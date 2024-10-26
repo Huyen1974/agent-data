@@ -1,6 +1,11 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['version']
-options:
-  logging: CLOUD_LOGGING_ONLY
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/google-docs-updater', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/$PROJECT_ID/google-docs-updater' ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [ 'run', 'deploy', 'google-docs-updater', '--image', 'gcr.io/$PROJECT_ID/google-docs-updater', '--region', 'us-central1', '--platform', 'managed' ]
+images:
+  - 'gcr.io/$PROJECT_ID/google-docs-updater'
 
