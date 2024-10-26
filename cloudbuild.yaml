@@ -8,4 +8,6 @@ steps:
     args: [ 'run', 'deploy', 'google-docs-updater', '--image', 'gcr.io/$PROJECT_ID/google-docs-updater', '--region', 'us-central1', '--platform', 'managed' ]
 images:
   - 'gcr.io/$PROJECT_ID/google-docs-updater'
+options:
+  logging: CLOUD_LOGGING_ONLY
 
