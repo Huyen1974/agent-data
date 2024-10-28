@@ -6,8 +6,6 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/google-docs-updater']
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['run', 'deploy', 'google-docs-updater', '--image', 'gcr.io/$PROJECT_ID/google-docs-updater', '--region', 'us-central1', '--platform', 'managed']
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['command-that-does-not-exist']
 
 images:
   - 'gcr.io/$PROJECT_ID/google-docs-updater'
