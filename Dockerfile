@@ -1,18 +1,19 @@
-# Use a lightweight Python image
-FROM python:3.8-slim
+# Sử dụng image python chính thức
+FROM python:3.9
 
-# Set the working directory in the container
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Sao chép file yêu cầu vào container và cài đặt thư viện
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Install Flask and Gunicorn for deployment
-RUN pip install --no-cache-dir flask gunicorn
+# Sao chép toàn bộ mã nguồn vào container
+COPY . .
 
-# Expose the port that Flask will run on
+# Thiết lập cổng
 EXPOSE 8080
 
-# Run a basic gunicorn command to check functionality
-CMD ["gunicorn", "-b", ":8080", "main:app"]
+# Chạy ứng dụng Flask
+CMD ["python", "backend.py"]
 
