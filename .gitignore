@@ -1,1 +1,26 @@
+# Ignore Terraform state files and directories
 .terraform/
+*.tfstate
+*.tfstate.backup
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore Python virtual environments
+venv/
+*.pyc
+__pycache__/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore credentials and environment files
+*.env
+*.json
+*.key
+
+# Ignore Terraform lock file
+.terraform.lock.hcl
