@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main  # Chỉ chạy khi push lên nhánh main
-      - test  # Hoặc test (nếu bạn có nhánh test)
 
 jobs:
   deploy:
