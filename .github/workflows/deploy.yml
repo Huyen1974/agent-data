@@ -1,16 +1,23 @@
-name: CI/CD Deployment
+name: Deploy to Google Cloud
 
 on:
   push:
     branches:
-      - main
+      - main  # Chỉ chạy khi push lên nhánh main
+      - test  # Hoặc test (nếu bạn có nhánh test)
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -21,10 +28,11 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Deploy to Google Cloud
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Deploy to Google Cloud Functions
         run: |
-          gcloud functions deploy google_docs_updater \
-          --runtime python310 \
-
+          gcloud functions deploy my-function \
+            --region asia-southeast1 \
+            --runtime python310 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --entry-point main
