@@ -3,8 +3,8 @@ name: Deploy to Google Cloud
 on:
   push:
     branches:
-      - main  # Chỉ chạy khi push lên nhánh main
-  workflow_dispatch:  # Thêm hỗ trợ chạy thủ công từ GitHub Actions hoặc CLI
+      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -17,7 +17,8 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
