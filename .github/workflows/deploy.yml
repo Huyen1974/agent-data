@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Chỉ chạy khi push lên nhánh main
+  workflow_dispatch:  # Thêm hỗ trợ chạy thủ công từ GitHub Actions hoặc CLI
 
 jobs:
   deploy:
