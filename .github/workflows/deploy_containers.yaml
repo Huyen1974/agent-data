@@ -5,7 +5,7 @@ on:
     branches: [ "main", "test" ]
     paths:
       - 'containers/**'
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build_and_deploy:
@@ -21,11 +21,13 @@ jobs:
     - name: Authenticate to Google Cloud (WIF)
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: 'projects/${{ secrets.PROJECT_ID }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-        service_account: 'chatgpt-deployer@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com'
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
     - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}
 
     - name: Configure Docker
       run: |
@@ -33,14 +35,13 @@ jobs:
 
     - name: Build & Push Docker images
       run: |
-        set -e  # Dừng ngay nếu có lỗi
+        set -e
         for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
           CONTAINER_NAME=$(basename "$CONTAINER_DIR")
           IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
 
           echo "🔨 Building Docker image: $IMAGE"
           docker build -t "$IMAGE" "$CONTAINER_DIR"
-
           echo "🚀 Pushing Docker image: $IMAGE"
           docker push "$IMAGE"
 
@@ -50,5 +51,5 @@ jobs:
             --region asia-southeast1 \
             --platform managed \
             --allow-unauthenticated \
-            --service-account=chatgpt-deployer@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com
+            --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
         done
