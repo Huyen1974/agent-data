@@ -4,14 +4,17 @@ on:
   push:
     branches:
       - main
+      - test  # Chạy trên cả nhánh test (nếu bạn muốn)
+    paths:
+      - 'functions/**'  # Chỉ chạy khi có thay đổi trong thư mục functions
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: "read"
-      id-token: "write"
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout code
@@ -34,9 +37,19 @@ jobs:
 
       - name: Deploy to Google Cloud Functions
         run: |
-          gcloud functions deploy my-function \
-            --region asia-southeast1 \
-            --runtime python310 \
-            --trigger-http \
-            --allow-unauthenticated \
-            --entry-point main
+          set -e  # Dừng nếu có lỗi
+          for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do
+            FUNCTION_NAME=$(basename "$FUNCTION_DIR")
+            echo "Deploying $FUNCTION_NAME..."
+            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)  # Tự động lấy entry point
+            if ! gcloud functions deploy "$FUNCTION_NAME" \
+              --region=asia-southeast1 \
+              --runtime=python310 \
+              --trigger-http \
+              --allow-unauthenticated \
+              --source="$FUNCTION_DIR" \
+              --entry-point="$ENTRY_POINT"; then
+              echo "❌ Deployment failed for $FUNCTION_NAME"
+              exit 1
+            fi
+          done
