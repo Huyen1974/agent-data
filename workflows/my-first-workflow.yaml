@@ -1,0 +1,13 @@
+main:
+  steps:
+    - init:
+        assign:
+          - project_id: ${PROJECT_ID}
+    - log_message:
+        call: sys.log
+        args:
+          text: "Hello from a deployed Google Workflow!"
+          severity: INFO
+    - return_success:
+        return:
+          message: "Workflow completed successfully."
