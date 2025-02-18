@@ -2,7 +2,7 @@ main:
   steps:
     - init:
         assign:
-          - project_id: ${PROJECT_ID}
+          - project_id: ${sys.get_env("GOOGLE_CLOUD_PROJECT_ID")}  # ĐÚNG
     - log_message:
         call: sys.log
         args:
