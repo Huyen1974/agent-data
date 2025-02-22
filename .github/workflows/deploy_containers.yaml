@@ -18,16 +18,28 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Set environment variables
+      run: |
+        if [ "${{ github.ref_name }}" == "main" ]; then
+          echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> $GITHUB_ENV
+          echo "WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" >> $GITHUB_ENV
+          echo "SERVICE_ACCOUNT=${{ secrets.GCP_SERVICE_ACCOUNT }}" >> $GITHUB_ENV
+        else
+          echo "PROJECT_ID=${{ secrets.PROJECT_ID_TEST }}" >> $GITHUB_ENV
+          echo "WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}" >> $GITHUB_ENV
+          echo "SERVICE_ACCOUNT=${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}" >> $GITHUB_ENV
+        fi
+
     - name: Authenticate to Google Cloud (WIF)
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ github.ref_name == 'main' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER || secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
-        service_account: ${{ github.ref_name == 'main' && secrets.GCP_SERVICE_ACCOUNT || secrets.GCP_SERVICE_ACCOUNT_TEST }}
+        workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ env.SERVICE_ACCOUNT }}
 
     - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v1
       with:
-        project_id: ${{ github.ref_name == 'main' && secrets.PROJECT_ID || secrets.PROJECT_ID_TEST }}
+        project_id: ${{ env.PROJECT_ID }}
 
     - name: Configure Docker
       run: |
@@ -38,7 +50,7 @@ jobs:
         set -e
         for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
           CONTAINER_NAME=$(basename "$CONTAINER_DIR")
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ github.ref_name == 'main' && secrets.PROJECT_ID || secrets.PROJECT_ID_TEST }}/docker-repo/$CONTAINER_NAME:latest"
+          IMAGE="asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
 
           echo "🔨 Building Docker image: $IMAGE"
           docker build -t "$IMAGE" "$CONTAINER_DIR"
@@ -51,5 +63,5 @@ jobs:
             --region asia-southeast1 \
             --platform managed \
             --allow-unauthenticated \
-            --service-account=${{ github.ref_name == 'main' && secrets.GCP_SERVICE_ACCOUNT || secrets.GCP_SERVICE_ACCOUNT_TEST }}
+            --service-account=${{ env.SERVICE_ACCOUNT }}
         done

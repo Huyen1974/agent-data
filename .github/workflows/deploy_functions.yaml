@@ -20,11 +20,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set environment variables
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> $GITHUB_ENV
+            echo "WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" >> $GITHUB_ENV
+            echo "SERVICE_ACCOUNT=${{ secrets.GCP_SERVICE_ACCOUNT }}" >> $GITHUB_ENV
+          else
+            echo "PROJECT_ID=${{ secrets.PROJECT_ID_TEST }}" >> $GITHUB_ENV
+            echo "WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}" >> $GITHUB_ENV
+            echo "SERVICE_ACCOUNT=${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}" >> $GITHUB_ENV
+          fi
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: ${{ github.ref_name == 'main' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER || secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
-          service_account: ${{ github.ref_name == 'main' && secrets.GCP_SERVICE_ACCOUNT || secrets.GCP_SERVICE_ACCOUNT_TEST }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -49,7 +61,7 @@ jobs:
               --allow-unauthenticated \
               --source="$FUNCTION_DIR" \
               --entry-point="$ENTRY_POINT" \
-              --project=${{ github.ref_name == 'main' && secrets.PROJECT_ID || secrets.PROJECT_ID_TEST }}; then
+              --project=${{ env.PROJECT_ID }}; then
               echo "❌ Deployment failed for $FUNCTION_NAME"
               exit 1
             fi
