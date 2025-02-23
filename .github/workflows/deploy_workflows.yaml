@@ -35,9 +35,7 @@ jobs:
         for WORKFLOW_FILE in $(find workflows -name "*.yaml"); do
           WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml)
           echo "Deploying workflow $WORKFLOW_NAME..."
-          if ! gcloud workflows deploy "$WORKFLOW_NAME" \
-            --source="$WORKFLOW_FILE" \
-            --location=asia-southeast1; then  # Thay đổi location nếu cần
+          if ! gcloud workflows deploy "$WORKFLOW_NAME"             --source="$WORKFLOW_FILE"             --location=asia-southeast1; then
             echo "❌ Deployment failed for $WORKFLOW_NAME"
             exit 1
           fi
