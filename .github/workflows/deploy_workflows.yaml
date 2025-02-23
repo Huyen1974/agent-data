@@ -2,7 +2,7 @@ name: Deploy Workflows
 
 on:
   push:
-    branches: [ "main", "test" ]
+    branches: [ "main" ]  # Chỉ chạy trên main
     paths:
       - 'workflows/**'
   workflow_dispatch:
@@ -35,7 +35,9 @@ jobs:
         for WORKFLOW_FILE in $(find workflows -name "*.yaml"); do
           WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml)
           echo "Deploying workflow $WORKFLOW_NAME..."
-          if ! gcloud workflows deploy "$WORKFLOW_NAME"             --source="$WORKFLOW_FILE"             --location=asia-southeast1; then
+          if ! gcloud workflows deploy "$WORKFLOW_NAME" \
+            --source="$WORKFLOW_FILE" \
+            --location=asia-southeast1; then
             echo "❌ Deployment failed for $WORKFLOW_NAME"
             exit 1
           fi
