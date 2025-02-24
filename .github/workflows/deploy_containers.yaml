@@ -3,6 +3,9 @@ name: Deploy Containers
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'containers/**'
+      - '.github/workflows/deploy_containers.yaml'  # <-- Đã thêm dòng này
   workflow_dispatch: {}
 
 jobs:

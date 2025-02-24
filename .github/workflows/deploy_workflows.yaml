@@ -3,6 +3,9 @@ name: Deploy Workflows
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'workflows/**'
+      - '.github/workflows/deploy_workflows.yaml'  # <-- Đã thêm dòng này
   workflow_dispatch:
 
 jobs:
