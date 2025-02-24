@@ -1,9 +1,12 @@
-name: Deploy to Google Cloud Functions
+name: Deploy to Google Cloud
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'functions/**'
+      - '.github/workflows/deploy_functions.yaml'
   workflow_dispatch:
 
 jobs:
