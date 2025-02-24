@@ -2,10 +2,7 @@ name: Deploy Workflows
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'workflows/**'
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
