@@ -2,7 +2,7 @@ name: Deploy Containers
 
 on:
   push:
-    branches: [ "main" ]  # Chỉ deploy khi push lên main
+    branches: [ "main" ]
     paths:
       - 'containers/**'
   workflow_dispatch: {}

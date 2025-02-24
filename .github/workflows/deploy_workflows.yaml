@@ -2,7 +2,7 @@ name: Deploy Workflows
 
 on:
   push:
-    branches: [ "main" ]  # Chỉ chạy trên main
+    branches: [ "main" ]
     paths:
       - 'workflows/**'
   workflow_dispatch:
