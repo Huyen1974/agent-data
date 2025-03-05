@@ -2,10 +2,10 @@ name: Deploy Containers
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "test" ]
     paths:
       - 'containers/**'
-      - '.github/workflows/deploy_containers.yaml'  # <-- Đã thêm dòng này
+      - '.github/workflows/deploy_containers.yaml'
   workflow_dispatch: {}
 
 jobs:
@@ -47,10 +47,5 @@ jobs:
           docker push "$IMAGE"
 
           echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
-          gcloud run deploy "$CONTAINER_NAME" \
-            --image "$IMAGE" \
-            --region asia-southeast1 \
-            --platform managed \
-            --allow-unauthenticated \
-            --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
+          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
         done
