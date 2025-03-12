@@ -1,20 +1,24 @@
 import requests
 import json
 import os
-import time  # ✅ Thêm dòng này để tránh lỗi
-
+import time
+import logging  # Thêm module logging
 from google.cloud import secretmanager
 from flask import jsonify
-import functions_framework  # Thêm để hỗ trợ decorator HTTP
+import functions_framework  # Đảm bảo decorator HTTP
 
 # Cấu hình
-PROJECT_ID = os.environ.get("PROJECT_ID", "github-chatgpt-ggcloud")  # Mặc định là github-chatgpt-ggcloud
-LARK_USER_INFO_URL = "https://open.larksuite.com/open-apis/authen/v1/access_token"
+PROJECT_ID = os.environ.get("PROJECT_ID", "github-chatgpt-ggcloud")  # Mặc định là project Production
+LARK_USER_INFO_URL = "https://open.larksuite.com/open-apis/authen/v1/user_info"  # URL chính xác để kiểm tra token
 LARK_GENERATE_TOKEN_URL = "https://asia-southeast1-github-chatgpt-ggcloud.cloudfunctions.net/generate-lark-token"
 SECRET_NAME = "lark-access-token-sg"
 MAX_RETRIES = 6
 
-def get_lark_token(request):  # Thêm tham số request
+# Cấu hình logging
+logging.basicConfig(level=logging.INFO)
+
+def get_lark_token(request):
+    """Lấy token từ Secret Manager."""
     client = secretmanager.SecretManagerServiceClient()
     name = f"projects/{PROJECT_ID}/secrets/{SECRET_NAME}/versions/latest"
     response = client.access_secret_version(request={"name": name})
@@ -27,27 +31,31 @@ def validate_lark_token(token):
     return response.status_code == 200
 
 def call_generate_lark_token():
-    """Gọi Cloud Function generate-lark-token."""
+    """Gọi Cloud Function generate-lark-token để tạo token mới."""
     try:
         response = requests.get(LARK_GENERATE_TOKEN_URL)
         response.raise_for_status()
         return True
     except requests.exceptions.RequestException as e:
-        print(f"Error calling generate-lark-token: {e}")
+        logging.error(f"Error calling generate-lark-token: {e}")
         return False
 
 def send_error_email(log_message):
-    """Gửi email thông báo lỗi (ví dụ)."""
+    """Gửi email thông báo lỗi (tạm thời dùng print thay vì email thực tế)."""
+    logging.info("Sending error email")
     print("Đã có lỗi xảy ra")
     print(log_message)
 
-@functions_framework.http  # Thêm decorator để xử lý HTTP request
+@functions_framework.http
 def check_lark_token(request):
     """Cloud Function để kiểm tra Lark token."""
+    logging.info("Start check_lark_token")  # Ghi log khi bắt đầu
     log = ""
     for attempt in range(MAX_RETRIES):
+        logging.info(f"Attempt {attempt + 1}: Getting token")  # Ghi log mỗi lần thử
         token = get_lark_token(request)
         if validate_lark_token(token):
+            logging.info("Token is valid")  # Ghi log khi token hợp lệ
             return jsonify({"status": "OK", "message": "Token is valid"})
         log += f"Attempt {attempt + 1}: Token invalid. Calling generate-lark-token...\n"
         if not call_generate_lark_token():
@@ -56,4 +64,5 @@ def check_lark_token(request):
             time.sleep(3)
     log += "ERROR: Token still invalid after multiple attempts and regeneration.\n"
     send_error_email(log)
+    logging.error("Token invalid after multiple attempts")  # Ghi log lỗi
     return jsonify({"status": "ERROR", "message": f"Token invalid after {MAX_RETRIES} attempts."}), 401
