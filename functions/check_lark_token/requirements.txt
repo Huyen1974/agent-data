@@ -1,3 +1,4 @@
 Flask>=2.3.3
 google-cloud-secret-manager
 requests
+Werkzeug==2.2.3
