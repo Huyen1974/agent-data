@@ -23,8 +23,8 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}  # <-- Đã escape
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}  # <-- Đã escape
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,12 +38,19 @@ jobs:
       - name: Deploy to Google Cloud Functions
         run: |
           set -e
-          for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do  # <-- Đã escape
-            FUNCTION_NAME=$(basename "$FUNCTION_DIR")  # <-- Đã escape
-            echo "Deploying $FUNCTION_NAME..."  # <-- Đã escape
-            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)  # <-- Đã escape
-            if ! gcloud functions deploy "$FUNCTION_NAME"               --region=asia-southeast1               --runtime=python310               --trigger-http               --allow-unauthenticated               --source="$FUNCTION_DIR"               --entry-point="$ENTRY_POINT"               --project=${{ secrets.PROJECT_ID }}; then  # <-- Đã escape
-              echo "❌ Deployment failed for $FUNCTION_NAME"  # <-- Đã escape
+          for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do
+            FUNCTION_NAME=$(basename "$FUNCTION_DIR")
+            echo "Deploying $FUNCTION_NAME..."
+            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)
+            if ! gcloud functions deploy "$FUNCTION_NAME" \
+              --region=asia-southeast1 \
+              --runtime=python310 \
+              --trigger-http \
+              --allow-unauthenticated \
+              --source="$FUNCTION_DIR" \
+              --entry-point="$ENTRY_POINT" \
+              --project=${{ secrets.PROJECT_ID_TEST }}; then
+              echo "❌ Deployment failed for $FUNCTION_NAME"
               exit 1
             fi
           done
