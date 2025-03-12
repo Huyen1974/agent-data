@@ -5,10 +5,10 @@ import time  # ✅ Thêm dòng này để tránh lỗi
 
 from google.cloud import secretmanager
 from flask import jsonify
-
+import functions_framework  # Thêm để hỗ trợ decorator HTTP
 
 # Cấu hình
-PROJECT_ID = os.environ.get("PROJECT_ID")  # Hoặc "github-chatgpt-ggcloud"
+PROJECT_ID = os.environ.get("PROJECT_ID", "github-chatgpt-ggcloud")  # Mặc định là github-chatgpt-ggcloud
 LARK_USER_INFO_URL = "https://open.larksuite.com/open-apis/authen/v1/access_token"
 LARK_GENERATE_TOKEN_URL = "https://asia-southeast1-github-chatgpt-ggcloud.cloudfunctions.net/generate-lark-token"
 SECRET_NAME = "lark-access-token-sg"
@@ -19,7 +19,6 @@ def get_lark_token(request):  # Thêm tham số request
     name = f"projects/{PROJECT_ID}/secrets/{SECRET_NAME}/versions/latest"
     response = client.access_secret_version(request={"name": name})
     return response.payload.data.decode("UTF-8")
-
 
 def validate_lark_token(token):
     """Kiểm tra token bằng cách gọi API lấy thông tin user."""
@@ -42,6 +41,7 @@ def send_error_email(log_message):
     print("Đã có lỗi xảy ra")
     print(log_message)
 
+@functions_framework.http  # Thêm decorator để xử lý HTTP request
 def check_lark_token(request):
     """Cloud Function để kiểm tra Lark token."""
     log = ""
