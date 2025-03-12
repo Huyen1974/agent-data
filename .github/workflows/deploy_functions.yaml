@@ -3,7 +3,7 @@ name: Deploy to Google Cloud
 on:
   push:
     branches:
-      - test
+      - main
     paths:
       - 'functions/**'
       - '.github/workflows/deploy_functions.yaml'
@@ -23,8 +23,8 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -49,7 +49,7 @@ jobs:
               --allow-unauthenticated \
               --source="$FUNCTION_DIR" \
               --entry-point="$ENTRY_POINT" \
-              --project=${{ secrets.PROJECT_ID_TEST }}; then
+              --project=${{ secrets.PROJECT_ID }}; then
               echo "❌ Deployment failed for $FUNCTION_NAME"
               exit 1
             fi
