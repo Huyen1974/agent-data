@@ -1,8 +1,11 @@
 import requests
 import json
 import os
+import time  # ✅ Thêm dòng này để tránh lỗi
+
 from google.cloud import secretmanager
 from flask import jsonify
+
 
 # Cấu hình
 PROJECT_ID = os.environ.get("PROJECT_ID")  # Hoặc "github-chatgpt-ggcloud"
@@ -11,12 +14,12 @@ LARK_GENERATE_TOKEN_URL = "https://asia-southeast1-github-chatgpt-ggcloud.cloudf
 SECRET_NAME = "lark-access-token-sg"
 MAX_RETRIES = 6
 
-def get_lark_token():
-    """Lấy token từ Secret Manager."""
+def get_lark_token(request):  # Thêm tham số request
     client = secretmanager.SecretManagerServiceClient()
     name = f"projects/{PROJECT_ID}/secrets/{SECRET_NAME}/versions/latest"
     response = client.access_secret_version(request={"name": name})
     return response.payload.data.decode("UTF-8")
+
 
 def validate_lark_token(token):
     """Kiểm tra token bằng cách gọi API lấy thông tin user."""
@@ -43,7 +46,7 @@ def check_lark_token(request):
     """Cloud Function để kiểm tra Lark token."""
     log = ""
     for attempt in range(MAX_RETRIES):
-        token = get_lark_token()
+        token = get_lark_token(request)
         if validate_lark_token(token):
             return jsonify({"status": "OK", "message": "Token is valid"})
         log += f"Attempt {attempt + 1}: Token invalid. Calling generate-lark-token...\n"
