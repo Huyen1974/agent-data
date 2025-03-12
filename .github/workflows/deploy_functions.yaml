@@ -1,5 +1,5 @@
 name: Deploy to Google Cloud
-
+# Trigger CI/CD re-run after IAM fix
 on:
   push:
     branches:
