@@ -35,6 +35,9 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Debug Secrets
+        run: echo "Using PROJECT_ID=${{ secrets.PROJECT_ID }}"
+
       - name: Deploy to Google Cloud Functions
         run: |
           set -e
