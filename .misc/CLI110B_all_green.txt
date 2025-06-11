@@ -1,0 +1,36 @@
+CLI110B: Implement Snapshot Restore on Cloud Run - COMPLETED
+
+Purpose: Implemented snapshot restore functionality for Cloud Run (Docker Qdrant) startup, downloading the latest snapshot from GCS and restoring it.
+
+Total tests: 65/65 (63 passed, 2 skipped)
+Check-fixture-drift: PASSED (exit 0)
+Flake8 compliance: PASSED (no F401/F841 errors)
+
+Summary:
+- Added scripts/qdrant_restore.py for downloading and restoring snapshots from GCS
+- Created optimized Dockerfile.qdrant for Cloud Run deployment (<120 MB target)
+- Added scripts/deploy_cloud_run.sh for automated Cloud Run deployment
+- Implemented multi-stage Docker build with Qdrant binary and Python dependencies
+- Added startup script that waits for Qdrant, then runs snapshot restore
+- Configured min-instances=0 for cost optimization
+- Maintained all existing test coverage and compliance
+
+Key Features:
+- Automatic snapshot discovery (finds latest by creation time)
+- Graceful handling when no snapshots exist (skipped status)
+- Comprehensive error handling and logging
+- Clean temporary file management
+- Health checks and startup verification
+- Environment variable configuration
+
+Files Added:
+- scripts/qdrant_restore.py (224 lines)
+- Dockerfile.qdrant (131 lines)
+- scripts/deploy_cloud_run.sh (92 lines)
+
+Git Status:
+- Commit: d883ad1
+- Tag: cli110b_all_green
+- Branch: cli103a
+
+Note: Next step is CLI 111A to implement Cloud Scheduler for hybrid sync between Cloud and Docker instances.

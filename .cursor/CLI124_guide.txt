@@ -1,0 +1,215 @@
+CLI 124 Guidance - Structured Logging & Test Optimization
+========================================================
+
+This document provides implementation guidance for CLI 124 objectives:
+standardizing logging, reducing costs, and optimizing test execution.
+
+STRUCTURED LOGGING IMPLEMENTATION
+---------------------------------
+
+1. Core Component: src/agent_data_manager/utils/structured_logger.py
+   - JSON-formatted logging with structured fields
+   - 10% sampling for INFO logs (cost optimization)
+   - 100% logging for ERROR/WARNING (reliability)
+   - Error metrics export to Cloud Monitoring
+   - File output: logs/agent_server.log
+
+2. Key Features:
+   ✓ StructuredJSONFormatter: Converts logs to JSON format
+   ✓ SamplingFilter: Implements 10% INFO sampling
+   ✓ ErrorMetricsHandler: Exports Prometheus metrics
+   ✓ StructuredLogger: Main logger class with context support
+
+3. Usage Pattern:
+   ```python
+   from agent_data_manager.utils.structured_logger import get_logger
+
+   logger = get_logger(__name__)
+
+   # Structured logging with context
+   logger.info("Operation completed",
+               session_id="sess_123",
+               doc_id="doc_456",
+               duration_ms=250)
+
+   # Error logging with exception info
+   logger.error("Operation failed",
+                doc_id="doc_789",
+                error="Connection timeout",
+                exc_info=True)
+   ```
+
+COST OPTIMIZATION STRATEGY
+--------------------------
+
+1. Log Sampling:
+   - INFO logs: 10% sampling rate
+   - WARNING logs: 100% (always logged)
+   - ERROR/CRITICAL logs: 100% (always logged)
+   - Estimated cost reduction: ~85% for INFO-heavy workloads
+
+2. Target Cost: < $1/day
+   - Cloud Logging pricing: ~$0.50/GB ingested
+   - With sampling: Reduced from ~5GB/day to ~1GB/day
+   - Estimated daily cost: $0.50 (within target)
+
+3. Monitoring:
+   - Error metrics exported to Cloud Monitoring
+   - Prometheus counters: agent_data_errors_total
+   - Error rate gauge: agent_data_error_rate
+
+TEST EXECUTION OPTIMIZATION
+---------------------------
+
+1. Current State (CLI 123a):
+   - Total: 227 tests (96.04% pass rate)
+   - Runtime: 20-30 minutes
+   - Growth: +16 tests in CLI 123
+
+2. Target State (CLI 124):
+   - Runtime: <15 minutes
+   - Controlled growth: Max 1-2 tests per CLI
+   - Selective execution with pytest markers
+
+3. Pytest Markers (Implemented):
+   - @pytest.mark.core: Essential functionality
+   - @pytest.mark.integration: External services
+   - @pytest.mark.logging: Logging tests
+   - @pytest.mark.performance: Performance tests
+   - @pytest.mark.slow: Long-running tests (>10s)
+
+4. Selective Test Execution:
+   ```bash
+   # Fast development feedback
+   pytest -m "core" --tb=short
+
+   # Feature-specific testing
+   pytest -m "logging" -v
+
+   # Skip slow tests
+   pytest -m "not slow"
+
+   # Parallel execution (MacBook M1)
+   pytest -n 8 tests/
+   ```
+
+UPDATED MODULES (CLI 124)
+-------------------------
+
+1. Structured Logging Integration:
+   ✓ EventManager: Updated to use structured logging
+   ✓ SessionManager: Updated to use structured logging
+   ✓ Additional modules can be updated incrementally
+
+2. New Test Categories:
+   ✓ tests/api/test_logging.py: 14 tests for logging functionality
+   ✓ All logging tests properly marked with @pytest.mark.logging
+
+3. Documentation:
+   ✓ .cursor/TESTING_GUIDELINES.txt: Comprehensive testing strategy
+   ✓ pytest.ini: Updated with marker definitions
+
+IMPLEMENTATION CHECKLIST
+------------------------
+
+✓ Created structured_logger.py with JSON formatting and sampling
+✓ Implemented error metrics for Cloud Monitoring
+✓ Added comprehensive test suite (14 tests) for logging
+✓ Updated pytest.ini with test markers
+✓ Created testing guidelines document
+✓ Updated EventManager and SessionManager to use structured logging
+✓ Verified 10 log entries generation (CLI 124 requirement)
+
+VERIFICATION COMMANDS
+--------------------
+
+1. Test Structured Logging:
+   ```bash
+   # Run logging tests only
+   pytest -m "logging" -v
+
+   # Test 10 log entries requirement
+   pytest tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement -v
+   ```
+
+2. Test Selective Execution:
+   ```bash
+   # Core tests only (fast)
+   pytest -m "core" --tb=short
+
+   # Integration tests
+   pytest -m "integration" -v
+   ```
+
+3. Full Test Suite:
+   ```bash
+   # Current pass rate check
+   pytest --tb=short | grep "passed"
+
+   # With parallel execution
+   pytest -n auto
+   ```
+
+COST MONITORING
+--------------
+
+1. Log Volume Estimation:
+   - Before: ~5GB/day (all INFO logs)
+   - After: ~1GB/day (10% INFO sampling)
+   - Cost savings: ~$2/day reduction
+
+2. Monitoring Setup:
+   - Error metrics: prometheus_client integration
+   - Log file: logs/agent_server.log (local monitoring)
+   - Cloud Monitoring: Error counters and rates
+
+3. Cost Verification:
+   - Monitor Cloud Logging usage in GCP Console
+   - Set up billing alerts for unexpected usage
+   - Regular review of log volume trends
+
+NEXT STEPS (CLI 125+)
+--------------------
+
+1. Incremental Module Updates:
+   - Update remaining modules to use structured logging
+   - Add context fields (session_id, doc_id, request_id)
+   - Implement consistent error handling
+
+2. Test Optimization:
+   - Add markers to existing test files
+   - Implement parallel test execution
+   - Create fast smoke test suite
+
+3. Production Deployment:
+   - Deploy structured logging to Cloud Run
+   - Monitor cost impact in production
+   - Adjust sampling rates if needed
+
+4. Documentation:
+   - Update developer documentation
+   - Create logging best practices guide
+   - Monitor and optimize based on usage patterns
+
+TROUBLESHOOTING
+--------------
+
+1. Prometheus Metrics Issues:
+   - Error: "Duplicated timeseries in CollectorRegistry"
+   - Solution: Implemented class-level metrics registration
+
+2. Exception Formatting Issues:
+   - Error: "'bool' object is not subscriptable"
+   - Solution: Proper exc_info handling in formatter
+
+3. Log File Creation Issues:
+   - Error: File not created in tests
+   - Solution: Fixed handler duplicate detection logic
+
+CONTACT
+-------
+
+For questions about CLI 124 implementation:
+- Review this guide for logging patterns
+- Check TESTING_GUIDELINES.txt for test strategies
+- Refer to structured_logger.py for API documentation

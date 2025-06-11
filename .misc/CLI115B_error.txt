@@ -1,0 +1,77 @@
+CLI115B Error Log
+================
+
+Git Status:
+-----------
+On branch cli103a
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   tests/api/test_embeddings_api.py
+
+Git Log:
+--------
+commit 66ffe22 (HEAD -> cli103a, tag: cli115a_all_green)
+Author: nmhuyen <nmhuyen@example.com>
+Date:   [timestamp]
+
+    CLI 115A: End-to-End Test with QdrantStore - All 5/5 tests passed
+
+Git Tags:
+---------
+cli115a_all_green
+
+Python Version:
+--------------
+Python 3.10.17
+
+Virtual Environment:
+-------------------
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python
+
+Pre-commit Config:
+-----------------
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        language_version: python3.10
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        args: [--max-line-length=120, --extend-ignore=E203,W503]
+  - repo: local
+    hooks:
+      - id: check-fixture-drift
+        name: Check fixture drift
+        entry: scripts/check_fixture_drift.py
+        language: python
+        pass_filenames: false
+        always_run: true
+
+Test Results:
+------------
+pytest -q: 75 passed, 2 skipped in 15.32s
+pytest tests/api/test_embeddings_api.py -v: 3 passed in 9.70s
+
+Flake8 Results:
+--------------
+pre-commit run flake8 --files tests/api/test_embeddings_api.py: Passed
+
+Fixture Drift Check:
+-------------------
+scripts/check_fixture_drift.py: Exit code 0 (Passed)
+
+Issues Encountered:
+------------------
+1. Initial flake8 failures due to unused imports (AsyncMock, MagicMock) and import order
+2. Fixed by removing unused imports and adding noqa comments for necessary imports after sys.path modification
+
+Resolution:
+----------
+- Updated tests/api/test_embeddings_api.py to use MockVectorStore implementing VectorStore interface
+- Removed FAISS-specific dependencies and replaced with generic VectorStore mocking
+- All tests pass with proper VectorStore interface mocking
+- Flake8 compliance achieved
+- Fixture drift check passes

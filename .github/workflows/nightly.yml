@@ -1,0 +1,60 @@
+name: Nightly Full Test Suite
+on:
+  schedule:
+    # Run at 1:00 AM ICT (18:00 UTC)
+    - cron: "0 18 * * *"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  full-test-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run full test suite
+        run: |
+          python -m pytest -v --tb=short
+
+      - name: Run sentinel enforcement test
+        run: |
+          # Explicitly run sentinel test to validate historical compliance
+          python -m pytest tests/test_enforce_single_test.py -v
+
+      - name: Validate test count compliance
+        run: |
+          echo "Checking test count compliance..."
+          python -c "
+          import subprocess
+          result = subprocess.run(['pytest', '--collect-only', '-q'], capture_output=True, text=True)
+          count = len([l for l in result.stdout.split('\n') if '::test_' in l])
+          print(f'Total tests: {count}')
+          assert count == 467, f'Expected 467 tests, got {count}'
+          "
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: |
+            .coverage
+            pytest_output.txt
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "⚠️ Nightly test suite failed! Check the logs for details."
+          echo "Total tests: $(python -m pytest --collect-only -q | grep -E '[0-9]+ tests? collected' | head -1)"

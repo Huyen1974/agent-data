@@ -1,0 +1,45 @@
+CLI106B Guide: Adding Tests for SEARCH_BY_PAYLOAD Endpoint
+
+APPROACH:
+- Incremental test addition: Added one test at a time, verifying each before proceeding
+- Used edit_file tool for creating and modifying test files
+- Updated test count in meta_count.py after each test addition
+
+STEPS TAKEN:
+1. Verified starting state: 57 passed, 2 skipped (59 total)
+2. Created tests/api/test_search_by_payload.py with first test (valid payload search)
+3. Updated EXPECTED_TOTAL_TESTS from 59 to 60
+4. Verified test passes: 58 passed, 2 skipped (60 total)
+5. Added second test (empty field validation)
+6. Updated EXPECTED_TOTAL_TESTS from 60 to 61
+7. Verified test passes: 59 passed, 2 skipped (61 total)
+8. Added third test (None value validation)
+9. Updated EXPECTED_TOTAL_TESTS from 61 to 62
+10. Verified test passes: 60 passed, 2 skipped (62 total)
+11. Added fourth test (pagination with offset)
+12. Updated EXPECTED_TOTAL_TESTS from 62 to 63
+13. Verified test passes: 61 passed, 2 skipped (63 total)
+
+TESTS IMPLEMENTED:
+- test_search_by_payload_valid: Tests valid field/value search with "science" tag
+- test_search_by_payload_empty_field: Tests empty field validation
+- test_search_by_payload_none_value: Tests None value validation
+- test_search_by_payload_pagination: Tests pagination with offset functionality
+
+VERIFICATION:
+- All tests pass: 61 passed, 2 skipped (63 total)
+- No F401/F841 errors in target directories (ADK/agent_data/tools/* and tests/*)
+- Fixture drift check passes (exit 0)
+- Successfully committed and tagged as cli106b_all_green
+
+ISSUES ENCOUNTERED:
+- None. All tests passed on first attempt.
+- Flake8 shows many style errors in other files, but no F401/F841 in target directories.
+
+TOOLS USED:
+- edit_file: Successfully used for creating test file and updating meta count
+- search_replace: Successfully used for adding additional tests incrementally
+- No need for sed -i as edit_file and search_replace worked perfectly
+
+NEXT STEPS:
+- Ready for CLI 107A to implement next feature (e.g., UPDATE_BY_PAYLOAD)

@@ -1,0 +1,76 @@
+{
+  "displayName": "Ingestion Workflow Failure Alert - Agent Data",
+  "documentation": {
+    "content": "Alert when ingestion-workflow experiences failures in vectorization or auto-tagging steps. Monitors Cloud Logging for ERROR severity messages from the ingestion workflow.",
+    "mimeType": "text/markdown"
+  },
+  "conditions": [
+    {
+      "displayName": "Ingestion Workflow Vectorize Failures",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND logName=\"projects/chatgpt-db-project/logs/ingestion-workflow\" AND severity=\"ERROR\" AND jsonPayload.step=\"vectorize_error\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 2.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "Ingestion Workflow Auto-Tag Failures",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND logName=\"projects/chatgpt-db-project/logs/ingestion-workflow\" AND severity=\"ERROR\" AND jsonPayload.step=\"auto_tag_error\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 2.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "Ingestion Workflow High Error Rate",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND logName=\"projects/chatgpt-db-project/logs/ingestion-workflow\" AND severity=\"ERROR\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "600s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 5.0,
+        "duration": "600s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    }
+  ],
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "alertStrategy": {
+    "autoClose": "3600s",
+    "notificationRateLimit": {
+      "period": "900s"
+    }
+  },
+  "severity": "ERROR",
+  "userLabels": {
+    "environment": "production",
+    "service": "agent-data",
+    "component": "ingestion-workflow",
+    "workflow": "document-processing"
+  }
+} 

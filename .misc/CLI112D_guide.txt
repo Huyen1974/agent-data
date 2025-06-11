@@ -1,0 +1,35 @@
+CLI112D: Add Missing Documentation Files from CLI 112 - GUIDE
+================================================================
+
+OBJECTIVE:
+Add the missing documentation files from CLI 112A, 112B, and 112C to git and update their respective tags to ensure a complete commit history.
+
+PROBLEM IDENTIFIED:
+The documentation files from CLI 112A, 112B, and 112C (.misc/CLI112[A,B,C]_*.txt) were not committed to git, making their respective tags incomplete.
+
+APPROACH:
+1. Verified current state on cli103a branch where all files exist
+2. Copied all CLI112 documentation files to temporary location (/tmp/cli112_docs/)
+3. Systematically fixed each CLI tag by:
+   - Checking out the specific tag
+   - Copying missing documentation files
+   - Adding files to git
+   - Committing changes
+   - Updating the tag to point to new commit
+
+EXECUTION STEPS:
+1. CLI112A: Added 3 missing files (all_green.txt, guide.txt, error.txt)
+2. CLI112B: Added 2 missing files (all_green.txt, guide.txt) - error.txt already existed
+3. CLI112C: Added 3 missing files (all_green.txt, guide.txt, error.txt)
+
+VERIFICATION:
+- Tests: 75/75 passed (75 passed, 2 skipped)
+- Fixture drift check: PASSED (exit 0)
+- All CLI112 tags now include complete documentation
+
+ISSUES RESOLVED:
+- Incomplete git history for CLI 112A, 112B, 112C tags
+- Missing documentation files that were created but not committed
+
+NEXT STEPS:
+Ready to proceed with CLI 113B to integrate QdrantStore with ToolsManager.

@@ -1,0 +1,92 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 17 items
+
+ADK/agent_data/tests/tools/test_faiss_tools.py .................         [100%]
+
+=============================== warnings summary ===============================
+setup/venv/lib/python3.10/site-packages/faiss/loader.py:49
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/faiss/loader.py:49: DeprecationWarning: numpy.core._multiarray_umath is deprecated and has been renamed to numpy._core._multiarray_umath. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core._multiarray_umath.__cpu_features__.
+    from numpy.core._multiarray_umath import __cpu_features__
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.10.17-final-0 _______________
+
+Name                                                            Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------------------------------------
+ADK/agent_data/tools/__init__.py                                    1      0      0      0   100%
+ADK/agent_data/tools/add_numbers_tool.py                           15     11      2      0    24%   17-30
+ADK/agent_data/tools/advanced_query_faiss_tool.py                  58     49     24      1    12%   27-77, 82-91
+ADK/agent_data/tools/advanced_semantic_search_tool.py              98     88     54      1     7%   10-25, 53-118, 124-152
+ADK/agent_data/tools/aggregate_metadata_tool.py                    60     50     16      1    14%   26-73, 79-95
+ADK/agent_data/tools/analyze_metadata_trends_tool.py               70     60     30      1    11%   28-85, 90-111
+ADK/agent_data/tools/batch_generate_embeddings_tool.py             78     67     22      1    12%   28-94, 100-120
+ADK/agent_data/tools/bulk_delete_metadata_tool.py                  93     82     24      1    10%   28-126, 132-153
+ADK/agent_data/tools/bulk_update_metadata_tool.py                  76     67     24      1    10%   26-93, 99-124
+ADK/agent_data/tools/clear_embeddings_tool.py                      54     54     20      0     0%   1-79
+ADK/agent_data/tools/conditional_search_metadata_tool.py           11     10      8      0     5%   8-17
+ADK/agent_data/tools/create_metadata_tree_tool.py                   3      2      0      0    33%   3-4
+ADK/agent_data/tools/delay_tool.py                                 20     15      2      0    23%   16-37
+ADK/agent_data/tools/delete_metadata_node_tool.py                   4      3      2      0    17%   3-5
+ADK/agent_data/tools/depth_first_search_tool.py                     5      4      2      0    14%   3-7
+ADK/agent_data/tools/detect_anomalies_tool.py                      65     53     24      1    15%   31-80, 86-109
+ADK/agent_data/tools/echo_tool.py                                   7      4      2      0    33%   16-20
+ADK/agent_data/tools/error_tool.py                                  7      5      2      1    33%   8, 12-15
+ADK/agent_data/tools/external_tool_registry.py                    276    238     92      1    11%   23-38, 46-55, 74-81, 90-116, 131-217, 235-337, 351-411, 417-434
+ADK/agent_data/tools/find_metadata_by_key_tool.py                   3      2      0      0    33%   3-4
+ADK/agent_data/tools/generate_embedding_real_tool.py               62     62     22      0     0%   1-93
+ADK/agent_data/tools/generate_embedding_tool.py                    67     56     18      1    14%   28-82, 87-109
+ADK/agent_data/tools/get_registered_tools_tool.py                  15     11      2      0    24%   10-21
+ADK/agent_data/tools/load_metadata_from_faiss_tool.py             104     31     14      5    69%   21, 24, 29-35, 85-86, 93-95, 120, 127-128, 133-136, 173-177, 190-201
+ADK/agent_data/tools/metadata_statistics_tool.py                   63     52     18      1    15%   30-80, 92-109
+ADK/agent_data/tools/multi_field_update_tool.py                    66     57     20      1    12%   27-87, 93-112
+ADK/agent_data/tools/multi_update_metadata_tool.py                  7      6      4      0     9%   9-14
+ADK/agent_data/tools/multiply_numbers_tool.py                      20     17      6      0    12%   15-37
+ADK/agent_data/tools/query_metadata_faiss_tool.py                 223     72     56     20    66%   30, 33, 38-52, 147, 153, 156, 158, 167-169, 183->182, 193-197, 207-208, 210-211, 213, 231-233, 238-240, 255-259, 261-265, 279-280, 288-290, 313-315, 319-320, 335-337, 341-363
+ADK/agent_data/tools/query_metadata_tool.py                         2      1      0      0    50%   3
+ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py      44     35     12      1    18%   25-59, 64-72
+ADK/agent_data/tools/rebuild_metadata_tree_tool.py                  3      2      0      0    33%   5-6
+ADK/agent_data/tools/register_tools.py                            104     44     10      1    54%   83->97, 90-93, 99-116, 124-207
+ADK/agent_data/tools/reverse_text_tool.py                          13     13      2      0     0%   1-25
+ADK/agent_data/tools/save_document_tool.py                          9      6      0      0    33%   5-10
+ADK/agent_data/tools/save_metadata_to_faiss_tool.py               416    230    116     31    44%   28, 38-40, 83, 88-89, 91-92, 94-95, 107-109, 113-115, 121-130, 142, 147, 153-154, 181-182, 197-205, 211-213, 220-221, 228-234, 244-245, 251-252, 256-257, 263, 269-270, 273-274, 293, 300-329, 374-375, 382-383, 426-430, 436-437, 438->442, 461->464, 467-468, 470-471, 478->480, 481-496, 500-504, 506-510, 515-536, 552, 556, 570-716
+ADK/agent_data/tools/save_text_tool.py                             21     15      2      0    26%   22-40
+ADK/agent_data/tools/semantic_expand_metadata_tool.py              46     37     12      1    17%   27-68, 73-80
+ADK/agent_data/tools/semantic_filter_metadata_tool.py              65     55     36      1    11%   12-26, 45-84, 89-98
+ADK/agent_data/tools/semantic_search_by_author_tool.py              3      2      0      0    33%   3-4
+ADK/agent_data/tools/semantic_search_by_keyword_tool.py             3      2      0      0    33%   3-4
+ADK/agent_data/tools/semantic_search_by_year_tool.py                3      2      0      0    33%   3-4
+ADK/agent_data/tools/semantic_search_cosine_tool.py                69     69     22      0     0%   1-98
+ADK/agent_data/tools/semantic_search_local_tool.py                  2      1      0      0    50%   3
+ADK/agent_data/tools/semantic_search_metadata_tool.py               3      2      0      0    33%   3-4
+ADK/agent_data/tools/semantic_search_metadata_tree_tool.py         60     50     30      1    12%   12-22, 40-77, 82-91
+ADK/agent_data/tools/semantic_search_multiple_fields_tool.py       12     11      8      0     5%   9-20
+ADK/agent_data/tools/semantic_similarity_search_tool.py            74     62     22      1    14%   31-88, 95-117
+ADK/agent_data/tools/sort_metadata_tool.py                         60     51     16      1    13%   28-85, 91-107
+ADK/agent_data/tools/update_metadata_node_tool.py                   4      3      2      0    17%   3-5
+ADK/agent_data/tools/update_metadata_tool.py                        2      1      0      0    50%   3
+ADK/agent_data/tools/validate_metadata_tree_tool.py                47     37      8      1    20%   29-65, 72-88
+ADK/agent_data/tools/vectorize_document_tool.py                     2      1      0      0    50%   4
+ADK/agent_data/tools/view_metadata_tree_tool.py                     2      1      0      0    50%   3
+-----------------------------------------------------------------------------------------------------------
+TOTAL                                                            2700   1961    808     77    24%
+Coverage XML written to file coverage.xml
+======================== 17 passed, 4 warnings in 7.65s ========================

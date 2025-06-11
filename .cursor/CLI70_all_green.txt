@@ -1,0 +1,6 @@
+New test: tests/api/test_empty_query_text.py
+Validates API rejects empty query_text.
+Code tweak: api_vector_search.py
+Added @field_validator for query_text in SemanticSearchRequest
+to ensure it's not blank.
+Result: 19/19 tests passed.

@@ -1,0 +1,46 @@
+CLI111B Error Log and Deployment Details
+
+GIT STATUS:
+- Branch: cli103a
+- Commit: 139dd05 "CLI111B: Fix Cloud Function and Integrate with Agent Data Logic"
+- Tag: cli111b_all_green
+- Files changed: 5 files, 150 insertions, 6 deletions
+
+CLOUD FUNCTION DEPLOYMENT:
+- Function: update_qdrant_env
+- Region: us-central1
+- URL: https://us-central1-github-chatgpt-ggcloud.cloudfunctions.net/update_qdrant_env
+- Status: Active
+- Service Account: chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com
+
+CLOUD RUN SERVICE:
+- Service: qdrant-agent
+- Region: us-central1
+- URL: https://qdrant-agent-812872501910.us-central1.run.app
+- Revision: qdrant-agent-00003-mv6
+- Service Account: chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com
+
+CLOUD FUNCTION TESTS:
+Cloud mode test:
+$ curl -X POST -H "Content-Type: application/json" -d '{"mode": "cloud"}' https://us-central1-github-chatgpt-ggcloud.cloudfunctions.net/update_qdrant_env
+{"message":"Successfully updated Qdrant service to cloud mode","mode":"cloud","project":"github-chatgpt-ggcloud","region":"us-central1","service":"qdrant-agent","status":"success"}
+
+Docker mode test:
+$ curl -X POST -H "Content-Type: application/json" -d '{"mode": "docker"}' https://us-central1-github-chatgpt-ggcloud.cloudfunctions.net/update_qdrant_env
+{"message":"Successfully updated Qdrant service to docker mode","mode":"docker","project":"github-chatgpt-ggcloud","region":"us-central1","service":"qdrant-agent","status":"success"}
+
+PYTEST RESULTS:
+66 tests total (64 passed, 2 skipped)
+All tests passing, including new MCP integration test
+
+FLAKE8 COMPLIANCE:
+No F401/F841 errors in key directories (app/, ADK/agent_data/tools/, tests/)
+
+CHECK-FIXTURE-DRIFT:
+Exit code: 0 (passing)
+
+INFRASTRUCTURE STATUS:
+- Qdrant Cluster: ba0aa7ef-be87-47b4-96de-7d36ca4527a8 (active)
+- GCS Bucket: qdrant-snapshots (active)
+- Cloud Scheduler: switch-to-cloud (8h), switch-to-docker (22h) (active)
+- Secret Manager: qdrant-api-key-sg (accessible)

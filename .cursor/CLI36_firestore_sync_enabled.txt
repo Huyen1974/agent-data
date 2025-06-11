@@ -1,0 +1,1 @@
+Firestore metadata synchronization (save/delete) integrated into QdrantStore, controlled by ENABLE_FIRESTORE_SYNC.

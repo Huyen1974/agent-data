@@ -1,0 +1,83 @@
+CLI110A: Qdrant Snapshot and GCS Upload Implementation Guide
+
+=== IMPLEMENTATION STEPS ===
+
+1. Branch Verification:
+   - Checked out cli103a branch
+   - Reset to cli109b_all_green commit (0689ae0)
+   - Verified starting state with 65/65 tests passing
+
+2. Snapshot Script Creation:
+   - Created scripts/qdrant_snapshot.py with comprehensive functionality:
+     * get_qdrant_client() - Initialize client with env vars
+     * create_snapshot() - Create timestamped snapshots
+     * download_snapshot() - Download to temp location
+     * upload_to_gcs() - Upload to 'qdrant-snapshots' bucket
+     * cleanup_local_file() - Clean up temp files
+     * take_and_upload_snapshot() - Main orchestration function
+   - Uses environment variables: QDRANT_URL, QDRANT_API_KEY, QDRANT_COLLECTION_NAME
+   - Organized GCS storage with YYYY/MM/DD folder structure
+
+3. Scheduler Script Creation:
+   - Created scripts/schedule_snapshot.sh for cron job execution
+   - Includes virtual environment activation
+   - Comprehensive logging to logs/snapshot.log
+   - Error handling and exit code propagation
+   - Made executable with chmod +x
+
+4. Code Quality Verification:
+   - Fixed F401 import error (removed unused pathlib.Path)
+   - Fixed W293 whitespace errors using sed command
+   - Fixed W292 newline at end of file
+   - Verified flake8 compliance (no F401/F841 errors)
+
+5. Testing and Validation:
+   - Compiled Python script successfully
+   - Ran pytest -q: 65/65 tests (63 passed, 2 skipped)
+   - Ran fixture drift check: passed (exit 0)
+   - All quality gates maintained
+
+6. Git Operations:
+   - Added new files to git
+   - Committed with detailed message
+   - Tagged as cli110a_all_green
+
+=== ISSUES ENCOUNTERED ===
+
+1. Flake8 Style Issues:
+   - Issue: Multiple whitespace and import errors
+   - Resolution: Removed unused import, used sed to fix whitespace, added newline
+
+2. Git Commit Message:
+   - Issue: Newline characters not allowed in command
+   - Resolution: Reformatted to single line with dashes
+
+=== RESOLUTIONS ===
+
+1. Environment Configuration:
+   - Leveraged existing QDRANT_URL, QDRANT_API_KEY setup from QdrantStore
+   - Used QDRANT_COLLECTION_NAME with default fallback to "my_collection"
+
+2. GCS Integration:
+   - Used existing google-cloud-storage dependency
+   - Implemented organized folder structure for snapshots
+   - Added comprehensive error handling and verification
+
+3. Logging and Monitoring:
+   - Structured logging with timestamps
+   - Detailed error reporting with stack traces
+   - Return status dictionary for monitoring integration
+
+=== CRON JOB SETUP ===
+
+To schedule snapshots every 6 hours, add to crontab:
+```
+0 */6 * * * /Users/nmhuyen/Documents/Manual\ Deploy/mpc_back_end_for_agents/scripts/schedule_snapshot.sh
+```
+
+=== NEXT STEPS ===
+
+CLI 110B will implement:
+- Snapshot restore functionality
+- Cloud Run integration for intelligent sync
+- Automated sync between Qdrant Cloud and Docker environments

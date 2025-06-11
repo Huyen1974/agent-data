@@ -1,0 +1,3 @@
+Purpose: Added test for semantic search with score exactly equal to threshold.
+Total tests passing: 35/35.
+Summary: Verified results are returned when cosine similarity matches the score_threshold exactly.

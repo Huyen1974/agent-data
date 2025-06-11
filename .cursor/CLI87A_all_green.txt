@@ -1,0 +1,3 @@
+Purpose: Added validation to raise ValueError for top_k <= 0.
+Total tests passing: 36/36.
+Summary: Modified semantic_search_cosine_handler to enforce top_k > 0.

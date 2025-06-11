@@ -1,0 +1,14 @@
+Integration tests for DELETE endpoints /delete_vector, /delete_vectors_by_tag, and /purge_all_vectors added in tests/api/test_delete_vectors_api.py.
+
+Key features of the tests:
+- Use FastAPI's TestClient with the real application (no mocking).
+- Set up test data using POST /upsert_vector before each deletion.
+- Assert correct status codes and response payloads.
+- Verify actual data removal from Qdrant after deletions.
+
+Troubleshooting steps taken:
+1. Initial test runs failed due to unawaited async calls in `api_vector_search.py` for QdrantStore methods (`upsert_vector`, `delete_vector`, `delete_vectors_by_tag`, `purge_all_vectors`). Added `await` where necessary in `api_vector_search.py`.
+2. Subsequent failures for `test_delete_vectors_by_tag` and `test_purge_all_vectors` showed a `TypeError: Cannot instantiate typing.Union` when `PointsSelector` was explicitly instantiated within `QdrantStore` methods.
+3. Modified `QdrantStore` to pass raw `Filter` objects and lists of point IDs directly to `self.client.delete()` for the `points_selector` argument, bypassing explicit `PointsSelector` instantiation. This resolved the `TypeError`.
+
+All tests now pass, confirming the deletion endpoints function correctly in an integrated environment.

@@ -1,0 +1,5 @@
+Purpose: Attempted to fix test_clear_embeddings to restore 50/50 test pass.
+Total tests passing: 49/50 (47 passed, 1 FAILED, 2 skipped) - test_clear_embeddings still fails due to TypeError.
+Summary: Encountered a persistent TypeError: Cannot instantiate typing.Union when creating qdrant_client.http.models.PointsSelector in agent_data/vector_store/qdrant_store.py. This issue occurs with qdrant-client 1.14.2, Pydantic 2.11.3, and Python 3.10.17. Multiple attempts to refactor PointsSelector instantiation (using Filter, PointIdsList, raw dicts) and mock client adjustments did not resolve the TypeError. The error prevents the test from running to completion correctly.
+Blocker: The TypeError is likely an environment or library incompatibility issue. Recommended fix is `pip install -U qdrant-client pydantic`, as documented in .cursor/CLI103A1_1_error.txt.
+Note: Next step CLI 103A1.2 (improve check-fixture-drift hook) is predicated on tests being green. This blocker needs resolution first.

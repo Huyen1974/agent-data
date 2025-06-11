@@ -1,0 +1,97 @@
+CLI116 Guide - MCP Integration with QdrantStore
+===============================================
+
+Overview:
+This CLI verified the integration of MCP (Model Context Protocol) with QdrantStore by testing the local_mcp_server.py with stdio requests.
+
+Steps Performed:
+
+1. Environment Setup:
+   - Verified Python 3.10.17 virtual environment
+   - Confirmed git state on cli103a branch from cli115b_all_green tag
+
+2. Initial MCP Testing:
+   - Tested echo tool: SUCCESS
+   - Tested save_document tool: SUCCESS
+   - Discovered async/sync mismatch with Qdrant tools
+
+3. Issue Identification:
+   - All Qdrant tools are async functions
+   - MCP server calls tools synchronously
+   - Need synchronous wrappers for MCP compatibility
+
+4. Solution Implementation:
+   - Created ADK/agent_data/tools/qdrant_sync_wrappers.py
+   - Implemented run_async_tool() helper function
+   - Added sync wrappers for key Qdrant tools:
+     * qdrant_health_check_sync
+     * qdrant_get_count_sync
+     * qdrant_upsert_vector_sync
+     * qdrant_query_by_tag_sync
+     * qdrant_delete_by_tag_sync
+     * qdrant_semantic_search_sync
+     * qdrant_generate_and_store_embedding_sync
+     * semantic_search_qdrant_sync
+
+5. Tool Registration Update:
+   - Updated register_tools.py to import sync wrappers
+   - Added sync tools to the tools dictionary
+   - Maintained both async and sync versions
+
+6. Testing Results:
+   - qdrant_health_check_sync: SUCCESS (connected to Qdrant cluster)
+   - qdrant_query_by_tag_sync: SUCCESS (query executed)
+   - qdrant_get_count_sync: SUCCESS (count retrieved)
+   - qdrant_upsert_vector_sync: Identified format requirements
+
+7. Vector Format Requirements Discovered:
+   - Vector IDs must be integers or UUIDs (not strings)
+   - Vector dimensions must match collection (1536 for OpenAI embeddings)
+
+8. Validation:
+   - All 75 tests pass (75 passed, 2 skipped)
+   - Flake8 compliance maintained
+   - Fixture drift check passes
+
+Key Technical Details:
+
+Async/Sync Wrapper Pattern:
+```python
+def run_async_tool(async_func, *args, **kwargs):
+    try:
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            # Use ThreadPoolExecutor for running event loop
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(asyncio.run, async_func(*args, **kwargs))
+                return future.result()
+        else:
+            return loop.run_until_complete(async_func(*args, **kwargs))
+    except RuntimeError:
+        return asyncio.run(async_func(*args, **kwargs))
+```
+
+MCP Request Format:
+```json
+{
+  "tool": "tool_name",
+  "input": {...},
+  "meta": {"request_id": "unique_id"}
+}
+```
+
+Qdrant Connection Details:
+- Cluster: ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io
+- Collection: agent_data_vectors
+- Vector Size: 1536 (OpenAI embedding dimension)
+
+Issues Resolved:
+1. Async/sync mismatch - solved with synchronous wrappers
+2. Flake8 trailing whitespace - fixed with sed command
+3. Vector ID format - identified requirements for future use
+
+Next Steps:
+- CLI 117: Document Qdrant integration
+- Continue development on free tier
+- Implement proper vector storage with correct formats

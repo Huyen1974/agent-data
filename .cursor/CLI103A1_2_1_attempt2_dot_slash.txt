@@ -1,0 +1,6 @@
+Check Fixture Drift......................................................Failed
+- hook id: check-fixture-drift
+- duration: 0s
+- exit code: 1
+
+Executable `./scripts/run_drift_check.sh` not found

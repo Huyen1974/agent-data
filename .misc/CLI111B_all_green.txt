@@ -1,0 +1,7 @@
+Purpose: Fixed Cloud Function and integrated QdrantStore with Agent Data logic.
+
+Total tests: 66/66 (64 passed, 2 skipped).
+
+Summary: Fixed Cloud Function update_qdrant_env, redeployed Cloud Run service qdrant-agent with snapshot restore, integrated QdrantStore with MCP Server, and added integration test. This completes KH1.1_Grok SAU Test 30-50 plan.
+
+Note: Next step is to report on KH1.1_Grok completion and plan for the remaining GPT Faiss -> Qdrant tasks.

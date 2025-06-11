@@ -1,0 +1,1427 @@
+KH1.1_Grok Transition to Agent Data - Error Log
+================================================
+
+Date: $(date)
+Branch: cli103a
+Tag: cli111b_all_green
+Commit: 139dd05
+
+Initial Git Status:
+On branch cli103a
+HEAD is now at 139dd05 CLI111B: Fix Cloud Function and Integrate with Agent Data Logic
+
+Virtual Environment: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv (activated)
+
+Task: Clean up Cloud Run and hybrid sync resources, transition to Agent Data development
+
+=== RESOURCE CLEANUP LOG === Deleting [qdrant-agent]...
+............done.
+Deleted service [qdrant-agent].
+Preparing function...
+....done.
+Deleting function...
+[Service]..................................done
+[Artifact Registry]done
+Done.
+Deleted [projects/github-chatgpt-ggcloud/locations/us-central1/functions/update_qdrant_env].
+Deleted job [switch-to-cloud].
+Deleted job [switch-to-docker].
+Snapshot cleanup: No snapshots found (bucket may be empty)
+ID                                    CREATE_TIME                DURATION  SOURCE  IMAGES  STATUS
+b8196f59-4be4-4cb7-9b81-8ebdb469c101  2025-03-14T04:34:23+00:00  -         -       -       FAILURE
+3fcdc30c-736e-441f-b2ea-da8ddbc09173  2025-03-12T10:58:19+00:00  -         -       -       FAILURE
+01381bc5-e4cf-4f5b-b9e8-b893f7a6029d  2025-02-24T08:47:10+00:00  -         -       -       FAILURE
+c049eb00-530e-4966-8e16-fd055c353855  2025-02-24T07:33:36+00:00  -         -       -       FAILURE
+1081f09c-4623-45f1-9c00-a37fc5131d1f  2025-02-24T07:20:42+00:00  -         -       -       FAILURE
+bdd18234-27b3-43f0-88cd-c15d3ee0b034  2025-02-24T05:59:17+00:00  -         -       -       FAILURE
+d48b0e98-5ebb-4781-afa4-c27d0acfcdfb  2025-02-24T05:30:18+00:00  -         -       -       FAILURE
+293671c2-a409-458f-b830-6248d58a40bf  2025-02-24T04:34:06+00:00  -         -       -       FAILURE
+c7dae8e2-3912-474d-9e9d-deba3240c4f5  2025-02-23T08:51:28+00:00  -         -       -       FAILURE
+3b04f73b-ebd6-467b-9ba6-5510c39ad6e1  2025-02-23T08:20:11+00:00  -         -       -       FAILURE
+ERROR: (gcloud.builds) Invalid choice: 'delete'.
+Maybe you meant:
+  gcloud builds connections delete
+  gcloud builds repositories delete
+  gcloud builds triggers delete
+  gcloud builds worker-pools delete
+  gcloud builds cancel
+  gcloud builds describe
+  gcloud builds get-default-service-account
+  gcloud builds list
+  gcloud builds log
+  gcloud builds submit
+
+To search the help text of gcloud commands, run:
+  gcloud help -- SEARCH_TERMS
+Failed builds cannot be deleted via gcloud builds delete (command not available)
+Checking for asia-southeast1 builds...
+ID                                    CREATE_TIME                DURATION  SOURCE  IMAGES  STATUS
+e9c792f6-964b-48e7-a720-ccee5cc87950  2025-03-17T10:19:56+00:00  21S       -       -       FAILURE
+63ee0810-a3b7-4057-9494-9b0d6366deba  2025-02-20T11:00:59+00:00  28S       -       -       FAILURE
+6b623559-8af0-4919-a64f-5917b1b82e0c  2025-02-02T03:18:37+00:00  18S       -       -       FAILURE
+c2102811-32f3-4e32-9e01-c8ac19d0bbad  2025-02-02T03:11:11+00:00  21S       -       -       FAILURE
+eab60747-87ca-4bf5-bf29-226e321c4110  2025-02-02T03:02:19+00:00  18S       -       -       FAILURE
+a8964f80-0c27-4445-81f7-4f8aad6f1b51  2024-12-28T08:50:02+00:00  24S       -       -       FAILURE
+0bb3803a-c411-418c-b137-947cb5039515  2024-12-20T10:20:21+00:00  12S       -       -       FAILURE
+67abf189-d7a7-4ccd-9a1f-e70ddaa06e43  2024-12-20T09:59:24+00:00  13S       -       -       FAILURE
+6ed23881-a2b6-4eb7-8f20-f831c5692139  2024-12-20T09:57:11+00:00  5S        -       -       FAILURE
+cdb06c86-c15e-4e8e-ae4e-feb1a6f1270f  2024-12-20T09:49:37+00:00  5S        -       -       FAILURE
+Failed builds listed (cannot be deleted via CLI)
+Listing items under project github-chatgpt-ggcloud, location us-central1, repository docker-repo.
+
+WARNING: The following filter keys were not present in any resource : name
+Listed 0 items.
+No Artifact Registry images found for qdrant-agent
+.........s.........................s..............................       [100%]
+64 passed, 2 skipped in 42.40s
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/staged_web_server.py:54:13: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/__init__.py:1:32: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/__init__.py:1:33: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/__init__.py:10:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:31:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/base_agent.py:4:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py:4:26: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py:18:79: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py:18:80: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:4:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:4:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:13:48: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:14:51: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:15:51: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:17:94: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:54:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:65:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:18:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:35:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:41:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:46:52: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:46:53: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:16:111: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:18:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:22:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:31:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:47:46: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:98:63: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:100:46: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:102:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:105:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:110:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:113:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:122:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:127:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:130:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:133:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:137:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:138:11: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py:138:12: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/__init__.py:1:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/__init__.py:1:2: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Optional' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Any' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:7:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:7:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:8:1: F401 'argparse' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:8:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:11:21: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:23:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:28:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:32:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:35:1: E305 expected 2 blank lines after class or function definition, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:43:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:48:72: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:65:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:65:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:67:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:67:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:67:78: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:95:40: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:2:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:5:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.Tuple' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.cast' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:15:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:23:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:23:6: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:24:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:25:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:26:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:27:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:28:6: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:29:6: E301 expected 1 blank line, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:29:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:34:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:51:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:54:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:79:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:95:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:110:35: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:119:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:122:46: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:126:58: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:131:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:134:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:143:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:166:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:166:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:168:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:168:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:183:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:184:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:187:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:192:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:195:22: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:30:9: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:40:13: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:59:58: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:66:32: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:76:31: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:81:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:81:10: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:82:10: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:83:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:94:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:101:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:101:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:102:14: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:103:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:106:105: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:111:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:115:52: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:115:53: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/scripts/__init__.py:3:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py:30:72: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py:30:73: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:36:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:43:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:45:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:45:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:46:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:46:23: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:63:21: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:70:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:80:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:91:64: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py:91:65: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:11:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:38:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:40:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:40:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:58:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:58:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:59:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:59:41: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:60:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:66:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:66:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:67:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:68:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:69:22: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:70:22: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:71:22: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:72:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:72:39: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:77:10: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:77:10: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:78:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:78:10: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:88:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:95:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:111:68: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py:111:69: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:14:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:18:78: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:30:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:37:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:41:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:48:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:52:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:57:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:61:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:68:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:74:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:76:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:83:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:97:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:101:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:142:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:144:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:149:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/bulk_upload_tool.py:149:42: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/clear_embeddings_tool.py:39:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/conditional_search_metadata_tool.py:17:44: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/conditional_search_metadata_tool.py:17:45: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/create_metadata_tree_tool.py:4:26: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/create_metadata_tree_tool.py:4:27: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py:28:33: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py:49:26: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:13:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:16:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:26:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:30:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:35:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:41:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:55:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:58:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:88:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:93:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_by_tag_tool.py:93:42: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_metadata_node_tool.py:5:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_metadata_node_tool.py:5:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/depth_first_search_tool.py:7:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/depth_first_search_tool.py:7:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py:19:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py:20:57: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py:20:58: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py:11:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py:15:45: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py:15:46: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:31:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:32:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:39:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:40:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:393:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/find_metadata_by_key_tool.py:4:32: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/find_metadata_by_key_tool.py:4:33: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/generate_embedding_real_tool.py:20:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:3:15: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:6:63: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:8:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:14:55: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:16:84: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:18:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:27:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:37:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:51:40: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:72:69: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:83:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:104:47: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:112:46: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:113:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:116:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:122:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:126:33: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:159:77: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:167:88: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:189:68: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:201:69: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py:201:70: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:11:51: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:43:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:43:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:65:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:65:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:66:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:67:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:68:23: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:68:23: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:69:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:70:23: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:70:23: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:71:23: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:71:23: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:72:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:77:13: E123 closing bracket does not match indentation of opening bracket's line
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:109:29: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py:109:30: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multi_update_metadata_tool.py:6:77: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multi_update_metadata_tool.py:14:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multi_update_metadata_tool.py:14:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py:16:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py:38:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_tool.py:3:71: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_tool.py:3:72: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:31:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:31:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:33:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:33:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:34:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:41:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:43:14: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:43:14: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:44:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:44:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:45:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:51:18: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:51:18: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:62:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:72:17: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py:72:18: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_tool.py:6:38: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_tool.py:6:39: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:8:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:9:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:10:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:11:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:12:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:13:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:16:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:18:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:19:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:20:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:22:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:23:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:24:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:25:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:26:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:29:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:30:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:31:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:32:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:33:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:34:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:35:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:36:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:37:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:38:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:41:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:42:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:43:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:44:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:45:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:46:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:47:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:48:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:51:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:52:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:53:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:56:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:57:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:58:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:59:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:60:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:61:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:64:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:68:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:84:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:100:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:113:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:122:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:127:19: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:128:41: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:187:23: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:188:23: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:191:33: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:192:31: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:195:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:195:10: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:230:1: W391 blank line at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:21:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:21:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:22:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:25:27: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py:25:28: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py:10:73: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py:10:74: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py:458:9: F821 undefined name 'openai'
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:26:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:26:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:27:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:28:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:31:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py:34:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:13:24: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:22:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:31:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:43:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:52:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:56:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:59:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:62:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:64:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:74:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:84:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:86:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:94:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:109:24: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:118:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:127:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:141:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:148:33: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:173:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:178:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/search_by_payload_tool.py:178:42: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:28:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:61:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:63:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:63:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:64:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:87:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:98:68: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py:98:69: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_author_tool.py:4:39: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_author_tool.py:4:40: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_keyword_tool.py:4:40: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_keyword_tool.py:4:41: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_year_tool.py:4:37: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_year_tool.py:4:38: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_cosine_tool.py:40:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_local_tool.py:3:52: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_local_tool.py:3:53: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tool.py:4:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tool.py:4:42: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:24:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:45:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:52:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:54:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:54:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:55:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:55:23: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:80:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:91:71: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py:91:72: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_multiple_fields_tool.py:20:53: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_multiple_fields_tool.py:20:54: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_node_tool.py:5:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_node_tool.py:5:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_tool.py:3:60: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_tool.py:3:61: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py:11:62: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py:12:101: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py:12:102: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/vectorize_document_tool.py:4:82: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/vectorize_document_tool.py:4:83: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/view_metadata_tree_tool.py:3:31: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/view_metadata_tree_tool.py:3:32: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/setup.py:16:2: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/setup.py:16:3: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/_test_insert_and_query.py:46:15: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/_test_insert_and_query.py:46:16: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py:1:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py:4:57: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py:9:44: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py:20:27: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_invalid_item_type.py:2:57: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/__init__.py:1:70: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/__init__.py:1:71: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/__init__.py:1:83: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/__init__.py:1:84: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:18:36: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:26:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:36:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:39:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:47:27: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:51:5: E303 too many blank lines (2)
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:59:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:79:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:80:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:108:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:138:18: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py:138:19: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:3:1: F401 'qdrant_client.models.PointsSelector' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:12:1: F401 'qdrant_client.http.models' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:13:1: F401 'uuid' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:409:41: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:437:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:440:54: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:441:55: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:451:47: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:452:22: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:452:22: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:453:22: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:454:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:475:25: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:489:65: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:493:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:493:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:503:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:506:65: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:515:21: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/__init__.py:1:50: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/__init__.py:1:51: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py:4:21: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py:20:25: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py:20:26: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:56:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:103:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:122:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:125:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:129:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:134:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:135:12: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:139:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:147:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:150:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:156:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:157:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:161:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:164:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:169:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:174:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:177:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:178:12: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:182:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:187:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:190:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:192:25: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:195:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:200:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:206:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:225:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:230:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:234:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:239:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:276:39: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:278:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:285:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:304:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:305:24: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:307:28: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:309:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:314:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:321:9: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:323:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:327:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:338:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:383:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:423:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:449:33: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:458:29: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:462:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:473:28: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:496:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:498:29: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:508:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:528:29: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:540:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:557:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:581:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:590:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:612:39: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:615:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:637:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:637:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:638:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:641:37: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:651:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:657:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:663:72: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:669:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:700:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:723:33: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:726:29: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:729:26: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:738:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:763:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:807:39: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:815:9: E303 too many blank lines (2)
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:825:26: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:833:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:854:50: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:2:1: F401 'asyncio' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:7:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:19:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:41:5: F841 local variable 'order_98b' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:42:5: F841 local variable 'order_97b' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:54:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:57:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:62:44: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:87:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:97:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:108:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:110:55: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:112:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:129:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:132:13: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:133:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:139:13: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:141:10: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:146:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:154:13: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:156:21: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:170:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:171:53: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:175:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:179:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:193:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:199:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:204:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:206:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:212:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:219:52: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:222:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:231:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:237:9: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:239:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:241:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:250:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:256:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:258:32: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:259:5: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:261:13: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:264:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:264:34: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:266:47: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:270:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:272:5: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:275:13: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:276:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:277:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:284:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:286:38: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:286:39: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/create_collection.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/create_collection.py:36:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:1:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:8:3: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:14:5: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:18:5: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:19:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:23:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:27:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:31:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:35:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:39:7: E121 continuation line under-indented for hanging indent
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:52:19: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:53:32: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:58:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:63:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:69:42: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:70:59: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:75:43: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:76:57: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:81:43: E226 missing whitespace around arithmetic operator
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:81:95: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:83:19: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:87:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:87:35: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:87:36: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/__init__.py:1:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/__init__.py:1:2: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:10:1: F401 'mcp' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:10:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:23:5: F401 'ADK.agent_data.tools.echo_tool.echo' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:24:5: F401 'ADK.agent_data.tools.save_text_tool.save_text' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:25:5: F401 'ADK.agent_data.tools.add_numbers_tool.add_numbers' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:26:5: F401 'ADK.agent_data.tools.get_registered_tools_tool.get_registered_tools' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:27:75: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:38:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:41:36: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:66:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:73:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:73:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:74:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:98:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:99:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:99:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:107:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:107:38: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:108:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:110:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:110:38: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:110:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:112:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:112:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:113:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:113:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:115:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:115:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:116:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:116:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:118:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:118:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:119:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:119:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:122:26: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:122:26: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:123:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:123:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:124:26: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:125:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:130:40: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:131:81: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:140:80: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:143:80: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:144:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:145:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:145:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:145:67: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:146:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:152:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:152:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:162:38: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:162:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:164:56: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:173:65: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:181:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:189:75: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:196:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:201:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:205:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:205:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:205:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Optional' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Any' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:7:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:7:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:8:1: F401 'argparse' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:8:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:11:21: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:23:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:28:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:32:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:35:1: E305 expected 2 blank lines after class or function definition, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:43:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:48:72: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:65:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:65:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:67:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:67:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:67:78: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:95:40: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:2:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:5:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.Tuple' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.cast' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:12:1: F401 'ADK.agent_data.agent.tools_manager.ToolsManager' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:16:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:24:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:24:6: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:25:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:26:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:27:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:28:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:29:6: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:30:6: E301 expected 1 blank line, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:30:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:35:6: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:52:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:55:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:80:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:96:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:111:35: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:120:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:123:46: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:127:58: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:132:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:135:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:144:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:167:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:167:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:169:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:169:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:184:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:185:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:188:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:193:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:196:22: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:3:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:19:21: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:24:1: E302 expected 2 blank lines, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:35:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:56:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:83:93: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:86:37: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:88:49: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:91:37: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:101:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:103:78: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:105:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:108:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:108:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:109:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:109:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:113:26: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:125:49: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:131:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:141:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:143:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:143:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:144:18: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:167:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:167:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:168:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:169:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:170:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:184:48: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:184:70: E702 multiple statements on one line (semicolon)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:190:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:190:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:191:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:192:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:193:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:201:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:207:44: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:207:45: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py:23:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py:48:17: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py:48:18: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/replace_firestore_func.py:61:92: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:8:62: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:9:55: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:10:58: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:11:57: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:12:95: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:13:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:14:83: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:15:74: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:16:88: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:17:65: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:37:50: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:38:30: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:39:33: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:41:24: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:43:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:47:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:59:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:67:54: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:69:52: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:71:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:71:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:73:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:73:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:77:72: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:82:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:85:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:94:51: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py:94:52: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:80:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:85:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:91:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:94:88: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:95:86: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:98:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py:115:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:3:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:25:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:47:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:68:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:68:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:82:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:83:11: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:83:12: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/setup.py:17:2: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/setup.py:17:3: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py:31:86: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py:50:85: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py:52:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py:62:16: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py:62:17: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_blank_query_text.py:11:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_blank_query_text.py:12:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:13:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:31:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:46:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:53:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:68:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:84:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:86:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:109:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:111:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:128:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:130:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:134:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_bulk_upload.py:134:2: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:14:73: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:14:74: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:13:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:24:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:42:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:58:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:62:57: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delete_by_tag.py:62:58: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_embeddings_api.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:12:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:13:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:17:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:28:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:29:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:31:92: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:11:36: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:14:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:14:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_case.py:14:36: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py:12:40: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py:12:41: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:16:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:16:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:11:109: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:11:110: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:19:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:19:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:21:94: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:21:95: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:30:68: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:30:69: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:1:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:2:1: F401 'pytest' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:12:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:30:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:34:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:38:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:42:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:48:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:51:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:61:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:67:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:69:28: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_qdrant_integration.py:69:29: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:22:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:25:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:29:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:34:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:39:83: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_metrics.py:39:84: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:13:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:16:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:19:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:22:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:26:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:36:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:40:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:44:37: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration.py:44:38: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:17:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:28:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:32:80: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:32:81: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:12:76: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:15:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:15:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py:19:99: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:13:38: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:16:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:16:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:4:34: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:16:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:34:32: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:35:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:37:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:41:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:57:81: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:59:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:65:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:69:52: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:73:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:77:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:101:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:112:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:115:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:118:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:122:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:124:108: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:124:109: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:11:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:15:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:18:99: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:18:100: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py:13:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py:13:48: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py:12:31: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py:12:32: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_search_by_payload.py:43:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_search_by_payload.py:53:95: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_search_by_payload.py:53:96: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py:12:80: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py:12:81: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py:14:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py:14:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:11:31: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:14:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:14:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:16:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:23:103: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:23:104: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:21:34: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:25:24: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:27:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:30:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:33:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:38:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:45:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:56:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:82:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:100:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:109:78: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:121:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:131:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:148:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:151:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:165:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:172:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:182:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:195:207: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:195:208: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:20:60: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:20:61: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:48:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:52:54: F821 undefined name 'CollectionReference'
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:65:5: E303 too many blank lines (3)
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:66:5: E301 expected 1 blank line, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:148:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:148:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:46:32: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:46:33: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:30:47: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:33:14: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:36:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:46:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:50:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:53:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:59:89: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:63:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:72:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:75:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:84:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:92:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:101:48: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:102:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:105:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:112:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:115:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:124:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:125:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:126:55: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:145:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:164:14: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:170:19: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:171:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:173:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:178:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:197:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:204:66: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:206:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:13: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:7:65: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:7:66: W292 no newline at end of file
+Documents/Manual Deploy/update_qdrant_env/main.py:3:1: F401 'os' imported but unused
+Documents/Manual Deploy/update_qdrant_env/main.py:4:1: F401 'json' imported but unused
+Documents/Manual Deploy/update_qdrant_env/main.py:12:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:23:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:27:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:33:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:39:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:42:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:48:39: W291 trailing whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:75:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:78:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:82:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:85:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:87:33: W291 trailing whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:94:1: W293 blank line contains whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:98:62: W291 trailing whitespace
+Documents/Manual Deploy/update_qdrant_env/main.py:98:63: W292 no newline at end of file
+Documents/Terraform_TEST/functions/check-lark-token/main.py:1:1: F401 'flask.request' imported but unused
+Documents/Terraform_TEST/functions/check-lark-token/main.py:6:1: F401 'datetime.timedelta' imported but unused
+Documents/Terraform_TEST/functions/check-lark-token/main.py:14:1: E302 expected 2 blank lines, found 1
+Documents/Terraform_TEST/functions/check-lark-token/main.py:19:1: E302 expected 2 blank lines, found 1
+Documents/Terraform_TEST/functions/check-lark-token/main.py:24:5: F841 local variable 'e' is assigned to but never used
+Documents/Terraform_TEST/functions/check-lark-token/main.py:27:1: E302 expected 2 blank lines, found 1
+Documents/Terraform_TEST/functions/check-lark-token/main.py:40:1: E302 expected 2 blank lines, found 1
+Documents/Terraform_TEST/functions/check-lark-token/main.py:82:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Terraform_TEST/functions/check-lark-token/main.py:83:39: W292 no newline at end of file
+Documents/Terraform_TEST/functions/dummy_function/main.py:1:1: F401 'flask.request' imported but unused
+Documents/Terraform_TEST/functions/dummy_function/main.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Terraform_TEST/functions/dummy_function/main.py:9:1: E305 expected 2 blank lines after class or function definition, found 1
+backend.py:5:1: E302 expected 2 blank lines, found 1
+backend.py:9:1: E305 expected 2 blank lines after class or function definition, found 1
+backend.py:11:1: W391 blank line at end of file
+check_google_api_access.py:22:1: E302 expected 2 blank lines, found 1
+check_google_api_access.py:31:1: E302 expected 2 blank lines, found 1
+check_google_api_access.py:40:1: E302 expected 2 blank lines, found 1
+check_google_api_access.py:49:1: E305 expected 2 blank lines after class or function definition, found 1
+check_google_api_access.py:52:1: W391 blank line at end of file
+containers/container-test/main.py:1:1: F401 'flask.request' imported but unused
+containers/container-test/main.py:1:1: F401 'flask.jsonify' imported but unused
+containers/container-test/main.py:6:1: E302 expected 2 blank lines, found 1
+containers/container-test/main.py:10:1: E305 expected 2 blank lines after class or function definition, found 1
+containers/container-test/main.py:11:68: W292 no newline at end of file
+functions/check_lark_token/main.py:2:1: F401 'json' imported but unused
+functions/check_lark_token/main.py:14:1: E302 expected 2 blank lines, found 1
+functions/check_lark_token/main.py:21:1: E302 expected 2 blank lines, found 1
+functions/check_lark_token/main.py:27:1: E302 expected 2 blank lines, found 1
+functions/check_lark_token/main.py:38:1: E302 expected 2 blank lines, found 1
+functions/check_lark_token/main.py:59:1: E302 expected 2 blank lines, found 1
+functions/check_lark_token/main.py:69:43: E261 at least two spaces before inline comment
+functions/check_lark_token/main.py:71:13: E265 block comment should start with '# '
+functions/check_lark_token/main.py:73:1: W293 blank line contains whitespace
+functions/check_lark_token/main.py:74:33: E226 missing whitespace around arithmetic operator
+functions/check_lark_token/main.py:74:36: E261 at least two spaces before inline comment
+functions/check_lark_token/main.py:74:37: E262 inline comment should start with '# '
+functions/check_lark_token/main.py:75:13: F821 undefined name 'time'
+functions/check_lark_token/main.py:78:5: E303 too many blank lines (2)
+functions/check_lark_token/main.py:80:26: E261 at least two spaces before inline comment
+functions/check_lark_token/main.py:80:27: E262 inline comment should start with '# '
+functions/function_1/main.py:1:1: F401 'flask.request' imported but unused
+functions/function_1/main.py:5:1: E302 expected 2 blank lines, found 1
+functions/function_1/main.py:5:16: F811 redefinition of unused 'request' from line 1
+functions/function_1/main.py:17:1: E305 expected 2 blank lines after class or function definition, found 1
+functions/function_1/main.py:18:50: F821 undefined name 'os'
+functions/function_1/main.py:20:19: W292 no newline at end of file
+google_docs_cicd_test.py:1:1: F401 'os' imported but unused
+google_docs_cicd_test.py:2:1: F401 'google.auth' imported but unused
+google_docs_cicd_test.py:17:1: E302 expected 2 blank lines, found 1
+google_docs_cicd_test.py:25:1: E302 expected 2 blank lines, found 1
+google_docs_cicd_test.py:37:9: F841 local variable 'result' is assigned to but never used
+google_docs_cicd_test.py:42:1: E302 expected 2 blank lines, found 1
+google_docs_cicd_test.py:54:9: F841 local variable 'result' is assigned to but never used
+google_docs_cicd_test.py:60:1: E305 expected 2 blank lines after class or function definition, found 1
+google_docs_cicd_test.py:63:1: W293 blank line contains whitespace
+google_docs_cicd_test.py:66:1: W293 blank line contains whitespace
+google_docs_cicd_test.py:69:1: W391 blank line at end of file
+google_docs_interaction.py:60:1: W391 blank line at end of file
+main.py:5:1: E302 expected 2 blank lines, found 1
+main.py:9:1: E305 expected 2 blank lines after class or function definition, found 1
+main.py:11:1: W391 blank line at end of file
+test_cline.py:7:1: E305 expected 2 blank lines after class or function definition, found 1
+update_data.py:5:1: E302 expected 2 blank lines, found 1
+update_data.py:20:1: E302 expected 2 blank lines, found 1
+update_data.py:24:1: W293 blank line contains whitespace
+update_data.py:29:1: W293 blank line contains whitespace
+update_data.py:32:1: W293 blank line contains whitespace
+update_data.py:35:1: W293 blank line contains whitespace
+update_data.py:41:1: E305 expected 2 blank lines after class or function definition, found 1
+update_data.py:43:1: W391 blank line at end of file
+
+Flake8 completed with many style warnings but main functionality intact
+INFO: Checking QdrantClient...
+INFO:   Signature mismatch for _embed_documents in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _embed_models in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _embed_models_strict in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _get_or_init_image_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _get_or_init_late_interaction_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _get_or_init_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _get_or_init_sparse_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _points_iterator in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _resolve_query_batch_request in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _resolve_query_request in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _scored_points_to_query_responses in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _sparse_embed_documents in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for _validate_collection_info in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for add in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for batch_update_points in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for clear_payload in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for count in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for create_collection in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for create_full_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for create_payload_index in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for create_shard_key in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for create_shard_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for create_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for delete_full_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_payload in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_payload_index in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_shard_key in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_shard_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for delete_vectors in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for discover in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for discover_batch in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for facet in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_aliases in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_collection_aliases in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_collections in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_embedding_size in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_fastembed_sparse_vector_params in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_fastembed_vector_params in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_locks in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_sparse_vector_field_name in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for get_vector_field_name in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for info in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for list_full_snapshots in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for list_shard_snapshots in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for list_snapshots in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for lock_storage in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for migrate in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for overwrite_payload in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for query in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for query_batch in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for query_batch_points in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for query_points in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for query_points_groups in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recommend in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recommend_batch in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recommend_groups in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recover_shard_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recover_snapshot in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for recreate_collection in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for retrieve in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for scroll in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for search in QdrantClient (ForwardRef difference - OK)
+INFO:   Signature mismatch for search_batch in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for search_groups in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for search_matrix_offsets in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for search_matrix_pairs in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for set_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for set_payload in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for set_sparse_model in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for unlock_storage in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for update_collection in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for update_collection_aliases in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for update_vectors in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for upload_collection in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for upload_points in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for upload_records in QdrantClient (placeholder method - OK)
+INFO:   Signature mismatch for upsert in QdrantClient (ForwardRef difference - OK)
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+INFO:   Signature mismatch for _determine_default in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _document_path_helper in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _emulator_channel in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _firestore_api_helper in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _get_collection_reference in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _prep_collections in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _prep_get_all in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _recursive_delete in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for _target_helper in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for batch in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for bulk_writer in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for close in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for collection_group in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for collections in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for document in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for field_path in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for get_all in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for recursive_delete in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for transaction in FirestoreClient (placeholder method - OK)
+INFO:   Signature mismatch for write_option in FirestoreClient (placeholder method - OK)
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+INFO: No mock drift detected.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+[cli103a 1803319] KH1.1_Grok Cleanup: Remove Cloud Run, Hybrid Sync Resources, and Transition to Agent Data
+ 47 files changed, 4438 insertions(+)
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI103A8_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI103A8_f401_f841_errors.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI103A8_target_all_errors.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI103A8_target_f401_f841_errors.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI103A8_tools_tests_errors.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI104A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI104A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI104B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI104B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI105A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI105A_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI105A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI105B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI105B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI106A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI106A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI106B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI106B_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI106B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI107A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI107A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI107B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI107B_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI107B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108A_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108B_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI108B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI109B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI109B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI109B_pytest_warnings.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110A_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110B_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI110B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111A_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111A_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111A_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111B_all_green.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111B_error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/CLI111B_guide.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/KH1_1_Grok_Final_Cleanup_Error.txt
+ create mode 100644 Documents/Manual Deploy/mpc_back_end_for_agents/.misc/KH1_1_Grok_Transition_to_Agent_Data_Error.txt
+kh1_1_grok_cleanup
+=== FINAL VERIFICATION ===
+Cloud Run service qdrant-agent not found (DELETED)
+Cloud Function update_qdrant_env not found (DELETED)
+Cloud Function update_qdrant_env not found (DELETED)
+Cloud Scheduler jobs not found (DELETED)
+=== CLEANUP VERIFICATION COMPLETE ===
+✓ Cloud Run service qdrant-agent: DELETED
+✓ Cloud Function update_qdrant_env: DELETED
+✓ Cloud Scheduler jobs: DELETED
+✓ Tests: 66/66 pass (64 passed, 2 skipped)
+✓ Fixture drift: No mock drift detected
+✓ Git: Tagged as kh1_1_grok_cleanup

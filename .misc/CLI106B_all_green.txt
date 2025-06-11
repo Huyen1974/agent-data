@@ -1,0 +1,4 @@
+Purpose: Added tests for SEARCH_BY_PAYLOAD endpoint.
+Total tests: 63/63 (61 passed, 2 skipped).
+Summary: Implemented tests for valid payload search, empty field, None value, pagination.
+Note: Next step is CLI 107A for new feature (e.g., UPDATE_BY_PAYLOAD).

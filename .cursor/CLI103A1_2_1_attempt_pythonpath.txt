@@ -1,0 +1,144 @@
+Check Fixture Drift......................................................Failed
+- hook id: check-fixture-drift
+- duration: 1.16s
+- exit code: 1
+
+INFO: Checking QdrantClient...
+ERROR:   Method _embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models_strict found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_image_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_late_interaction_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method _points_iterator found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_batch_request found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_request found in real QdrantClient but not in mock.
+ERROR:   Method _scored_points_to_query_responses found in real QdrantClient but not in mock.
+ERROR:   Method _sparse_embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _validate_collection_info found in real QdrantClient but not in mock.
+ERROR:   Method add found in real QdrantClient but not in mock.
+ERROR:   Method batch_update_points found in real QdrantClient but not in mock.
+ERROR:   Method clear_payload found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for close in QdrantClient:
+ERROR:     Real: (self, grpc_grace: Optional[float] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self)
+ERROR:   Signature mismatch for collection_exists in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str) -> bool
+ERROR:   Signature mismatch for count in QdrantClient:
+ERROR:     Real: (self, collection_name: str, count_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, exact: bool = True, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:     Mock: (self, collection_name: str, count_filter: Optional[qdrant_client.http.models.models.Filter] = None, exact: bool = True, **kwargs) -> qdrant_client.http.models.models.CountResult
+ERROR:   Signature mismatch for create_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, vectors_config: Union[Dict, qdrant_client.http.models.models.VectorParams], **kwargs) -> bool
+ERROR:   Method create_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for create_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, field_name: str, field_schema: Any, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Method create_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method create_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method create_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for delete in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points_selector: Union[List[Union[int, str, uuid.UUID]], qdrant_client.http.models.models.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for delete_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, timeout: Optional[int] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, timeout: Optional[int] = None) -> bool
+ERROR:   Method delete_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload_index found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_vectors found in real QdrantClient but not in mock.
+ERROR:   Method discover found in real QdrantClient but not in mock.
+ERROR:   Method discover_batch found in real QdrantClient but not in mock.
+ERROR:   Method facet found in real QdrantClient but not in mock.
+ERROR:   Method get_aliases found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for get_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:     Mock: (self, collection_name: str) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:   Method get_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method get_collections found in real QdrantClient but not in mock.
+ERROR:   Method get_embedding_size found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_sparse_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_locks found in real QdrantClient but not in mock.
+ERROR:   Method get_sparse_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method get_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method info found in real QdrantClient but not in mock.
+ERROR:   Method list_full_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_shard_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method lock_storage found in real QdrantClient but not in mock.
+ERROR:   Method migrate found in real QdrantClient but not in mock.
+ERROR:   Method overwrite_payload found in real QdrantClient but not in mock.
+ERROR:   Method query found in real QdrantClient but not in mock.
+ERROR:   Method query_batch found in real QdrantClient but not in mock.
+ERROR:   Method query_batch_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points_groups found in real QdrantClient but not in mock.
+ERROR:   Method recommend found in real QdrantClient but not in mock.
+ERROR:   Method recommend_batch found in real QdrantClient but not in mock.
+ERROR:   Method recommend_groups found in real QdrantClient but not in mock.
+ERROR:   Method recover_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recover_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recreate_collection found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for retrieve in QdrantClient:
+ERROR:     Real: (self, collection_name: str, ids: Sequence[Union[int, str, points_pb2.PointId]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.Record]
+ERROR:     Mock: (self, collection_name: str, ids: List[Union[int, str, uuid.UUID]], with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.Record]
+ERROR:   Signature mismatch for scroll in QdrantClient:
+ERROR:     Real: (self, collection_name: str, scroll_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, order_by: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.OrderBy, points_pb2.OrderBy, NoneType] = None, offset: Union[int, str, points_pb2.PointId, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> tuple[list[qdrant_client.http.models.models.Record], typing.Union[int, str, points_pb2.PointId, NoneType]]
+ERROR:     Mock: (self, collection_name: str, scroll_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, offset: Union[int, str, uuid.UUID, NoneType] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> tuple[typing.List[qdrant_client.http.models.models.Record], typing.Union[int, str, uuid.UUID, NoneType]]
+ERROR:   Signature mismatch for search in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, collection_name: str, query_vector: List[float], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, score_threshold: Optional[float] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.ScoredPoint]
+ERROR:   Method search_batch found in real QdrantClient but not in mock.
+ERROR:   Method search_groups found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_offsets found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_pairs found in real QdrantClient but not in mock.
+ERROR:   Method set_model found in real QdrantClient but not in mock.
+ERROR:   Method set_payload found in real QdrantClient but not in mock.
+ERROR:   Method set_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method unlock_storage found in real QdrantClient but not in mock.
+ERROR:   Method update_collection found in real QdrantClient but not in mock.
+ERROR:   Method update_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method update_vectors found in real QdrantClient but not in mock.
+ERROR:   Method upload_collection found in real QdrantClient but not in mock.
+ERROR:   Method upload_points found in real QdrantClient but not in mock.
+ERROR:   Method upload_records found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for upsert in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[Union[qdrant_client.http.models.models.PointStruct, points_pb2.PointStruct]]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points: List[qdrant_client.http.models.models.PointStruct], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+WARNING:   Method _calculate_score found in mock QdrantClient but not in real.
+WARNING:   Method _matches_filter found in mock QdrantClient but not in real.
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+ERROR:   Method _determine_default found in real FirestoreClient but not in mock.
+ERROR:   Method _document_path_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _emulator_channel found in real FirestoreClient but not in mock.
+ERROR:   Method _firestore_api_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _get_collection_reference found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_collections found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_get_all found in real FirestoreClient but not in mock.
+ERROR:   Method _recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method _target_helper found in real FirestoreClient but not in mock.
+ERROR:   Method batch found in real FirestoreClient but not in mock.
+ERROR:   Method bulk_writer found in real FirestoreClient but not in mock.
+ERROR:   Method close found in real FirestoreClient but not in mock.
+ERROR:   Signature mismatch for collection in FirestoreClient:
+ERROR:     Real: (self, *collection_path: 'str') -> 'CollectionReference'
+ERROR:     Mock: (self, collection_name: str) -> tests.mocks.firestore_fake.FakeFirestoreCollection
+ERROR:   Method collection_group found in real FirestoreClient but not in mock.
+ERROR:   Method collections found in real FirestoreClient but not in mock.
+ERROR:   Method document found in real FirestoreClient but not in mock.
+ERROR:   Method field_path found in real FirestoreClient but not in mock.
+ERROR:   Method get_all found in real FirestoreClient but not in mock.
+ERROR:   Method recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method transaction found in real FirestoreClient but not in mock.
+ERROR:   Method write_option found in real FirestoreClient but not in mock.
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+ERROR: Mock drift detected.

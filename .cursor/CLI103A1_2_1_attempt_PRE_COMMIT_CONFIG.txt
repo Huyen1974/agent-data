@@ -1,0 +1,7 @@
+Check Fixture Drift......................................................Failed
+- hook id: check-fixture-drift
+- duration: 0.01s
+- exit code: 126
+
+/bin/sh: /Users/nmhuyen/scripts/run_drift_check.sh: No such file or directory
+/bin/sh: line 0: exec: /Users/nmhuyen/scripts/run_drift_check.sh: cannot execute: No such file or directory

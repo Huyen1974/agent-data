@@ -1,0 +1,36 @@
+CLI106A Implementation Guide
+
+STEPS TAKEN:
+1. Verified branch state: git checkout cli103a && git reset --hard cli105b_all_green
+2. Created new search_by_payload_tool.py in ADK/agent_data/tools/
+   - Implemented async search_by_payload() function using QdrantClient.scroll with Filter
+   - Added synchronous wrapper search_by_payload_sync() for tool registration
+   - Used FieldCondition and MatchValue for payload filtering
+   - Supports pagination with offset parameter
+   - Returns formatted results with status, count, and next_offset
+3. Updated register_tools.py to import and register the new tool
+   - Added import: from .search_by_payload_tool import search_by_payload_sync
+   - Added to local_tools dict: "search_by_payload": search_by_payload_sync
+4. Verified implementation with flake8 and pytest
+5. Committed changes and tagged as cli106a_all_green
+
+ISSUES ENCOUNTERED:
+- None. Implementation went smoothly.
+
+RESOLUTIONS:
+- Used QdrantClient.scroll instead of search for payload-only filtering (more efficient)
+- Followed existing pattern from delete_by_tag_tool.py for async/sync wrapper
+- Maintained consistent error handling and logging
+
+VERIFICATION:
+- pre-commit run flake8 --all-files: No F401/F841 errors in target directories
+- pytest -q: 57 passed, 2 skipped (59/59 total)
+- scripts/check_fixture_drift.py: exit 0 (no drift detected)
+- git tag cli106a_all_green: Successfully tagged
+
+ENDPOINT FUNCTIONALITY:
+- Searches Qdrant collections by payload fields (tag, content, source, etc.)
+- Supports pagination with offset parameter
+- Configurable limit, with_payload, with_vectors options
+- Returns structured response with status, results, count, next_offset
+- Error handling for empty fields and None values

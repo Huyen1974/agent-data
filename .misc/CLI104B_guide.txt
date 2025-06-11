@@ -1,0 +1,33 @@
+CLI104B Guide: Add Tests for DELETE_BY_TAG Endpoint
+
+STEPS TAKEN:
+1. Verified branch state: git checkout cli103a && git reset --hard cli104a_all_green
+2. Explored test structure in tests/api/ directory
+3. Examined DELETE_BY_TAG implementation in ADK/agent_data/tools/delete_by_tag_tool.py
+4. Reviewed conftest.py fixtures (client_with_qdrant_override, client)
+5. Created tests/api/test_delete_by_tag.py with 3 test cases:
+   - test_delete_by_tag_valid: Tests deletion of existing "science" tag
+   - test_delete_by_tag_empty: Tests empty/whitespace tag handling
+   - test_delete_by_tag_non_existent: Tests non-existent tag handling
+6. Updated tests/test__meta_count.py: EXPECTED_TOTAL_TESTS from 50 to 53
+7. Committed changes and tagged as cli104b_all_green
+
+ISSUES ENCOUNTERED:
+1. Meta count test failure: Expected 50 tests but found 53 after adding new tests
+   Resolution: Updated EXPECTED_TOTAL_TESTS in test__meta_count.py from 50 to 53
+
+2. Flake8 check showed many errors but none were F401/F841 in target directories
+   Resolution: No action needed as task only requires F401/F841 compliance in ADK/agent_data/tools/* and tests/*
+
+RESOLUTIONS:
+- All tests pass: 51 passed, 2 skipped = 53 total
+- Fixture drift check passes (exit 0)
+- No F401/F841 errors in target directories
+- Successfully tagged cli104b_all_green
+
+FINAL STATUS:
+- Tests: 53/53 (51 passed, 2 skipped)
+- Fixture drift: PASS
+- F401/F841 compliance: PASS
+- Git tag: cli104b_all_green created
+- Documentation: CLI104B_all_green.txt and CLI104B_guide.txt created

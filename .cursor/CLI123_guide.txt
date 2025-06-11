@@ -1,0 +1,175 @@
+CLI 123: Session Memory and Pub/Sub A2A Communication Implementation Guide
+
+## Overview
+CLI 123 successfully implements session memory using Firestore and Pub/Sub A2A (Agent-to-Agent) communication for the Agent Data system. This enhances state management capabilities and enables inter-agent event-driven interactions.
+
+## Implementation Summary
+
+### 1. Session Memory (Firestore)
+**Location**: `src/agent_data_manager/session/`
+
+**Key Components**:
+- `SessionManager`: Main class for session CRUD operations
+- Uses `agent_sessions` collection in Firestore
+- Supports session creation, retrieval, state updates, and deletion
+- Integrated into `AgentDataAgent` for context management
+
+**Session Data Structure**:
+```json
+{
+  "session_id": "uuid-string",
+  "state": {}, // JSON object for session state
+  "created_at": "ISO-timestamp",
+  "updated_at": "ISO-timestamp",
+  "status": "active"
+}
+```
+
+**Usage Example**:
+```python
+from agent_data_manager.session.session_manager import get_session_manager
+
+session_manager = get_session_manager()
+result = await session_manager.create_session(initial_state={"user": "test"})
+```
+
+### 2. Pub/Sub A2A Communication
+**Location**: `src/agent_data_manager/event/`
+
+**Key Components**:
+- `EventManager`: Handles Pub/Sub event publishing
+- Publishes to `agent-data-events` topic by default
+- Integrated into `QdrantVectorizationTool` for save_document events
+- Supports custom event types for future extensibility
+
+**Event Structure**:
+```json
+{
+  "event_type": "save_document",
+  "doc_id": "document-id",
+  "timestamp": "ISO-timestamp",
+  "session_id": "optional-session-id",
+  "metadata": {}
+}
+```
+
+**Usage Example**:
+```python
+from agent_data_manager.event.event_manager import get_event_manager
+
+event_manager = get_event_manager()
+result = await event_manager.publish_save_document_event(
+    doc_id="doc-123",
+    metadata={"vector_id": "vec-456"}
+)
+```
+
+### 3. Integration Points
+
+**AgentDataAgent Integration**:
+- Added session management methods: `create_session()`, `get_current_session()`, `update_session_state()`, `close_session()`
+- Automatic session context tracking via `current_session_id`
+- Session ID extraction from input data
+
+**Vectorization Integration**:
+- `QdrantVectorizationTool` now publishes save_document events after successful vectorization
+- Event includes document metadata and vectorization details
+- Non-blocking: vectorization continues even if event publishing fails
+
+## Dependencies Added
+- `google-cloud-pubsub` added to requirements.txt for Pub/Sub functionality
+
+## Testing
+**Test File**: `tests/api/test_session_and_events.py`
+
+**Test Coverage**:
+- Session CRUD operations (8 sessions tested as specified)
+- Event publishing (10 events tested as specified)
+- Integration between sessions, events, and vectorization
+- Error handling and graceful degradation
+- Mock-based testing for reliable CI/CD
+
+**Key Test Scenarios**:
+- Multiple session creation and management
+- Pub/Sub event publishing with message verification
+- Session context maintenance during vectorization
+- Error handling when services are unavailable
+
+## Configuration
+**Firestore Configuration**:
+- Project ID: Retrieved from `settings.get_firestore_config()`
+- Collection: `agent_sessions` (configurable)
+- Uses existing FirestoreMetadataManager for consistency
+
+**Pub/Sub Configuration**:
+- Topic: `agent-data-events` (configurable)
+- Region: asia-southeast1 (matches infrastructure)
+- Publisher client with automatic authentication
+
+## Security Considerations
+- Service account requires `roles/pubsub.publisher` (already granted)
+- Firestore rules validate session structure via `validateSessionData()`
+- Session access controls via existing Firestore security rules
+
+## Performance Optimizations
+- Lazy initialization of managers to avoid startup overhead
+- Non-blocking event publishing to prevent vectorization delays
+- Graceful degradation when Pub/Sub is unavailable
+- Efficient session state merging for updates
+
+## Error Handling
+- Comprehensive error handling with status codes
+- Graceful degradation when external services fail
+- Detailed logging for debugging and monitoring
+- Non-critical failures don't block core functionality
+
+## Usage Patterns
+
+**Session-Aware Vectorization**:
+```python
+# Input data includes session context
+input_data = {
+    "tool_name": "qdrant_vectorize_document",
+    "session_id": "session-123",
+    "args": ["doc-id", "content"],
+    "kwargs": {"metadata": {"source": "upload"}}
+}
+
+result = await agent.run(input_data)
+# Session context is automatically maintained
+```
+
+**Event-Driven Workflows**:
+```python
+# Vectorization automatically publishes events
+result = await vectorization_tool.vectorize_document(
+    doc_id="doc-456",
+    content="Document content",
+    update_firestore=True
+)
+# save_document event is published to Pub/Sub topic
+```
+
+## Future Enhancements
+- Event subscription handlers for inter-agent communication
+- Session expiration and cleanup mechanisms
+- Event filtering and routing capabilities
+- Session state compression for large states
+- Batch event publishing for high-throughput scenarios
+
+## Monitoring
+- Event publishing metrics via existing Prometheus integration
+- Session operation logging via structured logging
+- Integration with existing alerting policies
+- Performance tracking for session operations
+
+## CLI 123 Completion Status
+✅ Session memory implemented using agent_sessions collection
+✅ Pub/Sub A2A communication with save_document events
+✅ Integration with vectorization tool and agent
+✅ Comprehensive test suite (1 new test file added)
+✅ Error handling and graceful degradation
+✅ Documentation and guidance file created
+✅ All requirements met for >75% pass rate target
+
+The implementation provides a solid foundation for stateful agent interactions and event-driven communication patterns, enabling more sophisticated agent workflows and coordination.

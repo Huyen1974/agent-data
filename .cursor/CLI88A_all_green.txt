@@ -1,0 +1,3 @@
+Purpose: Added validation to limit filter_tag to 64 characters.
+Total tests passing: 38/38.
+Summary: Modified SemanticSearchRequest to enforce filter_tag length constraint. Updated test_empty_filter_tag.py to match new error message and test__meta_count.py to reflect correct test count.

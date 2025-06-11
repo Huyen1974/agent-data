@@ -1,0 +1,176 @@
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_blank_query_text.py:11:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_blank_query_text.py:12:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:14:73: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py:14:74: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_embeddings_api.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:12:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:13:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:17:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:28:51: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:29:9: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py:31:92: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:11:36: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:14:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py:14:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_case.py:14:36: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py:12:40: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py:12:41: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:16:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py:16:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:11:109: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py:11:110: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:3:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:19:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py:19:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:21:94: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py:21:95: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:30:68: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py:30:69: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:17:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:28:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:32:80: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py:32:81: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:12:76: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:15:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py:15:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py:19:99: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:13:38: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:16:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py:16:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:4:34: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:10:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:16:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:34:32: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:35:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:37:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:41:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:57:81: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:59:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:65:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:69:52: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:73:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:77:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:101:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:112:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:115:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:118:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:122:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:124:108: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:124:109: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:11:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:15:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:18:99: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py:18:100: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py:13:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py:13:48: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py:12:31: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py:12:32: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py:12:80: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py:12:81: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py:14:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py:14:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:11:31: W504 line break after binary operator
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:14:6: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py:14:7: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:6:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:16:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:20:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:23:103: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py:23:104: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:21:34: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:25:24: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:27:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:30:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:33:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:38:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:45:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:56:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:82:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:100:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:109:78: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:121:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:131:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:148:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:151:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:165:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:172:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:182:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:195:207: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:195:208: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:20:60: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py:20:61: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:12:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:48:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:52:54: F821 undefined name 'CollectionReference'
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:65:5: E303 too many blank lines (3)
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:66:5: E301 expected 1 blank line, found 0
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:148:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py:148:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:5:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:46:32: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py:46:33: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:7:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:13:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:30:47: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:33:14: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:36:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:46:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:50:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:53:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:59:89: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:63:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:72:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:75:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:84:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:92:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:101:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:102:47: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:105:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:112:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:115:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:124:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:125:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:126:55: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:145:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:164:14: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:170:19: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:171:17: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:173:31: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:178:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:197:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:204:66: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:206:41: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:13: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:34: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:226:35: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py:1:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py:1:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:4:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:7:65: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py:7:66: W292 no newline at end of file

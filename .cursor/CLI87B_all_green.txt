@@ -1,0 +1,3 @@
+Purpose: Added test for semantic search raising ValueError for top_k <= 0.
+Total tests passing: 37/37.
+Summary: Verified endpoint correctly handles invalid top_k values with appropriate error.

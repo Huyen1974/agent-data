@@ -1,0 +1,249 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________________ test_clear_embeddings _____________________________
+
+setup_qdrant_for_search_tests = {'test_data_map': {1001: {'id': 1001, 'tag': 'science', 'text': 'The study of stars and celestial bodies.'}, 1002: {'i...', 'text': 'Ancient Rome and its powerful emperors.'}, ...}, 'upserted_ids': [1001, 1002, 1003, 2001, 2002, 3001, ...]}
+client = <starlette.testclient.TestClient object at 0x14a1c3580>
+
+    def test_clear_embeddings(setup_qdrant_for_search_tests, client: TestClient): # Added client fixture and type hint
+        """
+        Tests the /clear_embeddings endpoint with mocked embeddings for setup.
+        """
+        app.dependency_overrides[original_openai_embedding_func_for_override] = mock_generate_openai_embedding
+        try:
+            upserted_data_info = setup_qdrant_for_search_tests
+            initial_upserted_ids = upserted_data_info["upserted_ids"]
+            num_initial_items = len(initial_upserted_ids)
+
+            assert num_initial_items > 0, "Fixture should have upserted some items for clear test"
+
+            response = client.post("/clear_embeddings")
+            assert response.status_code == 200, \
+                f"Expected status 200 for /clear_embeddings, got {response.status_code}. Response: {response.text}"
+
+            response_json = response.json()
+            assert "status" in response_json and response_json["status"] == "ok"
+            assert "deleted_count" in response_json
+>           assert response_json["deleted_count"] == num_initial_items, \
+                f"Expected to delete {num_initial_items} items, but /clear_embeddings reported {response_json['deleted_count']}"
+E               AssertionError: Expected to delete 7 items, but /clear_embeddings reported 0
+E               assert 0 == 7
+
+tests/api/test_embeddings_api.py:238: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+✅ Vector 1001 inserted into Qdrant.
+✅ Vector 1002 inserted into Qdrant.
+✅ Vector 1003 inserted into Qdrant.
+✅ Vector 2001 inserted into Qdrant.
+✅ Vector 2002 inserted into Qdrant.
+✅ Vector 3001 inserted into Qdrant.
+✅ Vector 3002 inserted into Qdrant.
+---------------------------- Captured stderr setup -----------------------------
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' created.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+WARNING:agent_data.vector_store.qdrant_store:Attempting to purge ALL vectors from collection: my_collection
+INFO:agent_data.vector_store.qdrant_store:Starting to scroll for all point IDs in collection 'my_collection' for deletion.
+INFO:agent_data.vector_store.qdrant_store:No more points found in scroll.
+INFO:agent_data.vector_store.qdrant_store:Collected 0 point IDs for deletion from 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:No points found in collection 'my_collection' to delete.
+INFO:agent_data.vector_store.qdrant_store:Purge completed: No items were found in Qdrant collection 'my_collection'.
+INFO:api_vector_search:Successfully cleared 0 embeddings via /clear_embeddings.
+INFO:httpx:HTTP Request: POST http://testserver/clear_embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+INFO:httpx:HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+------------------------------ Captured log setup ------------------------------
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:114 Collection 'my_collection' created.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+WARNING  agent_data.vector_store.qdrant_store:qdrant_store.py:396 Attempting to purge ALL vectors from collection: my_collection
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:403 Starting to scroll for all point IDs in collection 'my_collection' for deletion.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:415 No more points found in scroll.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:427 Collected 0 point IDs for deletion from 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:430 No points found in collection 'my_collection' to delete.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:498 Purge completed: No items were found in Qdrant collection 'my_collection'.
+INFO     api_vector_search:api_vector_search.py:817 Successfully cleared 0 embeddings via /clear_embeddings.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/clear_embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/generate_embedding_real "HTTP/1.1 200 OK"
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/upsert_vector "HTTP/1.1 200 OK"
+----------------------------- Captured stderr call -----------------------------
+INFO:agent_data.vector_store.qdrant_store:Initializing QdrantStore...
+INFO:agent_data.vector_store.qdrant_store:Qdrant URL: http://dummy:6333
+INFO:agent_data.vector_store.qdrant_store:Qdrant API Key is set.
+INFO:agent_data.vector_store.qdrant_store:Collection 'my_collection' already exists.
+INFO:agent_data.vector_store.qdrant_store:Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO:agent_data.vector_store.qdrant_store:Firestore sync is disabled.
+WARNING:agent_data.vector_store.qdrant_store:Attempting to purge ALL vectors from collection: my_collection
+INFO:agent_data.vector_store.qdrant_store:Starting to scroll for all point IDs in collection 'my_collection' for deletion.
+INFO:agent_data.vector_store.qdrant_store:Scrolled 7 points, next offset: None. Total IDs collected so far: 7
+INFO:agent_data.vector_store.qdrant_store:Scroll completed, no further offset.
+INFO:agent_data.vector_store.qdrant_store:Collected 7 point IDs for deletion from 'my_collection'.
+ERROR:agent_data.vector_store.qdrant_store:Error during purge_all_vectors for collection my_collection: Cannot instantiate typing.Union
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py", line 449, in purge_all_vectors
+    points_selector_obj = models.PointsSelector(points=points_to_delete_list)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/typing.py", line 957, in __call__
+    result = self.__origin__(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/typing.py", line 387, in __call__
+    raise TypeError(f"Cannot instantiate {self!r}")
+TypeError: Cannot instantiate typing.Union
+INFO:api_vector_search:Successfully cleared 0 embeddings via /clear_embeddings.
+INFO:httpx:HTTP Request: POST http://testserver/clear_embeddings "HTTP/1.1 200 OK"
+------------------------------ Captured log call -------------------------------
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:54 Initializing QdrantStore...
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:62 Qdrant URL: http://dummy:6333
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:64 Qdrant API Key is set.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:116 Collection 'my_collection' already exists.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:128 Ensured payload index for field 'tag' (type KEYWORD) in collection 'my_collection'.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:106 Firestore sync is disabled.
+WARNING  agent_data.vector_store.qdrant_store:qdrant_store.py:396 Attempting to purge ALL vectors from collection: my_collection
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:403 Starting to scroll for all point IDs in collection 'my_collection' for deletion.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:421 Scrolled 7 points, next offset: None. Total IDs collected so far: 7
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:424 Scroll completed, no further offset.
+INFO     agent_data.vector_store.qdrant_store:qdrant_store.py:427 Collected 7 point IDs for deletion from 'my_collection'.
+ERROR    agent_data.vector_store.qdrant_store:qdrant_store.py:507 Error during purge_all_vectors for collection my_collection: Cannot instantiate typing.Union
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py", line 449, in purge_all_vectors
+    points_selector_obj = models.PointsSelector(points=points_to_delete_list)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/typing.py", line 957, in __call__
+    result = self.__origin__(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/typing.py", line 387, in __call__
+    raise TypeError(f"Cannot instantiate {self!r}")
+TypeError: Cannot instantiate typing.Union
+INFO     api_vector_search:api_vector_search.py:817 Successfully cleared 0 embeddings via /clear_embeddings.
+INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/clear_embeddings "HTTP/1.1 200 OK"
+=========================== short test summary info ============================
+FAILED tests/api/test_embeddings_api.py::test_clear_embeddings - AssertionErr...
+1 failed in 6.69s

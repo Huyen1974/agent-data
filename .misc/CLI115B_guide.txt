@@ -1,0 +1,88 @@
+CLI115B Guide: Update Unit Tests to Mock VectorStore Interface
+================================================================
+
+Overview:
+--------
+CLI 115B updated the unit tests in tests/api/test_embeddings_api.py to mock the VectorStore interface instead of relying on FAISS-specific behavior, ensuring compatibility with QdrantStore.
+
+Steps Taken:
+-----------
+
+1. Environment Setup:
+   - Verified branch cli103a and reset to cli115a_all_green
+   - Activated virtual environment (Python 3.10.17)
+   - Confirmed 75/75 tests passing baseline
+
+2. Analysis of Current Test Structure:
+   - Examined tests/api/test_embeddings_api.py
+   - Identified dependency on QdrantClient-level mocking
+   - Found client fixture in tests/conftest.py
+   - Analyzed VectorStore interface in ADK/agent_data/vector_store/base.py
+
+3. Implementation of VectorStore Mocking:
+   - Created MockVectorStore class implementing VectorStore interface
+   - Implemented all required abstract methods:
+     * upsert_vector()
+     * query_vectors_by_tag()
+     * delete_vectors_by_tag()
+     * get_vector_count()
+     * health_check()
+   - Added mock scoring logic for semantic similarity testing
+   - Created mock_vector_store fixture
+
+4. Test Updates:
+   - Updated setup_qdrant_for_search_tests fixture to use MockVectorStore
+   - Modified test_semantic_search_cosine to use VectorStore mocking
+   - Modified test_clear_embeddings to use VectorStore mocking
+   - Used patch('api_vector_search.get_qdrant_store') to inject mock
+   - Maintained existing test logic and assertions
+
+5. Code Quality Fixes:
+   - Removed unused imports (AsyncMock, MagicMock)
+   - Fixed import order with noqa comments for post-sys.path imports
+   - Cleaned up whitespace and formatting
+   - Ensured flake8 compliance
+
+6. Verification:
+   - All 3 tests in test_embeddings_api.py pass
+   - Full test suite: 75 passed, 2 skipped
+   - Flake8 compliance achieved
+   - Fixture drift check passes
+
+Key Changes:
+-----------
+
+1. MockVectorStore Implementation:
+   - Generic VectorStore interface implementation
+   - No FAISS-specific dependencies
+   - Compatible with QdrantStore interface
+   - Deterministic mock scoring for consistent test results
+
+2. Test Fixture Updates:
+   - Replaced QdrantClient-level mocking with VectorStore-level mocking
+   - Cleaner separation of concerns
+   - More maintainable test structure
+
+3. Improved Test Isolation:
+   - Each test uses its own mock instance
+   - Clear data between tests
+   - No shared state issues
+
+Benefits:
+--------
+- Tests are now independent of specific vector store implementation
+- Compatible with both FAISS and QdrantStore
+- Easier to maintain and extend
+- Better test isolation and reliability
+- Follows proper mocking patterns
+
+Issues Resolved:
+---------------
+- Removed FAISS-specific test dependencies
+- Fixed flake8 compliance issues
+- Improved import organization
+- Enhanced test maintainability
+
+Next Steps:
+----------
+CLI 115B completes the VectorStore interface mocking update. CLI 116 can proceed with MCP integration verification using QdrantStore on the free tier.

@@ -1,0 +1,315 @@
+On branch cli103a
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../../../.CFUserTextEncoding
+	../../../.bash_history
+	../../../.boto
+	../../../.cache/
+	../../../.codex/
+	../../../.conda/
+	../../../.condarc
+	../../../.config/
+	../../../.cursor/
+	../../../.dendron.uuid
+	../../../.docker/
+	../../../.dockerignore
+	../../../.gem/
+	../../../.gitconfig
+	../../../.github/workflows/get_id_token.yaml
+	../../../.gsutil/
+	../../../.idlerc/
+	../../../.lesshst
+	../../../.local/
+	../../../.mysql_history
+	../../../.npm/
+	../../../.psql_history
+	../../../.python_history
+	../../../.ssh/
+	../../../.terraform.d/
+	../../../.viminfo
+	../../../.vscode/
+	../../../.wdm/
+	../../../.zcompdump
+	../../../.zprofile
+	../../../.zsh_history
+	../../../.zsh_sessions/
+	../../../.zshrc
+	../../../.zshrc.backup
+	../../../ADK/
+	../../../Applications/
+	../../../Chatgpt_API_Test/
+	../../../Chatgpt_API_VS_code/
+	../../../Dendron/
+	../../../Desktop/
+	../../.localized
+	"../../B\341\272\243n sao GitHub/"
+	../../GitHub/
+	../../Infor/
+	../BACK_UP!!!!/
+	../LARK/
+	../Manual deploy guide 1.rtf
+	../command_handler/
+	../create_table/
+	../manage_information/
+	.cursor/CLI100B_all_green.txt
+	.cursor/CLI101B_all_green.txt
+	.cursor/CLI102B_all_green.txt
+	.cursor/CLI103A1_1_1_all_green.txt
+	.cursor/CLI103A1_1_1_env_versions.txt
+	.cursor/CLI103A1_1_1_error.txt
+	.cursor/CLI103A1_1_1_guide.txt
+	.cursor/CLI103A1_2_1_all_green.txt
+	.cursor/CLI103A1_2_1_attempt1_error.txt
+	.cursor/CLI103A1_2_1_attempt2.txt
+	.cursor/CLI103A1_2_1_attempt2_dot_slash.txt
+	.cursor/CLI103A1_2_1_attempt_PRE_COMMIT_CONFIG.txt
+	.cursor/CLI103A1_2_1_attempt_PRE_COMMIT_TOP_LEVEL.txt
+	.cursor/CLI103A1_2_1_attempt_hardcoded_path.txt
+	.cursor/CLI103A1_2_1_attempt_pythonpath.txt
+	.cursor/CLI103A1_2_1_env_versions.txt
+	.cursor/CLI103A1_2_1_error.txt
+	.cursor/CLI103A1_2_1_guide.txt
+	.cursor/CLI103A1_2_all_green.txt
+	.cursor/CLI103A1_2_env_versions.txt
+	.cursor/CLI103A1_2_error.txt
+	.cursor/CLI103A1_2_guide.txt
+	.cursor/CLI103A1_all_green.txt
+	.cursor/CLI103A1_error.txt
+	.cursor/CLI103A1_guide.txt
+	.cursor/CLI103A2_all_green.txt
+	.cursor/CLI103A2_error.txt
+	.cursor/CLI103A2_file_head.txt
+	.cursor/CLI103A2_guide.txt
+	.cursor/CLI103A3_1_all_green.txt
+	.cursor/CLI103A3_1_error.txt
+	.cursor/CLI103A3_1_guide.txt
+	.cursor/CLI103A3_1_web_server_head.txt
+	.cursor/CLI103A3_all_green.txt
+	.cursor/CLI103A3_guide.txt
+	.cursor/CLI103A4_all_green.txt
+	.cursor/CLI103A4_error.txt
+	.cursor/CLI103A4_faiss_tool_head.txt
+	.cursor/CLI103A4_guide.txt
+	.cursor/CLI103A5_2_all_green.txt
+	.cursor/CLI103A5_2_error.txt
+	.cursor/CLI103A5_2_guide.txt
+	.cursor/CLI103A5_all_green.txt
+	.cursor/CLI103A5_error.txt
+	.cursor/CLI103A6_all_green.txt
+	.cursor/CLI103A6_error.txt
+	.cursor/CLI103A6_guide.txt
+	.cursor/CLI103A6_pre_commit_config.txt
+	.cursor/CLI103A6_precommit.txt
+	.cursor/CLI103A6_readme_current.txt
+	.cursor/CLI103A7_1_all_green.txt
+	.cursor/CLI103A7_1_error.txt
+	.cursor/CLI103A7_Git_all_green.txt
+	.cursor/CLI103A7_Git_error.txt
+	.cursor/CLI103A7_Git_guide.txt
+	.cursor/CLI103A7_error.txt
+	.cursor/CLI103A7_mocks_head.txt
+	.cursor/CLI103A_error.txt
+	.cursor/CLI78_all_green.txt
+	.cursor/CLI79_all_green.txt
+	.cursor/CLI80_all_green.txt
+	.cursor/CLI81B_all_green.txt
+	.cursor/CLI82A_all_green.txt
+	.cursor/CLI82B_all_green.txt
+	.cursor/CLI83A_all_green.txt
+	.cursor/CLI83B_all_green.txt
+	.cursor/CLI84B_all_green.txt
+	.cursor/CLI85B_all_green.txt
+	.cursor/CLI86B_all_green.txt
+	.cursor/CLI87A_all_green.txt
+	.cursor/CLI87B_all_green.txt
+	.cursor/CLI88A_all_green.txt
+	.cursor/CLI88B_all_green.txt
+	.cursor/CLI89A_all_green.txt
+	.cursor/CLI89B_all_green.txt
+	.cursor/CLI90A_all_green.txt
+	.cursor/CLI90B_all_green.txt
+	.cursor/CLI91A_all_green.txt
+	.cursor/CLI91B_all_green.txt
+	.cursor/CLI92A_all_green.txt
+	.cursor/CLI92B_all_green.txt
+	.cursor/CLI93A_all_green.txt
+	.cursor/CLI93B_all_green.txt
+	.cursor/CLI94A_all_green.txt
+	.cursor/CLI94B_all_green.txt
+	.cursor/CLI95B_all_green.txt
+	.cursor/CLI96A_all_green.txt
+	.cursor/CLI96B_all_green.txt
+	.cursor/CLI97B_all_green.txt
+	.cursor/CLI98B_all_green.txt
+	.cursor/CLI99B_all_green.txt
+	.cursor/CLI_Cleanup_all_green.txt
+	.github/
+	.misc/CLI112A_all_green.txt
+	.misc/CLI112A_error.txt
+	.misc/CLI112A_guide.txt
+	.misc/CLI112B_all_green.txt
+	.misc/CLI112B_guide.txt
+	.misc/CLI112C_all_green.txt
+	.misc/CLI112C_error.txt
+	.misc/CLI112C_guide.txt
+	scripts/__init__.py
+	../mpc_local.db
+	../temp_backup_dirs/
+	../../NPV Incomex Tra Vinh.xlsx
+	../../Terraform/
+	../../Z...../
+	../../Zalo Received Files/
+	../../langchain/
+	../../../Downloads/
+	../../../LICENSE.txt
+	../../../LarkBase_OAuth_Policy/
+	../../../Library/
+	../../../Movies/
+	../../../Music/
+	../../../OneDrive
+	../../../Pictures/
+	../../../Public/
+	../../../add_content_google_sheet.py
+	../../../add_token.py
+	../../../app.py
+	../../../auto_copy.py
+	../../../backup.sql
+	../../../chatgpt-githubnew_TEST/
+	../../../chatgpt-mysql-project/
+	../../../chatgpt_postgres.py
+	../../../check_db_connection.py
+	../../../check_drive.py
+	../../../check_firestore.py
+	../../../check_mysql_connection.py
+	../../../check_openai.py
+	../../../check_responses.py
+	../../../cloud-build-notification/
+	../../../cloud-function-source/
+	../../../cloud_sql_proxy
+	../../../connect_mysql.py
+	../../../create_google_doc.py
+	../../../create_google_sheet.py
+	../../../create_memory_file.py
+	../../../daily_check.py
+	../../../deploy_apps_script.py
+	../../../deployment_update_notes.txt
+	../../../file_list.txt
+	../../../function-source.zip
+	../../../gemini_api_request_script.py
+	../../../gemini_request.py
+	../../../gemini_webhub/
+	../../../generate_report.py
+	../../../get-pip.py
+	../../../get_access_token.py
+	../../../go/
+	../../../google-cloud-sdk/
+	../../../google_docs_script.py
+	../../../install_pymysql.py
+	../../../lark_client.py
+	../../../miniconda/
+	../../../my-function-source/
+	../../../my-function/
+	../../../my-functions.zip
+	../../../my-functions/
+	../../../my-terraform-project/
+	../../../mysql_ssl_connection.py
+	../../../oauth_flow.py
+	../../../organize_data.py
+	../../../pipedream_check.py
+	../../../pipedream_check.py.save
+	../../../postgresql_db_check.sh
+	../../../retrieve_data.py
+	../../../sample-code.txt
+	../../../sample-file.txt
+	../../../store_data.py
+	../../../store_response.py
+	../../../suggest_store.py
+	../../../temp_untracked_files/
+	../../../templates/
+	../../../terraform-ci-cd/
+	../../../terraform.tfvars
+	../../../terraform_1.9.8_darwin_arm64.zip
+	../../../test_connection.py
+	../../../test_db_connection.py
+	../../../test_db_save.py
+	../../../test_mysql_read_write.py
+	../../../test_pymysql_connection.py
+	../../../test_selenium.py
+	../../../test_selenium.py.save
+	../../../token.txt
+	../../../update_memory.py
+	../../../update_memory_with_keys.py
+	../../../update_permissions.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+=== GIT LOG ===
+commit c8e255814fd4caa3824bd2f367455a874858bd26
+Author: Nguyễn Minh Huyên <nmhuyen@gmail.com>
+Date:   Tue May 27 22:04:36 2025 +0700
+
+    CLI112C: Measure baseline latency to Qdrant Cloud
+=== GIT TAGS ===
+cli97b_all_green
+cli98b_all_green
+cli99b_all_green
+cli_cleanup_all_green
+kh1_1_grok_cleanup
+=== FINAL TEST RESULTS ===
+.........s.........................s..............................       [100%]
+64 passed, 2 skipped in 24.38s
+=== SCRIPT OUTPUT SAMPLE ===
+#!/usr/bin/env python3
+"""
+CLI112C: Qdrant Cloud Latency Measurement Script
+
+This script measures baseline latency from development location (Vietnam) to Qdrant Cloud (us-east4-0):
+1. Ping latency to the endpoint
+2. Simple search operation latency
+"""
+
+import subprocess
+import time
+import datetime
+from typing import Optional
+from qdrant_client import QdrantClient
+import ping3
+
+
+def log_result(action: str, latency_ms: float, status: str, log_file: str = "logs/latency_probe.log"):
+    """Log latency measurement result with timestamp."""
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"[{timestamp}] [{action}] [{latency_ms:.2f}ms] [{status}]\n"
+
+    try:
+        with open(log_file, "a") as f:
+            f.write(log_entry)
+        print(f"📝 Logged: {log_entry.strip()}")
+    except Exception as e:
+        print(f"❌ Failed to write to log: {e}")
+
+
+def get_api_key_from_secret_manager() -> Optional[str]:
+    """Retrieve Qdrant API key from Google Cloud Secret Manager."""
+    try:
+        result = subprocess.run([
+            "gcloud", "secrets", "versions", "access", "latest",
+            "--secret=qdrant-api-key-sg",
+            "--project=github-chatgpt-ggcloud"
+        ], capture_output=True, text=True, check=True)
+
+        api_key = result.stdout.strip()
+        print("✅ Successfully retrieved API key from Secret Manager")
+        return api_key
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Failed to retrieve API key from Secret Manager: {e}")
+        print(f"stderr: {e.stderr}")
+        return None
+
+
+def measure_ping_latency(hostname: str) -> Optional[float]:
+    """Measure ping latency to hostname."""
+=== LATENCY LOG ===
+[2025-05-27 21:55:09] [Ping] [210.81ms] [SUCCESS]
+[2025-05-27 21:55:13] [SimpleSearch] [305.32ms] [SUCCESS]
+[2025-05-27 22:03:47] [Ping] [209.68ms] [SUCCESS]
+[2025-05-27 22:03:50] [SimpleSearch] [229.50ms] [SUCCESS]

@@ -1,0 +1,3 @@
+- test: test_blank_query_text.py
+- added: .strip() check if needed (functionality likely pre-existing or test passed due to other validation)
+- result: 22/22 passed

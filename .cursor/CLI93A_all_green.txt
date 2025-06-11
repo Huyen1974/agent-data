@@ -1,0 +1,3 @@
+Purpose: Created fixture for FAISS index with duplicate IDs for migration testing.
+Total tests passing: 43/43.
+Summary: Added tests/mocks/faiss_duplicate_id_fixture.py to simulate duplicate ID scenarios.

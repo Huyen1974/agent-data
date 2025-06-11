@@ -1,0 +1,3 @@
+Purpose: Added test for saving and retrieving metadata in Firestore mock.
+Total tests passing: 41/41.
+Summary: Verified metadata roundtrip using FakeFirestoreClient, ensuring data integrity.

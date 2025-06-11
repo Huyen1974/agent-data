@@ -1,0 +1,7 @@
+CLI 88A 38-test issue investigation:
+
+- Checked out tag `cli88a_all_green`.
+- Verified `tests/test__meta_count.py` had `EXPECTED_TOTAL_TESTS = 38`.
+- Ran `pytest --collect-only -q` which reported `38 tests collected`.
+
+Conclusion: The 38 tests reported at CLI 88A were the correct number of tests at that time, not an unexpected count. The `test__meta_count.py` was correctly reflecting this. No actual issue or misconfiguration was found related to this specific count at CLI 88A.

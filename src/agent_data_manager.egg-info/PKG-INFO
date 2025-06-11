@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: agent_data_manager
+Version: 0.1.0
+Summary: Agent Data Manager - Knowledge Management System for Google Cloud
+Author-email: Agent Data Team <team@agentdata.com>
+License: MIT
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: flask
+Requires-Dist: google-cloud-storage
+Requires-Dist: google-cloud-firestore
+Requires-Dist: google-cloud-aiplatform>=1.40.0
+Requires-Dist: google-api-python-client
+Requires-Dist: google-auth-httplib2
+Requires-Dist: google-auth-oauthlib
+Requires-Dist: faiss-cpu
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: python-dotenv
+Requires-Dist: gunicorn
+Requires-Dist: scikit-learn
+Requires-Dist: openai
+Requires-Dist: numpy
+Requires-Dist: retry
+Requires-Dist: langchain-openai
+Requires-Dist: pytest>=7.0.0
+Requires-Dist: pytest-mock>=3.0.0
+Requires-Dist: prometheus_client
+Requires-Dist: pydantic==2.11.*
+Requires-Dist: qdrant-client==1.14.*
+Requires-Dist: passlib[bcrypt]
+Requires-Dist: python-jose[cryptography]
+Requires-Dist: python-multipart
+Requires-Dist: slowapi
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"

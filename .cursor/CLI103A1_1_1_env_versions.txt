@@ -1,0 +1,21 @@
+Name: qdrant-client
+Version: 1.14.2
+Summary: Client library for the Qdrant vector search engine
+Home-page: https://github.com/qdrant/qdrant-client
+Author: Andrey Vasnetsov
+Author-email: andrey@qdrant.tech
+License: Apache-2.0
+Location: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages
+Requires: grpcio, httpx, numpy, portalocker, protobuf, pydantic, urllib3
+Required-by:
+---
+Name: pydantic
+Version: 2.11.3
+Summary: Data validation using Python type hints
+Home-page: https://github.com/pydantic/pydantic
+Author:
+Author-email: Samuel Colvin <s@muelcolvin.com>, Eric Jolibois <em.jolibois@gmail.com>, Hasan Ramezani <hasan.r67@gmail.com>, Adrian Garcia Badaracco <1755071+adriangb@users.noreply.github.com>, Terrence Dorsey <terry@pydantic.dev>, David Montague <david@pydantic.dev>, Serge Matveenko <lig@countzero.co>, Marcelo Trylesinski <marcelotryle@gmail.com>, Sydney Runkle <sydneymarierunkle@gmail.com>, David Hewitt <mail@davidhewitt.io>, Alex Hall <alex.mojaki@gmail.com>, Victorien Plot <contact@vctrn.dev>
+License-Expression: MIT
+Location: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages
+Requires: annotated-types, pydantic-core, typing-extensions, typing-inspection
+Required-by: fastapi, google-adk, google-cloud-aiplatform, google-genai, langchain, langchain-core, langsmith, mcp, openai, pydantic-settings, qdrant-client

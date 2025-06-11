@@ -1,0 +1,20 @@
+- Steps:
+  1. Verified branch and commit (`cli103a`, `cli103a1_2_all_green`).
+  2. Analyzed CWD issue: Confirmed pre-commit (v4.2.0) when its CWD is `/Users/nmhuyen` (as per problem description for this specific execution context) caused `git rev-parse --show-toplevel` (and fallbacks like `pwd`) within hook entries to resolve to `/Users/nmhuyen`. This led to "No such file or directory" errors for the hook script, as paths like `/Users/nmhuyen/scripts/run_drift_check.sh` were tried. Variables `PRE_COMMIT_TOP_LEVEL` and `PRE_COMMIT_CONFIG` were also ineffective for dynamically deriving the correct project root from within the hook entry under these CWD conditions.
+  3. Fix CWD issue:
+     - Attempted various dynamic CWD solutions in `.pre-commit-config.yaml` (using `git rev-parse`, `PRE_COMMIT_TOP_LEVEL`, `PRE_COMMIT_CONFIG`) – these failed due to the initial CWD problem.
+     - Attempted simplifying `entry` to `scripts/run_drift_check.sh` or `./scripts/run_drift_check.sh` and making the script itself robustly `cd` to project root; this failed as pre-commit couldn\'t find the script executable (e.g., looking for `/Users/nmhuyen/scripts/run_drift_check.sh`).
+     - **Resolution**: Adopted the hardcoded absolute project path. Modified `.pre-commit-config.yaml` for the `check-fixture-drift` hook. The `entry` is now: `sh -c \'cd "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents" && PYTHONPATH=. exec ./scripts/run_drift_check.sh\'`.
+     - The `scripts/run_drift_check.sh` was simplified to: `#!/bin/bash\n# This script assumes it\'s being run from the project root.\npython scripts/check_fixture_drift.py --fail-on-drift\n`.
+     - Setting `PYTHONPATH=.` in the entry ensures `scripts/check_fixture_drift.py` can correctly import local modules (e.g., `from tests.mocks...`).
+  4. Verified `pre-commit run check-fixture-drift`: The hook now executes without path errors. It correctly reports "Failed" (exit code 1) because `check_fixture_drift.py --fail-on-drift` detected actual mock drift. This is the intended behavior for the script.
+  5. Ran `pytest -q`: Confirmed 48 passed, 2 skipped (50/50 pass state maintained).
+  6. Committed changes: `.pre-commit-config.yaml` and `scripts/run_drift_check.sh`. Ensured `scripts/run_drift_check.sh` had its trailing whitespace removed and a final newline (fixed via `end-of-file-fixer` and amended commit).
+  7. Tagged commit as `cli103a1_2_1_all_green`.
+  8. Created documentation files `.cursor/CLI103A1_2_1_all_green.txt` and `.cursor/CLI103A1_2_1_guide.txt`.
+- Issues:
+  - `pre-commit` CWD behavior (v4.2.0): When `pre-commit run ...` is invoked in such a way that its CWD becomes external to the repository (e.g., `/Users/nmhuyen` in this case), `language: system` hooks struggled to resolve relative script paths in `entry`. Dynamic determination of the repo root from within the `entry` string using shell commands also failed as those commands inherited the problematic CWD.
+  - `edit_file` limitations: `edit_file` was not effective for subtle whitespace/EOF newline changes, requiring `sed` and `end-of-file-fixer` as fallbacks.
+- Resolutions:
+  - CWD issue: Resolved by hardcoding the absolute path to the project root (`/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents`) in the hook\'s `entry` command. This ensures the hook script is found and executed in the correct directory. Added `PYTHONPATH=.` to the execution string to handle local Python imports within the script.
+  - File EOL: Fixed using `pre-commit run end-of-file-fixer --files ...` and amending the commit.

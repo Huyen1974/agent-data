@@ -1,0 +1,7 @@
+Check Fixture Drift......................................................Passed
+- hook id: check-fixture-drift
+- duration: 1.71s
+
+ERROR: ImportError during QdrantClient setup: No module named 'tests'
+ERROR: ImportError during FirestoreClient setup: No module named 'tests'
+INFO: No mock drift detected.

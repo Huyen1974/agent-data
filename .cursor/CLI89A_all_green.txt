@@ -1,0 +1,3 @@
+Purpose: Added validation to reject empty or whitespace-only query_text.
+Total tests passing: 39/39.
+Summary: Modified SemanticSearchRequest to enforce non-empty query_text with 422 status. Added max_length to query_text. Updated filter_tag validation to strip whitespace, check for emptiness, and rely on Pydantic Field's max_length. Adjusted relevant tests.

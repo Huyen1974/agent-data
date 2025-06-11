@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: ADK
+Version: 0.1.0
+Requires-Dist: faiss-cpu>=1.11.0
+Requires-Dist: numpy>=2.2.5
+Requires-Dist: google-cloud-firestore<3.0.0,>=2.11.0
+Requires-Dist: google-cloud-storage>=2.19.0
+Requires-Dist: openai>=1.76.0
+Requires-Dist: pytest>=8.3.5
+Requires-Dist: pytest-asyncio>=0.26.0
+Dynamic: requires-dist

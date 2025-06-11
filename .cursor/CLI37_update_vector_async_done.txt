@@ -1,0 +1,1 @@
+QdrantStore.update_vector method refactored to async and integrated with Firestore sync via upsert_vector.

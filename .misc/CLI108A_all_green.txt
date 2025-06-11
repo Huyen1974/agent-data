@@ -1,0 +1,4 @@
+Purpose: Implemented FAISS to Qdrant migration CLI.
+Total tests: 64/64 (62 passed, 2 skipped).
+Summary: Added migration CLI to transfer vectors from FAISS to Qdrant, updated usage docs.
+Note: Next step is CLI 108B to add migration smoke test.

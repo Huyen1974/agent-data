@@ -1,0 +1,3 @@
+Purpose: Added test for semantic search with multiple queries.
+Total tests passing: 31/31.
+Summary: Verified correct vector retrieval for multiple queries.

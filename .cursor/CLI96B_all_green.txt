@@ -1,0 +1,3 @@
+Purpose: Added test for delay_tool completing within 2 seconds.
+Total tests passing: 47/47.
+Summary: Verified delay_tool caps delay at 2 seconds, marked as @slow.

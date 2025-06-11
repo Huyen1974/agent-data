@@ -1,0 +1,3 @@
+Purpose: Added test for FAISS to Qdrant migration dry-run statistics.
+Total tests passing: 43/43.
+Summary: Verified dry-run mode of migrate_faiss_to_qdrant returns correct vector processing statistics.

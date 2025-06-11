@@ -1,0 +1,6 @@
+Issue: pre-commit hook 'check-fixture-drift' with language: system executes with CWD=/Users/nmhuyen and empty PRE_COMMIT_TOP_LEVEL.
+Resolution: Used hardcoded absolute paths for the python interpreter and script in the hook definition.
+Path: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+
+YAML entry:
+entry: "\"/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python\" \"/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/scripts/check_fixture_drift.py\" --fail-on-drift"

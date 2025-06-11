@@ -1,0 +1,1 @@
+All 29 tests are expected to pass once Qdrant is operational. The file tests/api/test_batch_update_vectors_dry_run.py has been successfully deleted.

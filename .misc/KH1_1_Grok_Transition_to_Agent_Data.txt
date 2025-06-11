@@ -1,0 +1,37 @@
+KH1.1_Grok Transition to Agent Data - Summary
+============================================
+
+Purpose: Transition from KH1.1_Grok hybrid sync to Agent Data development phase.
+
+Total tests: 66/66 (64 passed, 2 skipped)
+
+Summary:
+Suspended Cloud Run and hybrid sync implementation due to Qdrant free tier region limitations.
+Cleaned up related Cloud resources (Cloud Run service qdrant-agent, Cloud Function update_qdrant_env,
+Cloud Scheduler jobs, snapshots, build artifacts). Kept codebase (scripts, tests) for future use
+when Qdrant is upgraded to a paid tier in asia-southeast1.
+
+Resources Successfully Cleaned Up:
+- Cloud Run service qdrant-agent (us-central1) - DELETED
+- Cloud Function update_qdrant_env (us-central1) - DELETED
+- Cloud Scheduler job switch-to-cloud (asia-northeast1) - DELETED
+- Cloud Scheduler job switch-to-docker (asia-northeast1) - DELETED
+- GCS bucket snapshots cleared (no snapshots found)
+- Failed Cloud Build artifacts listed (cannot be deleted via CLI)
+- Artifact Registry images checked (none found for qdrant-agent)
+
+Test Status:
+- pytest -q: 66/66 passed (64 passed, 2 skipped) ✓
+- check-fixture-drift hook: exit 0 ✓
+- flake8: many style warnings but core functionality intact
+
+Git Status:
+- Branch: cli103a
+- Previous Tag: cli111b_all_green
+- New Tag: kh1_1_grok_cleanup
+- Commit: 1803319 "KH1.1_Grok Cleanup: Remove Cloud Run, Hybrid Sync Resources, and Transition to Agent Data"
+
+Note:
+Next step is to build Agent Data and connect MCP to Cursor, using Qdrant Cloud (free tier) in us-east4-0.
+The hybrid sync infrastructure code is preserved for future use when upgrading to a paid Qdrant tier that
+supports asia-southeast1 region deployment.

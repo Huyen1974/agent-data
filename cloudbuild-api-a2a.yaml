@@ -1,0 +1,64 @@
+steps:
+# Build the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-f'
+    - 'ADK/agent_data/Dockerfile.api'
+    - '-t'
+    - '${_IMAGE_NAME}'
+    - '.'
+
+# Push the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_IMAGE_NAME}']
+
+# Deploy to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
+  args:
+    - 'run'
+    - 'deploy'
+    - '${_SERVICE_NAME}'
+    - '--image'
+    - '${_IMAGE_NAME}'
+    - '--region'
+    - '${_REGION}'
+    - '--platform'
+    - 'managed'
+    - '--allow-unauthenticated'
+    - '--service-account'
+    - '${_SERVICE_ACCOUNT}'
+    - '--set-env-vars'
+    - 'QDRANT_URL=${_QDRANT_URL},QDRANT_COLLECTION_NAME=${_QDRANT_COLLECTION_NAME},VECTOR_DIMENSION=${_VECTOR_DIMENSION},FIRESTORE_PROJECT_ID=${_FIRESTORE_PROJECT_ID},FIRESTORE_DATABASE_ID=${_FIRESTORE_DATABASE_ID},ENABLE_FIRESTORE_SYNC=true,ENABLE_METRICS=true,ENABLE_AUTHENTICATION=true,ALLOW_REGISTRATION=false,JWT_ALGORITHM=HS256,JWT_ACCESS_TOKEN_EXPIRE_MINUTES=30'
+    - '--set-secrets'
+    - 'QDRANT_API_KEY=qdrant-api-key-sg:latest,OPENAI_API_KEY=openai-api-key:latest,JWT_SECRET_KEY=jwt-secret-key:latest'
+    - '--memory'
+    - '1Gi'
+    - '--cpu'
+    - '1'
+    - '--min-instances'
+    - '0'
+    - '--max-instances'
+    - '10'
+    - '--timeout'
+    - '300'
+    - '--port'
+    - '8080'
+
+substitutions:
+  _IMAGE_NAME: 'gcr.io/chatgpt-db-project/api-a2a-gateway'
+  _SERVICE_NAME: 'api-a2a-gateway'
+  _REGION: 'asia-southeast1'
+  _SERVICE_ACCOUNT: 'gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com'
+  _QDRANT_URL: 'https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io'
+  _QDRANT_COLLECTION_NAME: 'agent_data_vectors'
+  _VECTOR_DIMENSION: '1536'
+  _FIRESTORE_PROJECT_ID: 'chatgpt-db-project'
+  _FIRESTORE_DATABASE_ID: 'test-default'
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  diskSizeGb: '100'
+
+timeout: '1200s'

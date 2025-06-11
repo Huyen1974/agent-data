@@ -1,0 +1,16 @@
+CLI59 Restoration Log:
+- Deleted tests/api/test_batch_vector_ops_api.py (post-CLI54 feature)
+- Deleted tests/api/test_batch_update_vectors_api.py (post-CLI54 feature)
+- Deleted directory ADK/agent_data/test_pass_53
+- Deleted directory ADK/agent_data/test_pass_55
+- Deleted directory ADK/agent_data/test_pass_56
+- Verified agent_data/__init__.py and agent_data/vector_store/__init__.py exist.
+- Removed /batch_insert_vectors endpoint and related models from api_vector_search.py.
+- Removed /batch_update_vectors endpoint and related models from api_vector_search.py.
+- Removed batch_upsert_vectors method from agent_data/vector_store/qdrant_store.py.
+- Set QDRANT_URL=http://localhost:6333 for the test session.
+- Refactored tests in tests/api/test_query_vectors_api.py to use /upsert_vector instead of /batch_insert_vectors.
+- Removed tests for batch_upsert_vectors from tests/unit/test_qdrant_store_firestore_sync.py.
+- Attempted to fix TypeError in tests/unit/test_qdrant_store_firestore_sync.py by awaiting fixtures (reverted as it caused new TypeError).
+- Refactored setup_test_vectors in tests/api/test_query_vector_by_score_threshold.py to use /upsert_vector.
+- Current test run: 20 failed, 6 passed, 9 errors. Primary blocker: Qdrant connection refused.

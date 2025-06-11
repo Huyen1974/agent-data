@@ -1,0 +1,3 @@
+Purpose: Added test for uploading and downloading blob in GCS mock.
+Total tests passing: 42/42.
+Summary: Verified blob roundtrip using FakeGCSClient, ensuring data integrity.

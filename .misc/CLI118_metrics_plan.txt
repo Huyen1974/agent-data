@@ -1,0 +1,184 @@
+CLI118 Metrics Export Plan - Prometheus Pushgateway & OpenTelemetry
+==================================================================
+
+OVERVIEW:
+This plan outlines how to export QdrantStore metrics to Google Cloud Monitoring
+using either Prometheus Pushgateway (preferred) or OpenTelemetry as alternatives.
+
+APPROACH 1: PROMETHEUS PUSHGATEWAY (PREFERRED)
+=============================================
+
+Why Preferred:
+- Existing Prometheus metrics in middleware (from CLI 107A/107B)
+- Simple push-based model works well with Cloud Run
+- Direct integration with Cloud Monitoring via federation
+
+Implementation Steps:
+
+1. Setup Prometheus Pushgateway:
+   ```bash
+   # Deploy Pushgateway on Cloud Run
+   gcloud run deploy prometheus-pushgateway \
+     --image prom/pushgateway:latest \
+     --platform managed \
+     --region us-central1 \
+     --allow-unauthenticated \
+     --memory 512Mi \
+     --cpu 0.5
+   ```
+
+2. Update QdrantStore middleware to push metrics:
+   ```python
+   # In ADK/agent_data/tools/api_key_middleware.py
+   import requests
+   from prometheus_client.gateway import push_to_gateway
+
+   def push_metrics_to_gateway():
+       gateway_url = os.environ.get('PUSHGATEWAY_URL')
+       if gateway_url:
+           push_to_gateway(gateway_url, job='qdrant-store', registry=registry)
+   ```
+
+3. Configure Cloud Monitoring integration:
+   - Setup Prometheus federation to scrape Pushgateway
+   - Configure GCP service discovery
+   - Set up alerting rules
+
+4. Environment Variables:
+   ```
+   PUSHGATEWAY_URL=https://prometheus-pushgateway-xxx.run.app
+   METRICS_PUSH_INTERVAL=60  # seconds
+   ```
+
+APPROACH 2: OPENTELEMETRY (ALTERNATIVE)
+=======================================
+
+Why Alternative:
+- More comprehensive observability (traces + metrics)
+- Direct Google Cloud integration
+- Future-proof industry standard
+
+Implementation Steps:
+
+1. Install OpenTelemetry dependencies:
+   ```python
+   # Add to requirements.txt
+   opentelemetry-api>=1.20.0
+   opentelemetry-sdk>=1.20.0
+   opentelemetry-exporter-gcp-monitoring>=1.6.0
+   opentelemetry-instrumentation-requests>=0.41b0
+   ```
+
+2. Initialize OpenTelemetry in QdrantStore:
+   ```python
+   # In ADK/agent_data/vector_store/qdrant_store.py
+   from opentelemetry import metrics
+   from opentelemetry.exporter.cloud_monitoring import CloudMonitoringMetricsExporter
+   from opentelemetry.sdk.metrics import MeterProvider
+   from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+
+   def setup_opentelemetry():
+       exporter = CloudMonitoringMetricsExporter()
+       reader = PeriodicExportingMetricReader(exporter, export_interval_millis=60000)
+       provider = MeterProvider(metric_readers=[reader])
+       metrics.set_meter_provider(provider)
+   ```
+
+3. Add custom metrics:
+   ```python
+   # Instrument QdrantStore operations
+   meter = metrics.get_meter(__name__)
+   request_counter = meter.create_counter("qdrant_requests_total")
+   request_duration = meter.create_histogram("qdrant_request_duration_seconds")
+   ```
+
+4. Environment Variables:
+   ```
+   GOOGLE_CLOUD_PROJECT=github-chatgpt-ggcloud
+   OTEL_RESOURCE_ATTRIBUTES=service.name=qdrant-store,service.version=1.0
+   ```
+
+COMMON METRICS TO EXPORT:
+=========================
+
+Core QdrantStore Metrics:
+- qdrant_requests_total (counter) - by operation, status
+- qdrant_request_duration_seconds (histogram) - by operation
+- qdrant_vector_count (gauge) - by collection
+- qdrant_api_errors_total (counter) - by error_type
+- qdrant_connection_status (gauge) - 1=connected, 0=disconnected
+
+Business Metrics:
+- documents_processed_total (counter)
+- semantic_searches_total (counter)
+- embedding_generation_duration_seconds (histogram)
+
+Infrastructure Metrics:
+- memory_usage_bytes (gauge)
+- cpu_usage_percent (gauge)
+- network_requests_bytes_total (counter)
+
+IMPLEMENTATION PRIORITY:
+========================
+
+Phase 1 (CLI 119A):
+- Choose between Prometheus Pushgateway vs OpenTelemetry
+- Implement basic metrics export
+- Test on free tier (within limits)
+
+Phase 2 (CLI 119B):
+- Add comprehensive metrics collection
+- Setup alerting rules
+- Create monitoring dashboard
+
+Phase 3 (CLI 120+):
+- Add distributed tracing (if OpenTelemetry chosen)
+- Performance optimization
+- Cost monitoring and optimization
+
+COST CONSIDERATIONS:
+===================
+
+Free Tier Limits:
+- Cloud Monitoring: 150 MB/month of chargeable metrics
+- Cloud Run: 2M requests/month, 400K GB-seconds/month
+- Prometheus data retention: 7 days for time-series data
+
+Optimization Strategies:
+- Use metric sampling for high-volume operations
+- Set appropriate export intervals (60s minimum)
+- Use metric labels judiciously to avoid cardinality explosion
+- Monitor billing alerts
+
+DEPLOYMENT NOTES:
+=================
+
+1. Authentication:
+   - Use service account with monitoring.metricWriter role
+   - Store credentials in Secret Manager
+
+2. Configuration:
+   - Environment-specific metric namespaces
+   - Separate dev/staging/prod metric streams
+
+3. Testing:
+   - Validate metrics export in Cloud Console
+   - Test alert delivery mechanisms
+   - Monitor export latency and success rates
+
+4. Rollback Plan:
+   - Keep existing Prometheus middleware as fallback
+   - Gradual migration with dual export capability
+   - Monitor resource usage impact
+
+CONCLUSION:
+===========
+
+Recommendation: Start with Prometheus Pushgateway (Approach 1) because:
+- Leverages existing Prometheus metrics infrastructure
+- Simpler to implement and debug
+- Lower resource overhead
+- Easy migration path to OpenTelemetry later
+
+This plan supports continued development on Qdrant free tier while
+preparing for production monitoring requirements.

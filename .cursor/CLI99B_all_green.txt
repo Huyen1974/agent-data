@@ -1,0 +1,10 @@
+Purpose: Added test to verify all tags in test fixtures are lowercase.
+Total tests passing: 50/50.
+Summary: Ensured tag consistency in STANDARD_SAMPLE_POINTS_RAW fixtures. Updated meta count tests to reflect 50 total tests.
+Branch: cli99b
+Tag: cli99b_all_green
+Key files changed:
+- tests/api/test_all_tags_lowercase_in_fixtures.py (new)
+- tests/conftest.py (tags lowercased)
+- tests/test__meta_count.py (EXPECTED_TOTAL_TESTS = 50)
+- tests/api/test_meta_count_48.py (assertion updated to 50)

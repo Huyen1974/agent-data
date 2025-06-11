@@ -1,0 +1,5 @@
+2025-04-28 14:27:55,332 - main - INFO - --------------------------------------------------
+2025-04-28 14:27:55,333 - main - INFO - Initializing AgentData Server...
+2025-04-28 14:27:55,335 - main - INFO - Successfully imported agent and tools modules.
+2025-04-28 14:27:55,335 - agent.agent_data_agent - INFO - AgentDataAgent initialized.
+2025-04-28 14:27:55,335 - main - INFO - ✅ Agent initialized. Registered tools: ['save_text']

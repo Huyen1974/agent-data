@@ -1,0 +1,4 @@
+Purpose: Added tests for BULK_UPLOAD endpoint.
+Total tests: 59/59 (57 passed, 2 skipped).
+Summary: Implemented tests for valid point upload, empty collection, invalid points, mixed valid/invalid points, and custom IDs.
+Note: Next step is CLI 106A for new feature (e.g., SEARCH_BY_PAYLOAD).

@@ -1,0 +1,3 @@
+Purpose: Added test for semantic search rejecting empty or whitespace-only query_text.
+Total tests passing: 40/40.
+Summary: Verified endpoint returns 422 status for invalid query_text with appropriate error message.

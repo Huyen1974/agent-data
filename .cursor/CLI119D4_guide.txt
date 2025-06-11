@@ -1,0 +1,100 @@
+CLI119D4 Execution Guide: Scale MCP Test to 50 Documents with Mock QdrantStore
+===============================================================================
+
+OBJECTIVE: Scale MCP test to 50 documents with >75% success rate using mock QdrantStore on MacBook M1
+
+EXECUTION STEPS COMPLETED:
+
+1. Environment Verification:
+   ```bash
+   git checkout cli103a
+   gcloud config get-value compute/region  # asia-southeast1
+   gcloud config get-value project         # github-chatgpt-ggcloud
+   source "setup/venv/bin/activate"
+   pip install numpy==1.26.4  # Fix compatibility
+   ```
+
+2. MCP Server Fixes:
+   - Fixed import path: agent_data.* → ADK.agent_data.*
+   - Improved MockQdrantStore import with fallback paths
+   - Reduced logging to ERROR level when USE_MOCK_QDRANT=1
+
+3. Mock Optimizations:
+   - Mock QdrantStore: Store only vector size, not full vectors
+   - Mock OpenAI: Created deterministic responses for testing
+   - Memory optimization for 50+ document processing
+
+4. Test Script Optimization (test_mcp_medium.py):
+   - Added server restart mechanism every 10 documents
+   - Optimized I/O with unbuffered subprocess communication
+   - Reduced logging to ERROR level
+   - Added comprehensive performance metrics
+
+5. Test Execution:
+   ```bash
+   OPENAI_API_KEY=dummy USE_MOCK_QDRANT=1 python test_mcp_medium.py
+   ```
+
+RESULTS ACHIEVED:
+- ✅ 50/50 documents processed successfully
+- ✅ 100% success rate (exceeds 75% threshold)
+- ✅ 20.56 seconds total time (0.41s per document)
+- ✅ 145.9 documents per minute throughput
+- ✅ No MacBook M1 stability issues
+- ✅ No Cursor hanging
+
+KEY TECHNICAL SOLUTIONS:
+
+1. Server Restart Mechanism:
+   - Prevents memory accumulation
+   - Restarts every 10 documents
+   - Maintains clean subprocess state
+
+2. I/O Optimization:
+   - ERROR-level logging only
+   - Unbuffered subprocess communication
+   - Minimal console output
+
+3. Memory Management:
+   - Mock components store minimal data
+   - Automatic resource cleanup
+   - Optimized vector storage
+
+CONFIGURATION USED:
+```python
+TEST_CONFIG = {
+    "num_documents": 50,
+    "restart_interval": 10,
+    "timeout": 60,
+    "success_threshold": 0.75,
+    "doc_delay": 0.2,
+    "concurrency": 1
+}
+```
+
+FILES MODIFIED:
+- test_mcp_medium.py (main test script)
+- ADK/agent_data/local_mcp_server.py (import fixes, logging)
+- tests/mocks/mock_qdrant_store.py (memory optimization)
+- tests/mocks/mock_openai.py (new mock implementation)
+- tests/test_mcp_integration.py (added medium-scale test)
+
+ENVIRONMENT REQUIREMENTS:
+- Python 3.10.17 in virtual environment
+- NumPy 1.26.4 (compatibility fix)
+- OPENAI_API_KEY=dummy (enables mock)
+- USE_MOCK_QDRANT=1 (enables mock QdrantStore)
+- PYTHONPATH set to workspace root
+
+PERFORMANCE METRICS:
+- Processing Rate: 145.9 docs/minute
+- Average Time: 0.41 seconds per document
+- Memory Usage: Optimized with restart mechanism
+- Success Rate: 100% (target: >75%)
+- Stability: No hanging or crashes on MacBook M1
+
+NEXT PHASE PREPARATION:
+Ready for CLI119D5 - Test ~2000 vectors with real Qdrant API
+
+This implementation successfully resolves MacBook M1 stability issues while achieving
+excellent performance for medium-scale document processing with mock components.

@@ -1,0 +1,54 @@
+Flake8 errors found in query_metadata_faiss_tool.py:
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:3:1: F401 'typing.Optional' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:3:1: F401 'typing.Tuple' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:9:63: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:10:35: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:12:1: F401 'asyncio' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:12:15: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:13:65: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:14:1: F401 'ADK.agent_data.tools.external_tool_registry.OPENAI_AVAILABLE' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:14:1: F401 'ADK.agent_data.tools.external_tool_registry.openai_client' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:15:1: F401 'inspect' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:18:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:22:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:26:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:30:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:34:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:38:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:45:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:49:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:53:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:57:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:61:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:66:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:70:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:74:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:79:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:90:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:97:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:108:41: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:113:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:124:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:124:10: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:125:10: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:126:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:129:14: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:131:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:139:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:157:9: F841 local variable 'vector_status' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:169:9: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:241:9: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:280:109: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:281:26: E128 continuation line under-indented for visual indent
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:294:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:386:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:398:60: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:451:9: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:484:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:488:1: W293 blank line contains whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:489:11: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py:503:53: W292 no newline at end of file

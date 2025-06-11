@@ -1,0 +1,75 @@
+CLI109A Guide: Cleanup and Fix Issues
+=====================================
+
+Purpose:
+--------
+Fix ImportError in check-fixture-drift hook, resolve pytest warnings, commit openapi.json,
+and fix flake8 errors in key files while maintaining test suite integrity.
+
+Steps Executed:
+---------------
+
+1. Verified Branch State
+   - Confirmed on cli103a branch at commit cli108b_all_green
+   - Verified 65/65 tests passing (63 passed, 2 skipped)
+
+2. Fixed ImportError in check-fixture-drift
+   Issue: Script couldn't import from 'tests' module
+   Resolution: Added project root to sys.path in scripts/check_fixture_drift.py
+   Code:
+   ```python
+   import os
+   project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+   if project_root not in sys.path:
+       sys.path.insert(0, project_root)
+   ```
+
+3. Resolved Pytest Warnings
+   a) Asyncio Warning:
+      Issue: asyncio_default_fixture_loop_scope unset
+      Resolution: Added to pytest.ini: asyncio_default_fixture_loop_scope = function
+
+   b) Numpy Deprecation Warning:
+      Issue: Conversion of array to scalar deprecated
+      Resolution: Changed float(cosine_sim) to float(cosine_sim.item()) in qdrant_multi_collection.py
+
+   c) SwigPy Warnings:
+      Issue: External library warnings (3 remaining)
+      Resolution: Cannot be easily fixed as they come from external dependencies
+
+4. Committed openapi.json
+   Issue: File existed but was ignored by global ~/.gitignore (*.json pattern)
+   Resolution: Used git add -f openapi.json to force add despite global ignore
+
+5. Fixed Flake8 Errors in Key Files
+   Issue: W293, W291, E302 errors in api_vector_search.py and migration_cli.py
+   Resolution:
+   - Used sed to remove trailing whitespace: sed -i '' 's/[[:space:]]*$//' <file>
+   - Focused on W293/W291 fixes as requested, E302 errors remain (many function spacing issues)
+
+Issues Encountered:
+-------------------
+1. Global gitignore conflict: User has ~/.gitignore with *.json pattern
+2. Large number of E302 errors across codebase (missing blank lines before functions)
+3. External library warnings that cannot be controlled
+
+Resolutions Applied:
+--------------------
+1. Force-added openapi.json despite global gitignore
+2. Fixed critical warnings that affect test execution
+3. Cleaned up trailing whitespace in key files
+4. Maintained test suite integrity (65/65 tests still pass)
+
+Verification:
+-------------
+- check-fixture-drift script runs without ImportError (exit 0)
+- pytest warnings reduced from 4 to 3 (only external library warnings remain)
+- Tests still pass: 63 passed, 2 skipped
+- openapi.json now tracked in git
+- Key files cleaned of trailing whitespace
+
+Next Steps:
+-----------
+- Consider addressing remaining E302 errors if code style is critical
+- Monitor for any new warnings in future test runs
+- Continue with CLI 109B or next planned feature implementation

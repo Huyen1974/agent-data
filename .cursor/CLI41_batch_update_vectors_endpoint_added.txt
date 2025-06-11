@@ -1,0 +1,11 @@
+Implemented the POST /batch_update_vectors endpoint in api_vector_search.py.
+
+Key features:
+- New Pydantic models: VectorUpdateItem, BatchUpdateVectorsRequest, BatchUpdateVectorsResponse.
+- VectorUpdateItem includes validation for vector dimension (1536) and non-empty metadata.
+- The endpoint iterates through a list of update items.
+- Each item is processed by calling `await qdrant_store.update_vector()`.
+- Handles partial failures gracefully, logging individual successes/failures.
+- Returns a summary response with `updated_count`, `failed_count`, and a list of `errors` if any occurred.
+
+This endpoint allows for efficient bulk updates of vectors and their metadata.

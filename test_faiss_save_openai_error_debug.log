@@ -1,0 +1,178 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... 
+----------------------------- live log collection ------------------------------
+DEBUG    faiss.loader:loader.py:89 Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+INFO     faiss.loader:loader.py:148 Loading faiss.
+INFO     faiss.loader:loader.py:150 Successfully loaded faiss.
+INFO     faiss:__init__.py:174 Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+collected 1 item
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.register_tools:register_tools.py:5 sys.path in Cloud Run at top of register_tools.py: ['/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python310.zip', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/lib-dynload', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages']
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:20 OpenAI import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:45 FAISS import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:73 OpenAI client initialized successfully via external registry.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:81 vector_data not provided for index 'test_openai_error_index'. Attempting to generate embeddings.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:95 Generating embeddings for 2 documents using field 'text'. Expected dimension: 10.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:120 Generating embedding for doc_id 'doc1' (text: 'Text that will cause embedding error...').
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:139 Failed to generate embedding for doc_id 'doc1' (embedding was None). Skipping.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:120 Generating embedding for doc_id 'doc2' (text: 'Another document...').
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Successfully generated embedding for doc_id 'doc2'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:152 Successfully generated 1 embeddings from 1 documents (out of 2 originally).
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:155 Starting validation for index 'test_openai_error_index' with 1 metadata entries and 1 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:184 vector_data is a list. Proceeding with list of vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:252 Validation successful. All 1 processed vectors have dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:257 Converting processed vector data to NumPy array.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:263 Creating FAISS index with actual dimension 10 from vector data.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:272 Number of vectors (1) is less than 20. Using IndexFlatL2.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:274 Created FAISS index (IndexFlatL2) with dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:307 Adding 1 vectors to the index in batches.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:311 Adding batch 1/1 with 1 vectors to FAISS index (MagicMock)
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:313 Finished adding vectors. Index now contains <MagicMock name='IndexFlatL2().ntotal' id='4797648080'> vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:315 Saving FAISS index locally to: /tmp/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:322 Saving metadata locally to: /tmp/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:327 Attempting to save metadata to Firestore for index: test_openai_error_index in project: test-project
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:349 Successfully saved metadata to Firestore for index: test_openai_error_index
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:356 Attempting to save FAISS index and metadata to GCS Bucket: test-bucket
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:366 Uploading /tmp/test_openai_error_index.faiss to gs://test-bucket/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:371 Uploading /tmp/test_openai_error_index.meta to gs://test-bucket/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:376 Successfully uploaded FAISS index and metadata for 'test_openai_error_index' to GCS bucket 'test-bucket'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:381 Registering FAISS index 'test_openai_error_index' in Firestore collection 'faiss_indexes_registry'...
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:400 Successfully registered FAISS index 'test_openai_error_index' in Firestore.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:416 Removed temporary local file: /tmp/test_openai_error_index.meta
+FAILED                                                                   [100%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <test_faiss_tools.TestSaveMetadataToFaiss object at 0x10b2a5750>
+mock_pickle_dump = <MagicMock name='dump' id='4482293840'>
+mock_faiss_write_index = <MagicMock name='write_index' id='4797396112'>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='4797485920'>
+mock_get_embedding = <MagicMock name='get_openai_embedding' id='4797493744'>
+mock_firestore_constructor = <MagicMock name='Client' id='4797534400'>
+mock_upload_with_retry = <MagicMock name='upload_with_retry' id='4797542224'>
+mock_storage_client = <MagicMock name='Client' id='4795537040'>
+mock_firestore_client = (<MagicMock name='Client()' id='4482506304'>, <MagicMock name='Client().collection().document()' id='4482569200'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x10b2a5fc0>
+request = <FixtureRequest for <Function test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.storage.Client")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.upload_with_retry")
+    @patch(FIRESTORE_CLIENT_PATH)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    def test_save_openai_embedding_error(self, mock_pickle_dump, mock_faiss_write_index, MockFaissIndexFlatL2,
+                                              mock_get_embedding, mock_firestore_constructor, mock_upload_with_retry,
+                                              mock_storage_client, mock_firestore_client, mocker, request):
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+    
+        mock_firestore_constructor.return_value = mock_firestore_client[0]
+        # mock_doc_ref = mock_firestore_client[1] # Not strictly needed for this test's assertions
+    
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_storage_client.return_value.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+    
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+    
+        # Simulate get_openai_embedding returning None for the first document, success for the second
+        mock_get_embedding.side_effect = [None, np.array([0.2]*10, dtype=np.float32)]
+    
+        input_metadata = {
+            "doc1": {"text": "Text that will cause embedding error"},
+            "doc2": {"text": "Another document"}
+        }
+        input_data = {
+            "index_name": "test_openai_error_index",
+            "metadata_dict": input_metadata,
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+    
+        result = save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+    
+        assert result is not None, "Result dictionary is None"
+        assert result.get("status") == "success", "Status should be success even with partial embedding failure"
+>       assert result.get("vector_count") == 1, "Vector count should be 1 as only one embedding succeeded"
+E       AssertionError: Vector count should be 1 as only one embedding succeeded
+E       assert <MagicMock name='IndexFlatL2().ntotal' id='4797648080'> == 1
+E        +  where <MagicMock name='IndexFlatL2().ntotal' id='4797648080'> = <built-in method get of dict object at 0x11df84cc0>('vector_count')
+E        +    where <built-in method get of dict object at 0x11df84cc0> = {'dimension': 10, 'duration_seconds': 0.0, 'gcs_bucket': 'test-bucket', 'gcs_faiss_path': 'gs://test-bucket/test_openai_error_index.faiss', ...}.get
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:325: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_openai_embedding_error: {'status': 'success', 'message': "FAISS index 'test_openai_error_index' and metadata saved and uploaded to GCS successfully.", 'index_name': 'test_openai_error_index', 'gcs_bucket': 'test-bucket', 'gcs_faiss_path': 'gs://test-bucket/test_openai_error_index.faiss', 'gcs_meta_path': 'gs://test-bucket/test_openai_error_index.meta', 'vector_count': <MagicMock name='IndexFlatL2().ntotal' id='4797648080'>, 'dimension': 10, 'index_type': 'MagicMock', 'duration_seconds': 0.0, 'gcs_upload_status': 'success'}
+
+------------------------------ Captured log call -------------------------------
+INFO     ADK.agent_data.tools.register_tools:register_tools.py:5 sys.path in Cloud Run at top of register_tools.py: ['/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python310.zip', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/lib-dynload', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages']
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:20 OpenAI import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:45 FAISS import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:73 OpenAI client initialized successfully via external registry.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:81 vector_data not provided for index 'test_openai_error_index'. Attempting to generate embeddings.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:95 Generating embeddings for 2 documents using field 'text'. Expected dimension: 10.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:120 Generating embedding for doc_id 'doc1' (text: 'Text that will cause embedding error...').
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:139 Failed to generate embedding for doc_id 'doc1' (embedding was None). Skipping.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:120 Generating embedding for doc_id 'doc2' (text: 'Another document...').
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Successfully generated embedding for doc_id 'doc2'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:152 Successfully generated 1 embeddings from 1 documents (out of 2 originally).
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:155 Starting validation for index 'test_openai_error_index' with 1 metadata entries and 1 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:184 vector_data is a list. Proceeding with list of vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:252 Validation successful. All 1 processed vectors have dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:257 Converting processed vector data to NumPy array.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:263 Creating FAISS index with actual dimension 10 from vector data.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:272 Number of vectors (1) is less than 20. Using IndexFlatL2.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:274 Created FAISS index (IndexFlatL2) with dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:307 Adding 1 vectors to the index in batches.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:311 Adding batch 1/1 with 1 vectors to FAISS index (MagicMock)
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:313 Finished adding vectors. Index now contains <MagicMock name='IndexFlatL2().ntotal' id='4797648080'> vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:315 Saving FAISS index locally to: /tmp/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:322 Saving metadata locally to: /tmp/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:327 Attempting to save metadata to Firestore for index: test_openai_error_index in project: test-project
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:349 Successfully saved metadata to Firestore for index: test_openai_error_index
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:356 Attempting to save FAISS index and metadata to GCS Bucket: test-bucket
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:366 Uploading /tmp/test_openai_error_index.faiss to gs://test-bucket/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:371 Uploading /tmp/test_openai_error_index.meta to gs://test-bucket/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:376 Successfully uploaded FAISS index and metadata for 'test_openai_error_index' to GCS bucket 'test-bucket'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:381 Registering FAISS index 'test_openai_error_index' in Firestore collection 'faiss_indexes_registry'...
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:400 Successfully registered FAISS index 'test_openai_error_index' in Firestore.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:416 Removed temporary local file: /tmp/test_openai_error_index.meta
+=============================== warnings summary ===============================
+setup/venv/lib/python3.10/site-packages/faiss/loader.py:49
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/faiss/loader.py:49: DeprecationWarning: numpy.core._multiarray_umath is deprecated and has been renamed to numpy._core._multiarray_umath. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core._multiarray_umath.__cpu_features__.
+    from numpy.core._multiarray_umath import __cpu_features__
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+======================== 1 failed, 4 warnings in 1.65s =========================

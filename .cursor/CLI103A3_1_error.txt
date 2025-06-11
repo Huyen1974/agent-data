@@ -1,0 +1,5 @@
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:54:13: F541 f-string is missing placeholders

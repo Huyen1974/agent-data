@@ -1,0 +1,1021 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 19 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  5%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed FAILED [ 10%]
+
+=================================== FAILURES ===================================
+_________________ TestSaveMetadataToFaiss.test_save_auto_embed _________________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x1687232e0>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='6057234192'>
+mock_faiss_write_index = <MagicMock name='write_index' id='6057243312'>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='6057299776'>
+mock_pickle_dump = <MagicMock name='dump' id='6057307408'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x168779060>
+request = <FixtureRequest for <Coroutine test_save_auto_embed>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    async def test_save_auto_embed(self,
+                                   mock_get_embedding,
+                                   mock_faiss_write_index,
+                                   MockFaissIndexFlatL2,
+                                   mock_pickle_dump,
+                                   mocker, request):
+        # Mock dependencies using mocker
+        # Rely on the autouse mock_env_vars fixture for os.getenv
+        # mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.os.getenv",
+        #              side_effect=lambda key, default=None: MOCKED_ENV_VARS.get(key, os.environ.get(key, default)))
+
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        # Setup mock instances returned by constructors
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 2 # Ensure ntotal is set for vector_count check
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+        input_data = {
+            "index_name": "test_index",
+            "metadata_dict": {
+                "doc1": {"text": "Hello world"},
+                "doc2": {"text": "Another document"}
+            },
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        expected_doc_ids_for_pickle = ['doc1', 'doc2']
+        expected_metadata_for_pickle = input_data["metadata_dict"]
+        expected_data_for_single_pickle_dump = {
+            'ids': expected_doc_ids_for_pickle,
+            'metadata': expected_metadata_for_pickle
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+        assert "status" in result
+        assert result["status"] == "success"
+        assert "gcs_faiss_path" in result
+        assert "gcs_meta_path" in result
+        assert result.get("vector_count") == 2 # Check vector_count
+>       assert result.get("meta", {}).get("dimension") == 10
+E       AssertionError: assert None == 10
+E        +  where None = <built-in method get of dict object at 0x1686e9ec0>('dimension')
+E        +    where <built-in method get of dict object at 0x1686e9ec0> = {}.get
+E        +      where {} = <built-in method get of dict object at 0x1690f1e80>('meta', {})
+E        +        where <built-in method get of dict object at 0x1690f1e80> = {'dimension': 10, 'duration_seconds': 0.0009, 'firestore_update_status': 'success', 'gcs_bucket': 'huyen1974-faiss-index-storage-test', ...}.get
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_auto_embed: {'status': 'success', 'message': "FAISS index 'test_index' and metadata saved and uploaded to GCS successfully.", 'index_name': 'test_index', 'gcs_bucket': 'huyen1974-faiss-index-storage-test', 'gcs_faiss_path': 'gs://huyen1974-faiss-index-storage-test/test_index.faiss', 'gcs_meta_path': 'gs://huyen1974-faiss-index-storage-test/test_index.meta', 'vector_count': 2, 'dimension': 10, 'index_type': 'MagicMock', 'duration_seconds': 0.0009, 'gcs_upload_status': 'success', 'firestore_update_status': 'success'}
+
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 1 passed, 3 warnings in 2.35s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data FAILED [ 20%]
+
+=================================== FAILURES ===================================
+______________ TestSaveMetadataToFaiss.test_save_with_vector_data ______________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x15461af20>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='5721211808'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5721220400'>
+mock_pickle_dump = <MagicMock name='dump' id='5721244720'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x154706f80>
+request = <FixtureRequest for <Coroutine test_save_with_vector_data>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_with_vector_data(self,
+                                         MockFaissIndexFlatL2,
+                                         mock_faiss_write_index,
+                                         mock_pickle_dump,
+                                         mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH)
+        # Simulate GCS upload failure for this test case
+        mock_upload_with_retry_local.side_effect = google_exceptions.NotFound("Mocked GCS upload failed for vector data test")
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mocker.patch.object(mock_index_instance, 'ntotal', new=2) # Ensure ntotal is set
+        input_data = {
+            "index_name": "test_index_vector",
+            "metadata_dict": {
+                "doc1": {"text": "Hello world"},
+                "doc2": {"text": "Another document"}
+            },
+            "vector_data": [
+                [0.1]*10, # Corresponds to doc1
+                [0.2]*10  # Corresponds to doc2
+            ],
+            "dimension": 10
+        }
+        expected_doc_ids_for_pickle = ['doc1', 'doc2']
+        expected_metadata_for_pickle = input_data["metadata_dict"]
+        expected_data_for_single_pickle_dump = {
+            'ids': expected_doc_ids_for_pickle,
+            'metadata': expected_metadata_for_pickle
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            vector_data=input_data["vector_data"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+        # This test should now expect an error due to GCS upload failure
+        assert result["status"] == "error"
+        MockFaissIndexFlatL2.assert_called_once_with(10)
+        mock_index_instance.add.assert_called_once()
+        added_vectors = mock_index_instance.add.call_args[0][0]
+        expected_np_vectors = np.array([[0.1]*10, [0.2]*10], dtype=np.float32)
+        assert np.array_equal(added_vectors, expected_np_vectors)
+        mock_faiss_write_index.assert_called_once_with(mock_index_instance, "/tmp/test_index_vector.faiss")
+        mock_pickle_dump.assert_called_once_with(expected_data_for_single_pickle_dump, mocker.ANY)
+        # Assert that upload was attempted, even if it fails
+        mock_upload_with_retry_local.assert_called()
+        mock_storage_client.assert_called_once_with(project="chatgpt-db-project")
+        mock_actual_storage_client_instance.bucket.assert_called_once_with(MOCKED_ENV_VARS["GCS_BUCKET_NAME"])
+        mock_bucket.blob.assert_has_calls([
+            call("test_index_vector.faiss"),
+            call("test_index_vector.meta")
+        ], any_order=True)
+        assert mock_bucket.blob.call_count == 2
+        mock_firestore_constructor.assert_called()
+        # Firestore doc should not be set if GCS upload fails
+        mock_doc_ref.set.assert_not_called()
+>       assert result.get("meta", {}).get("dimension") == 10 # Changed from result.get("dimension")
+E       AssertionError: assert None == 10
+E        +  where None = <built-in method get of dict object at 0x155081e00>('dimension')
+E        +    where <built-in method get of dict object at 0x155081e00> = {'duration_seconds': 0.001, 'error_type': 'GCSCommunicationError', 'index_name': 'test_index_vector'}.get
+E        +      where {'duration_seconds': 0.001, 'error_type': 'GCSCommunicationError', 'index_name': 'test_index_vector'} = <built-in method get of dict object at 0x15508a5c0>('meta', {})
+E        +        where <built-in method get of dict object at 0x15508a5c0> = {'dimension': 10, 'gcs_faiss_path': None, 'gcs_meta_path': None, 'gcs_upload_status': 'failed', ...}.get
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:325: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_with_vector_data: {'status': 'error', 'message': 'GCS upload failed: 404 Mocked GCS upload failed for vector data test', 'gcs_faiss_path': None, 'gcs_meta_path': None, 'gcs_upload_status': 'failed', 'vector_count': 2, 'dimension': 10, 'index_name': 'test_index_vector', 'meta': {'error_type': 'GCSCommunicationError', 'index_name': 'test_index_vector', 'duration_seconds': 0.001}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:315 GCS upload failed for index 'test_index_vector': 404 Mocked GCS upload failed for vector data test
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 304, in save_metadata_to_faiss
+    upload_with_retry(index_blob, index_path)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+google.api_core.exceptions.NotFound: 404 Mocked GCS upload failed for vector data test
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 2 passed, 3 warnings in 1.71s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error ERROR [ 26%]
+
+==================================== ERRORS ====================================
+__ ERROR at setup of TestSaveMetadataToFaiss.test_save_openai_embedding_error __
+file /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py, line 327
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+      async def test_save_openai_embedding_error(self,
+                                                 mock_get_embedding,
+                                                 mock_faiss_write_index,
+                                                 MockFaissIndexFlatL2,
+                                                 mock_pickle_dump,
+                                                 mocker, request):
+          # Mock dependencies using mocker
+          mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+          mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+          mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+          from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+          # Setup mock instances
+          mock_fs_instance = mock_firestore_constructor.return_value
+          mock_collection_ref = mock_fs_instance.collection.return_value
+          mock_doc_ref = mock_collection_ref.document.return_value
+
+          mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+          mock_storage_client.return_value = mock_actual_storage_client_instance
+          mock_bucket = MagicMock()
+          mock_blob = MagicMock()
+          mock_actual_storage_client_instance.bucket = MagicMock()
+          mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+          mock_bucket.blob.return_value = mock_blob
+
+          mock_index_instance = MockFaissIndexFlatL2.return_value
+          mock_index_instance.ntotal = 1 # For one successful embedding
+          mock_get_embedding.side_effect = [
+              {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}, # doc1 succeeds
+              EmbeddingGenerationError("Simulated embedding error for doc2") # doc2 fails
+          ]
+
+          input_metadata = {
+              "doc1": {"text": "Text that will succeed"},
+              "doc2": {"text": "Text that will cause embedding error"}
+          }
+          input_data = {
+              "index_name": "test_openai_error_index",
+              "metadata_dict": input_metadata,
+              "text_field_to_embed": "text",
+              "dimension": 10
+          }
+          result = await save_metadata_to_faiss(
+              index_name=input_data["index_name"],
+              metadata_dict=input_data["metadata_dict"],
+              text_field_to_embed=input_data["text_field_to_embed"],
+              dimension=input_data["dimension"]
+          )
+          print(f"\nResult dictionary for {request.node.name}: {result}\n")
+          assert result is not None
+          assert isinstance(result, dict)
+          assert result.get("status") == "success" # WAS "error"
+          # Only check meta and embedding error details if meta exists
+          if "meta" in result:
+              assert "embedding_generation_errors" in result["meta"]
+              assert "doc2" in result["meta"]["embedding_generation_errors"]
+              assert "Simulated embedding error for doc2" in result["meta"]["embedding_generation_errors"]["doc2"]
+              assert "doc2" in result.get("meta", {}).get("failed_doc_ids", [])
+              assert result.get("meta", {}).get("embedded_docs_count") == 1 # Only doc1 was embedded
+          # Always check main success fields
+          assert result.get("index_name") == input_data["index_name"]
+          assert result.get("vector_count") == 1
+          assert result.get("meta", {}).get("dimension") == 10
+          assert result.get("gcs_upload_status") == "success"
+          assert result.get("firestore_update_status") == "success"
+
+          mock_get_embedding.assert_any_call(agent_context=None, text_to_embed="Text that will succeed")
+          mock_get_embedding.assert_any_call(agent_context=None, text_to_embed="Text that will cause embedding error")
+
+          MockFaissIndexFlatL2.assert_called_once_with(10) # Index created
+          mock_index_instance.add.assert_called_once() # doc1's vector added
+          mock_faiss_write_index.assert_called_once() # Index for doc1 written
+          mock_pickle_dump.assert_called_once() # Meta for doc1 dumped
+          mock_upload_with_retry_local.assert_called() # Upload for doc1 attempted
+          mock_firestore_constructor.assert_called()
+          mock_doc_ref.set.assert_called()
+
+          mock_storage_client.assert_called_once_with(project="chatgpt-db-project")
+E       fixture 'mock_pickle_dump' not found
+>       available fixtures: ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::<event_loop>, ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::<event_loop>, ADK/agent_data/tests/tools::<event_loop>, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, class_mocker, cov, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_env_vars, mock_logging, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, session_mocker, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:327
+=========================== short test summary info ============================
+ERROR ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+==================== 3 passed, 3 warnings, 1 error in 1.37s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error FAILED [ 26%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x160f1b670>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='5924245120'>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='5924253712'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5924262848'>
+mock_pickle_dump = <MagicMock name='dump' id='5924270096'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x161088070>
+request = <FixtureRequest for <Coroutine test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_openai_embedding_error(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_get_embedding,
+                                               mock_faiss_write_index,
+                                               mock_pickle_dump,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # For one successful embedding
+        mock_get_embedding.side_effect = [
+            {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}, # doc1 succeeds
+            EmbeddingGenerationError("Simulated embedding error for doc2") # doc2 fails
+        ]
+
+        input_metadata = {
+            "doc1": {"text": "Text that will succeed"},
+            "doc2": {"text": "Text that will cause embedding error"}
+        }
+        input_data = {
+            "index_name": "test_openai_error_index",
+            "metadata_dict": input_metadata,
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+        assert result.get("status") == "success" # WAS "error"
+        # Only check meta and embedding error details if meta exists
+        if "meta" in result:
+            assert "embedding_generation_errors" in result["meta"]
+            assert "doc2" in result["meta"]["embedding_generation_errors"]
+            assert "Simulated embedding error for doc2" in result["meta"]["embedding_generation_errors"]["doc2"]
+            assert "doc2" in result.get("meta", {}).get("failed_doc_ids", [])
+            assert result.get("meta", {}).get("embedded_docs_count") == 1 # Only doc1 was embedded
+        # Always check main success fields
+        assert result.get("index_name") == input_data["index_name"]
+        assert result.get("vector_count") == 1
+>       assert result.get("meta", {}).get("dimension") == 10
+E       AssertionError: assert None == 10
+E        +  where None = <built-in method get of dict object at 0x161221280>('dimension')
+E        +    where <built-in method get of dict object at 0x161221280> = {}.get
+E        +      where {} = <built-in method get of dict object at 0x16122bc40>('meta', {})
+E        +        where <built-in method get of dict object at 0x16122bc40> = {'dimension': 10, 'duration_seconds': 0.0012, 'firestore_update_status': 'success', 'gcs_bucket': 'huyen1974-faiss-index-storage-test', ...}.get
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:394: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_openai_embedding_error: {'status': 'success', 'message': "FAISS index 'test_openai_error_index' and metadata saved and uploaded to GCS successfully.", 'index_name': 'test_openai_error_index', 'gcs_bucket': 'huyen1974-faiss-index-storage-test', 'gcs_faiss_path': 'gs://huyen1974-faiss-index-storage-test/test_openai_error_index.faiss', 'gcs_meta_path': 'gs://huyen1974-faiss-index-storage-test/test_openai_error_index.meta', 'vector_count': 1, 'dimension': 10, 'index_type': 'MagicMock', 'duration_seconds': 0.0012, 'gcs_upload_status': 'success', 'firestore_update_status': 'success'}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:94 EmbeddingGenerationError for doc_id doc2: Simulated embedding error for doc2
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 81, in _generate_embeddings_batch
+    embedding_response = await get_openai_embedding(
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 2243, in _execute_mock_call
+    raise result
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: Simulated embedding error for doc2
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 3 passed, 3 warnings in 1.52s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error PASSED [ 26%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_faiss_fails PASSED [ 33%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails FAILED [ 40%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_gcs_upload_meta_fails ____________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x15ea17ee0>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='5886229520'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5886220928'>
+mock_pickle_dump = <MagicMock name='dump' id='5886210880'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x15ecc90c0>
+request = <FixtureRequest for <Coroutine test_save_gcs_upload_meta_fails>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    async def test_save_gcs_upload_meta_fails(self,
+                                              mock_get_embedding,
+                                              mock_faiss_write_index,
+                                              mock_pickle_dump,
+                                              mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH)
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        MockFaissIndexFlatL2 = mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # One document is processed
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+
+        def upload_side_effect_meta_fail(blob, source_file_name):
+            if source_file_name.endswith(".meta"):
+                raise google_exceptions.NotFound("Mocked GCS META upload failed")
+            elif source_file_name.endswith(".faiss"):
+                return None
+            raise ValueError(f"Unexpected upload call: {source_file_name}")
+
+        mock_upload_with_retry_local.side_effect = upload_side_effect_meta_fail
+
+        input_data = {
+            "index_name": "test_index_gcs_meta_upload_fails",
+            "metadata_dict": {
+                "doc1": {"text": "Hello world for meta fail"},
+            },
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert result.get("status") == "error"
+        assert "message" in result
+        assert "Mocked GCS META upload failed" in result["message"]
+>       assert result.get("meta", {}).get("error_type") == "NotFound"
+E       AssertionError: assert 'GCSCommunicationError' == 'NotFound'
+E
+E         - NotFound
+E         + GCSCommunicationError
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:548: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_gcs_upload_meta_fails: {'status': 'error', 'message': 'GCS upload failed: 404 Mocked GCS META upload failed', 'gcs_faiss_path': 'gs://huyen1974-faiss-index-storage-test/test_index_gcs_meta_upload_fails.faiss', 'gcs_meta_path': None, 'gcs_upload_status': 'failed', 'vector_count': 1, 'dimension': 10, 'index_name': 'test_index_gcs_meta_upload_fails', 'meta': {'error_type': 'GCSCommunicationError', 'index_name': 'test_index_gcs_meta_upload_fails', 'duration_seconds': 0.0007}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:315 GCS upload failed for index 'test_index_gcs_meta_upload_fails': 404 Mocked GCS META upload failed
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 308, in save_metadata_to_faiss
+    upload_with_retry(meta_blob, meta_path)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1179, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py", line 522, in upload_side_effect_meta_fail
+    raise google_exceptions.NotFound("Mocked GCS META upload failed")
+google.api_core.exceptions.NotFound: 404 Mocked GCS META upload failed
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 5 passed, 3 warnings in 1.64s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error FAILED [ 26%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x16cf176d0>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='6125555904'>
+mock_faiss_write_index = <MagicMock name='write_index' id='6125565024'>
+mock_pickle_dump = <MagicMock name='dump' id='6125588720'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x16cf83910>
+request = <FixtureRequest for <Coroutine test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    async def test_save_openai_embedding_error(self,
+                                               mock_get_embedding,
+                                               mock_faiss_write_index,
+                                               mock_pickle_dump,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+>       mock_index_instance = MockFaissIndexFlatL2.return_value
+E       NameError: name 'MockFaissIndexFlatL2' is not defined
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:355: NameError
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 3 passed, 3 warnings in 1.60s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error ERROR [ 26%]
+
+==================================== ERRORS ====================================
+__ ERROR at setup of TestSaveMetadataToFaiss.test_save_openai_embedding_error __
+file /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py, line 327
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+      async def test_save_openai_embedding_error(self,
+                                                 MockFaissIndexFlatL2,
+                                                 mock_get_embedding,
+                                                 mock_faiss_write_index,
+                                                 mock_pickle_dump,
+                                                 mocker, request):
+          # Mock dependencies using mocker
+          mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+          mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+          mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+          from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+          # Setup mock instances
+          mock_fs_instance = mock_firestore_constructor.return_value
+          mock_collection_ref = mock_fs_instance.collection.return_value
+          mock_doc_ref = mock_collection_ref.document.return_value
+
+          mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+          mock_storage_client.return_value = mock_actual_storage_client_instance
+          mock_bucket = MagicMock()
+          mock_blob = MagicMock()
+          mock_actual_storage_client_instance.bucket = MagicMock()
+          mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+          mock_bucket.blob.return_value = mock_blob
+
+          mock_index_instance = MockFaissIndexFlatL2.return_value
+          mock_index_instance.ntotal = 1 # For one successful embedding
+          mock_get_embedding.side_effect = [
+              {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}, # doc1 succeeds
+              EmbeddingGenerationError("Simulated embedding error for doc2") # doc2 fails
+          ]
+
+          input_metadata = {
+              "doc1": {"text": "Text that will succeed"},
+              "doc2": {"text": "Text that will cause embedding error"}
+          }
+          input_data = {
+              "index_name": "test_openai_error_index",
+              "metadata_dict": input_metadata,
+              "text_field_to_embed": "text",
+              "dimension": 10
+          }
+          result = await save_metadata_to_faiss(
+              index_name=input_data["index_name"],
+              metadata_dict=input_data["metadata_dict"],
+              text_field_to_embed=input_data["text_field_to_embed"],
+              dimension=input_data["dimension"]
+          )
+          print(f"\nResult dictionary for {request.node.name}: {result}\n")
+          assert result is not None
+          assert isinstance(result, dict)
+          assert result.get("status") == "success" # WAS "error"
+          # Only check meta and embedding error details if meta exists
+          if "meta" in result:
+              assert "embedding_generation_errors" in result["meta"]
+              assert "doc2" in result["meta"]["embedding_generation_errors"]
+              assert "Simulated embedding error for doc2" in result["meta"]["embedding_generation_errors"]["doc2"]
+              assert "doc2" in result.get("meta", {}).get("failed_doc_ids", [])
+              assert result.get("meta", {}).get("embedded_docs_count") == 1 # Only doc1 was embedded
+          # Always check main success fields
+          assert result.get("index_name") == input_data["index_name"]
+          assert result.get("vector_count") == 1
+          assert result["dimension"] == 10
+          assert result.get("gcs_upload_status") == "success"
+          assert result.get("firestore_update_status") == "success"
+
+          mock_get_embedding.assert_any_call(agent_context=None, text_to_embed="Text that will succeed")
+          mock_get_embedding.assert_any_call(agent_context=None, text_to_embed="Text that will cause embedding error")
+
+          MockFaissIndexFlatL2.assert_called_once_with(10) # Index created
+          mock_index_instance.add.assert_called_once() # doc1's vector added
+          mock_faiss_write_index.assert_called_once() # Index for doc1 written
+          mock_pickle_dump.assert_called_once() # Meta for doc1 dumped
+          mock_upload_with_retry_local.assert_called() # Upload for doc1 attempted
+          mock_firestore_constructor.assert_called()
+          mock_doc_ref.set.assert_called()
+
+          mock_storage_client.assert_called_once_with(project="chatgpt-db-project")
+E       fixture 'mock_pickle_dump' not found
+>       available fixtures: ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::<event_loop>, ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::<event_loop>, ADK/agent_data/tests/tools::<event_loop>, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, class_mocker, cov, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_env_vars, mock_logging, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, session_mocker, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:327
+=========================== short test summary info ============================
+ERROR ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+==================== 3 passed, 3 warnings, 1 error in 1.40s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 15 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  6%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 13%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error FAILED [ 26%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x151117790>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='5658939104'>
+mock_pickle_dump = <AsyncMock name='get_openai_embedding' id='5658947696'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5658973216'>
+mock_get_embedding = <MagicMock name='dump' id='5658980464'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x1513880d0>
+request = <FixtureRequest for <Coroutine test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_openai_embedding_error(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_pickle_dump,
+                                               mock_faiss_write_index,
+                                               mock_get_embedding,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # For one successful embedding
+        mock_get_embedding.side_effect = [
+            {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}, # doc1 succeeds
+            EmbeddingGenerationError("Simulated embedding error for doc2") # doc2 fails
+        ]
+
+        input_metadata = {
+            "doc1": {"text": "Text that will succeed"},
+            "doc2": {"text": "Text that will cause embedding error"}
+        }
+        input_data = {
+            "index_name": "test_openai_error_index",
+            "metadata_dict": input_metadata,
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+>       assert result.get("status") == "success" # WAS "error"
+E       AssertionError: assert 'error' == 'success'
+E
+E         - success
+E         + error
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:383: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_openai_embedding_error: {'status': 'error', 'error': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'message': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'meta': {'error_type': 'EmbeddingGenerationError', 'index_name': 'test_openai_error_index', 'duration_seconds': 0.001, 'embedding_generation_errors': {'doc1': 'No result from embedding function', 'doc2': 'No result from embedding function'}, 'original_docs_count': 2, 'embedded_docs_count': 0, 'failed_doc_ids': ['doc1', 'doc2']}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc1. Response: <AsyncMock name='get_openai_embedding()' id='5659317232'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc2. Response: <AsyncMock name='get_openai_embedding()' id='5659317232'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_openai_error_index': EmbeddingGenerationError - No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 264, in save_metadata_to_faiss
+    raise EmbeddingGenerationError(error_msg)
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 3 passed, 5 warnings in 1.49s ====================
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 14 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [  7%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 14%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 21%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error FAILED [ 28%]
+
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <MagicMock name='dump' id='5188717248'>, args = ()
+kwargs = {'agent_context': None, 'text_to_embed': 'Text that will succeed'}
+expected = call(agent_context=None, text_to_embed='Text that will succeed')
+cause = None, actual = []
+expected_string = "dump(agent_context=None, text_to_embed='Text that will succeed')"
+
+    def assert_any_call(self, /, *args, **kwargs):
+        """assert the mock has been called with the specified arguments.
+
+        The assert passes if the mock has *ever* been called, unlike
+        `assert_called_with` and `assert_called_once_with` that only pass if
+        the call is the most recent one."""
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        cause = expected if isinstance(expected, Exception) else None
+        actual = [self._call_matcher(c) for c in self.call_args_list]
+        if cause or expected not in _AnyComparer(actual):
+            expected_string = self._format_mock_call_signature(args, kwargs)
+>           raise AssertionError(
+                '%s call not found' % expected_string
+            ) from cause
+E           AssertionError: dump(agent_context=None, text_to_embed='Text that will succeed') call not found
+
+/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py:1000: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x135215750>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='5188668000'>
+mock_pickle_dump = <AsyncMock name='get_openai_embedding' id='5188700864'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5188709936'>
+mock_get_embedding = <MagicMock name='dump' id='5188717248'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x13538b9a0>
+request = <FixtureRequest for <Coroutine test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_openai_embedding_error(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_pickle_dump,
+                                               mock_faiss_write_index,
+                                               mock_get_embedding,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # For one successful embedding
+        mock_get_embedding.side_effect = [
+            {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}, # doc1 succeeds
+            EmbeddingGenerationError("Simulated embedding error for doc2") # doc2 fails
+        ]
+
+        input_metadata = {
+            "doc1": {"text": "Text that will succeed"},
+            "doc2": {"text": "Text that will cause embedding error"}
+        }
+        input_data = {
+            "index_name": "test_openai_error_index",
+            "metadata_dict": input_metadata,
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+        assert result.get("status") == "error"
+        assert "No embeddings could be successfully processed" in result.get("message", "")
+        assert result.get("meta", {}).get("embedded_docs_count") == 0
+        assert result.get("index_name") is None
+        assert result.get("meta", {}).get("index_name") == input_data["index_name"]
+        assert "embedding_generation_errors" in result["meta"]
+        assert set(result.get("meta", {}).get("failed_doc_ids", [])) == {"doc1", "doc2"}
+        assert result.get("meta", {}).get("error_type") == "EmbeddingGenerationError"
+
+>       mock_get_embedding.assert_any_call(agent_context=None, text_to_embed="Text that will succeed")
+E       AssertionError: dump(agent_context=None, text_to_embed='Text that will succeed') call not found
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:392: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_openai_embedding_error: {'status': 'error', 'error': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'message': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'meta': {'error_type': 'EmbeddingGenerationError', 'index_name': 'test_openai_error_index', 'duration_seconds': 0.001, 'embedding_generation_errors': {'doc1': 'No result from embedding function', 'doc2': 'No result from embedding function'}, 'original_docs_count': 2, 'embedded_docs_count': 0, 'failed_doc_ids': ['doc1', 'doc2']}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc1. Response: <AsyncMock name='get_openai_embedding()' id='5189021184'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc2. Response: <AsyncMock name='get_openai_embedding()' id='5189021184'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_openai_error_index': EmbeddingGenerationError - No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 264, in save_metadata_to_faiss
+    raise EmbeddingGenerationError(error_msg)
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 1 failed, 3 passed, 5 warnings in 1.51s ====================

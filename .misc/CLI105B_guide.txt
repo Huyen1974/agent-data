@@ -1,0 +1,34 @@
+CLI105B Guide: Add Tests for BULK_UPLOAD Endpoint
+
+STEPS TAKEN:
+1. Verified branch state: git checkout cli103a && git reset --hard cli105a_all_green
+2. Examined existing test structure in tests/api/ directory
+3. Read bulk_upload_tool.py to understand the interface and return format
+4. Created tests/api/test_bulk_upload.py with 6 comprehensive test cases:
+   - test_bulk_upload_valid: Tests successful upload of valid points
+   - test_bulk_upload_empty_collection: Tests empty/whitespace collection names
+   - test_bulk_upload_empty_points: Tests empty points list
+   - test_bulk_upload_invalid_points: Tests points missing vector field
+   - test_bulk_upload_mixed_valid_invalid: Tests mix of valid/invalid points
+   - test_bulk_upload_with_custom_ids: Tests points with custom IDs
+5. Updated tests/test__meta_count.py: EXPECTED_TOTAL_TESTS from 53 to 59
+6. Verified tests pass: pytest -q showed 57 passed, 2 skipped
+7. Checked F401/F841 compliance: No errors in target directories
+8. Verified check-fixture-drift script passes (exit 0)
+9. Committed changes: git commit -m "CLI105B: Add tests for BULK_UPLOAD endpoint"
+10. Tagged commit: git tag cli105b_all_green
+
+ISSUES ENCOUNTERED:
+- None. All tests passed on first run.
+- Flake8 showed many errors in other files, but no F401/F841 errors in target directories.
+
+RESOLUTIONS:
+- Successfully implemented all required test cases
+- All tests pass and maintain existing test infrastructure
+- Check-fixture-drift hook continues to pass
+- F401/F841 compliance maintained in target directories
+
+FINAL STATUS:
+- Total tests: 59/59 (57 passed, 2 skipped)
+- All validation checks pass
+- Ready for next CLI iteration (CLI 106A)

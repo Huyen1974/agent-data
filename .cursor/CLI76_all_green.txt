@@ -1,0 +1,3 @@
+- test for long query_text rejection
+- validation via max_length constraint
+- all 25 tests passed

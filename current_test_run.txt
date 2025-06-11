@@ -1,0 +1,272 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.6.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, mock-3.14.0, cov-6.1.1, asyncio-1.0.0
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 209 items
+
+tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures PASSED [  0%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint PASSED [  0%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services PASSED [  1%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success PASSED [  1%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable PASSED [  2%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request PASSED [  2%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success PASSED [  3%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable PASSED [  3%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request PASSED [  4%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success PASSED [  4%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable PASSED [  5%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors PASSED [  5%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation PASSED [  6%]
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow PASSED [  6%]
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions PASSED [  7%]
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users PASSED [  7%]
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content PASSED [  8%]
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects PASSED [  8%]
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters PASSED [  9%]
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation PASSED [  9%]
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation PASSED [ 10%]
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation PASSED [ 10%]
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration PASSED [ 11%]
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling PASSED [ 11%]
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing PASSED [ 11%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization PASSED [ 12%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification PASSED [ 12%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation PASSED [ 13%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration PASSED [ 13%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token PASSED [ 14%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation PASSED [ 14%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation PASSED [ 15%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager PASSED [ 15%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling PASSED [ 16%]
+tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields PASSED [ 16%]
+tests/api/test_authentication.py::TestUserManager::test_user_creation PASSED [ 17%]
+tests/api/test_authentication.py::TestUserManager::test_user_authentication PASSED [ 17%]
+tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation PASSED [ 18%]
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation PASSED [ 18%]
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation PASSED [ 19%]
+tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises PASSED [ 19%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement PASSED [ 20%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches PASSED [ 20%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document PASSED [ 21%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures PASSED [ 21%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list PASSED [ 22%]
+tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration PASSED [ 22%]
+tests/api/test_blank_query_text.py::test_query_text_blank_spaces PASSED  [ 22%]
+tests/api/test_bulk_upload.py::test_bulk_upload_valid PASSED             [ 23%]
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection PASSED  [ 23%]
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_points PASSED      [ 24%]
+tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points PASSED    [ 24%]
+tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid PASSED [ 25%]
+tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids PASSED   [ 25%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data PASSED [ 26%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields PASSED [ 26%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types PASSED [ 27%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits PASSED [ 27%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps PASSED [ 28%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid PASSED [ 28%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment PASSED [ 29%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease PASSED [ 29%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip PASSED [ 30%]
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics PASSED [ 30%]
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity SKIPPED [ 31%]
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact SKIPPED [ 31%]
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics SKIPPED [ 32%]
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis SKIPPED [ 32%]
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax PASSED [ 33%]
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration PASSED [ 33%]
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration PASSED [ 33%]
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration PASSED [ 34%]
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references PASSED [ 34%]
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration PASSED [ 35%]
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration SKIPPED [ 35%]
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow PASSED [ 36%]
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow PASSED [ 36%]
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow PASSED [ 37%]
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow PASSED [ 37%]
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency PASSED [ 38%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow PASSED [ 38%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow PASSED [ 39%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow PASSED [ 39%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow PASSED [ 40%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow PASSED [ 40%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements PASSED [ 41%]
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency PASSED [ 41%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check PASSED [ 42%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user PASSED [ 42%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token PASSED [ 43%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth PASSED [ 43%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth PASSED [ 44%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth PASSED [ 44%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load PASSED [ 44%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync PASSED [ 45%]
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification PASSED [ 45%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success PASSED [ 46%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal PASSED [ 46%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id PASSED [ 47%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content PASSED [ 47%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure PASSED [ 48%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement PASSED [ 48%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility PASSED [ 49%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs PASSED [ 49%]
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario PASSED [ 50%]
+tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s SKIPPED [ 50%]
+tests/api/test_delete_by_tag.py::test_delete_by_tag_valid PASSED         [ 51%]
+tests/api/test_delete_by_tag.py::test_delete_by_tag_empty PASSED         [ 51%]
+tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent PASSED  [ 52%]
+tests/api/test_embeddings_api.py::test_generate_embedding_real SKIPPED   [ 52%]
+tests/api/test_embeddings_api.py::test_semantic_search_cosine PASSED     [ 53%]
+tests/api/test_embeddings_api.py::test_clear_embeddings PASSED           [ 53%]
+tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected PASSED [ 54%]
+tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected PASSED [ 54%]
+tests/api/test_empty_query_rejected.py::test_empty_query_rejected PASSED [ 55%]
+tests/api/test_empty_query_text.py::test_empty_query_text PASSED         [ 55%]
+tests/api/test_env_config_valid.py::test_env_config_valid PASSED         [ 55%]
+tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive PASSED [ 56%]
+tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches PASSED [ 56%]
+tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces PASSED [ 57%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure PASSED [ 57%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling PASSED [ 58%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied PASSED [ 58%]
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases PASSED [ 59%]
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases PASSED [ 59%]
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits PASSED [ 60%]
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation PASSED [ 60%]
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts PASSED [ 61%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity PASSED [ 61%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency PASSED [ 62%]
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation PASSED [ 62%]
+tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one PASSED [ 63%]
+tests/api/test_invalid_threshold.py::test_invalid_score_threshold PASSED [ 63%]
+tests/api/test_invalid_top_k.py::test_negative_top_k PASSED              [ 64%]
+tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration PASSED [ 64%]
+tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully PASSED   [ 65%]
+tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query PASSED [ 65%]
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic PASSED [ 66%]
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic PASSED [ 66%]
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation PASSED [ 66%]
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton PASSED [ 67%]
+tests/api/test_metrics.py::test_metrics_endpoint PASSED                  [ 67%]
+tests/api/test_migration.py::test_migration_smoke PASSED                 [ 68%]
+tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats PASSED [ 68%]
+tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids PASSED [ 69%]
+tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold PASSED [ 69%]
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_import PASSED [ 70%]
+tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import PASSED [ 70%]
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules PASSED [ 71%]
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata PASSED [ 71%]
+tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work PASSED [ 72%]
+tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold SKIPPED [ 72%]
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance PASSED [ 73%]
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents PASSED [ 73%]
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries PASSED [ 74%]
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches PASSED [ 74%]
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary PASSED [ 75%]
+tests/api/test_qdrant_integration.py::test_qdrant_tools_registration PASSED [ 75%]
+tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool PASSED [ 76%]
+tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool PASSED [ 76%]
+tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool PASSED [ 77%]
+tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool PASSED  [ 77%]
+tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool PASSED [ 77%]
+tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool PASSED [ 78%]
+tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling PASSED [ 78%]
+tests/api/test_qdrant_integration.py::test_qdrant_cluster_info SKIPPED   [ 79%]
+tests/api/test_qdrant_store.py::test_points_selector_empty PASSED        [ 79%]
+tests/api/test_qdrant_store.py::test_points_selector_with_filter PASSED  [ 80%]
+tests/api/test_qdrant_store.py::test_vector_store_interface_methods PASSED [ 80%]
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed PASSED [ 81%]
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status PASSED [ 81%]
+tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync PASSED [ 82%]
+tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync PASSED [ 82%]
+tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length PASSED [ 83%]
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes PASSED [ 83%]
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all PASSED [ 84%]
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold PASSED [ 84%]
+tests/api/test_query_vectors_api.py::test_get_vector_by_id PASSED        [ 85%]
+tests/api/test_query_vectors_api.py::test_query_vectors_by_ids PASSED    [ 85%]
+tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip PASSED [ 86%]
+tests/api/test_score_threshold_strict.py::test_score_threshold_one PASSED [ 86%]
+tests/api/test_score_threshold_zero.py::test_score_threshold_zero PASSED [ 87%]
+tests/api/test_search_by_payload.py::test_search_by_payload_valid PASSED [ 87%]
+tests/api/test_search_by_payload.py::test_search_by_payload_empty_field PASSED [ 88%]
+tests/api/test_search_by_payload.py::test_search_by_payload_none_value PASSED [ 88%]
+tests/api/test_search_by_payload.py::test_search_by_payload_pagination PASSED [ 88%]
+tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection PASSED [ 89%]
+tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold PASSED [ 89%]
+tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries PASSED [ 90%]
+tests/api/test_tag_too_long.py::test_tag_too_long PASSED                 [ 90%]
+tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum PASSED [ 91%]
+tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals PASSED [ 91%]
+tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count PASSED [ 92%]
+tests/api/test_top_k_minimum.py::test_top_k_minimum_one PASSED           [ 92%]
+tests/api/test_top_k_too_large.py::test_top_k_too_large PASSED           [ 93%]
+tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob PASSED [ 93%]
+tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found PASSED [ 94%]
+tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input PASSED [ 94%]
+tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid PASSED [ 95%]
+tests/api/test_vector_edge_cases.py::test_delete_vector_not_found PASSED [ 95%]
+tests/api/test_vector_safety_check.py::test_vector_id_collision PASSED   [ 96%]
+tests/api/test_vector_safety_check.py::test_vector_truncation_protection PASSED [ 96%]
+tests/test__meta_count.py::test_meta_count FAILED                        [ 97%]
+tests/test_mcp_integration.py::test_subprocess_single_save PASSED        [ 97%]
+tests/test_mcp_integration.py::test_subprocess_medium_scale PASSED       [ 98%]
+tests/test_mcp_integration.py::test_subprocess_mock_qdrant_environment PASSED [ 98%]
+tests/test_mcp_integration.py::test_subprocess_small_scale PASSED        [ 99%]
+tests/test_mcp_integration.py::test_subprocess_real_api_calls PASSED     [ 99%]
+tests/test_mcp_integration.py::test_timeout_retry_logic PASSED           [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_meta_count ________________________________
+tests/test__meta_count.py:72: in test_meta_count
+    assert (
+E   AssertionError: Expected 198 tests, but found 209. Ensure all new tests are included and EXPECTED_TOTAL_TESTS is up-to-date.
+E   assert 209 == 198
+=============================== warnings summary ===============================
+src/agent_data_manager/api_mcp_gateway.py:195
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/src/agent_data_manager/api_mcp_gateway.py:195: DeprecationWarning:
+          on_event is deprecated, use lifespan event handlers instead.
+
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    @app.on_event("startup")
+
+setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: DeprecationWarning:
+          on_event is deprecated, use lifespan event handlers instead.
+
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+
+    return self.router.on_event(event_type)
+
+tests/api/test_cli119d10_enhancements.py:376
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_cli119d10_enhancements.py:376: PytestUnknownMarkWarning: Unknown pytest.mark.integration - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.integration
+
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_cursor_e2e_integration_fixed.py:107: DeprecationWarning: "@coroutine" decorator is deprecated since Python 3.8, use "async def" instead
+    mock_get_embedding.return_value = asyncio.coroutine(
+
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_cursor_e2e_integration_fixed.py:331: DeprecationWarning: "@coroutine" decorator is deprecated since Python 3.8, use "async def" instead
+    mock_get_embedding.return_value = asyncio.coroutine(
+
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_cursor_e2e_integration_fixed.py:394: DeprecationWarning: "@coroutine" decorator is deprecated since Python 3.8, use "async def" instead
+    mock_get_embedding.return_value = asyncio.coroutine(lambda: None)()
+
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_cursor_e2e_integration_fixed.py:470: DeprecationWarning: "@coroutine" decorator is deprecated since Python 3.8, use "async def" instead
+    mock_get_embedding.return_value = asyncio.coroutine(
+
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/google/cloud/firestore_v1/base_collection.py:303: UserWarning: Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.
+    return query.where(field_path, op_string, value)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test__meta_count.py::test_meta_count - AssertionError: Expected ...
+======= 1 failed, 199 passed, 9 skipped, 8 warnings in 534.70s (0:08:54) =======

@@ -1,0 +1,764 @@
+ERROR: ImportError during QdrantClient setup: No module named 'tests'
+ERROR: ImportError during FirestoreClient setup: No module named 'tests'
+INFO: No mock drift detected.
+INFO: Checking QdrantClient...
+ERROR:   Method _embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models_strict found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_image_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_late_interaction_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method _points_iterator found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_batch_request found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_request found in real QdrantClient but not in mock.
+ERROR:   Method _scored_points_to_query_responses found in real QdrantClient but not in mock.
+ERROR:   Method _sparse_embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _validate_collection_info found in real QdrantClient but not in mock.
+ERROR:   Method add found in real QdrantClient but not in mock.
+ERROR:   Method batch_update_points found in real QdrantClient but not in mock.
+ERROR:   Method clear_payload found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for close in QdrantClient:
+ERROR:     Real: (self, grpc_grace: Optional[float] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self)
+ERROR:   Signature mismatch for collection_exists in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str) -> bool
+ERROR:   Signature mismatch for count in QdrantClient:
+ERROR:     Real: (self, collection_name: str, count_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, exact: bool = True, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:     Mock: (self, collection_name: str, count_filter: Optional[qdrant_client.http.models.models.Filter] = None, exact: bool = True, **kwargs) -> qdrant_client.http.models.models.CountResult
+ERROR:   Signature mismatch for create_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, vectors_config: Union[Dict, qdrant_client.http.models.models.VectorParams], **kwargs) -> bool
+ERROR:   Method create_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for create_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, field_name: str, field_schema: Any, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Method create_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method create_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method create_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for delete in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points_selector: Union[List[Union[int, str, uuid.UUID]], qdrant_client.http.models.models.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for delete_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, timeout: Optional[int] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, timeout: Optional[int] = None) -> bool
+ERROR:   Method delete_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload_index found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_vectors found in real QdrantClient but not in mock.
+ERROR:   Method discover found in real QdrantClient but not in mock.
+ERROR:   Method discover_batch found in real QdrantClient but not in mock.
+ERROR:   Method facet found in real QdrantClient but not in mock.
+ERROR:   Method get_aliases found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for get_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:     Mock: (self, collection_name: str) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:   Method get_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method get_collections found in real QdrantClient but not in mock.
+ERROR:   Method get_embedding_size found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_sparse_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_locks found in real QdrantClient but not in mock.
+ERROR:   Method get_sparse_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method get_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method info found in real QdrantClient but not in mock.
+ERROR:   Method list_full_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_shard_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method lock_storage found in real QdrantClient but not in mock.
+ERROR:   Method migrate found in real QdrantClient but not in mock.
+ERROR:   Method overwrite_payload found in real QdrantClient but not in mock.
+ERROR:   Method query found in real QdrantClient but not in mock.
+ERROR:   Method query_batch found in real QdrantClient but not in mock.
+ERROR:   Method query_batch_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points_groups found in real QdrantClient but not in mock.
+ERROR:   Method recommend found in real QdrantClient but not in mock.
+ERROR:   Method recommend_batch found in real QdrantClient but not in mock.
+ERROR:   Method recommend_groups found in real QdrantClient but not in mock.
+ERROR:   Method recover_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recover_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recreate_collection found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for retrieve in QdrantClient:
+ERROR:     Real: (self, collection_name: str, ids: Sequence[Union[int, str, points_pb2.PointId]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.Record]
+ERROR:     Mock: (self, collection_name: str, ids: List[Union[int, str, uuid.UUID]], with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.Record]
+ERROR:   Signature mismatch for scroll in QdrantClient:
+ERROR:     Real: (self, collection_name: str, scroll_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, order_by: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.OrderBy, points_pb2.OrderBy, NoneType] = None, offset: Union[int, str, points_pb2.PointId, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> tuple[list[qdrant_client.http.models.models.Record], typing.Union[int, str, points_pb2.PointId, NoneType]]
+ERROR:     Mock: (self, collection_name: str, scroll_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, offset: Union[int, str, uuid.UUID, NoneType] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> tuple[typing.List[qdrant_client.http.models.models.Record], typing.Union[int, str, uuid.UUID, NoneType]]
+ERROR:   Signature mismatch for search in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, collection_name: str, query_vector: List[float], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, score_threshold: Optional[float] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.ScoredPoint]
+ERROR:   Method search_batch found in real QdrantClient but not in mock.
+ERROR:   Method search_groups found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_offsets found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_pairs found in real QdrantClient but not in mock.
+ERROR:   Method set_model found in real QdrantClient but not in mock.
+ERROR:   Method set_payload found in real QdrantClient but not in mock.
+ERROR:   Method set_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method unlock_storage found in real QdrantClient but not in mock.
+ERROR:   Method update_collection found in real QdrantClient but not in mock.
+ERROR:   Method update_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method update_vectors found in real QdrantClient but not in mock.
+ERROR:   Method upload_collection found in real QdrantClient but not in mock.
+ERROR:   Method upload_points found in real QdrantClient but not in mock.
+ERROR:   Method upload_records found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for upsert in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[Union[qdrant_client.http.models.models.PointStruct, points_pb2.PointStruct]]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points: List[qdrant_client.http.models.models.PointStruct], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+WARNING:   Method _calculate_score found in mock QdrantClient but not in real.
+WARNING:   Method _matches_filter found in mock QdrantClient but not in real.
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+ERROR:   Method _determine_default found in real FirestoreClient but not in mock.
+ERROR:   Method _document_path_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _emulator_channel found in real FirestoreClient but not in mock.
+ERROR:   Method _firestore_api_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _get_collection_reference found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_collections found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_get_all found in real FirestoreClient but not in mock.
+ERROR:   Method _recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method _target_helper found in real FirestoreClient but not in mock.
+ERROR:   Method batch found in real FirestoreClient but not in mock.
+ERROR:   Method bulk_writer found in real FirestoreClient but not in mock.
+ERROR:   Method close found in real FirestoreClient but not in mock.
+ERROR:   Signature mismatch for collection in FirestoreClient:
+ERROR:     Real: (self, *collection_path: 'str') -> 'CollectionReference'
+ERROR:     Mock: (self, collection_name: str) -> tests.mocks.firestore_fake.FakeFirestoreCollection
+ERROR:   Method collection_group found in real FirestoreClient but not in mock.
+ERROR:   Method collections found in real FirestoreClient but not in mock.
+ERROR:   Method document found in real FirestoreClient but not in mock.
+ERROR:   Method field_path found in real FirestoreClient but not in mock.
+ERROR:   Method get_all found in real FirestoreClient but not in mock.
+ERROR:   Method recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method transaction found in real FirestoreClient but not in mock.
+ERROR:   Method write_option found in real FirestoreClient but not in mock.
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+ERROR: Mock drift detected.
+INFO: Checking QdrantClient...
+ERROR:   Signature mismatch for _embed_documents in QdrantClient:
+ERROR:     Real: (self, documents: Iterable[str], embedding_model_name: str = 'BAAI/bge-small-en', batch_size: int = 32, embed_type: str = 'default', parallel: Optional[int] = None) -> Iterable[tuple[str, list[float]]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _embed_models in QdrantClient:
+ERROR:     Real: (self, raw_models: Union[pydantic.main.BaseModel, Iterable[pydantic.main.BaseModel]], is_query: bool = False, batch_size: Optional[int] = None) -> Iterable[pydantic.main.BaseModel]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _embed_models_strict in QdrantClient:
+ERROR:     Real: (self, raw_models: Iterable[Union[dict[str, pydantic.main.BaseModel], pydantic.main.BaseModel]], batch_size: Optional[int] = None, parallel: Optional[int] = None) -> Iterable[pydantic.main.BaseModel]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_image_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, **kwargs: Any) -> 'ImageEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_late_interaction_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, **kwargs: Any) -> 'LateInteractionTextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, deprecated: bool = False, **kwargs: Any) -> 'TextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_sparse_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, deprecated: bool = False, **kwargs: Any) -> 'SparseTextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _points_iterator in QdrantClient:
+ERROR:     Real: (self, ids: Optional[Iterable[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]], metadata: Optional[Iterable[dict[str, Any]]], encoded_docs: Iterable[tuple[str, list[float]]], ids_accumulator: list, sparse_vectors: Optional[Iterable[qdrant_client.http.models.models.SparseVector]] = None) -> Iterable[qdrant_client.http.models.models.PointStruct]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _resolve_query_batch_request in QdrantClient:
+ERROR:     Real: (self, requests: Sequence[qdrant_client.http.models.models.QueryRequest]) -> Sequence[qdrant_client.http.models.models.QueryRequest]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _resolve_query_request in QdrantClient:
+ERROR:     Real: (self, query: qdrant_client.http.models.models.QueryRequest) -> qdrant_client.http.models.models.QueryRequest
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _scored_points_to_query_responses in QdrantClient:
+ERROR:     Real: (self, scored_points: list[qdrant_client.http.models.models.ScoredPoint]) -> list[qdrant_client.fastembed_common.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _sparse_embed_documents in QdrantClient:
+ERROR:     Real: (self, documents: Iterable[str], embedding_model_name: str = 'BAAI/bge-small-en', batch_size: int = 32, parallel: Optional[int] = None) -> Iterable[qdrant_client.http.models.models.SparseVector]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _validate_collection_info in QdrantClient:
+ERROR:     Real: (self, collection_info: qdrant_client.http.models.models.CollectionInfo) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for add in QdrantClient:
+ERROR:     Real: (self, collection_name: str, documents: Iterable[str], metadata: Optional[Iterable[dict[str, Any]]] = None, ids: Optional[Iterable[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]] = None, batch_size: int = 32, parallel: Optional[int] = None, **kwargs: Any) -> list[typing.Union[str, int]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for batch_update_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, update_operations: Sequence[Union[qdrant_client.http.models.models.UpsertOperation, qdrant_client.http.models.models.DeleteOperation, qdrant_client.http.models.models.SetPayloadOperation, qdrant_client.http.models.models.OverwritePayloadOperation, qdrant_client.http.models.models.DeletePayloadOperation, qdrant_client.http.models.models.ClearPayloadOperation, qdrant_client.http.models.models.UpdateVectorsOperation, qdrant_client.http.models.models.DeleteVectorsOperation]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.UpdateResult]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for clear_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for count in QdrantClient:
+ERROR:     Real: (self, collection_name: str, count_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, exact: bool = True, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:     Mock: (self, collection_name: str, count_filter: Optional[qdrant_client.http.models.models.Filter] = None, exact: bool = True, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:   Signature mismatch for create_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Optional[qdrant_client.http.models.models.HnswConfigDiff] = None, optimizers_config: Optional[qdrant_client.http.models.models.OptimizersConfigDiff] = None, wal_config: Optional[qdrant_client.http.models.models.WalConfigDiff] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:   Signature mismatch for create_full_snapshot in QdrantClient:
+ERROR:     Real: (self, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for create_shard_key in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_key: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]], shards_number: Optional[int] = None, replication_factor: Optional[int] = None, placement: Optional[list[int]] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points_selector: Union[List[Union[int, str]], qdrant_client.http.models.models.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for delete_full_snapshot in QdrantClient:
+ERROR:     Real: (self, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, keys: Sequence[str], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_shard_key in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_key: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]], **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_vectors in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors: Sequence[str], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for discover in QdrantClient:
+ERROR:     Real: (self, collection_name: str, target: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector, points_pb2.TargetVector, NoneType] = None, context: Optional[Sequence[Union[qdrant_client.http.models.models.ContextExamplePair, points_pb2.ContextExamplePair]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: int = 0, with_payload: Union[bool, list[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, list[str]] = False, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for discover_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.DiscoverRequest, points_pb2.DiscoverPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for facet in QdrantClient:
+ERROR:     Real: (self, collection_name: str, key: str, facet_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, exact: bool = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.FacetResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_aliases in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsAliasesResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_collection_aliases in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsAliasesResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_collections in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_embedding_size in QdrantClient:
+ERROR:     Real: (self, model_name: Optional[str] = None) -> int
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_fastembed_sparse_vector_params in QdrantClient:
+ERROR:     Real: (self, on_disk: Optional[bool] = None, modifier: Optional[qdrant_client.http.models.models.Modifier] = None) -> Optional[dict[str, qdrant_client.http.models.models.SparseVectorParams]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_fastembed_vector_params in QdrantClient:
+ERROR:     Real: (self, on_disk: Optional[bool] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, NoneType] = None, hnsw_config: Optional[qdrant_client.http.models.models.HnswConfigDiff] = None) -> dict[str, qdrant_client.http.models.models.VectorParams]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_locks in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_sparse_vector_field_name in QdrantClient:
+ERROR:     Real: (self) -> Optional[str]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_vector_field_name in QdrantClient:
+ERROR:     Real: (self) -> str
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for info in QdrantClient:
+ERROR:     Real: (self) -> qdrant_client.http.models.models.VersionInfo
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_full_snapshots in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_shard_snapshots in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_snapshots in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for lock_storage in QdrantClient:
+ERROR:     Real: (self, reason: str, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for migrate in QdrantClient:
+ERROR:     Real: (self, dest_client: qdrant_client.client_base.QdrantBase, collection_names: Optional[list[str]] = None, batch_size: int = 100, recreate_on_collision: bool = False) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for overwrite_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, payload: Dict[str, Any], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_text: str, query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, **kwargs: Any) -> list[qdrant_client.fastembed_common.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_texts: list[str], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, **kwargs: Any) -> list[list[qdrant_client.fastembed_common.QueryResponse]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_batch_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.QueryRequest, points_pb2.QueryPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query: Union[int, str, points_pb2.PointId, list[float], list[list[float]], qdrant_client.http.models.models.SparseVector, qdrant_client.http.models.models.NearestQuery, qdrant_client.http.models.models.RecommendQuery, qdrant_client.http.models.models.DiscoverQuery, qdrant_client.http.models.models.ContextQuery, qdrant_client.http.models.models.OrderByQuery, qdrant_client.http.models.models.FusionQuery, qdrant_client.http.models.models.FormulaQuery, qdrant_client.http.models.models.SampleQuery, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject, NoneType] = None, using: Optional[str] = None, prefetch: Union[qdrant_client.http.models.models.Prefetch, list[qdrant_client.http.models.models.Prefetch], NoneType] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.QueryResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_points_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, group_by: str, query: Union[int, str, points_pb2.PointId, list[float], list[list[float]], qdrant_client.http.models.models.SparseVector, qdrant_client.http.models.models.NearestQuery, qdrant_client.http.models.models.RecommendQuery, qdrant_client.http.models.models.DiscoverQuery, qdrant_client.http.models.models.ContextQuery, qdrant_client.http.models.models.OrderByQuery, qdrant_client.http.models.models.FusionQuery, qdrant_client.http.models.models.FormulaQuery, qdrant_client.http.models.models.SampleQuery, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject, NoneType] = None, using: Optional[str] = None, prefetch: Union[qdrant_client.http.models.models.Prefetch, list[qdrant_client.http.models.models.Prefetch], NoneType] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 3, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend in QdrantClient:
+ERROR:     Real: (self, collection_name: str, positive: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, negative: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: int = 0, with_payload: Union[bool, list[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, list[str]] = False, score_threshold: Optional[float] = None, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, strategy: Optional[qdrant_client.http.models.models.RecommendStrategy] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.RecommendRequest, points_pb2.RecommendPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, group_by: str, positive: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, negative: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 1, score_threshold: Optional[float] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, strategy: Optional[qdrant_client.http.models.models.RecommendStrategy] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recover_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, location: str, api_key: Optional[str] = None, checksum: Optional[str] = None, priority: Optional[qdrant_client.http.models.models.SnapshotPriority] = None, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recover_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, location: str, api_key: Optional[str] = None, checksum: Optional[str] = None, priority: Optional[qdrant_client.http.models.models.SnapshotPriority] = None, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recreate_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams]], sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for retrieve in QdrantClient:
+ERROR:     Real: (self, collection_name: str, ids: Sequence[Union[int, str, points_pb2.PointId]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.Record]
+ERROR:     Mock: (self, collection_name: str, ids: Sequence[Union[int, str]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> List[qdrant_client.http.models.models.Record]
+ERROR:   Signature mismatch for scroll in QdrantClient:
+ERROR:     Real: (self, collection_name: str, scroll_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, order_by: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.OrderBy, points_pb2.OrderBy, NoneType] = None, offset: Union[int, str, points_pb2.PointId, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> tuple[list[qdrant_client.http.models.models.Record], typing.Union[int, str, points_pb2.PointId, NoneType]]
+ERROR:     Mock: (self, collection_name: str, scroll_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, order_by: Union[str, qdrant_client.http.models.models.OrderBy, NoneType] = None, offset: Union[int, str, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> Tuple[List[qdrant_client.http.models.models.Record], Union[int, str, NoneType]]
+ERROR:   Signature mismatch for search in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, collection_name: str, query_vector: Union[Sequence[float], Tuple[str, List[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, search_params: Optional[qdrant_client.http.models.models.SearchParams] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> List[qdrant_client.http.models.models.ScoredPoint]
+ERROR:   Signature mismatch for search_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.SearchRequest, points_pb2.SearchPoints]], timeout: Optional[int] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], group_by: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 1, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_matrix_offsets in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 3, sample: int = 10, using: Optional[str] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.SearchMatrixOffsetsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_matrix_pairs in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 3, sample: int = 10, using: Optional[str] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.SearchMatrixPairsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_model in QdrantClient:
+ERROR:     Real: (self, embedding_model_name: str, max_length: Optional[int] = None, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, cuda: bool = False, device_ids: Optional[list[int]] = None, lazy_load: bool = False, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, payload: Dict[str, Any], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], key: Optional[str] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_sparse_model in QdrantClient:
+ERROR:     Real: (self, embedding_model_name: Optional[str], cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, cuda: bool = False, device_ids: Optional[list[int]] = None, lazy_load: bool = False, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for unlock_storage in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, collection_params: Union[qdrant_client.http.models.models.CollectionParamsDiff, collections_pb2.CollectionParamsDiff, NoneType] = None, vectors_config: Union[Dict[str, ForwardRef('VectorParamsDiff')], collections_pb2.VectorsConfigDiff, NoneType] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, qdrant_client.http.models.models.Disabled, collections_pb2.QuantizationConfigDiff, NoneType] = None, timeout: Optional[int] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_collection_aliases in QdrantClient:
+ERROR:     Real: (self, change_aliases_operations: Sequence[Union[qdrant_client.http.models.models.CreateAliasOperation, qdrant_client.http.models.models.RenameAliasOperation, qdrant_client.http.models.models.DeleteAliasOperation, collections_pb2.AliasOperations]], timeout: Optional[int] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_vectors in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Sequence[qdrant_client.http.models.models.PointVectors], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors: Union[Iterable[Union[List[Annotated[float, Strict(strict=True)]], List[List[Annotated[float, Strict(strict=True)]]], Dict[Annotated[str, Strict(strict=True)], Union[List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector, List[List[Annotated[float, Strict(strict=True)]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject]], dict[str, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], payload: Optional[Iterable[dict[Any, Any]]] = None, ids: Optional[Iterable[Union[int, str, points_pb2.PointId]]] = None, batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Iterable[qdrant_client.http.models.models.PointStruct], batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_records in QdrantClient:
+ERROR:     Real: (self, collection_name: str, records: Iterable[qdrant_client.http.models.models.Record], batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upsert in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[Union[qdrant_client.http.models.models.PointStruct, points_pb2.PointStruct]]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[qdrant_client.http.models.models.PointStruct]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+WARNING:   Method _calculate_score found in mock QdrantClient but not in real.
+WARNING:   Method _matches_filter found in mock QdrantClient but not in real.
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+ERROR:   Signature mismatch for _determine_default in FirestoreClient:
+ERROR:     Real: (project)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _document_path_helper in FirestoreClient:
+ERROR:     Real: (self, *document_path) -> 'List[str]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _emulator_channel in FirestoreClient:
+ERROR:     Real: (self, transport)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _firestore_api_helper in FirestoreClient:
+ERROR:     Real: (self, transport, client_class, client_module) -> 'Any'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_collection_reference in FirestoreClient:
+ERROR:     Real: (self, collection_id: 'str') -> 'BaseCollectionReference[BaseQuery]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _prep_collections in FirestoreClient:
+ERROR:     Real: (self, retry: 'retries.Retry | retries.AsyncRetry | object | None' = None, timeout: 'float | None' = None) -> 'Tuple[dict, dict]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _prep_get_all in FirestoreClient:
+ERROR:     Real: (self, references: 'list', field_paths: 'Iterable[str] | None' = None, transaction: 'BaseTransaction | None' = None, retry: 'retries.Retry | retries.AsyncRetry | object | None' = None, timeout: 'float | None' = None) -> 'Tuple[dict, dict, dict]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _recursive_delete in FirestoreClient:
+ERROR:     Real: (self, reference: 'Union[CollectionReference, DocumentReference]', bulk_writer: "'BulkWriter'", *, chunk_size: 'int' = 5000, depth: 'int' = 0) -> 'int'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _target_helper in FirestoreClient:
+ERROR:     Real: (self, client_class) -> 'str'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for batch in FirestoreClient:
+ERROR:     Real: (self) -> 'WriteBatch'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for bulk_writer in FirestoreClient:
+ERROR:     Real: (self, options: 'Optional[BulkWriterOptions]' = None) -> 'BulkWriter'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for close in FirestoreClient:
+ERROR:     Real: (self)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for collection in FirestoreClient:
+ERROR:     Real: (self, *collection_path: 'str') -> 'CollectionReference'
+ERROR:     Mock: (self, *collection_path: str) -> tests.mocks.firestore_fake.FakeFirestoreCollection
+ERROR:   Signature mismatch for collection_group in FirestoreClient:
+ERROR:     Real: (self, collection_id: 'str') -> 'CollectionGroup'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for collections in FirestoreClient:
+ERROR:     Real: (self, retry: 'retries.Retry | object | None' = <_MethodDefault._DEFAULT_VALUE: <object object at 0x128a84560>>, timeout: 'float | None' = None) -> 'Generator[Any, Any, None]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for document in FirestoreClient:
+ERROR:     Real: (self, *document_path: 'str') -> 'DocumentReference'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for field_path in FirestoreClient:
+ERROR:     Real: (*field_names: 'str') -> 'str'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_all in FirestoreClient:
+ERROR:     Real: (self, references: 'list', field_paths: 'Iterable[str] | None' = None, transaction: 'Transaction | None' = None, retry: 'retries.Retry | object | None' = <_MethodDefault._DEFAULT_VALUE: <object object at 0x128a84560>>, timeout: 'float | None' = None) -> 'Generator[DocumentSnapshot, Any, None]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recursive_delete in FirestoreClient:
+ERROR:     Real: (self, reference: 'Union[CollectionReference, DocumentReference]', *, bulk_writer: "Optional['BulkWriter']" = None, chunk_size: 'int' = 5000) -> 'int'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for transaction in FirestoreClient:
+ERROR:     Real: (self, **kwargs) -> 'Transaction'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for write_option in FirestoreClient:
+ERROR:     Real: (**kwargs) -> 'Union[_helpers.ExistsOption, _helpers.LastUpdateOption]'
+ERROR:     Mock: (self, *args, **kwargs)
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+ERROR: Mock drift detected.
+Check Fixture Drift......................................................Failed
+- hook id: check-fixture-drift
+- exit code: 1
+
+INFO: Checking QdrantClient...
+ERROR:   Signature mismatch for _embed_documents in QdrantClient:
+ERROR:     Real: (self, documents: Iterable[str], embedding_model_name: str = 'BAAI/bge-small-en', batch_size: int = 32, embed_type: str = 'default', parallel: Optional[int] = None) -> Iterable[tuple[str, list[float]]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _embed_models in QdrantClient:
+ERROR:     Real: (self, raw_models: Union[pydantic.main.BaseModel, Iterable[pydantic.main.BaseModel]], is_query: bool = False, batch_size: Optional[int] = None) -> Iterable[pydantic.main.BaseModel]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _embed_models_strict in QdrantClient:
+ERROR:     Real: (self, raw_models: Iterable[Union[dict[str, pydantic.main.BaseModel], pydantic.main.BaseModel]], batch_size: Optional[int] = None, parallel: Optional[int] = None) -> Iterable[pydantic.main.BaseModel]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_image_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, **kwargs: Any) -> 'ImageEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_late_interaction_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, **kwargs: Any) -> 'LateInteractionTextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, deprecated: bool = False, **kwargs: Any) -> 'TextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_or_init_sparse_model in QdrantClient:
+ERROR:     Real: (self, model_name: str, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, deprecated: bool = False, **kwargs: Any) -> 'SparseTextEmbedding'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _points_iterator in QdrantClient:
+ERROR:     Real: (self, ids: Optional[Iterable[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]], metadata: Optional[Iterable[dict[str, Any]]], encoded_docs: Iterable[tuple[str, list[float]]], ids_accumulator: list, sparse_vectors: Optional[Iterable[qdrant_client.http.models.models.SparseVector]] = None) -> Iterable[qdrant_client.http.models.models.PointStruct]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _resolve_query_batch_request in QdrantClient:
+ERROR:     Real: (self, requests: Sequence[qdrant_client.http.models.models.QueryRequest]) -> Sequence[qdrant_client.http.models.models.QueryRequest]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _resolve_query_request in QdrantClient:
+ERROR:     Real: (self, query: qdrant_client.http.models.models.QueryRequest) -> qdrant_client.http.models.models.QueryRequest
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _scored_points_to_query_responses in QdrantClient:
+ERROR:     Real: (self, scored_points: list[qdrant_client.http.models.models.ScoredPoint]) -> list[qdrant_client.fastembed_common.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _sparse_embed_documents in QdrantClient:
+ERROR:     Real: (self, documents: Iterable[str], embedding_model_name: str = 'BAAI/bge-small-en', batch_size: int = 32, parallel: Optional[int] = None) -> Iterable[qdrant_client.http.models.models.SparseVector]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _validate_collection_info in QdrantClient:
+ERROR:     Real: (self, collection_info: qdrant_client.http.models.models.CollectionInfo) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for add in QdrantClient:
+ERROR:     Real: (self, collection_name: str, documents: Iterable[str], metadata: Optional[Iterable[dict[str, Any]]] = None, ids: Optional[Iterable[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]] = None, batch_size: int = 32, parallel: Optional[int] = None, **kwargs: Any) -> list[typing.Union[str, int]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for batch_update_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, update_operations: Sequence[Union[qdrant_client.http.models.models.UpsertOperation, qdrant_client.http.models.models.DeleteOperation, qdrant_client.http.models.models.SetPayloadOperation, qdrant_client.http.models.models.OverwritePayloadOperation, qdrant_client.http.models.models.DeletePayloadOperation, qdrant_client.http.models.models.ClearPayloadOperation, qdrant_client.http.models.models.UpdateVectorsOperation, qdrant_client.http.models.models.DeleteVectorsOperation]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.UpdateResult]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for clear_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for count in QdrantClient:
+ERROR:     Real: (self, collection_name: str, count_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, exact: bool = True, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:     Mock: (self, collection_name: str, count_filter: Optional[qdrant_client.http.models.models.Filter] = None, exact: bool = True, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:   Signature mismatch for create_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Optional[qdrant_client.http.models.models.HnswConfigDiff] = None, optimizers_config: Optional[qdrant_client.http.models.models.OptimizersConfigDiff] = None, wal_config: Optional[qdrant_client.http.models.models.WalConfigDiff] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:   Signature mismatch for create_full_snapshot in QdrantClient:
+ERROR:     Real: (self, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for create_shard_key in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_key: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]], shards_number: Optional[int] = None, replication_factor: Optional[int] = None, placement: Optional[list[int]] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for create_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, wait: bool = True, **kwargs: Any) -> Optional[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points_selector: Union[List[Union[int, str]], qdrant_client.http.models.models.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for delete_full_snapshot in QdrantClient:
+ERROR:     Real: (self, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, keys: Sequence[str], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_shard_key in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_key: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]], **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, snapshot_name: str, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for delete_vectors in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors: Sequence[str], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for discover in QdrantClient:
+ERROR:     Real: (self, collection_name: str, target: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector, points_pb2.TargetVector, NoneType] = None, context: Optional[Sequence[Union[qdrant_client.http.models.models.ContextExamplePair, points_pb2.ContextExamplePair]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: int = 0, with_payload: Union[bool, list[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, list[str]] = False, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for discover_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.DiscoverRequest, points_pb2.DiscoverPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for facet in QdrantClient:
+ERROR:     Real: (self, collection_name: str, key: str, facet_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, exact: bool = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.FacetResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_aliases in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsAliasesResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_collection_aliases in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsAliasesResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_collections in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.CollectionsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_embedding_size in QdrantClient:
+ERROR:     Real: (self, model_name: Optional[str] = None) -> int
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_fastembed_sparse_vector_params in QdrantClient:
+ERROR:     Real: (self, on_disk: Optional[bool] = None, modifier: Optional[qdrant_client.http.models.models.Modifier] = None) -> Optional[dict[str, qdrant_client.http.models.models.SparseVectorParams]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_fastembed_vector_params in QdrantClient:
+ERROR:     Real: (self, on_disk: Optional[bool] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, NoneType] = None, hnsw_config: Optional[qdrant_client.http.models.models.HnswConfigDiff] = None) -> dict[str, qdrant_client.http.models.models.VectorParams]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_locks in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_sparse_vector_field_name in QdrantClient:
+ERROR:     Real: (self) -> Optional[str]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_vector_field_name in QdrantClient:
+ERROR:     Real: (self) -> str
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for info in QdrantClient:
+ERROR:     Real: (self) -> qdrant_client.http.models.models.VersionInfo
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_full_snapshots in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_shard_snapshots in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for list_snapshots in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> list[qdrant_client.http.models.models.SnapshotDescription]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for lock_storage in QdrantClient:
+ERROR:     Real: (self, reason: str, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for migrate in QdrantClient:
+ERROR:     Real: (self, dest_client: qdrant_client.client_base.QdrantBase, collection_names: Optional[list[str]] = None, batch_size: int = 100, recreate_on_collision: bool = False) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for overwrite_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, payload: Dict[str, Any], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_text: str, query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, **kwargs: Any) -> list[qdrant_client.fastembed_common.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_texts: list[str], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, **kwargs: Any) -> list[list[qdrant_client.fastembed_common.QueryResponse]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_batch_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.QueryRequest, points_pb2.QueryPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.QueryResponse]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query: Union[int, str, points_pb2.PointId, list[float], list[list[float]], qdrant_client.http.models.models.SparseVector, qdrant_client.http.models.models.NearestQuery, qdrant_client.http.models.models.RecommendQuery, qdrant_client.http.models.models.DiscoverQuery, qdrant_client.http.models.models.ContextQuery, qdrant_client.http.models.models.OrderByQuery, qdrant_client.http.models.models.FusionQuery, qdrant_client.http.models.models.FormulaQuery, qdrant_client.http.models.models.SampleQuery, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject, NoneType] = None, using: Optional[str] = None, prefetch: Union[qdrant_client.http.models.models.Prefetch, list[qdrant_client.http.models.models.Prefetch], NoneType] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.QueryResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for query_points_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, group_by: str, query: Union[int, str, points_pb2.PointId, list[float], list[list[float]], qdrant_client.http.models.models.SparseVector, qdrant_client.http.models.models.NearestQuery, qdrant_client.http.models.models.RecommendQuery, qdrant_client.http.models.models.DiscoverQuery, qdrant_client.http.models.models.ContextQuery, qdrant_client.http.models.models.OrderByQuery, qdrant_client.http.models.models.FusionQuery, qdrant_client.http.models.models.FormulaQuery, qdrant_client.http.models.models.SampleQuery, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject, NoneType] = None, using: Optional[str] = None, prefetch: Union[qdrant_client.http.models.models.Prefetch, list[qdrant_client.http.models.models.Prefetch], NoneType] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 3, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend in QdrantClient:
+ERROR:     Real: (self, collection_name: str, positive: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, negative: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: int = 0, with_payload: Union[bool, list[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, list[str]] = False, score_threshold: Optional[float] = None, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, strategy: Optional[qdrant_client.http.models.models.RecommendStrategy] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.RecommendRequest, points_pb2.RecommendPoints]], consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recommend_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, group_by: str, positive: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, negative: Optional[Sequence[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector]]] = None, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 1, score_threshold: Optional[float] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, using: Optional[str] = None, lookup_from: Union[qdrant_client.http.models.models.LookupLocation, points_pb2.LookupLocation, NoneType] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, strategy: Optional[qdrant_client.http.models.models.RecommendStrategy] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recover_shard_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, shard_id: int, location: str, api_key: Optional[str] = None, checksum: Optional[str] = None, priority: Optional[qdrant_client.http.models.models.SnapshotPriority] = None, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recover_snapshot in QdrantClient:
+ERROR:     Real: (self, collection_name: str, location: str, api_key: Optional[str] = None, checksum: Optional[str] = None, priority: Optional[qdrant_client.http.models.models.SnapshotPriority] = None, wait: bool = True, **kwargs: Any) -> Optional[bool]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recreate_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams]], sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for retrieve in QdrantClient:
+ERROR:     Real: (self, collection_name: str, ids: Sequence[Union[int, str, points_pb2.PointId]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.Record]
+ERROR:     Mock: (self, collection_name: str, ids: Sequence[Union[int, str]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> List[qdrant_client.http.models.models.Record]
+ERROR:   Signature mismatch for scroll in QdrantClient:
+ERROR:     Real: (self, collection_name: str, scroll_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, order_by: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.OrderBy, points_pb2.OrderBy, NoneType] = None, offset: Union[int, str, points_pb2.PointId, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> tuple[list[qdrant_client.http.models.models.Record], typing.Union[int, str, points_pb2.PointId, NoneType]]
+ERROR:     Mock: (self, collection_name: str, scroll_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, order_by: Union[str, qdrant_client.http.models.models.OrderBy, NoneType] = None, offset: Union[int, str, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> Tuple[List[qdrant_client.http.models.models.Record], Union[int, str, NoneType]]
+ERROR:   Signature mismatch for search in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, collection_name: str, query_vector: Union[Sequence[float], Tuple[str, List[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, search_params: Optional[qdrant_client.http.models.models.SearchParams] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[int, qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> List[qdrant_client.http.models.models.ScoredPoint]
+ERROR:   Signature mismatch for search_batch in QdrantClient:
+ERROR:     Real: (self, collection_name: str, requests: Sequence[Union[qdrant_client.http.models.models.SearchRequest, points_pb2.SearchPoints]], timeout: Optional[int] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, **kwargs: Any) -> list[list[qdrant_client.http.models.models.ScoredPoint]]
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_groups in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], group_by: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, group_size: int = 1, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, with_lookup: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.WithLookup, NoneType] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.GroupsResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_matrix_offsets in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 3, sample: int = 10, using: Optional[str] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.SearchMatrixOffsetsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for search_matrix_pairs in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 3, sample: int = 10, using: Optional[str] = None, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, timeout: Optional[int] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.SearchMatrixPairsResponse
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_model in QdrantClient:
+ERROR:     Real: (self, embedding_model_name: str, max_length: Optional[int] = None, cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, cuda: bool = False, device_ids: Optional[list[int]] = None, lazy_load: bool = False, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_payload in QdrantClient:
+ERROR:     Real: (self, collection_name: str, payload: Dict[str, Any], points: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], key: Optional[str] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for set_sparse_model in QdrantClient:
+ERROR:     Real: (self, embedding_model_name: Optional[str], cache_dir: Optional[str] = None, threads: Optional[int] = None, providers: Optional[Sequence[ForwardRef('OnnxProvider')]] = None, cuda: bool = False, device_ids: Optional[list[int]] = None, lazy_load: bool = False, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for unlock_storage in QdrantClient:
+ERROR:     Real: (self, **kwargs: Any) -> qdrant_client.http.models.models.LocksOption
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, collection_params: Union[qdrant_client.http.models.models.CollectionParamsDiff, collections_pb2.CollectionParamsDiff, NoneType] = None, vectors_config: Union[Dict[str, ForwardRef('VectorParamsDiff')], collections_pb2.VectorsConfigDiff, NoneType] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, qdrant_client.http.models.models.Disabled, collections_pb2.QuantizationConfigDiff, NoneType] = None, timeout: Optional[int] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_collection_aliases in QdrantClient:
+ERROR:     Real: (self, change_aliases_operations: Sequence[Union[qdrant_client.http.models.models.CreateAliasOperation, qdrant_client.http.models.models.RenameAliasOperation, qdrant_client.http.models.models.DeleteAliasOperation, collections_pb2.AliasOperations]], timeout: Optional[int] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for update_vectors in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Sequence[qdrant_client.http.models.models.PointVectors], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors: Union[Iterable[Union[List[Annotated[float, Strict(strict=True)]], List[List[Annotated[float, Strict(strict=True)]]], Dict[Annotated[str, Strict(strict=True)], Union[List[Annotated[float, Strict(strict=True)]], qdrant_client.http.models.models.SparseVector, List[List[Annotated[float, Strict(strict=True)]]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject]], qdrant_client.http.models.models.Document, qdrant_client.http.models.models.Image, qdrant_client.http.models.models.InferenceObject]], dict[str, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], payload: Optional[Iterable[dict[Any, Any]]] = None, ids: Optional[Iterable[Union[int, str, points_pb2.PointId]]] = None, batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_points in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Iterable[qdrant_client.http.models.models.PointStruct], batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upload_records in QdrantClient:
+ERROR:     Real: (self, collection_name: str, records: Iterable[qdrant_client.http.models.models.Record], batch_size: int = 64, parallel: int = 1, method: Optional[str] = None, max_retries: int = 3, wait: bool = False, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for upsert in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[Union[qdrant_client.http.models.models.PointStruct, points_pb2.PointStruct]]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[qdrant_client.http.models.models.PointStruct]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[int, str, List[Union[int, str]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+WARNING:   Method _calculate_score found in mock QdrantClient but not in real.
+WARNING:   Method _matches_filter found in mock QdrantClient but not in real.
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+ERROR:   Signature mismatch for _determine_default in FirestoreClient:
+ERROR:     Real: (project)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _document_path_helper in FirestoreClient:
+ERROR:     Real: (self, *document_path) -> 'List[str]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _emulator_channel in FirestoreClient:
+ERROR:     Real: (self, transport)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _firestore_api_helper in FirestoreClient:
+ERROR:     Real: (self, transport, client_class, client_module) -> 'Any'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _get_collection_reference in FirestoreClient:
+ERROR:     Real: (self, collection_id: 'str') -> 'BaseCollectionReference[BaseQuery]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _prep_collections in FirestoreClient:
+ERROR:     Real: (self, retry: 'retries.Retry | retries.AsyncRetry | object | None' = None, timeout: 'float | None' = None) -> 'Tuple[dict, dict]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _prep_get_all in FirestoreClient:
+ERROR:     Real: (self, references: 'list', field_paths: 'Iterable[str] | None' = None, transaction: 'BaseTransaction | None' = None, retry: 'retries.Retry | retries.AsyncRetry | object | None' = None, timeout: 'float | None' = None) -> 'Tuple[dict, dict, dict]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _recursive_delete in FirestoreClient:
+ERROR:     Real: (self, reference: 'Union[CollectionReference, DocumentReference]', bulk_writer: "'BulkWriter'", *, chunk_size: 'int' = 5000, depth: 'int' = 0) -> 'int'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for _target_helper in FirestoreClient:
+ERROR:     Real: (self, client_class) -> 'str'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for batch in FirestoreClient:
+ERROR:     Real: (self) -> 'WriteBatch'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for bulk_writer in FirestoreClient:
+ERROR:     Real: (self, options: 'Optional[BulkWriterOptions]' = None) -> 'BulkWriter'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for close in FirestoreClient:
+ERROR:     Real: (self)
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for collection in FirestoreClient:
+ERROR:     Real: (self, *collection_path: 'str') -> 'CollectionReference'
+ERROR:     Mock: (self, *collection_path: str) -> tests.mocks.firestore_fake.FakeFirestoreCollection
+ERROR:   Signature mismatch for collection_group in FirestoreClient:
+ERROR:     Real: (self, collection_id: 'str') -> 'CollectionGroup'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for collections in FirestoreClient:
+ERROR:     Real: (self, retry: 'retries.Retry | object | None' = <_MethodDefault._DEFAULT_VALUE: <object object at 0x126624560>>, timeout: 'float | None' = None) -> 'Generator[Any, Any, None]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for document in FirestoreClient:
+ERROR:     Real: (self, *document_path: 'str') -> 'DocumentReference'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for field_path in FirestoreClient:
+ERROR:     Real: (*field_names: 'str') -> 'str'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for get_all in FirestoreClient:
+ERROR:     Real: (self, references: 'list', field_paths: 'Iterable[str] | None' = None, transaction: 'Transaction | None' = None, retry: 'retries.Retry | object | None' = <_MethodDefault._DEFAULT_VALUE: <object object at 0x126624560>>, timeout: 'float | None' = None) -> 'Generator[DocumentSnapshot, Any, None]'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for recursive_delete in FirestoreClient:
+ERROR:     Real: (self, reference: 'Union[CollectionReference, DocumentReference]', *, bulk_writer: "Optional['BulkWriter']" = None, chunk_size: 'int' = 5000) -> 'int'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for transaction in FirestoreClient:
+ERROR:     Real: (self, **kwargs) -> 'Transaction'
+ERROR:     Mock: (self, *args, **kwargs)
+ERROR:   Signature mismatch for write_option in FirestoreClient:
+ERROR:     Real: (**kwargs) -> 'Union[_helpers.ExistsOption, _helpers.LastUpdateOption]'
+ERROR:     Mock: (self, *args, **kwargs)
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+ERROR: Mock drift detected.

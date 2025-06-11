@@ -1,0 +1,4 @@
+Purpose: Measured baseline latency to Qdrant Cloud for performance assessment.
+Total tests: 66/66 (64 passed, 2 skipped).
+Summary: Created probe_qdrant_latency.py to measure ping and simple search latency, logged results in latency_probe.log.
+Note: Next step is to implement Qdrant VectorStore classes and mocks in CLI 113A.

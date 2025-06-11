@@ -1,0 +1,3 @@
+Purpose: Created mock MCP client for testing server interactions.
+Total tests passing: 44/44.
+Summary: Added tests/mocks/mcp_mock_client.py to simulate MCP message passing and tool registration.

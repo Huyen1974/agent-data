@@ -1,0 +1,29 @@
+CLI119D4 Medium Test Results - 50 Documents
+==========================================
+
+Test Configuration:
+- Documents: 50
+- Timeout: 60s
+- Success threshold: 75.00%
+- Doc delay: 0.2s
+- Concurrency: 1
+
+Results:
+- Total time: 20.44 seconds
+- Documents processed: 50
+- Successful: 50
+- Failed: 0
+- Success rate: 100.00%
+- Test result: PASSED
+
+Environment:
+- Mock QdrantStore: Enabled
+- Virtual environment: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python
+- Workspace: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+- Logging level: ERROR (optimized)
+
+Performance:
+- Average time per document: 0.41s
+- Documents per minute: 146.8
+
+Error Summary:

@@ -1,0 +1,19 @@
+CLI108B Guide: Add Migration Smoke Test
+
+Steps taken:
+1. Verified current state: 64/64 tests (62 passed, 2 skipped)
+2. Created tests/api/test_migration.py with smoke test for FAISS to Qdrant migration
+3. Updated tests/test__meta_count.py to expect 65 tests
+4. Verified tests pass: 65/65 (63 passed, 2 skipped)
+5. Checked flake8 compliance - no F401/F841 errors in target directories
+6. Verified fixture drift check passes (exit 0)
+7. Committed changes and tagged as cli108b_all_green
+
+Issues encountered: None
+Resolutions: N/A
+
+Test implementation details:
+- Created fixture to generate small FAISS index (5 vectors, 128 dimensions)
+- Test migrates FAISS index to Qdrant collection with batch_size=2
+- Verifies migration result status and count
+- Verifies actual upsert to Qdrant by checking collection count

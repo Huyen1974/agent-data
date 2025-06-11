@@ -1,0 +1,34 @@
+CLI105A Implementation Guide
+
+STEPS TAKEN:
+1. Verified branch state: git checkout cli103a && git reset --hard cli104b_all_green
+2. Created ADK/agent_data/tools/bulk_upload_tool.py with:
+   - async bulk_upload() function using QdrantClient.upsert for batch uploading
+   - bulk_upload_sync() wrapper for tool registration compatibility
+   - Proper error handling and validation
+   - Support for both provided IDs and auto-generated sequential IDs
+3. Updated ADK/agent_data/tools/register_tools.py to:
+   - Import bulk_upload_sync from bulk_upload_tool
+   - Register "bulk_upload" tool in get_all_tool_functions()
+4. Fixed F401 error in tests/api/test_delete_by_tag.py by removing unused pytest import
+
+ISSUES ENCOUNTERED:
+- F401 error: 'pytest' imported but unused in tests/api/test_delete_by_tag.py
+  Resolution: Removed unused import
+
+VERIFICATION RESULTS:
+- pre-commit run flake8 --all-files: No F401/F841 errors in ADK/agent_data/tools/* and tests/*
+- pytest -q: 51 passed, 2 skipped (53/53 total)
+- scripts/check_fixture_drift.py: exit 0 (no drift detected)
+
+IMPLEMENTATION DETAILS:
+- bulk_upload() accepts collection_name and list of points
+- Each point can have 'id', 'vector', and 'payload' keys
+- Uses QdrantStore().client.upsert() for efficient batch operations
+- Returns status, uploaded_count, message, and operation_id
+- Handles edge cases: empty collection name, invalid points, missing vectors
+
+COMMIT INFO:
+- Commit: ae5b9ca "CLI105A: Implement BULK_UPLOAD endpoint"
+- Tag: cli105a_all_green
+- Files changed: 3 (bulk_upload_tool.py created, register_tools.py updated, test_delete_by_tag.py fixed)

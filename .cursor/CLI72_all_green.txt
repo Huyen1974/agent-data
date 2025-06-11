@@ -1,0 +1,5 @@
+New test added: tests/api/test_missing_filter_tag.py
+Validation tweak: Added @model_validator to SemanticSearchRequest in api_vector_search.py
+Ensured filter_tag is provided if score_threshold is omitted.
+Updated existing tests in tests/api/test_embeddings_api.py to provide filter_tag.
+Total tests: 21/21 passed.

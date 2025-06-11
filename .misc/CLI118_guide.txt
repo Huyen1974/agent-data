@@ -1,0 +1,102 @@
+CLI118 Guide - Security and Observability Enhancement
+====================================================
+
+EXECUTION STEPS:
+===============
+
+1. Environment Setup:
+   - Verified git state: cli103a branch on cli117_all_green
+   - Activated virtual environment with Python 3.10.17
+   - Confirmed all dependencies compatible
+
+2. Dependency Version Pinning:
+   - Checked current versions: qdrant-client 1.14.2, pydantic 2.11.3
+   - Updated requirements.txt with pinned versions:
+     * pydantic==2.11.*
+     * qdrant-client==1.14.*
+   - Added tested-with badge to README
+
+3. Security Scanning Setup:
+   - Installed bandit security scanner (1.8.3)
+   - Configured .pre-commit-config.yaml with bandit hooks
+   - Set to report only high-severity issues
+   - Excluded external directories (functions/, containers/, Documents/)
+
+4. Security Issues Resolution:
+   - Fixed MD5 hash usage: Added usedforsecurity=False parameter
+   - Fixed subprocess security: Removed shell=True, used safer approach
+   - Verified shell scripts have appropriate security measures (set -e)
+
+5. API Key Validation:
+   - Added test_qdrant_cluster_info() to test_qdrant_integration.py
+   - Tests cluster info and collections access
+   - Marked as @pytest.mark.slow for appropriate workflow
+   - Updated test count from 77 to 78
+
+6. Metrics Export Planning:
+   - Created comprehensive plan in .misc/CLI118_metrics_plan.txt
+   - Detailed Prometheus Pushgateway approach (preferred)
+   - Alternative OpenTelemetry approach
+   - Cost considerations for free tier usage
+
+7. Verification:
+   - All tests passing: 78/78 (75 passed, 3 skipped)
+   - Check-fixture-drift: exit code 0
+   - Pre-commit hooks: all passing
+   - Bandit: no high-severity security issues
+
+ISSUES ENCOUNTERED & RESOLUTIONS:
+=================================
+
+Issue 1: Bandit path handling with spaces
+Resolution: Updated exclude patterns and fixed arguments configuration
+
+Issue 2: High-severity security findings
+Resolution: Fixed MD5 hash and subprocess security issues in code
+
+Issue 3: Test count mismatch
+Resolution: Updated expected count from 77 to 78 after adding API key test
+
+Issue 4: Pre-commit hook configuration
+Resolution: Properly configured bandit with high-severity only reporting
+
+DELIVERABLES:
+============
+
+Security Enhancements:
+- Pinned dependency versions for stability
+- Bandit security scanning integrated
+- Code security issues resolved
+- Shell scripts security verified
+
+Observability Improvements:
+- API key validation test added
+- Metrics export plan created
+- Cloud Monitoring integration planned
+- Free tier cost optimization planned
+
+Documentation:
+- .misc/CLI118_error.txt: Complete process log
+- .misc/CLI118_metrics_plan.txt: Detailed metrics export plan
+- .misc/CLI118_guide.txt: Step-by-step guide
+- .misc/CLI118_all_green.txt: Completion summary
+
+VERIFICATION CHECKLIST:
+======================
+✓ requirements.txt pins pydantic==2.11.* and qdrant-client==1.14.*
+✓ README badge added for tested versions
+✓ Bandit security scanning configured and passing
+✓ Security issues in code resolved (MD5, subprocess)
+✓ Shell scripts reviewed and secured
+✓ API key validation test added and working
+✓ Metrics export plan created with detailed implementation steps
+✓ All tests passing (78/78, with 3 skipped)
+✓ Check-fixture-drift passing (exit code 0)
+✓ Pre-commit hooks working correctly
+✓ Git commit and tag created: cli118_all_green
+
+READY FOR NEXT PHASE:
+====================
+CLI 119A: Implement metrics export using Prometheus Pushgateway
+CLI 119B: Add comprehensive metrics collection and alerting
+CLI 120+: Optimize performance and implement distributed tracing

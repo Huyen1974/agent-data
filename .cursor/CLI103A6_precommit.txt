@@ -1,0 +1,759 @@
+trim trailing whitespace.................................................Failed
+- hook id: trailing-whitespace
+- exit code: 1
+- files were modified by this hook
+
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/vectorize_document_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI37_update_vector_async_done.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI52_tag_filtering_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI_Cleanup_error.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mpc-integration/cursor_instructions.cursor
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_keyword_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_local_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI71_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI75_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI40_update_vector_test_separated.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/create_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI47_embeddings_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI67_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI42_batch_update_vectors_tests_added.txt
+Fixing google_docs_cicd_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI74_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI76_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_metadata_node_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_node_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pytest_check_1.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/scripts/build_docker.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/requirements.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI77_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI61_restore_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A1_1_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI33_get_vector_ids_by_tag_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI32_get_vector_by_id_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A1_1_error.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.gitignore
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI73_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI58_restored_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI41_batch_update_vectors_endpoint_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI53_score_threshold_tested.txt
+Fixing functions/check_lark_token/main.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pytest.ini
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/view_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/CLI38_update_vector_verified_and_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/_test_insert_and_query.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.env.example
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py
+Fixing update_data.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/find_metadata_by_key_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/last_test_run.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/setup.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/conditional_search_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI50_regression_resolved.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/run_server_test.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_author_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI63_restore_exact_29_tests.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI69_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/README_MCP_TEST.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI65_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI43_delete_vectors_tests_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_invalid_item_type.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/test_faiss.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/CLI39_update_vector_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_year_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI72_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/depth_first_search_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI34_qdrant_api_secret_created.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI48_batch_ops_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/README_vector_search_api.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Nhật ký Agent data .txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multi_update_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI35_qdrant_api_secret_loader_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/Dockerfile
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Nhật ký Agent data_backup.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/test_outputs/test_save_metadata_to_faiss_prompt20_log.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/reports/log_analysis_report.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI31_purge_all_vectors_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_multiple_fields_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI54_batch_update_by_tag_verified.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pytest_output_faiss.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI62_restore_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI51_vector_safety_verified.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A1_1_guide.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI45_tests_validation_passed.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI36_firestore_sync_enabled.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pytest_output.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Gem 2.5 phản biện.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI59_restore_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI68_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI66_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI70_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/test_outputs/test_save_metadata_to_faiss_prompt16_log.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py
+
+fix end of files.........................................................Failed
+- hook id: end-of-file-fixer
+- exit code: 1
+- files were modified by this hook
+
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/vectorize_document_tool.py
+Fixing Documents/Terraform_TEST/functions/check-lark-token/main.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI37_update_vector_async_done.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI52_tag_filtering_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI_Cleanup_error.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mpc-integration/cursor_instructions.cursor
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/replace_firestore_func.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_keyword_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_local_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI71_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI75_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI40_update_vector_test_separated.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pyproject.toml
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/create_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI47_embeddings_tested.txt
+Fixing main.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI67_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI42_batch_update_vectors_tests_added.txt
+Fixing google_docs_cicd_test.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI74_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/ADK.egg-info/dependency_links.txt
+Fixing functions/function_1/main.py
+Fixing functions/check_lark_token/requirements.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI76_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delete_metadata_node_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_node_tool.py
+Fixing Documents/Terraform_TEST/outputs.tf
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/saved_documents/cursor_doc.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/requirements.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI77_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI61_restore_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A1_1_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/__init__.py
+Fixing google_docs_interaction.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI33_get_vector_ids_by_tag_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI32_get_vector_by_id_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.gitignore
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI73_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI58_restored_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/saved_documents/doc1.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI41_batch_update_vectors_endpoint_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/update_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI53_score_threshold_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/pytest.ini
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/scripts/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/view_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/scripts/test_faiss.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/CLI38_update_vector_verified_and_tested.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/unit/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/_test_insert_and_query.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/saved_documents/doc_perf_test.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.env.example
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A3_error.txt
+Fixing Dockerfiley
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py
+Fixing containers/container-test/main.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py
+Fixing update_data.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/find_metadata_by_key_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/setup.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/conditional_search_metadata_tool.py
+Fixing deploy.yaml
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI50_regression_resolved.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/run_server_test.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_author_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI63_restore_exact_29_tests.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI69_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/README_MCP_TEST.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI65_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py
+Fixing check_google_api_access.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI43_delete_vectors_tests_added.txt
+Fixing workflows/my-first-workflow.yaml
+Fixing Dockerfile
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/base_agent.py
+Fixing Documents/Terraform_TEST/modules/cloud_run/outputs.tf
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/test_faiss.sh
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/CLI39_update_vector_api_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_year_tool.py
+Fixing Procfile
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI72_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/ADK.egg-info/SOURCES.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/saved_documents/doc_mcp_test1.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/__init__.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py
+Fixing cloudbuild.yaml
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/depth_first_search_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI34_qdrant_api_secret_created.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/README_vector_search_api.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Nhật ký Agent data .txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multi_update_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI35_qdrant_api_secret_loader_added.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/Dockerfile
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Nhật ký Agent data_backup.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/reports/log_analysis_report.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI31_purge_all_vectors_api_added.txt
+Fixing requirements.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_multiple_fields_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI54_batch_update_by_tag_verified.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/task_report.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI51_vector_safety_verified.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI103A1_1_guide.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI45_tests_validation_passed.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI36_firestore_sync_enabled.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/setup/adk/Gem 2.5 phản biện.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI59_restore_29_pass.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/task_report.md
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI68_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_case.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI66_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/CLI70_all_green.txt
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py
+Fixing Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py
+Fixing backend.py
+
+check yaml...............................................................Passed
+check for added large files..............................................Passed
+black....................................................................Failed
+- hook id: black
+- files were modified by this hook
+
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/__init__.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/__init__.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/memory_manager.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/local_mcp_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/add_numbers_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/echo_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/error_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/delay_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/advanced_query_faiss_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/staged_web_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/multiply_numbers_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/analyze_metadata_trends_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/metadata_statistics_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/reverse_text_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_document_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_author_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/rebuild_metadata_tree_from_faiss_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_text_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_by_year_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/utils/gcs_utils.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/add_test_firestore_client_fail.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/_test_insert_and_query.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_invalid_item_type.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/agent_toolkit/tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_metadata_tree_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_filter_metadata_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/create_collection.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/fix_malformed_embedding_result.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/firestore_metadata_manager.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/migrate_faiss_to_qdrant.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/setup.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/run_perf_test.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_delay_tool_completes_under_2s.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_query_text.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_blank_query_text.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_case.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_threshold.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_filter_tag_no_match.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_over_threshold.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_empty_filter_tag.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/temp_perf_test.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_echo_tool_integration.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_invalid_top_k.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_missing_filter_tag.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_mcp_exit_gracefully.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_text_too_long.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_parallel_calls_under_threshold.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_dry_run_stats.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_zero.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_save_metadata_roundtrip.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_larger_than_data.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_score_threshold_strict.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_minimum.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_upload_and_download_blob.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_top_k_too_large.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/mcp_mock_client.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/faiss_duplicate_id_fixture.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/firestore_fake.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py
+reformatted Documents/Terraform_TEST/functions/dummy_function/main.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tools/delay_tool.py
+reformatted backend.py
+reformatted check_google_api_access.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py
+reformatted containers/container-test/main.py
+reformatted google_docs_interaction.py
+reformatted Documents/Terraform_TEST/functions/check-lark-token/main.py
+reformatted main.py
+reformatted test_cline.py
+reformatted functions/function_1/main.py
+reformatted functions/check_lark_token/main.py
+reformatted update_data.py
+reformatted google_docs_cicd_test.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py
+reformatted Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py
+
+All done! ✨ 🍰 ✨
+96 files reformatted, 74 files left unchanged.
+
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/.cursor/staged_web_server.py:52:13: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/agent_data_agent.py:9:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:4:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/agent/tools_manager.py:4:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Optional' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Any' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:6:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:7:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent.py:8:1: F401 'argparse' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:2:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:5:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.Tuple' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/mcp_agent_core.py:8:1: F401 'typing.cast' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:33:9: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/web_server.py:43:13: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/clear_embeddings_tool.py:39:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:31:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:32:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:39:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:40:5: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/external_tool_registry.py:393:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/generate_embedding_real_tool.py:20:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:8:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:9:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:10:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:11:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:12:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:13:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:16:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:18:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:19:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:20:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:22:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:23:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:26:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:27:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:28:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:29:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:30:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:31:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:32:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:33:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:34:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:35:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:38:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:39:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:40:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:41:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:42:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:43:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:44:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:45:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:48:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:49:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:50:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:53:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:54:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:55:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:56:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:57:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:58:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:61:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:65:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/register_tools.py:81:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py:458:9: F821 undefined name 'openai'
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/semantic_search_cosine_tool.py:40:50: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/add_test_vector_count_mismatch.py:1:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:3:1: F401 'qdrant_client.models.PointsSelector' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:12:1: F401 'qdrant_client.http.models' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/agent_data/vector_store/qdrant_store.py:13:1: F401 'uuid' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:1:1: F401 'fastapi.Body' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:1:1: F401 'fastapi.Query' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:1:1: F401 'fastapi.BackgroundTasks' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:6:1: F401 'qdrant_client.http.models.PointStruct' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:8:1: F401 'uuid' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:9:1: F401 'fastapi.responses.JSONResponse' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/api_vector_search.py:12:1: F401 'numpy as np' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:2:1: F401 'asyncio' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:42:5: F841 local variable 'order_98b' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:43:5: F841 local variable 'order_97b' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:157:13: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:251:9: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:274:5: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py:288:5: F841 local variable 'e' is assigned to but never used
+Documents/Manual Deploy/mpc_back_end_for_agents/create_collection.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/create_collection.py:26:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/generate_report_plots.py:1:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:12:1: F401 'mcp' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:12:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:25:5: F401 'ADK.agent_data.tools.echo_tool.echo' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:26:5: F401 'ADK.agent_data.tools.save_text_tool.save_text' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:27:5: F401 'ADK.agent_data.tools.add_numbers_tool.add_numbers' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/local_mcp_server.py:28:5: F401 'ADK.agent_data.tools.get_registered_tools_tool.get_registered_tools' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Optional' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.List' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Dict' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Any' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:6:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:7:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent.py:8:1: F401 'argparse' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:2:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:5:1: F401 'traceback' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.Union' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.Tuple' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:8:1: F401 'typing.cast' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/mcp_agent_core.py:12:1: F401 'ADK.agent_data.agent.tools_manager.ToolsManager' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp_test_runner.py:3:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/scripts/validate_batch_tools.py:3:1: F401 'os' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_embeddings_api.py:17:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_query_vectors_api.py:37:32: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_vector_edge_cases.py:21:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_basic.py:8:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_basic.py:9:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_basic.py:10:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_basic.py:11:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_basic.py:28:1: E402 module level import not at top of file
+Documents/Terraform_TEST/functions/check-lark-token/main.py:1:1: F401 'flask.request' imported but unused
+Documents/Terraform_TEST/functions/check-lark-token/main.py:6:1: F401 'datetime.timedelta' imported but unused
+Documents/Terraform_TEST/functions/check-lark-token/main.py:26:5: F841 local variable 'e' is assigned to but never used
+Documents/Terraform_TEST/functions/dummy_function/main.py:1:1: F401 'flask.request' imported but unused
+containers/container-test/main.py:1:1: F401 'flask.request' imported but unused
+containers/container-test/main.py:1:1: F401 'flask.jsonify' imported but unused
+functions/check_lark_token/main.py:2:1: F401 'json' imported but unused
+functions/check_lark_token/main.py:80:13: F821 undefined name 'time'
+functions/function_1/main.py:1:1: F401 'flask.request' imported but unused
+functions/function_1/main.py:6:16: F811 redefinition of unused 'request' from line 1
+functions/function_1/main.py:20:50: F821 undefined name 'os'
+google_docs_cicd_test.py:1:1: F401 'os' imported but unused
+google_docs_cicd_test.py:2:1: F401 'google.auth' imported but unused
+google_docs_cicd_test.py:38:9: F841 local variable 'result' is assigned to but never used
+google_docs_cicd_test.py:47:9: F841 local variable 'result' is assigned to but never used
+
+Python Compile Check.....................................................Passed
+Check Fixture Drift......................................................Failed
+- hook id: check-fixture-drift
+- exit code: 1
+
+INFO: Checking QdrantClient...
+ERROR:   Method _embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models found in real QdrantClient but not in mock.
+ERROR:   Method _embed_models_strict found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_image_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_late_interaction_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_model found in real QdrantClient but not in mock.
+ERROR:   Method _get_or_init_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method _points_iterator found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_batch_request found in real QdrantClient but not in mock.
+ERROR:   Method _resolve_query_request found in real QdrantClient but not in mock.
+ERROR:   Method _scored_points_to_query_responses found in real QdrantClient but not in mock.
+ERROR:   Method _sparse_embed_documents found in real QdrantClient but not in mock.
+ERROR:   Method _validate_collection_info found in real QdrantClient but not in mock.
+ERROR:   Method add found in real QdrantClient but not in mock.
+ERROR:   Method batch_update_points found in real QdrantClient but not in mock.
+ERROR:   Method clear_payload found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for close in QdrantClient:
+ERROR:     Real: (self, grpc_grace: Optional[float] = None, **kwargs: Any) -> None
+ERROR:     Mock: (self)
+ERROR:   Signature mismatch for collection_exists in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str) -> bool
+ERROR:   Signature mismatch for count in QdrantClient:
+ERROR:     Real: (self, collection_name: str, count_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, exact: bool = True, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> qdrant_client.http.models.models.CountResult
+ERROR:     Mock: (self, collection_name: str, count_filter: Optional[qdrant_client.http.models.models.Filter] = None, exact: bool = True, **kwargs) -> qdrant_client.http.models.models.CountResult
+ERROR:   Signature mismatch for create_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, vectors_config: Union[qdrant_client.http.models.models.VectorParams, Mapping[str, qdrant_client.http.models.models.VectorParams], NoneType] = None, sparse_vectors_config: Optional[Mapping[str, qdrant_client.http.models.models.SparseVectorParams]] = None, shard_number: Optional[int] = None, sharding_method: Optional[qdrant_client.http.models.models.ShardingMethod] = None, replication_factor: Optional[int] = None, write_consistency_factor: Optional[int] = None, on_disk_payload: Optional[bool] = None, hnsw_config: Union[qdrant_client.http.models.models.HnswConfigDiff, collections_pb2.HnswConfigDiff, NoneType] = None, optimizers_config: Union[qdrant_client.http.models.models.OptimizersConfigDiff, collections_pb2.OptimizersConfigDiff, NoneType] = None, wal_config: Union[qdrant_client.http.models.models.WalConfigDiff, collections_pb2.WalConfigDiff, NoneType] = None, quantization_config: Union[qdrant_client.http.models.models.ScalarQuantization, qdrant_client.http.models.models.ProductQuantization, qdrant_client.http.models.models.BinaryQuantization, collections_pb2.QuantizationConfig, NoneType] = None, init_from: Union[qdrant_client.http.models.models.InitFrom, str, NoneType] = None, timeout: Optional[int] = None, strict_mode_config: Optional[qdrant_client.http.models.models.StrictModeConfig] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, vectors_config: Union[Dict, qdrant_client.http.models.models.VectorParams], **kwargs) -> bool
+ERROR:   Method create_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for create_payload_index in QdrantClient:
+ERROR:     Real: (self, collection_name: str, field_name: str, field_schema: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, field_type: Union[qdrant_client.http.models.models.PayloadSchemaType, qdrant_client.http.models.models.KeywordIndexParams, qdrant_client.http.models.models.IntegerIndexParams, qdrant_client.http.models.models.FloatIndexParams, qdrant_client.http.models.models.GeoIndexParams, qdrant_client.http.models.models.TextIndexParams, qdrant_client.http.models.models.BoolIndexParams, qdrant_client.http.models.models.DatetimeIndexParams, qdrant_client.http.models.models.UuidIndexParams, int, collections_pb2.PayloadIndexParams, NoneType] = None, wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, field_name: str, field_schema: Any, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Method create_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method create_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method create_snapshot found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for delete in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points_selector: Union[list[Union[int, str, points_pb2.PointId]], qdrant_client.http.models.models.Filter, points_pb2.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector, points_pb2.PointsSelector], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points_selector: Union[List[Union[int, str, uuid.UUID]], qdrant_client.http.models.models.Filter, qdrant_client.http.models.models.PointIdsList, qdrant_client.http.models.models.FilterSelector], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+ERROR:   Signature mismatch for delete_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, timeout: Optional[int] = None, **kwargs: Any) -> bool
+ERROR:     Mock: (self, collection_name: str, timeout: Optional[int] = None) -> bool
+ERROR:   Method delete_full_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload found in real QdrantClient but not in mock.
+ERROR:   Method delete_payload_index found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_key found in real QdrantClient but not in mock.
+ERROR:   Method delete_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method delete_vectors found in real QdrantClient but not in mock.
+ERROR:   Method discover found in real QdrantClient but not in mock.
+ERROR:   Method discover_batch found in real QdrantClient but not in mock.
+ERROR:   Method facet found in real QdrantClient but not in mock.
+ERROR:   Method get_aliases found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for get_collection in QdrantClient:
+ERROR:     Real: (self, collection_name: str, **kwargs: Any) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:     Mock: (self, collection_name: str) -> qdrant_client.http.models.models.CollectionInfo
+ERROR:   Method get_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method get_collections found in real QdrantClient but not in mock.
+ERROR:   Method get_embedding_size found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_sparse_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_fastembed_vector_params found in real QdrantClient but not in mock.
+ERROR:   Method get_locks found in real QdrantClient but not in mock.
+ERROR:   Method get_sparse_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method get_vector_field_name found in real QdrantClient but not in mock.
+ERROR:   Method info found in real QdrantClient but not in mock.
+ERROR:   Method list_full_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_shard_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method list_snapshots found in real QdrantClient but not in mock.
+ERROR:   Method lock_storage found in real QdrantClient but not in mock.
+ERROR:   Method migrate found in real QdrantClient but not in mock.
+ERROR:   Method overwrite_payload found in real QdrantClient but not in mock.
+ERROR:   Method query found in real QdrantClient but not in mock.
+ERROR:   Method query_batch found in real QdrantClient but not in mock.
+ERROR:   Method query_batch_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points found in real QdrantClient but not in mock.
+ERROR:   Method query_points_groups found in real QdrantClient but not in mock.
+ERROR:   Method recommend found in real QdrantClient but not in mock.
+ERROR:   Method recommend_batch found in real QdrantClient but not in mock.
+ERROR:   Method recommend_groups found in real QdrantClient but not in mock.
+ERROR:   Method recover_shard_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recover_snapshot found in real QdrantClient but not in mock.
+ERROR:   Method recreate_collection found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for retrieve in QdrantClient:
+ERROR:     Real: (self, collection_name: str, ids: Sequence[Union[int, str, points_pb2.PointId]], with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.Record]
+ERROR:     Mock: (self, collection_name: str, ids: List[Union[int, str, uuid.UUID]], with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.Record]
+ERROR:   Signature mismatch for scroll in QdrantClient:
+ERROR:     Real: (self, collection_name: str, scroll_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, limit: int = 10, order_by: Union[Annotated[str, Strict(strict=True)], qdrant_client.http.models.models.OrderBy, points_pb2.OrderBy, NoneType] = None, offset: Union[int, str, points_pb2.PointId, NoneType] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> tuple[list[qdrant_client.http.models.models.Record], typing.Union[int, str, points_pb2.PointId, NoneType]]
+ERROR:     Mock: (self, collection_name: str, scroll_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, offset: Union[int, str, uuid.UUID, NoneType] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> tuple[typing.List[qdrant_client.http.models.models.Record], typing.Union[int, str, uuid.UUID, NoneType]]
+ERROR:   Signature mismatch for search in QdrantClient:
+ERROR:     Real: (self, collection_name: str, query_vector: Union[Sequence[float], tuple[str, list[float]], qdrant_client.http.models.models.NamedVector, qdrant_client.http.models.models.NamedSparseVector, numpy.ndarray[Any, numpy.dtype[Union[numpy.bool_, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.float16, numpy.float32, numpy.float64, numpy.longdouble]]]], query_filter: Union[qdrant_client.http.models.models.Filter, points_pb2.Filter, NoneType] = None, search_params: Union[qdrant_client.http.models.models.SearchParams, points_pb2.SearchParams, NoneType] = None, limit: int = 10, offset: Optional[int] = None, with_payload: Union[bool, Sequence[str], qdrant_client.http.models.models.PayloadSelectorInclude, qdrant_client.http.models.models.PayloadSelectorExclude, points_pb2.WithPayloadSelector] = True, with_vectors: Union[bool, Sequence[str]] = False, score_threshold: Optional[float] = None, append_payload: bool = True, consistency: Union[Annotated[int, Strict(strict=True)], qdrant_client.http.models.models.ReadConsistencyType, NoneType] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, timeout: Optional[int] = None, **kwargs: Any) -> list[qdrant_client.http.models.models.ScoredPoint]
+ERROR:     Mock: (self, collection_name: str, query_vector: List[float], query_filter: Optional[qdrant_client.http.models.models.Filter] = None, limit: int = 10, score_threshold: Optional[float] = None, with_payload: bool = True, with_vectors: bool = False, **kwargs) -> List[qdrant_client.http.models.models.ScoredPoint]
+ERROR:   Method search_batch found in real QdrantClient but not in mock.
+ERROR:   Method search_groups found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_offsets found in real QdrantClient but not in mock.
+ERROR:   Method search_matrix_pairs found in real QdrantClient but not in mock.
+ERROR:   Method set_model found in real QdrantClient but not in mock.
+ERROR:   Method set_payload found in real QdrantClient but not in mock.
+ERROR:   Method set_sparse_model found in real QdrantClient but not in mock.
+ERROR:   Method unlock_storage found in real QdrantClient but not in mock.
+ERROR:   Method update_collection found in real QdrantClient but not in mock.
+ERROR:   Method update_collection_aliases found in real QdrantClient but not in mock.
+ERROR:   Method update_vectors found in real QdrantClient but not in mock.
+ERROR:   Method upload_collection found in real QdrantClient but not in mock.
+ERROR:   Method upload_points found in real QdrantClient but not in mock.
+ERROR:   Method upload_records found in real QdrantClient but not in mock.
+ERROR:   Signature mismatch for upsert in QdrantClient:
+ERROR:     Real: (self, collection_name: str, points: Union[qdrant_client.http.models.models.Batch, Sequence[Union[qdrant_client.http.models.models.PointStruct, points_pb2.PointStruct]]], wait: bool = True, ordering: Optional[qdrant_client.http.models.models.WriteOrdering] = None, shard_key_selector: Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)], List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]], NoneType] = None, **kwargs: Any) -> qdrant_client.http.models.models.UpdateResult
+ERROR:     Mock: (self, collection_name: str, points: List[qdrant_client.http.models.models.PointStruct], wait: bool = True, **kwargs) -> qdrant_client.http.models.models.UpdateResult
+WARNING:   Method _calculate_score found in mock QdrantClient but not in real.
+WARNING:   Method _matches_filter found in mock QdrantClient but not in real.
+WARNING:   Method delete_points found in mock QdrantClient but not in real.
+WARNING:   Method list_collections found in mock QdrantClient but not in real.
+WARNING:   Method upsert_points found in mock QdrantClient but not in real.
+INFO: Checking FirestoreClient...
+ERROR:   Method _determine_default found in real FirestoreClient but not in mock.
+ERROR:   Method _document_path_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _emulator_channel found in real FirestoreClient but not in mock.
+ERROR:   Method _firestore_api_helper found in real FirestoreClient but not in mock.
+ERROR:   Method _get_collection_reference found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_collections found in real FirestoreClient but not in mock.
+ERROR:   Method _prep_get_all found in real FirestoreClient but not in mock.
+ERROR:   Method _recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method _target_helper found in real FirestoreClient but not in mock.
+ERROR:   Method batch found in real FirestoreClient but not in mock.
+ERROR:   Method bulk_writer found in real FirestoreClient but not in mock.
+ERROR:   Method close found in real FirestoreClient but not in mock.
+ERROR:   Signature mismatch for collection in FirestoreClient:
+ERROR:     Real: (self, *collection_path: 'str') -> 'CollectionReference'
+ERROR:     Mock: (self, collection_name: str) -> tests.mocks.firestore_fake.FakeFirestoreCollection
+ERROR:   Method collection_group found in real FirestoreClient but not in mock.
+ERROR:   Method collections found in real FirestoreClient but not in mock.
+ERROR:   Method document found in real FirestoreClient but not in mock.
+ERROR:   Method field_path found in real FirestoreClient but not in mock.
+ERROR:   Method get_all found in real FirestoreClient but not in mock.
+ERROR:   Method recursive_delete found in real FirestoreClient but not in mock.
+ERROR:   Method transaction found in real FirestoreClient but not in mock.
+ERROR:   Method write_option found in real FirestoreClient but not in mock.
+WARNING:   Method clear_all_data found in mock FirestoreClient but not in real.
+ERROR: Mock drift detected.

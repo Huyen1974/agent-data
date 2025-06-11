@@ -1,0 +1,4 @@
+Purpose: Added tests for DELETE_BY_TAG endpoint.
+Total tests: 53/53 (51 passed, 2 skipped).
+Summary: Implemented tests for valid tag deletion, empty tag, non-existent tag.
+Note: Next step is CLI 104C for further DELETE_BY_TAG enhancements or CLI 105A for new feature.

@@ -1,0 +1,112 @@
+CLI119D6 Execution Guide - Complete Metrics Propagation, Deploy Alerting Policy, and Enhance Real API Calls
+=====================================================================================================
+
+EXECUTION DATE: $(date)
+PROJECT: chatgpt-db-project (1042559846495)
+SERVICE ACCOUNT: gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com
+BRANCH: cli103a → cli119d6
+
+CURRENT STATUS:
+- Test Suite: 79 passed, 4 skipped ✅
+- Qdrant Integration: Functional with real API calls ✅
+- Metrics: Generated in Pushgateway (production project) ⚠️
+- Alerting Policy: Not deployed ❌
+- Timeout/Retry Logic: Missing in test_subprocess_real_api_calls ❌
+
+EXECUTION PLAN:
+==============
+
+TASK 1: Verify Metrics Propagation Status
+-----------------------------------------
+1.1. Check Cloud Monitoring for custom metrics on chatgpt-db-project
+1.2. Verify if metrics exporter needs to be deployed on test project
+1.3. Check Pushgateway status and metrics availability
+1.4. Troubleshoot metrics propagation if needed
+
+TASK 2: Deploy Alerting Policy
+------------------------------
+2.1. Verify alert_policy_latency.json configuration
+2.2. Deploy alerting policy to chatgpt-db-project
+2.3. Validate policy deployment in Cloud Monitoring
+2.4. Test alerting policy functionality
+
+TASK 3: Enhance test_subprocess_real_api_calls with Timeout/Retry Logic
+----------------------------------------------------------------------
+3.1. Add asyncio.wait_for for timeout handling
+3.2. Implement retry logic with exponential backoff
+3.3. Add proper error handling for Qdrant rate limits
+3.4. Optimize for free tier constraints (210-305ms/call)
+3.5. Ensure MacBook M1 compatibility
+
+TASK 4: Verify Test Suite Stability
+-----------------------------------
+4.1. Run full test suite to confirm 79/83 pass rate
+4.2. Investigate any test failures or inconsistencies
+4.3. Ensure Python 3.10.17 compatibility
+4.4. Verify mock vs real API test separation
+
+TASK 5: Cleanup CLI119D4.2 Resources
+------------------------------------
+5.1. Identify resources on github-chatgpt-ggcloud from CLI119D4.2
+5.2. Delete unnecessary dashboards and resources
+5.3. Ensure no conflicts with current setup
+
+TASK 6: Add New Test Case for Timeout/Retry Logic
+-------------------------------------------------
+6.1. Create test_timeout_retry_logic in test_mcp_integration.py
+6.2. Test timeout scenarios with simulated delays
+6.3. Test retry scenarios with simulated failures
+6.4. Ensure >75% success rate requirement
+
+TASK 7: Prepare MCP stdio for Cursor Connectivity
+-------------------------------------------------
+7.1. Test JSON input/output with local_mcp_server.py
+7.2. Verify stdio communication protocol
+7.3. Test Agent development readiness
+7.4. Prepare for CSKH and Knowledge Manager integration
+
+TASK 8: Final Validation and Documentation
+------------------------------------------
+8.1. Update .misc/CLI119A_error.txt with execution log
+8.2. Create comprehensive test report
+8.3. Commit changes and tag cli119d6_all_green
+8.4. Prepare summary for CLI119D7 planning
+
+IMPLEMENTATION DETAILS:
+======================
+
+Timeout/Retry Logic Implementation:
+- Use asyncio.wait_for() with configurable timeouts
+- Implement exponential backoff: 1s, 2s, 4s, 8s
+- Maximum 3 retry attempts per operation
+- Rate limit handling: 210-305ms between calls
+- Circuit breaker pattern for consecutive failures
+
+Error Handling Strategy:
+- Distinguish between timeout, rate limit, and API errors
+- Graceful degradation for partial failures
+- Comprehensive logging for debugging
+- Metrics collection for monitoring
+
+Test Enhancement Approach:
+- Separate timeout/retry tests from main functionality
+- Use mock delays to simulate real-world conditions
+- Validate both success and failure scenarios
+- Ensure compatibility with existing test suite
+
+EXPECTED OUTCOMES:
+=================
+✅ Metrics propagated to Cloud Monitoring (3+ qdrant_*, 3+ business metrics)
+✅ Alerting policy deployed and functional on chatgpt-db-project
+✅ test_subprocess_real_api_calls enhanced with robust timeout/retry logic
+✅ Test suite maintains 79/83 pass rate (4 skipped)
+✅ CLI119D4.2 resources cleaned up
+✅ New test case passes with >75% success rate
+✅ MCP stdio ready for Cursor connectivity
+✅ All actions use chatgpt-db-project and correct service account
+✅ Documentation updated and commit tagged
+
+NEXT PHASE:
+==========
+CLI119D7: Cursor connectivity and Agent development (CSKH, Knowledge Manager)
+CLI119D8: Paid tier preparation and large-scale testing

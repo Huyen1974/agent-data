@@ -1,0 +1,10 @@
+CLI61 Restore Process Log:
+[LOG] Deleted tests/api/test_batch_update_by_tag.py
+[LOG] Deleted directory ADK/agent_data/tests/
+[LOG] Deleted directory ADK/agent_data/test_outputs/
+[LOG] Deleted test_api_vector_search.py from workspace root.
+[LOG] Refactored tests/api/test_vector_safety_check.py to use /upsert_vector instead of /batch_insert_vectors due to missing batch endpoint.
+[LOG] Refactored tests/api/test_vector_tag_filtering.py to use /upsert_vector instead of /batch_insert_vectors.
+[LOG] Deleted tests/test_validate_batch_tools.py.
+[LOG] Created __init__.py in tests/, tests/api/, tests/unit/.
+[LOG] Qdrant check: FAILED. Qdrant not accessible at http://localhost:6333. Waiting for user to start Qdrant.

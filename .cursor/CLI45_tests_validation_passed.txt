@@ -1,0 +1,12 @@
+All 4 test cases in tests/api/test_vector_edge_cases.py passed successfully.
+
+Summary of actions taken to achieve this:
+1.  Corrected Python import paths in the test file (sys.path manipulation and import statement for the FastAPI app from `api_vector_search.py`).
+2.  Modified test calls to `/get_vector_by_id` to use POST with a JSON body instead of GET with query parameters, aligning with the API definition.
+3.  Updated `VECTOR_DIMENSION` in the test file to 1536 to match API validation rules.
+4.  Corrected the payload structure for calls to `/upsert_vector` in `test_query_vectors_by_ids_partial_invalid` to send a single item directly, not a list, and updated status assertion from "success"/"updated" to "ok".
+5.  Implemented the missing `/query_vectors_by_ids` functionality:
+    a.  Added `get_vectors_by_ids` method to `QdrantStore` (in `agent_data/vector_store/qdrant_store.py`) to fetch multiple points by their IDs using Qdrant client's `retrieve`.
+    b.  Added the `/query_vectors_by_ids` API endpoint to `api_vector_search.py`, including Pydantic request/response models. This new endpoint uses the new store method and returns a list of found points, fulfilling the requirements of `test_query_vectors_by_ids_partial_invalid`.
+
+All tests now pass, validating the edge case handling for the vector API operations.

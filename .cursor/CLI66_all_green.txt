@@ -1,0 +1,9 @@
+- New test: tests/api/test_search_tag_and_threshold.py added.
+  - Test verifies /semantic_search_cosine with combined filter_tag and score_threshold.
+- Helper edits:
+  - Corrected FastAPI app import in the new test file (from api_vector_search instead of app.main).
+  - Refactored mock setup to use dependency override for QdrantStore and monkeypatch for embeddings.
+  - Adjusted mock Qdrant operations to be synchronous to match actual QdrantStore methods.
+  - Corrected parsing of API response in the test assertion.
+- All 15 tests are passing (14 existing + 1 new).
+- Git branch: cli66, Tag: CLI66_all_green.

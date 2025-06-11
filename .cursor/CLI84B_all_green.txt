@@ -1,0 +1,3 @@
+Purpose: Added test for semantic search with filter tag containing trailing spaces.
+Total tests passing: 34/34.
+Summary: Verified filter tags with trailing spaces are trimmed and matched correctly.

@@ -1,0 +1,1 @@
+Test document 40: This is a comprehensive test document for evaluating the MCP server's performance with medium-scale operations. The document contains meaningful content to test embedding generation and semantic search capabilities. Document ID: 40, Category: Medium Scale Test

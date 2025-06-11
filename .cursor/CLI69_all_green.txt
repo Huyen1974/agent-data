@@ -1,0 +1,7 @@
+New test: tests/api/test_invalid_over_threshold.py
+Purpose: Verify API validation for score_threshold > 1.0.
+Payload: {"query_text":"edge-case check","top_k":3,"score_threshold":1.5}
+Expected: HTTP 422, detail contains "score_threshold must be between 0 and 1".
+Code fix: None. Existing validation for score_threshold in SemanticSearchRequest was sufficient.
+Result: 18 tests passed.
+All previous tests remain green.

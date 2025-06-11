@@ -1,0 +1,4 @@
+Purpose: Implemented Qdrant VectorStore classes and mocks for Agent Data development.
+Total tests: 69/69 (67 passed, 2 skipped).
+Summary: Created base.py, qdrant_store.py, fake_qdrant_v2.py, updated settings, added PointsSelector tests to replace FAISS dependency.
+Note: Next step is to integrate QdrantStore with ToolsManager in CLI 113B.

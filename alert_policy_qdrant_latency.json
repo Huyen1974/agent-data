@@ -1,0 +1,70 @@
+{
+  "displayName": "Qdrant Agent Data Latency Alert",
+  "documentation": {
+    "content": "Alert when Qdrant request latency exceeds 1 second or connection fails in Agent Data system",
+    "mimeType": "text/markdown"
+  },
+  "conditions": [
+    {
+      "displayName": "Qdrant Request Latency High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_request_duration_seconds\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "Qdrant Connection Down",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_connection_status\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_LT",
+        "thresholdValue": 1.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "Embedding Generation Slow",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/embedding_generation_duration_seconds\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 2.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    }
+  ],
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  },
+  "severity": "WARNING"
+} 

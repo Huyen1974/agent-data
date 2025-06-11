@@ -1,0 +1,110 @@
+CLI110B Implementation Guide: Snapshot Restore on Cloud Run
+
+=== OVERVIEW ===
+This guide documents the implementation of snapshot restore functionality for Cloud Run deployment of Qdrant with automatic GCS snapshot restoration on startup.
+
+=== IMPLEMENTATION STEPS ===
+
+1. Created Snapshot Restore Script (scripts/qdrant_restore.py)
+   - Downloads latest snapshot from GCS bucket by creation time
+   - Restores snapshot to local Qdrant instance
+   - Handles cases where no snapshots exist (graceful skip)
+   - Comprehensive error handling and logging
+   - Clean temporary file management
+
+2. Created Optimized Dockerfile (Dockerfile.qdrant)
+   - Multi-stage build for minimal image size (<120 MB target)
+   - Stage 1: Build Qdrant binary from source (Rust)
+   - Stage 2: Build Python dependencies in virtual environment
+   - Stage 3: Final runtime image with Alpine Linux
+   - Embedded startup script for Qdrant + restore workflow
+   - Health checks and proper signal handling
+
+3. Created Cloud Run Deployment Script (scripts/deploy_cloud_run.sh)
+   - Automated gcloud authentication check
+   - API enablement (Cloud Build, Cloud Run, Storage)
+   - Docker image build and push to GCR
+   - Cloud Run service deployment with proper configuration
+   - Environment variable setup for GCS integration
+
+=== KEY TECHNICAL DECISIONS ===
+
+1. Startup Sequence:
+   - Start Qdrant in background
+   - Wait for health check (30 second timeout)
+   - Run snapshot restore
+   - Keep Qdrant running in foreground
+
+2. Error Handling:
+   - Graceful degradation when no snapshots exist
+   - Comprehensive logging for debugging
+   - Proper exit codes for container orchestration
+
+3. Resource Configuration:
+   - min-instances=0 for cost optimization
+   - 2Gi memory, 1 CPU for adequate performance
+   - 300 second timeout for startup operations
+
+=== ISSUES ENCOUNTERED AND RESOLUTIONS ===
+
+1. Issue: Dockerfile syntax errors with embedded shell scripts
+   Resolution: Used echo commands with >> redirection instead of heredoc syntax
+
+2. Issue: Flake8 whitespace violations in Python script
+   Resolution: Used sed to remove trailing whitespace and added proper newline
+
+3. Issue: Docker image size optimization
+   Resolution: Multi-stage build with Alpine Linux base and virtual environments
+
+=== TESTING AND VALIDATION ===
+
+1. Python Compilation: ✓ PASSED
+   - python -m py_compile scripts/qdrant_restore.py
+
+2. Flake8 Compliance: ✓ PASSED
+   - pre-commit run flake8 --files scripts/qdrant_restore.py
+
+3. Test Suite: ✓ PASSED
+   - pytest -q: 65/65 (63 passed, 2 skipped)
+
+4. Fixture Drift Check: ✓ PASSED
+   - scripts/check_fixture_drift.py: exit 0
+
+=== DEPLOYMENT INSTRUCTIONS ===
+
+1. Set environment variables:
+   export PROJECT_ID="your-gcp-project"
+   export QDRANT_COLLECTION_NAME="my_collection"
+   export GCS_BUCKET_NAME="qdrant-snapshots"
+
+2. Run deployment:
+   ./scripts/deploy_cloud_run.sh
+
+3. Verify deployment:
+   curl https://SERVICE_URL/health
+
+=== CONFIGURATION OPTIONS ===
+
+Environment Variables:
+- QDRANT_URL: Qdrant connection URL (default: http://localhost:6333)
+- QDRANT_COLLECTION_NAME: Collection to restore (default: my_collection)
+- GCS_BUCKET_NAME: GCS bucket for snapshots (default: qdrant-snapshots)
+- GOOGLE_CLOUD_PROJECT: GCP project ID
+
+=== MONITORING AND LOGS ===
+
+View Cloud Run logs:
+gcloud logs tail --follow --service=qdrant-agent
+
+Key log messages:
+- "Starting Qdrant with snapshot restore..."
+- "Found latest snapshot: ..."
+- "Snapshot restored successfully to collection ..."
+- "No snapshot found to restore" (when bucket is empty)
+
+=== NEXT STEPS ===
+
+CLI 111A: Implement Cloud Scheduler for hybrid sync
+- Schedule regular snapshots from Cloud Qdrant
+- Coordinate with Docker Qdrant restore functionality
+- Implement intelligent sync logic between instances

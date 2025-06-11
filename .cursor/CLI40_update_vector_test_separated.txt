@@ -1,0 +1,8 @@
+Test file tests/api/test_update_vector_api.py created with three isolated integration tests for the /update_vector endpoint.
+
+1. test_update_vector_success: Uses a valid UUID point_id, a 1536-dim float vector, and non-empty metadata. Expects 200 OK.
+2. test_update_vector_invalid_vector_dim: Uses a vector with incorrect dimensions. Expects 422 Unprocessable Entity.
+3. test_update_vector_empty_metadata: Uses empty metadata. Expects 422 Unprocessable Entity.
+
+All tests use the real FastAPI app and QdrantStore, with no mocking.
+Tests were run successfully using `PYTHONPATH=. pytest tests/api/test_update_vector_api.py -v` after fixing an initial point_id format issue.

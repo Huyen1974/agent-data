@@ -1,0 +1,5 @@
+New test: tests/api/test_top_k_too_large.py
+Validates API rejects top_k > 100.
+Code tweak: api_vector_search.py
+Updated SemanticSearchRequest.top_k with le=100.
+Result: 20/20 tests passed.

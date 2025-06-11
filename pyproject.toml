@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent_data_manager"
+version = "0.1.0"
+description = "Agent Data Manager - Knowledge Management System for Google Cloud"
+authors = [{name = "Agent Data Team", email = "team@agentdata.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "flask",
+    "google-cloud-storage",
+    "google-cloud-firestore",
+    "google-cloud-aiplatform>=1.40.0",
+    "google-api-python-client",
+    "google-auth-httplib2",
+    "google-auth-oauthlib",
+    "faiss-cpu",
+    "fastapi",
+    "uvicorn",
+    "python-dotenv",
+    "gunicorn",
+    "scikit-learn",
+    "openai",
+    "numpy",
+    "retry",
+    "langchain-openai",
+    "pytest>=7.0.0",
+    "pytest-mock>=3.0.0",
+    "prometheus_client",
+    "pydantic==2.11.*",
+    "qdrant-client==1.14.*",
+    "passlib[bcrypt]",
+    "python-jose[cryptography]",
+    "python-multipart",
+    "slowapi",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "flake8",
+    "pytest-cov",
+    "pre-commit",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "qdrant_required: marks tests that require Qdrant",
+    "docker_required: marks tests that require Docker"
+]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 100

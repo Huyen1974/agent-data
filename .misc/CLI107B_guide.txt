@@ -1,0 +1,105 @@
+CLI107B Implementation Guide - Metrics Test
+===========================================
+
+Objective: Add 1 test for metrics middleware to verify /metrics endpoint functionality and increase test count to 64.
+
+Steps Executed:
+---------------
+
+1. Branch Verification:
+   - Verified on branch cli103a
+   - Reset to commit cli107a_all_green (49dee0a)
+   - Confirmed clean state with metrics middleware already implemented
+
+2. Test Implementation:
+   - Created tests/api/test_metrics.py with test_metrics_endpoint function
+   - Test verifies:
+     * GET /metrics returns HTTP 200 status
+     * Content-Type header is text/plain (Prometheus format)
+     * Response contains expected metrics: api_requests_total, api_request_duration_seconds
+     * Response follows basic Prometheus format structure
+   - Used client fixture from conftest.py for FastAPI TestClient
+
+3. Test Count Update:
+   - Updated tests/test__meta_count.py EXPECTED_TOTAL_TESTS from 63 to 64
+   - Updated comment to reflect CLI 107B metrics test addition
+
+4. Code Quality Fix:
+   - Fixed F401 unused import in tests/api/test_search_by_payload.py
+   - Removed unused 'import pytest' line
+
+5. Testing and Validation:
+   - Ran pytest -q: 62 passed, 2 skipped (64/64 total)
+   - Verified fixture drift check: No drift detected (exit 0)
+   - Checked flake8 F401/F841 errors in target directories: Clean
+
+6. Version Control:
+   - Staged test files: tests/
+   - Committed with message "CLI107B: Add metrics test → 64 tests"
+   - Tagged as cli107b_all_green
+
+Issues Encountered:
+-------------------
+
+1. F401 Unused Import:
+   - Issue: pytest imported but unused in test_search_by_payload.py
+   - Resolution: Removed unused import line
+   - Impact: Fixed flake8 compliance for target directories
+
+2. Test Client Fixture:
+   - Issue: Needed to use correct test client fixture
+   - Resolution: Used 'client: TestClient' parameter from conftest.py
+   - Note: Leveraged existing test infrastructure
+
+Technical Implementation Details:
+---------------------------------
+
+Test Function Structure:
+- Function: test_metrics_endpoint(client: TestClient)
+- Endpoint: GET /metrics
+- Assertions:
+  * response.status_code == 200
+  * response.headers["content-type"].startswith("text/plain")
+  * "api_requests_total" in response.text
+  * "api_request_duration_seconds" in response.text
+  * Basic Prometheus format validation
+
+Metrics Verified:
+- api_requests_total: Counter metric for API requests
+- api_request_duration_seconds: Histogram metric for request latency
+- Prometheus text format compliance
+
+Test Coverage Added:
+- Endpoint accessibility
+- Response format validation
+- Metrics presence verification
+- Basic structure validation
+
+Best Practices Applied:
+-----------------------
+- Used existing test infrastructure (conftest.py fixtures)
+- Comprehensive assertions for endpoint behavior
+- Clear test documentation and comments
+- Proper error handling expectations
+- Standard test naming conventions
+
+Verification Methods:
+--------------------
+- Full test suite execution (pytest -q)
+- Fixture drift verification
+- Flake8 compliance check for target directories
+- Git diff review before commit
+
+Next Steps:
+-----------
+- CLI 108A: Implement FAISS to Qdrant migration CLI
+- Consider adding more detailed metrics tests (error scenarios, metric values)
+- Potential integration with monitoring dashboards
+
+Files Modified:
+---------------
+- tests/api/test_metrics.py: New metrics test file
+- tests/test__meta_count.py: Updated expected test count
+- tests/api/test_search_by_payload.py: Fixed unused import
+- .misc/CLI107B_all_green.txt: Success documentation
+- .misc/CLI107B_guide.txt: This implementation guide

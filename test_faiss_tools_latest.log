@@ -1,0 +1,620 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... 
+----------------------------- live log collection ------------------------------
+DEBUG    faiss.loader:loader.py:89 Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+INFO     faiss.loader:loader.py:148 Loading faiss.
+INFO     faiss.loader:loader.py:150 Successfully loaded faiss.
+INFO     faiss:__init__.py:174 Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+collected 15 items
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_auto_embed 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.register_tools:register_tools.py:5 sys.path in Cloud Run at top of register_tools.py: ['/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python310.zip', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10', '/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/lib-dynload', '/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages']
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:20 OpenAI import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:45 FAISS import successful.
+INFO     ADK.agent_data.tools.external_tool_registry:external_tool_registry.py:73 OpenAI client initialized successfully via external registry.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:86 vector_data not provided for index 'test_index'. Attempting to generate embeddings.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:100 Generating embeddings for 2 documents using field 'text'. Expected dimension: 10.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Generating embedding for doc_id 'doc1' (text: 'Hello world...').
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:151 Successfully generated embedding for doc_id 'doc1'.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Generating embedding for doc_id 'doc2' (text: 'Another document...').
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:151 Successfully generated embedding for doc_id 'doc2'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:176 Successfully generated 2 embeddings from 2 documents (out of 2 originally).
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:179 Starting validation for index 'test_index' with 2 metadata entries and 2 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:208 vector_data is a list. Proceeding with list of vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:276 Validation successful. All 2 processed vectors have dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:281 Converting processed vector data to NumPy array.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:287 Creating FAISS index with actual dimension 10 from vector data.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:296 Number of vectors (2) is less than 20. Using IndexFlatL2.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:298 Created FAISS index (IndexFlatL2) with dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:331 Adding 2 vectors to the index in batches.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:335 Adding batch 1/1 with 2 vectors to FAISS index (MagicMock)
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:337 Finished adding vectors. Index now contains <MagicMock name='IndexFlatL2().ntotal' id='4564669616'> vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:339 Saving FAISS index locally to: /tmp/test_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:346 Saving metadata locally to: /tmp/test_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:351 Attempting to save metadata to Firestore for index: test_index in project: test-project
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:373 Successfully saved metadata to Firestore for index: test_index
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:380 Attempting to save FAISS index and metadata to GCS Bucket: test-bucket
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:390 Uploading /tmp/test_index.faiss to gs://test-bucket/test_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:395 Uploading /tmp/test_index.meta to gs://test-bucket/test_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:400 Successfully uploaded FAISS index and metadata for 'test_index' to GCS bucket 'test-bucket'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:405 Registering FAISS index 'test_index' in Firestore collection 'faiss_indexes_registry'...
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:424 Successfully registered FAISS index 'test_index' in Firestore.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:440 Removed temporary local file: /tmp/test_index.meta
+PASSED                                                                   [  6%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_with_vector_data 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:179 Starting validation for index 'test_index_vector' with 2 metadata entries and 2 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:187 vector_data is a dict. Extracting values as vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:276 Validation successful. All 2 processed vectors have dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:281 Converting processed vector data to NumPy array.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:287 Creating FAISS index with actual dimension 10 from vector data.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:296 Number of vectors (2) is less than 20. Using IndexFlatL2.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:298 Created FAISS index (IndexFlatL2) with dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:331 Adding 2 vectors to the index in batches.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:335 Adding batch 1/1 with 2 vectors to FAISS index (MagicMock)
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:337 Finished adding vectors. Index now contains <MagicMock name='IndexFlatL2().ntotal' id='4565167136'> vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:339 Saving FAISS index locally to: /tmp/test_index_vector.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:346 Saving metadata locally to: /tmp/test_index_vector.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:351 Attempting to save metadata to Firestore for index: test_index_vector in project: test-project
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:373 Successfully saved metadata to Firestore for index: test_index_vector
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:380 Attempting to save FAISS index and metadata to GCS Bucket: test-bucket
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:390 Uploading /tmp/test_index_vector.faiss to gs://test-bucket/test_index_vector.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:395 Uploading /tmp/test_index_vector.meta to gs://test-bucket/test_index_vector.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:400 Successfully uploaded FAISS index and metadata for 'test_index_vector' to GCS bucket 'test-bucket'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:405 Registering FAISS index 'test_index_vector' in Firestore collection 'faiss_indexes_registry'...
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:424 Successfully registered FAISS index 'test_index_vector' in Firestore.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:440 Removed temporary local file: /tmp/test_index_vector.meta
+PASSED                                                                   [ 13%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:86 vector_data not provided for index 'test_openai_error_index'. Attempting to generate embeddings.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:100 Generating embeddings for 2 documents using field 'text'. Expected dimension: 10.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Generating embedding for doc_id 'doc1' (text: 'Text that will cause embedding error...').
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:153 Failed to generate embedding for doc_id 'doc1' (embedding was None). Skipping.
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:137 Generating embedding for doc_id 'doc2' (text: 'Another document...').
+DEBUG    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:151 Successfully generated embedding for doc_id 'doc2'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:176 Successfully generated 1 embeddings from 1 documents (out of 2 originally).
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:179 Starting validation for index 'test_openai_error_index' with 1 metadata entries and 1 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:208 vector_data is a list. Proceeding with list of vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:276 Validation successful. All 1 processed vectors have dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:281 Converting processed vector data to NumPy array.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:287 Creating FAISS index with actual dimension 10 from vector data.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:296 Number of vectors (1) is less than 20. Using IndexFlatL2.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:298 Created FAISS index (IndexFlatL2) with dimension 10.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:331 Adding 1 vectors to the index in batches.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:335 Adding batch 1/1 with 1 vectors to FAISS index (MagicMock)
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:337 Finished adding vectors. Index now contains 1 vectors.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:339 Saving FAISS index locally to: /tmp/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:346 Saving metadata locally to: /tmp/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:351 Attempting to save metadata to Firestore for index: test_openai_error_index in project: test-project
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:373 Successfully saved metadata to Firestore for index: test_openai_error_index
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:380 Attempting to save FAISS index and metadata to GCS Bucket: test-bucket
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:390 Uploading /tmp/test_openai_error_index.faiss to gs://test-bucket/test_openai_error_index.faiss
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:395 Uploading /tmp/test_openai_error_index.meta to gs://test-bucket/test_openai_error_index.meta
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:400 Successfully uploaded FAISS index and metadata for 'test_openai_error_index' to GCS bucket 'test-bucket'.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:405 Registering FAISS index 'test_openai_error_index' in Firestore collection 'faiss_indexes_registry'...
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:424 Successfully registered FAISS index 'test_openai_error_index' in Firestore.
+INFO     ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:440 Removed temporary local file: /tmp/test_openai_error_index.meta
+PASSED                                                                   [ 20%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_api_error_during_embedding FAILED [ 26%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestLoadMetadataFromFaiss::test_load_completed 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:55 Checking Firestore status for index: test_load in collection 'faiss_indexes_registry'
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:74 Firestore data for 'test_load': vectorStatus=completed, gcs_meta_path=gs://test-bucket/test_load.meta
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:91 Firestore status check passed for index 'test_load'. Using gcs_meta_path: gs://test-bucket/test_load.meta
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:110 Attempting GCS download using path from Firestore: gs://test-bucket/test_load.meta
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:139 Loading metadata from: /tmp/test_load.meta
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:148 Successfully loaded metadata for 'test_load'. Execution time: 0.8482s
+PASSED                                                                   [ 33%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestLoadMetadataFromFaiss::test_load_pending 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:55 Checking Firestore status for index: test_pending in collection 'faiss_indexes_registry'
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:74 Firestore data for 'test_pending': vectorStatus=pending, gcs_meta_path=None
+WARNING  ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:77 Index 'test_pending' vectorStatus is 'pending', not 'completed'.
+FAILED                                                                   [ 40%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestLoadMetadataFromFaiss::test_load_meta_unpickling_error 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:55 Checking Firestore status for index: test_unpickle_error in collection 'faiss_indexes_registry'
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:74 Firestore data for 'test_unpickle_error': vectorStatus=completed, gcs_meta_path=gs://test-bucket/test_unpickle_error.meta
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:91 Firestore status check passed for index 'test_unpickle_error'. Using gcs_meta_path: gs://test-bucket/test_unpickle_error.meta
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:110 Attempting GCS download using path from Firestore: gs://test-bucket/test_unpickle_error.meta
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:139 Loading metadata from: /tmp/test_unpickle_error.meta
+ERROR    ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:165 General error in load_metadata_from_faiss for 'test_unpickle_error': Mocked Unpickling Error
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/load_metadata_from_faiss_tool.py", line 141, in load_metadata_from_faiss
+    loaded_data = pickle.load(f)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+_pickle.UnpicklingError: Mocked Unpickling Error
+PASSED                                                                   [ 46%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestLoadMetadataFromFaiss::test_load_not_exists 
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:55 Checking Firestore status for index: test_not_exists in collection 'faiss_indexes_registry'
+WARNING  ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:63 Index 'test_not_exists' not found in Firestore registry.
+PASSED                                                                   [ 53%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_success 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_query', query_text (was key) 'find similar content to doc 0' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'find similar content to doc 0' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'find similar content to doc 0'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_query in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:90 Firestore data for 'test_query': vectorStatus=completed, gcs_faiss_path=gs://test-bucket/test_query.faiss, gcs_meta_path=gs://test-bucket/test_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:110 Firestore status check passed for index 'test_query'.
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:117 Local FAISS index file missing: /tmp/test_query.faiss. Attempting download from gs://test-bucket/test_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:126 Local metadata file missing: /tmp/test_query.meta. Attempting download from gs://test-bucket/test_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:133 GCS download attempt finished for index 'test_query'. Files downloaded: {'index': True, 'meta': True}
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:136 Loading FAISS index for query: /tmp/test_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:139 Loaded FAISS index 'test_query' with dimension 5.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:141 Loading metadata for query: /tmp/test_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:148 Loaded 2 metadata entries and 2 stored IDs.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:151 Validating query vector dimension (5) against index dimension (5).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:159 Query vector validation successful.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:163 Performing FAISS search for top 1 neighbors.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:166 FAISS search completed. Found indices: [[0]], Distances: [[0.10000000149011612]]
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:198 Retrieved 1 metadata results for query.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:217 query_metadata_faiss_internal finished for index 'test_query'. Status: success. Time: 0.6304s
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_query'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_query'.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:331 FAISS query completed. Returning 1 neighbors' metadata for index 'test_query'.
+PASSED                                                                   [ 60%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_pending 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_query_pending', query_text (was key) 'q' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'q' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'q'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_query_pending in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:90 Firestore data for 'test_query_pending': vectorStatus=pending, gcs_faiss_path=None, gcs_meta_path=None
+WARNING  ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:93 Index 'test_query_pending' vectorStatus is 'pending', not 'completed'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_query_pending'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_query_pending'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_query_pending': Index 'test_query_pending' is not ready (vectorStatus: pending).
+PASSED                                                                   [ 66%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_not_exists 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_query_not_exists', query_text (was key) 'q' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'q' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'q'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_query_not_exists in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+WARNING  ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:78 Index 'test_query_not_exists' not found in Firestore registry.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_query_not_exists'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_query_not_exists'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_query_not_exists': Index 'test_query_not_exists' not found in Firestore registry.
+PASSED                                                                   [ 73%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_firestore_error 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_firestore_error_query', query_text (was key) 'some query' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'some query' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'some query'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_firestore_error_query in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:245 General error during FAISS query internal for 'test_firestore_error_query': 503 Mocked Firestore Service Unavailable
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py", line 75, in query_metadata_faiss_internal
+    doc = doc_ref.get()
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+google.api_core.exceptions.ServiceUnavailable: 503 Mocked Firestore Service Unavailable
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_firestore_error_query'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_firestore_error_query'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_firestore_error_query': Unexpected error during FAISS query: 503 Mocked Firestore Service Unavailable
+PASSED                                                                   [ 80%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_gcs_download_error 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_gcs_error_query', query_text (was key) 'another query' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'another query' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'another query'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_gcs_error_query in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:90 Firestore data for 'test_gcs_error_query': vectorStatus=completed, gcs_faiss_path=gs://test-bucket/test_gcs_error.faiss, gcs_meta_path=gs://test-bucket/test_gcs_error.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:110 Firestore status check passed for index 'test_gcs_error_query'.
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:117 Local FAISS index file missing: /tmp/test_gcs_error_query.faiss. Attempting download from gs://test-bucket/test_gcs_error.faiss
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:245 General error during FAISS query internal for 'test_gcs_error_query': 404 Mocked GCS File Not Found
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py", line 119, in query_metadata_faiss_internal
+    _download_gcs_file(storage_client, bucket_name, blob_name, local_index_path)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+google.api_core.exceptions.NotFound: 404 Mocked GCS File Not Found
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_gcs_error_query'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_gcs_error_query'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_gcs_error_query': Unexpected error during FAISS query: 404 Mocked GCS File Not Found
+PASSED                                                                   [ 86%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_faiss_search_error 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+-------------------------------- live log call ---------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_faiss_search_error_query', query_text (was key) 'query text' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'query text' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'query text'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_faiss_search_error_query in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:90 Firestore data for 'test_faiss_search_error_query': vectorStatus=completed, gcs_faiss_path=gs://test-bucket/test_faiss_search_error_query.faiss, gcs_meta_path=gs://test-bucket/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:110 Firestore status check passed for index 'test_faiss_search_error_query'.
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:117 Local FAISS index file missing: /tmp/test_faiss_search_error_query.faiss. Attempting download from gs://test-bucket/test_faiss_search_error_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:126 Local metadata file missing: /tmp/test_faiss_search_error_query.meta. Attempting download from gs://test-bucket/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:133 GCS download attempt finished for index 'test_faiss_search_error_query'. Files downloaded: {'index': True, 'meta': True}
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:136 Loading FAISS index for query: /tmp/test_faiss_search_error_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:139 Loaded FAISS index 'test_faiss_search_error_query' with dimension 5.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:141 Loading metadata for query: /tmp/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:148 Loaded 2 metadata entries and 2 stored IDs.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:151 Validating query vector dimension (5) against index dimension (5).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:159 Query vector validation successful.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:163 Performing FAISS search for top 1 neighbors.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:168 RuntimeError during FAISS search for 'test_faiss_search_error_query': Mocked FAISS search error
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py", line 165, in query_metadata_faiss_internal
+    distances, indices = faiss_index.search(query_np, top_k)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+RuntimeError: Mocked FAISS search error
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_faiss_search_error_query'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_faiss_search_error_query'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_faiss_search_error_query': FAISS search operation failed: Mocked FAISS search error
+FAILED                                                                   [ 93%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_firestore_missing_gcs_faiss_path 
+-------------------------------- live log setup --------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+FAILED                                                                   [100%]
+------------------------------ live log teardown -------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+
+
+=================================== FAILURES ===================================
+_____ TestSaveMetadataToFaiss.test_save_openai_api_error_during_embedding ______
+
+self = <test_faiss_tools.TestSaveMetadataToFaiss object at 0x1099b0760>
+mock_pickle_dump = <MagicMock name='dump' id='4565793856'>
+mock_faiss_write_index = <MagicMock name='write_index' id='4565434176'>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='4565426208'>
+mock_get_embedding = <MagicMock name='get_openai_embedding' id='4565418384'>
+mock_firestore_constructor = <MagicMock name='Client' id='4565393968'>
+mock_upload_with_retry = <MagicMock name='upload_with_retry' id='4565386096'>
+mock_storage_client = <MagicMock name='Client' id='4565376576'>
+mock_firestore_client = (<MagicMock name='Client()' id='4565708048'>, <MagicMock name='Client().collection().document()' id='4565754272'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x110166f50>
+request = <FixtureRequest for <Function test_save_openai_api_error_during_embedding>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.storage.Client")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.upload_with_retry")
+    @patch(FIRESTORE_CLIENT_PATH)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    def test_save_openai_api_error_during_embedding(self, mock_pickle_dump, mock_faiss_write_index, MockFaissIndexFlatL2,
+                                                    mock_get_embedding, mock_firestore_constructor, mock_upload_with_retry,
+                                                    mock_storage_client, mock_firestore_client, mocker, request):
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+    
+        mock_firestore_constructor.return_value = mock_firestore_client[0]
+        # Simulate openai.APIError on the first call to get_openai_embedding
+        mock_get_embedding.side_effect = [\
+>           openai.APIError("Mocked API Error"), # Simpler instantiation # type: ignore\
+            np.array([0.2]*10, dtype=np.float32) # Subsequent call succeeds
+        ]
+E       TypeError: APIError.__init__() missing 1 required positional argument: 'request'
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:380: TypeError
+_________________ TestLoadMetadataFromFaiss.test_load_pending __________________
+
+self = <test_faiss_tools.TestLoadMetadataFromFaiss object at 0x1099b00a0>
+mock_firestore_constructor = <MagicMock name='Client' id='4566488144'>
+mock_firestore_client = (<MagicMock name='Client()' id='4565823312'>, <MagicMock name='Client().collection().document()' id='4564805728'>)
+
+    @patch(FIRESTORE_CLIENT_PATH)
+    def test_load_pending(self, mock_firestore_constructor, mock_firestore_client):
+        from ADK.agent_data.tools.load_metadata_from_faiss_tool import load_metadata_from_faiss
+    
+        mock_firestore_constructor.return_value = mock_firestore_client[0]
+        mock_doc_snapshot = MagicMock()
+        mock_doc_snapshot.exists = True
+        mock_doc_snapshot.to_dict.return_value = {
+            "vectorStatus": "pending",
+            "gcs_meta_path": None
+        }
+        mock_firestore_client[1].get.return_value = mock_doc_snapshot
+    
+        result = load_metadata_from_faiss(index_name="test_pending")
+        assert result.get("meta", {}).get("status") == "error"
+        assert result.get("meta", {}).get("error_type") == "IndexNotReadyError"
+        assert "Index 'test_pending' is not ready (vectorStatus: pending)" in result.get("error", "")
+>       assert "vectorStatus is 'pending'" in result.get("error", "")
+E       assert "vectorStatus is 'pending'" in "Index 'test_pending' is not ready (vectorStatus: pending)."
+E        +  where "Index 'test_pending' is not ready (vectorStatus: pending)." = <built-in method get of dict object at 0x110318dc0>('error', '')
+E        +    where <built-in method get of dict object at 0x110318dc0> = {'error': "Index 'test_pending' is not ready (vectorStatus: pending).", 'meta': {'error_type': 'IndexNotReadyError', 'execution_time': 0.00023508071899414062, 'status': 'error'}}.get
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:483: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:55 Checking Firestore status for index: test_pending in collection 'faiss_indexes_registry'
+INFO     ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:74 Firestore data for 'test_pending': vectorStatus=pending, gcs_meta_path=None
+WARNING  ADK.agent_data.tools.load_metadata_from_faiss_tool:load_metadata_from_faiss_tool.py:77 Index 'test_pending' vectorStatus is 'pending', not 'completed'.
+_____________ TestQueryMetadataFaiss.test_query_faiss_search_error _____________
+
+self = <test_faiss_tools.TestQueryMetadataFaiss object at 0x1099b2b30>
+mock_faiss_read_index = <MagicMock name='read_index' id='4567597264'>
+mock_internal_download_gcs = <MagicMock name='_download_gcs_file' id='4567617632'>
+mock_firestore_constructor = <MagicMock name='Client' id='4567625360'>
+mock_get_embedding = <MagicMock name='get_openai_embedding' id='4566387488'>
+mock_pickle_load = <MagicMock name='load' id='4566398864'>
+mock_builtin_open = <MagicMock name='open' id='4567716416'>
+mock_firestore_client = (<MagicMock name='Client()' id='4567694880'>, <MagicMock name='Client().collection().document()' id='4567649968'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x1103a5900>
+request = <FixtureRequest for <Coroutine test_query_faiss_search_error>>
+
+    @patch(f"{QUERY_TOOL_MODULE_PATH}.open")
+    @patch(PICKLE_LOAD_QUERY_PATH)
+    @patch("ADK.agent_data.tools.query_metadata_faiss_tool.get_openai_embedding")
+    @patch(FIRESTORE_CLIENT_PATH)
+    @patch(DOWNLOAD_GCS_QUERY_PATH)
+    @patch(FAISS_READ_INDEX_QUERY_PATH)
+    async def test_query_faiss_search_error(self,
+                                            mock_faiss_read_index,
+                                            mock_internal_download_gcs,
+                                            mock_firestore_constructor,
+                                            mock_get_embedding,
+                                            mock_pickle_load,
+                                            mock_builtin_open,
+                                            mock_firestore_client, mocker, request):
+        from ADK.agent_data.tools.query_metadata_faiss_tool import query_metadata_faiss
+    
+        index_name_for_test = "test_faiss_search_error_query"
+        local_meta_path_expected = f"/tmp/{index_name_for_test}.meta"
+    
+        mock_agent_context = MagicMock()
+        mock_get_embedding.return_value = [0.1]*5
+    
+        mock_firestore_constructor.return_value = mock_firestore_client[0]
+        mock_doc_ref = mock_firestore_client[1]
+        mock_doc_snapshot = MagicMock()
+        mock_doc_snapshot.exists = True
+        doc_data_from_firestore = {
+            "vectorStatus": "completed",
+            "gcs_faiss_path": f"gs://test-bucket/{index_name_for_test}.faiss",
+            "gcs_meta_path": f"gs://test-bucket/{index_name_for_test}.meta",
+            "dimension": 5,
+            "doc_id_list_for_faiss": ["doc1", "doc2"]
+        }
+        mock_doc_snapshot.to_dict.return_value = doc_data_from_firestore
+        mock_doc_ref.get.return_value = mock_doc_snapshot
+    
+        mock_internal_download_gcs.return_value = True
+    
+        mock_faiss_index_instance = MagicMock()
+        mock_faiss_index_instance.search.side_effect = RuntimeError("Mocked FAISS search error")
+        mock_faiss_index_instance.d = 5 # ADD THIS LINE to set the dimension attribute
+        mock_faiss_read_index.return_value = mock_faiss_index_instance
+    
+        dummy_metadata_content = {
+            "ids": ["doc1", "doc2"],
+            "metadata": {"doc1": {"data": "meta1"}, "doc2": {"data": "meta2"}}
+        }
+        mock_pickle_load.return_value = dummy_metadata_content
+    
+        mock_opened_file_context_manager = MagicMock()
+        mock_opened_file_context_manager.__enter__.return_value = MagicMock()
+        mock_opened_file_context_manager.__exit__.return_value = None
+        mock_builtin_open.return_value = mock_opened_file_context_manager
+    
+        result = await query_metadata_faiss(
+            agent_context=mock_agent_context,
+            index_name=index_name_for_test,
+            key="query text",
+            top_k=1
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+    
+        assert result is not None, "Result dictionary is None"
+        assert result.get("meta", {}).get("status") == "error", f"Status should be error, was {result.get('meta', {}).get('status')}. Full result: {result}"
+        assert "error_type" in result.get("meta", {}), f"error_type missing in meta. Full result: {result}"
+        assert result["meta"]["error_type"] == "FaissSearchError", f"Incorrect error_type for FAISS search failure. Full result: {result}"
+        assert "Mocked FAISS search error" in result.get("error", ""), f"Error message mismatch. Full result: {result}"
+    
+        mock_faiss_read_index.assert_called_once()
+        mock_faiss_index_instance.search.assert_called_once()
+        mock_get_embedding.assert_called_once_with("query text")
+    
+        mock_internal_download_gcs.assert_any_call(mocker.ANY, "test-bucket", f"{index_name_for_test}.faiss", f"/tmp/{index_name_for_test}.faiss")
+        mock_internal_download_gcs.assert_any_call(mocker.ANY, "test-bucket", f"{index_name_for_test}.meta", local_meta_path_expected)
+    
+        mock_builtin_open.assert_called_once_with(local_meta_path_expected, "rb")
+        mock_pickle_load.assert_called_once()
+    
+        # Verify that pickle.load was called for the metadata file
+        # Find the call to pickle_load that corresponds to the metadata file loading
+        pickle_load_called_for_meta = False
+        # Corrected access to call_args_list for mock_pickle_load
+        # Assuming mock_pickle_load is directly patched or passed correctly to the test method.
+        # If mock_pickle_load is from a class-level patch, ensure it's correctly referenced.
+        # For this example, we assume mock_pickle_load is the correct mock object.
+        if hasattr(mock_pickle_load, 'call_args_list'):
+            for call_args_tuple in mock_pickle_load.call_args_list:
+                # The first argument to pickle.load is the file object.
+                # We check if our mock_meta_file was passed.
+>               if call_args_tuple[0][0] == mock_meta_file: # Accessing the file object from the call arguments
+E               NameError: name 'mock_meta_file' is not defined
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:907: NameError
+------------------------------ Captured log setup ------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_query_faiss_search_error: {'error': 'FAISS search operation failed: Mocked FAISS search error', 'meta': {'status': 'error', 'execution_time': 0.6268742084503174, 'error_type': 'FaissSearchError', 'message': 'Mocked FAISS search error'}}
+
+------------------------------ Captured log call -------------------------------
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:270 Executing query_metadata_faiss tool for index 'test_faiss_search_error_query', query_text (was key) 'query text' (top_k=1).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:277 Generating embedding for query text: 'query text' directly.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:292 Successfully generated embedding for query text 'query text'. Vector length: 5
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:72 Checking Firestore status for index: test_faiss_search_error_query in collection 'faiss_indexes_registry' (Project: test-project, DB: test-db)
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:90 Firestore data for 'test_faiss_search_error_query': vectorStatus=completed, gcs_faiss_path=gs://test-bucket/test_faiss_search_error_query.faiss, gcs_meta_path=gs://test-bucket/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:110 Firestore status check passed for index 'test_faiss_search_error_query'.
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:278 Checking None for explicit credentials as part of auth process...
+DEBUG    google.auth._default:_default.py:250 Checking Cloud SDK credentials as part of auth process...
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:117 Local FAISS index file missing: /tmp/test_faiss_search_error_query.faiss. Attempting download from gs://test-bucket/test_faiss_search_error_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:126 Local metadata file missing: /tmp/test_faiss_search_error_query.meta. Attempting download from gs://test-bucket/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:133 GCS download attempt finished for index 'test_faiss_search_error_query'. Files downloaded: {'index': True, 'meta': True}
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:136 Loading FAISS index for query: /tmp/test_faiss_search_error_query.faiss
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:139 Loaded FAISS index 'test_faiss_search_error_query' with dimension 5.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:141 Loading metadata for query: /tmp/test_faiss_search_error_query.meta
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:148 Loaded 2 metadata entries and 2 stored IDs.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:151 Validating query vector dimension (5) against index dimension (5).
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:159 Query vector validation successful.
+INFO     ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:163 Performing FAISS search for top 1 neighbors.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:168 RuntimeError during FAISS search for 'test_faiss_search_error_query': Mocked FAISS search error
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/query_metadata_faiss_tool.py", line 165, in query_metadata_faiss_internal
+    distances, indices = faiss_index.search(query_np, top_k)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py", line 1173, in _execute_mock_call
+    raise effect
+RuntimeError: Mocked FAISS search error
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:252 Starting cleanup for internal query on index 'test_faiss_search_error_query'.
+DEBUG    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:266 Cleanup finished for internal query on index 'test_faiss_search_error_query'.
+ERROR    ADK.agent_data.tools.query_metadata_faiss_tool:query_metadata_faiss_tool.py:306 Internal FAISS query failed for index 'test_faiss_search_error_query': FAISS search operation failed: Mocked FAISS search error
+---------------------------- Captured log teardown -----------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+______ TestQueryMetadataFaiss.test_query_firestore_missing_gcs_faiss_path ______
+
+self = <test_faiss_tools.TestQueryMetadataFaiss object at 0x1099b3070>
+mock_get_embedding = <MagicMock name='get_openai_embedding' id='4565555264'>
+mock_firestore_constructor = <MagicMock name='Client' id='4565559056'>
+mock_firestore_client = (<MagicMock name='Client()' id='4565621136'>, <MagicMock name='Client().collection().document()' id='4567902160'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x1103b0820>
+
+    @patch(FIRESTORE_CLIENT_PATH)
+    @patch("ADK.agent_data.tools.query_metadata_faiss_tool.get_openai_embedding")
+    async def test_query_firestore_missing_gcs_faiss_path(self, mock_get_embedding, mock_firestore_constructor, mock_firestore_client, mocker):
+        from ADK.agent_data.tools.query_metadata_faiss_tool import query_metadata_faiss
+    
+        mock_agent_context = MagicMock()
+        index_name_for_test = "test_missing_faiss_path"
+    
+        mock_firestore_constructor.return_value = mock_firestore_client[0]
+        mock_doc_ref = mock_firestore_client[1]
+    
+        mock_doc_snapshot = MagicMock()
+        mock_doc_snapshot.exists = True
+        # Simulate Firestore document missing 'gcs_faiss_path'
+        mock_doc_snapshot.to_dict.return_value = {
+            "vectorStatus": "completed",
+            "gcs_meta_path": f"gs://test-bucket/{index_name_for_test}.meta",
+            "dimension": 5
+        }
+        mock_doc_ref.get.return_value = mock_doc_snapshot
+    
+        mock_get_embedding.return_value = [0.1]*5 # Dummy embedding
+    
+        # Corrected tool_input, no agent_context
+        tool_input = {\
+            "index_name": index_name_for_test,
+            "query_text": "some query",
+            "top_k": 1
+        }
+    
+        # Single call to query_metadata_faiss
+>       result = await query_metadata_faiss(**tool_input)
+E       TypeError: query_metadata_faiss() got an unexpected keyword argument 'query_text'
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:943: TypeError
+------------------------------ Captured log setup ------------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+---------------------------- Captured log teardown -----------------------------
+DEBUG    asyncio:selector_events.py:54 Using selector: KqueueSelector
+=============================== warnings summary ===============================
+setup/venv/lib/python3.10/site-packages/faiss/loader.py:49
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/faiss/loader.py:49: DeprecationWarning: numpy.core._multiarray_umath is deprecated and has been renamed to numpy._core._multiarray_umath. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core._multiarray_umath.__cpu_features__.
+    from numpy.core._multiarray_umath import __cpu_features__
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_api_error_during_embedding
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestLoadMetadataFromFaiss::test_load_pending
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_faiss_search_error
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestQueryMetadataFaiss::test_query_firestore_missing_gcs_faiss_path
+=================== 4 failed, 11 passed, 4 warnings in 5.13s ===================

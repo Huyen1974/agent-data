@@ -1,0 +1,1 @@
+All 22 tests passed successfully after fixes for CLI50.

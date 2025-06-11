@@ -1,0 +1,100 @@
+import logging
+
+# Configure logging for the mock if you want to see its internal logs,
+# otherwise, it will use root logger settings if any.
+# logging.basicConfig(level=logging.INFO) # Example: enable logging for this module
+logger = logging.getLogger(__name__)
+
+from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
+import uuid
+import numpy as np
+from qdrant_client.http.models import (
+    PointStruct,
+    UpdateResult,
+    Filter,
+    FieldCondition,
+    MatchValue,
+    HasIdCondition,
+    Distance,
+    ScoredPoint,
+    Record,
+    PointsSelector,
+    VectorParams,
+    CollectionInfo,
+    CollectionsResponse,
+    CollectionDescription,
+    CountResult,
+)
+import random
+
+# Define a constant for vector dimension for clarity
+VECTOR_DIMENSION = 1536
+
+# Type alias for the (async) EmbeddingFunction
+EmbeddingFunctionAsync = Callable[[List[str]], Awaitable[Dict[str, Any]]]
+
+
+def _ensure_flat_float_list(vec: Any) -> List[float]:
+    """Ensures the input is a flat list of floats."""
+    if isinstance(vec, np.ndarray):
+        vec = vec.tolist()  # Convert numpy array to list
+
+    if not isinstance(vec, list):
+        # If it's a single number or something else not iterable, this won't work well.
+        # Assuming it should be some form of list-like structure if not a list.
+        # This case should ideally not be hit if type hints are followed upstream.
+        try:
+            vec = list(vec)
+        except TypeError:
+            raise ValueError(f"Input vector {vec} cannot be converted to a list.")
+
+    flat_list = []
+    for item in vec:
+        if isinstance(item, (list, tuple, np.ndarray)):
+            # If an item is itself a list/tuple/array, extend (flatten one level)
+            if isinstance(item, np.ndarray):
+                item = item.tolist()
+            for sub_item in item:
+                try:
+                    flat_list.append(float(sub_item))
+                except (ValueError, TypeError) as e:
+                    raise ValueError(f"Cannot convert sub-item '{sub_item}' to float: {e}")
+        else:
+            try:
+                flat_list.append(float(item))
+            except (ValueError, TypeError) as e:
+                raise ValueError(f"Cannot convert item '{item}' to float: {e}")
+    return flat_list
+
+
+def _pad_vector(vector: Any, target_dimension: int = VECTOR_DIMENSION) -> List[float]:
+    """Pads or truncates a vector to the target dimension. Ensures input is processed as a flat list of floats."""
+    try:
+        flat_vector = _ensure_flat_float_list(vector)
+    except ValueError:
+        # print(f"_pad_vector error during _ensure_flat_float_list: {e}. Original vector: {vector}")
+        raise  # Re-raise the error to make it visible
+
+    if not flat_vector:  # Handle None or empty list vector after flattening
+        return [0.0] * target_dimension
+
+    current_dimension = len(flat_vector)
+    if current_dimension == target_dimension:
+        return flat_vector
+    elif current_dimension < target_dimension:
+        return flat_vector + [0.0] * (target_dimension - current_dimension)
+    else:  # current_dimension > target_dimension
+        return flat_vector[:target_dimension]
+
+
+# Predefined vectors for specific texts, padded to VECTOR_DIMENSION
+# These are used by mock_embedding_function_for_conftest
+PREDEFINED_VECTORS_FOR_EMBEDDING = {
+    # Vector for point 9001 in conftest.py is [0.1, 0.2, 0.8, 0.0, ..., 0.0]
+    "modern astronomy discoveries": _pad_vector([0.1, 0.2, 0.8]),  # This will pad with 0.0s
+    "history of ancient egypt": _pad_vector([0.3, 0.2, 0.1] + [0.02] * (VECTOR_DIMENSION - 3)),
+    "delicious pasta recipes": _pad_vector([0.1, 0.5, 0.2] + [0.03] * (VECTOR_DIMENSION - 3)),
+    "future of ai in politics": _pad_vector([0.6, 0.1, 0.3] + [0.04] * (VECTOR_DIMENSION - 3)),
+    # Add other specific texts if tests rely on them
+    "This is a test document for ensuring non-ASCII characters are handled: 東京 and emojis 😊": _pad_vector(
+        [0.1] * 10

@@ -1,0 +1,80 @@
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:217: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 50 items
+
+tests/api/test_all_tags_lowercase_in_fixtures.py .                       [  2%]
+tests/api/test_bad_topk_value_raises.py .                                [  4%]
+tests/api/test_blank_query_text.py .                                     [  6%]
+tests/api/test_delay_tool_completes_under_2s.py s                        [  8%]
+tests/api/test_embeddings_api.py ...                                     [ 14%]
+tests/api/test_empty_filter_tag.py ..                                    [ 18%]
+tests/api/test_empty_query_rejected.py .                                 [ 20%]
+tests/api/test_empty_query_text.py .                                     [ 22%]
+tests/api/test_env_config_valid.py .                                     [ 24%]
+tests/api/test_filter_tag_case.py .                                      [ 26%]
+tests/api/test_filter_tag_no_match.py .                                  [ 28%]
+tests/api/test_filter_tag_trailing_spaces.py .                           [ 30%]
+tests/api/test_invalid_over_threshold.py .                               [ 32%]
+tests/api/test_invalid_threshold.py .                                    [ 34%]
+tests/api/test_invalid_top_k.py .                                        [ 36%]
+tests/api/test_mcp_echo_tool_integration.py .                            [ 38%]
+tests/api/test_mcp_exit_gracefully.py .                                  [ 40%]
+tests/api/test_migration_dry_run_stats.py .                              [ 42%]
+tests/api/test_migration_handles_duplicate_ids.py E                      [ 44%]
+tests/api/test_missing_filter_tag.py .                                   [ 46%]
+tests/api/test_parallel_calls_under_threshold.py s                       [ 48%]
+tests/api/test_query_text_too_long.py .                                  [ 50%]
+tests/api/test_query_vector_by_score_threshold.py ...                    [ 56%]
+tests/api/test_query_vectors_api.py ..                                   [ 60%]
+tests/api/test_save_metadata_roundtrip.py .                              [ 62%]
+tests/api/test_score_threshold_strict.py .                               [ 64%]
+tests/api/test_score_threshold_zero.py .                                 [ 66%]
+tests/api/test_search_in_alt_collection.py .                             [ 68%]
+tests/api/test_search_tag_and_threshold.py .                             [ 70%]
+tests/api/test_semantic_search_multiple_queries.py .                     [ 72%]
+tests/api/test_tag_too_long.py .                                         [ 74%]
+tests/api/test_threshold_below_minimum.py .                              [ 76%]
+tests/api/test_threshold_exact_equals.py .                               [ 78%]
+tests/api/test_top_k_larger_than_data.py .                               [ 80%]
+tests/api/test_top_k_minimum.py .                                        [ 82%]
+tests/api/test_top_k_too_large.py .                                      [ 84%]
+tests/api/test_upload_and_download_blob.py .                             [ 86%]
+tests/api/test_vector_edge_cases.py ....                                 [ 94%]
+tests/api/test_vector_safety_check.py ..                                 [ 98%]
+tests/test__meta_count.py .                                              [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at setup of test_migration_handles_duplicate_ids ____________
+file /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_handles_duplicate_ids.py, line 5
+  def test_migration_handles_duplicate_ids(faiss_index_with_duplicates):
+E       fixture 'faiss_index_with_duplicates' not found
+>       available fixtures: _manage_env_and_qdrant_patch, _reset_qdrant_state_before_each_test, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, class_mocker, client, client_with_qdrant_override, cov, current_timestamp_string_cli95a, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, legacy_qdrant_db_file_fixture_cli93b, load_env_vars, manage_test_environment_lifespan, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, session_mocker, temp_file_for_testing, tests/api/test_migration_handles_duplicate_ids.py::<event_loop>, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/api/test_migration_handles_duplicate_ids.py:5
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/mocks/qdrant_multi_collection.py:101: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+    score=float(cosine_sim),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids
+============= 47 passed, 2 skipped, 4 warnings, 1 error in 42.35s ==============

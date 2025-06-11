@@ -1,0 +1,10 @@
+Name: pre_commit
+Version: 4.2.0
+Summary: A framework for managing and maintaining multi-language pre-commit hooks.
+Home-page: https://github.com/pre-commit/pre-commit
+Author: Anthony Sottile
+Author-email: asottile@umich.edu
+License: MIT
+Location: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages
+Requires: cfgv, identify, nodeenv, pyyaml, virtualenv
+Required-by:

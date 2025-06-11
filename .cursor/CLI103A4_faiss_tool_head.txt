@@ -1,0 +1,100 @@
+import pickle
+import os
+from typing import Dict, Any, Optional, List, Tuple
+import logging
+import numpy as np
+import faiss
+import time
+from google.cloud import storage
+from google.cloud import exceptions as google_cloud_exceptions # Import google.cloud.exceptions
+from google.cloud import firestore # Added for Firestore check
+import json
+import asyncio # Added for asyncio.run
+from ADK.agent_data.agent.agent_data_agent import AgentDataAgent # Added for type hinting agent_context
+from ADK.agent_data.tools.external_tool_registry import get_openai_embedding, OPENAI_AVAILABLE, openai_client
+import inspect
+
+# Define custom exceptions
+class EmbeddingGenerationError(Exception):
+    """Custom exception for errors during embedding generation."""
+    pass
+
+class FaissIndexNotFoundError(FileNotFoundError):
+    """Custom exception when a FAISS index file is not found locally or in GCS."""
+    pass
+
+class FaissMetaNotFoundError(FileNotFoundError):
+    """Custom exception when a FAISS metadata file is not found locally or in GCS."""
+    pass
+
+class FaissReadError(Exception):
+    """Custom exception for errors during FAISS index reading."""
+    pass
+
+class FaissSearchError(Exception):
+    """Custom exception for errors during FAISS index search."""
+    pass
+
+class FaissDimensionMismatchError(ValueError):
+    """Custom exception for dimension mismatch between query and FAISS index."""
+    def __init__(self, message, query_dim=None, index_dim=None):
+        super().__init__(message)
+        self.query_dim = query_dim
+        self.index_dim = index_dim
+
+class MissingDimensionError(ValueError):
+    """Custom exception for missing dimension in Firestore document."""
+    pass
+
+class UnpicklingError(Exception):
+    """Custom exception for errors during unpickling of metadata."""
+    pass
+
+class FirestoreCommunicationError(Exception):
+    """Custom exception for errors communicating with Firestore."""
+    pass
+
+class GCSCommunicationError(Exception):
+    """Custom exception for errors communicating with GCS."""
+    pass
+
+class GCSPathParseError(Exception):
+    """Custom exception for errors parsing GCS paths."""
+    def __init__(self, message):
+        super().__init__(message)
+
+class IndexNotReadyError(Exception):
+    """Custom exception for index not ready (vectorStatus not completed)."""
+    pass
+
+class MissingGCSMetaPathError(Exception):
+    """Custom exception for missing gcs_meta_path in Firestore."""
+    pass
+
+class IndexNotRegisteredError(Exception):
+    """Custom exception for index not registered in Firestore."""
+    pass
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Assuming load_metadata_from_faiss is NOT used here anymore, as query needs direct access
+# from .load_metadata_from_faiss_tool import load_metadata_from_faiss
+
+GCS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
+FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
+FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
+
+# MOVED _create_local_temp_path to module level
+def _create_local_temp_path(index_name: str, suffix: str) -> str:
+    # Sanitize index_name to prevent directory traversal or invalid characters for a filename
+    safe_index_name = "".join(c if c.isalnum() or c in ('_', '-') else '_' for c in index_name)
+    filename = f"{safe_index_name}_{int(time.time() * 1000)}{suffix}"
+    return os.path.join("/tmp", filename)
+
+# REFACTORED _parse_gcs_path at module level
+def _parse_gcs_path(gcs_path: str) -> tuple[str, str]:
+    if not gcs_path:
+        raise ValueError("GCS path cannot be empty.")
+    if not gcs_path.startswith("gs://"):

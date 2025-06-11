@@ -1,0 +1,11 @@
+Persistent issues with pre-commit path resolution for local hooks:
+1.  `language: python` with `entry: scripts/check_fixture_drift.py` failed: "Executable scripts/check_fixture_drift.py not found". `pre-commit` resolved path relative to `/Users/nmhuyen`.
+2.  `language: system` with `entry: bash -c "cd $(git rev-parse --show-toplevel) && python scripts/check_fixture_drift.py"` failed: Python could not find `scripts/check_fixture_drift.py` as it was still looking in `/Users/nmhuyen/scripts/...`.
+3.  `language: system` with `entry: bash -c "cd $(git rev-parse --show-toplevel) && setup/venv/bin/python scripts/check_fixture_drift.py"` failed: `/bin/bash: setup/venv/bin/python: No such file or directory`. Path to python interpreter not resolved correctly from the new CWD.
+4.  `language: system` with `entry: bash -c "cd \"$(git rev-parse --show-toplevel)\" && \"$(git rev-parse --show-toplevel)/setup/venv/bin/python\" scripts/check_fixture_drift.py --fail-on-drift"` failed. `$(git rev-parse --show-toplevel)` consistently resolved to `/Users/nmhuyen` instead of the full project path when used in the `entry` field. Error: `/bin/bash: /Users/nmhuyen/setup/venv/bin/python: No such file or directory`.
+5.  `language: script` with `entry: scripts/check_fixture_drift.py` failed: "Executable /Users/nmhuyen/scripts/check_fixture_drift.py not found".
+
+The `PRE_COMMIT_TOP_LEVEL` environment variable might be empty or incorrectly set, and `git rev-parse --show-toplevel` does not seem to be evaluated as expected within the `pre-commit` hook entry.
+This suggests `pre-commit`'s execution CWD for resolving local hook entries is `/Users/nmhuyen` and not the project root.
+A global `pre-commit` configuration or shell environment issue might be the cause. Investigation into `~/.gitconfig` or global pre-commit settings is advised.
+Reverting to hardcoded absolute paths as a temporary workaround for CLI103A1.

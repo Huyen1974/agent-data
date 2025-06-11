@@ -1,0 +1,8 @@
+New test: tests/api/test_invalid_top_k.py
+Purpose: Verify API validation for negative top_k.
+Payload: {"query_text":"quick check","top_k":-5,"score_threshold":0.3}
+Expected: HTTP 422, detail msg "Input should be greater than or equal to 1".
+Code fix: None needed. Existing Pydantic validation for top_k (ge=1) was sufficient.
+Test fix: Adjusted assertion to match Pydantic's exact error message.
+Result: 17 tests passed.
+All previous tests remain green.

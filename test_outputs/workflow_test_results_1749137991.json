@@ -1,0 +1,84 @@
+{
+  "test_batch": "cli125_workflow_test",
+  "timestamp": "2025-06-05T22:39:51.422213",
+  "total_documents": 8,
+  "successful": 8,
+  "failed": 0,
+  "success_rate": 100.0,
+  "total_time": 79.30704164505005,
+  "avg_time_per_doc": 9.913380205631256,
+  "results": [
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_1",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 1 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115055.\",\"doc_id\":\"workflow_test_doc_1\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115063\",\"doc_index\":1,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:38:33.272189169Z'\nduration: 3.530741435s\nendTime: '2025-06-05T15:38:36.802930604Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/898f329a-c532-4412-911e-f06f6fe423c8\nstartTime: '2025-06-05T15:38:33.272189169Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137919.7143161
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_2",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 2 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115065.\",\"doc_id\":\"workflow_test_doc_2\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115067\",\"doc_index\":2,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:38:43.628660085Z'\nduration: 3.473894409s\nendTime: '2025-06-05T15:38:47.102554494Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/1a2ee930-8b72-456f-bf5c-a5071ae4b46b\nstartTime: '2025-06-05T15:38:43.628660085Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137930.886208
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_3",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 3 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115068.\",\"doc_id\":\"workflow_test_doc_3\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115070\",\"doc_index\":3,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:38:54.726785516Z'\nduration: 3.430191715s\nendTime: '2025-06-05T15:38:58.156977231Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/2c960fed-ceff-4adb-824e-bfd470999293\nstartTime: '2025-06-05T15:38:54.726785516Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137940.9129322
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_4",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 4 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115071.\",\"doc_id\":\"workflow_test_doc_4\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115072\",\"doc_index\":4,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:39:04.847682916Z'\nduration: 3.524594476s\nendTime: '2025-06-05T15:39:08.372277392Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/3004199c-9d82-4c1f-aaf5-48697e547450\nstartTime: '2025-06-05T15:39:04.847682916Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137950.616449
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_5",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 5 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115074.\",\"doc_id\":\"workflow_test_doc_5\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115075\",\"doc_index\":5,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:39:14.525601886Z'\nduration: 3.433654452s\nendTime: '2025-06-05T15:39:17.959256338Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/790fe6ca-f128-4cb4-a500-575f462c60a6\nstartTime: '2025-06-05T15:39:14.525601886Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137961.355523
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_6",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 6 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115077.\",\"doc_id\":\"workflow_test_doc_6\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115078\",\"doc_index\":6,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:39:25.244138119Z'\nduration: 3.438415670s\nendTime: '2025-06-05T15:39:28.682553789Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/516a0562-4726-48bc-b7b3-475329d2c991\nstartTime: '2025-06-05T15:39:25.244138119Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137971.647509
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_7",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 7 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115079.\",\"doc_id\":\"workflow_test_doc_7\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115080\",\"doc_index\":7,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:39:35.519431978Z'\nduration: 3.440493947s\nendTime: '2025-06-05T15:39:38.959925925Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/53e75e64-67db-4187-b0f4-0bddc1fe7ee2\nstartTime: '2025-06-05T15:39:35.519431978Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137981.914291
+    },
+    {
+      "status": "success",
+      "doc_id": "workflow_test_doc_8",
+      "workflow_result": {
+        "message": "Workflow completed successfully"
+      },
+      "raw_output": "argument: '{\"content\":\"This is test document 8 for workflow testing. It contains sample\n  content for vectorization and tagging. Document created at 2025-06-05T22:38:32.115082.\",\"doc_id\":\"workflow_test_doc_8\",\"metadata\":{\"created_at\":\"2025-06-05T22:38:32.115083\",\"doc_index\":8,\"test_batch\":\"cli125_workflow_test\",\"test_type\":\"workflow_validation\"}}'\ncreateTime: '2025-06-05T15:39:45.845930672Z'\nduration: 3.458840675s\nendTime: '2025-06-05T15:39:49.304771347Z'\nerror:\n  context: |-\n    ValueError: invalid domain for OAuth2\n    in step \"vectorize_retry\", routine \"main\", line: 116\n  payload: '{\"message\":\"ValueError: invalid domain for OAuth2\",\"tags\":[\"ValueError\"]}'\n  stackTrace:\n    elements:\n    - position:\n        column: '19'\n        length: '2'\n        line: '116'\n      routine: main\n      step: vectorize_retry\nname: projects/1042559846495/locations/asia-southeast1/workflows/ingestion-workflow/executions/024032fb-cc7f-4178-a42e-c419f6cc191c\nstartTime: '2025-06-05T15:39:45.845930672Z'\nstate: FAILED\nstatus:\n  currentSteps:\n  - routine: main\n    step: vectorize_retry\nworkflowRevisionId: 000005-e5f\n",
+      "execution_time": 1749137991.4221408
+    }
+  ]
+}

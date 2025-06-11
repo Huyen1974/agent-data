@@ -1,0 +1,364 @@
+KH1.1 Grok Qdrant Integration Documentation
+==============================================
+
+This document provides comprehensive documentation for the Qdrant Cloud integration with QdrantStore and MCP (Model Context Protocol) in the Agent Data system.
+
+## Table of Contents
+1. [Qdrant Cloud Configuration](#qdrant-cloud-configuration)
+2. [QdrantStore Integration with ToolsManager](#qdrantstore-integration-with-toolsmanager)
+3. [MCP stdio Communication with local_mcp_server.py](#mcp-stdio-communication-with-local_mcp_serverpy)
+4. [Architecture Overview](#architecture-overview)
+5. [API Integration](#api-integration)
+6. [Testing and Verification](#testing-and-verification)
+7. [Performance Considerations](#performance-considerations)
+8. [Security Features](#security-features)
+
+## Qdrant Cloud Configuration
+
+### Cluster Details
+- **Cluster ID**: ba0aa7ef-be87-47b4-96de-7d36ca4527a8
+- **Endpoint**: https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io
+- **Region**: us-east4-0 (Google Cloud Platform, US East)
+- **Tier**: Free tier (limited to US/Europe regions)
+- **Collection Name**: agent_data_vectors
+- **Vector Dimension**: 1536 (OpenAI embedding standard)
+- **Distance Metric**: COSINE
+
+### API Key Management
+- **Storage**: Google Cloud Secret Manager
+- **Secret Name**: qdrant-api-key-sg
+- **Project**: github-chatgpt-ggcloud
+- **Region**: asia-southeast1
+- **Access Control**:
+  - Production: chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com (roles/secretmanager.secretAccessor)
+  - Test: gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com (roles/secretmanager.secretAccessor)
+
+### Configuration Settings
+Located in `ADK/agent_data/config/settings.py`:
+```python
+class Settings:
+    VECTOR_BACKEND: str = "QDRANT"
+    QDRANT_URL: str = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    QDRANT_API_KEY: str = os.environ.get("QDRANT_API_KEY", "")
+    QDRANT_COLLECTION_NAME: str = "agent_data_vectors"
+    QDRANT_REGION: str = "us-east4-0"
+    VECTOR_DIMENSION: int = 1536
+```
+
+## QdrantStore Integration with ToolsManager
+
+### QdrantStore Implementation
+File: `ADK/agent_data/vector_store/qdrant_store.py`
+
+The QdrantStore class implements the VectorStore interface and provides:
+- **Async Operations**: All vector operations are asynchronous for optimal performance
+- **Collection Management**: Automatic collection creation and payload indexing
+- **Vector Operations**: Upsert, query, delete, count, and health check operations
+- **Metadata Support**: Rich metadata storage with tag-based filtering
+- **Error Handling**: Comprehensive error handling with detailed logging
+
+Key Methods:
+- `upsert_vector()`: Store vectors with metadata and tags
+- `query_vectors_by_tag()`: Query vectors by tag with optional similarity search
+- `delete_vectors_by_tag()`: Delete vectors by tag
+- `get_vector_count()`: Get total vector count
+- `health_check()`: Verify cluster connectivity
+
+### Tool Registration
+File: `ADK/agent_data/tools/register_tools.py`
+
+QdrantStore tools are registered in two categories:
+
+#### Async Tools (for Agent use):
+- qdrant_upsert_vector
+- qdrant_query_by_tag
+- qdrant_delete_by_tag
+- qdrant_get_count
+- qdrant_health_check
+- save_vector_to_qdrant
+- search_vectors_qdrant
+- qdrant_generate_and_store_embedding
+- qdrant_semantic_search
+- qdrant_batch_generate_embeddings
+- semantic_search_qdrant
+
+#### Synchronous Wrappers (for MCP use):
+- qdrant_health_check_sync
+- qdrant_get_count_sync
+- qdrant_upsert_vector_sync
+- qdrant_query_by_tag_sync
+- qdrant_delete_by_tag_sync
+- qdrant_semantic_search_sync
+- qdrant_generate_and_store_embedding_sync
+- semantic_search_qdrant_sync
+
+### Synchronous Wrappers
+File: `ADK/agent_data/tools/qdrant_sync_wrappers.py`
+
+The synchronous wrappers enable async Qdrant tools to work with the synchronous MCP server:
+
+```python
+def run_async_tool(async_func, *args, **kwargs):
+    """Helper function to run async tools synchronously."""
+    try:
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            # Use ThreadPoolExecutor for running loops
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(asyncio.run, async_func(*args, **kwargs))
+                return future.result()
+        else:
+            return loop.run_until_complete(async_func(*args, **kwargs))
+    except RuntimeError:
+        return asyncio.run(async_func(*args, **kwargs))
+```
+
+## MCP stdio Communication with local_mcp_server.py
+
+### MCP Server Implementation
+File: `ADK/agent_data/local_mcp_server.py`
+
+The MCP server provides stdio-based communication for tool execution:
+
+#### Communication Protocol
+- **Input**: JSON requests via stdin
+- **Output**: JSON responses via stdout
+- **Logging**: Error and debug information via stderr
+- **Format**: Line-delimited JSON
+
+#### Request Format
+```json
+{
+    "tool_name": "qdrant_health_check_sync",
+    "data": {
+        // Tool-specific parameters
+    }
+}
+```
+
+#### Response Format
+```json
+{
+    "result": {
+        // Tool execution result
+    },
+    "meta": {
+        "status": "success"
+    }
+}
+```
+
+#### Error Response Format
+```json
+{
+    "error": "Error message",
+    "meta": {
+        "status": "error"
+    }
+}
+```
+
+### Supported MCP Operations
+
+#### Basic Operations
+1. **Echo Test**:
+   ```json
+   {"tool_name": "echo", "data": {"text": "Hello MCP"}}
+   ```
+
+2. **Health Check**:
+   ```json
+   {"tool_name": "qdrant_health_check_sync", "data": {}}
+   ```
+
+3. **Vector Count**:
+   ```json
+   {"tool_name": "qdrant_get_count_sync", "data": {}}
+   ```
+
+#### Document Operations
+1. **Save Document**:
+   ```json
+   {
+       "tool_name": "save_document",
+       "data": {
+           "content": "Document content",
+           "filename": "test_doc.txt",
+           "metadata": {"tag": "test"}
+       }
+   }
+   ```
+
+2. **Query by Tag**:
+   ```json
+   {
+       "tool_name": "qdrant_query_by_tag_sync",
+       "data": {
+           "tag": "test",
+           "limit": 10,
+           "threshold": 0.0
+       }
+   }
+   ```
+
+### Tool Loading and Registration
+The MCP server loads 75+ tools including:
+- Core tools (echo, save_text, add_numbers, etc.)
+- Document management tools
+- Metadata operations
+- Vector search tools
+- Qdrant-specific operations
+- Synchronous wrappers for MCP compatibility
+
+## Architecture Overview
+
+### System Components
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   MCP Client    │    │  local_mcp_server │    │  QdrantStore    │
+│   (stdio)       │◄──►│     (stdio)       │◄──►│   (async)       │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                                │                        │
+                                ▼                        ▼
+                       ┌──────────────────┐    ┌─────────────────┐
+                       │  ToolsManager    │    │  Qdrant Cloud   │
+                       │  (75+ tools)     │    │  (us-east4-0)   │
+                       └──────────────────┘    └─────────────────┘
+```
+
+### Data Flow
+1. **MCP Request**: Client sends JSON request via stdin
+2. **Tool Resolution**: Server identifies and loads appropriate tool
+3. **Sync Wrapper**: Async tools are wrapped for synchronous execution
+4. **Qdrant Operation**: Vector operations executed against Qdrant Cloud
+5. **Response**: Results returned as JSON via stdout
+
+### Vector Format Requirements
+- **Vector ID**: Integer or UUID string
+- **Vector Dimension**: 1536 (OpenAI embedding standard)
+- **Metadata**: Dictionary with optional 'tag' field
+- **Distance Metric**: COSINE similarity
+
+## API Integration
+
+### FastAPI Integration
+File: `api_vector_search.py`
+
+QdrantStore is integrated with FastAPI through dependency injection:
+
+```python
+def get_qdrant_store():
+    """Dependency to get QdrantStore instance."""
+    from ADK.agent_data.config.settings import settings
+    return QdrantStore(
+        url=settings.QDRANT_URL,
+        api_key=settings.QDRANT_API_KEY,
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        vector_size=settings.VECTOR_DIMENSION
+    )
+```
+
+### Available Endpoints
+- `/search_vector`: Vector similarity search
+- `/upsert_vector`: Store vectors with metadata
+- `/delete_vector`: Delete specific vectors
+- `/query_vectors_by_tag`: Query by tag filter
+- `/count_vectors_by_tag`: Count vectors by tag
+- `/health`: Health check endpoint
+- `/semantic_search_cosine`: Semantic search with embeddings
+- `/generate_embedding_real`: Generate OpenAI embeddings
+
+### Prometheus Metrics
+The API includes Prometheus metrics for monitoring:
+- `api_requests_total`: Total API requests counter
+- `api_request_duration_seconds`: Request latency histogram
+
+## Testing and Verification
+
+### Test Coverage
+Current test suite: 75/75 tests pass (75 passed, 2 skipped)
+
+Test categories:
+- Vector operations (upsert, query, delete)
+- Filter operations (tag-based filtering)
+- Bad input handling
+- Firestore/GCS integration
+- FAISS→Qdrant migration
+- MCP integration
+- Performance testing
+- Sentinel monitoring
+
+### Verification Commands
+```bash
+# Run all tests
+pytest -q
+
+# Check flake8 compliance
+pre-commit run flake8 --files ADK/local_mcp_server.py
+
+# Check fixture drift
+scripts/check_fixture_drift.py
+
+# Test MCP integration
+echo '{"tool_name": "qdrant_health_check_sync", "data": {}}' | python ADK/agent_data/local_mcp_server.py
+```
+
+## Performance Considerations
+
+### Latency Measurements
+From CLI 112C latency probe (Vietnam to us-east4-0):
+- **Ping Latency**: 210-218ms
+- **Search Latency**: 229-305ms
+- **E2E Workflow**: ~2632ms (save_document → vectorize → semantic_search)
+
+### Optimization Strategies
+1. **Batch Operations**: Use batch_size=100 for bulk uploads
+2. **Concurrency**: Limit to 2 concurrent operations for free tier
+3. **Batch Delays**: 3s delay between batches to avoid rate limits
+4. **Connection Pooling**: Reuse QdrantClient instances
+5. **Async Operations**: Use async/await for all vector operations
+
+### Migration Performance
+FAISS to Qdrant migration benchmarks:
+- **2000 vectors**: 0.31s/vector with optimal configuration
+- **Success Rate**: 100% with proper error handling
+- **Optimal Config**: concurrency=2, batch_size=100, batch_delay=3s
+
+## Security Features
+
+### API Key Masking
+File: `ADK/agent_data/tools/api_key_middleware.py`
+
+Automatic API key masking in logs and responses:
+```python
+def setup_global_api_key_masking():
+    """Setup global API key masking middleware."""
+    # Masks API keys in logs and configuration output
+```
+
+### Access Control
+- **Secret Manager**: Centralized API key storage
+- **Service Accounts**: Role-based access control
+- **Environment Variables**: Secure configuration injection
+- **HTTPS**: All communications encrypted in transit
+
+### Configuration Security
+- API keys never logged in plaintext
+- Configuration dictionaries automatically masked
+- Secure defaults for all settings
+- Environment-based configuration override
+
+---
+
+## Summary
+
+The Qdrant integration provides a robust, scalable vector storage solution with:
+- **Cloud-native**: Qdrant Cloud free tier with 1GB storage
+- **High Performance**: Optimized for 1536-dimensional OpenAI embeddings
+- **MCP Compatible**: Synchronous wrappers for stdio communication
+- **API Ready**: FastAPI integration with Prometheus metrics
+- **Secure**: API key masking and access control
+- **Well Tested**: 75/75 tests passing with comprehensive coverage
+
+The system is production-ready for agent-based applications requiring vector search capabilities, with clear migration paths to paid tiers as usage scales.

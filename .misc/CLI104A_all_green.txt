@@ -1,0 +1,4 @@
+Purpose: Implemented DELETE_BY_TAG endpoint.
+Total tests: 50/50 (48 passed, 2 skipped).
+Summary: Added endpoint to delete points by tag using QdrantClient.delete with Filter.
+Note: Next step is CLI 104B to add test for DELETE_BY_TAG.

@@ -1,0 +1,86 @@
+flake8...................................................................Failed
+- hook id: flake8
+- exit code: 1
+
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:10:1: F401 'mcp' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:10:1: E402 module level import not at top of file
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:18:5: F401 'tools.echo_tool.echo' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:19:5: F401 'tools.save_text_tool.save_text' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:20:5: F401 'tools.add_numbers_tool.add_numbers' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:21:5: F401 'tools.get_registered_tools_tool.get_registered_tools' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:22:60: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:33:1: E302 expected 2 blank lines, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:36:36: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:61:22: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:68:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:68:18: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:69:18: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:93:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:94:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:94:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:94:64: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:102:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:102:38: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:103:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:105:38: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:105:38: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:105:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:107:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:107:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:108:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:108:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:110:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:110:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:111:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:111:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:113:30: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:113:30: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:114:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:114:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:117:26: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:117:26: E117 over-indented (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:118:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:118:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:119:26: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:120:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:125:40: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:126:81: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:135:80: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:138:80: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:139:30: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:140:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:140:30: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:140:67: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:141:30: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:147:26: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:147:26: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:157:38: E701 multiple statements on one line (colon)
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:157:61: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:159:56: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:168:65: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:176:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:184:75: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:191:18: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:196:1: E305 expected 2 blank lines after class or function definition, found 1
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:200:16: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:200:59: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/mcp/local_mcp_server.py:200:60: W292 no newline at end of file
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:3:1: F401 'json' imported but unused
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:30:9: E731 do not assign a lambda expression, use a def
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:40:13: F541 f-string is missing placeholders
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:59:58: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:66:32: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:76:31: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:81:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:81:10: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:82:10: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:83:10: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:94:38: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:101:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:101:14: E117 over-indented
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:102:14: E114 indentation is not a multiple of 4 (comment)
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:103:14: E111 indentation is not a multiple of 4
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:106:105: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:111:45: E261 at least two spaces before inline comment
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:115:52: W291 trailing whitespace
+Documents/Manual Deploy/mpc_back_end_for_agents/mcp/web_server.py:115:53: W292 no newline at end of file

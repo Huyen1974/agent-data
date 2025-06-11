@@ -1,0 +1,23 @@
+Purpose: Implemented Cloud Scheduler for hybrid sync between Qdrant Cloud (8h-22h) and Cloud Run (22h-8h)
+
+Total tests: 65/65 (63 passed, 2 skipped)
+
+Summary:
+- Deployed Cloud Run service qdrant-agent using simplified approach with pre-built Qdrant image
+- Created Cloud Function update_qdrant_env for environment variable switching
+- Added Cloud Scheduler jobs to switch between Qdrant Cloud and Cloud Run based on time:
+  * switch-to-cloud: Daily at 8 AM (0 8 * * *)
+  * switch-to-docker: Daily at 10 PM (0 22 * * *)
+- Cloud Run service URL: https://qdrant-agent-pfne2mqwja-uc.a.run.app
+- Cloud Function URL: https://us-central1-github-chatgpt-ggcloud.cloudfunctions.net/update_qdrant_env
+
+Infrastructure:
+- Cloud Run service: qdrant-agent (region us-central1)
+- Cloud Function: update_qdrant_env (region us-central1)
+- Cloud Scheduler jobs: switch-to-cloud, switch-to-docker (region asia-northeast1)
+
+Note: Cloud Function has a known issue with service structure that needs to be fixed in CLI 111B.
+The scheduler jobs are created and will attempt to call the function, but the environment variable
+updates may fail until the service structure is corrected.
+
+Next step: CLI 111B to fix Cloud Function and integrate with Agent Data logic.

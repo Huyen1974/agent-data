@@ -1,0 +1,55 @@
+GUIDE FOR CLI103A1.1: Fix Test test_clear_embeddings
+
+Objective: Fix test_clear_embeddings in tests/api/test_embeddings_api.py to achieve 50/50 test pass (48 passed, 2 skipped).
+
+Initial State:
+- Test test_clear_embeddings fails with AssertionError: Expected to delete 7 items, but /clear_embeddings reported 0.
+- Root cause: TypeError: Cannot instantiate typing.Union in agent_data/vector_store/qdrant_store.py when creating PointsSelector (e.g., PointsSelector(filter=Filter(must=[])) or PointsSelector(points=PointIdsList(...))).
+- Environment: Python 3.10.17, qdrant-client 1.14.2, Pydantic 2.11.3.
+
+Steps Taken & Issues Encountered:
+
+1.  **Verification:**
+    *   Confirmed working on branch `cli103a`.
+
+2.  **Initial Analysis:**
+    *   Ran `pytest -q tests/api/test_embeddings_api.py::test_clear_embeddings`. Confirmed `TypeError` during `PointsSelector` instantiation in `qdrant_store.py` before mock client `delete_points` is called.
+    *   Checked library versions: `qdrant-client==1.14.2`, `pydantic==2.11.3`.
+
+3.  **Attempted Fixes for TypeError in `qdrant_store.py` & `FakeQdrantClient`:**
+
+    *   **Attempt 1: Modify `FakeQdrantClient.delete_points` to handle `Filter(must=[])`**
+        *   Edited `tests/mocks/qdrant_basic.py` so `delete_points` would clear all points if `points_selector.filter` was `Filter(must=[])`.
+        *   **Result:** `TypeError` persisted in `qdrant_store.py` because it occurs during `PointsSelector` creation, before the mock method is called.
+
+    *   **Attempt 2: Pass `PointsSelector(filter={'must': []})` in `qdrant_store.py`**
+        *   Modified `agent_data/vector_store/qdrant_store.py` to pass a dictionary for the filter argument to `PointsSelector`.
+        *   **Result:** `TypeError` persisted. The issue is with `PointsSelector` model validation itself.
+
+    *   **Attempt 3: Refactor `purge_all_vectors` to delete by ID list**
+        *   Modified `agent_data/vector_store/qdrant_store.py`:
+            *   Scroll through all points to get their IDs.
+            *   Create `models.PointIdsList` with these IDs.
+            *   Call `models.PointsSelector(points=point_ids_list_obj)`.
+        *   Updated `FakeQdrantClient.scroll` for robust ID-based offset handling.
+        *   Corrected `import uuid` (from `typing import uuid` to `import uuid`).
+        *   **Result:** `TypeError: Cannot instantiate typing.Union` shifted to the line `points_selector_obj = models.PointsSelector(points=points_to_delete_list)`. This confirmed the problem is with `PointsSelector` construction with any valid argument (`filter` or `points`).
+
+4.  **Conclusion on TypeError:**
+    *   The `TypeError: Cannot instantiate typing.Union` is highly indicative of an environment or library incompatibility issue between Pydantic, qdrant-client, and Python's typing module at the specified versions.
+    *   The error prevents successful instantiation of `qdrant_client.http.models.PointsSelector`.
+    *   **Recommended Resolution:** Upgrade libraries: `pip install -U qdrant-client pydantic`. This was logged in `.cursor/CLI103A1_1_error.txt`.
+
+5.  **Test Status:**
+    *   `test_clear_embeddings` remains **FAILED** due to the unhandled `TypeError` in `qdrant_store.py`.
+    *   Overall tests: 47 passed, 1 FAILED, 2 skipped.
+
+6.  **Git Actions (Simulated - Not actually green):**
+    *   Files modified:
+        *   `agent_data/vector_store/qdrant_store.py` (multiple attempts to fix `PointsSelector` usage, then reverted to a simple version for clarity of the blocking error).
+        *   `tests/mocks/qdrant_basic.py` (updates to `delete_points` and `scroll`).
+    *   Staging and committing would normally happen here if tests were green.
+    *   Tag `cli103a1_1_all_green` would be applied.
+
+Final Assessment:
+The primary goal to fix `test_clear_embeddings` was not achieved due to a persistent `TypeError` related to `PointsSelector` instantiation, which appears to be an environment/library issue. Further progress on this specific test requires addressing this underlying problem, likely by upgrading libraries as recommended.

@@ -1,0 +1,381 @@
+KH1.1_Grok Final Cleanup - Error Log
+======================================
+
+Date: $(date)
+Branch: cli103a
+Tag: cli111b_all_green
+Commit: 139dd05
+
+Initial Git Status:
+On branch cli103a
+HEAD is now at 139dd05 CLI111B: Fix Cloud Function and Integrate with Agent Data Logic
+
+Virtual Environment: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv (activated)
+
+Task: Redeploy Cloud Run service with snapshot restore, verify hybrid sync, clean up resources
+
+=== DEPLOYMENT LOG === === Cloud Run Deployment for Qdrant ===
+Project ID: github-chatgpt-ggcloud
+Region: asia-southeast1
+Service Name: qdrant-agent
+Image: gcr.io/github-chatgpt-ggcloud/qdrant-agent
+Collection: my_collection
+GCS Bucket: qdrant-snapshots
+
+Checking gcloud authentication...
+Setting gcloud project to github-chatgpt-ggcloud...
+WARNING: Your active project does not match the quota project in your local Application Default Credentials file. This might result in unexpected quota issues.
+
+To update your Application Default Credentials quota project, use the `gcloud auth application-default set-quota-project` command.
+Updated property [core/project].
+Enabling required APIs...
+Building Docker image...
+Creating temporary archive of 486 file(s) totalling 6.4 MiB before compression.
+Some files were not included in the source upload.
+
+Check the gcloud log [/Users/nmhuyen/.config/gcloud/logs/2025.05.27/14.17.55.039585.log] to see which files and the contents of the
+default gcloudignore file used (see `$ gcloud topic gcloudignore` to learn
+more).
+
+Uploading tarball of [.] to [gs://github-chatgpt-ggcloud_cloudbuild/source/1748330275.127926-c8037c89cb744f5697e016e89a90b37e.tgz]
+ERROR: (gcloud.builds.submit) FAILED_PRECONDITION: failed precondition: due to quota restrictions, Cloud Build cannot run builds in this region, please contact Google Cloud Support at https://cloud.google.com/support-hub
+=== Cloud Run Deployment for Qdrant ===
+Project ID: github-chatgpt-ggcloud
+Region: us-central1
+Service Name: qdrant-agent
+Image: us-central1-docker.pkg.dev/github-chatgpt-ggcloud/docker-repo/qdrant-agent:latest
+Collection: my_collection
+GCS Bucket: qdrant-snapshots
+
+Checking gcloud authentication...
+Checking Docker installation...
+Setting gcloud project to github-chatgpt-ggcloud...
+WARNING: Your active project does not match the quota project in your local Application Default Credentials file. This might result in unexpected quota issues.
+
+To update your Application Default Credentials quota project, use the `gcloud auth application-default set-quota-project` command.
+Updated property [core/project].
+Enabling required APIs...
+Creating/checking Artifact Registry repository...
+Create request issued for: [docker-repo]
+Waiting for operation [projects/github-chatgpt-ggcloud/locations/us-central1/operations/1081007a-9c61-4e7a-b0a3-566183f69f6f] to complete...
+..........done.
+Created repository [docker-repo].
+Building Docker image locally...
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.qdrant
+#1 transferring dockerfile: 4.82kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11-alpine
+#2 ...
+
+#3 [auth] library/alpine:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/python:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [auth] library/rust:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [internal] load metadata for docker.io/library/rust:1.75-alpine
+#6 ...
+
+#2 [internal] load metadata for docker.io/library/python:3.11-alpine
+#2 DONE 4.1s
+
+#6 [internal] load metadata for docker.io/library/rust:1.75-alpine
+#6 DONE 4.2s
+
+#7 [internal] load metadata for docker.io/library/alpine:3.18
+#7 DONE 4.7s
+
+#8 [internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 7.60kB 0.0s done
+#9 DONE 0.1s
+
+#10 [stage-2  1/10] FROM docker.io/library/alpine:3.18@sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f
+#10 resolve docker.io/library/alpine:3.18@sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f 0.0s done
+#10 sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 0B / 3.34MB 0.2s
+#10 sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 1.05MB / 3.34MB 1.1s
+#10 sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 2.10MB / 3.34MB 1.4s
+#10 sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 3.15MB / 3.34MB 1.5s
+#10 sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 3.34MB / 3.34MB 1.6s done
+#10 extracting sha256:95459497489f07b9d71d294c852a09f9bbf1af51bb35db752a31f6f48935e293 0.1s done
+#10 DONE 1.7s
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 resolve docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0 0.0s done
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 0B / 52.97MB 1.5s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 0B / 228.65MB 1.5s
+#11 sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 0B / 3.35MB 1.5s
+#11 sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 1.05MB / 3.35MB 2.6s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 3.15MB / 52.97MB 3.3s
+#11 sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 2.10MB / 3.35MB 3.3s
+#11 sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 3.15MB / 3.35MB 3.9s
+#11 sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 3.35MB / 3.35MB 4.1s done
+#11 extracting sha256:bca4290a96390d7a6fc6f2f9929370d06f8dfcacba591c76e3d5c5044e7f420c 0.1s done
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 6.29MB / 52.97MB 4.8s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 9.44MB / 52.97MB 6.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 4.19MB / 228.65MB 6.6s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 12.58MB / 52.97MB 8.1s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 15.73MB / 52.97MB 9.8s
+#11 ...
+
+#12 [python-builder 1/4] FROM docker.io/library/python:3.11-alpine@sha256:d0199977fdae5d1109a89d0b0014468465e014a9834d0a566ea50871b3255ade
+#12 resolve docker.io/library/python:3.11-alpine@sha256:d0199977fdae5d1109a89d0b0014468465e014a9834d0a566ea50871b3255ade 0.0s done
+#12 sha256:40de236649c7fafd916a1501e9f8e38bc23451880bc970cc9624023942031e74 248B / 248B 0.7s done
+#12 sha256:d353c603bd695e7a3d24409a25030be5dc5071b11b03d88c7109e9ee88a3a4b0 7.34MB / 16.29MB 7.8s
+#12 sha256:f50b10efc2b0f5c71ea50728af1c0b9c1a4787270fc322139a1e8ceb93bb3b43 462.07kB / 462.07kB 1.9s done
+#12 sha256:6e771e15690e2fabf2332d3a3b744495411d6e0b00b2aea64419b58b0066cf81 3.99MB / 3.99MB 3.6s done
+#12 extracting sha256:6e771e15690e2fabf2332d3a3b744495411d6e0b00b2aea64419b58b0066cf81 0.1s done
+#12 extracting sha256:f50b10efc2b0f5c71ea50728af1c0b9c1a4787270fc322139a1e8ceb93bb3b43 0.0s done
+#12 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 18.87MB / 52.97MB 11.4s
+#11 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 0.255 fetch https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/APKINDEX.tar.gz
+#13 2.585 fetch https://dl-cdn.alpinelinux.org/alpine/v3.18/community/aarch64/APKINDEX.tar.gz
+#13 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 8.39MB / 228.65MB 11.7s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 22.02MB / 52.97MB 12.9s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 25.17MB / 52.97MB 14.3s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 28.31MB / 52.97MB 15.9s
+#11 ...
+
+#12 [python-builder 1/4] FROM docker.io/library/python:3.11-alpine@sha256:d0199977fdae5d1109a89d0b0014468465e014a9834d0a566ea50871b3255ade
+#12 sha256:d353c603bd695e7a3d24409a25030be5dc5071b11b03d88c7109e9ee88a3a4b0 16.29MB / 16.29MB 13.8s done
+#12 extracting sha256:d353c603bd695e7a3d24409a25030be5dc5071b11b03d88c7109e9ee88a3a4b0 0.3s done
+#12 DONE 16.4s
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 ...
+
+#12 [python-builder 1/4] FROM docker.io/library/python:3.11-alpine@sha256:d0199977fdae5d1109a89d0b0014468465e014a9834d0a566ea50871b3255ade
+#12 extracting sha256:40de236649c7fafd916a1501e9f8e38bc23451880bc970cc9624023942031e74 done
+#12 DONE 16.4s
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 15.73MB / 228.65MB 16.8s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 31.46MB / 52.97MB 17.4s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 34.60MB / 52.97MB 18.3s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 37.75MB / 52.97MB 19.3s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 40.89MB / 52.97MB 20.4s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 44.04MB / 52.97MB 21.5s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 24.12MB / 228.65MB 21.9s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 47.19MB / 52.97MB 22.4s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 50.33MB / 52.97MB 23.4s
+#11 sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 52.97MB / 52.97MB 24.0s done
+#11 extracting sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417
+#11 extracting sha256:3aabc96c6f430bef666524451a6a7b3be61f8660baa0acd535a3d18d56cc9417 0.6s done
+#11 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 0.133 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/aarch64/APKINDEX.tar.gz
+#14 1.789 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/aarch64/APKINDEX.tar.gz
+#14 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 34.60MB / 228.65MB 27.0s
+#11 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 16.80 (1/27) Installing ca-certificates (20241121-r1)
+#13 18.18 (2/27) Installing libgcc (12.2.1_git20220924-r10)
+#13 18.46 (3/27) Installing libstdc++ (12.2.1_git20220924-r10)
+#13 25.53 (4/27) Installing openssl (3.1.8-r0)
+#13 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 46.14MB / 228.65MB 30.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 57.67MB / 228.65MB 33.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 69.21MB / 228.65MB 36.3s
+#11 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 27.56 (5/27) Installing libexpat (2.7.0-r0)
+#13 28.26 (6/27) Installing libbz2 (1.0.8-r5)
+#13 28.58 (7/27) Installing libffi (3.4.4-r2)
+#13 28.78 (8/27) Installing gdbm (1.23-r1)
+#13 29.26 (9/27) Installing xz-libs (5.4.3-r1)
+#13 30.02 (10/27) Installing mpdecimal (2.5.1-r2)
+#13 30.97 (11/27) Installing ncurses-terminfo-base (6.4_p20230506-r0)
+#13 31.23 (12/27) Installing libncursesw (6.4_p20230506-r0)
+#13 33.16 (13/27) Installing libpanelw (6.4_p20230506-r0)
+#13 33.34 (14/27) Installing readline (8.2.1-r1)
+#13 34.79 (15/27) Installing sqlite-libs (3.41.2-r3)
+#13 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 80.74MB / 228.65MB 39.6s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 92.27MB / 228.65MB 42.0s
+#11 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 16.37 (1/17) Installing libgcc (14.2.0-r4)
+#14 16.76 (2/17) Installing jansson (2.14-r4)
+#14 16.99 (3/17) Installing libstdc++ (14.2.0-r4)
+#14 24.03 (4/17) Installing zstd-libs (1.5.6-r2)
+#14 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 39.52 (16/27) Installing python3 (3.11.12-r1)
+#13 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 114.29MB / 228.65MB 46.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 125.83MB / 228.65MB 48.9s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 137.36MB / 228.65MB 51.8s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 148.90MB / 228.65MB 54.5s
+#11 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 28.61 (5/17) Installing binutils (2.43.1-r2)
+#14 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 160.43MB / 228.65MB 57.0s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 171.97MB / 228.65MB 59.7s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 183.50MB / 228.65MB 62.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 195.04MB / 228.65MB 65.3s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 204.47MB / 228.65MB 70.4s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 214.96MB / 228.65MB 75.5s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 226.49MB / 228.65MB 79.9s
+#11 sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 228.65MB / 228.65MB 80.7s done
+#11 extracting sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576
+#11 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 67.58 (6/17) Installing libgomp (14.2.0-r4)
+#14 ...
+
+#11 [qdrant-builder 1/6] FROM docker.io/library/rust:1.75-alpine@sha256:65aa0b28d02612a3811a7fd0c65b56e4ba766c35cef71965f1cacae7555771a0
+#11 extracting sha256:e4e79dd15600152a45dbb42332e271b46e4be78bfc5f7836bd6d64c57b4c8576 3.2s done
+#11 DONE 84.0s
+
+#15 [qdrant-builder 2/6] RUN apk add --no-cache     musl-dev     pkgconfig     openssl-dev     git
+#15 0.196 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/aarch64/APKINDEX.tar.gz
+#15 2.205 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/aarch64/APKINDEX.tar.gz
+#15 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 68.99 (7/17) Installing libatomic (14.2.0-r4)
+#14 69.07 (8/17) Installing gmp (6.3.0-r2)
+#14 71.42 (9/17) Installing isl26 (0.26-r1)
+#14 78.68 (10/17) Installing mpfr4 (4.2.1-r0)
+#14 81.19 (11/17) Installing mpc1 (1.3.1-r1)
+#14 81.46 (12/17) Installing gcc (14.2.0-r4)
+#14 ...
+
+#15 [qdrant-builder 2/6] RUN apk add --no-cache     musl-dev     pkgconfig     openssl-dev     git
+#15 16.15 (1/16) Upgrading musl (1.2.4_git20230717-r4 -> 1.2.4_git20230717-r5)
+#15 22.08 (2/16) Upgrading libcrypto3 (3.1.4-r5 -> 3.1.8-r0)
+#15 36.18 (3/16) Upgrading libssl3 (3.1.4-r5 -> 3.1.8-r0)
+#15 39.51 (4/16) Installing brotli-libs (1.1.0-r1)
+#15 45.03 (5/16) Installing c-ares (1.27.0-r0)
+#15 46.01 (6/16) Installing libunistring (1.1-r2)
+#15 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 132.7 (17/27) Installing python3-pycache-pyc0 (3.11.12-r1)
+#13 ...
+
+#15 [qdrant-builder 2/6] RUN apk add --no-cache     musl-dev     pkgconfig     openssl-dev     git
+#15 53.00 (7/16) Installing libidn2 (2.3.4-r4)
+#15 54.80 (8/16) Installing nghttp2-libs (1.58.0-r0)
+#15 55.12 (9/16) Installing libpsl (0.21.5-r0)
+#15 56.13 (10/16) Installing libcurl (8.12.1-r0)
+#15 60.34 (11/16) Installing libexpat (2.7.0-r0)
+#15 61.42 (12/16) Installing pcre2 (10.42-r2)
+#15 65.30 (13/16) Installing git (2.43.6-r0)
+#15 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 177.0 (18/27) Installing pyc (0.1-r0)
+#13 177.1 (19/27) Installing py3-setuptools-pyc (70.3.0-r0)
+#13 ...
+
+#15 [qdrant-builder 2/6] RUN apk add --no-cache     musl-dev     pkgconfig     openssl-dev     git
+#15 98.46 (14/16) Installing musl-dev (1.2.4_git20230717-r5)
+#15 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 191.1 (20/27) Installing py3-pip-pyc (23.1.2-r0)
+#13 ...
+
+#15 [qdrant-builder 2/6] RUN apk add --no-cache     musl-dev     pkgconfig     openssl-dev     git
+#15 121.5 (15/16) Installing pkgconf (2.1.0-r0)
+#15 122.1 (16/16) Installing openssl-dev (3.1.8-r0)
+#15 124.4 Executing busybox-1.36.1-r15.trigger
+#15 124.4 Executing ca-certificates-20230506-r0.trigger
+#15 124.5 OK: 164 MiB in 41 packages
+#15 DONE 124.6s
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 ...
+
+#16 [qdrant-builder 3/6] WORKDIR /build
+#16 DONE 0.2s
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 ...
+
+#17 [qdrant-builder 4/6] RUN git clone https://github.com/qdrant/qdrant.git --depth 1 --branch v1.7.4
+#17 0.144 Cloning into 'qdrant'...
+#17 3.253 Note: switching to '7aa164bd2dda1c0fc9bf3a0da42e656c95c2e52a'.
+#17 3.253
+#17 3.253 You are in 'detached HEAD' state. You can look around, make experimental
+#17 3.253 changes and commit them, and you can discard any commits you make in this
+#17 3.253 state without impacting any branches by switching back to a branch.
+#17 3.253
+#17 3.253 If you want to create a new branch to retain commits you create, you may
+#17 3.253 do so (now or later) by using -c with the switch command. Example:
+#17 3.253
+#17 3.253   git switch -c <new-branch-name>
+#17 3.253
+#17 3.253 Or undo this operation with:
+#17 3.253
+#17 3.253   git switch -
+#17 3.253
+#17 3.253 Turn off this advice by setting config variable advice.detachedHead to false
+#17 3.253
+#17 DONE 3.5s
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 ...
+
+#18 [qdrant-builder 5/6] WORKDIR /build/qdrant
+#18 DONE 0.0s
+
+#19 [qdrant-builder 6/6] RUN cargo build --release --bin qdrant
+#19 0.344     Updating git repository `https://github.com/qdrant/tonic`
+#19 ...
+
+#13 [stage-2  2/10] RUN apk add --no-cache     libgcc     libstdc++     openssl     ca-certificates     python3     py3-pip
+#13 214.7 (21/27) Installing py3-parsing (3.0.9-r2)
+#13 215.8 (22/27) Installing py3-parsing-pyc (3.0.9-r2)
+#13 217.0 (23/27) Installing py3-packaging-pyc (23.1-r1)
+#13 218.1 (24/27) Installing python3-pyc (3.11.12-r1)
+#13 218.2 (25/27) Installing py3-packaging (23.1-r1)
+#13 218.9 (26/27) Installing py3-setuptools (70.3.0-r0)
+#13 224.0 (27/27) Installing py3-pip (23.1.2-r0)
+#13 240.7 Executing busybox-1.36.1-r7.trigger
+#13 240.7 Executing ca-certificates-20241121-r1.trigger
+#13 240.8 OK: 83 MiB in 42 packages
+#13 DONE 241.0s
+
+#19 [qdrant-builder 6/6] RUN cargo build --release --bin qdrant
+#19 ...
+
+#14 [python-builder 2/4] RUN apk add --no-cache     gcc     musl-dev     libffi-dev     openssl-dev
+#14 446.0 (13/17) Installing linux-headers (6.6-r1)

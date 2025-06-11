@@ -1,0 +1,3 @@
+Purpose: Added test for MCP echo tool integration with mock client.
+Total tests passing: 45/45.
+Summary: Verified FakeMCPClient correctly registers echo tool and processes messages.

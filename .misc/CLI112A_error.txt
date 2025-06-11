@@ -1,0 +1,350 @@
+CLI112A: Architecture Documentation Update - Initial State
+Git Status:
+On branch cli103a
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../../../.CFUserTextEncoding
+	../../../.bash_history
+	../../../.boto
+	../../../.cache/
+	../../../.codex/
+	../../../.conda/
+	../../../.condarc
+	../../../.config/
+	../../../.cursor/
+	../../../.dendron.uuid
+	../../../.docker/
+	../../../.dockerignore
+	../../../.gem/
+	../../../.gitconfig
+	../../../.github/workflows/get_id_token.yaml
+	../../../.gsutil/
+	../../../.idlerc/
+	../../../.lesshst
+	../../../.local/
+	../../../.mysql_history
+	../../../.npm/
+	../../../.psql_history
+	../../../.python_history
+	../../../.ssh/
+	../../../.terraform.d/
+	../../../.viminfo
+	../../../.vscode/
+	../../../.wdm/
+	../../../.zcompdump
+	../../../.zprofile
+	../../../.zsh_history
+	../../../.zsh_sessions/
+	../../../.zshrc
+	../../../.zshrc.backup
+	../../../ADK/
+	../../../Applications/
+	../../../Chatgpt_API_Test/
+	../../../Chatgpt_API_VS_code/
+	../../../Dendron/
+	../../../Desktop/
+	../../.localized
+	"../../B\341\272\243n sao GitHub/"
+	../../GitHub/
+	../../Infor/
+	../BACK_UP!!!!/
+	../LARK/
+	../Manual deploy guide 1.rtf
+	../command_handler/
+	../create_table/
+	../manage_information/
+	.cursor/CLI100B_all_green.txt
+	.cursor/CLI101B_all_green.txt
+	.cursor/CLI102B_all_green.txt
+	.cursor/CLI103A1_1_1_all_green.txt
+	.cursor/CLI103A1_1_1_env_versions.txt
+	.cursor/CLI103A1_1_1_error.txt
+	.cursor/CLI103A1_1_1_guide.txt
+	.cursor/CLI103A1_2_1_all_green.txt
+	.cursor/CLI103A1_2_1_attempt1_error.txt
+	.cursor/CLI103A1_2_1_attempt2.txt
+	.cursor/CLI103A1_2_1_attempt2_dot_slash.txt
+	.cursor/CLI103A1_2_1_attempt_PRE_COMMIT_CONFIG.txt
+	.cursor/CLI103A1_2_1_attempt_PRE_COMMIT_TOP_LEVEL.txt
+	.cursor/CLI103A1_2_1_attempt_hardcoded_path.txt
+	.cursor/CLI103A1_2_1_attempt_pythonpath.txt
+	.cursor/CLI103A1_2_1_env_versions.txt
+	.cursor/CLI103A1_2_1_error.txt
+	.cursor/CLI103A1_2_1_guide.txt
+	.cursor/CLI103A1_2_all_green.txt
+	.cursor/CLI103A1_2_env_versions.txt
+	.cursor/CLI103A1_2_error.txt
+	.cursor/CLI103A1_2_guide.txt
+	.cursor/CLI103A1_all_green.txt
+	.cursor/CLI103A1_error.txt
+	.cursor/CLI103A1_guide.txt
+	.cursor/CLI103A2_all_green.txt
+	.cursor/CLI103A2_error.txt
+	.cursor/CLI103A2_file_head.txt
+	.cursor/CLI103A2_guide.txt
+	.cursor/CLI103A3_1_all_green.txt
+	.cursor/CLI103A3_1_error.txt
+	.cursor/CLI103A3_1_guide.txt
+	.cursor/CLI103A3_1_web_server_head.txt
+	.cursor/CLI103A3_all_green.txt
+	.cursor/CLI103A3_guide.txt
+	.cursor/CLI103A4_all_green.txt
+	.cursor/CLI103A4_error.txt
+	.cursor/CLI103A4_faiss_tool_head.txt
+	.cursor/CLI103A4_guide.txt
+	.cursor/CLI103A5_2_all_green.txt
+	.cursor/CLI103A5_2_error.txt
+	.cursor/CLI103A5_2_guide.txt
+	.cursor/CLI103A5_all_green.txt
+	.cursor/CLI103A5_error.txt
+	.cursor/CLI103A6_all_green.txt
+	.cursor/CLI103A6_error.txt
+	.cursor/CLI103A6_guide.txt
+	.cursor/CLI103A6_pre_commit_config.txt
+	.cursor/CLI103A6_precommit.txt
+	.cursor/CLI103A6_readme_current.txt
+	.cursor/CLI103A7_1_all_green.txt
+	.cursor/CLI103A7_1_error.txt
+	.cursor/CLI103A7_Git_all_green.txt
+	.cursor/CLI103A7_Git_error.txt
+	.cursor/CLI103A7_Git_guide.txt
+	.cursor/CLI103A7_error.txt
+	.cursor/CLI103A7_mocks_head.txt
+	.cursor/CLI103A_error.txt
+	.cursor/CLI78_all_green.txt
+	.cursor/CLI79_all_green.txt
+	.cursor/CLI80_all_green.txt
+	.cursor/CLI81B_all_green.txt
+	.cursor/CLI82A_all_green.txt
+	.cursor/CLI82B_all_green.txt
+	.cursor/CLI83A_all_green.txt
+	.cursor/CLI83B_all_green.txt
+	.cursor/CLI84B_all_green.txt
+	.cursor/CLI85B_all_green.txt
+	.cursor/CLI86B_all_green.txt
+	.cursor/CLI87A_all_green.txt
+	.cursor/CLI87B_all_green.txt
+	.cursor/CLI88A_all_green.txt
+	.cursor/CLI88B_all_green.txt
+	.cursor/CLI89A_all_green.txt
+	.cursor/CLI89B_all_green.txt
+	.cursor/CLI90A_all_green.txt
+	.cursor/CLI90B_all_green.txt
+	.cursor/CLI91A_all_green.txt
+	.cursor/CLI91B_all_green.txt
+	.cursor/CLI92A_all_green.txt
+	.cursor/CLI92B_all_green.txt
+	.cursor/CLI93A_all_green.txt
+	.cursor/CLI93B_all_green.txt
+	.cursor/CLI94A_all_green.txt
+	.cursor/CLI94B_all_green.txt
+	.cursor/CLI95B_all_green.txt
+	.cursor/CLI96A_all_green.txt
+	.cursor/CLI96B_all_green.txt
+	.cursor/CLI97B_all_green.txt
+	.cursor/CLI98B_all_green.txt
+	.cursor/CLI99B_all_green.txt
+	.cursor/CLI_Cleanup_all_green.txt
+	.github/
+	.misc/CLI112A_error.txt
+	scripts/__init__.py
+	../mpc_local.db
+	../temp_backup_dirs/
+	../../NPV Incomex Tra Vinh.xlsx
+	../../Terraform/
+	../../Z...../
+	../../Zalo Received Files/
+	../../langchain/
+	../../../Downloads/
+	../../../LICENSE.txt
+	../../../LarkBase_OAuth_Policy/
+	../../../Library/
+	../../../Movies/
+	../../../Music/
+	../../../OneDrive
+	../../../Pictures/
+	../../../Public/
+	../../../add_content_google_sheet.py
+	../../../add_token.py
+	../../../app.py
+	../../../auto_copy.py
+	../../../backup.sql
+	../../../chatgpt-githubnew_TEST/
+	../../../chatgpt-mysql-project/
+	../../../chatgpt_postgres.py
+	../../../check_db_connection.py
+	../../../check_drive.py
+	../../../check_firestore.py
+	../../../check_mysql_connection.py
+	../../../check_openai.py
+	../../../check_responses.py
+	../../../cloud-build-notification/
+	../../../cloud-function-source/
+	../../../cloud_sql_proxy
+	../../../connect_mysql.py
+	../../../create_google_doc.py
+	../../../create_google_sheet.py
+	../../../create_memory_file.py
+	../../../daily_check.py
+	../../../deploy_apps_script.py
+	../../../deployment_update_notes.txt
+	../../../file_list.txt
+	../../../function-source.zip
+	../../../gemini_api_request_script.py
+	../../../gemini_request.py
+	../../../gemini_webhub/
+	../../../generate_report.py
+	../../../get-pip.py
+	../../../get_access_token.py
+	../../../go/
+	../../../google-cloud-sdk/
+	../../../google_docs_script.py
+	../../../install_pymysql.py
+	../../../lark_client.py
+	../../../miniconda/
+	../../../my-function-source/
+	../../../my-function/
+	../../../my-functions.zip
+	../../../my-functions/
+	../../../my-terraform-project/
+	../../../mysql_ssl_connection.py
+	../../../oauth_flow.py
+	../../../organize_data.py
+	../../../pipedream_check.py
+	../../../pipedream_check.py.save
+	../../../postgresql_db_check.sh
+	../../../retrieve_data.py
+	../../../sample-code.txt
+	../../../sample-file.txt
+	../../../store_data.py
+	../../../store_response.py
+	../../../suggest_store.py
+	../../../temp_untracked_files/
+	../../../templates/
+	../../../terraform-ci-cd/
+	../../../terraform.tfvars
+	../../../terraform_1.9.8_darwin_arm64.zip
+	../../../test_connection.py
+	../../../test_db_connection.py
+	../../../test_db_save.py
+	../../../test_mysql_read_write.py
+	../../../test_pymysql_connection.py
+	../../../test_selenium.py
+	../../../test_selenium.py.save
+	../../../token.txt
+	../../../update_memory.py
+	../../../update_memory_with_keys.py
+	../../../update_permissions.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Git Log:
+commit 384dc14ceeec46cc9b4b630a30496d0289779359
+Author: Nguyễn Minh Huyên <nmhuyen@gmail.com>
+Date:   Tue May 27 15:06:24 2025 +0700
+
+    KH1.1_Grok Cleanup: Add documentation for transition to Agent Data phase
+
+Current README head:
+──────────────────────────────────────────────────────────────────────────────
+PLAN – VectorDB & Qdrant v1.1  (FINAL after Grok feedback)
+──────────────────────────────────────────────────────────────────────────────
+TAG HIỆN TẠI : cli103a5_2_all_green
+TEST PASS    : 50/50 (48 pass, 2 skip @slow)
+
+╭────────┬──────────────────────────────┬────────────────────────────────────╮
+│ GĐ     │  MỤC TIÊU                    │  CLI CHI TIẾT (Δ test)            │
+├────────┼──────────────────────────────┼────────────────────────────────────┤
+│ G1     │ Hardening & Completion       │ 103A_slow_pipeline     (+0)       │
+│        │ • đạt 50 test                │ 103A6_finalize         (+0)       │
+│        │ • CI @slow + drift check     │                                    │
+├────────┼──────────────────────────────┼────────────────────────────────────┤
+│ G2     │ Feature gaps                 │ 104A_vector_delete      (+0)      │
+│        │ • API DELETE_BY_TAG          │ 104B_test_delete_tag    (+1)      │
+│        │ • TTL placeholder            │                                    │
+├────────┼──────────────────────────────┼────────────────────────────────────┤
+│ G3     │ Performance / Bulk           │ 105A_bulk_upsert        (+0)      │
+│        │ • batch upsert 1000 pts      │ 105B_test_bulk_upsert   (+1)      │
+│        │ • asyncio parallel search    │ 106A_async_search       (+0)      │
+│        │                              │ 106B_test_async_perf    (+1)      │
+├────────┼──────────────────────────────┼────────────────────────────────────┤
+│ G4     │ Observability & Migration    │ 107A_metrics_middleware (+0)      │
+│        │ • Prom metrics + tracing     │ 107B_test_metrics       (+1)      │
+│        │ • FAISS→Qdrant migrate tool  │ 108A_migration_cli      (+0)      │
+│        │ • Smoke-test migration       │ 108B_test_migration     (+1)      │
+╰────────┴──────────────────────────────┴────────────────────────────────────╯
+*Sau G4*: tag **v1.1_qdrant_ready**; chuyển block Firestore sync.
+
+BỔ SUNG - CHIA NHỎ CLI 103A
+
+Updated README head:
+──────────────────────────────────────────────────────────────────────────────
+PLAN – VectorDB & Qdrant v1.1  (FINAL after Grok feedback)
+──────────────────────────────────────────────────────────────────────────────
+**ARCHITECTURE UPDATE: FAISS deprecated, Qdrant chosen**
+This project has transitioned from FAISS to Qdrant Cloud (free tier) for vector storage.
+Qdrant is now the primary vector database, while Firestore, GCS, MCP, and ADK Tools remain intact.
+
+TAG HIỆN TẠI : cli103a5_2_all_green
+TEST PASS    : 50/50 (48 pass, 2 skip @slow)
+
+╭────────┬──────────────────────────────┬────────────────────────────────────╮
+│ GĐ     │  MỤC TIÊU                    │  CLI CHI TIẾT (Δ test)            │
+├────────┼──────────────────────────────┼────────────────────────────────────┤
+│ G1     │ Hardening & Completion       │ 103A_slow_pipeline     (+0)       │
+│        │ • đạt 50 test                │ 103A6_finalize         (+0)       │
+
+Test Results:
+64 passed, 2 skipped (66 total tests)
+
+Flake8 Status:
+Many F401/F841/E261/E111/W291 errors exist as documented in previous CLI progress - non-blocking for documentation-only CLI112A
+
+check-fixture-drift.py Status:
+PASSED - Exit code 0, no mock drift detected
+
+Final Status:
+Git commit: 9380dca CLI112A: Update architecture doc to mark FAISS deprecated and Qdrant chosen
+Git tags: cli112a_all_green
+
+Pre-commit config:
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0 # Use a recent, stable version
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+
+-   repo: https://github.com/psf/black
+    rev: 24.4.2 # Use a recent, stable version
+    hooks:
+    -   id: black
+        args: [--line-length=120]
+
+-   repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0 # Use a recent, stable version
+    hooks:
+    -   id: flake8
+        args:
+        -   "--max-line-length=120"
+        -   "--ignore=E203,E501,W503" # E203: whitespace before ':', E501: line too long (handled by black), W503: line break before binary operator
+        exclude: ^(venv/|\.venv/|__pycache__/|\.git/|\.tox/|build/|dist/)
+
+-   repo: local
+    hooks:
+    -   id: pycompile-check
+        name: Python Compile Check
+        entry: python -m py_compile
+        language: system
+        types: [python]
+        pass_filenames: true # Pass all staged .py files to py_compile
+        # Consider `args: [-x, path/to/exclude]` if needed, but py_compile usually handles this well.
+
+    -   id: check-fixture-drift
+        name: Check Fixture Drift
+        entry: sh -c 'cd "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents" && PYTHONPATH=. exec ./scripts/run_drift_check.sh'
+        language: system
+        always_run: true
+        pass_filenames: false

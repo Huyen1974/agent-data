@@ -1,0 +1,180 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Vector Search API",
+        "description": "API for vector search using QdrantStore",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/search_vector": {
+            "post": {
+                "summary": "Search Vector",
+                "description": "Search for vectors in the Qdrant collection that are similar to the query vector.\n\nArgs:\n    request: Vector search request containing query_vector, top_k, and filter_tag\n\nReturns:\n    List of search results with point IDs and payloads",
+                "operationId": "search_vector_search_vector_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VectorSearchRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "title": "Response Search Vector Search Vector Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "summary": "Health Check",
+                "description": "Health check endpoint to verify API is running",
+                "operationId": "health_check_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics": {
+            "get": {
+                "summary": "Prometheus Metrics",
+                "description": "Exposes Prometheus metrics for monitoring API performance including request counts, latency, and status codes.",
+                "operationId": "prometheus_metrics_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Metrics data in Prometheus format",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "title": "Prometheus Metrics"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "VectorSearchRequest": {
+                "properties": {
+                    "query_vector": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "title": "Query Vector",
+                        "description": "Vector to search for (embedding)"
+                    },
+                    "top_k": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top K",
+                        "description": "Number of results to return",
+                        "default": 5
+                    },
+                    "filter_tag": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Tag",
+                        "description": "Optional tag to filter results"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "query_vector"
+                ],
+                "title": "VectorSearchRequest"
+            }
+        }
+    }
+}

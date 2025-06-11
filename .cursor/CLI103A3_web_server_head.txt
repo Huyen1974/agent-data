@@ -1,0 +1,50 @@
+import logging
+import os
+import json
+import time
+import sys
+from flask import Flask, request, jsonify
+# Removed storage import as it seems unused
+# from google.cloud import storage
+
+# Import tool registration and dependency flags
+try:
+    from ADK.agent_data.tools.register_tools import get_all_tool_functions
+    from ADK.agent_data.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
+    REGISTRY_IMPORTED = True
+except ImportError as e1:
+    print(f"Initial import failed ({e1}), attempting relative path adjustment...")
+    REGISTRY_IMPORTED = False
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(script_dir, '..', '..', '..'))
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
+        print(f"Added {project_root} to sys.path")
+        from ADK.agent_data.tools.register_tools import get_all_tool_functions
+        from ADK.agent_data.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
+        REGISTRY_IMPORTED = True
+        print("Successfully imported registry after path adjustment.")
+    except ImportError as e2:
+        print(f"CRITICAL: Failed to import registry even after path adjustment: {e2}")
+        get_all_tool_functions = lambda: {}
+        FAISS_AVAILABLE = False
+        OPENAI_AVAILABLE = False
+        print("CRITICAL: Using dummy get_all_tool_functions and flags!")
+
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# -->> ADDED STARTUP LOGGING <<--
+logger.info(f"--- Web Server Starting ---")
+logger.info(f"Python Version: {sys.version}")
+logger.info(f"Flask App Name: {app.name}")
+if REGISTRY_IMPORTED:
+    logger.info(f"Initial Dependency Check (web_server): FAISS_AVAILABLE={FAISS_AVAILABLE}, OPENAI_AVAILABLE={OPENAI_AVAILABLE}")
+else:
+    logger.error("Initial Dependency Check (web_server): Failed to import registry module.")
+# -->> END STARTUP LOGGING <<--
+
+# Load tools at startup - REMOVED
+# ALL_TOOLS = get_all_tool_functions()

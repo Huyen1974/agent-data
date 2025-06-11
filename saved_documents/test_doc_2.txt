@@ -1,0 +1,1 @@
+Test document 2: This is a comprehensive test document for evaluating the MCP server's performance with medium-scale operations. The document contains meaningful content to test embedding generation and semantic search capabilities. Document ID: 2, Category: Medium Scale Test

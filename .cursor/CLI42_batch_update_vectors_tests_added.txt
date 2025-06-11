@@ -1,0 +1,10 @@
+Integration tests for the /batch_update_vectors endpoint added in tests/api/test_batch_update_vectors_api.py.
+
+Three test cases were implemented using the real FastAPI app and QdrantStore (no mocking):
+1. test_batch_update_vectors_success: All items in the batch are valid. Expects 2 updated, 0 failed.
+2. test_batch_update_vectors_partial_failure: One valid item, one invalid item (wrong vector dimension). Expects 1 updated, 1 failed, and one error message.
+3. test_batch_update_vectors_all_invalid: Both items in the batch are invalid (wrong vector dimension, empty metadata). Expects 0 updated, 2 failed, and two error messages.
+
+Initial test runs showed that FastAPI's default Pydantic validation (422 response) for request body items was too strict for the desired per-item error reporting. The validation logic for vector dimension and non-empty metadata was moved from the `VectorUpdateItem` Pydantic model directly into the endpoint handler's loop.
+
+After this adjustment, all tests pass, confirming the endpoint correctly handles batches, including partial failures, and returns a 200 status code with detailed success/failure counts and error messages in the response body.

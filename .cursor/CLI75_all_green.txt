@@ -1,0 +1,3 @@
+- test for empty filter_tag rejection
+- validator behavior confirmed
+- total 24 tests passed

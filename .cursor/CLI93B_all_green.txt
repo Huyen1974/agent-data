@@ -1,0 +1,3 @@
+Purpose: Added test for FAISS to Qdrant migration handling duplicate IDs.
+Total tests passing: 44/44.
+Summary: Verified migrate_faiss_to_qdrant processes duplicate IDs correctly in dry-run mode.

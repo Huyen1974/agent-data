@@ -1,0 +1,4 @@
+Purpose: Updated architecture documentation to reflect transition from FAISS to Qdrant.
+Total tests: 66/66 (64 passed, 2 skipped).
+Summary: Added note "FAISS deprecated, Qdrant chosen" in README_TEST_Qdrant_30to50_plan.md to align with project direction.
+Note: Next step is to verify Qdrant cluster connectivity in CLI 112B.
