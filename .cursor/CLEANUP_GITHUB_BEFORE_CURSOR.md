@@ -1,0 +1,1 @@
+- Ngày 2025-06-11 12:56 : Đã backup và xoá các file untracked để dọn dẹp repo trước khi dùng Cursor
