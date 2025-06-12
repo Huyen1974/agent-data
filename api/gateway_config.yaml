@@ -1,0 +1,533 @@
+# API Gateway Configuration for MCP Gateway
+# Routes requests to appropriate Cloud Functions and handles authentication
+
+# CLI140g.1: Enhanced API Gateway Configuration with Shadow Traffic
+swagger: '2.0'
+info:
+  title: Agent Data MCP Gateway API
+  description: API Gateway for MCP operations with shadow traffic routing
+  version: 1.1.0-shadow
+  contact:
+    name: Agent Data Team
+    email: support@agentdata.com
+
+host: mcp-gateway-api-gateway.uc.gateway.dev
+basePath: /v1
+
+schemes:
+  - https
+
+securityDefinitions:
+  jwt_auth:
+    type: apiKey
+    name: Authorization
+    in: header
+    x-google-issuer: "https://securetoken.google.com/your-project-id"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "your-project-id"
+
+security:
+  - jwt_auth: []
+
+paths:
+  # Health check endpoint (no auth required)
+  /health:
+    get:
+      summary: API Gateway health check
+      description: Check API Gateway and backend services health
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Health check successful
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: "healthy"
+              timestamp:
+                type: string
+                format: date-time
+              version:
+                type: string
+                example: "1.1.0-shadow"
+              services:
+                type: object
+      x-google-backend:
+        address: https://us-central1-your-project-id.cloudfunctions.net/mcp-handler
+        deadline: 10.0
+
+  # Authentication endpoints (handled by auth-handler function)
+  /auth/login:
+    post:
+      summary: User authentication
+      description: Login user and get JWT token with shadow monitoring
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: credentials
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: Login successful
+          schema:
+            type: object
+            properties:
+              access_token:
+                type: string
+              token_type:
+                type: string
+                example: "bearer"
+              expires_in:
+                type: integer
+              user_id:
+                type: string
+              email:
+                type: string
+              scopes:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Invalid credentials
+      x-google-backend:
+        address: https://us-central1-your-project-id.cloudfunctions.net/auth-handler
+        deadline: 10.0
+      x-google-backend-shadow:
+        address: https://us-central1-your-project-id.cloudfunctions.net/auth-handler-shadow
+        deadline: 10.0
+        weight: 1
+
+  /auth/register:
+    post:
+      summary: User registration
+      operationId: auth_register
+      security: []
+      parameters:
+        - name: user_data
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - full_name
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+                minLength: 8
+              full_name:
+                type: string
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input data
+        '409':
+          description: User already exists
+      x-google-backend:
+        address: https://us-central1-your-project-id.cloudfunctions.net/auth-handler
+        deadline: 15.0
+      # Shadow traffic for auth operations
+      x-google-backend-shadow:
+        address: https://us-central1-your-project-id.cloudfunctions.net/auth-handler-shadow
+        deadline: 15.0
+        weight: 1
+
+  /auth/validate:
+    post:
+      summary: Token validation
+      operationId: auth_validate
+      responses:
+        '200':
+          description: Token is valid
+        '401':
+          description: Invalid token
+      x-google-backend:
+        address: https://REGION-PROJECT_ID.cloudfunctions.net/auth-handler
+        path_translation: APPEND_PATH_TO_ADDRESS
+
+  # Document operations (handled by mcp-handler function)
+  /save:
+    post:
+      summary: Save document to vector store
+      description: Save document with vector embedding and metadata (70% Cloud Functions)
+      security:
+        - jwt_auth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: document_data
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - doc_id
+              - content
+            properties:
+              doc_id:
+                type: string
+              content:
+                type: string
+              metadata:
+                type: object
+              tag:
+                type: string
+              update_firestore:
+                type: boolean
+                default: true
+      responses:
+        '200':
+          description: Document saved successfully
+        '400':
+          description: Invalid document data
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      x-google-backend:
+        address: https://us-central1-your-project-id.cloudfunctions.net/mcp-handler
+        deadline: 30.0
+      x-google-backend-shadow:
+        address: https://us-central1-your-project-id.cloudfunctions.net/mcp-handler-shadow
+        deadline: 30.0
+        weight: 1
+
+  /query:
+    post:
+      summary: Vector similarity search
+      description: Query similar vectors from vector store (70% Cloud Functions)
+      security:
+        - jwt_auth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: query_data
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - query_text
+            properties:
+              query_text:
+                type: string
+              limit:
+                type: integer
+                default: 10
+                minimum: 1
+                maximum: 100
+              threshold:
+                type: number
+                format: float
+                default: 0.7
+                minimum: 0.0
+                maximum: 1.0
+              user_id:
+                type: string
+      responses:
+        '200':
+          description: Query results
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    doc_id:
+                      type: string
+                    content:
+                      type: string
+                    score:
+                      type: number
+                    metadata:
+                      type: object
+              query_time_ms:
+                type: number
+              total_results:
+                type: integer
+        '400':
+          description: Invalid query parameters
+        '401':
+          description: Unauthorized
+      x-google-backend:
+        address: https://us-central1-your-project-id.cloudfunctions.net/mcp-handler
+        deadline: 25.0
+      x-google-backend-shadow:
+        address: https://us-central1-your-project-id.cloudfunctions.net/mcp-handler-shadow
+        deadline: 25.0
+        weight: 1
+
+  /search:
+    post:
+      summary: Search documents with metadata filtering
+      operationId: search_documents
+      parameters:
+        - name: search_data
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              tag:
+                type: string
+              offset:
+                type: integer
+                minimum: 0
+                default: 0
+              limit:
+                type: integer
+                minimum: 1
+                maximum: 100
+                default: 10
+              include_vectors:
+                type: boolean
+                default: false
+      responses:
+        '200':
+          description: Search results
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              results:
+                type: array
+                items:
+                  type: object
+              total_found:
+                type: integer
+              offset:
+                type: integer
+              limit:
+                type: integer
+              message:
+                type: string
+        '401':
+          description: Unauthorized
+      x-google-backend:
+        address: https://REGION-PROJECT_ID.cloudfunctions.net/mcp-handler
+        path_translation: APPEND_PATH_TO_ADDRESS
+
+  /rag:
+    post:
+      summary: RAG-based search and response
+      description: Enhanced search with context generation (20% Workflows)
+      security:
+        - jwt_auth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: rag_query
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - question
+            properties:
+              question:
+                type: string
+              context_limit:
+                type: integer
+                default: 5
+              temperature:
+                type: number
+                format: float
+                default: 0.7
+              max_tokens:
+                type: integer
+                default: 500
+      responses:
+        '200':
+          description: RAG search results
+        '400':
+          description: Invalid search parameters
+        '401':
+          description: Unauthorized
+      # Route to Workflows for complex RAG operations (20% of architecture)
+      x-google-backend:
+        address: https://workflowexecutions.googleapis.com/v1/projects/your-project-id/locations/us-central1/workflows/rag-workflow/executions
+        deadline: 45.0
+      x-google-backend-shadow:
+        address: https://workflowexecutions.googleapis.com/v1/projects/your-project-id/locations/us-central1/workflows/rag-workflow-shadow/executions
+        deadline: 45.0
+        weight: 1
+
+  # CSKH (Customer Service Knowledge Hub) endpoints
+  /api/cskh/search:
+    post:
+      summary: Customer support knowledge search
+      description: Specialized CSKH search with enhanced context (<10% Cloud Run)
+      security:
+        - jwt_auth: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: cskh_query
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - query
+            properties:
+              query:
+                type: string
+              category:
+                type: string
+              priority:
+                type: string
+                enum: ["low", "medium", "high", "urgent"]
+              language:
+                type: string
+                default: "vi"
+      responses:
+        '200':
+          description: CSKH search results
+        '400':
+          description: Invalid search parameters
+        '401':
+          description: Unauthorized
+      # Route to Cloud Run for legacy CSKH operations (<10% of architecture)
+      x-google-backend:
+        address: https://cskh-service-cloud-run-url.a.run.app
+        deadline: 20.0
+      x-google-backend-shadow:
+        address: https://cskh-service-shadow-cloud-run-url.a.run.app
+        deadline: 20.0
+        weight: 1
+
+  /api/cskh/categories:
+    get:
+      summary: Get CSKH categories
+      operationId: cskh_categories
+      responses:
+        '200':
+          description: Available categories
+          schema:
+            type: object
+            properties:
+              categories:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+      x-google-backend:
+        address: https://REGION-PROJECT_ID.cloudfunctions.net/mcp-handler
+        path_translation: APPEND_PATH_TO_ADDRESS
+
+# Rate limiting configuration
+x-google-quota:
+  metricCosts:
+    auth_requests:
+      cost: 1
+    document_operations:
+      cost: 2
+    search_operations:
+      cost: 1
+    rag_operations:
+      cost: 3
+
+# CORS configuration
+x-google-cors:
+  - origin: "*"
+    methods: ["GET", "POST", "OPTIONS"]
+    headers: ["Authorization", "Content-Type", "X-Requested-With"]
+    maxAge: 3600
+
+# Backend authentication
+x-google-backend-auth:
+  jwt_audience: "PROJECT_ID"
+
+# Shadow Traffic Monitoring Configuration
+x-google-shadow-traffic:
+  enabled: true
+  percentage: 1.0  # 1% shadow traffic
+  duration: 24h
+  logging:
+    enabled: true
+    log_group: "shadow-traffic-logs"
+    log_level: "INFO"
+  monitoring:
+    enabled: true
+    error_threshold: 5.0  # 5% error rate threshold
+    latency_threshold: 500  # 500ms latency threshold
+    alert_channels:
+      - "projects/your-project-id/notificationChannels/shadow-alerts"
+
+# Architecture Distribution Targets (CLI140g.3)
+x-google-architecture-targets:
+  cloud_functions: 70.0  # Target: 70%
+  workflows: 20.0        # Target: 20%  
+  cloud_run: 10.0        # Target: <10%
+
+definitions:
+  Error:
+    type: object
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+      request_id:
+        type: string
+      shadow_traffic:
+        type: boolean
+        description: Whether this error occurred in shadow traffic
+
+# Rate limiting configuration
+x-google-quota:
+  metricCosts:
+    auth_requests:
+      cost: 1
+    document_operations:
+      cost: 2
+    search_operations:
+      cost: 1
+    rag_operations:
+      cost: 3
+
+# CORS configuration
+x-google-cors:
+  - origin: "*"
+    methods: ["GET", "POST", "OPTIONS"]
+    headers: ["Authorization", "Content-Type", "X-Requested-With"]
+    maxAge: 3600
+
+# Backend authentication
+x-google-backend-auth:
+  jwt_audience: "PROJECT_ID" 
