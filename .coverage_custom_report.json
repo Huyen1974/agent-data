@@ -1,7 +1,1 @@
-{
-    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation": {
-        "status": "passed",
-        "duration": 0.00045066699749440886,
-        "timestamp": "2025-06-12T15:29:45.534429"
-    }
-}
+{}
