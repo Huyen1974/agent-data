@@ -56,7 +56,8 @@ def test_meta_count():
     # CLI140e.3.23: Removed CLI140e.3.22, CLI140e.3.11, CLI140e.3.12 validation tests (-3) and added CLI140e.3.23 validation test (+3)
     # Mathematical result: 467 (CLI140e.3.22 count) - 12 (removed old tests) + 3 (added CLI140e.3.23 tests) = 458
     # Note: CLI140e.3.23 consolidates validation tests and completes nightly.yml merge
-    EXPECTED_TOTAL_TESTS = 458  # Final count after CLI140e.3.23 completion with validation consolidation
+    # CLI140f: Added 2 performance tests for qdrant_vectorization_tool.py coverage improvement (460 -> 462)
+    EXPECTED_TOTAL_TESTS = 462  # Updated for CLI140f coverage improvement
 
     # For CLI 126A. Test count after adding optimization tests (259->263, +4 tests)
     # Previous: CLI 126 had 259 tests (256 passed, 3 skipped)
