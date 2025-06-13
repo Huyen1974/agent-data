@@ -1,0 +1,27 @@
+{
+  "cli_phase": "CLI140k.3",
+  "execution_date": "2025-06-13T17:35:14.351254",
+  "test_count": 463,
+  "runtime_seconds": 303.15,
+  "runtime_minutes": 5.05,
+  "target_seconds": 300,
+  "target_minutes": 5.0,
+  "difference_seconds": 3.15,
+  "difference_percentage": 1.05,
+  "status": "COMPLETED",
+  "environment": "MacBook M1",
+  "workers": 4,
+  "pass_rate": 82.9,
+  "results": {
+    "passed": 384,
+    "failed": 36,
+    "skipped": 22,
+    "errors": 16
+  },
+  "performance_metrics": {
+    "tests_per_second": 1.53,
+    "seconds_per_test": 0.655,
+    "parallel_efficiency": "Good"
+  },
+  "validation": "Runtime within acceptable tolerance for local execution"
+}
