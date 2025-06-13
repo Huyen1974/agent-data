@@ -1,0 +1,201 @@
+name: Full Test Suite CI
+
+on:
+  workflow_dispatch: # Manual trigger for CLI140k.1 validation
+    inputs:
+      timeout_minutes:
+        description: 'Timeout in minutes (default: 10 for 5min target + buffer)'
+        required: false
+        default: '10'
+  push:
+    branches: [ test ]
+    paths:
+      - 'tests/**'
+      - 'ADK/**'
+      - 'src/**'
+      - '.github/workflows/full-suite-ci.yml'
+
+jobs:
+  full-suite-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ fromJSON(github.event.inputs.timeout_minutes || '10') }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest-xdist pytest-testmon pytest-benchmark
+          
+      - name: Verify test count
+        id: test_count
+        run: |
+          count=$(python -m pytest --collect-only -q | grep -c "::test_" || echo "0")
+          echo "test_count=$count" >> $GITHUB_OUTPUT
+          echo "Total tests found: $count"
+          
+      - name: Run full test suite with timing
+        id: full_suite
+        run: |
+          start_time=$(date +%s)
+          echo "Starting full test suite at $(date)"
+          
+          # Run full suite with parallel execution optimized for CI
+          python -m pytest -n 4 --dist worksteal --tb=short --maxfail=50 \
+            --durations=10 --strict-markers --strict-config \
+            -v --junitxml=test-results.xml \
+            --cov=src --cov=ADK --cov-report=xml \
+            || echo "Some tests failed, but continuing to measure runtime"
+          
+          end_time=$(date +%s)
+          runtime=$((end_time - start_time))
+          runtime_minutes=$(echo "scale=2; $runtime / 60" | bc)
+          
+          echo "runtime_seconds=$runtime" >> $GITHUB_OUTPUT
+          echo "runtime_minutes=$runtime_minutes" >> $GITHUB_OUTPUT
+          echo "Full suite completed in ${runtime}s (${runtime_minutes}m)"
+          
+          # Check if runtime meets <5min target (300s)
+          if [ $runtime -lt 300 ]; then
+            echo "✅ Runtime target met: ${runtime}s < 300s"
+            echo "runtime_target_met=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Runtime target exceeded: ${runtime}s >= 300s"
+            echo "runtime_target_met=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Parse test results
+        id: test_results
+        if: always()
+        run: |
+          if [ -f test-results.xml ]; then
+            # Extract test statistics from JUnit XML
+            total=$(grep -o 'tests="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
+            failures=$(grep -o 'failures="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
+            errors=$(grep -o 'errors="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
+            skipped=$(grep -o 'skipped="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
+            passed=$((total - failures - errors - skipped))
+            
+            echo "total_tests=$total" >> $GITHUB_OUTPUT
+            echo "passed_tests=$passed" >> $GITHUB_OUTPUT
+            echo "failed_tests=$((failures + errors))" >> $GITHUB_OUTPUT
+            echo "skipped_tests=$skipped" >> $GITHUB_OUTPUT
+            
+            echo "Test Results: $passed passed, $((failures + errors)) failed, $skipped skipped out of $total total"
+          else
+            echo "No test results file found"
+            echo "total_tests=0" >> $GITHUB_OUTPUT
+            echo "passed_tests=0" >> $GITHUB_OUTPUT
+            echo "failed_tests=0" >> $GITHUB_OUTPUT
+            echo "skipped_tests=0" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Generate CLI140k.1 Report
+        if: always()
+        run: |
+          cat > cli140k1_ci_report.md << EOF
+          # CLI140k.1 CI Full Suite Runtime Report
+          
+          **Generated**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          **Workflow**: ${{ github.workflow }}
+          **Run ID**: ${{ github.run_id }}
+          **Commit**: ${{ github.sha }}
+          
+          ## Runtime Performance
+          - **Total Runtime**: ${{ steps.full_suite.outputs.runtime_seconds }}s (${{ steps.full_suite.outputs.runtime_minutes }}m)
+          - **Target**: <300s (5 minutes)
+          - **Status**: ${{ steps.full_suite.outputs.runtime_target_met == 'true' && '✅ PASSED' || '❌ FAILED' }}
+          - **Buffer**: ${{ steps.full_suite.outputs.runtime_target_met == 'true' && format('{0}s remaining', 300 - steps.full_suite.outputs.runtime_seconds) || 'Target exceeded' }}
+          
+          ## Test Results
+          - **Total Tests**: ${{ steps.test_results.outputs.total_tests }}
+          - **Passed**: ${{ steps.test_results.outputs.passed_tests }}
+          - **Failed**: ${{ steps.test_results.outputs.failed_tests }}
+          - **Skipped**: ${{ steps.test_results.outputs.skipped_tests }}
+          - **Pass Rate**: ${{ steps.test_results.outputs.total_tests > 0 && format('{0}%', (steps.test_results.outputs.passed_tests * 100 / steps.test_results.outputs.total_tests)) || 'N/A' }}
+          
+          ## Environment
+          - **Runner**: ubuntu-latest
+          - **Python**: 3.10
+          - **Parallel Workers**: 4 (--dist worksteal)
+          - **Timeout**: ${{ fromJSON(github.event.inputs.timeout_minutes || '10') }} minutes
+          
+          ## CLI140k.1 Validation
+          ${{ steps.full_suite.outputs.runtime_target_met == 'true' && '✅ **CI full suite runtime <5min requirement MET**' || '❌ **CI full suite runtime <5min requirement NOT MET**' }}
+          
+          EOF
+          
+          echo "CLI140k.1 CI Report generated:"
+          cat cli140k1_ci_report.md
+          
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: |
+            test-results.xml
+            coverage.xml
+            cli140k1_ci_report.md
+            
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          file: ./coverage.xml
+          flags: full-suite
+          name: full-suite-coverage
+          
+      - name: Comment PR with results
+        uses: actions/github-script@v6
+        if: always() && github.event_name == 'push'
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('cli140k1_ci_report.md', 'utf8');
+            
+            // Find existing comment or create new one
+            const { data: comments } = await github.rest.issues.listCommentsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('CLI140k.1 CI Full Suite Runtime Report')
+            );
+            
+            const commentBody = `## 🚀 CLI140k.1 CI Full Suite Runtime Report\n\n${report}`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody
+              });
+            } 
