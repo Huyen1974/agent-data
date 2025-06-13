@@ -37,7 +37,6 @@ from qdrant_client.http.models import (
     ProductQuantization,
     BinaryQuantization,
     InitFrom,
-    StrictModeConfig,
     PayloadSchemaType,
     KeywordIndexParams,
     IntegerIndexParams,
@@ -57,6 +56,12 @@ from qdrant_client.http.models import (
     SparseVectorParams,
     ShardingMethod,
 )
+
+# Try to import StrictModeConfig, fallback to None if not available
+try:
+    from qdrant_client.http.models import StrictModeConfig
+except ImportError:
+    StrictModeConfig = None
 
 try:
     from qdrant_client.grpc import collections_pb2, points_pb2
@@ -247,7 +252,7 @@ class FakeQdrantClient:
         ] = None,
         init_from: Union[InitFrom, str, None] = None,
         timeout: Optional[int] = None,
-        strict_mode_config: Optional[StrictModeConfig] = None,
+        strict_mode_config: Optional[Any] = None,
         **kwargs: Any,
     ) -> bool:
         """Creates a new collection."""
