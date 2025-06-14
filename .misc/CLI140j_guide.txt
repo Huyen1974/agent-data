@@ -1,0 +1,54 @@
+CLI140j: Serverless Cost Optimization Guide
+=========================================
+
+Objective:
+----------
+- Reduce serverless costs to <$10/day in dev, <$3/day in production
+- Configure min-instances=0, budget alerts, and Log Router
+- Ensure all functionalities remain intact
+
+Implementation Steps:
+-------------------
+1. Cost Audit
+   - Review Cloud Billing reports
+   - Identify high-cost services
+   - Analyze usage patterns
+
+2. Service Configuration
+   - Set min-instances=0 for all services
+   - Configure Log Router for cost optimization
+   - Set up budget alerts
+
+3. Logging Optimization
+   - Reduce INFO level logging
+   - Configure log retention
+   - Set up log routing rules
+
+4. Testing
+   - Run cost optimization tests
+   - Verify service scaling
+   - Validate budget alerts
+
+Verification:
+------------
+1. Cost Metrics
+   - Daily cost <$10 (dev)
+   - Daily cost <$3 (production)
+   - Monitor via Billing API
+
+2. Configuration
+   - All services: min-instances=0
+   - Log Router active
+   - Budget alerts configured
+
+3. Functionality
+   - All tests passing
+   - Services scaling properly
+   - Logging working as expected
+
+Notes:
+------
+- Use ptfast for quick tests
+- Monitor cost changes
+- Keep documentation updated
+- Regular cost reviews 

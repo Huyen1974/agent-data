@@ -17,7 +17,17 @@ from src.agent_data_manager.api_mcp_gateway import app, RateLimitError, Validati
 @pytest.fixture
 def client():
     """Create test client for API testing."""
-    return TestClient(app)
+    from src.agent_data_manager.api_mcp_gateway import get_current_user
+    
+    # Override authentication dependency for testing
+    def mock_get_current_user():
+        return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+    
+    app.dependency_overrides[get_current_user] = mock_get_current_user
+    client = TestClient(app)
+    yield client
+    # Clean up dependency overrides
+    app.dependency_overrides.clear()
 
 
 @pytest.fixture
