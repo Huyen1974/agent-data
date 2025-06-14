@@ -1,0 +1,59 @@
+# ⬛ MacOS system files
+.DS_Store
+
+# ⬛ Python cache & compiled files
+__pycache__/
+*.py[cod]
+*.so
+*.pyo
+
+# ⬛ Environment
+.env
+.venv/
+venv/
+env/
+
+# ⬛ Logs and debug outputs
+*.log
+agent_server.log
+logs/
+test_outputs/
+
+# ⬛ FAISS index & pickle dump
+*.faiss
+*.pkl
+*.pickle
+faiss_indices/
+
+# ⬛ AI test result folders
+test_pass_*/
+saved_documents/
+task_report.md
+
+# ⬛ Backup folders
+ADK_nested_backup/
+*.bak
+*.swp
+*.tmp
+
+# ⬛ VSCode and JetBrains project settings
+.vscode/
+.idea/
+
+# ⬛ Output artifacts
+dist/
+build/
+*.egg-info/
+
+# ⬛ Docker
+*.tar
+*.img
+*.container
+
+# ⬛ Optional
+# Remove below if you want to keep local test data or examples
+mcp_test_runner.py
+agent-data-config.yaml
+
+# ⬛ Tests or large auto-generated files (if needed)
+test_*.json

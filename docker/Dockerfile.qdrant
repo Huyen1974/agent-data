@@ -1,0 +1,142 @@
+# Multi-stage build for optimized Qdrant hybrid Docker image
+# CLI140i: Target size <500MB, startup time <2s
+
+# Stage 1: Base Debian slim with minimal dependencies
+FROM debian:12-slim AS base
+
+# Install essential runtime dependencies only
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    wget \
+    python3 \
+    python3-pip \
+    libunwind8 \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Stage 2: Python environment builder
+FROM python:3.11-slim AS python-builder
+
+# Install build dependencies for Python packages only
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    build-essential \
+    libffi-dev \
+    libssl-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Create virtual environment with minimal dependencies
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install only essential Python packages for hybrid functionality
+RUN pip install --no-cache-dir --no-compile \
+    google-cloud-storage==2.10.0 \
+    qdrant-client==1.7.0 \
+    requests==2.31.0 \
+    pyyaml==6.0.1 \
+    && rm -rf /root/.cache/pip
+
+# Stage 3: Qdrant binary from official image (lightweight approach)
+FROM qdrant/qdrant:v1.7.4 AS qdrant-source
+
+# Stage 4: Final optimized runtime image
+FROM base AS runtime
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python virtual environment from builder
+COPY --from=python-builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy Qdrant binary from official image (smaller than building from source)
+COPY --from=qdrant-source /qdrant/qdrant /usr/local/bin/qdrant
+
+# Copy optimized scripts and config
+COPY scripts/qdrant_restore.py /app/qdrant_restore.py
+
+# Create data and config directories
+RUN mkdir -p /qdrant/storage /qdrant/snapshots
+
+# Set environment variables for hybrid operation
+ENV QDRANT_URL="http://localhost:6333" \
+    QDRANT_COLLECTION_NAME="agent_data_vectors" \
+    GCS_BUCKET_NAME="qdrant-snapshots" \
+    PYTHONPATH="/app" \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:/usr/local/bin:/usr/bin:/bin"
+
+# Create optimized Qdrant config for fast startup
+RUN echo 'service:' > /app/qdrant-config.yaml && \
+    echo '  host: 0.0.0.0' >> /app/qdrant-config.yaml && \
+    echo '  http_port: 6333' >> /app/qdrant-config.yaml && \
+    echo '  grpc_port: 6334' >> /app/qdrant-config.yaml && \
+    echo '  enable_cors: true' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'storage:' >> /app/qdrant-config.yaml && \
+    echo '  storage_path: /qdrant/storage' >> /app/qdrant-config.yaml && \
+    echo '  snapshots_path: /qdrant/snapshots' >> /app/qdrant-config.yaml && \
+    echo '  on_disk_payload: true' >> /app/qdrant-config.yaml && \
+    echo '  wal:' >> /app/qdrant-config.yaml && \
+    echo '    wal_capacity_mb: 32' >> /app/qdrant-config.yaml && \
+    echo '    wal_segments_ahead: 1' >> /app/qdrant-config.yaml && \
+    echo '  performance:' >> /app/qdrant-config.yaml && \
+    echo '    max_search_threads: 2' >> /app/qdrant-config.yaml && \
+    echo '    max_optimization_threads: 1' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'cluster:' >> /app/qdrant-config.yaml && \
+    echo '  enabled: false' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'telemetry_disabled: true' >> /app/qdrant-config.yaml && \
+    echo 'log_level: WARN' >> /app/qdrant-config.yaml
+
+# Create optimized startup script for <2s startup time
+RUN echo '#!/bin/sh' > /app/startup.sh && \
+    echo 'set -e' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo 'echo "Starting optimized Qdrant hybrid service..."' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Start Qdrant with optimized config in background' >> /app/startup.sh && \
+    echo 'echo "Launching Qdrant server..."' >> /app/startup.sh && \
+    echo 'qdrant --config-path /app/qdrant-config.yaml &' >> /app/startup.sh && \
+    echo 'QDRANT_PID=$!' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Optimized health check with shorter intervals' >> /app/startup.sh && \
+    echo 'echo "Waiting for Qdrant readiness..."' >> /app/startup.sh && \
+    echo 'for i in $(seq 1 10); do' >> /app/startup.sh && \
+    echo '    if wget -q --spider --timeout=1 http://localhost:6333/health 2>/dev/null; then' >> /app/startup.sh && \
+    echo '        echo "Qdrant ready in ${i}s!"' >> /app/startup.sh && \
+    echo '        break' >> /app/startup.sh && \
+    echo '    fi' >> /app/startup.sh && \
+    echo '    if [ $i -eq 10 ]; then' >> /app/startup.sh && \
+    echo '        echo "Qdrant startup timeout"' >> /app/startup.sh && \
+    echo '        exit 1' >> /app/startup.sh && \
+    echo '    fi' >> /app/startup.sh && \
+    echo '    sleep 0.2' >> /app/startup.sh && \
+    echo 'done' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Optional: Run snapshot restore if enabled' >> /app/startup.sh && \
+    echo 'if [ "${ENABLE_SNAPSHOT_RESTORE:-false}" = "true" ]; then' >> /app/startup.sh && \
+    echo '    echo "Running snapshot restore..."' >> /app/startup.sh && \
+    echo '    python3 /app/qdrant_restore.py' >> /app/startup.sh && \
+    echo 'fi' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo 'echo "Qdrant hybrid service ready!"' >> /app/startup.sh && \
+    echo 'wait $QDRANT_PID' >> /app/startup.sh && \
+    chmod +x /app/startup.sh
+
+# Set permissions for qdrant directories
+RUN chmod 755 /app /qdrant
+
+# Expose Qdrant ports
+EXPOSE 6333 6334
+
+# Optimized health check for fast startup validation
+HEALTHCHECK --interval=10s --timeout=3s --start-period=2s --retries=2 \
+    CMD wget -q --spider --timeout=1 http://localhost:6333/health || exit 1
+
+# Use optimized startup script
+CMD ["/app/startup.sh"] 

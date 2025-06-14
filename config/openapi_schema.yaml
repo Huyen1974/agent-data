@@ -1,0 +1,378 @@
+openapi: 3.0.3
+info:
+  title: Agent Data API A2A Gateway
+  description: REST API for agent-to-agent communication with Qdrant vector storage and Firestore metadata
+  version: 1.0.0
+  contact:
+    name: Agent Data Team
+    email: support@agentdata.example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api-gateway-asia-southeast1-chatgpt-db-project.cloudfunctions.net
+    description: Production Cloud Run deployment
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: API Information
+      description: Get basic information about the API and available endpoints
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  service:
+                    type: string
+                  version:
+                    type: string
+                  description:
+                    type: string
+                  endpoints:
+                    type: object
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /health:
+    get:
+      summary: Health Check
+      description: Check the health status of the API and connected services
+      responses:
+        '200':
+          description: Health status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /save:
+    post:
+      summary: Save Document
+      description: Save and vectorize a document for agent-to-agent access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveDocumentRequest'
+            examples:
+              simple_document:
+                summary: Simple document save
+                value:
+                  doc_id: "agent_doc_001"
+                  content: "This is a test document for agent communication."
+                  metadata:
+                    source: "cs_agent"
+                    priority: "normal"
+                  tag: "customer_support"
+              complex_document:
+                summary: Complex document with full metadata
+                value:
+                  doc_id: "knowledge_base_article_123"
+                  content: "Comprehensive guide to troubleshooting common issues..."
+                  metadata:
+                    source: "knowledge_base"
+                    category: "troubleshooting"
+                    author: "support_team"
+                    created_at: "2025-01-27T18:30:00Z"
+                  tag: "documentation"
+                  update_firestore: true
+      responses:
+        '200':
+          description: Document saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveDocumentResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+  /query:
+    post:
+      summary: Semantic Query
+      description: Perform semantic search on vectorized documents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryVectorsRequest'
+            examples:
+              customer_support_query:
+                summary: Customer support semantic search
+                value:
+                  query_text: "How to reset password for user account"
+                  tag: "customer_support"
+                  limit: 5
+                  score_threshold: 0.8
+              general_search:
+                summary: General knowledge search
+                value:
+                  query_text: "Python debugging techniques"
+                  limit: 10
+                  score_threshold: 0.7
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryVectorsResponse'
+        '503':
+          description: Service unavailable
+
+  /search:
+    post:
+      summary: Search Documents
+      description: Search documents by tag and metadata filters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchDocumentsRequest'
+            examples:
+              tag_search:
+                summary: Search by tag
+                value:
+                  tag: "customer_support"
+                  limit: 20
+                  offset: 0
+                  include_vectors: false
+              recent_documents:
+                summary: Get recent documents
+                value:
+                  limit: 10
+                  offset: 0
+                  include_vectors: false
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchDocumentsResponse'
+        '503':
+          description: Service unavailable
+
+components:
+  schemas:
+    SaveDocumentRequest:
+      type: object
+      required:
+        - doc_id
+        - content
+      properties:
+        doc_id:
+          type: string
+          description: Unique document identifier
+          example: "agent_doc_001"
+        content:
+          type: string
+          description: Document content to vectorize and store
+          example: "This is a test document for agent communication."
+        metadata:
+          type: object
+          description: Optional metadata
+          additionalProperties: true
+          example:
+            source: "cs_agent"
+            priority: "normal"
+        tag:
+          type: string
+          description: Optional tag for grouping
+          example: "customer_support"
+        update_firestore:
+          type: boolean
+          description: Whether to update Firestore metadata
+          default: true
+
+    SaveDocumentResponse:
+      type: object
+      required:
+        - status
+        - doc_id
+        - message
+      properties:
+        status:
+          type: string
+          enum: [success, failed, error]
+        doc_id:
+          type: string
+        message:
+          type: string
+        vector_id:
+          type: string
+          nullable: true
+        embedding_dimension:
+          type: integer
+          nullable: true
+        firestore_updated:
+          type: boolean
+          default: false
+        error:
+          type: string
+          nullable: true
+
+    QueryVectorsRequest:
+      type: object
+      required:
+        - query_text
+      properties:
+        query_text:
+          type: string
+          description: Text to search for semantically similar documents
+          example: "How to reset password"
+        tag:
+          type: string
+          description: Optional tag filter
+          nullable: true
+          example: "customer_support"
+        limit:
+          type: integer
+          description: Maximum number of results
+          minimum: 1
+          maximum: 100
+          default: 10
+        score_threshold:
+          type: number
+          format: float
+          description: Minimum similarity score
+          minimum: 0.0
+          maximum: 1.0
+          default: 0.7
+
+    QueryVectorsResponse:
+      type: object
+      required:
+        - status
+        - query_text
+        - results
+        - total_found
+        - message
+      properties:
+        status:
+          type: string
+          enum: [success, error]
+        query_text:
+          type: string
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        total_found:
+          type: integer
+        message:
+          type: string
+        error:
+          type: string
+          nullable: true
+
+    SearchDocumentsRequest:
+      type: object
+      properties:
+        tag:
+          type: string
+          description: Tag to filter documents
+          nullable: true
+          example: "customer_support"
+        offset:
+          type: integer
+          description: Number of results to skip
+          minimum: 0
+          default: 0
+        limit:
+          type: integer
+          description: Maximum number of results
+          minimum: 1
+          maximum: 100
+          default: 10
+        include_vectors:
+          type: boolean
+          description: Whether to include vector embeddings
+          default: false
+
+    SearchDocumentsResponse:
+      type: object
+      required:
+        - status
+        - results
+        - total_found
+        - offset
+        - limit
+        - message
+      properties:
+        status:
+          type: string
+          enum: [success, error]
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        total_found:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        message:
+          type: string
+        error:
+          type: string
+          nullable: true
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+        - services
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded]
+        timestamp:
+          type: string
+          format: date-time
+        version:
+          type: string
+        services:
+          type: object
+          properties:
+            qdrant:
+              type: string
+              enum: [connected, disconnected]
+            firestore:
+              type: string
+              enum: [connected, disconnected]
+            vectorization:
+              type: string
+              enum: [available, unavailable]
+
+tags:
+  - name: Health
+    description: Health check and service status
+  - name: Documents
+    description: Document storage and vectorization
+  - name: Search
+    description: Document search and retrieval
+
+security: []

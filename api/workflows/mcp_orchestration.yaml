@@ -1,0 +1,294 @@
+# Cloud Workflows: MCP Orchestration
+# Handles complex document processing and RAG operations (20% of logic)
+
+main:
+  params: [input]
+  steps:
+    - init:
+        assign:
+          - operation: ${input.operation}
+          - start_time: ${sys.now()}
+          - project_id: ${sys.get_env("GOOGLE_CLOUD_PROJECT")}
+          - region: ${sys.get_env("GOOGLE_CLOUD_REGION", "us-central1")}
+    
+    - log_start:
+        call: sys.log
+        args:
+          text: ${"Starting MCP workflow: " + operation}
+          severity: INFO
+    
+    - route_operation:
+        switch:
+          - condition: ${operation == "save_document"}
+            next: process_document_save
+          - condition: ${operation == "rag_search"}
+            next: process_rag_search
+          - condition: ${operation == "batch_processing"}
+            next: process_batch_operations
+          - condition: true
+            next: unsupported_operation
+
+    # Document Save Processing (Complex documents >10KB)
+    - process_document_save:
+        steps:
+          - validate_document_input:
+              assign:
+                - doc_id: ${input.doc_id}
+                - content: ${input.content}
+                - metadata: ${input.metadata}
+                - user_info: ${input.user_info}
+          
+          - check_document_size:
+              assign:
+                - content_size: ${len(content)}
+                - is_large_document: ${content_size > 10000}
+          
+          - split_large_document:
+              switch:
+                - condition: ${is_large_document}
+                  steps:
+                    - call_document_splitter:
+                        call: http.post
+                        args:
+                          url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/document-splitter"}
+                          headers:
+                            Content-Type: "application/json"
+                          body:
+                            doc_id: ${doc_id}
+                            content: ${content}
+                            chunk_size: 5000
+                            overlap: 200
+                        result: split_result
+                    
+                    - assign_chunks:
+                        assign:
+                          - document_chunks: ${split_result.body.chunks}
+              next: vectorize_chunks
+          
+          - vectorize_single_document:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/vectorizer"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  doc_id: ${doc_id}
+                  content: ${content}
+                  metadata: ${metadata}
+              result: vector_result
+              next: save_to_firestore
+          
+          - vectorize_chunks:
+              for:
+                value: chunk
+                index: chunk_index
+                in: ${document_chunks}
+                steps:
+                  - vectorize_chunk:
+                      call: http.post
+                      args:
+                        url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/vectorizer"}
+                        headers:
+                          Content-Type: "application/json"
+                        body:
+                          doc_id: ${doc_id + "_chunk_" + string(chunk_index)}
+                          content: ${chunk.content}
+                          metadata: ${map.merge(metadata, chunk.metadata)}
+                      result: chunk_vector_result
+          
+          - save_to_firestore:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/firestore-manager"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  operation: "save_metadata"
+                  doc_id: ${doc_id}
+                  metadata: ${metadata}
+                  vector_ids: ${if(is_large_document, map.get(document_chunks, "vector_ids"), [vector_result.body.vector_id])}
+              result: firestore_result
+          
+          - record_processing_metrics:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/metrics-recorder"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  metric_type: "document_processing"
+                  operation: "save"
+                  duration_ms: ${(sys.now() - start_time) * 1000}
+                  document_size: ${content_size}
+                  chunks_created: ${if(is_large_document, len(document_chunks), 1)}
+          
+          - return_save_result:
+              return:
+                status: "success"
+                operation: "save_document"
+                doc_id: ${doc_id}
+                processing_time_ms: ${(sys.now() - start_time) * 1000}
+                chunks_processed: ${if(is_large_document, len(document_chunks), 1)}
+                firestore_updated: ${firestore_result.body.success}
+
+    # RAG Search Processing (Complex queries >1000 chars)
+    - process_rag_search:
+        steps:
+          - validate_rag_input:
+              assign:
+                - query_text: ${input.query_text}
+                - metadata_filters: ${input.metadata_filters}
+                - limit: ${input.limit}
+                - score_threshold: ${input.score_threshold}
+                - user_info: ${input.user_info}
+          
+          - analyze_query_complexity:
+              assign:
+                - query_length: ${len(query_text)}
+                - is_complex_query: ${query_length > 1000}
+                - requires_preprocessing: ${map.get(metadata_filters, "complex_rag", false)}
+          
+          - preprocess_complex_query:
+              switch:
+                - condition: ${is_complex_query or requires_preprocessing}
+                  steps:
+                    - call_query_analyzer:
+                        call: http.post
+                        args:
+                          url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/query-analyzer"}
+                          headers:
+                            Content-Type: "application/json"
+                          body:
+                            query_text: ${query_text}
+                            analysis_type: "semantic_decomposition"
+                        result: analysis_result
+                    
+                    - extract_sub_queries:
+                        assign:
+                          - sub_queries: ${analysis_result.body.sub_queries}
+                          - query_intent: ${analysis_result.body.intent}
+              next: execute_rag_search
+          
+          - execute_simple_rag:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/rag-executor"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  query_text: ${query_text}
+                  metadata_filters: ${metadata_filters}
+                  limit: ${limit}
+                  score_threshold: ${score_threshold}
+              result: rag_result
+              next: aggregate_results
+          
+          - execute_rag_search:
+              for:
+                value: sub_query
+                index: query_index
+                in: ${sub_queries}
+                steps:
+                  - execute_sub_query:
+                      call: http.post
+                      args:
+                        url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/rag-executor"}
+                        headers:
+                          Content-Type: "application/json"
+                        body:
+                          query_text: ${sub_query.text}
+                          metadata_filters: ${map.merge(metadata_filters, sub_query.filters)}
+                          limit: ${int(limit / len(sub_queries))}
+                          score_threshold: ${score_threshold}
+                      result: sub_rag_result
+          
+          - aggregate_results:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/result-aggregator"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  results: ${if(is_complex_query, map.get(sub_queries, "results"), [rag_result.body])}
+                  aggregation_method: "semantic_ranking"
+                  final_limit: ${limit}
+              result: aggregated_result
+          
+          - record_rag_metrics:
+              call: http.post
+              args:
+                url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/metrics-recorder"}
+                headers:
+                  Content-Type: "application/json"
+                body:
+                  metric_type: "rag_processing"
+                  operation: "search"
+                  duration_ms: ${(sys.now() - start_time) * 1000}
+                  query_length: ${query_length}
+                  sub_queries_count: ${if(is_complex_query, len(sub_queries), 1)}
+                  results_count: ${len(aggregated_result.body.results)}
+          
+          - return_rag_result:
+              return:
+                status: "success"
+                operation: "rag_search"
+                query: ${query_text}
+                results: ${aggregated_result.body.results}
+                processing_time_ms: ${(sys.now() - start_time) * 1000}
+                sub_queries_processed: ${if(is_complex_query, len(sub_queries), 1)}
+                rag_info:
+                  query_complexity: ${if(is_complex_query, "high", "low")}
+                  preprocessing_applied: ${requires_preprocessing}
+
+    # Batch Processing Operations
+    - process_batch_operations:
+        steps:
+          - validate_batch_input:
+              assign:
+                - operations: ${input.operations}
+                - batch_size: ${len(operations)}
+          
+          - process_batch:
+              for:
+                value: operation
+                index: op_index
+                in: ${operations}
+                steps:
+                  - execute_batch_operation:
+                      call: http.post
+                      args:
+                        url: ${"https://" + region + "-" + project_id + ".cloudfunctions.net/mcp-handler"}
+                        headers:
+                          Content-Type: "application/json"
+                          Authorization: ${"Bearer " + operation.auth_token}
+                        body: ${operation.payload}
+                      result: batch_op_result
+          
+          - return_batch_result:
+              return:
+                status: "success"
+                operation: "batch_processing"
+                batch_size: ${batch_size}
+                processing_time_ms: ${(sys.now() - start_time) * 1000}
+
+    # Error handling for unsupported operations
+    - unsupported_operation:
+        raise:
+          message: ${"Unsupported operation: " + operation}
+          code: 400
+
+    # Global error handling
+    - handle_error:
+        steps:
+          - log_error:
+              call: sys.log
+              args:
+                text: ${"MCP workflow error: " + string(error)}
+                severity: ERROR
+          
+          - return_error:
+              return:
+                status: "error"
+                operation: ${operation}
+                error: ${string(error)}
+                processing_time_ms: ${(sys.now() - start_time) * 1000} 
