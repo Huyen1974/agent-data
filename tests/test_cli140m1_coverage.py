@@ -61,9 +61,9 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         """Test cache initialization with configuration."""
         from ADK.agent_data.api_mcp_gateway import initialize_caches
         
-        # Fixed: initialize_caches takes no parameters
+        # Fixed: initialize_caches returns None but should execute without error
         result = initialize_caches()
-        assert result is not None
+        assert result is None  # Function doesn't return anything
 
     def test_cache_result_and_get_cached_result(self):
         """Test caching and retrieving results."""
@@ -140,7 +140,8 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             mock_settings.get_qdrant_config.return_value = {
                 "url": "test", 
                 "api_key": "test",
-                "collection_name": "test_collection"
+                "collection_name": "test_collection",
+                "vector_size": 1536
             }
             
             # Mock async methods

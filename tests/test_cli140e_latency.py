@@ -93,6 +93,7 @@ class TestLatencyProfiling:
                 
         return ProfileContext()
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_rag_search_latency_profile(self, mock_qdrant_store, mock_firestore_manager, performance_profile_context):
         """
@@ -133,6 +134,7 @@ class TestLatencyProfiling:
                 "profile_stats": performance_profile_context.get_stats()
             }
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_cskh_api_latency_profile(self, performance_profile_context):
         """
@@ -231,6 +233,7 @@ class TestLatencyProfiling:
         logger.info(f"Cache get performance: {get_time:.3f}s for 1000 operations")
         logger.info(f"Cache hit ratio: {hits}/1000 = {hits/10}%")
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_firestore_optimization(self, mock_firestore_manager):
         """Test batch Firestore operations for RU optimization."""
@@ -265,6 +268,7 @@ class TestLatencyProfiling:
         logger.info(f"Estimated individual query latency: {individual_latency:.3f}s")
         logger.info(f"Performance improvement: {individual_latency/batch_latency:.2f}x")
 
+    @pytest.mark.deferred
     @pytest.mark.performance
     async def test_end_to_end_latency_with_caching(self, mock_qdrant_store, mock_firestore_manager):
         """

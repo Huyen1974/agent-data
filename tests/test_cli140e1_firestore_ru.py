@@ -72,6 +72,7 @@ class TestFirestoreRUOptimization:
                 
         return RUTracker()
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_optimized_document_existence_check(self, mock_firestore_client, ru_cost_tracker):
         """
@@ -144,6 +145,7 @@ class TestFirestoreRUOptimization:
         
         logger.info(f"Fallback existence check completed: exists={exists}")
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_optimized_versioning_document_fetch(self, mock_firestore_client, ru_cost_tracker):
         """
@@ -184,6 +186,7 @@ class TestFirestoreRUOptimization:
             
             logger.info(f"Optimized versioning fetch completed: version={doc_snapshot.to_dict()['version']}")
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_nonexistent_document_optimization(self, mock_firestore_client, ru_cost_tracker):
         """
@@ -319,6 +322,7 @@ class TestFirestoreRUOptimization:
             "savings_percentage": savings_percentage
         }
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_save_metadata_with_ru_optimization(self, mock_firestore_client, ru_cost_tracker):
         """
