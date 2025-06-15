@@ -1,1 +1,7 @@
-{}
+{
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization": {
+        "status": "failed",
+        "duration": 0.6082238330000109,
+        "timestamp": "2025-06-15T16:30:02.993342"
+    }
+}
