@@ -30,11 +30,11 @@ except ImportError:
         return None
 
 
-from ..config.settings import settings
-from ..vector_store.qdrant_store import QdrantStore
-from ..vector_store.firestore_metadata_manager import FirestoreMetadataManager
-from .external_tool_registry import get_openai_embedding, openai_async_client, OPENAI_AVAILABLE
-from .auto_tagging_tool import get_auto_tagging_tool
+from ADK.agent_data.config.settings import settings
+from ADK.agent_data.vector_store.qdrant_store import QdrantStore
+from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+from ADK.agent_data.tools.external_tool_registry import get_openai_embedding, openai_async_client, OPENAI_AVAILABLE
+from ADK.agent_data.tools.auto_tagging_tool import get_auto_tagging_tool
 
 logger = logging.getLogger(__name__)
 
