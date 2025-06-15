@@ -1,7 +1,2512 @@
 {
-    "ADK/agent_data/tests/test_cli140m_coverage.py::TestCLI140mCoverageValidation::test_cli140m_coverage_validation": {
+    "tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures": {
         "status": "passed",
-        "duration": 8.400000024266774e-05,
-        "timestamp": "2025-06-14T15:48:17.540966"
+        "duration": 0.00010470800043549389,
+        "timestamp": "2025-06-15T15:31:14.061592"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint": {
+        "status": "passed",
+        "duration": 0.0013582499996118713,
+        "timestamp": "2025-06-15T15:31:14.064633"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services": {
+        "status": "passed",
+        "duration": 0.000958333001108258,
+        "timestamp": "2025-06-15T15:31:14.067237"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success": {
+        "status": "passed",
+        "duration": 0.0031061249992490048,
+        "timestamp": "2025-06-15T15:31:14.071951"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable": {
+        "status": "passed",
+        "duration": 0.002021457999944687,
+        "timestamp": "2025-06-15T15:31:14.076240"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request": {
+        "status": "passed",
+        "duration": 0.0023734999995213,
+        "timestamp": "2025-06-15T15:31:14.081057"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success": {
+        "status": "passed",
+        "duration": 0.0032394160007243045,
+        "timestamp": "2025-06-15T15:31:14.086022"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable": {
+        "status": "passed",
+        "duration": 0.0017311250012426171,
+        "timestamp": "2025-06-15T15:31:14.089555"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request": {
+        "status": "passed",
+        "duration": 0.0017564169993420364,
+        "timestamp": "2025-06-15T15:31:14.093725"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success": {
+        "status": "passed",
+        "duration": 0.0027972080006293254,
+        "timestamp": "2025-06-15T15:31:14.098397"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable": {
+        "status": "passed",
+        "duration": 0.001240457999301725,
+        "timestamp": "2025-06-15T15:31:14.101352"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors": {
+        "status": "passed",
+        "duration": 0.0019851249999192078,
+        "timestamp": "2025-06-15T15:31:14.104878"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation": {
+        "status": "passed",
+        "duration": 0.00011079199975938536,
+        "timestamp": "2025-06-15T15:31:14.107005"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow": {
+        "status": "passed",
+        "duration": 0.0060579170003620675,
+        "timestamp": "2025-06-15T15:31:14.115481"
+    },
+    "tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users": {
+        "status": "passed",
+        "duration": 0.2174009999998816,
+        "timestamp": "2025-06-15T15:31:15.658357"
+    },
+    "tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content": {
+        "status": "passed",
+        "duration": 0.0002979159999085823,
+        "timestamp": "2025-06-15T15:31:15.662115"
+    },
+    "tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects": {
+        "status": "passed",
+        "duration": 0.00023024999973131344,
+        "timestamp": "2025-06-15T15:31:15.664034"
+    },
+    "tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters": {
+        "status": "passed",
+        "duration": 0.0001343750009255018,
+        "timestamp": "2025-06-15T15:31:15.665686"
+    },
+    "tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation": {
+        "status": "passed",
+        "duration": 0.002823666000040248,
+        "timestamp": "2025-06-15T15:31:16.644636"
+    },
+    "tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation": {
+        "status": "passed",
+        "duration": 0.0020105000003241003,
+        "timestamp": "2025-06-15T15:31:17.653212"
+    },
+    "tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation": {
+        "status": "passed",
+        "duration": 0.005984333000014885,
+        "timestamp": "2025-06-15T15:31:18.629700"
+    },
+    "tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling": {
+        "status": "passed",
+        "duration": 0.0005908329985686578,
+        "timestamp": "2025-06-15T15:31:19.601056"
+    },
+    "tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing": {
+        "status": "passed",
+        "duration": 0.0010207499999523861,
+        "timestamp": "2025-06-15T15:31:20.543642"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization": {
+        "status": "passed",
+        "duration": 0.00017879200095194392,
+        "timestamp": "2025-06-15T15:31:21.904482"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification": {
+        "status": "passed",
+        "duration": 0.9798516250011744,
+        "timestamp": "2025-06-15T15:31:22.887829"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation": {
+        "status": "passed",
+        "duration": 0.0005920829989918275,
+        "timestamp": "2025-06-15T15:31:22.890658"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration": {
+        "status": "passed",
+        "duration": 1.2060860000001412,
+        "timestamp": "2025-06-15T15:31:24.099051"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token": {
+        "status": "passed",
+        "duration": 0.00032900000041991007,
+        "timestamp": "2025-06-15T15:31:24.101899"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation": {
+        "status": "passed",
+        "duration": 0.00027762499848904554,
+        "timestamp": "2025-06-15T15:31:24.103723"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation": {
+        "status": "passed",
+        "duration": 0.000289250001515029,
+        "timestamp": "2025-06-15T15:31:24.106254"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager": {
+        "status": "passed",
+        "duration": 0.002314041999852634,
+        "timestamp": "2025-06-15T15:31:24.110837"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling": {
+        "status": "passed",
+        "duration": 0.0003204160002496792,
+        "timestamp": "2025-06-15T15:31:24.112955"
+    },
+    "tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields": {
+        "status": "passed",
+        "duration": 0.00033674999940558337,
+        "timestamp": "2025-06-15T15:31:24.114695"
+    },
+    "tests/api/test_authentication.py::TestUserManager::test_user_creation": {
+        "status": "passed",
+        "duration": 0.0030386250000447035,
+        "timestamp": "2025-06-15T15:31:24.470319"
+    },
+    "tests/api/test_authentication.py::TestUserManager::test_user_authentication": {
+        "status": "passed",
+        "duration": 0.48343095800009905,
+        "timestamp": "2025-06-15T15:31:24.957297"
+    },
+    "tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation": {
+        "status": "passed",
+        "duration": 9.541699910187162e-05,
+        "timestamp": "2025-06-15T15:31:24.959908"
+    },
+    "tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation": {
+        "status": "passed",
+        "duration": 1.0220507499998348,
+        "timestamp": "2025-06-15T15:31:25.983905"
+    },
+    "tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation": {
+        "status": "passed",
+        "duration": 2.26957958300045,
+        "timestamp": "2025-06-15T15:31:28.255924"
+    },
+    "tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises": {
+        "status": "passed",
+        "duration": 0.004688708000685438,
+        "timestamp": "2025-06-15T15:31:28.269522"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement": {
+        "status": "passed",
+        "duration": 7.227325791998737,
+        "timestamp": "2025-06-15T15:31:35.501836"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches": {
+        "status": "passed",
+        "duration": 0.03392066600099497,
+        "timestamp": "2025-06-15T15:31:35.539325"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document": {
+        "status": "passed",
+        "duration": 0.007110708000254817,
+        "timestamp": "2025-06-15T15:31:35.549990"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures": {
+        "status": "passed",
+        "duration": 2.7104488750010205,
+        "timestamp": "2025-06-15T15:31:38.263189"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list": {
+        "status": "passed",
+        "duration": 0.0003584589994716225,
+        "timestamp": "2025-06-15T15:31:38.267131"
+    },
+    "tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration": {
+        "status": "passed",
+        "duration": 1.20525891699981,
+        "timestamp": "2025-06-15T15:31:39.475037"
+    },
+    "tests/api/test_blank_query_text.py::test_query_text_blank_spaces": {
+        "status": "passed",
+        "duration": 0.002062624998870888,
+        "timestamp": "2025-06-15T15:31:39.480633"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_valid": {
+        "status": "passed",
+        "duration": 0.0010674170007405337,
+        "timestamp": "2025-06-15T15:31:39.488407"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection": {
+        "status": "passed",
+        "duration": 0.00021804099924338516,
+        "timestamp": "2025-06-15T15:31:39.491175"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_empty_points": {
+        "status": "passed",
+        "duration": 0.0001560000000608852,
+        "timestamp": "2025-06-15T15:31:39.493306"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points": {
+        "status": "passed",
+        "duration": 0.0030694580000272254,
+        "timestamp": "2025-06-15T15:31:39.502500"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid": {
+        "status": "passed",
+        "duration": 0.0011309589990560198,
+        "timestamp": "2025-06-15T15:31:39.510175"
+    },
+    "tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids": {
+        "status": "passed",
+        "duration": 0.0006261250000534346,
+        "timestamp": "2025-06-15T15:31:39.517071"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data": {
+        "status": "passed",
+        "duration": 7.741700028418563e-05,
+        "timestamp": "2025-06-15T15:31:39.519530"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields": {
+        "status": "passed",
+        "duration": 9.370800034957938e-05,
+        "timestamp": "2025-06-15T15:31:39.522119"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types": {
+        "status": "passed",
+        "duration": 0.00011258300037297886,
+        "timestamp": "2025-06-15T15:31:39.524737"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits": {
+        "status": "passed",
+        "duration": 0.0001847079984145239,
+        "timestamp": "2025-06-15T15:31:39.527540"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps": {
+        "status": "passed",
+        "duration": 7.316699884540867e-05,
+        "timestamp": "2025-06-15T15:31:39.529754"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid": {
+        "status": "passed",
+        "duration": 7.225000081234612e-05,
+        "timestamp": "2025-06-15T15:31:39.531532"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment": {
+        "status": "passed",
+        "duration": 6.920800115040038e-05,
+        "timestamp": "2025-06-15T15:31:39.533316"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease": {
+        "status": "passed",
+        "duration": 0.00012804200014215894,
+        "timestamp": "2025-06-15T15:31:39.535204"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip": {
+        "status": "passed",
+        "duration": 0.00011916699986613821,
+        "timestamp": "2025-06-15T15:31:39.537063"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics": {
+        "status": "passed",
+        "duration": 0.0005645420005748747,
+        "timestamp": "2025-06-15T15:31:39.539916"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity": {
+        "status": "passed",
+        "duration": 0.0009812499993131496,
+        "timestamp": "2025-06-15T15:31:39.543084"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact": {
+        "status": "passed",
+        "duration": 0.00011179200009792112,
+        "timestamp": "2025-06-15T15:31:39.544857"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics": {
+        "status": "passed",
+        "duration": 0.00010254100016027223,
+        "timestamp": "2025-06-15T15:31:39.546895"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis": {
+        "status": "passed",
+        "duration": 0.00011475000064820051,
+        "timestamp": "2025-06-15T15:31:39.548755"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax": {
+        "status": "passed",
+        "duration": 0.0006259590008994564,
+        "timestamp": "2025-06-15T15:31:39.550904"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration": {
+        "status": "passed",
+        "duration": 0.000364500001523993,
+        "timestamp": "2025-06-15T15:31:39.552589"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration": {
+        "status": "passed",
+        "duration": 0.00029895799889345653,
+        "timestamp": "2025-06-15T15:31:39.554208"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration": {
+        "status": "passed",
+        "duration": 0.0005421669993666001,
+        "timestamp": "2025-06-15T15:31:39.556254"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references": {
+        "status": "passed",
+        "duration": 0.00019841700122924522,
+        "timestamp": "2025-06-15T15:31:39.558270"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration": {
+        "status": "passed",
+        "duration": 0.002905875000578817,
+        "timestamp": "2025-06-15T15:31:39.563155"
+    },
+    "tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration": {
+        "status": "passed",
+        "duration": 0.00011620800069067627,
+        "timestamp": "2025-06-15T15:31:39.564852"
+    },
+    "tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow": {
+        "status": "passed",
+        "duration": 0.003216707998944912,
+        "timestamp": "2025-06-15T15:31:39.569473"
+    },
+    "tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow": {
+        "status": "passed",
+        "duration": 0.9070950419991277,
+        "timestamp": "2025-06-15T15:31:40.478102"
+    },
+    "tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow": {
+        "status": "passed",
+        "duration": 0.004356292000011308,
+        "timestamp": "2025-06-15T15:31:40.484694"
+    },
+    "tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow": {
+        "status": "passed",
+        "duration": 0.003987666999819339,
+        "timestamp": "2025-06-15T15:31:40.493143"
+    },
+    "tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency": {
+        "status": "passed",
+        "duration": 0.0033691669996187557,
+        "timestamp": "2025-06-15T15:31:40.498909"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow": {
+        "status": "passed",
+        "duration": 0.003844666000077268,
+        "timestamp": "2025-06-15T15:31:40.504558"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow": {
+        "status": "passed",
+        "duration": 0.9070618749992718,
+        "timestamp": "2025-06-15T15:31:41.415113"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow": {
+        "status": "passed",
+        "duration": 0.0037381250003818423,
+        "timestamp": "2025-06-15T15:31:41.421341"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow": {
+        "status": "passed",
+        "duration": 0.005033000001276378,
+        "timestamp": "2025-06-15T15:31:41.428885"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow": {
+        "status": "passed",
+        "duration": 0.0022474580000562128,
+        "timestamp": "2025-06-15T15:31:41.433131"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements": {
+        "status": "passed",
+        "duration": 7.662499956495594e-05,
+        "timestamp": "2025-06-15T15:31:41.434760"
+    },
+    "tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency": {
+        "status": "passed",
+        "duration": 0.0037120839988347143,
+        "timestamp": "2025-06-15T15:31:41.439992"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check": {
+        "status": "passed",
+        "duration": 0.3271967910004605,
+        "timestamp": "2025-06-15T15:31:41.769678"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user": {
+        "status": "passed",
+        "duration": 0.5658405829999538,
+        "timestamp": "2025-06-15T15:31:42.337717"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token": {
+        "status": "passed",
+        "duration": 0.10338958300053491,
+        "timestamp": "2025-06-15T15:31:42.444053"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth": {
+        "status": "passed",
+        "duration": 66.69637916600004,
+        "timestamp": "2025-06-15T15:32:49.139778"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth": {
+        "status": "passed",
+        "duration": 18.027282832999845,
+        "timestamp": "2025-06-15T15:33:07.169035"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth": {
+        "status": "passed",
+        "duration": 0.35056824999992386,
+        "timestamp": "2025-06-15T15:33:07.522108"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load": {
+        "status": "passed",
+        "duration": 23.483372582999436,
+        "timestamp": "2025-06-15T15:33:31.014263"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync": {
+        "status": "passed",
+        "duration": 5.129951499999152,
+        "timestamp": "2025-06-15T15:33:36.149560"
+    },
+    "tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification": {
+        "status": "passed",
+        "duration": 0.10484337500020047,
+        "timestamp": "2025-06-15T15:33:36.256804"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success": {
+        "status": "passed",
+        "duration": 0.0003566670002328465,
+        "timestamp": "2025-06-15T15:33:36.260617"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal": {
+        "status": "passed",
+        "duration": 0.00029320800058485474,
+        "timestamp": "2025-06-15T15:33:36.263648"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id": {
+        "status": "passed",
+        "duration": 0.00037291600165190175,
+        "timestamp": "2025-06-15T15:33:36.267802"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content": {
+        "status": "passed",
+        "duration": 0.00024041699907684233,
+        "timestamp": "2025-06-15T15:33:36.271645"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure": {
+        "status": "passed",
+        "duration": 0.001045291999616893,
+        "timestamp": "2025-06-15T15:33:36.274786"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement": {
+        "status": "passed",
+        "duration": 0.00025770799948077183,
+        "timestamp": "2025-06-15T15:33:36.277393"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility": {
+        "status": "passed",
+        "duration": 9.308400149166118e-05,
+        "timestamp": "2025-06-15T15:33:36.278920"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs": {
+        "status": "passed",
+        "duration": 0.0005355419998522848,
+        "timestamp": "2025-06-15T15:33:36.281510"
+    },
+    "tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario": {
+        "status": "passed",
+        "duration": 0.00041483299901301507,
+        "timestamp": "2025-06-15T15:33:36.285024"
+    },
+    "tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s": {
+        "status": "passed",
+        "duration": 2.0052413749999687,
+        "timestamp": "2025-06-15T15:33:38.292981"
+    },
+    "tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay": {
+        "status": "passed",
+        "duration": 0.10491445800107613,
+        "timestamp": "2025-06-15T15:33:38.400021"
+    },
+    "tests/api/test_delete_by_tag.py::test_delete_by_tag_valid": {
+        "status": "passed",
+        "duration": 0.0008586660005676094,
+        "timestamp": "2025-06-15T15:33:38.408538"
+    },
+    "tests/api/test_delete_by_tag.py::test_delete_by_tag_empty": {
+        "status": "passed",
+        "duration": 0.00045237499944050796,
+        "timestamp": "2025-06-15T15:33:38.411586"
+    },
+    "tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent": {
+        "status": "passed",
+        "duration": 0.0006768749990442302,
+        "timestamp": "2025-06-15T15:33:38.418277"
+    },
+    "tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality": {
+        "status": "passed",
+        "duration": 0.0002117909989465261,
+        "timestamp": "2025-06-15T15:33:38.421268"
+    },
+    "tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider": {
+        "status": "passed",
+        "duration": 0.0018203750005341135,
+        "timestamp": "2025-06-15T15:33:38.425206"
+    },
+    "tests/api/test_embeddings_api.py::test_generate_embedding_mock": {
+        "status": "passed",
+        "duration": 0.011572750001505483,
+        "timestamp": "2025-06-15T15:33:38.438410"
+    },
+    "tests/api/test_embeddings_api.py::test_semantic_search_cosine": {
+        "status": "passed",
+        "duration": 0.009142541000983329,
+        "timestamp": "2025-06-15T15:33:38.468637"
+    },
+    "tests/api/test_embeddings_api.py::test_clear_embeddings": {
+        "status": "passed",
+        "duration": 0.004665833999752067,
+        "timestamp": "2025-06-15T15:33:38.493617"
+    },
+    "tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected": {
+        "status": "passed",
+        "duration": 0.0012825840003642952,
+        "timestamp": "2025-06-15T15:33:38.497406"
+    },
+    "tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected": {
+        "status": "passed",
+        "duration": 0.0019485419998090947,
+        "timestamp": "2025-06-15T15:33:38.501695"
+    },
+    "tests/api/test_empty_query_rejected.py::test_empty_query_rejected": {
+        "status": "passed",
+        "duration": 0.002442791999783367,
+        "timestamp": "2025-06-15T15:33:38.510956"
+    },
+    "tests/api/test_empty_query_text.py::test_empty_query_text": {
+        "status": "passed",
+        "duration": 0.0012859999987995252,
+        "timestamp": "2025-06-15T15:33:38.514486"
+    },
+    "tests/api/test_env_config_valid.py::test_env_config_valid": {
+        "status": "passed",
+        "duration": 0.0013673330013261875,
+        "timestamp": "2025-06-15T15:33:38.517655"
+    },
+    "tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive": {
+        "status": "passed",
+        "duration": 0.002916708999691764,
+        "timestamp": "2025-06-15T15:33:38.526970"
+    },
+    "tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches": {
+        "status": "passed",
+        "duration": 0.0022384580006473698,
+        "timestamp": "2025-06-15T15:33:38.535252"
+    },
+    "tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces": {
+        "status": "passed",
+        "duration": 0.0029838750015187543,
+        "timestamp": "2025-06-15T15:33:38.545548"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure": {
+        "status": "passed",
+        "duration": 0.0003330000017740531,
+        "timestamp": "2025-06-15T15:33:38.547812"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling": {
+        "status": "passed",
+        "duration": 0.5995699590002914,
+        "timestamp": "2025-06-15T15:33:39.149028"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied": {
+        "status": "passed",
+        "duration": 0.362141249999695,
+        "timestamp": "2025-06-15T15:33:39.514178"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases": {
+        "status": "passed",
+        "duration": 2.4734188340007677,
+        "timestamp": "2025-06-15T15:33:42.352974"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases": {
+        "status": "passed",
+        "duration": 4.758386792000238,
+        "timestamp": "2025-06-15T15:33:47.507901"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits": {
+        "status": "passed",
+        "duration": 0.005220541999733541,
+        "timestamp": "2025-06-15T15:33:47.873074"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation": {
+        "status": "passed",
+        "duration": 1.398445458000424,
+        "timestamp": "2025-06-15T15:33:49.639153"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts": {
+        "status": "passed",
+        "duration": 0.019829124999887426,
+        "timestamp": "2025-06-15T15:33:50.218674"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity": {
+        "status": "passed",
+        "duration": 0.2466337919995567,
+        "timestamp": "2025-06-15T15:33:50.991178"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency": {
+        "status": "passed",
+        "duration": 0.24708237499908137,
+        "timestamp": "2025-06-15T15:33:51.596525"
+    },
+    "tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation": {
+        "status": "passed",
+        "duration": 1.4494634999991831,
+        "timestamp": "2025-06-15T15:33:53.404800"
+    },
+    "tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one": {
+        "status": "passed",
+        "duration": 0.002604625000458327,
+        "timestamp": "2025-06-15T15:33:53.410949"
+    },
+    "tests/api/test_invalid_threshold.py::test_invalid_score_threshold": {
+        "status": "passed",
+        "duration": 0.0014685000005556503,
+        "timestamp": "2025-06-15T15:33:53.414793"
+    },
+    "tests/api/test_invalid_top_k.py::test_negative_top_k": {
+        "status": "passed",
+        "duration": 0.0013195830015320098,
+        "timestamp": "2025-06-15T15:33:53.418270"
+    },
+    "tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format": {
+        "status": "passed",
+        "duration": 0.00015837499995541293,
+        "timestamp": "2025-06-15T15:33:53.420278"
+    },
+    "tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields": {
+        "status": "passed",
+        "duration": 0.00015445899953192566,
+        "timestamp": "2025-06-15T15:33:53.422063"
+    },
+    "tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting": {
+        "status": "passed",
+        "duration": 0.0016470829996251268,
+        "timestamp": "2025-06-15T15:33:53.425552"
+    },
+    "tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes": {
+        "status": "passed",
+        "duration": 9.850000060396269e-05,
+        "timestamp": "2025-06-15T15:33:53.427522"
+    },
+    "tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes": {
+        "status": "passed",
+        "duration": 7.495799945900217e-05,
+        "timestamp": "2025-06-15T15:33:53.428884"
+    },
+    "tests/api/test_logging.py::TestSamplingFilter::test_info_sampling": {
+        "status": "passed",
+        "duration": 0.00029262499992910307,
+        "timestamp": "2025-06-15T15:33:53.430346"
+    },
+    "tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization": {
+        "status": "passed",
+        "duration": 9.208299888996407e-05,
+        "timestamp": "2025-06-15T15:33:53.431748"
+    },
+    "tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit": {
+        "status": "passed",
+        "duration": 0.0012056659998052055,
+        "timestamp": "2025-06-15T15:33:53.434120"
+    },
+    "tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization": {
+        "status": "passed",
+        "duration": 0.0007890420001785969,
+        "timestamp": "2025-06-15T15:33:53.436144"
+    },
+    "tests/api/test_logging.py::TestStructuredLogger::test_log_levels": {
+        "status": "passed",
+        "duration": 0.001285665999603225,
+        "timestamp": "2025-06-15T15:33:53.439207"
+    },
+    "tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation": {
+        "status": "passed",
+        "duration": 0.0009539590009808308,
+        "timestamp": "2025-06-15T15:33:53.442180"
+    },
+    "tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton": {
+        "status": "passed",
+        "duration": 0.0009252500003640307,
+        "timestamp": "2025-06-15T15:33:53.444991"
+    },
+    "tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names": {
+        "status": "passed",
+        "duration": 0.00040870799966796767,
+        "timestamp": "2025-06-15T15:33:53.447220"
+    },
+    "tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement": {
+        "status": "passed",
+        "duration": 0.0009732090002216864,
+        "timestamp": "2025-06-15T15:33:53.450466"
+    },
+    "tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration": {
+        "status": "passed",
+        "duration": 8.65420006448403e-05,
+        "timestamp": "2025-06-15T15:33:53.451863"
+    },
+    "tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully": {
+        "status": "passed",
+        "duration": 0.00024112500068440568,
+        "timestamp": "2025-06-15T15:33:53.453421"
+    },
+    "tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query": {
+        "status": "passed",
+        "duration": 0.10630049999963376,
+        "timestamp": "2025-06-15T15:33:53.561864"
+    },
+    "tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic": {
+        "status": "passed",
+        "duration": 0.00010133300020243041,
+        "timestamp": "2025-06-15T15:33:53.563900"
+    },
+    "tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic": {
+        "status": "passed",
+        "duration": 9.374999899591785e-05,
+        "timestamp": "2025-06-15T15:33:53.565474"
+    },
+    "tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation": {
+        "status": "passed",
+        "duration": 0.00010820900024555158,
+        "timestamp": "2025-06-15T15:33:53.566998"
+    },
+    "tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton": {
+        "status": "passed",
+        "duration": 7.999999979801942e-05,
+        "timestamp": "2025-06-15T15:33:53.568566"
+    },
+    "tests/api/test_metrics.py::test_metrics_endpoint": {
+        "status": "passed",
+        "duration": 0.0037592499993479578,
+        "timestamp": "2025-06-15T15:33:53.574292"
+    },
+    "tests/api/test_migration.py::test_migration_smoke": {
+        "status": "passed",
+        "duration": 0.0010678750004444737,
+        "timestamp": "2025-06-15T15:33:53.582707"
+    },
+    "tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats": {
+        "status": "passed",
+        "duration": 0.0004591249999066349,
+        "timestamp": "2025-06-15T15:33:53.585165"
+    },
+    "tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids": {
+        "status": "passed",
+        "duration": 0.0007765000009385403,
+        "timestamp": "2025-06-15T15:33:53.588470"
+    },
+    "tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold": {
+        "status": "passed",
+        "duration": 0.0020022919998154975,
+        "timestamp": "2025-06-15T15:33:53.593308"
+    },
+    "tests/api/test_package_installation.py::TestPackageInstallation::test_package_import": {
+        "status": "passed",
+        "duration": 7.03330006217584e-05,
+        "timestamp": "2025-06-15T15:33:53.595200"
+    },
+    "tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import": {
+        "status": "passed",
+        "duration": 7.416600055876188e-05,
+        "timestamp": "2025-06-15T15:33:53.596461"
+    },
+    "tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules": {
+        "status": "passed",
+        "duration": 6.600000051548705e-05,
+        "timestamp": "2025-06-15T15:33:53.597756"
+    },
+    "tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata": {
+        "status": "passed",
+        "duration": 6.733300142514054e-05,
+        "timestamp": "2025-06-15T15:33:53.599114"
+    },
+    "tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work": {
+        "status": "passed",
+        "duration": 6.358300015563145e-05,
+        "timestamp": "2025-06-15T15:33:53.600345"
+    },
+    "tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold": {
+        "status": "failed",
+        "duration": 0.00027070800024375785,
+        "timestamp": "2025-06-15T15:33:53.602290"
+    },
+    "tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance": {
+        "status": "passed",
+        "duration": 0.00017312500131083652,
+        "timestamp": "2025-06-15T15:33:53.604851"
+    },
+    "tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents": {
+        "status": "passed",
+        "duration": 0.00026870799956668634,
+        "timestamp": "2025-06-15T15:33:53.606884"
+    },
+    "tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries": {
+        "status": "passed",
+        "duration": 0.0001907499990920769,
+        "timestamp": "2025-06-15T15:33:53.608592"
+    },
+    "tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches": {
+        "status": "passed",
+        "duration": 0.0002241670008515939,
+        "timestamp": "2025-06-15T15:33:53.610584"
+    },
+    "tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary": {
+        "status": "passed",
+        "duration": 0.00023062499894876964,
+        "timestamp": "2025-06-15T15:33:53.612681"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_tools_registration": {
+        "status": "passed",
+        "duration": 0.00018087499847752042,
+        "timestamp": "2025-06-15T15:33:53.616452"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool": {
+        "status": "passed",
+        "duration": 0.000984209000307601,
+        "timestamp": "2025-06-15T15:33:53.620781"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool": {
+        "status": "passed",
+        "duration": 0.0009755829996720422,
+        "timestamp": "2025-06-15T15:33:53.626018"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool": {
+        "status": "passed",
+        "duration": 0.0005547079999814741,
+        "timestamp": "2025-06-15T15:33:53.630221"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool": {
+        "status": "passed",
+        "duration": 0.001014041999951587,
+        "timestamp": "2025-06-15T15:33:53.634368"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool": {
+        "status": "passed",
+        "duration": 0.0010790839987748768,
+        "timestamp": "2025-06-15T15:33:53.639039"
+    },
+    "tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool": {
+        "status": "passed",
+        "duration": 0.0014995830006228061,
+        "timestamp": "2025-06-15T15:33:53.644908"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling": {
+        "status": "passed",
+        "duration": 0.0005083340001874603,
+        "timestamp": "2025-06-15T15:33:53.649462"
+    },
+    "tests/api/test_qdrant_integration.py::test_qdrant_config_validation": {
+        "status": "passed",
+        "duration": 0.00016287500147882383,
+        "timestamp": "2025-06-15T15:33:53.651369"
+    },
+    "tests/api/test_qdrant_store.py::test_points_selector_empty": {
+        "status": "passed",
+        "duration": 0.00019020800027647056,
+        "timestamp": "2025-06-15T15:33:53.653617"
+    },
+    "tests/api/test_qdrant_store.py::test_points_selector_with_filter": {
+        "status": "passed",
+        "duration": 0.00028049999855284113,
+        "timestamp": "2025-06-15T15:33:53.655999"
+    },
+    "tests/api/test_qdrant_store.py::test_vector_store_interface_methods": {
+        "status": "passed",
+        "duration": 0.0003595409998524701,
+        "timestamp": "2025-06-15T15:33:53.658648"
+    },
+    "tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed": {
+        "status": "passed",
+        "duration": 0.00039458300125261303,
+        "timestamp": "2025-06-15T15:33:53.663471"
+    },
+    "tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status": {
+        "status": "passed",
+        "duration": 0.000324791999446461,
+        "timestamp": "2025-06-15T15:33:53.667470"
+    },
+    "tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync": {
+        "status": "passed",
+        "duration": 0.603011916999094,
+        "timestamp": "2025-06-15T15:33:54.275396"
+    },
+    "tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync": {
+        "status": "passed",
+        "duration": 0.0004439170006662607,
+        "timestamp": "2025-06-15T15:33:54.281687"
+    },
+    "tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length": {
+        "status": "passed",
+        "duration": 0.0015260830004990567,
+        "timestamp": "2025-06-15T15:33:54.285505"
+    },
+    "tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes": {
+        "status": "passed",
+        "duration": 0.0033991250002145534,
+        "timestamp": "2025-06-15T15:33:54.303205"
+    },
+    "tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all": {
+        "status": "passed",
+        "duration": 0.0033537079998495756,
+        "timestamp": "2025-06-15T15:33:54.321172"
+    },
+    "tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold": {
+        "status": "passed",
+        "duration": 0.0032097090006573126,
+        "timestamp": "2025-06-15T15:33:54.337763"
+    },
+    "tests/api/test_query_vectors_api.py::test_get_vector_by_id": {
+        "status": "passed",
+        "duration": 0.007132707998607657,
+        "timestamp": "2025-06-15T15:33:54.347693"
+    },
+    "tests/api/test_query_vectors_api.py::test_query_vectors_by_ids": {
+        "status": "passed",
+        "duration": 0.01775229099985154,
+        "timestamp": "2025-06-15T15:33:54.367278"
+    },
+    "tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip": {
+        "status": "passed",
+        "duration": 0.00011908399937965441,
+        "timestamp": "2025-06-15T15:33:54.373467"
+    },
+    "tests/api/test_score_threshold_strict.py::test_score_threshold_one": {
+        "status": "passed",
+        "duration": 0.00300470900037908,
+        "timestamp": "2025-06-15T15:33:54.383236"
+    },
+    "tests/api/test_score_threshold_zero.py::test_score_threshold_zero": {
+        "status": "passed",
+        "duration": 0.0035578749993874226,
+        "timestamp": "2025-06-15T15:33:54.393213"
+    },
+    "tests/api/test_search_by_payload.py::test_search_by_payload_valid": {
+        "status": "passed",
+        "duration": 0.0003795829998125555,
+        "timestamp": "2025-06-15T15:33:54.399581"
+    },
+    "tests/api/test_search_by_payload.py::test_search_by_payload_empty_field": {
+        "status": "passed",
+        "duration": 0.00011120799899799749,
+        "timestamp": "2025-06-15T15:33:54.401460"
+    },
+    "tests/api/test_search_by_payload.py::test_search_by_payload_none_value": {
+        "status": "passed",
+        "duration": 0.00011837499914690852,
+        "timestamp": "2025-06-15T15:33:54.402808"
+    },
+    "tests/api/test_search_by_payload.py::test_search_by_payload_pagination": {
+        "status": "passed",
+        "duration": 0.0007478339994122507,
+        "timestamp": "2025-06-15T15:33:54.409575"
+    },
+    "tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection": {
+        "status": "passed",
+        "duration": 0.001607457999853068,
+        "timestamp": "2025-06-15T15:33:54.417187"
+    },
+    "tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold": {
+        "status": "passed",
+        "duration": 0.004303542000343441,
+        "timestamp": "2025-06-15T15:33:54.427790"
+    },
+    "tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries": {
+        "status": "passed",
+        "duration": 0.005686790998879587,
+        "timestamp": "2025-06-15T15:33:54.439572"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation": {
+        "status": "passed",
+        "duration": 0.0020449580006243195,
+        "timestamp": "2025-06-15T15:33:54.445336"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id": {
+        "status": "passed",
+        "duration": 0.0005643749991577351,
+        "timestamp": "2025-06-15T15:33:54.448243"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval": {
+        "status": "passed",
+        "duration": 0.0005791249986941693,
+        "timestamp": "2025-06-15T15:33:54.450846"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update": {
+        "status": "passed",
+        "duration": 0.0009730000001582084,
+        "timestamp": "2025-06-15T15:33:54.454347"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion": {
+        "status": "passed",
+        "duration": 0.0008614170001237653,
+        "timestamp": "2025-06-15T15:33:54.458203"
+    },
+    "tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions": {
+        "status": "passed",
+        "duration": 0.0012317920009081718,
+        "timestamp": "2025-06-15T15:33:54.462501"
+    },
+    "tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing": {
+        "status": "passed",
+        "duration": 0.0007372079999186099,
+        "timestamp": "2025-06-15T15:33:54.465573"
+    },
+    "tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing": {
+        "status": "passed",
+        "duration": 0.0006605830003536539,
+        "timestamp": "2025-06-15T15:33:54.468342"
+    },
+    "tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing": {
+        "status": "passed",
+        "duration": 0.0021531250004045432,
+        "timestamp": "2025-06-15T15:33:54.472705"
+    },
+    "tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub": {
+        "status": "passed",
+        "duration": 0.00030795800012128893,
+        "timestamp": "2025-06-15T15:33:54.475408"
+    },
+    "tests/api/test_session_and_events.py::TestIntegration::test_agent_session_management": {
+        "status": "passed",
+        "duration": 0.0019034169999940787,
+        "timestamp": "2025-06-15T15:33:54.482757"
+    },
+    "tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events": {
+        "status": "passed",
+        "duration": 1.6384749580010975,
+        "timestamp": "2025-06-15T15:33:56.127132"
+    },
+    "tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization": {
+        "status": "passed",
+        "duration": 0.0008829170001263265,
+        "timestamp": "2025-06-15T15:33:56.134887"
+    },
+    "tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error": {
+        "status": "passed",
+        "duration": 0.0009400830003869487,
+        "timestamp": "2025-06-15T15:33:56.137726"
+    },
+    "tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error": {
+        "status": "passed",
+        "duration": 0.00432520800131897,
+        "timestamp": "2025-06-15T15:33:56.144437"
+    },
+    "tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error": {
+        "status": "passed",
+        "duration": 0.0011135410004499136,
+        "timestamp": "2025-06-15T15:33:56.147392"
+    },
+    "tests/api/test_tag_too_long.py::test_tag_too_long": {
+        "status": "passed",
+        "duration": 0.0020240419999026926,
+        "timestamp": "2025-06-15T15:33:56.155337"
+    },
+    "tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum": {
+        "status": "passed",
+        "duration": 0.0030604580006183824,
+        "timestamp": "2025-06-15T15:33:56.165396"
+    },
+    "tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals": {
+        "status": "passed",
+        "duration": 0.0034734159999061376,
+        "timestamp": "2025-06-15T15:33:56.174973"
+    },
+    "tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count": {
+        "status": "passed",
+        "duration": 0.002950083000541781,
+        "timestamp": "2025-06-15T15:33:56.184628"
+    },
+    "tests/api/test_top_k_minimum.py::test_top_k_minimum_one": {
+        "status": "passed",
+        "duration": 0.0027783329987869365,
+        "timestamp": "2025-06-15T15:33:56.194102"
+    },
+    "tests/api/test_top_k_too_large.py::test_top_k_too_large": {
+        "status": "passed",
+        "duration": 0.0014664580012322403,
+        "timestamp": "2025-06-15T15:33:56.198181"
+    },
+    "tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob": {
+        "status": "passed",
+        "duration": 8.954099939728621e-05,
+        "timestamp": "2025-06-15T15:33:56.204011"
+    },
+    "tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found": {
+        "status": "passed",
+        "duration": 0.0028806249993067468,
+        "timestamp": "2025-06-15T15:33:56.209074"
+    },
+    "tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input": {
+        "status": "passed",
+        "duration": 0.008247292000305606,
+        "timestamp": "2025-06-15T15:33:56.219252"
+    },
+    "tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid": {
+        "status": "passed",
+        "duration": 0.006889333000799525,
+        "timestamp": "2025-06-15T15:33:56.227524"
+    },
+    "tests/api/test_vector_edge_cases.py::test_delete_vector_not_found": {
+        "status": "passed",
+        "duration": 0.004386541000712896,
+        "timestamp": "2025-06-15T15:33:56.233485"
+    },
+    "tests/api/test_vector_safety_check.py::test_vector_id_collision": {
+        "status": "passed",
+        "duration": 0.011829541999759385,
+        "timestamp": "2025-06-15T15:33:56.248239"
+    },
+    "tests/api/test_vector_safety_check.py::test_vector_truncation_protection": {
+        "status": "passed",
+        "duration": 0.0072204170010081725,
+        "timestamp": "2025-06-15T15:33:56.260583"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists": {
+        "status": "passed",
+        "duration": 0.013081875000352738,
+        "timestamp": "2025-06-15T15:33:56.277917"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation": {
+        "status": "passed",
+        "duration": 0.0021710829987569014,
+        "timestamp": "2025-06-15T15:33:56.281777"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation": {
+        "status": "passed",
+        "duration": 7.883299986133352e-05,
+        "timestamp": "2025-06-15T15:33:56.283544"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling": {
+        "status": "passed",
+        "duration": 0.00020337500063760672,
+        "timestamp": "2025-06-15T15:33:56.284950"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement": {
+        "status": "passed",
+        "duration": 7.062500117172021e-05,
+        "timestamp": "2025-06-15T15:33:56.286236"
+    },
+    "tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement": {
+        "status": "passed",
+        "duration": 0.00011158400047861505,
+        "timestamp": "2025-06-15T15:33:56.287626"
+    },
+    "tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status": {
+        "status": "passed",
+        "duration": 8.42079989524791e-05,
+        "timestamp": "2025-06-15T15:33:56.289266"
+    },
+    "tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations": {
+        "status": "passed",
+        "duration": 9.19579997571418e-05,
+        "timestamp": "2025-06-15T15:33:56.291142"
+    },
+    "tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125": {
+        "status": "passed",
+        "duration": 0.0008326660008606268,
+        "timestamp": "2025-06-15T15:33:56.293697"
+    },
+    "tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_complete_e2e_pipeline": {
+        "status": "passed",
+        "duration": 0.002235125000879634,
+        "timestamp": "2025-06-15T15:33:56.299272"
+    },
+    "tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_error_handling": {
+        "status": "passed",
+        "duration": 0.0016364579987566685,
+        "timestamp": "2025-06-15T15:33:56.302458"
+    },
+    "tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_performance": {
+        "status": "passed",
+        "duration": 0.00266070799989393,
+        "timestamp": "2025-06-15T15:33:56.308070"
+    },
+    "tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_markers": {
+        "status": "passed",
+        "duration": 0.00011045800056308508,
+        "timestamp": "2025-06-15T15:33:56.310430"
+    },
+    "tests/test__meta_count.py::test_meta_count": {
+        "status": "passed",
+        "duration": 3.393044207999992,
+        "timestamp": "2025-06-15T15:33:59.705349"
+    },
+    "tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_testmon_installed": {
+        "status": "passed",
+        "duration": 1.3085395409998455,
+        "timestamp": "2025-06-15T15:34:01.020216"
+    },
+    "tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_xdist_installed": {
+        "status": "passed",
+        "duration": 1.3356731250005396,
+        "timestamp": "2025-06-15T15:34:02.359524"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_qdrant_mock_functionality": {
+        "status": "passed",
+        "duration": 0.00017712499902700074,
+        "timestamp": "2025-06-15T15:34:02.368194"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_openai_mock_functionality": {
+        "status": "passed",
+        "duration": 0.0003169999999954598,
+        "timestamp": "2025-06-15T15:34:02.370432"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_embedding_cache_functionality": {
+        "status": "passed",
+        "duration": 0.00225154100007785,
+        "timestamp": "2025-06-15T15:34:02.376795"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_fast_e2e_mocks_integration": {
+        "status": "passed",
+        "duration": 0.0003277079995314125,
+        "timestamp": "2025-06-15T15:34:02.382415"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_auto_mock_external_services": {
+        "status": "passed",
+        "duration": 0.0008580829999118578,
+        "timestamp": "2025-06-15T15:34:02.384788"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_mocking_performance_improvement": {
+        "status": "passed",
+        "duration": 0.00012412500109348912,
+        "timestamp": "2025-06-15T15:34:02.388233"
+    },
+    "tests/test_cli126b_mocking.py::TestCLI126BMocking::test_cache_persistence": {
+        "status": "passed",
+        "duration": 0.004005041999334935,
+        "timestamp": "2025-06-15T15:34:02.396190"
+    },
+    "tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_core_functionality_tests_remain_active": {
+        "status": "passed",
+        "duration": 4.394798832998276,
+        "timestamp": "2025-06-15T15:34:06.794623"
+    },
+    "tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_cli126c_strategy_documentation_ready": {
+        "status": "failed",
+        "duration": 0.0292084579996299,
+        "timestamp": "2025-06-15T15:34:06.828478"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_workflow_exists_and_valid": {
+        "status": "failed",
+        "duration": 0.0023768749997543637,
+        "timestamp": "2025-06-15T15:34:06.834308"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_pre_push_hook_exists_and_executable": {
+        "status": "passed",
+        "duration": 0.00033266699938394595,
+        "timestamp": "2025-06-15T15:34:06.835996"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_hook_functionality_simulation": {
+        "status": "passed",
+        "duration": 11.472363082999436,
+        "timestamp": "2025-06-15T15:34:18.310292"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_ci_badge_ready": {
+        "status": "passed",
+        "duration": 0.0002659580004547024,
+        "timestamp": "2025-06-15T15:34:18.318112"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_cli126d_requirements_met": {
+        "status": "passed",
+        "duration": 0.0002785420001600869,
+        "timestamp": "2025-06-15T15:34:18.320329"
+    },
+    "tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_development_workflow_optimization": {
+        "status": "passed",
+        "duration": 2.826944957998421,
+        "timestamp": "2025-06-15T15:34:21.148797"
+    },
+    "tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation": {
+        "status": "passed",
+        "duration": 0.43811991599977773,
+        "timestamp": "2025-06-15T15:34:21.590181"
+    },
+    "tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work": {
+        "status": "passed",
+        "duration": 0.00025312500110885594,
+        "timestamp": "2025-06-15T15:34:21.594417"
+    },
+    "tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible": {
+        "status": "passed",
+        "duration": 0.00012466699990909547,
+        "timestamp": "2025-06-15T15:34:21.596682"
+    },
+    "tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase": {
+        "status": "passed",
+        "duration": 0.021770583000034094,
+        "timestamp": "2025-06-15T15:34:21.619938"
+    },
+    "tests/test_cli128_metadata.py::TestCLI128MetadataManagement::test_comprehensive_metadata_management_logic": {
+        "status": "passed",
+        "duration": 0.0019580829994083615,
+        "timestamp": "2025-06-15T15:34:21.632727"
+    },
+    "tests/test_cli129_security_rules.py::TestCLI129SecurityRules::test_comprehensive_firestore_security_rules_validation": {
+        "status": "passed",
+        "duration": 0.0005341659998521209,
+        "timestamp": "2025-06-15T15:34:21.635474"
+    },
+    "tests/test_cli130_tree_view.py::TestCLI130TreeView::test_comprehensive_tree_view_functionality": {
+        "status": "passed",
+        "duration": 0.0031743750005261973,
+        "timestamp": "2025-06-15T15:34:21.642839"
+    },
+    "tests/test_cli130_tree_view.py::TestCLI130TreeView::test_tree_view_implementation_completeness": {
+        "status": "passed",
+        "duration": 0.00018208300025435165,
+        "timestamp": "2025-06-15T15:34:21.645304"
+    },
+    "tests/test_cli131_search.py::TestCLI131AdvancedSearch::test_comprehensive_advanced_search_functionality": {
+        "status": "passed",
+        "duration": 0.3803697909988841,
+        "timestamp": "2025-06-15T15:34:22.602658"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_success": {
+        "status": "passed",
+        "duration": 0.00394241599860834,
+        "timestamp": "2025-06-15T15:34:22.614838"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_not_found": {
+        "status": "passed",
+        "duration": 0.0016726249996281695,
+        "timestamp": "2025-06-15T15:34:22.620196"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_path": {
+        "status": "passed",
+        "duration": 0.002442708999296883,
+        "timestamp": "2025-06-15T15:34:22.626998"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_tags": {
+        "status": "passed",
+        "duration": 0.0023118749995774124,
+        "timestamp": "2025-06-15T15:34:22.634026"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_metadata": {
+        "status": "passed",
+        "duration": 0.0015485000003536697,
+        "timestamp": "2025-06-15T15:34:22.638974"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_combined_parameters": {
+        "status": "passed",
+        "duration": 0.0022799580001446884,
+        "timestamp": "2025-06-15T15:34:22.646092"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_invalid_metadata_json": {
+        "status": "passed",
+        "duration": 0.0015569999995932449,
+        "timestamp": "2025-06-15T15:34:22.651391"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_no_parameters": {
+        "status": "passed",
+        "duration": 0.0028512499993667006,
+        "timestamp": "2025-06-15T15:34:22.657859"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_health_endpoint": {
+        "status": "passed",
+        "duration": 0.0012372919991321396,
+        "timestamp": "2025-06-15T15:34:22.661351"
+    },
+    "tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_api_error_handling": {
+        "status": "passed",
+        "duration": 0.0032930830002442235,
+        "timestamp": "2025-06-15T15:34:22.669103"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_vector_only": {
+        "status": "failed",
+        "duration": 0.0017568339990248205,
+        "timestamp": "2025-06-15T15:34:22.676592"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_metadata_filters": {
+        "status": "failed",
+        "duration": 0.001481957999203587,
+        "timestamp": "2025-06-15T15:34:22.683871"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_tags_filter": {
+        "status": "failed",
+        "duration": 0.001593749999301508,
+        "timestamp": "2025-06-15T15:34:22.691624"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_path_filter": {
+        "status": "failed",
+        "duration": 0.001179124999907799,
+        "timestamp": "2025-06-15T15:34:22.698829"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_combined_filters": {
+        "status": "failed",
+        "duration": 0.0011022500002582092,
+        "timestamp": "2025-06-15T15:34:22.704489"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_no_results": {
+        "status": "passed",
+        "duration": 0.0024758330000622664,
+        "timestamp": "2025-06-15T15:34:22.711683"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_qdrant_failure": {
+        "status": "passed",
+        "duration": 0.0007971250015543774,
+        "timestamp": "2025-06-15T15:34:22.838738"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_qdrant_rag_search_function": {
+        "status": "passed",
+        "duration": 0.0017105830011132639,
+        "timestamp": "2025-06-15T15:34:22.845801"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_metadata": {
+        "status": "passed",
+        "duration": 9.604200022295117e-05,
+        "timestamp": "2025-06-15T15:34:22.849084"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_tags": {
+        "status": "passed",
+        "duration": 9.566600056132302e-05,
+        "timestamp": "2025-06-15T15:34:22.851635"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_path": {
+        "status": "passed",
+        "duration": 7.262500002980232e-05,
+        "timestamp": "2025-06-15T15:34:22.853943"
+    },
+    "tests/test_cli133_rag.py::TestCLI133RAG::test_build_hierarchy_path": {
+        "status": "passed",
+        "duration": 0.00013520900029106997,
+        "timestamp": "2025-06-15T15:34:22.856668"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_qdrant_metrics_collection": {
+        "status": "passed",
+        "duration": 0.00019441599943093024,
+        "timestamp": "2025-06-15T15:34:22.859254"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_firestore_metrics_collection": {
+        "status": "passed",
+        "duration": 0.00014529100008076057,
+        "timestamp": "2025-06-15T15:34:22.861461"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_export_integration": {
+        "status": "passed",
+        "duration": 0.0003203329997631954,
+        "timestamp": "2025-06-15T15:34:22.864048"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_alert_policy_validation": {
+        "status": "passed",
+        "duration": 0.0013566249999712454,
+        "timestamp": "2025-06-15T15:34:22.867722"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_dashboard_configuration": {
+        "status": "passed",
+        "duration": 0.0006596659986826126,
+        "timestamp": "2025-06-15T15:34:22.870885"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_observability_error_handling": {
+        "status": "passed",
+        "duration": 0.000160833998961607,
+        "timestamp": "2025-06-15T15:34:22.872730"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_performance": {
+        "status": "passed",
+        "duration": 0.000316458999805036,
+        "timestamp": "2025-06-15T15:34:22.876106"
+    },
+    "tests/test_cli134_observability.py::TestCLI134Observability::test_observability_with_8_documents": {
+        "status": "passed",
+        "duration": 0.0001732500004436588,
+        "timestamp": "2025-06-15T15:34:22.878519"
+    },
+    "tests/test_cli135_logging.py::TestCLI135AutomatedLogging::test_automated_logging_functionality": {
+        "status": "passed",
+        "duration": 0.0014295420005510096,
+        "timestamp": "2025-06-15T15:34:22.881782"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_hierarchy_optimized": {
+        "status": "passed",
+        "duration": 0.0019030420007766224,
+        "timestamp": "2025-06-15T15:34:23.277145"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_version_range_optimized": {
+        "status": "passed",
+        "duration": 0.0022375419994205004,
+        "timestamp": "2025-06-15T15:34:23.675441"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_latest_by_category_optimized": {
+        "status": "passed",
+        "duration": 0.0018594169996504206,
+        "timestamp": "2025-06-15T15:34:24.096965"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_multi_level_hierarchy_optimized": {
+        "status": "passed",
+        "duration": 0.0016964579990599304,
+        "timestamp": "2025-06-15T15:34:24.474411"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_benchmark_query_performance": {
+        "status": "passed",
+        "duration": 0.0028353329998935806,
+        "timestamp": "2025-06-15T15:34:24.854513"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_error_handling": {
+        "status": "passed",
+        "duration": 0.00044137499935459346,
+        "timestamp": "2025-06-15T15:34:25.220512"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_validation": {
+        "status": "passed",
+        "duration": 0.0010110420007549692,
+        "timestamp": "2025-06-15T15:34:25.594199"
+    },
+    "tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_performance_target": {
+        "status": "passed",
+        "duration": 7.608400119352154e-05,
+        "timestamp": "2025-06-15T15:34:25.597519"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_success": {
+        "status": "passed",
+        "duration": 0.30816604100073164,
+        "timestamp": "2025-06-15T15:34:25.908069"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_success": {
+        "status": "passed",
+        "duration": 0.1561605419992702,
+        "timestamp": "2025-06-15T15:34:26.068218"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_partial_failure": {
+        "status": "failed",
+        "duration": 0.20590037500005565,
+        "timestamp": "2025-06-15T15:34:26.277941"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_scenarios": {
+        "status": "passed",
+        "duration": 0.5147786249999626,
+        "timestamp": "2025-06-15T15:34:26.796135"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_performance": {
+        "status": "passed",
+        "duration": 1.0152437500000815,
+        "timestamp": "2025-06-15T15:34:27.814151"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_request_validation": {
+        "status": "passed",
+        "duration": 0.0002867920011340175,
+        "timestamp": "2025-06-15T15:34:27.816550"
+    },
+    "tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_error_handling": {
+        "status": "passed",
+        "duration": 0.0008883749997039558,
+        "timestamp": "2025-06-15T15:34:27.819722"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_agent_data_final_report_exists": {
+        "status": "passed",
+        "duration": 0.0010954579993267544,
+        "timestamp": "2025-06-15T15:34:27.822400"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_agent_data_final_report_required_sections": {
+        "status": "passed",
+        "duration": 0.0002758330010692589,
+        "timestamp": "2025-06-15T15:34:27.824456"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_agent_data_final_report_technical_details": {
+        "status": "passed",
+        "duration": 0.0001890419989649672,
+        "timestamp": "2025-06-15T15:34:27.826821"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_integrate_with_cursor_updated": {
+        "status": "passed",
+        "duration": 0.0006010000015521655,
+        "timestamp": "2025-06-15T15:34:27.829283"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_api_examples_valid_json": {
+        "status": "passed",
+        "duration": 0.00029583400100818835,
+        "timestamp": "2025-06-15T15:34:27.831182"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_contains_performance_metrics": {
+        "status": "passed",
+        "duration": 0.00011733399878721684,
+        "timestamp": "2025-06-15T15:34:27.832533"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_deployment_instructions": {
+        "status": "passed",
+        "duration": 0.00014449999980570283,
+        "timestamp": "2025-06-15T15:34:27.833940"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_validation_performance": {
+        "status": "passed",
+        "duration": 0.00011145800090162084,
+        "timestamp": "2025-06-15T15:34:27.835296"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_file_sizes_reasonable": {
+        "status": "passed",
+        "duration": 8.841700037010014e-05,
+        "timestamp": "2025-06-15T15:34:27.836586"
+    },
+    "tests/test_cli138_docs.py::TestCLI138Docs::test_documentation_encoding_utf8": {
+        "status": "passed",
+        "duration": 0.00015125000027182978,
+        "timestamp": "2025-06-15T15:34:27.837956"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit": {
+        "status": "failed",
+        "duration": 0.006223417000001064,
+        "timestamp": "2025-06-15T15:34:27.846388"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling": {
+        "status": "passed",
+        "duration": 15.005018916999688,
+        "timestamp": "2025-06-15T15:34:42.852916"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting": {
+        "status": "failed",
+        "duration": 0.00429558300129429,
+        "timestamp": "2025-06-15T15:34:42.860352"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_operations_performance_under_5_seconds": {
+        "status": "passed",
+        "duration": 3.058178166000289,
+        "timestamp": "2025-06-15T15:34:45.924441"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_concurrent_session_operations": {
+        "status": "passed",
+        "duration": 0.0028969579998374684,
+        "timestamp": "2025-06-15T15:34:45.930386"
+    },
+    "tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_api_error_classes_defined": {
+        "status": "passed",
+        "duration": 0.00011108299986517522,
+        "timestamp": "2025-06-15T15:34:45.932895"
+    },
+    "tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery": {
+        "status": "failed",
+        "duration": 0.003194499999153777,
+        "timestamp": "2025-06-15T15:34:45.938811"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit": {
+        "status": "failed",
+        "duration": 0.004924167000353918,
+        "timestamp": "2025-06-15T15:34:45.946595"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling": {
+        "status": "passed",
+        "duration": 15.00549570899966,
+        "timestamp": "2025-06-15T15:35:00.953410"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting": {
+        "status": "failed",
+        "duration": 0.004317750001064269,
+        "timestamp": "2025-06-15T15:35:00.961039"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_batch_operations_performance_under_5_seconds": {
+        "status": "failed",
+        "duration": 1.027679957998771,
+        "timestamp": "2025-06-15T15:35:01.991797"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_concurrent_session_operations": {
+        "status": "passed",
+        "duration": 0.0039396249994752,
+        "timestamp": "2025-06-15T15:35:01.998831"
+    },
+    "tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery": {
+        "status": "failed",
+        "duration": 0.003688834000058705,
+        "timestamp": "2025-06-15T15:35:02.005314"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_endpoint_basic": {
+        "status": "passed",
+        "duration": 0.005854166000062833,
+        "timestamp": "2025-06-15T15:35:02.013519"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_performance_under_1s": {
+        "status": "passed",
+        "duration": 0.003102165999735007,
+        "timestamp": "2025-06-15T15:35:02.018578"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_caching": {
+        "status": "passed",
+        "duration": 0.0049034999992727535,
+        "timestamp": "2025-06-15T15:35:02.025214"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_error_handling": {
+        "status": "passed",
+        "duration": 0.004904666999209439,
+        "timestamp": "2025-06-15T15:35:02.032529"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_validation": {
+        "status": "passed",
+        "duration": 0.002639916998305125,
+        "timestamp": "2025-06-15T15:35:02.037596"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_metrics_recording": {
+        "status": "passed",
+        "duration": 0.004761291998875095,
+        "timestamp": "2025-06-15T15:35:02.043988"
+    },
+    "tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_api_root_includes_cskh_endpoint": {
+        "status": "passed",
+        "duration": 0.0010697079997044057,
+        "timestamp": "2025-06-15T15:35:02.047404"
+    },
+    "tests/test_cli140b_ci_alert.py::test_cli140b_alerting_policies_and_ci_validation": {
+        "status": "passed",
+        "duration": 0.001359249999950407,
+        "timestamp": "2025-06-15T15:35:02.050082"
+    },
+    "tests/test_cli140c_doc.py::TestCLI140cDocumentation::test_cskh_api_documentation_validation": {
+        "status": "passed",
+        "duration": 0.0026741250003397,
+        "timestamp": "2025-06-15T15:35:02.054070"
+    },
+    "tests/test_cli140d_index_cost.py::TestCLI140dIndexCost::test_firestore_index_deployment_and_cost_monitoring": {
+        "status": "passed",
+        "duration": 0.0028642500001296867,
+        "timestamp": "2025-06-15T15:35:02.058392"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check": {
+        "status": "failed",
+        "duration": 0.5928268330007995,
+        "timestamp": "2025-06-15T15:35:02.657410"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check": {
+        "status": "passed",
+        "duration": 0.3590689579996251,
+        "timestamp": "2025-06-15T15:35:03.024340"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch": {
+        "status": "failed",
+        "duration": 0.3713551250002638,
+        "timestamp": "2025-06-15T15:35:03.403922"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization": {
+        "status": "failed",
+        "duration": 0.3690187079992029,
+        "timestamp": "2025-06-15T15:35:03.782523"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization": {
+        "status": "passed",
+        "duration": 0.3683514579988696,
+        "timestamp": "2025-06-15T15:35:04.157404"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison": {
+        "status": "passed",
+        "duration": 0.0003835000006802147,
+        "timestamp": "2025-06-15T15:35:04.161853"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization": {
+        "status": "failed",
+        "duration": 0.3790000000008149,
+        "timestamp": "2025-06-15T15:35:04.550622"
+    },
+    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization": {
+        "status": "passed",
+        "duration": 0.36312633300076413,
+        "timestamp": "2025-06-15T15:35:04.919145"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limit_enforcement": {
+        "status": "passed",
+        "duration": 0.3014853749991744,
+        "timestamp": "2025-06-15T15:35:05.227643"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_states": {
+        "status": "passed",
+        "duration": 0.001268792000701069,
+        "timestamp": "2025-06-15T15:35:05.232832"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_success_path": {
+        "status": "passed",
+        "duration": 0.004141250001339358,
+        "timestamp": "2025-06-15T15:35:05.239946"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_embedding_error": {
+        "status": "passed",
+        "duration": 0.0016713330005586613,
+        "timestamp": "2025-06-15T15:35:05.245455"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_with_mocked_components": {
+        "status": "passed",
+        "duration": 0.00015008299851615448,
+        "timestamp": "2025-06-15T15:35:05.248863"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_full_workflow": {
+        "status": "passed",
+        "duration": 0.0013365419999900041,
+        "timestamp": "2025-06-15T15:35:05.252647"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_documents_success": {
+        "status": "passed",
+        "duration": 0.6026033329999336,
+        "timestamp": "2025-06-15T15:35:05.857702"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_invalid_documents": {
+        "status": "passed",
+        "duration": 0.001429833999281982,
+        "timestamp": "2025-06-15T15:35:05.864026"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status_error_handling": {
+        "status": "passed",
+        "duration": 0.0011154999992868397,
+        "timestamp": "2025-06-15T15:35:05.868410"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_upsert_failure": {
+        "status": "passed",
+        "duration": 2.68604166699879,
+        "timestamp": "2025-06-15T15:35:08.557880"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_get_vectorization_tool_factory": {
+        "status": "passed",
+        "duration": 0.0020410839988471707,
+        "timestamp": "2025-06-15T15:35:08.563889"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_vectorize_document_function": {
+        "status": "passed",
+        "duration": 0.0011012909999408294,
+        "timestamp": "2025-06-15T15:35:08.567076"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_rag_search_function": {
+        "status": "passed",
+        "duration": 0.0009019169992825482,
+        "timestamp": "2025-06-15T15:35:08.569903"
+    },
+    "tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_batch_vectorize_documents_function": {
+        "status": "passed",
+        "duration": 0.001013125000099535,
+        "timestamp": "2025-06-15T15:35:08.572754"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage": {
+        "status": "passed",
+        "duration": 0.003180833999067545,
+        "timestamp": "2025-06-15T15:35:08.578302"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage": {
+        "status": "passed",
+        "duration": 0.00446150000061607,
+        "timestamp": "2025-06-15T15:35:08.584803"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths": {
+        "status": "passed",
+        "duration": 0.001706957998976577,
+        "timestamp": "2025-06-15T15:35:08.588076"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage": {
+        "status": "failed",
+        "duration": 0.01075325000056182,
+        "timestamp": "2025-06-15T15:35:08.601350"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage": {
+        "status": "failed",
+        "duration": 0.009280000000217115,
+        "timestamp": "2025-06-15T15:35:08.612748"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix": {
+        "status": "passed",
+        "duration": 7.084274791999633,
+        "timestamp": "2025-06-15T15:35:15.698597"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix": {
+        "status": "passed",
+        "duration": 1.7498401249995368,
+        "timestamp": "2025-06-15T15:35:17.452247"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance": {
+        "status": "failed",
+        "duration": 3.282648458998665,
+        "timestamp": "2025-06-15T15:35:20.738587"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker": {
+        "status": "passed",
+        "duration": 0.00022737499966751784,
+        "timestamp": "2025-06-15T15:35:20.742802"
+    },
+    "tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage": {
+        "status": "passed",
+        "duration": 0.011249332999796025,
+        "timestamp": "2025-06-15T15:35:20.756508"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_key_generation_edge_cases": {
+        "status": "passed",
+        "duration": 0.00018825000006472692,
+        "timestamp": "2025-06-15T15:35:20.759150"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_ttl_expiration": {
+        "status": "passed",
+        "duration": 0.3104481670015957,
+        "timestamp": "2025-06-15T15:35:21.071318"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_max_size_eviction": {
+        "status": "passed",
+        "duration": 0.00011662500037346035,
+        "timestamp": "2025-06-15T15:35:21.073877"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_initialization": {
+        "status": "passed",
+        "duration": 0.0008120830007101176,
+        "timestamp": "2025-06-15T15:35:21.078420"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_rate_limiting": {
+        "status": "passed",
+        "duration": 0.0007962920008139918,
+        "timestamp": "2025-06-15T15:35:21.081501"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_initialization_error_handling": {
+        "status": "passed",
+        "duration": 1.568478708000839,
+        "timestamp": "2025-06-15T15:35:22.651733"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_batch_metadata_retrieval_error_handling": {
+        "status": "passed",
+        "duration": 0.004316417000154615,
+        "timestamp": "2025-06-15T15:35:22.659331"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_rate_limiting_key_generation": {
+        "status": "passed",
+        "duration": 0.002317082999070408,
+        "timestamp": "2025-06-15T15:35:22.664267"
+    },
+    "tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_qdrant_operation_retry_mechanism": {
+        "status": "passed",
+        "duration": 1.0021974170012982,
+        "timestamp": "2025-06-15T15:35:23.668266"
+    },
+    "tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile": {
+        "status": "failed",
+        "duration": 0.9111956249998912,
+        "timestamp": "2025-06-15T15:35:24.584482"
+    },
+    "tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile": {
+        "status": "failed",
+        "duration": 0.005779541999800131,
+        "timestamp": "2025-06-15T15:35:24.595183"
+    },
+    "tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance": {
+        "status": "passed",
+        "duration": 0.0014155829994706437,
+        "timestamp": "2025-06-15T15:35:24.598760"
+    },
+    "tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization": {
+        "status": "failed",
+        "duration": 0.0002609999992273515,
+        "timestamp": "2025-06-15T15:35:24.601886"
+    },
+    "tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching": {
+        "status": "failed",
+        "duration": 0.6602750420006487,
+        "timestamp": "2025-06-15T15:35:25.265887"
+    },
+    "tests/test_cli140f_coverage.py::test_cli140f_batch_firestore_metadata_performance": {
+        "status": "passed",
+        "duration": 0.003109417000814574,
+        "timestamp": "2025-06-15T15:35:25.271751"
+    },
+    "tests/test_cli140f_coverage.py::test_cli140f_standalone_function_performance": {
+        "status": "passed",
+        "duration": 0.0011529579987836769,
+        "timestamp": "2025-06-15T15:35:25.274740"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_configuration_validation": {
+        "status": "passed",
+        "duration": 0.0005509590009751264,
+        "timestamp": "2025-06-15T15:35:25.996574"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_routing_behavior": {
+        "status": "passed",
+        "duration": 0.022429790999012766,
+        "timestamp": "2025-06-15T15:35:26.750039"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_monitoring_metrics": {
+        "status": "passed",
+        "duration": 0.00204404199939745,
+        "timestamp": "2025-06-15T15:35:27.513562"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_error_threshold_monitoring": {
+        "status": "passed",
+        "duration": 0.000672167001539492,
+        "timestamp": "2025-06-15T15:35:28.255481"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_latency_threshold_monitoring": {
+        "status": "passed",
+        "duration": 0.0009084589983103797,
+        "timestamp": "2025-06-15T15:35:28.989550"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_architecture_distribution": {
+        "status": "passed",
+        "duration": 0.0005245410011411877,
+        "timestamp": "2025-06-15T15:35:29.765556"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_report_generation": {
+        "status": "failed",
+        "duration": 0.0055344159991363995,
+        "timestamp": "2025-06-15T15:35:30.617813"
+    },
+    "tests/test_cli140g1_shadow.py::TestCLI140gShadowTraffic::test_shadow_traffic_endpoint_coverage": {
+        "status": "passed",
+        "duration": 0.0030687500002386514,
+        "timestamp": "2025-06-15T15:35:31.343233"
+    },
+    "tests/test_cli140g1_shadow.py::test_cli140g1_shadow_traffic_validation_complete": {
+        "status": "passed",
+        "duration": 0.0004829170011362294,
+        "timestamp": "2025-06-15T15:35:31.347094"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist": {
+        "status": "passed",
+        "duration": 0.00010445800035085995,
+        "timestamp": "2025-06-15T15:35:31.348989"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure": {
+        "status": "passed",
+        "duration": 0.0011326669991831295,
+        "timestamp": "2025-06-15T15:35:31.351562"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation": {
+        "status": "passed",
+        "duration": 0.00011233299846935552,
+        "timestamp": "2025-06-15T15:35:31.352964"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists": {
+        "status": "passed",
+        "duration": 0.0004908330010948703,
+        "timestamp": "2025-06-15T15:35:31.354718"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists": {
+        "status": "passed",
+        "duration": 0.00033683299989206716,
+        "timestamp": "2025-06-15T15:35:31.356535"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists": {
+        "status": "passed",
+        "duration": 0.0003876669998135185,
+        "timestamp": "2025-06-15T15:35:31.358408"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists": {
+        "status": "passed",
+        "duration": 0.0001722920005704509,
+        "timestamp": "2025-06-15T15:35:31.360463"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented": {
+        "status": "passed",
+        "duration": 0.0001487500012444798,
+        "timestamp": "2025-06-15T15:35:31.362373"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured": {
+        "status": "passed",
+        "duration": 0.00015258299936249387,
+        "timestamp": "2025-06-15T15:35:31.364320"
+    },
+    "tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation": {
+        "status": "passed",
+        "duration": 0.0003081249997194391,
+        "timestamp": "2025-06-15T15:35:31.366016"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_health_check": {
+        "status": "passed",
+        "duration": 0.000402082998334663,
+        "timestamp": "2025-06-15T15:35:31.368025"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_auth_flow": {
+        "status": "passed",
+        "duration": 0.0005385419990489027,
+        "timestamp": "2025-06-15T15:35:31.370086"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_document_save_flow": {
+        "status": "passed",
+        "duration": 0.0002675420000741724,
+        "timestamp": "2025-06-15T15:35:31.371791"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_vector_query_flow": {
+        "status": "passed",
+        "duration": 0.00035854099951393437,
+        "timestamp": "2025-06-15T15:35:31.374121"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_rag_search_flow": {
+        "status": "passed",
+        "duration": 0.0004025409998575924,
+        "timestamp": "2025-06-15T15:35:31.376872"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_cskh_endpoints": {
+        "status": "passed",
+        "duration": 0.0005486249992827652,
+        "timestamp": "2025-06-15T15:35:31.379717"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_latency_requirements": {
+        "status": "passed",
+        "duration": 0.0007764170004520565,
+        "timestamp": "2025-06-15T15:35:31.382179"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_error_handling": {
+        "status": "passed",
+        "duration": 0.0005692920003639301,
+        "timestamp": "2025-06-15T15:35:31.384299"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_architecture_distribution": {
+        "status": "passed",
+        "duration": 0.00015466700097022112,
+        "timestamp": "2025-06-15T15:35:31.386053"
+    },
+    "tests/test_cli140g_api_gateway_e2e.py::test_cli140g_migration_completion": {
+        "status": "passed",
+        "duration": 0.00013587499961431604,
+        "timestamp": "2025-06-15T15:35:31.387484"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_optimized_dockerfile_exists": {
+        "status": "passed",
+        "duration": 0.0004095409985893639,
+        "timestamp": "2025-06-15T15:35:31.389198"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_runtime_requirements_optimization": {
+        "status": "failed",
+        "duration": 0.0007792500000505242,
+        "timestamp": "2025-06-15T15:35:31.392505"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_build_script_configuration": {
+        "status": "passed",
+        "duration": 0.0005962499999441206,
+        "timestamp": "2025-06-15T15:35:31.395314"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_dependency_reduction_calculation": {
+        "status": "passed",
+        "duration": 0.0005724170005123597,
+        "timestamp": "2025-06-15T15:35:31.397603"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_docker_security_configuration": {
+        "status": "passed",
+        "duration": 0.00014312500024971087,
+        "timestamp": "2025-06-15T15:35:31.399120"
+    },
+    "tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_cli140h_optimization_complete": {
+        "status": "passed",
+        "duration": 0.0005007500003557652,
+        "timestamp": "2025-06-15T15:35:31.401496"
+    },
+    "tests/test_cli140h_docker_optimization.py::test_cli140h_completion_summary": {
+        "status": "passed",
+        "duration": 0.0002932499992311932,
+        "timestamp": "2025-06-15T15:35:31.403132"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_thread_safe_lru_cache_comprehensive": {
+        "status": "passed",
+        "duration": 2.206931665999946,
+        "timestamp": "2025-06-15T15:35:33.611311"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_cache_key_generation": {
+        "status": "passed",
+        "duration": 0.0001308329992752988,
+        "timestamp": "2025-06-15T15:35:33.613703"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_cache_operations": {
+        "status": "passed",
+        "duration": 0.00011620899931585882,
+        "timestamp": "2025-06-15T15:35:33.615550"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_rate_limiting_edge_cases": {
+        "status": "passed",
+        "duration": 0.0012899170014861738,
+        "timestamp": "2025-06-15T15:35:33.618332"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_initialize_caches_function": {
+        "status": "passed",
+        "duration": 0.0001883329987322213,
+        "timestamp": "2025-06-15T15:35:33.619894"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_health_endpoint_comprehensive": {
+        "status": "passed",
+        "duration": 0.00542166600098426,
+        "timestamp": "2025-06-15T15:35:33.626833"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_authentication_flow_coverage": {
+        "status": "passed",
+        "duration": 0.003736041999218287,
+        "timestamp": "2025-06-15T15:35:33.632804"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11APIMCPGatewayCoverage::test_pydantic_models_validation": {
+        "status": "failed",
+        "duration": 0.00018329200065636542,
+        "timestamp": "2025-06-15T15:35:33.634893"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_vectorize_document_comprehensive": {
+        "status": "failed",
+        "duration": 0.0008290829991892679,
+        "timestamp": "2025-06-15T15:35:33.638959"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_vectorize_document_error_scenarios": {
+        "status": "failed",
+        "duration": 0.0009619169995858101,
+        "timestamp": "2025-06-15T15:35:33.643856"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_rag_search_comprehensive": {
+        "status": "failed",
+        "duration": 0.001469500000894186,
+        "timestamp": "2025-06-15T15:35:33.649359"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_batch_operations": {
+        "status": "failed",
+        "duration": 0.0008333749992743833,
+        "timestamp": "2025-06-15T15:35:33.653312"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_filter_building_methods": {
+        "status": "failed",
+        "duration": 0.00020937499903084245,
+        "timestamp": "2025-06-15T15:35:33.656652"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_vector_status_update": {
+        "status": "failed",
+        "duration": 0.0003561670000635786,
+        "timestamp": "2025-06-15T15:35:33.661750"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11QdrantVectorizationCoverage::test_hierarchy_path_building": {
+        "status": "passed",
+        "duration": 0.0001560000000608852,
+        "timestamp": "2025-06-15T15:35:33.665264"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_ingest_document_comprehensive": {
+        "status": "failed",
+        "duration": 0.0009952090003935155,
+        "timestamp": "2025-06-15T15:35:33.668918"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_batch_ingest_documents": {
+        "status": "failed",
+        "duration": 0.0007558750003227033,
+        "timestamp": "2025-06-15T15:35:33.672431"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_batch_ingest_with_errors": {
+        "status": "failed",
+        "duration": 0.0009915419996104902,
+        "timestamp": "2025-06-15T15:35:33.676550"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_save_to_disk_functionality": {
+        "status": "passed",
+        "duration": 0.0010591660011414206,
+        "timestamp": "2025-06-15T15:35:33.681831"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_save_to_disk_error_handling": {
+        "status": "failed",
+        "duration": 0.00040820899994287174,
+        "timestamp": "2025-06-15T15:35:33.684978"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_performance_metrics_tracking": {
+        "status": "passed",
+        "duration": 0.0006039580002834555,
+        "timestamp": "2025-06-15T15:35:33.687764"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_concurrent_operations": {
+        "status": "passed",
+        "duration": 0.0009142090002569603,
+        "timestamp": "2025-06-15T15:35:33.691150"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11DocumentIngestionCoverage::test_metadata_validation_and_enhancement": {
+        "status": "passed",
+        "duration": 0.0008095840003079502,
+        "timestamp": "2025-06-15T15:35:33.695270"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11ValidationAndCompliance::test_cli140m11_coverage_objectives_validation": {
+        "status": "passed",
+        "duration": 9.812499956751708e-05,
+        "timestamp": "2025-06-15T15:35:33.697226"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11ValidationAndCompliance::test_cli140m11_test_count_validation": {
+        "status": "passed",
+        "duration": 0.00011212500066903885,
+        "timestamp": "2025-06-15T15:35:33.698568"
+    },
+    "tests/test_cli140m11_coverage.py::TestCLI140m11ValidationAndCompliance::test_cli140m11_objectives_summary": {
+        "status": "passed",
+        "duration": 7.283400009328034e-05,
+        "timestamp": "2025-06-15T15:35:33.699805"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_thread_safe_lru_cache_max_size_eviction": {
+        "status": "passed",
+        "duration": 7.533399912063032e-05,
+        "timestamp": "2025-06-15T15:35:33.701382"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_thread_safe_lru_cache_update_existing": {
+        "status": "passed",
+        "duration": 7.249999907799065e-05,
+        "timestamp": "2025-06-15T15:35:33.702679"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_initialize_caches_with_config": {
+        "status": "failed",
+        "duration": 0.00023474999943573494,
+        "timestamp": "2025-06-15T15:35:33.704508"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_cache_result_and_get_cached_result": {
+        "status": "passed",
+        "duration": 7.183300112956204e-05,
+        "timestamp": "2025-06-15T15:35:33.705929"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_get_user_id_for_rate_limiting_with_valid_jwt": {
+        "status": "passed",
+        "duration": 0.0006457079998654081,
+        "timestamp": "2025-06-15T15:35:33.708098"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_get_user_id_for_rate_limiting_no_auth_header": {
+        "status": "passed",
+        "duration": 0.000688375001118402,
+        "timestamp": "2025-06-15T15:35:33.710629"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_get_user_id_for_rate_limiting_malformed_jwt": {
+        "status": "passed",
+        "duration": 0.0006638750001002336,
+        "timestamp": "2025-06-15T15:35:33.712881"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_startup_event_initialization": {
+        "status": "failed",
+        "duration": 0.002749167000729358,
+        "timestamp": "2025-06-15T15:35:33.717989"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_auth_endpoints_coverage": {
+        "status": "passed",
+        "duration": 0.003693042001032154,
+        "timestamp": "2025-06-15T15:35:33.723387"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_api_endpoints_without_auth": {
+        "status": "passed",
+        "duration": 0.003537583999786875,
+        "timestamp": "2025-06-15T15:35:33.729082"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1APIMCPGatewayAdvanced::test_pydantic_model_edge_cases": {
+        "status": "passed",
+        "duration": 0.00010887500138778705,
+        "timestamp": "2025-06-15T15:35:33.731200"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_vectorize_document_full_flow": {
+        "status": "passed",
+        "duration": 0.35966045900022436,
+        "timestamp": "2025-06-15T15:35:34.092881"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_vectorize_document_with_auto_tagging": {
+        "status": "passed",
+        "duration": 0.364077542000814,
+        "timestamp": "2025-06-15T15:35:34.461236"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_vectorize_document_error_handling": {
+        "status": "passed",
+        "duration": 0.3581802919998154,
+        "timestamp": "2025-06-15T15:35:34.823364"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_rag_search_with_all_filters": {
+        "status": "failed",
+        "duration": 0.3675100829987059,
+        "timestamp": "2025-06-15T15:35:35.196164"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_batch_vectorize_documents": {
+        "status": "passed",
+        "duration": 0.36994400000003225,
+        "timestamp": "2025-06-15T15:35:35.569163"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_update_vector_status": {
+        "status": "passed",
+        "duration": 0.002590500000223983,
+        "timestamp": "2025-06-15T15:35:35.576082"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_vectorize_document_with_timeout": {
+        "status": "passed",
+        "duration": 0.35777429200061306,
+        "timestamp": "2025-06-15T15:35:35.936434"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_filter_methods_comprehensive": {
+        "status": "passed",
+        "duration": 0.00016808299915282987,
+        "timestamp": "2025-06-15T15:35:35.939252"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1QdrantVectorizationToolAdvanced::test_build_hierarchy_path_edge_cases": {
+        "status": "passed",
+        "duration": 0.0001730839994706912,
+        "timestamp": "2025-06-15T15:35:35.941403"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_batch_ingest_documents_full_flow": {
+        "status": "passed",
+        "duration": 0.5597892919995502,
+        "timestamp": "2025-06-15T15:35:36.503597"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_batch_ingest_with_errors": {
+        "status": "passed",
+        "duration": 0.5649687080003787,
+        "timestamp": "2025-06-15T15:35:37.071690"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_ingest_document_disk_save_error": {
+        "status": "passed",
+        "duration": 0.5744420840001112,
+        "timestamp": "2025-06-15T15:35:37.649038"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_save_document_metadata_cache_cleanup": {
+        "status": "passed",
+        "duration": 0.01377195799977926,
+        "timestamp": "2025-06-15T15:35:37.666629"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_performance_metrics_tracking": {
+        "status": "passed",
+        "duration": 2.421719791000214,
+        "timestamp": "2025-06-15T15:35:40.090932"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_save_to_disk_with_subdirectories": {
+        "status": "passed",
+        "duration": 0.0016105419999803416,
+        "timestamp": "2025-06-15T15:35:40.096743"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1DocumentIngestionToolAdvanced::test_concurrent_operations_stress": {
+        "status": "failed",
+        "duration": 0.5892708339997625,
+        "timestamp": "2025-06-15T15:35:40.689008"
+    },
+    "tests/test_cli140m1_coverage.py::TestCLI140m1CoverageValidation::test_cli140m1_coverage_validation": {
+        "status": "passed",
+        "duration": 0.00019995799993921537,
+        "timestamp": "2025-06-15T15:35:40.692366"
+    },
+    "tests/test_enforce_single_test.py::test_enforce_single_test_per_cli": {
+        "status": "failed",
+        "duration": 3.2763736249999056,
+        "timestamp": "2025-06-15T15:35:43.971505"
+    },
+    "tests/test_enforce_single_test.py::test_cli_guide_documentation_exists": {
+        "status": "passed",
+        "duration": 0.002392082998994738,
+        "timestamp": "2025-06-15T15:35:43.977194"
+    },
+    "tests/test_integration_api.py::TestIntegrationAPI::test_comprehensive_api_coverage_integration": {
+        "status": "passed",
+        "duration": 0.00016304199925798457,
+        "timestamp": "2025-06-15T15:35:43.979560"
+    },
+    "tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_single_save": {
+        "status": "passed",
+        "duration": 2.02217358300004,
+        "timestamp": "2025-06-15T15:35:46.003316"
+    },
+    "tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_medium_scale": {
+        "status": "passed",
+        "duration": 3.070675000000847,
+        "timestamp": "2025-06-15T15:35:49.077696"
+    },
+    "tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_mock_qdrant_environment": {
+        "status": "passed",
+        "duration": 2.016402000001108,
+        "timestamp": "2025-06-15T15:35:51.098458"
+    },
+    "tests/test_mcp_integration.py::TestMCPIntegration::test_timeout_retry_logic": {
+        "status": "passed",
+        "duration": 2.0157407090009656,
+        "timestamp": "2025-06-15T15:35:53.118331"
+    },
+    "tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_8_documents": {
+        "status": "passed",
+        "duration": 0.002074709000225994,
+        "timestamp": "2025-06-15T15:35:53.128044"
+    },
+    "tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_50_documents": {
+        "status": "passed",
+        "duration": 0.0016895000007934868,
+        "timestamp": "2025-06-15T15:35:53.134683"
+    },
+    "tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_key_generation_performance": {
+        "status": "passed",
+        "duration": 0.0005294589991535759,
+        "timestamp": "2025-06-15T15:35:53.137057"
+    },
+    "tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_operations_performance": {
+        "status": "passed",
+        "duration": 0.00023462499848392326,
+        "timestamp": "2025-06-15T15:35:53.138549"
+    },
+    "tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_rag_caching_effectiveness": {
+        "status": "passed",
+        "duration": 0.011831375000838307,
+        "timestamp": "2025-06-15T15:35:53.155625"
     }
 }

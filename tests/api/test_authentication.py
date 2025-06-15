@@ -79,20 +79,28 @@ class TestJWTAuthentication:
         """Test JWT token expiration handling with optimized timing"""
         user_data = {"sub": "test@cursor.integration", "email": "test@cursor.integration"}
 
-        # Create token with very short expiration
-        short_expiry = timedelta(seconds=1)
-        token = self.auth_manager.create_access_token(user_data, expires_delta=short_expiry)
+        # Create token with longer expiration first to test immediate validity
+        longer_expiry = timedelta(seconds=10)
+        valid_token = self.auth_manager.create_access_token(user_data, expires_delta=longer_expiry)
 
         # Token should be valid immediately
-        payload = self.auth_manager.verify_token(token)
+        payload = self.auth_manager.verify_token(valid_token)
         assert payload["sub"] == user_data["sub"]
 
-        # Wait for token to expire (optimized wait time)
-        time.sleep(1.1)  # Slightly longer than expiry
+        # Now create token with very short expiration
+        short_expiry = timedelta(seconds=1)
+        short_token = self.auth_manager.create_access_token(user_data, expires_delta=short_expiry)
 
-        # Token should now be invalid
-        with pytest.raises(Exception):  # Should raise HTTPException
-            self.auth_manager.verify_token(token)
+        # Wait for token to expire
+        time.sleep(1.2)  # Slightly longer than expiry
+
+        # Token should now be invalid - the auth manager raises HTTPException with 401 status
+        from fastapi import HTTPException
+        with pytest.raises(HTTPException) as exc_info:
+            self.auth_manager.verify_token(short_token)
+        
+        # Verify it's the correct type of HTTPException (401 Unauthorized)
+        assert exc_info.value.status_code == 401
 
     @pytest.mark.deferred
     def test_invalid_jwt_token(self):
@@ -239,7 +247,9 @@ class TestUserManager:
         mock_user = {
             "email": "test@cursor.integration",
             "password_hash": CACHED_PASSWORD_HASH,  # Use cached hash
-            "full_name": "Test User"
+            "full_name": "Test User",
+            "user_id": "test_user_id",
+            "is_active": True
         }
 
         # Mock get_user_by_email to return the mock user
@@ -316,6 +326,10 @@ class TestAuthenticationIntegration:
         # Create initial token
         user_data = {"sub": "refresh@test.com", "email": "refresh@test.com"}
         old_token = auth_manager.create_access_token(user_data)
+        
+        # Add small delay to ensure different timestamps
+        import time
+        time.sleep(1)
         
         # Simulate token refresh (create new token)
         new_token = auth_manager.create_access_token(user_data)

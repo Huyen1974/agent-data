@@ -75,7 +75,18 @@ class AuthManager:
         else:
             expire = datetime.utcnow() + timedelta(minutes=self.access_token_expire_minutes)
 
-        to_encode.update({"exp": expire, "iat": datetime.utcnow()})
+        # Use timestamp for exp field as required by JWT standard
+        # Use time.time() to match what JWT libraries use for validation
+        import time
+        current_timestamp = int(time.time())
+        exp_timestamp = current_timestamp + int(expires_delta.total_seconds() if expires_delta else self.access_token_expire_minutes * 60)
+        
+        to_encode.update({
+            "exp": exp_timestamp, 
+            "iat": current_timestamp
+        })
+        
+        logger.debug(f"Creating JWT: current_ts={current_timestamp}, exp_ts={exp_timestamp}, delta={exp_timestamp-current_timestamp}s")
 
         try:
             encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
@@ -96,17 +107,22 @@ class AuthManager:
         )
 
         try:
+            # jose library validates expiration by default, but let's be explicit
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
+            
+            # Additional explicit expiration check using time.time() to match token creation
+            import time
+            current_time = int(time.time())
+            exp_time = payload.get("exp")
+            
+            if exp_time and exp_time <= current_time:
+                logger.warning(f"JWT token expired: exp={exp_time}, current={current_time}")
+                raise credentials_exception
+            
             user_id: str = payload.get("sub")
 
             if user_id is None:
                 logger.warning("JWT token missing 'sub' field")
-                raise credentials_exception
-
-            # Check if token is expired
-            exp = payload.get("exp")
-            if exp and datetime.fromtimestamp(exp) < datetime.utcnow():
-                logger.warning(f"JWT token expired for user: {user_id}")
                 raise credentials_exception
 
             logger.debug(f"Successfully validated JWT token for user: {user_id}")
