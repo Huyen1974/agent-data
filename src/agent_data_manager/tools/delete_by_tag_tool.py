@@ -52,18 +52,28 @@ def delete_by_tag_sync(tag: str) -> Dict[str, Any]:
         A dictionary with status and count of deleted vectors.
     """
     try:
-        # Run the async function in the current event loop or create a new one
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
+        # Try to get the current event loop
+        try:
+            loop = asyncio.get_running_loop()
             # If we're already in an async context, we need to handle this differently
-            # For now, we'll create a new event loop in a thread
+            # Create a new event loop in a thread
             import concurrent.futures
+            import threading
+
+            def run_in_new_loop():
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    return new_loop.run_until_complete(delete_by_tag(tag))
+                finally:
+                    new_loop.close()
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                future = executor.submit(asyncio.run, delete_by_tag(tag))
+                future = executor.submit(run_in_new_loop)
                 return future.result()
-        else:
-            return loop.run_until_complete(delete_by_tag(tag))
+        except RuntimeError:
+            # No event loop running, we can create one
+            return asyncio.run(delete_by_tag(tag))
     except Exception as e:
         logger.error(f"Error in synchronous wrapper for delete_by_tag: {e}", exc_info=True)
         return {"status": "failed", "error": f"Failed to delete vectors by tag '{tag}': {str(e)}", "deleted_count": 0}

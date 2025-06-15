@@ -1,5 +1,5 @@
 import time
-from agent_data_manager.tools.delay_tool import delay_tool
+from tools.delay_tool import delay_tool
 import pytest
 
 
