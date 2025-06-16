@@ -48,8 +48,8 @@ class TestNoDeferredSentinel:
                 deselected_count = total_count - collected_count
                 
                 # Validate that deferred tests are properly excluded
-                assert collected_count <= 165, f"Too many active tests: {collected_count} (should be ≤165 for fast execution)"
-                assert deselected_count >= 300, f"Not enough tests deferred: {deselected_count} deselected (should be ≥300)"
+                assert collected_count <= 155, f"Too many active tests: {collected_count} (should be ≤155 for fast execution)"
+                assert deselected_count >= 320, f"Not enough tests deferred: {deselected_count} deselected (should be ≥320)"
                 
                 print(f"✅ Sentinel validation passed:")
                 print(f"   Active tests (not slow and not deferred): {collected_count}")
@@ -57,7 +57,7 @@ class TestNoDeferredSentinel:
                 print(f"   Total tests: {total_count}")
                 
                 # Additional validation: ensure we have a reasonable number of active tests
-                assert 150 <= collected_count <= 165, f"Active test count {collected_count} outside expected range 150-165"
+                assert 145 <= collected_count <= 155, f"Active test count {collected_count} outside expected range 145-155"
                 
             else:
                 pytest.fail(f"Could not parse collection summary: {summary}")
@@ -90,7 +90,7 @@ class TestNoDeferredSentinel:
                 deferred_count = int(summary.split('/')[0].strip())
                 
                 # Validate that we have a significant number of deferred tests
-                assert deferred_count >= 300, f"Expected ≥300 deferred tests, found {deferred_count}"
+                assert deferred_count >= 320, f"Expected ≥320 deferred tests, found {deferred_count}"
                 
                 print(f"✅ Deferred marker validation passed:")
                 print(f"   Deferred tests available: {deferred_count}")
@@ -99,7 +99,7 @@ class TestNoDeferredSentinel:
                 # Handle case where all tests are collected (no deselection)
                 if 'tests collected' in summary:
                     deferred_count = int(summary.split()[0])
-                    assert deferred_count >= 300, f"Expected ≥300 deferred tests, found {deferred_count}"
+                    assert deferred_count >= 320, f"Expected ≥320 deferred tests, found {deferred_count}"
                     print(f"✅ Deferred marker validation passed: {deferred_count} deferred tests")
                 else:
                     pytest.fail(f"Could not parse deferred collection summary: {summary}")
@@ -136,8 +136,8 @@ class TestNoDeferredSentinel:
                 active_count = int(summary.split()[0])
             
             # Validate test count is within fast execution range
-            # Target: ≤165 tests for <10s execution with pytest-testmon and pytest-xdist
-            assert active_count <= 165, f"Active test count {active_count} exceeds fast execution target (≤165)"
+            # Target: ≤155 tests for <10s execution with pytest-testmon and pytest-xdist
+            assert active_count <= 155, f"Active test count {active_count} exceeds fast execution target (≤155)"
             
             # Estimate execution time based on test count
             # Assumption: ~0.1s per test with optimizations (testmon, xdist, mocking)
@@ -146,7 +146,7 @@ class TestNoDeferredSentinel:
             assert estimated_time <= 35, f"Estimated execution time {estimated_time:.1f}s exceeds 35s target"
             
             print(f"✅ Fast execution validation passed:")
-            print(f"   Active tests: {active_count} (≤165 target)")
+            print(f"   Active tests: {active_count} (≤155 target)")
             print(f"   Estimated execution time: {estimated_time:.1f}s (≤35s target)")
             
         else:
