@@ -406,7 +406,7 @@ Step 2: Verify test files
 - Command: ls -l tests/test_cli140m14_coverage.py ADK/agent_data/tests/test_cli140m12_coverage.py tests/test_no_deferred.py
 - Status: SUCCESS
 - Files verified: All 3 target test files exist and are accessible
-- test_cli140m14_coverage.py: 30,441 bytes (Jun 16 15:13)
+- test_cli140m14_coverage.py: 30,441 bytes (Jun 15 16:13)
 - test_cli140m12_coverage.py: 13,909 bytes (Jun 15 16:17) 
 - test_no_deferred.py: 7,414 bytes (Jun 16 12:52)
 
@@ -750,3 +750,86 @@ Test Infrastructure:
 - New tests properly use AsyncMock for async function mocking
 - Tests follow established CLI140m.17 mocking patterns
 - Runtime within 15s limit (3.1s for full test suite)
+
+CLI140m.24 Command 10 Results:
+==============================
+
+Date: Monday, June 16, 2025 04:30 PM +07
+Objective: Verify nightly CI and Git pre-push hook functionality
+
+Step 1: Reset .testmondata
+- Command: rm -f .testmondata
+- Status: SUCCESS
+- Verification: ls -l .testmondata returned "No such file or directory"
+- Result: pytest-testmon cache successfully cleared
+
+Step 2: Verify required files
+- Command: ls -l .github/workflows/nightly.yml .git/hooks/pre-push tests/test_no_deferred.py
+- nightly.yml: FOUND (710 bytes, dated Jun 15 16:54)
+- pre-push hook: FOUND (546 bytes, dated Jun 6 21:02, executable)
+- test_no_deferred.py: FOUND (7,414 bytes, dated Jun 16 15:48)
+- Status: SUCCESS - All required files present
+
+Step 3: Sentinel test verification
+- Command: pytest tests/test_no_deferred.py -m "not slow and not deferred" --testmon -n 1 -q
+- Results: 2 FAILED, 1 PASSED (runtime: 9.81s)
+- Active test count: 163 (exceeds 160 target)
+- Status: FAILED - Runtime exceeded 5s limit, active tests above target
+- Error logged: "CLI140m.24 - Sentinel test exceeded 5s limit (9.81s), 163 active tests > 160 target"
+
+Step 4: Nightly CI verification
+- File: .github/workflows/nightly.yml
+- Schedule: cron '0 18 * * *' (daily at 18:00 UTC / 01:00 ICT +7)
+- Triggers: schedule, workflow_dispatch, push to test branch
+- Test command: pytest --collect-only -q | grep -c "::test_" > test_count.txt
+- Expected test count: 467 (hardcoded in workflow)
+- Status: CONFIGURED - Workflow exists and properly scheduled
+- GitHub CLI status: 404 Not Found (expected for local repository)
+
+Step 5: Git pre-push hook verification
+- File: .git/hooks/pre-push (executable)
+- Hook command: python -m pytest -q -m "not slow and not deferred" --testmon
+- Hook behavior: Runs ptfast before push, aborts on failure
+- Status message: "🔍 Running fast test suite before push..."
+- Success message: "✅ Fast test suite passed! Proceeding with push..."
+- Failure message: "❌ Fast test suite failed! Push aborted."
+- Status: VERIFIED - Hook properly configured with ptfast command
+
+Verification Results:
+✅ Nightly CI: Configured (nightly.yml runs daily at 01:00 ICT, expects 467 tests)
+✅ Git pre-push hook: Verified (ptfast executed before push, proper error handling)
+❌ Runtime target: EXCEEDED (9.81s > 5s limit)
+❌ Active test count: ABOVE TARGET (163 > 160)
+
+CI Status: nightly.yml schedule verified, runs daily at 01:00 ICT, workflow_dispatch enabled
+Hook Status: ptfast command verified, executes "python -m pytest -q -m 'not slow and not deferred' --testmon"
+Results: CI and hook verification completed, runtime exceeded target (9.81s)
+
+Performance Metrics:
+- Total runtime: ~10s (exceeded 5s target)
+- Sentinel test runtime: 9.81s (main contributor)
+- File verification: <1s
+- CI/hook checks: <1s
+- Active test count: 163 (target: ≤160)
+- Error logging: Completed
+
+Technical Notes:
+- nightly.yml expects 467 total tests vs current 163 active tests
+- pre-push hook uses same ptfast command as development workflow
+- GitHub CLI unavailable for remote repository (local development setup)
+- .testmondata reset successful but sentinel test still slow
+- Active test count reduction needed for CLI141
+
+Compliance Status:
+- Reset .testmondata: ✅ SUCCESS
+- File verification: ✅ SUCCESS  
+- CI configuration: ✅ VERIFIED
+- Hook configuration: ✅ VERIFIED
+- Runtime target: ❌ EXCEEDED (9.81s > 5s)
+- Test count target: ❌ EXCEEDED (163 > 160)
+
+Recommendations for CLI140m.25:
+- Address 163 active tests > 160 target (defer 3+ tests)
+- Optimize sentinel test runtime or split into smaller tests
+- Update nightly.yml expected test count from 467 to current suite size
+- Consider test performance optimization strategies
