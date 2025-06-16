@@ -1,7 +1,8 @@
 name: Nightly CI
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 18 * * *'
+  workflow_dispatch:
   push:
     branches: [ test ]
 jobs:
@@ -20,7 +21,7 @@ jobs:
       - name: Verify test count
         run: |
           count=$(cat test_count.txt)
-          if [ "$count" -ne 467 ]; then
-            echo "Test count $count does not match expected 467"
+          if [ "$count" -ne 481 ]; then
+            echo "Test count $count does not match expected 481"
             exit 1
           fi
