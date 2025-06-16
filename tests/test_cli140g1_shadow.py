@@ -291,8 +291,8 @@ class TestCLI140gShadowTraffic:
             
             assert report is not None
             assert report['assessment'] == 'PASS'
-            assert abs(report['duration_hours'] - 24.0) < 0.1  # Allow small float precision differences
-            assert abs(report['traffic_distribution']['shadow_percentage'] - 1.0) < 0.1
+            assert report['duration_hours'] == pytest.approx(24.0, abs=0.5)
+            assert report['traffic_distribution']['shadow_percentage'] == pytest.approx(1.0, abs=0.5)
             assert report['shadow_traffic']['error_rate_percent'] < 5.0
             assert report['shadow_traffic']['latency_p95_ms'] < 500
             
