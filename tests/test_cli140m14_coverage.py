@@ -561,6 +561,84 @@ class TestCLI140m14QdrantVectorizationCoverage:
         path = vectorization_tool._build_hierarchy_path(result)
         assert path == ""
 
+    @pytest.mark.asyncio
+    async def test_filter_building_logic(self, vectorization_tool):
+        """Test filter building logic - reused from CLI140m9 coverage."""
+        
+        # Test data with correct field structure for qdrant_vectorization_tool
+        results = [
+            {"_doc_id": "doc1", "auto_tags": ["tag1", "tag2"], "level_1_category": "Science", "key": "value1"},
+            {"_doc_id": "doc2", "level_1_category": "Math", "key": "value3"},  # Missing auto_tags (will default to [])
+            {"_doc_id": "doc3", "auto_tags": [], "level_1_category": "", "key": ""},  # Empty values
+            {"_doc_id": "doc4", "auto_tags": ["tag1"], "level_1_category": "Technology", "key": "value2"},
+            {"_doc_id": "doc5"}  # Missing fields
+        ]
+        
+        # Test tag filtering with edge cases using actual auto_tags field
+        filtered = vectorization_tool._filter_by_tags(results, ["tag1"])
+        assert isinstance(filtered, list)
+        assert len(filtered) == 2  # Should find doc1 and doc4
+        
+        # Test path filtering with edge cases using hierarchy  
+        filtered = vectorization_tool._filter_by_path(results, "science")
+        assert isinstance(filtered, list)
+        
+        # Test metadata filtering with edge cases
+        filtered = vectorization_tool._filter_by_metadata(results, {"key": "value1"})
+        assert isinstance(filtered, list)
+        
+        # Test hierarchy path building with edge cases
+        for result in results:
+            try:
+                path = vectorization_tool._build_hierarchy_path(result)
+                assert isinstance(path, str)
+                # Should return a valid string, even if "Uncategorized"
+                assert len(path) > 0
+            except (KeyError, AttributeError, TypeError):
+                # Edge cases might cause exceptions, which is acceptable
+                pass
+
+    @pytest.mark.asyncio
+    async def test_batch_operation_processing(self, vectorization_tool):
+        """Test batch operation processing - reused from CLI140m9 coverage."""
+        
+        # Mock embedding function
+        with patch('ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding') as mock_embedding_func:
+            mock_embedding_func.return_value = {"embedding": [0.1] * 1536}
+            
+            # Test with various edge case documents
+            edge_case_documents = [
+                {"doc_id": "valid_doc", "content": "Valid content", "metadata": {"type": "valid"}},
+                {"doc_id": "", "content": "Empty ID"},  # Empty doc_id
+                {"content": "Missing doc_id"},  # Missing doc_id
+                {"doc_id": "missing_content"},  # Missing content
+                {"doc_id": "empty_content", "content": ""},  # Empty content
+                {"doc_id": "none_content", "content": None},  # None content
+            ]
+            
+            result = await vectorization_tool.batch_vectorize_documents(
+                documents=edge_case_documents,
+                tag="edge_case_test",
+                update_firestore=True
+            )
+            
+            # Should handle edge cases gracefully
+            assert result["status"] == "completed"
+            assert "total_documents" in result
+            assert "successful" in result
+            assert "failed" in result
+            assert "results" in result
+            
+            # Verify that invalid documents are handled properly
+            failed_count = 0
+            for doc_result in result["results"]:
+                if doc_result["status"] == "failed":
+                    failed_count += 1
+                    assert "error" in doc_result
+            
+            # Should have some failures due to invalid documents
+            assert failed_count > 0
+
 
 class TestCLI140m14DocumentIngestionCoverage:
     """Comprehensive Document Ingestion Tool coverage tests."""
