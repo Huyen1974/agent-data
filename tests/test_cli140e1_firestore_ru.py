@@ -329,10 +329,16 @@ class TestFirestoreRUOptimization:
         Test complete save_metadata workflow with RU optimizations.
         """
         manager = FirestoreMetadataManager()
-        manager.db = mock_firestore_client["client"]
         
-        # Mock document reference and operations
-        mock_doc_ref = mock_firestore_client["doc_ref"]
+        # Fix async mocking - use regular Mock for db to avoid coroutine issues
+        mock_db = MagicMock()
+        mock_collection = MagicMock()
+        mock_doc_ref = MagicMock()
+        
+        # Setup proper method chaining
+        mock_db.collection.return_value = mock_collection
+        mock_collection.document.return_value = mock_doc_ref
+        manager.db = mock_db
         
         # Test saving new document (doesn't exist)
         with patch.object(manager, '_get_document_for_versioning') as mock_get_doc, \
@@ -354,6 +360,9 @@ class TestFirestoreRUOptimization:
                 "version": 1,
                 "lastUpdated": "2024-01-01T00:00:00Z"
             }
+            
+            # Mock the async set operation
+            mock_doc_ref.set = AsyncMock()
             
             # Execute save metadata
             test_metadata = {"doc_id": "test_doc", "content": "test content"}
