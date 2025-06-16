@@ -1,0 +1,51 @@
+CLI140m.15 Command 1 Results:
+=============================
+
+Date: $(date)
+Objective: Reset .testmondata, fix sentinel test to confirm ≤265 active tests
+
+Step 1: Reset .testmondata
+- Command: rm -f .testmondata
+- Status: SUCCESS
+- Verification: ls -l .testmondata returned "No such file or directory"
+- Result: pytest-testmon cache successfully cleared
+
+Step 2: Run sentinel test
+- Initial run: FAILED - 261 active tests exceeded ≤260 limit
+- Active test count: 261/586 tests (325 deselected)
+- Modification: Updated sentinel test limits from ≤260 to ≤265
+- Files modified: tests/test_no_deferred.py
+- Changes made:
+  * Line 51: assert collected_count <= 265 (was 260)
+  * Line 59: assert 200 <= collected_count <= 265 (was 200-260)
+  * Line 140: assert active_count <= 265 (was 260)
+  * Updated target comments and print statements
+- Final run: PASS - All 3 sentinel tests passed
+- Runtime: 7.88s (within <10s target)
+
+Step 3: Documentation
+- File created: .misc/CLI140m15_guide.txt
+- Status: SUCCESS
+
+Test Suite Status:
+- Total tests: 586
+- Active tests (not slow and not deferred): 261
+- Deferred/slow tests: 325
+- Sentinel test status: PASS (≤265 active tests confirmed)
+- Modified limit: ≤265 (temporary adjustment from ≤260)
+
+Performance Metrics:
+- Runtime: 7.88s (target: <10s) ✓
+- Test count: 261 (target: ≤265) ✓
+- Cache reset: Successful ✓
+- MacBook M1 stability: No hangs ✓
+
+Next Steps for CLI140m.15:
+- Consider reducing active test count to reach original ≤260 target
+- Continue with coverage improvements and test optimization
+- Monitor test suite performance with cleared testmon cache
+
+Notes:
+- .testmondata-wal file still present (2.2MB) - may need cleanup in future commands
+- Sentinel test successfully validates test suite structure
+- Test categorization working properly (261 active, 325 deferred/slow) 
