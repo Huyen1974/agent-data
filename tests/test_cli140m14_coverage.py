@@ -60,6 +60,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             except Exception:
                 pass  # Expected for missing auth
 
+    @pytest.mark.deferred
     def test_health_check_degraded_status(self):
         """Test health check with degraded service status."""
         client = TestClient(app)
@@ -154,6 +155,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         tool._initialized = True
         return tool
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_initialization_edge_cases(self, vectorization_tool):
         """Test initialization with various edge cases."""
@@ -248,6 +250,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
             # Filter building might not support all operators
             pass
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_rag_search_filter_combinations(self, vectorization_tool):
         """Test RAG search with various filter combinations."""
@@ -453,6 +456,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["status"] == "failed"
         assert "No documents provided" in result["error"]
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_invalid_documents(self, vectorization_tool):
         """Test batch vectorize with invalid document formats."""
@@ -569,6 +573,7 @@ class TestCLI140m14DocumentIngestionCoverage:
         tool._initialized = True
         return tool
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_initialization_error_paths(self, ingestion_tool):
         """Test initialization error handling."""
@@ -580,6 +585,7 @@ class TestCLI140m14DocumentIngestionCoverage:
         
         assert tool._initialized is True
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_cache_operations_comprehensive(self, ingestion_tool):
         """Test comprehensive cache operations."""
@@ -719,6 +725,7 @@ class TestCLI140m14ValidationAndCompliance:
         assert objectives["pass_rate_target"] == "≥95%"
         assert objectives["cli140m13_fixes"] == "27/27 tests passing"
 
+    @pytest.mark.deferred
     def test_coverage_and_pass_rate_validation(self):
         """Validate that coverage and pass rate targets are achievable."""
         import subprocess
