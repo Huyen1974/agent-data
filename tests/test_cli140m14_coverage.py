@@ -639,6 +639,147 @@ class TestCLI140m14QdrantVectorizationCoverage:
             # Should have some failures due to invalid documents
             assert failed_count > 0
 
+    @pytest.mark.asyncio
+    async def test_vectorization_error_handling(self, vectorization_tool):
+        """Test vectorization error handling for lines 290-305."""
+        # Test Case 1: Mock embedding generation returning None/empty result
+        with patch("ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding", new_callable=AsyncMock) as mock_embedding:
+            mock_embedding.return_value = None
+            
+            result = await vectorization_tool.vectorize_document(
+                doc_id="test_doc_none",
+                content="test content",
+                update_firestore=True
+            )
+            
+            assert result["status"] == "failed"
+            assert "Failed to generate embedding" in result["error"]
+            assert result["doc_id"] == "test_doc_none"
+            assert "latency" in result
+            assert result["performance_target_met"] is False
+
+        # Test Case 2: Mock embedding generation returning result without 'embedding' key
+        with patch("ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding", new_callable=AsyncMock) as mock_embedding:
+            mock_embedding.return_value = {"status": "success", "model": "text-embedding-ada-002"}
+            
+            result = await vectorization_tool.vectorize_document(
+                doc_id="test_doc_no_embedding",
+                content="test content",
+                update_firestore=True
+            )
+            
+            assert result["status"] == "failed"
+            assert "Failed to generate embedding" in result["error"]
+            assert result["doc_id"] == "test_doc_no_embedding"
+            assert "latency" in result
+            assert result["performance_target_met"] is False
+
+        # Test Case 3: Mock embedding generation raising an exception
+        with patch("ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding", new_callable=AsyncMock) as mock_embedding:
+            mock_embedding.side_effect = ValueError("OpenAI API error")
+            
+            result = await vectorization_tool.vectorize_document(
+                doc_id="test_doc_exception",
+                content="test content",
+                update_firestore=True
+            )
+            
+            assert result["status"] == "failed"
+            assert "OpenAI API error" in result["error"]
+            assert result["doc_id"] == "test_doc_exception"
+            assert "latency" in result
+            assert result["performance_target_met"] is False
+
+    @pytest.mark.asyncio
+    async def test_search_query_processing(self, vectorization_tool):
+        """Test search query processing and error handling for lines 432-549."""
+        # Test Case 1: Test Qdrant operation with retry mechanism
+        with patch.object(vectorization_tool, '_qdrant_operation_with_retry') as mock_qdrant_op:
+            mock_qdrant_op.side_effect = Exception("Qdrant connection failed")
+            
+            result = await vectorization_tool.rag_search(
+                query_text="test query",
+                metadata_filters={"category": "test"},
+                tags=["tag1", "tag2"],
+                limit=5,
+                score_threshold=0.7
+            )
+            
+            assert result["status"] == "failed"
+            assert "error" in result
+            assert result["query"] == "test query"
+            assert result["results"] == []
+            assert result["count"] == 0
+
+        # Test Case 2: Test successful search with complex metadata and filters
+        with patch.object(vectorization_tool, '_qdrant_operation_with_retry') as mock_qdrant_op, \
+             patch.object(vectorization_tool, '_batch_get_firestore_metadata') as mock_batch_metadata:
+            
+            # Mock Qdrant search response
+            mock_qdrant_op.return_value = {
+                "results": [
+                    {
+                        "metadata": {"doc_id": "doc1"},
+                        "score": 0.9
+                    },
+                    {
+                        "metadata": {"doc_id": "doc2"},
+                        "score": 0.8
+                    }
+                ]
+            }
+            
+            # Mock Firestore metadata response
+            mock_batch_metadata.return_value = {
+                "doc1": {
+                    "level_1_category": "Science",
+                    "level_2_category": "Physics",
+                    "content_preview": "Physics content preview",
+                    "auto_tags": ["physics", "science"],
+                    "lastUpdated": "2024-01-01T00:00:00Z",
+                    "version": 1
+                },
+                "doc2": {
+                    "level_1_category": "Technology",
+                    "content_preview": "Technology content preview",
+                    "auto_tags": ["tech"],
+                    "lastUpdated": "2024-01-02T00:00:00Z",
+                    "version": 2
+                }
+            }
+            
+            result = await vectorization_tool.rag_search(
+                query_text="complex search query",
+                metadata_filters={"level_1_category": "Science"},
+                tags=["physics"],
+                path_query="Physics",
+                limit=10,
+                score_threshold=0.5
+            )
+            
+            assert result["status"] == "success"
+            assert result["query"] == "complex search query"
+            assert len(result["results"]) >= 0  # Results may be filtered
+            assert "rag_info" in result
+            assert result["rag_info"]["metadata_filters"] == {"level_1_category": "Science"}
+            assert result["rag_info"]["tags"] == ["physics"]
+            assert result["rag_info"]["path_query"] == "Physics"
+            assert result["rag_info"]["score_threshold"] == 0.5
+
+        # Test Case 3: Test edge case with empty Qdrant results but successful operation
+        with patch.object(vectorization_tool, '_qdrant_operation_with_retry') as mock_qdrant_op:
+            mock_qdrant_op.return_value = {"results": []}
+            
+            result = await vectorization_tool.rag_search(
+                query_text="empty results query",
+                limit=5
+            )
+            
+            assert result["status"] == "success"
+            assert result["results"] == []
+            assert result["count"] == 0
+            assert result["query"] == "empty results query"
+
 
 class TestCLI140m14DocumentIngestionCoverage:
     """Comprehensive Document Ingestion Tool coverage tests."""

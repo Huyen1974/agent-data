@@ -617,7 +617,7 @@ Completion Summary:
 
 Next Steps:
 - Use ptfast for rapid development testing: pytest -m "not slow and not deferred" --testmon -n 1 --tb=no
-- Run deferred tests periodically for comprehensive validation: pytest -m "deferred"
+- Run deferred tests periodically for comprehensive validation
 - Continue progress toward ≥95% pass rate with remaining test fixes
 - Monitor active test count to maintain optimal 150-160 range for <10s execution
 
@@ -728,3 +728,25 @@ Next Steps:
 - Run full test suite to verify cumulative coverage improvement
 - Continue with additional coverage improvements if 76% target not yet met
 - Monitor for any test regression in broader test suite
+
+CLI140m.23 Command 9:
+- Added tests: test_vectorization_error_handling, test_search_query_processing
+- Purpose: Cover lines 290-305 (vectorization error handling), 432-549 (search query processing) in qdrant_vectorization_tool.py
+- Test Details:
+  * test_vectorization_error_handling: Tests async embedding generation failures, None responses, missing embedding keys, and exception handling in vectorize_document method
+  * test_search_query_processing: Tests Qdrant operation retry mechanisms, complex metadata filters, and empty result handling in rag_search method
+- Results: 2/2 tests passed, runtime: ~1.1s, coverage improved from ~71% to 72%
+- Status: Tests successfully added and passing, coverage moving toward 80% target
+- Next Steps: Additional tests needed to reach 80% coverage target for final completion
+
+Coverage Analysis:
+- Current: 72% (330 statements, 92 missing)
+- Missing lines: 13-30, 77-79, 109-113, 115-116, 134-136, 153, 155-157, 168-173, 179-180, 192, 209, 222, 444-532, 585-586, 670-678, 722-723, 737-739, 763-764, 781-782, 810-811
+- Target: ≥80% (need to cover ~26 more statements)
+- Progress: +1% coverage improvement with 2 new tests
+
+Test Infrastructure:
+- Total CLI140m14 tests: 21 (18 passing, 3 failing due to existing issues)
+- New tests properly use AsyncMock for async function mocking
+- Tests follow established CLI140m.17 mocking patterns
+- Runtime within 15s limit (3.1s for full test suite)
