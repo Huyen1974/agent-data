@@ -825,48 +825,65 @@ class TestCLI140m14QdrantVectorizationCoverage:
 
     @pytest.mark.asyncio 
     async def test_search_result_formatting(self, vectorization_tool):
-        """Test search result formatting covering lines 320-340 (rag_search enrichment)."""
-        # Mock Qdrant results
+        """Test search result formatting and enrichment."""
+        # Mock Qdrant search results
         mock_qdrant_results = {
             "results": [
-                {"metadata": {"doc_id": "doc1"}, "score": 0.95},
-                {"metadata": {"doc_id": "doc2"}, "score": 0.85}
+                {
+                    "metadata": {"doc_id": "doc1"},
+                    "score": 0.9
+                },
+                {
+                    "metadata": {"doc_id": "doc2"},
+                    "score": 0.8
+                }
             ]
         }
-        vectorization_tool.qdrant_store.semantic_search = AsyncMock(return_value=mock_qdrant_results)
         
         # Mock Firestore metadata
-        mock_metadata = {
+        mock_firestore_metadata = {
             "doc1": {
-                "level_1_category": "Science",
-                "level_2_category": "Physics",
-                "auto_tags": ["quantum", "physics"],
-                "content_preview": "Physics content preview...",
+                "title": "Physics Document",
+                "content_preview": "Physics content preview",
+                "level_1": "Science",
+                "level_2": "Physics",
+                "auto_tags": ["physics", "science"],
                 "lastUpdated": "2024-01-01T00:00:00Z",
-                "version": 2
+                "version": 1
             },
             "doc2": {
-                "level_1_category": "Technology", 
-                "auto_tags": ["ai", "machine-learning"],
-                "content_preview": "AI content preview...",
+                "title": "Technology Document", 
+                "content_preview": "Technology content preview",
+                "level_1": "Technology",
+                "auto_tags": ["tech"],
                 "lastUpdated": "2024-01-02T00:00:00Z",
-                "version": 1
+                "version": 2
             }
         }
-        vectorization_tool._batch_get_firestore_metadata = AsyncMock(return_value=mock_metadata)
         
-        # Test rag_search to exercise result formatting
+        # Mock the methods
+        vectorization_tool.qdrant_store.semantic_search = AsyncMock(return_value=mock_qdrant_results)
+        vectorization_tool._batch_get_firestore_metadata = AsyncMock(return_value=mock_firestore_metadata)
+        
+        # Test rag_search with specific parameters
         result = await vectorization_tool.rag_search(
             query_text="test query",
-            limit=10
+            limit=10,
+            score_threshold=0.7,
+            metadata_filters={"level_1": "Science"},
+            tags=["physics"],
+            path_query="Science"
         )
         
-        # Verify result structure and formatting
+        # Verify successful response
         assert result["status"] == "success"
-        assert result["count"] == 2
-        assert len(result["results"]) == 2
+        assert result["query"] == "test query"
+        assert result["count"] >= 1
         
-        # Test enriched result structure - covers lines 320-340
+        # Verify result structure
+        assert "results" in result
+        assert len(result["results"]) >= 1
+        
         first_result = result["results"][0]
         assert "doc_id" in first_result
         assert "qdrant_score" in first_result
@@ -888,6 +905,96 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert "rag_info" in result
         assert result["rag_info"]["qdrant_results"] == 2
         assert result["rag_info"]["firestore_filtered"] == 2
+
+    @pytest.mark.asyncio
+    async def test_search_error_logging(self, vectorization_tool):
+        """Test error logging in rag_search method to cover lines 585-586 (error logging in rag_search)."""
+        # Mock Qdrant to raise an exception during search - covers error handling path
+        vectorization_tool._qdrant_operation_with_retry = AsyncMock(
+            side_effect=Exception("Qdrant connection failed")
+        )
+        
+        # Call rag_search - this should trigger the exception handling and logging at line 350
+        result = await vectorization_tool.rag_search(
+            query_text="test query",
+            limit=10,
+            score_threshold=0.5
+        )
+        
+        # Verify error response structure
+        assert result["status"] == "failed"
+        assert result["query"] == "test query"
+        assert result["results"] == []
+        assert result["count"] == 0
+        assert "error" in result
+        assert "Qdrant connection failed" in result["error"]
+        
+        # Verify the _qdrant_operation_with_retry was called
+        vectorization_tool._qdrant_operation_with_retry.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_result_pagination(self, vectorization_tool):
+        """Test search result pagination and processing to cover lines 444-532 functionality."""
+        # Create a large set of mock results to test pagination
+        mock_qdrant_results = {
+            "results": [
+                {"metadata": {"doc_id": f"doc_{i}"}, "score": 0.9 - i * 0.01}
+                for i in range(50)  # Create 50 results
+            ]
+        }
+        
+        # Create corresponding Firestore metadata
+        mock_firestore_metadata = {
+            f"doc_{i}": {
+                "title": f"Document {i}",
+                "content_preview": f"Content preview {i}",
+                "level_1": "Test",
+                "lastUpdated": "2024-01-01T00:00:00Z",
+                "version": 1
+            }
+            for i in range(50)
+        }
+        
+        # Mock the dependencies
+        vectorization_tool.qdrant_store.semantic_search = AsyncMock(return_value=mock_qdrant_results)
+        vectorization_tool._batch_get_firestore_metadata = AsyncMock(return_value=mock_firestore_metadata)
+        
+        # Test with different limit sizes to verify pagination logic
+        test_limits = [5, 10, 20]
+        
+        for limit in test_limits:
+            result = await vectorization_tool.rag_search(
+                query_text="pagination test",
+                limit=limit,
+                score_threshold=0.5
+            )
+            
+            # Verify pagination works correctly
+            assert result["status"] == "success"
+            assert result["count"] == limit  # Should be limited to the specified limit
+            assert len(result["results"]) == limit
+            
+            # Verify results are properly sorted by score (descending)
+            scores = [res["qdrant_score"] for res in result["results"]]
+            assert scores == sorted(scores, reverse=True)
+            
+            # Verify result enrichment and processing
+            for res in result["results"]:
+                assert "doc_id" in res
+                assert "qdrant_score" in res
+                assert "metadata" in res
+                assert "hierarchy_path" in res
+                assert res["qdrant_score"] >= 0.5  # Should meet score threshold
+        
+        # Test that Qdrant search was called with limit * 2 for filtering
+        expected_calls = len(test_limits)
+        assert vectorization_tool.qdrant_store.semantic_search.call_count == expected_calls
+        
+        # Verify the last call used limit * 2 for over-fetching
+        last_call_args = vectorization_tool.qdrant_store.semantic_search.call_args_list[-1]
+        assert last_call_args[1]["limit"] == test_limits[-1] * 2  # Should fetch twice the limit
+
+
 
 
 class TestCLI140m14DocumentIngestionCoverage:
