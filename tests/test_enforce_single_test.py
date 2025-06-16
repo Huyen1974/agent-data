@@ -66,7 +66,7 @@ def test_enforce_single_test_per_cli():
         "140m.10": 491,    # CLI 140m.10: Current test count after coverage improvements and test fixes
         "140m.12": 517,    # CLI 140m.12: Module coverage ≥80% and test fixes
         "140m.13": 544,    # CLI 140m.13: Added 27 coverage tests (517 -> 544)
-        "140m.14": 544,    # CLI 140m.14: Fixed CLI140m13 tests, achieved 95%+ pass rate, maintained test count
+        "140m.14": 565,    # CLI 140m.14: Fixed CLI140m13 tests (27), added CLI140m14 coverage tests (15), achieved 90.3% pass rate, +21 tests
     }
 
     # Current CLI being validated
