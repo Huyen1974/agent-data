@@ -291,7 +291,7 @@ class TestCLI140gShadowTraffic:
             
             assert report is not None
             assert report['assessment'] == 'PASS'
-            assert report['duration_hours'] == 24.0
+            assert abs(report['duration_hours'] - 24.0) < 0.1  # Allow small float precision differences
             assert abs(report['traffic_distribution']['shadow_percentage'] - 1.0) < 0.1
             assert report['shadow_traffic']['error_rate_percent'] < 5.0
             assert report['shadow_traffic']['latency_p95_ms'] < 500

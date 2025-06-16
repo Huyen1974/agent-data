@@ -364,7 +364,7 @@ class TestCLI140e39Validation:
             pytest.fail(f"Cloud Profiler test failed: {e}")
 
     def test_test_suite_count_compliance(self):
-        """Test that the test suite count is compliant with CLI140m.11 target (491 tests)."""
+        """Test that the test suite count is compliant with CLI140m.15 target (565 tests)."""
         result = subprocess.run(["pytest", "--collect-only", "-q"], capture_output=True, text=True)
 
         assert result.returncode == 0, "Test collection should succeed"
@@ -373,8 +373,8 @@ class TestCLI140e39Validation:
         test_lines = [line for line in result.stdout.split("\n") if "::test_" in line]
         test_count = len(test_lines)
 
-        # Should be 491 tests (updated for CLI140m.11)
-        expected_count = 491
+        # Should be 565 tests (updated for CLI140m.15)
+        expected_count = 565
         assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
 
         print(f"✅ Test suite count compliance: {test_count} tests")
