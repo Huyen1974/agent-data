@@ -147,8 +147,10 @@ class DocumentIngestionTool:
             
             # CLI140f: Cleanup old cache entries (simple LRU)
             if len(self._cache) > 100:
-                oldest_key = min(self._cache.keys(), key=lambda k: self._cache[k][1])
-                del self._cache[oldest_key]
+                # Remove multiple old entries to keep cache size manageable
+                sorted_keys = sorted(self._cache.keys(), key=lambda k: self._cache[k][1])
+                for key in sorted_keys[:5]:  # Remove 5 oldest entries
+                    del self._cache[key]
 
             latency = time.time() - start_time
             logger.debug(f"Document metadata saved for {doc_id} in {latency:.3f}s")
