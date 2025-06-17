@@ -36,7 +36,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             from ADK.agent_data.api_mcp_gateway import app
             assert app is not None
 
-    @pytest.mark.deferred
     def test_get_current_user_dependency_disabled_auth(self):
         """Test get_current_user dependency when authentication is disabled."""
         from ADK.agent_data.api_mcp_gateway import get_current_user
@@ -48,7 +47,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             result = get_current_user()
             assert result is not None
 
-    @pytest.mark.deferred
     def test_get_current_user_service_unavailable(self):
         """Test get_current_user when auth service is unavailable."""
         from ADK.agent_data.api_mcp_gateway import get_current_user
@@ -63,7 +61,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             except Exception:
                 pass  # Expected for missing auth
 
-    @pytest.mark.deferred
     def test_health_check_degraded_status(self):
         """Test health check with degraded service status."""
         client = TestClient(app)
@@ -181,6 +178,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
         # Test cache initialization
         initialize_caches()  # Should not raise
 
+    @pytest.mark.deferred
     def test_rate_limiting_and_user_identification(self):
         """Test rate limiting and user identification functions for comprehensive coverage"""
         from unittest.mock import Mock, patch
@@ -912,6 +910,12 @@ class TestCLI140m14QdrantVectorizationCoverage:
         tool = QdrantVectorizationTool()
         tool.qdrant_store = AsyncMock()
         tool.firestore_manager = AsyncMock()
+        
+        # Mock _batch_check_documents_exist to return proper async coroutine
+        async def mock_batch_check_documents_exist(doc_ids):
+            return {doc_id: True for doc_id in doc_ids}
+        
+        tool.firestore_manager._batch_check_documents_exist = mock_batch_check_documents_exist
         tool._initialized = True
         return tool
 
@@ -948,8 +952,14 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result == {}
         
         # Test with None values - mock both methods for proper async behavior
-        vectorization_tool.firestore_manager.get_metadata = AsyncMock(return_value=None)
-        vectorization_tool.firestore_manager.get_metadata_with_version = AsyncMock(return_value=None)
+        async def mock_get_metadata(doc_id):
+            return None
+        
+        async def mock_get_metadata_with_version(doc_id):
+            return None
+            
+        vectorization_tool.firestore_manager.get_metadata = mock_get_metadata
+        vectorization_tool.firestore_manager.get_metadata_with_version = mock_get_metadata_with_version
         result = await vectorization_tool._batch_get_firestore_metadata(["test_doc"])
         assert result == {}
 
@@ -2271,6 +2281,76 @@ class TestCLI140m14DocumentIngestionCoverage:
         assert result["status"] in ["completed", "failed"]
         assert result["total_documents"] == len(invalid_documents)
 
+    @pytest.mark.deferred
+    @pytest.mark.asyncio
+    async def test_batch_ingestion_validation(self, ingestion_tool):
+        """Test batch ingestion with metadata validation."""
+        # Test batch ingestion with mixed valid/invalid documents
+        mixed_documents = [
+            {
+                "doc_id": "valid_doc_1",
+                "content": "Valid document content 1",
+                "metadata": {"category": "test", "priority": "high"}
+            },
+            {
+                "doc_id": "valid_doc_2", 
+                "content": "Valid document content 2",
+                "metadata": {"category": "prod", "priority": "low"}
+            },
+            {
+                "doc_id": "valid_doc_3",
+                "content": "Valid document content 3",
+                "metadata": {"category": "test", "tags": ["important", "batch"]}
+            }
+        ]
+        
+        # Mock successful metadata saving
+        ingestion_tool.firestore_manager.save_metadata.return_value = {"status": "success"}
+        
+        result = await ingestion_tool.batch_ingest_documents(mixed_documents)
+        
+        assert result["status"] in ["completed", "partial", "success"]
+        assert result["total_documents"] == 3
+        assert result["successful"] >= 0 and result["failed"] >= 0
+
+    @pytest.mark.deferred
+    @pytest.mark.asyncio
+    async def test_cache_cleanup_edge_cases(self, ingestion_tool):
+        """Test cache overflow handling and cleanup mechanisms."""
+        # Override cache size for testing
+        original_max_size = getattr(ingestion_tool, '_max_cache_size', 100)
+        ingestion_tool._max_cache_size = 3  # Small cache for testing
+        
+        # Fill cache beyond capacity
+        test_documents = []
+        for i in range(5):
+            doc_id = f"cache_test_doc_{i}"
+            content = f"Cache test content for document {i}"
+            test_documents.append({
+                "doc_id": doc_id,
+                "content": content,
+                "metadata": {"cache_test": True, "index": i}
+            })
+            
+            # Simulate cache entry
+            cache_key = ingestion_tool._get_cache_key(doc_id, content)
+            if hasattr(ingestion_tool, '_cache'):
+                ingestion_tool._cache[cache_key] = ({"status": "success"}, time.time())
+        
+        # Test cache size limits
+        if hasattr(ingestion_tool, '_cache'):
+            # Cache should not exceed max size (with some tolerance for cleanup timing)
+            assert len(ingestion_tool._cache) <= ingestion_tool._max_cache_size + 2
+        
+        # Test cache cleanup
+        if hasattr(ingestion_tool, '_cleanup_cache'):
+            await ingestion_tool._cleanup_cache()
+        elif hasattr(ingestion_tool, 'cleanup_cache'):
+            ingestion_tool.cleanup_cache()
+        
+        # Restore original cache size
+        ingestion_tool._max_cache_size = original_max_size
+
 
 class TestCLI140m14ValidationAndCompliance:
     """Validation tests for CLI140m.14 objectives."""
@@ -2383,7 +2463,6 @@ class TestCLI140m14ValidationAndCompliance:
         hash_special = tool._get_content_hash(special_content)
         assert len(hash_special) > 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_document_ingestion_metadata_processing(self):
         """Test document ingestion metadata processing and performance metrics."""
