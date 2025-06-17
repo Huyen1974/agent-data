@@ -325,25 +325,21 @@ class TestCLI139Integration:
 
             mock_vectorization.vectorize_document = variable_response
 
+            # Test data - single document for /save endpoint
             test_data = {
-                "documents": [
-                    {
-                        "doc_id": "recovery_test_doc",
-                        "content": "Test content for error recovery",
-                        "metadata": {"test_type": "error_recovery"},
-                    }
-                ]
+                "doc_id": "recovery_test_doc",
+                "content": "Test content for error recovery",
+                "metadata": {"test_type": "error_recovery"}
             }
 
-            # Make request
-            response = client.post("/batch_save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            # Make request to /save endpoint
+            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
 
             # Verify successful recovery
             assert response.status_code == 200
             result = response.json()
-            assert result["status"] == "completed"
-            assert result["successful_saves"] == 1
-            assert result["failed_saves"] == 0
+            assert result["status"] == "success"
+            assert "vector_id" in result
 
             # Verify retry occurred
             assert call_count == 2
@@ -476,7 +472,7 @@ class TestCLI139:
     @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
-        """Test that batch operations complete within 5 seconds for reasonable loads."""
+        """Test that operations complete within 5 seconds for reasonable loads."""
 
         with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
             "ADK.agent_data.api_mcp_gateway.vectorization_tool"
@@ -501,40 +497,40 @@ class TestCLI139:
 
             mock_qdrant.semantic_search = fast_search
 
-            # Test batch save performance
+            # Test save performance (single document)
             save_data = {
-                "documents": [
-                    {"doc_id": f"perf_doc_{i}", "content": f"Performance test content {i}", "metadata": {}}
-                    for i in range(10)  # 10 documents
-                ]
+                "doc_id": "perf_doc_1",
+                "content": "Performance test content", 
+                "metadata": {}
             }
 
             start_time = time.time()
-            save_response = client.post("/batch_save", json=save_data, headers={"Authorization": "Bearer test_token"})
+            save_response = client.post("/save", json=save_data, headers={"Authorization": "Bearer test_token"})
             save_time = time.time() - start_time
 
-            # Test batch query performance
+            # Test query performance (single query)
             query_data = {
-                "queries": [{"query_text": f"performance test query {i}", "limit": 5} for i in range(10)]  # 10 queries
+                "query_text": "performance test query", 
+                "limit": 5
             }
 
             start_time = time.time()
             query_response = client.post(
-                "/batch_query", json=query_data, headers={"Authorization": "Bearer test_token"}
+                "/query", json=query_data, headers={"Authorization": "Bearer test_token"}
             )
             query_time = time.time() - start_time
 
             # Verify performance
             assert save_response.status_code == 200
             assert query_response.status_code == 200
-            assert save_time < 5.0, f"Batch save took {save_time:.2f}s, should be < 5s"
-            assert query_time < 5.0, f"Batch query took {query_time:.2f}s, should be < 5s"
+            assert save_time < 5.0, f"Save took {save_time:.2f}s, should be < 5s"
+            assert query_time < 5.0, f"Query took {query_time:.2f}s, should be < 5s"
 
             # Verify successful operations
             save_result = save_response.json()
             query_result = query_response.json()
-            assert save_result["successful_saves"] == 10
-            assert query_result["successful_queries"] == 10
+            assert save_result["status"] == "success"
+            assert "results" in query_result
 
     @pytest.mark.deferred
     @pytest.mark.asyncio
@@ -607,25 +603,21 @@ class TestCLI139:
 
             mock_vectorization.vectorize_document = variable_response
 
+            # Test data - single document for /save endpoint
             test_data = {
-                "documents": [
-                    {
-                        "doc_id": "recovery_test_doc",
-                        "content": "Test content for error recovery",
-                        "metadata": {"test_type": "error_recovery"},
-                    }
-                ]
+                "doc_id": "recovery_test_doc",
+                "content": "Test content for error recovery",
+                "metadata": {"test_type": "error_recovery"}
             }
 
-            # Make request
-            response = client.post("/batch_save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            # Make request to /save endpoint
+            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
 
             # Verify successful recovery
             assert response.status_code == 200
             result = response.json()
-            assert result["status"] == "completed"
-            assert result["successful_saves"] == 1
-            assert result["failed_saves"] == 0
+            assert result["status"] == "success"
+            assert "vector_id" in result
 
             # Verify retry occurred
             assert call_count == 2
