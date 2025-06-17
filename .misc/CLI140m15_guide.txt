@@ -2790,3 +2790,22 @@ CLI140m.40 COMPLETION SUMMARY - 2025-06-17 16:44:52 +0700
 Runtime: All tests <3s (compliant with <8s requirement)
 Batch size: 1 test/batch (compliant with ≤1 requirement)
 Changes committed to git with commit 288438e
+
+CLI140m.40 CONTINUATION COMPLETION:
+====================================
+
+Date: 2025-06-17 16:55:53 +0700
+Objective: Complete CLI140m.40 - commit Git changes, verify log compliance
+
+✅ COMPLETION STATUS: ALL REQUIREMENTS ADDRESSED SUCCESSFULLY
+
+Action 1: Git Commit - COMPLETED
+- Analyzed prior results from logs/test_errors.log lines 5074-5078
+- Successfully committed changes with message: 'CLI140m.40: Fixed 3 CLI139 tests - updated endpoints and logic'
+- Git hash logged and diff recorded
+
+Action 2: Log Compliance - COMPLETED
+- Re-ran all 3 tests with ≤1 test/batch compliance
+- All tests PASSED with runtime <8s
+- Logged test names, status, and line numbers as required
+- Perfect MacBook M1 safety compliance maintained
