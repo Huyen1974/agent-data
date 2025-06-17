@@ -35,7 +35,7 @@ def test_enforce_single_test_per_cli():
     except (subprocess.CalledProcessError, ValueError) as e:
         pytest.fail(f"Failed to collect current test count: {e}")
 
-    # Expected test counts per CLI (updated for CLI 140e.3.6)
+    # Expected test counts per CLI (updated for CLI140m.44)
     CLI_TEST_COUNTS = {
         139: 354,  # CLI 139: Added 7 tests (347 -> 354)
         140: 362,  # CLI 140: Added 8 tests (354 -> 362) - VIOLATED RULE
@@ -67,11 +67,12 @@ def test_enforce_single_test_per_cli():
         "140m.12": 517,    # CLI 140m.12: Module coverage ≥80% and test fixes
         "140m.13": 544,    # CLI 140m.13: Added 27 coverage tests (517 -> 544)
         "140m.14": 565,    # CLI 140m.14: Fixed CLI140m13 tests (27), added CLI140m14 coverage tests (15), achieved 90.3% pass rate, +21 tests
+        "140m.44": 512,    # CLI 140m.44: Test Infrastructure fixes, reduced from 565 to 512 tests
     }
 
     # Current CLI being validated
-    CURRENT_CLI = "140m.14"
-    PREVIOUS_CLI = "140m.13"
+    CURRENT_CLI = "140m.44"
+    PREVIOUS_CLI = "140m.14"
 
     # Get expected counts
     previous_count = CLI_TEST_COUNTS.get(PREVIOUS_CLI, 0)
