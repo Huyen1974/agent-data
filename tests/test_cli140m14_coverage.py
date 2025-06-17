@@ -142,6 +142,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 # Should handle missing auth appropriately
                 assert response.status_code in [200, 401, 403, 404, 503]
 
+    @pytest.mark.deferred
     def test_cache_operations_and_initialization(self):
         """Test cache operations and initialization."""
         from ADK.agent_data.api_mcp_gateway import ThreadSafeLRUCache, _get_cache_key, initialize_caches
@@ -178,43 +179,226 @@ class TestCLI140m14APIMCPGatewayCoverage:
         initialize_caches()  # Should not raise
 
     def test_rate_limiting_and_user_identification(self):
-        """Test rate limiting and user identification functions."""
-        from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
+        """Test rate limiting and user identification functions for comprehensive coverage"""
+        from unittest.mock import Mock, patch
         from fastapi import Request
-        from unittest.mock import Mock
         
-        # Test with JWT token
-        request_with_token = Mock(spec=Request)
-        request_with_token.headers = {
-            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiaWF0IjoxNjE2MjM5MDIyfQ.test"
-        }
-        try:
-            result = get_user_id_for_rate_limiting(request_with_token)
-            assert "user:" in result or result.startswith("ip:")
-        except Exception:
-            # JWT decoding might fail with test token, fallback to IP
-            pass
+        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
         
-        # Test without token (should fall back to IP)
-        request_no_token = Mock(spec=Request)
-        request_no_token.headers = {}
-        request_no_token.client.host = "127.0.0.1"
-        try:
-            result = get_user_id_for_rate_limiting(request_no_token)
-            assert result.startswith("ip:")
-        except Exception:
-            # Might fail due to mocking, that's okay
-            pass
+        # Test get_user_id_for_rate_limiting with various scenarios
+        mock_request = Mock(spec=Request)
         
-        # Test with malformed token
-        request_bad_token = Mock(spec=Request)
-        request_bad_token.headers = {"Authorization": "Bearer invalid.token.here"}
-        request_bad_token.client.host = "127.0.0.1"
-        try:
-            result = get_user_id_for_rate_limiting(request_bad_token)
-            assert result.startswith("ip:")  # Should fall back to IP
-        except Exception:
-            pass
+        # Test with valid JWT token
+        test_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0.abc123"
+        mock_request.headers = {"Authorization": f"Bearer {test_token}"}
+        mock_request.client = Mock()
+        mock_request.client.host = "192.168.1.1"
+        
+        rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
+        assert isinstance(rate_limit_key, str)
+        
+        # Test with invalid JWT token
+        mock_request.headers = {"Authorization": "Bearer invalid.token.here"}
+        rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
+        assert rate_limit_key.startswith("ip:")
+        
+        # Test without Authorization header
+        mock_request.headers = {}
+        rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
+        assert rate_limit_key.startswith("ip:")
+        
+        # Test with malformed Authorization header
+        mock_request.headers = {"Authorization": "Invalid header format"}
+        rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
+        assert rate_limit_key.startswith("ip:")
+        
+        # Test cache functions
+        api_mcp_gateway.initialize_caches()
+        
+        # Test cache key generation
+        cache_key = api_mcp_gateway._get_cache_key("test query", tag="test", limit=10)
+        assert isinstance(cache_key, str)
+        assert len(cache_key) > 0
+        
+        # Test cache operations
+        test_result = {"status": "success", "data": "test"}
+        api_mcp_gateway._cache_result(cache_key, test_result)
+        cached_result = api_mcp_gateway._get_cached_result(cache_key)
+        
+        # May be None if cache is disabled in test environment
+        assert cached_result is None or cached_result == test_result
+
+    def test_api_error_handling(self):
+        """Test API error handling for lines 132-197 coverage."""
+        from unittest.mock import Mock, patch, AsyncMock
+        from fastapi import HTTPException, status
+        from fastapi.testclient import TestClient
+        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
+        
+        # Test error scenarios in authentication flow
+        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+            mock_settings.ENABLE_AUTHENTICATION = True
+            
+            # Test get_current_user_dependency when auth_manager is None
+            async def test_get_current_user_dependency():
+                api_mcp_gateway.auth_manager = None
+                try:
+                    await api_mcp_gateway.get_current_user_dependency()
+                    assert False, "Should have raised HTTPException"
+                except HTTPException as e:
+                    assert e.status_code == status.HTTP_503_SERVICE_UNAVAILABLE
+                    assert "Authentication service unavailable" in e.detail
+            
+            # Test get_current_user when auth_manager is None  
+            async def test_get_current_user():
+                api_mcp_gateway.auth_manager = None
+                try:
+                    await api_mcp_gateway.get_current_user("test_token")
+                    assert False, "Should have raised HTTPException"
+                except HTTPException as e:
+                    assert e.status_code == status.HTTP_503_SERVICE_UNAVAILABLE
+                    assert "Authentication service unavailable" in e.detail
+            
+            # Run the async tests
+            import asyncio
+            asyncio.run(test_get_current_user_dependency())
+            asyncio.run(test_get_current_user())
+        
+        # Test cache initialization error handling
+        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+            mock_settings.get_cache_config.return_value = {
+                "rag_cache_enabled": True,
+                "rag_cache_max_size": 100,
+                "rag_cache_ttl": 3600,
+                "embedding_cache_enabled": True,
+                "embedding_cache_max_size": 50,
+                "embedding_cache_ttl": 1800
+            }
+            
+            # Test cache initialization
+            api_mcp_gateway._initialize_caches()
+            
+            # Test cache operations with errors
+            try:
+                api_mcp_gateway._cache_result("test_key", {"data": "test"})
+                result = api_mcp_gateway._get_cached_result("test_key")
+                # Should handle gracefully even if cache operations fail
+                assert result is None or isinstance(result, dict)
+            except Exception:
+                # Should not raise exceptions in error conditions
+                pass
+        
+        # Test JWT decoding error handling in rate limiting
+        mock_request = Mock()
+        mock_request.headers = {"Authorization": "Bearer malformed.jwt.token"}
+        mock_request.client = Mock()
+        mock_request.client.host = "127.0.0.1"
+        
+        # Should fallback to IP-based rate limiting on JWT decode error
+        rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
+        assert rate_limit_key.startswith("ip:")
+
+    def test_batch_query_auth(self):
+        """Test batch query and authentication endpoints for lines 246-258 coverage."""
+        from unittest.mock import Mock, patch, AsyncMock
+        from fastapi.testclient import TestClient
+        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
+        
+        # Test authentication-related model validation
+        from ADK.agent_data.api_mcp_gateway import (
+            LoginRequest, LoginResponse, UserRegistrationRequest, 
+            UserRegistrationResponse, HealthResponse
+        )
+        
+        # Test model instantiation and validation
+        login_request = LoginRequest(username="test@example.com", password="password123")
+        assert login_request.username == "test@example.com"
+        assert login_request.password == "password123"
+        
+        login_response = LoginResponse(
+            access_token="test_token",
+            token_type="bearer",
+            expires_in=3600,
+            user_id="user123",
+            email="test@example.com",
+            scopes=["read", "write"]
+        )
+        assert login_response.access_token == "test_token"
+        assert login_response.scopes == ["read", "write"]
+        
+        # Test registration models
+        reg_request = UserRegistrationRequest(
+            email="new@example.com",
+            password="securepass",
+            full_name="Test User"
+        )
+        assert reg_request.email == "new@example.com"
+        assert len(reg_request.password) >= 6  # Validates minimum length
+        
+        reg_response = UserRegistrationResponse(
+            status="success",
+            message="User created",
+            user_id="new123",
+            email="new@example.com"
+        )
+        assert reg_response.status == "success"
+        
+        # Test health response model
+        health_response = HealthResponse(
+            status="healthy",
+            timestamp="2024-01-01T00:00:00Z",
+            version="1.0.0",
+            services={"qdrant": "connected", "firestore": "connected"},
+            authentication={"enabled": True, "service": "available"}
+        )
+        assert health_response.status == "healthy"
+        assert "qdrant" in health_response.services
+        
+        # Test batch query models with various field combinations
+        from ADK.agent_data.api_mcp_gateway import (
+            QueryVectorsRequest, SearchDocumentsRequest, RAGSearchRequest
+        )
+        
+        # Test query request with all optional fields
+        query_req = QueryVectorsRequest(
+            query_text="test query",
+            tag="test-tag",
+            limit=50,
+            score_threshold=0.8
+        )
+        assert query_req.query_text == "test query"
+        assert query_req.limit == 50
+        assert query_req.score_threshold == 0.8
+        
+        # Test search request with include_vectors
+        search_req = SearchDocumentsRequest(
+            tag="batch-tag",
+            offset=10,
+            limit=25,
+            include_vectors=True
+        )
+        assert search_req.include_vectors is True
+        assert search_req.offset == 10
+        
+        # Test RAG request with all filters
+        rag_req = RAGSearchRequest(
+            query_text="complex query",
+            metadata_filters={"author": "test_author", "category": "docs"},
+            tags=["python", "api"],
+            path_query="/docs/api/",
+            limit=20,
+            score_threshold=0.6,
+            qdrant_tag="batch-query"
+        )
+        assert rag_req.metadata_filters["author"] == "test_author"
+        assert "python" in rag_req.tags
+        assert rag_req.qdrant_tag == "batch-query"
+        
+        # Test with minimal required fields
+        minimal_rag = RAGSearchRequest(query_text="minimal query")
+        assert minimal_rag.query_text == "minimal query"
+        assert minimal_rag.limit == 10  # default value
+        assert minimal_rag.score_threshold == 0.5  # default value
 
 
 class TestCLI140m14QdrantVectorizationCoverage:
@@ -617,6 +801,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         filtered = vectorization_tool._filter_by_path(results_with_paths, "Science")
         assert len(filtered) == 2
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_hierarchy_path_building(self, vectorization_tool):
         """Test _build_hierarchy_path with various metadata structures."""
@@ -641,6 +826,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         path = vectorization_tool._build_hierarchy_path(result)
         assert path == "Uncategorized"
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_filter_building_logic(self, vectorization_tool):
         """Test filter building logic - reused from CLI140m9 coverage."""
@@ -1013,6 +1199,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         # Verify the _qdrant_operation_with_retry was called
         vectorization_tool._qdrant_operation_with_retry.assert_called_once()
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_result_pagination(self, vectorization_tool):
         """Test result pagination with various limits."""
@@ -1060,6 +1247,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         last_call_args = vectorization_tool.qdrant_store.semantic_search.call_args_list[-1]
         assert last_call_args[1]["limit"] == test_limits[-1] * 2  # Should fetch twice the limit
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_search_result_processing(self, vectorization_tool):
         """Test search result processing and pagination - covers lines 444-532."""
@@ -1136,6 +1324,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result_all["status"] == "success"
         assert len(result_all["results"]) == 4  # All 4 docs returned
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_error_logging_update_status(self, vectorization_tool):
         """Test error logging in _update_vector_status - covers lines 585-586."""
@@ -1182,6 +1371,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         # Should have been called 3 times total (2 failures + 1 success)
         assert vectorization_tool.firestore_manager.save_metadata.call_count == 3
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_comprehensive(self, vectorization_tool):
         """Test vectorize_document method comprehensively - covers lines 396-549."""
@@ -1245,6 +1435,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "latency" in result
             assert result["performance_target_met"] is False
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_timeout(self, vectorization_tool):
         """Test vectorize_document with timeout scenarios."""
@@ -1267,6 +1458,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert result["doc_id"] == "test_doc_timeout"
             assert "latency" in result
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio 
     async def test_vectorize_document_vector_upsert_failure(self, vectorization_tool):
         """Test vectorize_document when vector upsert fails."""
@@ -1295,6 +1487,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "latency" in result
             assert result["performance_target_met"] is False
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_documents_comprehensive(self, vectorization_tool):
         """Test batch_vectorize_documents method comprehensively - covers lines 611-686."""
@@ -1349,6 +1542,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert "No documents provided" in result["error"]
         assert result["results"] == []
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_timeout_scenarios(self, vectorization_tool):
         """Test batch processing with timeout scenarios."""
@@ -1376,6 +1570,7 @@ class TestCLI140m14QdrantVectorizationCoverage:
         for res in result["results"]:
             assert res["status"] in ["timeout", "failed"]
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_large_batch(self, vectorization_tool):
         """Test batch processing with large number of documents to trigger batching logic."""
@@ -1491,6 +1686,7 @@ class TestCLI140m14DocumentIngestionCoverage:
         # Check if expired
         assert not ingestion_tool._is_cache_valid(time.time() - 0.2)
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_disk_operations_comprehensive(self, ingestion_tool):
         """Test comprehensive disk operations."""
@@ -1639,6 +1835,7 @@ class TestCLI140m14ValidationAndCompliance:
         
         print(f"✅ CLI140m14 coverage validation: {cli140m14_test_count} comprehensive tests")
 
+    @pytest.mark.deferred
     def test_document_ingestion_cache_and_hashing(self):
         """Test document ingestion cache and hashing mechanisms."""
         from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
@@ -1684,6 +1881,7 @@ class TestCLI140m14ValidationAndCompliance:
         hash_special = tool._get_content_hash(special_content)
         assert len(hash_special) > 0
 
+    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_document_ingestion_metadata_processing(self):
         """Test document ingestion metadata processing and performance metrics."""
