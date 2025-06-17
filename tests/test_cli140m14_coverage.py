@@ -692,6 +692,216 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Verify qdrant search was not called (cache hit)
             mock_qdrant.semantic_search.assert_not_called()
 
+    def test_search_documents_endpoint_coverage(self):
+        """Test search_documents endpoint for comprehensive coverage - targeting lines 732-774"""
+        from unittest.mock import Mock, AsyncMock, patch
+        from fastapi.testclient import TestClient
+        from ADK.agent_data.api_mcp_gateway import app
+        
+        client = TestClient(app)
+        
+        # Mock the authentication and qdrant dependencies
+        with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user, \
+             patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
+             patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
+             patch('ADK.agent_data.api_mcp_gateway.auth_manager') as mock_auth_manager:
+            
+            # Setup mocks
+            mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
+            mock_settings.ENABLE_AUTHENTICATION = True
+            mock_auth_manager.validate_user_access.return_value = True
+            
+            # Test 1: Service unavailable (qdrant_store is None)
+            mock_qdrant_store = None
+            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store', None):
+                response = client.post("/search", json={
+                    "tag": "test_tag",
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": False
+                })
+                assert response.status_code == 503
+            
+            # Re-setup qdrant store for successful tests
+            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant:
+                # Test 2: Insufficient permissions 
+                mock_auth_manager.validate_user_access.return_value = False
+                response = client.post("/search", json={
+                    "tag": "test_tag",
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": False
+                })
+                assert response.status_code == 403
+                
+                # Reset permissions for next tests
+                mock_auth_manager.validate_user_access.return_value = True
+                
+                # Test 3: Successful search with tag
+                mock_qdrant.query_vectors_by_tag = AsyncMock(return_value={
+                    "results": [
+                        {"doc_id": "doc1", "content": "test content", "vector": [0.1, 0.2]},
+                        {"doc_id": "doc2", "content": "test content 2", "vector": [0.3, 0.4]}
+                    ]
+                })
+                
+                response = client.post("/search", json={
+                    "tag": "test_tag",
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": False
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "success"
+                assert len(data["results"]) == 2
+                # Verify vectors are excluded when include_vectors=False
+                assert "vector" not in data["results"][0]
+                
+                # Test 4: Search with no tag (recent documents)
+                mock_qdrant.get_recent_documents = AsyncMock(return_value={
+                    "results": [{"doc_id": "recent1", "content": "recent content"}]
+                })
+                
+                response = client.post("/search", json={
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": True
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "success"
+                mock_qdrant.get_recent_documents.assert_called_once()
+                
+                # Test 5: Search with vectors included
+                mock_qdrant.query_vectors_by_tag = AsyncMock(return_value={
+                    "results": [{"doc_id": "doc3", "content": "test", "vector": [0.5, 0.6]}]
+                })
+                
+                response = client.post("/search", json={
+                    "tag": "test_tag",
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": True
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert "vector" in data["results"][0]  # Vectors should be included
+                
+                # Test 6: Search with exception handling
+                mock_qdrant.query_vectors_by_tag = AsyncMock(side_effect=Exception("Search failed"))
+                
+                response = client.post("/search", json={
+                    "tag": "error_tag",
+                    "offset": 0,
+                    "limit": 10,
+                    "include_vectors": False
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "error"
+                assert "Internal error during document search" in data["message"]
+
+    def test_rag_search_endpoint_coverage(self):
+        """Test rag_search endpoint for comprehensive coverage - targeting lines 794-851"""
+        from unittest.mock import Mock, AsyncMock, patch
+        from fastapi.testclient import TestClient
+        from ADK.agent_data.api_mcp_gateway import app
+        import asyncio
+        
+        client = TestClient(app)
+        
+        # Mock the authentication and qdrant dependencies
+        with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user, \
+             patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
+             patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
+             patch('ADK.agent_data.api_mcp_gateway.auth_manager') as mock_auth_manager, \
+             patch('ADK.agent_data.api_mcp_gateway.qdrant_rag_search') as mock_rag_search, \
+             patch('ADK.agent_data.api_mcp_gateway._cache_result') as mock_cache:
+            
+            # Setup mocks
+            mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
+            mock_settings.ENABLE_AUTHENTICATION = True
+            mock_auth_manager.validate_user_access.return_value = True
+            
+            # Test 1: Service unavailable (qdrant_store is None)
+            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store', None):
+                response = client.post("/rag", json={
+                    "query_text": "test query",
+                    "limit": 5,
+                    "score_threshold": 0.7
+                })
+                assert response.status_code == 503
+            
+            # Re-setup qdrant store for successful tests
+            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant:
+                # Test 2: Insufficient permissions
+                mock_auth_manager.validate_user_access.return_value = False
+                response = client.post("/rag", json={
+                    "query_text": "test query",
+                    "limit": 5,
+                    "score_threshold": 0.7
+                })
+                assert response.status_code == 403
+                
+                # Reset permissions for next tests
+                mock_auth_manager.validate_user_access.return_value = True
+                
+                # Test 3: Successful RAG search
+                mock_rag_search.return_value = {
+                    "results": [
+                        {"doc_id": "rag1", "content": "rag content", "score": 0.9},
+                        {"doc_id": "rag2", "content": "rag content 2", "score": 0.8}
+                    ],
+                    "rag_info": {"processing_time": 0.3}
+                }
+                
+                response = client.post("/rag", json={
+                    "query_text": "test query",
+                    "metadata_filters": {"category": "test"},
+                    "tags": ["tag1", "tag2"],
+                    "limit": 5,
+                    "score_threshold": 0.7
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "success"
+                assert len(data["results"]) == 2
+                assert data["count"] == 2
+                assert "rag_info" in data
+                mock_cache.assert_called_once()  # Verify caching happened
+                
+                # Test 4: RAG search timeout
+                async def timeout_rag_search(*args, **kwargs):
+                    await asyncio.sleep(1.0)  # Longer than 0.6s timeout
+                    return {"results": []}
+                
+                mock_rag_search.side_effect = timeout_rag_search
+                
+                response = client.post("/rag", json={
+                    "query_text": "timeout query",
+                    "limit": 5,
+                    "score_threshold": 0.7
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "timeout"
+                assert "timeout" in data["message"].lower()
+                assert data["rag_info"]["timeout"] is True
+                
+                # Test 5: RAG search exception
+                mock_rag_search.side_effect = Exception("RAG search failed")
+                
+                response = client.post("/rag", json={
+                    "query_text": "error query",
+                    "limit": 5,
+                    "score_threshold": 0.7
+                })
+                assert response.status_code == 200
+                data = response.json()
+                assert data["status"] == "error"
+                assert "Internal error during RAG search" in data["message"]
+
 
 class TestCLI140m14QdrantVectorizationCoverage:
     """Comprehensive Qdrant Vectorization Tool coverage tests."""
