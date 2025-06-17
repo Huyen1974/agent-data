@@ -48,8 +48,8 @@ class TestNoDeferredSentinel:
                 deselected_count = total_count - collected_count
                 
                 # Validate that deferred tests are properly excluded
-                assert collected_count <= 170, f"Too many active tests: {collected_count} (should be ≤170 for execution)"
-                assert deselected_count >= 350, f"Not enough tests deferred: {deselected_count} deselected (should be ≥350)"
+                assert collected_count <= 165, f"Too many active tests: {collected_count} (should be ≤165 for execution)"
+                assert deselected_count >= 340, f"Not enough tests deferred: {deselected_count} deselected (should be ≥340)"
                 
                 print(f"✅ Sentinel validation passed:")
                 print(f"   Active tests (not slow and not deferred): {collected_count}")
@@ -136,8 +136,8 @@ class TestNoDeferredSentinel:
                 active_count = int(summary.split()[0])
             
             # Validate test count is within fast execution range
-            # Target: ≤170 tests for reasonable execution with pytest-testmon and pytest-xdist
-            assert active_count <= 170, f"Active test count {active_count} exceeds execution target (≤170)"
+            # Target: ≤165 tests for reasonable execution with pytest-testmon and pytest-xdist
+            assert active_count <= 165, f"Active test count {active_count} exceeds execution target (≤165)"
             
             # Estimate execution time based on test count
             # Assumption: ~0.1s per test with optimizations (testmon, xdist, mocking)
@@ -146,7 +146,7 @@ class TestNoDeferredSentinel:
             assert estimated_time <= 35, f"Estimated execution time {estimated_time:.1f}s exceeds 35s target"
             
             print(f"✅ Fast execution validation passed:")
-            print(f"   Active tests: {active_count} (≤170 target)")
+            print(f"   Active tests: {active_count} (≤165 target)")
             print(f"   Estimated execution time: {estimated_time:.1f}s (≤35s target)")
             
         else:

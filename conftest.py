@@ -374,6 +374,13 @@ def pytest_addoption(parser):
         default=".coverage_custom_report.json",
         help="File to store custom coverage data for CLI 87B.",
     )
+    # CLI140m.32: Add --qdrant-mock option for mocked testing
+    parser.addoption(
+        "--qdrant-mock",
+        action="store_true",
+        default=False,
+        help="Use mocked Qdrant client instead of real connections",
+    )
 
 
 def pytest_configure(config):
