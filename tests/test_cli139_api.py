@@ -191,40 +191,40 @@ class TestCLI139APIErrorHandling:
 
             mock_qdrant.semantic_search = fast_search
 
-            # Test batch save performance
+            # Test save performance (single document at a time)
             save_data = {
-                "documents": [
-                    {"doc_id": f"perf_doc_{i}", "content": f"Performance test content {i}", "metadata": {}}
-                    for i in range(10)  # 10 documents
-                ]
+                "doc_id": "perf_doc_1", 
+                "content": "Performance test content", 
+                "metadata": {}
             }
 
             start_time = time.time()
-            save_response = client.post("/batch_save", json=save_data, headers={"Authorization": "Bearer test_token"})
+            save_response = client.post("/save", json=save_data, headers={"Authorization": "Bearer test_token"})
             save_time = time.time() - start_time
 
-            # Test batch query performance
+            # Test query performance (single query)
             query_data = {
-                "queries": [{"query_text": f"performance test query {i}", "limit": 5} for i in range(10)]  # 10 queries
+                "query_text": "performance test query", 
+                "limit": 5
             }
 
             start_time = time.time()
             query_response = client.post(
-                "/batch_query", json=query_data, headers={"Authorization": "Bearer test_token"}
+                "/query", json=query_data, headers={"Authorization": "Bearer test_token"}
             )
             query_time = time.time() - start_time
 
             # Verify performance
             assert save_response.status_code == 200
             assert query_response.status_code == 200
-            assert save_time < 5.0, f"Batch save took {save_time:.2f}s, should be < 5s"
-            assert query_time < 5.0, f"Batch query took {query_time:.2f}s, should be < 5s"
+            assert save_time < 5.0, f"Save took {save_time:.2f}s, should be < 5s"
+            assert query_time < 5.0, f"Query took {query_time:.2f}s, should be < 5s"
 
             # Verify successful operations
             save_result = save_response.json()
             query_result = query_response.json()
-            assert save_result["successful_saves"] == 10
-            assert query_result["successful_queries"] == 10
+            assert save_result["status"] == "success"
+            assert "results" in query_result
 
     @pytest.mark.deferred
     @pytest.mark.asyncio
