@@ -69,11 +69,12 @@ def test_enforce_single_test_per_cli():
         "140m.14": 565,    # CLI 140m.14: Fixed CLI140m13 tests (27), added CLI140m14 coverage tests (15), achieved 90.3% pass rate, +21 tests
         "140m.44": 512,    # CLI 140m.44: Test Infrastructure fixes, reduced from 565 to 512 tests
         "140m.45": 515,    # CLI 140m.45: Fixed 5 Additional Category tests, deferred new tests, added 3 tests
+        "140m.49": 519,    # CLI 140m.49: Fixed 4 remaining Failed tests from CLI140m.47, added 4 tests
     }
 
     # Current CLI being validated
-    CURRENT_CLI = "140m.45"
-    PREVIOUS_CLI = "140m.44"
+    CURRENT_CLI = "140m.49"
+    PREVIOUS_CLI = "140m.45"
 
     # Get expected counts
     previous_count = CLI_TEST_COUNTS.get(PREVIOUS_CLI, 0)

@@ -38,9 +38,9 @@ class TestCLI140m15Validation:
         if collection_line:
             summary = collection_line[0]
             test_count = int(summary.split()[0])
-            
-            # For CLI140m.45, expect 515 tests (updated after adding deferred tests)
-            expected_count = 515
+
+            # For CLI140m.49, expect 519 tests (updated after adding more tests)
+            expected_count = 519
             assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
             
             # For CLI140m.44, assume pass rate ≥90% if test infrastructure is working
