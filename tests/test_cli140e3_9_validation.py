@@ -373,8 +373,8 @@ class TestCLI140e39Validation:
         test_lines = [line for line in result.stdout.split("\n") if "::test_" in line]
         test_count = len(test_lines)
 
-        # Should be 512 tests (updated for CLI140m.44)
-        expected_count = 512
+        # Should be 515 tests (updated for CLI140m.46)
+        expected_count = 515
         assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
 
         print(f"✅ Test suite count compliance: {test_count} tests")
