@@ -75,7 +75,7 @@ def run_test_batch(batch, batch_num, total_batches, csv_writer):
     # Construct pytest command with enhanced options
     cmd = [
         "pytest", "-k", k_param,
-        "--qdrant-mock", "-m", "not deferred",
+        "--qdrant-mock",
         "--tb=short", "--durations=10", "-v", "-rs",
         f"--junit-xml=test_results_batch_{batch_num}.xml"
     ]
@@ -219,7 +219,7 @@ def main():
     # Log script start
     log_with_timestamp("="*80)
     log_with_timestamp("CLI140m.47 Enhanced Batch Test Script Started")
-    log_with_timestamp("Date: June 18, 2025, 13:38 +07")
+    log_with_timestamp("Date: June 18, 2025, 13:47 +07")
     log_with_timestamp("Objective: Log detailed test F, S, Skipped, Timeout for Vòng 1")
     log_with_timestamp("Reusing CLI140m.39 batch approach with enhanced logging")
     log_with_timestamp("="*80)
