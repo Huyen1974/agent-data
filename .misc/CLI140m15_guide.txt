@@ -3147,3 +3147,38 @@ Objective: Fix 4 failing Test Infrastructure tests, commit Git changes, verify l
 CLI140m.44 CONTINUATION SUCCESSFULLY COMPLETED
 Next CLI: CLI140m.45 (fix next 3-5 failing tests)
 Date: 2025-06-17 18:30:00 +0700
+
+CLI140m.15 Guide - M1 MacBook Safety Guidelines
+=====================================================
+
+Created: June 18, 2025, 15:21 +07
+Purpose: Guidelines for safe test execution on M1 MacBook
+
+M1 Safety Requirements:
+- Batch size ≤3 tests per batch
+- Test timeout ≤8s per test
+- Batch timeout ≤24s (3×8s)
+- Sleep 0.5s between batches
+- Always use --qdrant-mock
+- Always use --timeout=8
+- Remove .testmondata before runs
+- No parallel test execution
+- No heavy tests without timeout
+
+Test Status Categories:
+- PASSED: Test completed successfully
+- FAILED: Test failed with error
+- SLOW: Test took >8s (marked as slow)
+- SKIPPED: Test was skipped
+- TIMEOUT: Test/batch timed out
+- ERROR: Execution error
+- UNKNOWN: No result found
+
+Batch Test Script Requirements:
+- Log ALL tests with comprehensive status
+- Use CSV format: name, file, status, error_runtime_reason, log_line
+- Include F, S, Skipped, Timeout examples
+- Simple logic with clear error handling
+- Timestamp all actions in logs/test_fixes.log
+- Use pytest --collect-only for test discovery
+- Use -k with test method names for execution
