@@ -85,7 +85,7 @@ def run_test_batch(batch, batch_num, total_batches, csv_writer):
     # Run the command and capture output
     start_time = time.time()
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=24)
         end_time = time.time()
         runtime = end_time - start_time
         
@@ -236,7 +236,7 @@ def main():
         # CSV Header
         csv_writer.writerow(["name", "file", "status", "error/runtime/reason", "log_line"])
         
-        # Run first ~10 tests to verify log format
+        # Run first ~10 tests to verify log format (production mode)
         test_batches = batches[:4]  # First 4 batches (~12 tests)
         
         successful_batches = 0
