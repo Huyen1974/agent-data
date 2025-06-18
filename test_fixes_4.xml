@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="4.257" timestamp="2025-06-18T17:57:35.479159+07:00" hostname="MacBook-Air-cua-Nguyen.local"><testcase classname="tests.test_enforce_single_test" name="test_enforce_single_test_per_cli" time="2.662" /></testsuite></testsuites>

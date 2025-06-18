@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="3.166" timestamp="2025-06-17T17:54:46.834009+07:00" hostname="192.168.1.12"><testcase classname="tests.test_cli139_api.TestCLI139" name="test_end_to_end_error_recovery" time="0.022" /></testsuite></testsuites>

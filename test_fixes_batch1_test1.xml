@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="34" time="9.130" timestamp="2025-06-18T18:14:54.767096+07:00" hostname="MacBook-Air-cua-Nguyen.local"><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_initialization_edge_cases" time="0.580" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_tenacity_fallback_decorators" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_metadata_edge_cases" time="0.003" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_filter_building_comprehensive" time="0.006" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_rag_search_filter_combinations" time="0.913" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_rag_search_empty_results_handling" time="0.009" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_rag_search_exception_handling" time="0.009" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_openai_unavailable" time="0.006" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_timeout_scenarios" time="0.007" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_embedding_failure" time="0.006" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_auto_tagging_failure" time="0.007" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_operations_comprehensive" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_vectorize_empty_documents" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_vectorize_invalid_documents" time="0.208" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_update_vector_status_scenarios" time="0.011" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_filter_methods_edge_cases" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_hierarchy_path_building" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_filter_building_logic" time="0.004" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_operation_processing" time="0.006" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorization_error_handling" time="0.007" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_search_query_processing" time="0.007" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_initialization_validation" time="0.004" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_search_result_formatting" time="0.005"><failure message="assert 0 &gt;= 1">self = &lt;tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage object at 0x119b877c0&gt;
+vectorization_tool = &lt;ADK.agent_data.tools.qdrant_vectorization_tool.QdrantVectorizationTool object at 0x119b9b490&gt;
+
+    @pytest.mark.deferred
+    @pytest.mark.asyncio
+    async def test_search_result_formatting(self, vectorization_tool):
+        """Test search result formatting and enrichment."""
+        # Mock Qdrant search results
+        mock_qdrant_results = {
+            "results": [
+                {
+                    "metadata": {"doc_id": "doc1"},
+                    "score": 0.9
+                },
+                {
+                    "metadata": {"doc_id": "doc2"},
+                    "score": 0.8
+                }
+            ]
+        }
+    
+        # Mock Firestore metadata
+        mock_firestore_metadata = {
+            "doc1": {
+                "title": "Physics Document",
+                "content_preview": "Physics content preview",
+                "level_1": "Science",
+                "level_2": "Physics",
+                "auto_tags": ["physics", "science"],
+                "lastUpdated": "2024-01-01T00:00:00Z",
+                "version": 1
+            },
+            "doc2": {
+                "title": "Technology Document",
+                "content_preview": "Technology content preview",
+                "level_1": "Technology",
+                "auto_tags": ["tech"],
+                "lastUpdated": "2024-01-02T00:00:00Z",
+                "version": 2
+            }
+        }
+    
+        # Mock the methods
+        vectorization_tool.qdrant_store.semantic_search = AsyncMock(return_value=mock_qdrant_results)
+        vectorization_tool._batch_get_firestore_metadata = AsyncMock(return_value=mock_firestore_metadata)
+    
+        # Test rag_search with specific parameters
+        result = await vectorization_tool.rag_search(
+            query_text="test query",
+            limit=10,
+            score_threshold=0.7,
+            metadata_filters={"level_1": "Science"},
+            tags=["physics"],
+            path_query="Science"
+        )
+    
+        # Verify successful response
+        assert result["status"] == "success"
+        assert result["query"] == "test query"
+&gt;       assert result["count"] &gt;= 1
+E       assert 0 &gt;= 1
+
+tests/test_cli140m14_coverage.py:1675: AssertionError</failure></testcase><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_search_error_logging" time="0.003" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_result_pagination" time="0.911" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_search_result_processing" time="0.313" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_error_logging_update_status" time="0.010" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_comprehensive" time="0.010" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_timeout" time="0.210" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_vectorize_document_vector_upsert_failure" time="0.402" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_vectorize_documents_comprehensive" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_vectorize_timeout_scenarios" time="0.003" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_batch_vectorize_large_batch" time="0.005" /><testcase classname="tests.test_cli140m14_coverage.TestCLI140m14QdrantVectorizationCoverage" name="test_global_tool_functions" time="3.653" /></testsuite></testsuites>

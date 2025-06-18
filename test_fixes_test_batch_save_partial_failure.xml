@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="1.991" timestamp="2025-06-18T17:34:32.343365+07:00" hostname="192.168.1.29"><testcase classname="tests.test_cli137_api.TestCLI137BatchAPI" name="test_batch_save_partial_failure" time="0.214"><failure message="AssertionError: assert 2 == 1&#10; +  where 2 = BatchSaveResponse(status='completed', batch_id='batch_20250618_103433', total_documents=3, successful_saves=2, failed_saves=2, results=[SaveDocumentResponse(status='success', doc_id='cli137_doc_1', message='Document cli137_doc_1 saved successfully in batch', vector_id='test_vector_id', embedding_dimension=1536, firestore_updated=True, error=None), SaveDocumentResponse(status='error', doc_id='cli137_doc_2', message='Error processing document cli137_doc_2: ServerError', vector_id=None, embedding_dimension=None, firestore_updated=False, error='Server error for cli137_doc_2: Simulated failure'), SaveDocumentResponse(status='success', doc_id='cli137_doc_3', message='Document cli137_doc_3 saved successfully in batch', vector_id='test_vector_id', embedding_dimension=1536, firestore_updated=True, error=None)], message='Batch save completed: 2 successful, 2 failed', error=None).failed_saves">self = &lt;tests.test_cli137_api.TestCLI137BatchAPI object at 0x11d707c70&gt;
+mock_current_user = {'email': 'test@cli137.com', 'scopes': ['read', 'write'], 'user_id': 'test_user_cli137'}
+mock_request = &lt;MagicMock spec='Request' id='4810378928'&gt;
+sample_documents = [SaveDocumentRequest(doc_id='cli137_doc_1', content='Test document content 1 for CLI137 batch testing', metadata={'tes...I137 batch testing', metadata={'test_type': 'cli137', 'doc_index': 3}, tag='cli137_batch_test', update_firestore=True)]
+
+    @pytest.mark.asyncio
+    async def test_batch_save_partial_failure(self, mock_current_user, mock_request, sample_documents):
+        """Test batch save with some failures"""
+    
+        def mock_vectorize_side_effect(*args, **kwargs):
+            doc_id = kwargs.get("doc_id", "")
+            if "doc_2" in doc_id:
+                return {"status": "failed", "error": "Simulated failure"}
+            return {"status": "success", "vector_id": "test_vector_id", "embedding_dimension": 1536}
+    
+        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", MagicMock()):
+            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
+                with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
+                    with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
+                        with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+                            # Setup mocks
+                            mock_tool.vectorize_document = AsyncMock(side_effect=mock_vectorize_side_effect)
+                            mock_settings.ENABLE_AUTHENTICATION = False
+                            mock_auth.validate_user_access.return_value = True
+                            mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+    
+                            # Create batch request
+                            batch_request = BatchSaveRequest(documents=sample_documents)
+    
+                            # Execute batch save
+                            response = await batch_save_documents(
+                                request=mock_request,
+                                batch_data=batch_request,
+                                background_tasks=MagicMock(),
+                                current_user=mock_current_user,
+                            )
+    
+                            # Assertions
+                            assert response.status == "completed"
+                            assert response.total_documents == 3
+                            assert response.successful_saves == 2
+&gt;                           assert response.failed_saves == 1
+E                           AssertionError: assert 2 == 1
+E                            +  where 2 = BatchSaveResponse(status='completed', batch_id='batch_20250618_103433', total_documents=3, successful_saves=2, failed_saves=2, results=[SaveDocumentResponse(status='success', doc_id='cli137_doc_1', message='Document cli137_doc_1 saved successfully in batch', vector_id='test_vector_id', embedding_dimension=1536, firestore_updated=True, error=None), SaveDocumentResponse(status='error', doc_id='cli137_doc_2', message='Error processing document cli137_doc_2: ServerError', vector_id=None, embedding_dimension=None, firestore_updated=False, error='Server error for cli137_doc_2: Simulated failure'), SaveDocumentResponse(status='success', doc_id='cli137_doc_3', message='Document cli137_doc_3 saved successfully in batch', vector_id='test_vector_id', embedding_dimension=1536, firestore_updated=True, error=None)], message='Batch save completed: 2 successful, 2 failed', error=None).failed_saves
+
+tests/test_cli137_api.py:177: AssertionError</failure></testcase></testsuite></testsuites>
