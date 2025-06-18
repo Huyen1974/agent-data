@@ -1,7 +1,7 @@
 import pytest
 import time
 import concurrent.futures
-from agent_data_manager.tools.delay_tool import delay_tool
+from tools.delay_tool import delay_tool
 
 
 @pytest.mark.deferred
