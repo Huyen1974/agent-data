@@ -13,11 +13,13 @@ import os
 class TestCLI140m13Coverage:
     """Test coverage for CLI140m13 objectives."""
     
+    @pytest.mark.deferred
     def test_cli140m13_basic_coverage(self):
         """Basic coverage test for CLI140m13."""
         # This is a minimal test to satisfy the file dependency
         assert True, "CLI140m13 basic coverage test"
         
+    @pytest.mark.deferred
     def test_cli140m13_file_structure(self):
         """Test that basic file structure is in place."""
         # Check that some key files exist
@@ -29,6 +31,7 @@ class TestCLI140m13Coverage:
         for file_path in key_files:
             assert os.path.exists(file_path), f"Key file missing: {file_path}"
             
+    @pytest.mark.deferred
     def test_cli140m13_completion_marker(self):
         """Mark CLI140m13 as completed for dependency purposes."""
         # This test serves as a completion marker
