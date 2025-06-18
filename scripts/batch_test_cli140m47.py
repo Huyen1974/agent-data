@@ -75,7 +75,7 @@ def run_test_batch(batch, batch_num, total_batches, csv_writer):
     # Construct pytest command with enhanced options
     cmd = [
         "pytest", "-k", k_param,
-        "--qdrant-mock", "-m", "not deferred",
+        "--qdrant-mock",
         "--tb=short", "--durations=10", "-v",
         f"--junit-xml=test_results_batch_{batch_num}.xml"
     ]
@@ -85,7 +85,9 @@ def run_test_batch(batch, batch_num, total_batches, csv_writer):
     # Run the command and capture output
     start_time = time.time()
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=24)
+        # Use shorter timeout for verification testing to demonstrate timeout logging
+        test_timeout = 10 if any("timeout_fake" in test for test in batch) else 24
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=test_timeout)
         end_time = time.time()
         runtime = end_time - start_time
         
@@ -109,14 +111,18 @@ def run_test_batch(batch, batch_num, total_batches, csv_writer):
         runtime = end_time - start_time
         log_with_timestamp(f"ERROR: Batch {batch_num} timed out after {runtime:.2f}s")
         
-        # Log timeout tests as failed
-        for test in batch:
+        # Log timeout tests separately with detailed information
+        for i, test in enumerate(batch):
+            test_name = test.split("::")[-1] if "::" in test else test
+            test_file = test.split("::")[0] if "::" in test else f"tests/{test}.py"
+            log_with_timestamp(f"Test TIMEOUT: {test_name}, File: {test_file}, Runtime: {runtime:.2f}s, Log: Line timeout-{i+1}")
+            
             csv_writer.writerow([
-                test.split("::")[-1], 
-                test.split("::")[0], 
+                test_name, 
+                test_file, 
                 "TIMEOUT", 
                 f"Timeout after {runtime:.2f}s", 
-                f"Line timeout"
+                f"Line timeout-{i+1}"
             ])
         
         return False, runtime
@@ -213,8 +219,8 @@ def main():
     # Log script start
     log_with_timestamp("="*80)
     log_with_timestamp("CLI140m.47 Enhanced Batch Test Script Started")
-    log_with_timestamp("Date: June 18, 2025, 12:48 +07")
-    log_with_timestamp("Objective: Log detailed test F, S, skipped tests for Vòng 1")
+    log_with_timestamp("Date: June 18, 2025, 13:20 +07")
+    log_with_timestamp("Objective: Log detailed test F, S, Skipped, Timeout for Vòng 1")
     log_with_timestamp("Reusing CLI140m.39 batch approach with enhanced logging")
     log_with_timestamp("="*80)
     
@@ -236,7 +242,7 @@ def main():
         # CSV Header
         csv_writer.writerow(["name", "file", "status", "error/runtime/reason", "log_line"])
         
-        # Run first ~10 tests to verify log format (production mode)
+        # Run first ~10 tests to verify log format (production mode for Vòng 1)
         test_batches = batches[:4]  # First 4 batches (~12 tests)
         
         successful_batches = 0
