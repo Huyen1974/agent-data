@@ -19,12 +19,11 @@ class TestRateLimitingEdgeCases:
         """Setup test environment"""
         self.auth_manager = AuthManager()
 
-    @pytest.mark.slow
     @pytest.mark.deferred
     def test_rate_limit_boundary_conditions(self):
         """Test rate limiting at exact boundaries"""
-        # Simulate requests at rate limit boundaries
-        request_intervals = [0.1, 0.5, 1.0, 2.0, 5.0]  # Different intervals in seconds
+        # Simulate requests at rate limit boundaries (optimized for MacBook M1)
+        request_intervals = [0.01, 0.05, 0.1, 0.2, 0.5]  # Different intervals in seconds
 
         for interval in request_intervals:
             start_time = time.time()
@@ -260,10 +259,9 @@ class TestErrorHandlingEdgeCases:
         except Exception as e:
             pytest.fail(f"Memory pressure test failed: {e}")
 
-    @pytest.mark.slow
     @pytest.mark.deferred
     def test_rapid_token_expiration(self):
-        """Test rapid token creation and expiration"""
+        """Test rapid token creation and expiration (optimized for MacBook M1)"""
         from datetime import timedelta
 
         # Create tokens with very short expiration
@@ -271,7 +269,7 @@ class TestErrorHandlingEdgeCases:
 
         for i in range(5):
             token = self.auth_manager.create_access_token(
-                {"sub": f"rapid_{i}@test.com", "email": f"rapid_{i}@test.com"}, expires_delta=timedelta(seconds=2)
+                {"sub": f"rapid_{i}@test.com", "email": f"rapid_{i}@test.com"}, expires_delta=timedelta(seconds=1)
             )
             short_lived_tokens.append(token)
 
@@ -279,8 +277,8 @@ class TestErrorHandlingEdgeCases:
             payload = self.auth_manager.verify_token(token)
             assert payload["sub"] == f"rapid_{i}@test.com"
 
-        # Wait for expiration
-        time.sleep(3)
+        # Wait for expiration (reduced for M1 compatibility)
+        time.sleep(1.5)
 
         # All tokens should now be expired
         expired_count = 0

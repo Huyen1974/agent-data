@@ -350,7 +350,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.slow
     @pytest.mark.deferred
     def test_subprocess_small_scale(self):
         """Test small-scale processing with 10 documents using mock QdrantStore."""
@@ -452,7 +451,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.slow
     @pytest.mark.deferred
     def test_subprocess_real_api_calls(self):
         """Test Agent functionalities with real Qdrant API calls - CLI 119D6 Enhanced."""
@@ -529,11 +527,11 @@ class TestMCPIntegration:
 
                     print(f"Processing document {i+1}/{num_docs}: {doc_id}")
 
-                    # Use enhanced retry logic
+                    # Use enhanced retry logic (optimized for MacBook M1)
                     response = await send_request_with_retry(
                         process=process,
                         request=test_doc,
-                        timeout=30.0,
+                        timeout=8.0,  # Reduced timeout for M1 compatibility
                         retry_config=retry_config,  # Timeout per attempt
                     )
 
