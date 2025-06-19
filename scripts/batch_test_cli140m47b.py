@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-CLI140m.47c Batch Test Script - Comprehensive Test Logging
-Created: June 18, 2025, 15:21 +07
-Purpose: Log ALL tests (Pass, F, S, Skipped, Timeout) with M1 safety
+CLI140m.55 Batch Test Script - Fixed Test Count Discrepancy
+Created: June 19, 2025, 12:30 +07
+Purpose: Log ALL tests (Pass, F, S, Skipped, Timeout) with M1 safety - FIXED DUPLICATION
 """
 
 import subprocess
@@ -20,8 +20,9 @@ class BatchTestRunner:
         self.batch_timeout = 24  # 3×8s
         self.sleep_between_batches = 0.5
         self.results = []
+        self.seen_test_ids = set()  # Track unique test IDs to prevent duplication
         self.log_file = "logs/test_fixes.log"
-        self.csv_file = "test_summary_cli140m47.txt"
+        self.csv_file = "test_summary_cli140m55.txt"  # Updated for CLI140m.55
         
     def log_action(self, message):
         """Log action with timestamp"""
@@ -33,31 +34,54 @@ class BatchTestRunner:
             f.write(f"{log_msg}\n")
     
     def collect_tests(self):
-        """Collect all tests using pytest --collect-only"""
-        self.log_action("Collecting all tests with pytest --collect-only")
+        """Collect all tests using pytest --collect-only with --qdrant-mock"""
+        self.log_action("Collecting all tests with pytest --collect-only --qdrant-mock")
         
         try:
             result = subprocess.run([
-                'python', '-m', 'pytest', '--collect-only', '-q'
+                'python', '-m', 'pytest', '--collect-only', '-q', '--qdrant-mock'
             ], capture_output=True, text=True, timeout=30)
             
             if result.returncode != 0:
                 self.log_action(f"Test collection failed: {result.stderr}")
                 return []
             
-            # Parse test collection output
+            # Parse test collection output more carefully
             tests = []
-            for line in result.stdout.split('\n'):
-                # Look for test method patterns
-                if '::test_' in line and not line.startswith(' '):
-                    # Extract test file and method
-                    parts = line.strip().split('::')
-                    if len(parts) >= 2:
-                        test_file = parts[0]
-                        test_method = parts[1]
-                        tests.append((test_file, test_method))
+            unique_tests = set()  # Ensure uniqueness during collection
             
-            self.log_action(f"Collected {len(tests)} total tests")
+            for line in result.stdout.split('\n'):
+                line = line.strip()
+                # Look for test patterns - can be file::test_method or file::TestClass::test_method
+                if '::' in line and ('test_' in line or 'Test' in line) and not line.startswith('=') and not line.startswith('<'):
+                    # Skip empty lines and headers
+                    if not line or line.startswith('=') or 'collected' in line.lower():
+                        continue
+                    
+                    # Handle both formats:
+                    # tests/file.py::test_method
+                    # tests/file.py::TestClass::test_method
+                    parts = line.split('::')
+                    if len(parts) >= 2:
+                        test_file = parts[0].strip()
+                        
+                        if len(parts) == 2:
+                            # Format: file::test_method
+                            test_method = parts[1].strip()
+                        else:
+                            # Format: file::TestClass::test_method
+                            test_method = parts[-1].strip()  # Get the last part (actual test method)
+                        
+                        # Only include actual test methods
+                        if test_method.startswith('test_'):
+                            # Create unique test identifier
+                            test_id = f"{test_file}::{test_method}"
+                            
+                            if test_id not in unique_tests:
+                                unique_tests.add(test_id)
+                                tests.append((test_file, test_method))
+            
+            self.log_action(f"Collected {len(tests)} unique tests")
             return tests
             
         except subprocess.TimeoutExpired:
@@ -104,26 +128,32 @@ class BatchTestRunner:
         except subprocess.TimeoutExpired:
             # Handle timeout - mark all tests as TIMEOUT
             for test_file, test_method in batch_tests:
-                self.results.append({
-                    'name': test_method,
-                    'file': test_file,
-                    'status': 'TIMEOUT',
-                    'error_runtime_reason': f'Batch timeout >{self.batch_timeout}s',
-                    'log_line': f'TIMEOUT: {test_method} in {test_file}'
-                })
+                test_id = f"{test_file}::{test_method}"
+                if test_id not in self.seen_test_ids:
+                    self.seen_test_ids.add(test_id)
+                    self.results.append({
+                        'name': test_method,
+                        'file': test_file,
+                        'status': 'TIMEOUT',
+                        'error_runtime_reason': f'Batch timeout >{self.batch_timeout}s',
+                        'log_line': f'TIMEOUT: {test_method} in {test_file}'
+                    })
             self.log_action(f"Batch TIMEOUT after {self.batch_timeout}s")
             return False
             
         except Exception as e:
             # Handle other errors - mark tests as ERROR
             for test_file, test_method in batch_tests:
-                self.results.append({
-                    'name': test_method,
-                    'file': test_file,
-                    'status': 'ERROR',
-                    'error_runtime_reason': f'Execution error: {e}',
-                    'log_line': f'ERROR: {test_method} in {test_file} - {e}'
-                })
+                test_id = f"{test_file}::{test_method}"
+                if test_id not in self.seen_test_ids:
+                    self.seen_test_ids.add(test_id)
+                    self.results.append({
+                        'name': test_method,
+                        'file': test_file,
+                        'status': 'ERROR',
+                        'error_runtime_reason': f'Execution error: {e}',
+                        'log_line': f'ERROR: {test_method} in {test_file} - {e}'
+                    })
             self.log_action(f"Batch ERROR: {e}")
             return False
     
@@ -141,48 +171,55 @@ class BatchTestRunner:
                 if ' PASSED ' in line:
                     test_info = self.extract_test_info(line)
                     if test_info:
-                        test_method = test_info['method']
-                        seen_tests.add(test_method)
-                        self.results.append({
-                            'name': test_method,
-                            'file': test_info['file'],
-                            'status': 'PASSED',
-                            'error_runtime_reason': f'{test_info.get("runtime", "N/A")}',
-                            'log_line': line.strip()
-                        })
+                        test_id = f"{test_info['file']}::{test_info['method']}"
+                        if test_id not in self.seen_test_ids:
+                            self.seen_test_ids.add(test_id)
+                            seen_tests.add(test_info['method'])
+                            self.results.append({
+                                'name': test_info['method'],
+                                'file': test_info['file'],
+                                'status': 'PASSED',
+                                'error_runtime_reason': f'{test_info.get("runtime", "N/A")}',
+                                'log_line': line.strip()
+                            })
                 
                 # FAILED pattern
                 elif ' FAILED ' in line:
                     test_info = self.extract_test_info(line)
                     if test_info:
-                        test_method = test_info['method']
-                        seen_tests.add(test_method)
-                        self.results.append({
-                            'name': test_method,
-                            'file': test_info['file'],
-                            'status': 'FAILED',
-                            'error_runtime_reason': self.extract_failure_reason(lines, line),
-                            'log_line': line.strip()
-                        })
+                        test_id = f"{test_info['file']}::{test_info['method']}"
+                        if test_id not in self.seen_test_ids:
+                            self.seen_test_ids.add(test_id)
+                            seen_tests.add(test_info['method'])
+                            self.results.append({
+                                'name': test_info['method'],
+                                'file': test_info['file'],
+                                'status': 'FAILED',
+                                'error_runtime_reason': self.extract_failure_reason(lines, line),
+                                'log_line': line.strip()
+                            })
                 
                 # SKIPPED pattern
                 elif ' SKIPPED ' in line:
                     test_info = self.extract_test_info(line)
                     if test_info:
-                        test_method = test_info['method']
-                        seen_tests.add(test_method)
-                        self.results.append({
-                            'name': test_method,
-                            'file': test_info['file'],
-                            'status': 'SKIPPED',
-                            'error_runtime_reason': self.extract_skip_reason(line),
-                            'log_line': line.strip()
-                        })
+                        test_id = f"{test_info['file']}::{test_info['method']}"
+                        if test_id not in self.seen_test_ids:
+                            self.seen_test_ids.add(test_id)
+                            seen_tests.add(test_info['method'])
+                            self.results.append({
+                                'name': test_info['method'],
+                                'file': test_info['file'],
+                                'status': 'SKIPPED',
+                                'error_runtime_reason': self.extract_skip_reason(line),
+                                'log_line': line.strip()
+                            })
         
         # Check for tests that took >8s (SLOW)
         avg_runtime = batch_runtime / len(batch_tests)
         if avg_runtime > 8:
             for test_file, test_method in batch_tests:
+                test_id = f"{test_file}::{test_method}"
                 if test_method in seen_tests:
                     # Update existing result to mark as SLOW
                     for result in self.results:
@@ -193,7 +230,9 @@ class BatchTestRunner:
         
         # Mark any unseen tests as missing/unknown
         for test_file, test_method in batch_tests:
-            if test_method not in seen_tests:
+            test_id = f"{test_file}::{test_method}"
+            if test_method not in seen_tests and test_id not in self.seen_test_ids:
+                self.seen_test_ids.add(test_id)
                 self.results.append({
                     'name': test_method,
                     'file': test_file,
@@ -264,7 +303,7 @@ class BatchTestRunner:
     
     def run_all_tests(self):
         """Main execution method"""
-        self.log_action("Starting CLI140m.47c batch test execution")
+        self.log_action("Starting CLI140m.55 batch test execution")
         
         # Verify pytest-timeout is installed
         try:
