@@ -264,8 +264,8 @@ class TestCLI139APIErrorHandling:
             # Verify save_metadata was called multiple times (original + retries)
             assert mock_firestore_instance.save_metadata.call_count >= 3
 
+    @pytest.mark.xfail(reason="Error classes not implemented yet")
     def test_api_error_classes_defined(self):
-        pytest.skip("Error classes not implemented yet")
         """Test that custom error classes are properly defined."""
 
         # Test error class hierarchy

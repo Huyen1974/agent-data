@@ -446,7 +446,7 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.deferred
+    @pytest.mark.skipif(not os.getenv("QDRANT_API_KEY"), reason="QDRANT_API_KEY not set, skipping real API tests")
     def test_subprocess_real_api_calls(self):
         """Test Agent functionalities with real Qdrant API calls - CLI 119D6 Enhanced."""
         # Virtual environment path

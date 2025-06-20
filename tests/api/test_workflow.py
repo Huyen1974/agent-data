@@ -79,7 +79,6 @@ class TestWorkflowOrchestration:
         assert result["doc_id"] == "test_doc_1", "Should return correct doc_id"
         assert "workflow_result" in result, "Should contain workflow result"
 
-    @pytest.mark.slow
     @patch("subprocess.run")
     def test_workflow_batch_execution_simulation(self, mock_subprocess):
         """Test batch workflow execution with 8 documents."""

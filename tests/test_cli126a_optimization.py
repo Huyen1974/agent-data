@@ -20,7 +20,6 @@ class TestCLI126AOptimization:
         assert result.returncode == 0
         assert "-n" in result.stdout, "pytest-xdist should be available"
 
-    @pytest.mark.slow
     def test_selective_test_execution_markers(self):
         """Test that test markers are properly configured for selective execution."""
         # Test that we can collect tests by markers
@@ -35,7 +34,6 @@ class TestCLI126AOptimization:
         lines = [line for line in result.stdout.split("\n") if "::" in line]
         assert len(lines) > 0, "Should collect some E2E tests"
 
-    @pytest.mark.slow
     def test_cli126a_optimization_goal_achieved(self):
         """Test that CLI 126A optimization goals are achieved."""
         # Verify we can run E2E tests quickly
