@@ -44,6 +44,7 @@ class TestCLI140gShadowTraffic:
     def setup_test_environment(self):
         """Set up test environment for shadow traffic testing."""
         self.api_gateway_url = "https://mcp-gateway-api-gateway.uc.gateway.dev/v1"
+        # CLI140m.63: Use mocked ShadowTrafficMonitor to prevent timeouts
         self.shadow_monitor = ShadowTrafficMonitor("test-project-id")
         
         # Mock external services

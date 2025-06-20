@@ -318,8 +318,8 @@ class TestCLI140e39Validation:
 
     def test_rag_latency_validation_with_auth_fix(self):
         """Test that RAG latency validation works with fixed authentication."""
-        # Skip heavy subprocess test for timeout optimization (CLI140m.50 fix)
-        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization")
+        # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
+        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
         
         # # Run the latency test script and check results
         # try:
@@ -344,8 +344,8 @@ class TestCLI140e39Validation:
 
     def test_cloud_profiler_validation_with_auth_fix(self):
         """Test that Cloud Profiler validation works with fixed authentication."""
-        # Skip heavy subprocess test for timeout optimization (CLI140m.50 fix)
-        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization")
+        # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
+        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
         
         # # Run the profiler test script and check results
         # try:
