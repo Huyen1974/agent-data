@@ -33,7 +33,7 @@ class TestCursorRealCloudIntegration:
     def test_01_health_check(self):
         """Test Cloud Run service health and authentication status"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         try:
             response = self.test_session.get(f"{self.base_url}/health")
             assert response.status_code == 200, f"Health check failed: {response.status_code}"
@@ -57,7 +57,7 @@ class TestCursorRealCloudIntegration:
     def test_02_authenticate_user(self):
         """Test user authentication and JWT token retrieval"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         try:
             # Attempt login with test user credentials
             login_data = {"username": TEST_USER_EMAIL, "password": TEST_USER_PASSWORD}
@@ -92,7 +92,7 @@ class TestCursorRealCloudIntegration:
     def test_03_access_denied_without_token(self):
         """Test that API endpoints require authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -112,7 +112,7 @@ class TestCursorRealCloudIntegration:
     def test_04_save_documents_with_auth(self):
         """Test saving multiple documents with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -245,7 +245,7 @@ class TestCursorRealCloudIntegration:
     def test_05_semantic_search_with_auth(self):
         """Test semantic search with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -316,7 +316,7 @@ class TestCursorRealCloudIntegration:
     def test_06_document_search_with_auth(self):
         """Test document search by tag with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -344,7 +344,7 @@ class TestCursorRealCloudIntegration:
     def test_07_performance_under_load(self):
         """Test API performance with multiple authenticated requests"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -397,7 +397,7 @@ class TestCursorRealCloudIntegration:
     def test_08_verify_firestore_sync(self):
         """Test that document metadata is properly synced to Firestore"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 
@@ -452,7 +452,7 @@ class TestCursorRealCloudIntegration:
     def test_09_cleanup_and_verification(self):
         """Cleanup test and verify system state"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
-        pytest.skip("Skipping real cloud integration test for timeout optimization")
+        # pytest.skip("Skipping real cloud integration test for timeout optimization")
         if not self.access_token:
             pytest.skip("Authentication token not available")
 

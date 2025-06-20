@@ -197,7 +197,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.deferred
     def test_subprocess_medium_scale(self):
         """Test medium-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path

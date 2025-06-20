@@ -1,0 +1,16 @@
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:36: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:60: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:95: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:115: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:248: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:319: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:347: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:400: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:455: Skipping real cloud integration test for timeout optimization
+SKIPPED [1] tests/api/test_embeddings_api.py:217: OPENAI_API_KEY not set, skipping real embedding tests
+SKIPPED [10] conftest.py:509: need --runslow option to run
+SKIPPED [8] conftest.py:511: need --rundeferred option to run
+SKIPPED [1] tests/test_cli139_api.py:268: Error classes not implemented yet
+SKIPPED [1] tests/test_cli140e3_9_validation.py:321: Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63
+SKIPPED [1] tests/test_cli140e3_9_validation.py:347: Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63
+SKIPPED [1] tests/test_timeout_fake.py:22: Testing skip functionality
