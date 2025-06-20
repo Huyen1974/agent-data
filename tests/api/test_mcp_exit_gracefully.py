@@ -9,7 +9,6 @@ def mcp_mock():
     yield client
 
 
-@pytest.mark.deferred
 def test_mcp_exit_gracefully(mcp_mock):
     # Register a tool and send a message
     tool_config = {"name": "test_tool", "type": "test"}

@@ -18,7 +18,6 @@ from src.agent_data_manager.tools.qdrant_vectorization_tool import (
 
 @pytest.mark.qdrant
 @pytest.mark.asyncio
-@pytest.mark.deferred
 class TestQdrantVectorizationToolCoverage:
     """Test class for QdrantVectorizationTool coverage improvement."""
 
@@ -352,7 +351,6 @@ class TestQdrantVectorizationToolCoverage:
             mock_update_status.assert_any_call("test_doc", "failed", None, "Failed to upsert vector: Upsert failed")
 
 
-@pytest.mark.deferred
 def test_get_vectorization_tool_factory():
     """Test the factory function for getting vectorization tool instance."""
     # Test with custom embedding provider first
@@ -371,7 +369,6 @@ def test_get_vectorization_tool_factory():
 
 
 @pytest.mark.asyncio
-@pytest.mark.deferred
 async def test_qdrant_vectorize_document_function():
     """Test the standalone qdrant_vectorize_document function."""
     with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
@@ -391,7 +388,6 @@ async def test_qdrant_vectorize_document_function():
 
 
 @pytest.mark.asyncio
-@pytest.mark.deferred
 async def test_qdrant_rag_search_function():
     """Test the standalone qdrant_rag_search function."""
     with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
@@ -422,7 +418,6 @@ async def test_qdrant_rag_search_function():
 
 
 @pytest.mark.asyncio
-@pytest.mark.deferred
 async def test_batch_vectorize_documents_function():
     """Test the standalone qdrant_batch_vectorize_documents function."""
     with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:

@@ -19,7 +19,7 @@ from src.agent_data_manager.api_mcp_gateway import app
 # )
 
 
-@pytest.mark.deferred
+
 class TestCLI140CSKHRag:
     """Test suite for CLI140 CSKH Agent API and RAG optimization."""
 

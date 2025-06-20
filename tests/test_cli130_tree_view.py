@@ -16,7 +16,6 @@ from datetime import datetime, timedelta
 from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
 class TestCLI130TreeView:
     """Test Tree View functionality for CLI 130."""
 

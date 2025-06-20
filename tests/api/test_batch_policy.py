@@ -9,7 +9,6 @@ from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizati
 from agent_data_manager.config.settings import settings
 
 
-@pytest.mark.deferred
 class TestBatchPolicy:
     """Test batch processing policy enforcement."""
 
@@ -35,7 +34,6 @@ class TestBatchPolicy:
         ]
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_size_enforcement(self, mock_vectorization_tool, sample_documents):
         """Test that batch processing respects the configured batch size."""
 
@@ -62,7 +60,6 @@ class TestBatchPolicy:
             assert mock_vectorization_tool.vectorize_document.call_count == 25
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_sleep_between_batches(self, mock_vectorization_tool, sample_documents):
         """Test that sleep is applied between batches but not after the last batch."""
 
@@ -97,7 +94,6 @@ class TestBatchPolicy:
             assert len(batch_sleep_calls) == 2  # Sleep between batch 1-2 and 2-3, not after 3
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_rate_limit_applied_per_document(self, mock_vectorization_tool, sample_documents):
         """Test that rate limiting is applied per document."""
 
@@ -125,7 +121,6 @@ class TestBatchPolicy:
             assert result["total_documents"] == 5
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_policy_with_failures(self, mock_vectorization_tool, sample_documents):
         """Test batch processing behavior when some documents fail."""
 
@@ -155,7 +150,6 @@ class TestBatchPolicy:
             assert result["successful"] == 6
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_empty_documents_list(self, mock_vectorization_tool):
         """Test batch processing with empty documents list."""
 
@@ -174,7 +168,6 @@ class TestBatchPolicy:
             assert result["batches_processed"] == 0
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_default_batch_configuration(self, mock_vectorization_tool, sample_documents):
         """Test that default batch configuration values are used when not specified."""
 

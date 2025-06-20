@@ -15,7 +15,7 @@ import json
 from src.agent_data_manager.cs_agent_api import app, get_firestore_manager
 
 
-@pytest.mark.deferred
+
 class TestCLI132CSAgentAPI:
     """Test CS Agent API endpoints for Tree View and Search functionality."""
 

@@ -15,7 +15,6 @@ from agent_data_manager.tools.qdrant_vectorization_tool import qdrant_rag_search
 from agent_data_manager.api_mcp_gateway import _get_cache_key, _get_cached_result, _cache_result
 
 
-@pytest.mark.deferred
 class TestHybridQueryPerformance:
     """Test performance of hybrid queries with various document loads."""
 
@@ -64,7 +63,6 @@ class TestHybridQueryPerformance:
         return mock_provider
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_hybrid_query_latency_8_documents(
         self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider
     ):
@@ -230,7 +228,6 @@ class TestHybridQueryPerformance:
                     assert "metadata" in item
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_hybrid_query_latency_50_documents(
         self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider
     ):
@@ -379,7 +376,6 @@ class TestHybridQueryPerformance:
                 assert result["count"] <= 50
                 assert latency < 0.7, f"Hybrid query latency {latency:.3f}s exceeds 0.7s target for 50 documents"
 
-    @pytest.mark.deferred
     def test_cache_key_generation_performance(self):
         """Test performance of cache key generation for queries."""
         start_time = time.time()
@@ -397,7 +393,6 @@ class TestHybridQueryPerformance:
         # Should be very fast
         assert latency < 0.1, f"Cache key generation too slow: {latency:.3f}s for 100 keys"
 
-    @pytest.mark.deferred
     def test_cache_operations_performance(self):
         """Test performance of cache operations (get/set)."""
         test_data = {
@@ -427,7 +422,6 @@ class TestHybridQueryPerformance:
         assert latency < 0.1, f"Cache operations too slow: {latency:.3f}s for 100 operations"
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_rag_caching_effectiveness(self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider):
         """Test effectiveness of RAG query caching."""
 

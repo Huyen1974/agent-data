@@ -14,7 +14,6 @@ from unittest.mock import Mock, patch, AsyncMock
 from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
 class TestMetadataValidationEnhancements:
     """Test enhanced metadata validation functionality."""
 
@@ -26,7 +25,6 @@ class TestMetadataValidationEnhancements:
             manager.db = Mock()
             return manager
 
-    @pytest.mark.deferred
     def test_validate_metadata_valid_data(self, metadata_manager):
         """Test metadata validation with valid data."""
         valid_metadata = {
@@ -43,7 +41,6 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is True
         assert len(result["errors"]) == 0
 
-    @pytest.mark.deferred
     def test_validate_metadata_missing_required_fields(self, metadata_manager):
         """Test metadata validation with missing required fields."""
         invalid_metadata = {"vectorStatus": "completed", "lastUpdated": "2025-01-27T19:00:00Z"}
@@ -53,7 +50,6 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is False
         assert "Missing required field: doc_id" in result["errors"]
 
-    @pytest.mark.deferred
     def test_validate_metadata_invalid_types(self, metadata_manager):
         """Test metadata validation with invalid data types."""
         invalid_metadata = {
@@ -69,7 +65,6 @@ class TestMetadataValidationEnhancements:
         assert "version must be an integer" in result["errors"]
         assert "level_1 must be a string or None" in result["errors"]
 
-    @pytest.mark.deferred
     def test_validate_metadata_content_size_limits(self, metadata_manager):
         """Test metadata validation with content size limits."""
         large_text = "x" * 60000  # Exceeds 50KB limit
@@ -83,7 +78,6 @@ class TestMetadataValidationEnhancements:
         assert "original_text exceeds 50KB limit" in result["errors"]
         assert "level_1 must be 100 characters or less" in result["errors"]
 
-    @pytest.mark.deferred
     def test_validate_metadata_invalid_timestamps(self, metadata_manager):
         """Test metadata validation with invalid timestamp formats."""
         invalid_metadata = {
@@ -97,7 +91,6 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is False
         assert any("must be a valid ISO format timestamp" in error for error in result["errors"])
 
-    @pytest.mark.deferred
     def test_validate_version_increment_valid(self, metadata_manager):
         """Test version increment validation with valid increments."""
         existing_data = {"version": 5}
@@ -116,7 +109,6 @@ class TestMetadataValidationEnhancements:
 
         assert result is True
 
-    @pytest.mark.deferred
     def test_validate_version_increment_decrease(self, metadata_manager):
         """Test version increment validation with version decrease."""
         existing_data = {"version": 5}
@@ -183,7 +175,6 @@ class TestMetadataValidationEnhancements:
         assert stats["oldest_document"] == "2025-01-27T17:00:00Z"
 
 
-@pytest.mark.deferred
 class TestChangeReportingEnhancements:
     """Test enhanced change reporting functionality."""
 
@@ -215,7 +206,6 @@ class TestChangeReportingEnhancements:
         except ImportError as e:
             pytest.skip(f"Failed to import {function_name}: {e}")
 
-    @pytest.mark.deferred
     def test_calculate_string_similarity(self):
         """Test string similarity calculation."""
         calculate_string_similarity = self._import_function_safely("calculate_string_similarity")
@@ -234,7 +224,6 @@ class TestChangeReportingEnhancements:
         assert calculate_string_similarity("", "") == 0.0
         assert calculate_string_similarity("hello", "") == 0.0
 
-    @pytest.mark.deferred
     def test_analyze_change_impact(self):
         """Test change impact analysis."""
         analyze_change_impact = self._import_function_safely("analyze_change_impact")
@@ -252,7 +241,6 @@ class TestChangeReportingEnhancements:
         assert "vector_search" in impact["affected_systems"]
         assert "vectorization_completed" in impact["workflow_impact"]
 
-    @pytest.mark.deferred
     def test_calculate_data_quality_metrics(self):
         """Test data quality metrics calculation."""
         calculate_data_quality_metrics = self._import_function_safely("calculate_data_quality_metrics")
@@ -273,7 +261,6 @@ class TestChangeReportingEnhancements:
         assert metrics["validity_score"] == 1.0  # All required fields present
         assert metrics["quality_trend"] == "improving"  # More complete than before
 
-    @pytest.mark.deferred
     def test_enhanced_change_analysis(self):
         """Test enhanced change analysis with detailed metrics."""
         analyze_changes = self._import_function_safely("analyze_changes")
@@ -306,11 +293,9 @@ class TestChangeReportingEnhancements:
             assert "new_type" in field_change
 
 
-@pytest.mark.deferred
 class TestFirestoreRulesValidation:
     """Test Firestore rules deployment and validation."""
 
-    @pytest.mark.deferred
     def test_firestore_rules_syntax(self):
         """Test that Firestore rules file has valid syntax."""
         import os
@@ -331,7 +316,6 @@ class TestFirestoreRulesValidation:
         assert "agent_sessions" in content
         assert "agent_data" in content
 
-    @pytest.mark.deferred
     def test_firebase_json_configuration(self):
         """Test Firebase configuration file."""
         import json
@@ -368,11 +352,9 @@ class TestFirestoreRulesValidation:
         assert "change_reports" in index_collections
 
 
-@pytest.mark.deferred
 class TestAlertingPolicyValidation:
     """Test alerting policy configuration and deployment."""
 
-    @pytest.mark.deferred
     def test_alert_policy_configuration(self):
         """Test alerting policy JSON configuration."""
         import json
@@ -401,7 +383,6 @@ class TestAlertingPolicyValidation:
             assert "comparison" in threshold
             assert "thresholdValue" in threshold
 
-    @pytest.mark.deferred
     def test_alert_policy_metrics_references(self):
         """Test that alert policy references correct metrics."""
         import json
@@ -417,7 +398,6 @@ class TestAlertingPolicyValidation:
 
 
 @pytest.mark.integration
-@pytest.mark.deferred
 class TestCLI119D10Integration:
     """Integration tests for CLI119D10 enhancements."""
 
@@ -482,7 +462,6 @@ class TestCLI119D10Integration:
             # Verify that set was called (metadata was saved)
             manager.db.collection.return_value.document.return_value.set.assert_called_once()
 
-    @pytest.mark.deferred
     def test_change_reporting_integration(self):
         """Test change reporting with enhanced analytics."""
         generate_change_report = self._import_function_safely("generate_change_report")

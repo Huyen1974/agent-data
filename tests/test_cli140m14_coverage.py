@@ -25,7 +25,6 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m14APIMCPGatewayCoverage:
     """Comprehensive API MCP Gateway coverage tests."""
 
-    @pytest.mark.deferred
     def test_startup_event_initialization_errors(self):
         """Test startup event with initialization errors."""
         # Test that startup event can handle initialization failures gracefully
@@ -36,7 +35,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             from ADK.agent_data.api_mcp_gateway import app
             assert app is not None
 
-    @pytest.mark.deferred
     def test_get_current_user_dependency_disabled_auth(self):
         """Test get_current_user dependency when authentication is disabled."""
         from ADK.agent_data.api_mcp_gateway import get_current_user
@@ -48,7 +46,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             result = get_current_user()
             assert result is not None
 
-    @pytest.mark.deferred
     def test_get_current_user_service_unavailable(self):
         """Test get_current_user when auth service is unavailable."""
         from ADK.agent_data.api_mcp_gateway import get_current_user
@@ -63,7 +60,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             except Exception:
                 pass  # Expected for missing auth
 
-    @pytest.mark.deferred
     def test_health_check_degraded_status(self):
         """Test health check with degraded service status."""
         client = TestClient(app)
@@ -76,7 +72,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should return health status even if degraded
             assert response.status_code in [200, 503]
 
-    @pytest.mark.deferred
     def test_login_authentication_disabled(self):
         """Test login endpoint when authentication is disabled."""
         client = TestClient(app)
@@ -91,7 +86,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle disabled auth appropriately
             assert response.status_code in [200, 400, 404, 501]
 
-    @pytest.mark.deferred
     def test_login_service_unavailable(self):
         """Test login when authentication service is unavailable."""
         client = TestClient(app)
@@ -104,7 +98,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle service errors gracefully
             assert response.status_code in [400, 500, 503]
 
-    @pytest.mark.deferred
     def test_register_authentication_disabled(self):
         """Test registration when authentication is disabled."""
         client = TestClient(app)
@@ -123,7 +116,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle disabled auth appropriately
             assert response.status_code in [200, 400, 404, 501]
 
-    @pytest.mark.deferred
     def test_api_endpoints_with_authentication_errors(self):
         """Test API endpoints with various authentication error scenarios."""
         with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user:
@@ -149,7 +141,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 # Should handle missing auth appropriately
                 assert response.status_code in [200, 401, 403, 404, 503]
 
-    @pytest.mark.deferred
     def test_cache_operations_and_initialization(self):
         """Test cache operations and initialization."""
         from ADK.agent_data.api_mcp_gateway import ThreadSafeLRUCache, _get_cache_key, initialize_caches
@@ -185,7 +176,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
         # Test cache initialization
         initialize_caches()  # Should not raise
 
-    @pytest.mark.deferred
     def test_rate_limiting_and_user_identification(self):
         """Test rate limiting and user identification functions for comprehensive coverage"""
         from unittest.mock import Mock, patch
@@ -488,7 +478,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             finally:
                 loop.close()
 
-    @pytest.mark.deferred
     def test_authentication_endpoints_and_save_document_coverage(self):
         """Test authentication endpoints and save document endpoint for comprehensive coverage."""
         from fastapi.testclient import TestClient
@@ -624,7 +613,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle failure gracefully
             assert response.status_code in [200, 400, 401, 422, 503]
 
-    @pytest.mark.deferred
     def test_query_vectors_endpoint_coverage(self):
         """Test query vectors endpoint for additional coverage to reach 75%+"""
         from fastapi.testclient import TestClient
@@ -926,7 +914,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         tool._initialized = True
         return tool
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_initialization_edge_cases(self, vectorization_tool):
         """Test initialization with various edge cases."""
@@ -937,7 +924,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         
         assert tool._initialized is True
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_tenacity_fallback_decorators(self, vectorization_tool):
         """Test tenacity decorator fallback when tenacity is not available."""
@@ -952,7 +938,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             except Exception:
                 pass  # Expected if mocks aren't set up properly
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_metadata_edge_cases(self, vectorization_tool):
         """Test batch metadata retrieval with edge cases."""
@@ -972,7 +957,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         result = await vectorization_tool._batch_get_firestore_metadata(["test_doc"])
         assert result == {}
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_filter_building_comprehensive(self, vectorization_tool):
         """Test comprehensive filter building and application."""
@@ -1031,7 +1015,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             # Filter building might not support all operators
             pass
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_rag_search_filter_combinations(self, vectorization_tool):
         """Test RAG search with various filter combinations."""
@@ -1108,7 +1091,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         )
         assert result["status"] == "success"
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_rag_search_empty_results_handling(self, vectorization_tool):
         """Test RAG search with empty results from Qdrant."""
@@ -1125,7 +1107,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["count"] == 0
         assert result["rag_info"]["qdrant_results"] == 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_rag_search_exception_handling(self, vectorization_tool):
         """Test RAG search exception handling."""
@@ -1142,7 +1123,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["results"] == []
         assert result["count"] == 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_openai_unavailable(self, vectorization_tool):
         """Test vectorize_document when OpenAI is unavailable."""
@@ -1156,7 +1136,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "OpenAI async client not available" in result["error"]
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_timeout_scenarios(self, vectorization_tool):
         """Test vectorize_document with timeout scenarios."""
@@ -1173,7 +1152,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert result["status"] in ["timeout", "failed"]
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_embedding_failure(self, vectorization_tool):
         """Test vectorize_document with embedding generation failure."""
@@ -1191,7 +1169,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "Failed to generate embedding" in result["error"]
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_auto_tagging_failure(self, vectorization_tool):
         """Test vectorize_document with auto-tagging failure."""
@@ -1210,7 +1187,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                 # Should still succeed even if auto-tagging fails
                 assert result["status"] in ["success", "failed"]
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_operations_comprehensive(self, vectorization_tool):
         """Test comprehensive batch operations."""
@@ -1237,7 +1213,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["status"] in ["completed", "failed"]
         assert "total_documents" in result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_empty_documents(self, vectorization_tool):
         """Test batch vectorize with empty documents list."""
@@ -1245,7 +1220,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["status"] == "failed"
         assert "No documents provided" in result["error"]
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_invalid_documents(self, vectorization_tool):
         """Test batch vectorize with invalid document formats."""
@@ -1260,7 +1234,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["status"] in ["completed", "failed"]
         assert result["total_documents"] == len(invalid_documents)
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_update_vector_status_scenarios(self, vectorization_tool):
         """Test _update_vector_status with various scenarios."""
@@ -1285,7 +1258,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             "pending"
         )
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_filter_methods_edge_cases(self, vectorization_tool):
         """Test filter methods with edge cases."""
@@ -1328,7 +1300,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         filtered = vectorization_tool._filter_by_path(results_with_paths, "Science")
         assert len(filtered) == 2
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_hierarchy_path_building(self, vectorization_tool):
         """Test _build_hierarchy_path with various metadata structures."""
@@ -1353,7 +1324,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         path = vectorization_tool._build_hierarchy_path(result)
         assert path == "Uncategorized"
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_filter_building_logic(self, vectorization_tool):
         """Test filter building logic - reused from CLI140m9 coverage."""
@@ -1391,7 +1361,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                 # Edge cases might cause exceptions, which is acceptable
                 pass
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_operation_processing(self, vectorization_tool):
         """Test batch operation processing - reused from CLI140m9 coverage."""
@@ -1433,7 +1402,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             # Should have some failures due to invalid documents
             assert failed_count > 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorization_error_handling(self, vectorization_tool):
         """Test vectorization error handling for lines 290-305."""
@@ -1485,7 +1453,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "latency" in result
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_search_query_processing(self, vectorization_tool):
         """Test search query processing and error handling for lines 432-549."""
@@ -1576,7 +1543,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert result["count"] == 0
             assert result["query"] == "empty results query"
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_initialization_validation(self, vectorization_tool):
         """Test initialization validation covering lines 13-30."""
@@ -1616,7 +1582,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                     mock_qdrant.assert_called_once()
                     mock_firestore.assert_called_once()
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_search_result_formatting(self, vectorization_tool):
         """Test search result formatting and enrichment."""
@@ -1698,7 +1663,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result["rag_info"]["qdrant_results"] == 2
         assert result["rag_info"]["firestore_filtered"] == 2
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_search_error_logging(self, vectorization_tool):
         """Test error logging in rag_search method to cover lines 585-586 (error logging in rag_search)."""
@@ -1725,7 +1689,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         # Verify the _qdrant_operation_with_retry was called
         vectorization_tool._qdrant_operation_with_retry.assert_called_once()
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_result_pagination(self, vectorization_tool):
         """Test result pagination with various limits."""
@@ -1773,7 +1736,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         last_call_args = vectorization_tool.qdrant_store.semantic_search.call_args_list[-1]
         assert last_call_args[1]["limit"] == test_limits[-1] * 2  # Should fetch twice the limit
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_search_result_processing(self, vectorization_tool):
         """Test search result processing and pagination - covers lines 444-532."""
@@ -1850,7 +1812,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert result_all["status"] == "success"
         assert len(result_all["results"]) == 4  # All 4 docs returned
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_error_logging_update_status(self, vectorization_tool):
         """Test error logging in _update_vector_status - covers lines 585-586."""
@@ -1897,7 +1858,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         # Should have been called 3 times total (2 failures + 1 success)
         assert vectorization_tool.firestore_manager.save_metadata.call_count == 3
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_comprehensive(self, vectorization_tool):
         """Test vectorize_document method comprehensively - covers lines 396-549."""
@@ -1940,7 +1900,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "firestore_updated" in result
             assert result["firestore_updated"] is True
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_embedding_failure(self, vectorization_tool):
         """Test vectorize_document with embedding generation failure."""
@@ -1962,7 +1921,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "latency" in result
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_vectorize_document_timeout(self, vectorization_tool):
         """Test vectorize_document with timeout scenarios."""
@@ -1985,7 +1943,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert result["doc_id"] == "test_doc_timeout"
             assert "latency" in result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio 
     async def test_vectorize_document_vector_upsert_failure(self, vectorization_tool):
         """Test vectorize_document when vector upsert fails."""
@@ -2014,7 +1971,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
             assert "latency" in result
             assert result["performance_target_met"] is False
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_documents_comprehensive(self, vectorization_tool):
         """Test batch_vectorize_documents method comprehensively - covers lines 611-686."""
@@ -2057,7 +2013,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert "results" in result
         assert len(result["results"]) == len(test_documents)
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_empty_documents(self, vectorization_tool):
         """Test batch_vectorize_documents with empty document list."""
@@ -2070,7 +2025,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         assert "No documents provided" in result["error"]
         assert result["results"] == []
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_timeout_scenarios(self, vectorization_tool):
         """Test batch processing with timeout scenarios."""
@@ -2098,7 +2052,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         for res in result["results"]:
             assert res["status"] in ["timeout", "failed"]
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_vectorize_large_batch(self, vectorization_tool):
         """Test batch processing with large number of documents to trigger batching logic."""
@@ -2129,7 +2082,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
         # Verify batch processing was called for all documents
         assert vectorization_tool._vectorize_document_with_timeout.call_count == 25
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_global_tool_functions(self, vectorization_tool):
         """Test global tool functions to achieve ≥80% coverage."""
@@ -2184,7 +2136,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         tool._initialized = True
         return tool
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_initialization_error_paths(self, ingestion_tool):
         """Test initialization error handling."""
@@ -2196,7 +2147,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         
         assert tool._initialized is True
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_cache_operations_comprehensive(self, ingestion_tool):
         """Test comprehensive cache operations."""
@@ -2214,7 +2164,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         # Check if expired
         assert not ingestion_tool._is_cache_valid(time.time() - 0.2)
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_disk_operations_comprehensive(self, ingestion_tool):
         """Test comprehensive disk operations."""
@@ -2241,7 +2190,6 @@ class TestCLI140m14DocumentIngestionCoverage:
                 saved_content = f.read()
                 assert saved_content == special_content
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_performance_metrics_edge_cases(self, ingestion_tool):
         """Test performance metrics in various scenarios."""
@@ -2260,7 +2208,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         assert metrics["total_calls"] >= 5
         assert metrics["total_time"] > 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_error_handling_comprehensive(self, ingestion_tool):
         """Test comprehensive error handling scenarios."""
@@ -2275,7 +2222,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         
         assert result["status"] in ["success", "failed", "partial", "timeout"]
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_processing_edge_cases(self, ingestion_tool):
         """Test batch processing with edge cases."""
@@ -2297,7 +2243,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         assert result["status"] in ["completed", "failed"]
         assert result["total_documents"] == len(invalid_documents)
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_ingestion_validation(self, ingestion_tool):
         """Test batch ingestion with metadata validation."""
@@ -2329,7 +2274,6 @@ class TestCLI140m14DocumentIngestionCoverage:
         assert result["total_documents"] == 3
         assert result["successful"] >= 0 and result["failed"] >= 0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_cache_cleanup_edge_cases(self, ingestion_tool):
         """Test cache overflow handling and cleanup mechanisms."""
@@ -2461,7 +2405,6 @@ class TestCLI140m14ValidationAndCompliance:
             # Expected in test environment without proper config
             pass
 
-    @pytest.mark.deferred
     def test_coverage_and_pass_rate_validation(self):
         """Validate that coverage and pass rate targets are achievable."""
         import subprocess
@@ -2484,7 +2427,6 @@ class TestCLI140m14ValidationAndCompliance:
         
         print(f"✅ CLI140m14 coverage validation: {cli140m14_test_count} comprehensive tests")
 
-    @pytest.mark.deferred
     def test_document_ingestion_cache_and_hashing(self):
         """Test document ingestion cache and hashing mechanisms."""
         from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool

@@ -9,7 +9,7 @@ import pytest
 from pathlib import Path
 
 
-@pytest.mark.deferred
+
 class TestCLI138Docs:
     """Test suite for CLI 138 documentation validation."""
 

@@ -41,7 +41,6 @@ except ImportError:
         return '{"status": "success"}', 200
 
 
-@pytest.mark.deferred
 class TestCLI135AutomatedLogging:
     """Test class for CLI 135 automated CI/CD logging functionality."""
 

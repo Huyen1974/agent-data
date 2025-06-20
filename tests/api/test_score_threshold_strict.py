@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.deferred
+
 def test_score_threshold_one(client_with_qdrant_override):
 
     payload = {

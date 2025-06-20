@@ -12,7 +12,6 @@ from agent_data_manager.agent.agent_data_agent import AgentDataAgent
 from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 
-@pytest.mark.deferred
 class TestSessionMemory:
     """Test session memory functionality."""
 
@@ -152,7 +151,6 @@ class TestSessionMemory:
         assert mock_firestore_manager.save_metadata.call_count == 8
 
 
-@pytest.mark.deferred
 class TestPubSubEvents:
     """Test Pub/Sub A2A communication functionality."""
 
@@ -261,7 +259,6 @@ class TestPubSubEvents:
             assert result["reason"] == "pubsub_not_available"
 
 
-@pytest.mark.deferred
 class TestIntegration:
     """Test integration between session management, event publishing, and vectorization."""
 
@@ -400,7 +397,6 @@ class TestIntegration:
             assert agent.current_session_id == session_id
 
 
-@pytest.mark.deferred
 class TestErrorHandling:
     """Test error handling in session and event management."""
 

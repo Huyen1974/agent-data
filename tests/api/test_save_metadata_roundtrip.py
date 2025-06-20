@@ -10,7 +10,6 @@ def firestore_mock():
     yield client
 
 
-@pytest.mark.deferred
 def test_save_metadata_roundtrip(firestore_mock, client_with_qdrant_override: TestClient):
     metadata = {"doc_id": "test_doc", "title": "Test Document", "status": "active"}
     collection = firestore_mock.collection("metadata")

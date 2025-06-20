@@ -1,7 +1,6 @@
 import pytest
 
 
-@pytest.mark.deferred
 def test_filter_tag_with_no_matches(client_with_qdrant_override):
 
     payload = {

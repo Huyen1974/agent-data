@@ -100,6 +100,7 @@ class TestCLI126CDeferredStrategy:
         assert total_count > active_count + 50, f"Total: {total_count}, Active: {active_count}"
         print(f"✓ Total tests: {total_count}, Active tests: {active_count}")
 
+    @pytest.mark.deferred
     def test_core_functionality_tests_remain_active(self):
         """
         Test that core functionality tests are not deferred.

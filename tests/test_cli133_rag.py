@@ -8,7 +8,6 @@ from src.agent_data_manager.tools.qdrant_vectorization_tool import (
 )
 
 
-@pytest.mark.deferred
 class TestCLI133RAG:
     """Test suite for RAG functionality combining Qdrant semantic search with Firestore metadata filtering."""
 

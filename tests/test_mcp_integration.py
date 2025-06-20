@@ -100,10 +100,8 @@ async def _read_response(process: subprocess.Popen) -> Optional[Dict[str, Any]]:
         await asyncio.sleep(0.1)
 
 
-@pytest.mark.deferred
 class TestMCPIntegration:
 
-    @pytest.mark.deferred
     def test_subprocess_single_save(self):
         """Test single save_document call with mock QdrantStore via subprocess."""
         # Virtual environment path
@@ -300,7 +298,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.deferred
     def test_subprocess_mock_qdrant_environment(self):
         """Test that mock QdrantStore is properly initialized via environment variable."""
         # Virtual environment path
@@ -350,7 +347,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.deferred
     def test_subprocess_small_scale(self):
         """Test small-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path
@@ -585,7 +581,6 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.deferred
     def test_timeout_retry_logic(self):
         """Test timeout and retry logic with simulated delays and failures - CLI 119D6."""
         # Virtual environment path

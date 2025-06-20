@@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-@pytest.mark.deferred
 def test_semantic_search_multiple_queries(client_with_qdrant_override: TestClient):
     queries = [
         {"query_text": "modern astronomy discoveries", "expected_id": 9001},

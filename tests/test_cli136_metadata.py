@@ -16,7 +16,7 @@ from typing import List
 from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
+
 class TestCLI136MetadataOptimization:
     """Test CLI 136 metadata query optimization."""
 

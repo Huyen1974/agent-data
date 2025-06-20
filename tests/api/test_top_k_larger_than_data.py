@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.deferred
+
 def test_top_k_exceeds_data_count(client_with_qdrant_override):
 
     payload = {

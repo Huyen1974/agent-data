@@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-@pytest.mark.deferred
 def test_bad_topk_value_raises(client_with_qdrant_override: TestClient):
     for invalid_top_k in [0, -1]:
         response = client_with_qdrant_override.post(

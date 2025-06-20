@@ -1,0 +1,21 @@
+2025-06-20 12:59:48: Starting CLI140m.61 batch test execution with optimized regex parsing
+2025-06-20 12:59:48: Cleaning up previous test data
+2025-06-20 12:59:48: Collecting all tests with pytest --collect-only --qdrant-mock
+2025-06-20 12:59:51: Collected 513 unique tests with optimized regex
+2025-06-20 12:59:51: Created 171 batches of ≤3 tests
+2025-06-20 12:59:51: Limited to 3 batches for testing
+2025-06-20 12:59:51: Running batch 1/3
+2025-06-20 12:59:51: Running batch: ['test_all_tags_lowercase_in_fixtures', 'test_root_endpoint', 'test_health_endpoint_no_services']
+2025-06-20 12:59:54: Batch completed in 2.59s
+2025-06-20 12:59:55: Running batch 2/3
+2025-06-20 12:59:55: Running batch: ['test_save_document_success', 'test_save_document_service_unavailable', 'test_save_document_invalid_request']
+2025-06-20 12:59:57: Batch completed in 2.76s
+2025-06-20 12:59:58: Running batch 3/3
+2025-06-20 12:59:58: Running batch: ['test_query_vectors_success', 'test_query_vectors_service_unavailable', 'test_query_vectors_invalid_request']
+2025-06-20 13:00:01: Batch completed in 2.75s
+2025-06-20 13:00:01: Saving 9 test results to test_summary_cli140m61.txt
+2025-06-20 13:00:01: Test summary: {'PASSED': 9}
+2025-06-20 13:00:01: Completed: 3/3 batches successful
+
+Batch testing completed. Results saved to test_summary_cli140m61.txt
+Check logs/test_fixes.log for detailed execution log

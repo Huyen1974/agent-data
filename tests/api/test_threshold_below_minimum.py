@@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-@pytest.mark.deferred
 def test_threshold_below_minimum(client_with_qdrant_override: TestClient):
     response = client_with_qdrant_override.post(
         "/semantic_search_cosine",

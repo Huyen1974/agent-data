@@ -30,11 +30,9 @@ from agent_data_manager.utils.structured_logger import (
 
 @pytest.mark.logging
 @pytest.mark.core
-@pytest.mark.deferred
 class TestStructuredJSONFormatter:
     """Test JSON formatting functionality."""
 
-    @pytest.mark.deferred
     def test_basic_json_format(self):
         """Test basic log record JSON formatting."""
         formatter = StructuredJSONFormatter()
@@ -64,7 +62,6 @@ class TestStructuredJSONFormatter:
         assert "thread" in log_data
         assert "thread_name" in log_data
 
-    @pytest.mark.deferred
     def test_context_fields(self):
         """Test that context fields are included in JSON output."""
         formatter = StructuredJSONFormatter()
@@ -96,7 +93,6 @@ class TestStructuredJSONFormatter:
         assert log_data["request_id"] == "req_789"
         assert log_data["duration_ms"] == 250
 
-    @pytest.mark.deferred
     def test_exception_formatting(self):
         """Test exception info formatting."""
         formatter = StructuredJSONFormatter()
@@ -127,11 +123,9 @@ class TestStructuredJSONFormatter:
 
 @pytest.mark.logging
 @pytest.mark.core
-@pytest.mark.deferred
 class TestSamplingFilter:
     """Test log sampling functionality."""
 
-    @pytest.mark.deferred
     def test_error_always_passes(self):
         """Test that ERROR and above always pass the filter."""
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
@@ -148,7 +142,6 @@ class TestSamplingFilter:
         assert sampling_filter.filter(error_record) is True
         assert sampling_filter.filter(critical_record) is True
 
-    @pytest.mark.deferred
     def test_warning_always_passes(self):
         """Test that WARNING always passes the filter."""
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
@@ -161,7 +154,6 @@ class TestSamplingFilter:
         assert sampling_filter.filter(warning_record) is True
 
     @patch("random.random")
-    @pytest.mark.deferred
     def test_info_sampling(self, mock_random):
         """Test INFO log sampling at 10% rate."""
         sampling_filter = SamplingFilter(info_sample_rate=0.1)
@@ -181,11 +173,9 @@ class TestSamplingFilter:
 
 @pytest.mark.logging
 @pytest.mark.integration
-@pytest.mark.deferred
 class TestErrorMetricsHandler:
     """Test error metrics functionality."""
 
-    @pytest.mark.deferred
     def test_metrics_handler_initialization(self):
         """Test that metrics handler initializes correctly."""
         handler = ErrorMetricsHandler()
@@ -223,11 +213,9 @@ class TestErrorMetricsHandler:
 
 @pytest.mark.logging
 @pytest.mark.core
-@pytest.mark.deferred
 class TestStructuredLogger:
     """Test the main StructuredLogger class."""
 
-    @pytest.mark.deferred
     def test_logger_initialization(self):
         """Test logger initialization with temporary file."""
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -253,7 +241,6 @@ class TestStructuredLogger:
             logger.error("Error message", exc_info=False, duration_ms=100)
             logger.critical("Critical message", exc_info=False)
 
-    @pytest.mark.deferred
     def test_log_file_creation(self):
         """Test that log file is created and contains JSON entries."""
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -280,11 +267,9 @@ class TestStructuredLogger:
 
 @pytest.mark.logging
 @pytest.mark.core
-@pytest.mark.deferred
 class TestLoggerRegistry:
     """Test the global logger registry functionality."""
 
-    @pytest.mark.deferred
     def test_get_logger_singleton(self):
         """Test that get_logger returns the same instance for the same name."""
         logger1 = get_logger("test.singleton")
@@ -292,7 +277,6 @@ class TestLoggerRegistry:
 
         assert logger1 is logger2
 
-    @pytest.mark.deferred
     def test_get_logger_different_names(self):
         """Test that different names return different logger instances."""
         logger1 = get_logger("test.logger1")
@@ -304,7 +288,6 @@ class TestLoggerRegistry:
 
 @pytest.mark.logging
 @pytest.mark.integration
-@pytest.mark.deferred
 class TestLoggingIntegration:
     """Integration tests for the complete logging system."""
 

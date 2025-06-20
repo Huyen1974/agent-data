@@ -41,7 +41,6 @@ def create_random_vector(dimensions: int = VECTOR_DIMENSION, precision: int = 7)
 # Test implementations will follow
 
 
-@pytest.mark.deferred
 def test_vector_id_collision():
     """Tests that inserting a vector with an existing ID replaces the old one."""
     point_id = random.randint(100000, 200000)  # Using integer ID
@@ -77,7 +76,6 @@ def test_vector_id_collision():
     assert retrieved_point["metadata"] == metadata2
 
 
-@pytest.mark.deferred
 def test_vector_truncation_protection():
     """Tests that inserting a vector with incorrect (too large) dimension is rejected."""
     point_id = random.randint(200001, 300000)  # Using integer ID

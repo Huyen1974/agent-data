@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.deferred
+
 def test_filter_tag_case_insensitive(client_with_qdrant_override):
 
     payload = {

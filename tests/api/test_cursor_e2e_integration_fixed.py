@@ -16,7 +16,6 @@ from agent_data_manager.vector_store.qdrant_store import QdrantStore
 # from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
 class TestCursorE2EIntegrationFixed:
     """End-to-end integration tests for Cursor IDE to Qdrant/Firestore workflow."""
 
@@ -393,7 +392,6 @@ class TestCursorE2EIntegrationFixed:
             # Verify Firestore was updated with failure status
             assert mock_firestore.save_metadata.call_count >= 1
 
-    @pytest.mark.deferred
     def test_cursor_integration_performance_requirements(self):
         """Test that the integration meets performance requirements for Cursor IDE."""
         # Performance requirements for Cursor IDE integration:

@@ -10,7 +10,6 @@ from unittest.mock import patch, AsyncMock, Mock, MagicMock
 from fastapi.testclient import TestClient
 
 
-@pytest.mark.deferred
 class TestCLI140e39Validation:
     """Test class for CLI140e.3.9 validation and completion."""
 
@@ -371,13 +370,26 @@ class TestCLI140e39Validation:
 
     def test_test_suite_count_compliance(self):
         """Test that the test suite count is compliant with CLI140m.44 target (512 tests)."""
-        result = subprocess.run(["pytest", "--collect-only", "-q"], capture_output=True, text=True)
+        result = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], capture_output=True, text=True)
 
         assert result.returncode == 0, "Test collection should succeed"
 
-        # Count actual tests (excluding collection summary)
-        test_lines = [line for line in result.stdout.split("\n") if "::test_" in line]
-        test_count = len(test_lines)
+        # Parse the output to find the test count (same logic as meta count test)
+        lines = result.stdout.strip().split("\n")
+        test_count = 0
+        
+        # First try to find the summary line like "519 tests collected in 1.71s"
+        for line in lines:
+            if "tests collected" in line or "test collected" in line:
+                words = line.split()
+                if words and words[0].isdigit():
+                    test_count = int(words[0])
+                    break
+        
+        # If summary line method didn't work, count test lines directly
+        if test_count == 0:
+            test_lines = [line for line in lines if "::test_" in line]
+            test_count = len(test_lines)
 
         # Updated for CLI140m.48 to match current test count (was 515)
         expected_count = 519

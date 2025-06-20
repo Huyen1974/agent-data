@@ -1,0 +1,19 @@
+277,280d276
+< tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation
+< tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work
+< tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible
+< tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase
+521c517,527
+< 519 tests collected in 1.80s
+---
+> ==================================== ERRORS ====================================
+> ________________ ERROR collecting tests/test_cli127_package.py _________________
+> tests/test_cli127_package.py:12: in <module>
+>     class TestCLI127PackageSetup:
+> tests/test_cli127_package.py:15: in TestCLI127PackageSetup
+>     @pytest.mark.deferred
+> E   NameError: name 'pytest' is not defined
+> =========================== short test summary info ============================
+> ERROR tests/test_cli127_package.py - NameError: name 'pytest' is not defined
+> !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+> 515 tests collected, 1 error in 2.08s

@@ -22,7 +22,7 @@ from unittest.mock import MagicMock
 from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
+
 class TestCLI131AdvancedSearch:
     """Test suite for CLI 131 advanced search functionality."""
 

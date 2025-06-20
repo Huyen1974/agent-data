@@ -39,9 +39,7 @@ def mock_auth_user():
 class TestCLI139APIErrorHandling:
     """Test suite for CLI 139 API error handling and performance improvements."""
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_save_retry_logic_on_rate_limit(self, client, mock_auth_user):
         """Test that batch_save retries on rate limit errors with exponential backoff."""
 
@@ -87,9 +85,7 @@ class TestCLI139APIErrorHandling:
             # Verify vectorization was called once (successful on first try)
             assert mock_vectorization.vectorize_document.call_count == 1
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that batch_query handles timeouts properly."""
 
@@ -125,9 +121,7 @@ class TestCLI139APIErrorHandling:
             # Verify operation completed quickly with successful mock
             assert end_time - start_time < 1.0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
 
@@ -162,9 +156,7 @@ class TestCLI139APIErrorHandling:
             assert result["status"] == "success"
             assert "vector_id" in result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
         """Test that batch operations complete within 5 seconds for reasonable loads."""
 
@@ -226,9 +218,7 @@ class TestCLI139APIErrorHandling:
             assert save_result["status"] == "success"
             assert "results" in query_result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_concurrent_session_operations(self):
         """Test concurrent session operations with optimistic locking."""
 
@@ -274,7 +264,6 @@ class TestCLI139APIErrorHandling:
             # Verify save_metadata was called multiple times (original + retries)
             assert mock_firestore_instance.save_metadata.call_count >= 3
 
-    @pytest.mark.deferred
     def test_api_error_classes_defined(self):
         pytest.skip("Error classes not implemented yet")
         """Test that custom error classes are properly defined."""
@@ -301,7 +290,6 @@ class TestCLI139APIErrorHandling:
 class TestCLI139Integration:
     """Integration tests for CLI 139 improvements."""
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""
@@ -340,11 +328,9 @@ class TestCLI139Integration:
             assert mock_vectorization.vectorize_document.call_count == 1
 
 
-@pytest.mark.deferred
 class TestCLI139:
     """Deferred tests for CLI 139 improvements."""
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_save_retry_logic_on_rate_limit(self, client, mock_auth_user):
         """Test that save endpoint handles retry logic properly."""
@@ -391,7 +377,6 @@ class TestCLI139:
             # Verify vectorization was called once (successful on first try)
             assert mock_vectorization.vectorize_document.call_count == 1
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that query endpoint handles requests properly."""
@@ -428,7 +413,6 @@ class TestCLI139:
             # Verify operation completed quickly with successful mock
             assert end_time - start_time < 1.0
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
@@ -464,7 +448,6 @@ class TestCLI139:
             assert result["status"] == "success"
             assert "vector_id" in result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
         """Test that operations complete within 5 seconds for reasonable loads."""
@@ -527,7 +510,6 @@ class TestCLI139:
             assert save_result["status"] == "success"
             assert "results" in query_result
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_concurrent_session_operations(self):
         """Test concurrent session operations with optimistic locking."""
@@ -574,7 +556,6 @@ class TestCLI139:
             # Verify save_metadata was called multiple times (original + retries)
             assert mock_firestore_instance.save_metadata.call_count >= 3
 
-    @pytest.mark.deferred
     @pytest.mark.asyncio
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""

@@ -112,7 +112,6 @@ class MockMetricsCollector:
         return json.dumps(response), 200
 
 
-@pytest.mark.deferred
 class TestCLI134Observability:
     """Test metrics collection functionality."""
 

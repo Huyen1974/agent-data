@@ -15,7 +15,6 @@ from agent_data_manager.vector_store.qdrant_store import QdrantStore
 from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 
-@pytest.mark.deferred
 class TestCursorE2EIntegration:
     """End-to-end integration tests for Cursor IDE to Qdrant/Firestore workflow."""
 
@@ -134,7 +133,6 @@ class TestCursorE2EIntegration:
         }
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_single_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding):
         """Test end-to-end workflow for a single document from Cursor IDE."""
         doc = sample_cursor_documents[0]
@@ -183,7 +181,6 @@ class TestCursorE2EIntegration:
                     assert result["firestore_updated"] is True
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_batch_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding):
         """Test end-to-end workflow for batch processing of Cursor IDE documents."""
         # Take first 4 documents for batch test
@@ -242,7 +239,6 @@ class TestCursorE2EIntegration:
                     assert mock_firestore.save_metadata.call_count >= 8  # 2 calls per document
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_cursor_query_workflow(self, sample_cursor_documents, mock_openai_embedding):
         """Test semantic search workflow that would be triggered from Cursor IDE."""
         query_text = "How to implement authentication in web applications?"
@@ -322,7 +318,6 @@ class TestCursorE2EIntegration:
                         assert search_results["results"][1]["score"] == 0.85
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_cursor_metadata_validation_workflow(self, sample_cursor_documents):
         """Test metadata validation and enhancement during Cursor IDE workflow."""
         doc = sample_cursor_documents[0]
@@ -379,7 +374,6 @@ class TestCursorE2EIntegration:
                     assert result["firestore_updated"] is True
 
     @pytest.mark.asyncio
-    @pytest.mark.deferred
     async def test_cursor_integration_data_consistency(self, sample_cursor_documents):
         """Test data consistency between Qdrant and Firestore in Cursor workflow."""
         doc = sample_cursor_documents[0]

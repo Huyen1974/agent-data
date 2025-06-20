@@ -16,7 +16,6 @@ def faiss_index(tmp_path):
     return index_path
 
 
-@pytest.mark.deferred
 def test_migration_dry_run_stats(faiss_index):
     client = FakeQdrantClient(url="http://mock-qdrant:6333")
     payloads = [{"id": i, "text": f"doc_{i}"} for i in range(10)]

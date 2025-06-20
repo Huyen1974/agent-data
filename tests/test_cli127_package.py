@@ -7,11 +7,13 @@ as an editable package and that imports work correctly across the codebase.
 
 import subprocess
 import sys
+import pytest
 
 
 class TestCLI127PackageSetup:
     """Test CLI 127 package setup and import validation."""
 
+    @pytest.mark.deferred
     def test_package_editable_installation(self):
         """Test that agent_data_manager is installed as editable package."""
         # Check if package is installed

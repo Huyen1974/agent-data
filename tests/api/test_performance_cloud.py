@@ -29,7 +29,6 @@ SEARCH_DELAY = 0.5 if not MOCK_MODE else 0.05  # Reduced from 3s to 0.5s for rea
 RATE_LIMIT_WAIT = 2.0 if not MOCK_MODE else 0.1  # Reduced from 6s to 2s for rate limit recovery
 
 
-@pytest.mark.deferred
 class TestCloudPerformance:
     """Performance tests for Cloud API A2A Gateway"""
 
@@ -45,7 +44,6 @@ class TestCloudPerformance:
         cls.rate_limited_operations = 0
         cls.failed_operations = 0
 
-    @pytest.mark.deferred
     def test_01_authenticate_for_performance(self):
         """Authenticate user for performance testing"""
         if MOCK_MODE:
@@ -76,7 +74,6 @@ class TestCloudPerformance:
         except requests.exceptions.RequestException as e:
             pytest.skip(f"Authentication service not accessible: {e}")
 
-    @pytest.mark.deferred
     def test_02_performance_save_documents(self):
         """Test saving 20 documents with performance monitoring"""
         if not self.access_token:
@@ -182,7 +179,6 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_saves
             self.__class__.response_times.extend(save_times)
 
-    @pytest.mark.deferred
     def test_03_performance_search_queries(self):
         """Test 15 search queries with performance monitoring"""
         if not self.access_token:
@@ -297,7 +293,6 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_searches
             self.__class__.response_times.extend(search_times)
 
-    @pytest.mark.deferred
     def test_04_performance_document_searches(self):
         """Test 15 document searches with performance monitoring"""
         if not self.access_token:
@@ -393,7 +388,6 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_doc_searches
             self.__class__.response_times.extend(doc_search_times)
 
-    @pytest.mark.deferred
     def test_05_overall_performance_summary(self):
         """Generate overall performance summary"""
         if MOCK_MODE:

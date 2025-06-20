@@ -1,7 +1,17 @@
 {
-    "tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization": {
-        "status": "failed",
-        "duration": 0.6082238330000109,
-        "timestamp": "2025-06-15T16:30:02.993342"
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success": {
+        "status": "passed",
+        "duration": 0.003913791999366367,
+        "timestamp": "2025-06-20T13:00:00.644041"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable": {
+        "status": "passed",
+        "duration": 0.001575750000483822,
+        "timestamp": "2025-06-20T13:00:00.654555"
+    },
+    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request": {
+        "status": "passed",
+        "duration": 0.0011894580002262956,
+        "timestamp": "2025-06-20T13:00:00.660690"
     }
 }

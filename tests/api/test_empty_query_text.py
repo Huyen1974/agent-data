@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.deferred
+
 def test_empty_query_text(client):
 
     payload = {"query_text": "", "top_k": 3, "score_threshold": 0.4}  # invalid – empty

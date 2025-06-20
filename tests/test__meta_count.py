@@ -22,7 +22,6 @@ from pathlib import Path
 import pytest
 
 
-@pytest.mark.deferred
 def test_meta_count():
     """Ensures the number of tests discovered by pytest matches the expected total."""
     # Total number of tests expected to be found by pytest
@@ -76,14 +75,15 @@ def test_meta_count():
 
         # Use safer subprocess approach without shell=True
 
-        collect_process = subprocess.run(["pytest", "--collect-only", "-q"], check=True, capture_output=True, text=True)
+        collect_process = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], check=True, capture_output=True, text=True)
 
         # Parse the output to find the test count
         lines = collect_process.stdout.strip().split("\n")
         actual_total_str = ""
+        
         for line in lines:
             if "tests collected" in line or "test collected" in line:
-                # Extract number from line like "77 tests collected"
+                # Extract number from line like "519 tests collected in 1.71s"
                 words = line.split()
                 if words and words[0].isdigit():
                     actual_total_str = words[0]

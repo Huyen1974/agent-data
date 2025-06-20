@@ -4,7 +4,6 @@ import concurrent.futures
 from tools.delay_tool import delay_tool
 
 
-@pytest.mark.deferred
 def test_parallel_calls_under_threshold():
     """Test that parallel calls execute concurrently, not sequentially."""
     num_calls = 3  # Reduced for faster testing
@@ -23,7 +22,6 @@ def test_parallel_calls_under_threshold():
 
 
 @pytest.mark.slow
-@pytest.mark.deferred
 def test_parallel_calls_original_timing():
     """Original test with longer delays - marked as slow."""
     num_calls = 5

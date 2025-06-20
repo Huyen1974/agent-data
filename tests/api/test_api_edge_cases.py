@@ -11,7 +11,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from agent_data_manager.auth.auth_manager import AuthManager
 
 
-@pytest.mark.deferred
 class TestRateLimitingEdgeCases:
     """Test rate limiting edge cases and boundary conditions"""
 
@@ -19,7 +18,6 @@ class TestRateLimitingEdgeCases:
         """Setup test environment"""
         self.auth_manager = AuthManager()
 
-    @pytest.mark.deferred
     def test_rate_limit_boundary_conditions(self):
         """Test rate limiting at exact boundaries"""
         # Simulate requests at rate limit boundaries (optimized for MacBook M1)
@@ -42,7 +40,6 @@ class TestRateLimitingEdgeCases:
                     expected_min_time = i * interval
                     assert processing_time >= expected_min_time * 0.9  # Allow 10% tolerance
 
-    @pytest.mark.deferred
     def test_concurrent_rate_limit_users(self):
         """Test rate limiting with multiple concurrent users"""
 
@@ -85,11 +82,9 @@ class TestRateLimitingEdgeCases:
                 assert time_diff >= 0.05  # Minimum spacing
 
 
-@pytest.mark.deferred
 class TestLargePayloadHandling:
     """Test handling of large payloads and boundary conditions"""
 
-    @pytest.mark.deferred
     def test_large_document_content(self):
         """Test handling of large document content"""
         # Test different content sizes
@@ -117,7 +112,6 @@ class TestLargePayloadHandling:
             except Exception as e:
                 pytest.fail(f"Failed to serialize document of size {size}: {e}")
 
-    @pytest.mark.deferred
     def test_large_metadata_objects(self):
         """Test handling of large metadata objects"""
         # Create large metadata with many fields
@@ -137,7 +131,6 @@ class TestLargePayloadHandling:
         assert len(parsed_metadata) >= 101  # 100 fields + nested
         assert parsed_metadata["nested"]["level1"]["level2"]["data"][0] == "item"
 
-    @pytest.mark.deferred
     def test_unicode_and_special_characters(self):
         """Test handling of Unicode and special characters"""
         special_contents = [
@@ -167,7 +160,6 @@ class TestLargePayloadHandling:
                 pytest.fail(f"Failed to handle special content: {content[:50]}... Error: {e}")
 
 
-@pytest.mark.deferred
 class TestConcurrentRequestHandling:
     """Test concurrent request handling and race conditions"""
 
@@ -175,7 +167,6 @@ class TestConcurrentRequestHandling:
         """Setup test environment"""
         self.auth_manager = AuthManager()
 
-    @pytest.mark.deferred
     def test_concurrent_token_creation(self):
         """Test concurrent JWT token creation"""
 
@@ -198,7 +189,6 @@ class TestConcurrentRequestHandling:
             assert "sub" in payload
             assert "@test.com" in payload["sub"]
 
-    @pytest.mark.deferred
     def test_concurrent_token_validation(self):
         """Test concurrent token validation"""
         # Create a single token
@@ -226,7 +216,6 @@ class TestConcurrentRequestHandling:
         assert all(user == "concurrent@test.com" for user in users)
 
 
-@pytest.mark.deferred
 class TestErrorHandlingEdgeCases:
     """Test error handling in edge cases and boundary conditions"""
 
@@ -234,7 +223,6 @@ class TestErrorHandlingEdgeCases:
         """Setup test environment"""
         self.auth_manager = AuthManager()
 
-    @pytest.mark.deferred
     def test_memory_pressure_simulation(self):
         """Test behavior under simulated memory pressure"""
         # Create many tokens to simulate memory usage
@@ -259,7 +247,6 @@ class TestErrorHandlingEdgeCases:
         except Exception as e:
             pytest.fail(f"Memory pressure test failed: {e}")
 
-    @pytest.mark.deferred
     def test_rapid_token_expiration(self):
         """Test rapid token creation and expiration (optimized for MacBook M1)"""
         from datetime import timedelta
@@ -290,7 +277,6 @@ class TestErrorHandlingEdgeCases:
 
         assert expired_count == 5  # All should be expired
 
-    @pytest.mark.deferred
     def test_malformed_input_handling(self):
         """Test handling of various malformed inputs"""
         malformed_inputs = [
@@ -312,7 +298,6 @@ class TestErrorHandlingEdgeCases:
                     # Expected to fail
                     pass
 
-    @pytest.mark.deferred
     def test_boundary_value_testing(self):
         """Test boundary values for various parameters"""
         from datetime import timedelta

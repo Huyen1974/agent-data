@@ -18,7 +18,6 @@ from src.agent_data_manager.api_mcp_gateway import (
 )
 
 
-@pytest.mark.deferred
 class TestCLI137BatchAPI:
     """Test suite for CLI137 batch API endpoints"""
 
