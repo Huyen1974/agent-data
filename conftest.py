@@ -361,6 +361,7 @@ def load_env_vars(manage_test_environment_lifespan):  # Depends on the lifespan 
 # Add custom command-line options
 def pytest_addoption(parser):
     parser.addoption("--runslow", action="store_true", default=False, help="run slow tests")
+    parser.addoption("--rundeferred", action="store_true", default=False, help="run deferred tests")
     parser.addoption(
         "--count-tests-to",
         action="store",
@@ -393,6 +394,8 @@ def pytest_configure(config):
 def pytest_runtest_setup(item):
     if "slow" in item.keywords and not item.config.getoption("--runslow"):
         pytest.skip("need --runslow option to run")
+    if "deferred" in item.keywords and not item.config.getoption("--rundeferred"):
+        pytest.skip("need --rundeferred option to run")
 
 
 # For CLI 87B: Collect coverage-like data

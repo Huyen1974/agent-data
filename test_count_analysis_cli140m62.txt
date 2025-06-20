@@ -1,0 +1,12 @@
+557c557
+< 519 tests collected in 2.55s
+---
+> 519 tests collected in 2.32s
+CLI140m.62 ANALYSIS:
+- Total tests: 519 (confirmed)
+- Deferred tests skipped: 370
+- Non-deferred tests: 153
+- Tests passed: 134
+- Tests skipped (non-deferred): ~6
+- Tests timeout: 6
+- Tests unknown: 3
