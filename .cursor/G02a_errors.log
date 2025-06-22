@@ -136,4 +136,43 @@ python -m pytest tests/test_meta_counts.py::test_ci_environment -v --qdrant-mock
 ### Next Action:
 Commit the pytest.ini fix and trigger fifth CI run.
 
+---
+
+## Fifth CI Run Failure - Run ID: 15807515209
+**Status**: FAILED
+**Commit**: 2ca6982446ec69472a52c0cc4fef170b7511846e
+**Error Type**: Module import path issues
+
+### Error Details:
+```
+ImportError while importing test module '/home/runner/work/agent-data/agent-data/tests/test_cli140e1_firestore_ru.py'.
+tests/test_cli140e1_firestore_ru.py:15: in <module>
+    from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+E   ModuleNotFoundError: No module named 'ADK'
+```
+
+### Root Cause:
+Tests are written to import from `ADK.agent_data.*` structure but the repository doesn't have an ADK directory. The pytest.ini has `pythonpath = src ADK` but ADK directory was missing.
+
+### Fix Applied:
+Created ADK directory structure with symbolic link:
+```bash
+mkdir -p ADK
+ln -s .. ADK/agent_data
+```
+
+This allows imports like `from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager` to work correctly.
+
+### Verification:
+```bash
+python -c "from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager; print('Import successful!')"
+Import successful!
+
+python -m pytest tests/test_meta_counts.py::test_ci_environment -v --qdrant-mock
+============================================ 1 passed in 0.97s ============================================
+```
+
+### Next Action:
+Commit the ADK directory structure fix and trigger sixth CI run.
+
 --- 
