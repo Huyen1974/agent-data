@@ -22,25 +22,49 @@ class TestFirestoreRUOptimization:
     @pytest.fixture
     def mock_firestore_client(self):
         """Mock Firestore async client for testing."""
-        mock_client = AsyncMock()
+        # Use MagicMock instead of AsyncMock to avoid coroutine issues
+        mock_client = MagicMock()
         
         # Mock collection and document structure
-        mock_collection = AsyncMock()
-        mock_doc_ref = AsyncMock()
-        mock_query = AsyncMock()
+        mock_collection = MagicMock()
+        mock_doc_ref = MagicMock()
+        mock_query = MagicMock()
         
-        # Setup method chaining
+        # Setup method chaining for synchronous calls
         mock_client.collection.return_value = mock_collection
         mock_collection.document.return_value = mock_doc_ref
         mock_collection.select.return_value = mock_query
         mock_query.limit.return_value = mock_query
         mock_query.where.return_value = mock_query
         
+        # Create mock document snapshot
+        mock_doc_snapshot = MagicMock()
+        mock_doc_snapshot.exists = True
+        mock_doc_snapshot.to_dict.return_value = {
+            "version": 1,
+            "lastUpdated": "2024-01-01T00:00:00Z",
+            "content": "test content"
+        }
+        
+        # Setup async methods with AsyncMock and proper return values
+        mock_doc_ref.get = AsyncMock(return_value=mock_doc_snapshot)
+        mock_doc_ref.set = AsyncMock()
+        mock_doc_ref.update = AsyncMock()
+        mock_doc_ref.delete = AsyncMock()
+        
+        # Setup query stream with proper async iterator
+        async def mock_stream_empty():
+            return
+            yield  # Never executes
+        
+        mock_query.stream = AsyncMock(return_value=mock_stream_empty())
+        
         return {
             "client": mock_client,
             "collection": mock_collection,
             "doc_ref": mock_doc_ref,
-            "query": mock_query
+            "query": mock_query,
+            "doc_snapshot": mock_doc_snapshot
         }
 
     @pytest.fixture
@@ -158,14 +182,14 @@ class TestFirestoreRUOptimization:
             
             # Mock full document fetch
             mock_doc_ref = mock_firestore_client["doc_ref"]
-            mock_doc_snapshot = AsyncMock()
+            mock_doc_snapshot = MagicMock()
             mock_doc_snapshot.exists = True
             mock_doc_snapshot.to_dict.return_value = {
                 "version": 2,
                 "lastUpdated": "2024-01-01T00:00:00Z",
                 "content": "test content"
             }
-            mock_doc_ref.get.return_value = mock_doc_snapshot
+            mock_doc_ref.get = AsyncMock(return_value=mock_doc_snapshot)
             
             # Execute optimized document fetch
             doc_snapshot = await manager._get_document_for_versioning(mock_doc_ref)
@@ -205,20 +229,29 @@ class TestFirestoreRUOptimization:
         mock_doc_ref = mock_firestore_client["doc_ref"]
         mock_doc_ref.path = "test_collection/nonexistent_doc"
         
-        # Execute optimized document fetch for versioning
-        doc_snapshot = await manager._get_document_for_versioning(mock_doc_ref)
-        
-        # Verify mock document returned
-        assert doc_snapshot.exists is False
-        assert doc_snapshot.to_dict() == {}
-        
-        # Verify no full document fetch was performed
-        mock_doc_ref.get.assert_not_called()
-        
-        # Record RU cost (only existence check, no full fetch)
-        ru_cost_tracker.record_operation("existence_check_miss", 1, "optimized check, no full fetch needed")
-        
-        logger.info(f"Non-existent document optimization completed: fetch avoided")
+        # Mock the _get_document_for_versioning to return non-existent document
+        with patch.object(manager, '_check_document_exists') as mock_exists:
+            mock_exists.return_value = False
+            
+            # Create mock for non-existent document
+            mock_nonexistent_snapshot = MagicMock()
+            mock_nonexistent_snapshot.exists = False
+            mock_nonexistent_snapshot.to_dict.return_value = {}
+            
+            # Execute optimized document fetch for versioning
+            doc_snapshot = await manager._get_document_for_versioning(mock_doc_ref)
+            
+            # Verify mock document returned
+            assert doc_snapshot.exists is False
+            assert doc_snapshot.to_dict() == {}
+            
+            # Verify no full document fetch was performed (existence check returned False)
+            mock_doc_ref.get.assert_not_called()
+            
+            # Record RU cost (only existence check, no full fetch)
+            ru_cost_tracker.record_operation("existence_check_miss", 1, "optimized check, no full fetch needed")
+            
+            logger.info(f"Non-existent document optimization completed: fetch avoided")
 
     @pytest.mark.asyncio
     async def test_batch_existence_optimization(self, mock_firestore_client, ru_cost_tracker):

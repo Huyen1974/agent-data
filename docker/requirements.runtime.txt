@@ -21,7 +21,6 @@ mcp==1.6.0
 
 # Vector database
 qdrant-client==1.12.1
-faiss-cpu==1.9.0
 
 # Google Cloud (minimal set)
 google-cloud-firestore>=2.20.2,<2.21.0
@@ -31,8 +30,6 @@ google-api-core==2.24.2
 
 # AI/ML APIs (lightweight)
 openai==1.76.0
-scikit-learn==1.6.0
-numpy==2.2.1
 retry==0.9.2
 
 # Authentication and security

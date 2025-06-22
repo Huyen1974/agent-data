@@ -57,3 +57,17 @@ agent-data-config.yaml
 
 # ⬛ Tests or large auto-generated files (if needed)
 test_*.json
+
+# ⬛ Pytest and Coverage
+.pytest_cache/
+.testmondata
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.xml
+
+# ⬛ Development artifacts
+baseline_mapped.txt
+collect_diff*.txt
+list*.txt

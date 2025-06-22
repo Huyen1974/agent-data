@@ -167,6 +167,11 @@ def _initialize_caches():
         )
 
 
+def initialize_caches():
+    """Public function to initialize caches - exposed for testing."""
+    return _initialize_caches()
+
+
 # Custom rate limiting key function for Cloud Run
 def get_user_id_for_rate_limiting(request: Request):
     """
