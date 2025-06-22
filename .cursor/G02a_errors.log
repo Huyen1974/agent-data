@@ -101,4 +101,39 @@ python -m pytest --collect-only -q --qdrant-mock | tail -1
 ### Next Action:
 Commit the mock files and trigger fourth CI run.
 
+---
+
+## Fourth CI Run Failure - Run ID: 15807486753
+**Status**: FAILED
+**Commit**: af64488446ec69472a52c0cc4fef170b7511846e
+**Error Type**: Invalid pytest configuration options
+
+### Error Details:
+```
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --no-cov
+##[error]Process completed with exit code 4.
+```
+
+### Root Cause:
+The pytest.ini file contained options that require plugins not installed:
+- `--no-cov` requires pytest-cov plugin (not in requirements.txt)
+- `--timeout=8` requires pytest-timeout plugin (not in requirements.txt)
+
+### Fix Applied:
+Updated pytest.ini to remove unsupported options:
+```diff
+- addopts = --tb=short --qdrant-mock --timeout=8 --no-cov
++ addopts = --tb=short --qdrant-mock
+```
+
+### Verification:
+```bash
+python -m pytest tests/test_meta_counts.py::test_ci_environment -v --qdrant-mock
+============================================ 1 passed in 1.08s ============================================
+```
+
+### Next Action:
+Commit the pytest.ini fix and trigger fifth CI run.
+
 --- 
