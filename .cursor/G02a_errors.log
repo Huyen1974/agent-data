@@ -60,4 +60,45 @@ python -m pytest --help | grep qdrant-mock
 ### Next Action:
 Commit the missing configuration files and trigger third CI run.
 
+---
+
+## Third CI Run Failure - Run ID: 15807397613
+**Status**: FAILED
+**Commit**: f86d5e7446ec69472a52c0cc4fef170b7511846e
+**Error Type**: Missing test mock dependencies
+
+### Error Details:
+```
+ImportError while loading conftest '/home/runner/work/agent-data/agent-data/conftest.py'.
+conftest.py:11: in <module>
+    from tests.mocks.faiss_duplicate_id_fixture import faiss_index_with_duplicates
+E   ModuleNotFoundError: No module named 'tests.mocks'
+##[error]Process completed with exit code 4.
+```
+
+### Root Cause:
+The conftest.py file imports from `tests.mocks` but the mocks directory was missing from the agent_data repository.
+
+### Fix Applied:
+Copied the entire tests/mocks directory from main project:
+- enhanced_mock_manager.py (8,385 bytes)
+- faiss_duplicate_id_fixture.py (828 bytes)  
+- fake_qdrant_v2.py (11,398 bytes)
+- firestore_fake.py (5,190 bytes)
+- gcs_mock.py (1,292 bytes)
+- mcp_mock_client.py (1,697 bytes)
+- mock_openai.py (4,245 bytes)
+- mock_qdrant_store.py (3,309 bytes)
+- qdrant_basic.py (52,781 bytes)
+- qdrant_multi_collection.py (11,287 bytes)
+
+### Verification:
+```bash
+python -m pytest --collect-only -q --qdrant-mock | tail -1
+724 tests collected in 2.02s
+```
+
+### Next Action:
+Commit the mock files and trigger fourth CI run.
+
 --- 
