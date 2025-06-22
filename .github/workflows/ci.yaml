@@ -1,6 +1,32 @@
-- name: Auth
-id: auth
-uses: google-github-actions/auth@v2
-with:
-  workload_identity_provider: "projects/1042559846495/locations/global/workloadIdentityPools/github-test-pool/providers/github-test-provider"
-  service_account: "gemini-service-account@github-chatgpt-ggcloud.iam.gserviceaccount.com"
+name: auth-test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Authenticate to Google Cloud
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: "projects/1042559846495/locations/global/workloadIdentityPools/github-test-pool/providers/github-test-provider"
+          service_account_email: "gemini-service-account@github-chatgpt-ggcloud.iam.gserviceaccount.com"
+
+      - name: Setup gcloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Verify authentication
+        run: gcloud auth list
