@@ -78,4 +78,4 @@ GitHub Actions workflows handle:
 
 ## License
 
-Internal project - All rights reserved.
+Internal project - All rights reserved. 

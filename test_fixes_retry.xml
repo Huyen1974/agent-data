@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="2.805" timestamp="2025-06-17T16:43:58.967183+07:00" hostname="192.168.1.12"><testcase classname="tests.test_cli139_api.TestCLI139APIErrorHandling" name="test_batch_save_retry_logic_on_rate_limit" time="0.030" /></testsuite></testsuites>

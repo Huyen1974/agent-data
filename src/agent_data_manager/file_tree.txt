@@ -1,0 +1,356 @@
+.
+├── ./ADK_nested_backup
+│   └── ./ADK_nested_backup/agent_data
+│       └── ./ADK_nested_backup/agent_data/faiss_indices
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_anomalies.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_anomalies.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_bulk.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_bulk.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_real_semantic.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_real_semantic.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_semantic_test.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_semantic_test.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_trends.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_trends.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_v1.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_v1.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_v2.faiss
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/index_v2.meta
+│           ├── ./ADK_nested_backup/agent_data/faiss_indices/test_index.faiss
+│           └── ./ADK_nested_backup/agent_data/faiss_indices/test_index.meta
+├── ./Dockerfile
+├── ./README_MCP_TEST.md
+├── ./__init__.py
+├── ./__pycache__
+│   └── ./__pycache__/__init__.cpython-310.pyc
+├── ./agent
+│   ├── ./agent/__init__.py
+│   ├── ./agent/__pycache__
+│   │   ├── ./agent/__pycache__/__init__.cpython-310.pyc
+│   │   ├── ./agent/__pycache__/agent_data_agent.cpython-310.pyc
+│   │   ├── ./agent/__pycache__/base_agent.cpython-310.pyc
+│   │   ├── ./agent/__pycache__/memory_manager.cpython-310.pyc
+│   │   └── ./agent/__pycache__/tools_manager.cpython-310.pyc
+│   ├── ./agent/agent_data_agent.py
+│   ├── ./agent/base_agent.py
+│   ├── ./agent/memory_manager.py
+│   └── ./agent/tools_manager.py
+├── ./agent-data-config.yaml
+├── ./agent_server.log
+├── ./api_mcp_gateway.py
+├── ./config
+│   └── ./config/__init__.py
+├── ./docs
+│   └── ./docs/INTEGRATE_WITH_CURSOR.md
+├── ./faiss_indices
+│   ├── ./faiss_indices/index_v1.pkl
+│   └── ./faiss_indices/index_v2.pkl
+├── ./file_tree.txt
+├── ./local_mcp_server.py
+├── ./logs
+│   ├── ./logs/agent_server.log
+│   ├── ./logs/pytest.log
+│   └── ./logs/server_test.log
+├── ./mcp
+│   ├── ./mcp/__init__.py
+│   ├── ./mcp/__pycache__
+│   │   ├── ./mcp/__pycache__/__init__.cpython-310.pyc
+│   │   ├── ./mcp/__pycache__/mcp_agent.cpython-310.pyc
+│   │   └── ./mcp/__pycache__/mcp_agent_core.cpython-310.pyc
+│   ├── ./mcp/local_mcp_server.py
+│   ├── ./mcp/mcp_agent.py
+│   ├── ./mcp/mcp_agent_core.py
+│   └── ./mcp/web_server.py
+├── ./mcp_test_runner.py
+├── ./requirements.txt
+├── ./saved_documents
+│   └── ./saved_documents/doc001.txt
+├── ./scripts
+│   ├── ./scripts/__init__.py
+│   ├── ./scripts/build_docker.sh
+│   └── ./scripts/test_faiss.sh
+├── ./task_report.md
+├── ./test_outputs
+│   ├── ./test_outputs/test_all_tools.txt
+│   ├── ./test_outputs/test_file_batch-req-0.txt
+│   ├── ./test_outputs/test_file_batch-req-1.txt
+│   ├── ./test_outputs/test_file_batch-req-10.txt
+│   ├── ./test_outputs/test_file_batch-req-11.txt
+│   ├── ./test_outputs/test_file_batch-req-12.txt
+│   ├── ./test_outputs/test_file_batch-req-13.txt
+│   ├── ./test_outputs/test_file_batch-req-14.txt
+│   ├── ./test_outputs/test_file_batch-req-15.txt
+│   ├── ./test_outputs/test_file_batch-req-16.txt
+│   ├── ./test_outputs/test_file_batch-req-17.txt
+│   ├── ./test_outputs/test_file_batch-req-18.txt
+│   ├── ./test_outputs/test_file_batch-req-19.txt
+│   ├── ./test_outputs/test_file_batch-req-20.txt
+│   ├── ./test_outputs/test_file_batch-req-22.txt
+│   ├── ./test_outputs/test_file_batch-req-23.txt
+│   ├── ./test_outputs/test_file_batch-req-26.txt
+│   ├── ./test_outputs/test_file_batch-req-27.txt
+│   ├── ./test_outputs/test_file_batch-req-3.txt
+│   ├── ./test_outputs/test_file_batch-req-31.txt
+│   ├── ./test_outputs/test_file_batch-req-32.txt
+│   ├── ./test_outputs/test_file_batch-req-34.txt
+│   ├── ./test_outputs/test_file_batch-req-35.txt
+│   ├── ./test_outputs/test_file_batch-req-37.txt
+│   ├── ./test_outputs/test_file_batch-req-38.txt
+│   ├── ./test_outputs/test_file_batch-req-39.txt
+│   ├── ./test_outputs/test_file_batch-req-4.txt
+│   ├── ./test_outputs/test_file_batch-req-40.txt
+│   ├── ./test_outputs/test_file_batch-req-41.txt
+│   ├── ./test_outputs/test_file_batch-req-42.txt
+│   ├── ./test_outputs/test_file_batch-req-43.txt
+│   ├── ./test_outputs/test_file_batch-req-44.txt
+│   ├── ./test_outputs/test_file_batch-req-46.txt
+│   ├── ./test_outputs/test_file_batch-req-47.txt
+│   ├── ./test_outputs/test_file_batch-req-48.txt
+│   ├── ./test_outputs/test_file_batch-req-49.txt
+│   ├── ./test_outputs/test_file_batch-req-5.txt
+│   ├── ./test_outputs/test_file_batch-req-51.txt
+│   ├── ./test_outputs/test_file_batch-req-52.txt
+│   ├── ./test_outputs/test_file_batch-req-54.txt
+│   ├── ./test_outputs/test_file_batch-req-55.txt
+│   ├── ./test_outputs/test_file_batch-req-56.txt
+│   ├── ./test_outputs/test_file_batch-req-57.txt
+│   ├── ./test_outputs/test_file_batch-req-58.txt
+│   ├── ./test_outputs/test_file_batch-req-59.txt
+│   ├── ./test_outputs/test_file_batch-req-6.txt
+│   ├── ./test_outputs/test_file_batch-req-60.txt
+│   ├── ./test_outputs/test_file_batch-req-62.txt
+│   ├── ./test_outputs/test_file_batch-req-63.txt
+│   ├── ./test_outputs/test_file_batch-req-64.txt
+│   ├── ./test_outputs/test_file_batch-req-65.txt
+│   ├── ./test_outputs/test_file_batch-req-66.txt
+│   ├── ./test_outputs/test_file_batch-req-67.txt
+│   ├── ./test_outputs/test_file_batch-req-68.txt
+│   ├── ./test_outputs/test_file_batch-req-69.txt
+│   ├── ./test_outputs/test_file_batch-req-7.txt
+│   ├── ./test_outputs/test_file_batch-req-70.txt
+│   ├── ./test_outputs/test_file_batch-req-72.txt
+│   ├── ./test_outputs/test_file_batch-req-75.txt
+│   ├── ./test_outputs/test_file_batch-req-76.txt
+│   ├── ./test_outputs/test_file_batch-req-78.txt
+│   ├── ./test_outputs/test_file_batch-req-79.txt
+│   ├── ./test_outputs/test_file_batch-req-8.txt
+│   ├── ./test_outputs/test_file_batch-req-80.txt
+│   ├── ./test_outputs/test_file_batch-req-81.txt
+│   ├── ./test_outputs/test_file_batch-req-82.txt
+│   ├── ./test_outputs/test_file_batch-req-83.txt
+│   ├── ./test_outputs/test_file_batch-req-85.txt
+│   ├── ./test_outputs/test_file_batch-req-86.txt
+│   ├── ./test_outputs/test_file_batch-req-88.txt
+│   ├── ./test_outputs/test_file_batch-req-89.txt
+│   ├── ./test_outputs/test_file_batch-req-91.txt
+│   ├── ./test_outputs/test_file_batch-req-92.txt
+│   ├── ./test_outputs/test_file_batch-req-93.txt
+│   ├── ./test_outputs/test_file_batch-req-94.txt
+│   ├── ./test_outputs/test_file_batch-req-95.txt
+│   ├── ./test_outputs/test_file_batch-req-96.txt
+│   ├── ./test_outputs/test_file_batch-req-97.txt
+│   ├── ./test_outputs/test_file_batch-req-98.txt
+│   └── ./test_outputs/test_file_batch-req-99.txt
+├── ./test_pass_53
+│   ├── ./test_pass_53/external_tool_registry.py
+│   ├── ./test_pass_53/gcs_utils.py
+│   ├── ./test_pass_53/local_mcp_server.py
+│   ├── ./test_pass_53/query_metadata_faiss_tool.py
+│   ├── ./test_pass_53/save_metadata_to_faiss_tool.py
+│   ├── ./test_pass_53/save_metadata_to_faiss_tool.py.bak
+│   ├── ./test_pass_53/test_load_metadata_from_faiss.py
+│   ├── ./test_pass_53/test_mcp_agent_all_tools.py
+│   ├── ./test_pass_53/test_mcp_agent_batch_large.py
+│   ├── ./test_pass_53/test_mcp_agent_batch_tools.py
+│   ├── ./test_pass_53/test_mcp_agent_loop.py
+│   ├── ./test_pass_53/test_mcp_registered_tools.py
+│   ├── ./test_pass_53/test_mcp_timeout.py
+│   ├── ./test_pass_53/test_query_metadata_from_faiss.py
+│   ├── ./test_pass_53/test_save_metadata_to_faiss.py
+│   ├── ./test_pass_53/test_save_metadata_to_faiss.py.bak
+│   ├── ./test_pass_53/test_save_metadata_to_faiss.py.bkp
+│   └── ./test_pass_53/validate_batch_tools.py
+├── ./test_pass_55
+│   ├── ./test_pass_55/__init__.py
+│   ├── ./test_pass_55/__pycache__
+│   │   ├── ./test_pass_55/__pycache__/__init__.cpython-310.pyc
+│   │   ├── ./test_pass_55/__pycache__/test_faiss_tools.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./test_pass_55/__pycache__/test_load_metadata_from_faiss.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./test_pass_55/__pycache__/test_query_metadata_from_faiss.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./test_pass_55/__pycache__/test_save_metadata_to_faiss.cpython-310-pytest-8.3.5.pyc
+│   │   └── ./test_pass_55/__pycache__/test_temp_file.cpython-310-pytest-8.3.5.pyc
+│   ├── ./test_pass_55/cleanup_test_docs.py
+│   ├── ./test_pass_55/test_load_metadata_from_faiss.py
+│   ├── ./test_pass_55/test_query_metadata_from_faiss.py
+│   ├── ./test_pass_55/test_save_metadata_to_faiss.py
+│   ├── ./test_pass_55/test_save_metadata_to_faiss.py.bkp
+│   └── ./test_pass_55/test_temp_file.py
+├── ./tests
+│   ├── ./tests/__init__.py
+│   ├── ./tests/__pycache__
+│   │   ├── ./tests/__pycache__/__init__.cpython-310.pyc
+│   │   ├── ./tests/__pycache__/test_add_numbers_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_agent_all_tools.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_agent_batch_large.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_agent_batch_tools.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_agent_loop.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_faiss_query.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_registered_tools.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_mcp_timeout.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_multiply_numbers_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_query_metadata_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_save_document_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_save_text_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_semantic_search_local_tool.cpython-310-pytest-8.3.5.pyc
+│   │   ├── ./tests/__pycache__/test_update_metadata_tool.cpython-310-pytest-8.3.5.pyc
+│   │   └── ./tests/__pycache__/test_vectorize_document_tool.cpython-310-pytest-8.3.5.pyc
+│   ├── ./tests/logs
+│   │   ├── ./tests/logs/batch_execution.log
+│   │   ├── ./tests/logs/pytest_faiss.log
+│   │   └── ./tests/logs/pytest_timeout.log
+│   ├── ./tests/test_add_numbers_tool.py
+│   ├── ./tests/test_mcp_agent_all_tools.py
+│   ├── ./tests/test_mcp_agent_batch_large.py
+│   ├── ./tests/test_mcp_agent_batch_tools.py
+│   ├── ./tests/test_mcp_agent_loop.py
+│   ├── ./tests/test_mcp_faiss_query.py
+│   ├── ./tests/test_mcp_registered_tools.py
+│   ├── ./tests/test_mcp_timeout.py
+│   ├── ./tests/test_multiply_numbers_tool.py
+│   ├── ./tests/test_outputs
+│   ├── ./tests/test_query_metadata_tool.py
+│   ├── ./tests/test_save_document_tool.py
+│   ├── ./tests/test_save_text_tool.py
+│   ├── ./tests/test_semantic_search_local_tool.py
+│   ├── ./tests/test_update_metadata_tool.py
+│   ├── ./tests/test_vectorize_document_tool.py
+│   └── ./tests/tools
+│       ├── ./tests/tools/__init__.py
+│       ├── ./tests/tools/__pycache__
+│       │   ├── ./tests/tools/__pycache__/__init__.cpython-310.pyc
+│       │   ├── ./tests/tools/__pycache__/test_faiss_tools.cpython-310-pytest-8.3.5.pyc
+│       │   ├── ./tests/tools/__pycache__/test_load_metadata_from_faiss.cpython-310-pytest-8.3.5.pyc
+│       │   ├── ./tests/tools/__pycache__/test_query_metadata_from_faiss.cpython-310-pytest-8.3.5.pyc
+│       │   ├── ./tests/tools/__pycache__/test_save_metadata_to_faiss.cpython-310-pytest-8.3.5.pyc
+│       │   └── ./tests/tools/__pycache__/test_temp_file.cpython-310-pytest-8.3.5.pyc
+│       ├── ./tests/tools/cleanup_test_docs.py
+│       ├── ./tests/tools/test_load_metadata_from_faiss.py
+│       ├── ./tests/tools/test_query_metadata_from_faiss.py
+│       ├── ./tests/tools/test_save_metadata_to_faiss.py
+│       └── ./tests/tools/test_temp_file.py
+├── ./tools
+│   ├── ./tools/__init__.py
+│   ├── ./tools/__pycache__
+│   │   ├── ./tools/__pycache__/__init__.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/add_numbers_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/advanced_query_faiss_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/advanced_semantic_search_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/aggregate_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/analyze_metadata_trends_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/batch_generate_embeddings_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/bulk_delete_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/bulk_update_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/conditional_search_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/create_metadata_tree_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/delay_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/delete_metadata_node_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/depth_first_search_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/detect_anomalies_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/echo_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/error_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/external_tool_registry.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/find_metadata_by_key_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/generate_embedding_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/get_registered_tools_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/load_metadata_from_faiss_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/metadata_statistics_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/multi_field_update_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/multi_update_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/multiply_numbers_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/query_metadata_faiss_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/query_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/rebuild_metadata_tree_from_faiss_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/rebuild_metadata_tree_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/register_tools.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/save_document_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/save_metadata_to_faiss_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/save_text_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_expand_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_filter_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_by_author_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_by_keyword_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_by_year_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_local_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_metadata_tree_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_search_multiple_fields_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/semantic_similarity_search_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/sort_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/update_metadata_node_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/update_metadata_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/validate_metadata_tree_tool.cpython-310.pyc
+│   │   ├── ./tools/__pycache__/vectorize_document_tool.cpython-310.pyc
+│   │   └── ./tools/__pycache__/view_metadata_tree_tool.cpython-310.pyc
+│   ├── ./tools/add_numbers_tool.py
+│   ├── ./tools/advanced_query_faiss_tool.py
+│   ├── ./tools/advanced_semantic_search_tool.py
+│   ├── ./tools/aggregate_metadata_tool.py
+│   ├── ./tools/analyze_metadata_trends_tool.py
+│   ├── ./tools/batch_generate_embeddings_tool.py
+│   ├── ./tools/bulk_delete_metadata_tool.py
+│   ├── ./tools/bulk_update_metadata_tool.py
+│   ├── ./tools/clear_embeddings_tool.py
+│   ├── ./tools/conditional_search_metadata_tool.py
+│   ├── ./tools/create_metadata_tree_tool.py
+│   ├── ./tools/delay_tool.py
+│   ├── ./tools/delete_metadata_node_tool.py
+│   ├── ./tools/depth_first_search_tool.py
+│   ├── ./tools/detect_anomalies_tool.py
+│   ├── ./tools/echo_tool.py
+│   ├── ./tools/error_tool.py
+│   ├── ./tools/external_tool_registry.py
+│   ├── ./tools/find_metadata_by_key_tool.py
+│   ├── ./tools/generate_embedding_real_tool.py
+│   ├── ./tools/generate_embedding_tool.py
+│   ├── ./tools/get_registered_tools_tool.py
+│   ├── ./tools/load_metadata_from_faiss_tool.py
+│   ├── ./tools/metadata_statistics_tool.py
+│   ├── ./tools/multi_field_update_tool.py
+│   ├── ./tools/multi_update_metadata_tool.py
+│   ├── ./tools/multiply_numbers_tool.py
+│   ├── ./tools/query_metadata_faiss_tool.py
+│   ├── ./tools/query_metadata_tool.py
+│   ├── ./tools/rebuild_metadata_tree_from_faiss_tool.py
+│   ├── ./tools/rebuild_metadata_tree_tool.py
+│   ├── ./tools/register_tools.py
+│   ├── ./tools/reverse_text_tool.py
+│   ├── ./tools/save_document_tool.py
+│   ├── ./tools/save_metadata_to_faiss_tool.py
+│   ├── ./tools/save_text_tool.py
+│   ├── ./tools/semantic_expand_metadata_tool.py
+│   ├── ./tools/semantic_filter_metadata_tool.py
+│   ├── ./tools/semantic_search_by_author_tool.py
+│   ├── ./tools/semantic_search_by_keyword_tool.py
+│   ├── ./tools/semantic_search_by_year_tool.py
+│   ├── ./tools/semantic_search_cosine_tool.py
+│   ├── ./tools/semantic_search_local_tool.py
+│   ├── ./tools/semantic_search_metadata_tool.py
+│   ├── ./tools/semantic_search_metadata_tree_tool.py
+│   ├── ./tools/semantic_search_multiple_fields_tool.py
+│   ├── ./tools/semantic_similarity_search_tool.py
+│   ├── ./tools/sort_metadata_tool.py
+│   ├── ./tools/update_metadata_node_tool.py
+│   ├── ./tools/update_metadata_tool.py
+│   ├── ./tools/utils
+│   │   ├── ./tools/utils/__init__.py
+│   │   ├── ./tools/utils/__pycache__
+│   │   │   ├── ./tools/utils/__pycache__/__init__.cpython-310.pyc
+│   │   │   └── ./tools/utils/__pycache__/gcs_utils.cpython-310.pyc
+│   │   └── ./tools/utils/gcs_utils.py
+│   ├── ./tools/validate_metadata_tree_tool.py
+│   ├── ./tools/vectorize_document_tool.py
+│   └── ./tools/view_metadata_tree_tool.py
+└── ./utils
+    └── ./utils/__init__.py
+
+30 directories, 324 files

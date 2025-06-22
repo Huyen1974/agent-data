@@ -1,0 +1,563 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 10 items
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_pickle_dump_fails PASSED [ 10%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_auto_embed PASSED [ 20%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_with_vector_data PASSED [ 30%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error FAILED [ 40%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_faiss_fails FAILED [ 50%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails FAILED [ 60%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_firestore_update_fails FAILED [ 70%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_malformed_embedding_result FAILED [ 80%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_firestore_client_init_fails ERROR [ 90%]
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_temp_file_deletion_fails FAILED [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestSaveMetadataToFaiss.test_save_firestore_client_init_fails _
+file /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py, line 792
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.OPENAI_AVAILABLE", True)
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock()) # Ensure OpenAI client is mocked as available
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+      @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+      @patch(FIRESTORE_CLIENT_PATH)
+      @patch(UPLOAD_WITH_RETRY_PATH)
+      @patch(STORAGE_CLIENT_SAVE_PATH)
+      async def test_save_firestore_client_init_fails(self,
+                                                   mock_get_embedding,
+                                                   MockFaissIndexFlatL2,
+                                                   mock_faiss_write_index,
+                                                   mock_pickle_dump,
+                                                   mock_firestore_constructor,
+                                                   mock_upload_with_retry,
+                                                   mock_storage_client_constructor,
+                                                   mocker, request):
+          """Test failure during Firestore client initialization."""
+          from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+
+          mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+          mock_firestore_constructor.side_effect = google_exceptions.GoogleCloudError("Mocked Firestore client init failed")
+
+          input_data = {
+              "index_name": "test_fs_init_fail_index",
+              "metadata_dict": {"doc1": {"text": "Some text"}},
+              "text_field_to_embed": "text",
+              "dimension": 10
+          }
+
+          result = await save_metadata_to_faiss(**input_data)
+
+          print(f"\nResult dictionary for {request.node.name}: {result}\n")
+          assert result is not None
+          assert result.get("status") == "error"
+          assert "Failed to initialize Firestore client" in result.get("message", "")
+          assert result.get("meta", {}).get("error_type") in ["GoogleCloudError", "ConfigurationError", "FirestoreError", "FirestoreInitializationError"]
+          assert result.get("meta", {}).get("index_name") == "test_fs_init_fail_index"
+          # As per user's note on tool modification, check for these fields in meta for errors
+          assert "vector_count" not in result.get("meta", {}) # Should fail before vector processing
+          assert "dimension" not in result.get("meta", {})    # Should fail before vector processing
+
+          mock_firestore_constructor.assert_called_once()
+          # Ensure FAISS/GCS operations are not attempted
+          mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2").assert_not_called()
+          mocker.patch(UPLOAD_WITH_RETRY_PATH).assert_not_called()
+E       fixture 'mock_storage_client_constructor' not found
+>       available fixtures: ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::<event_loop>, ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::<event_loop>, ADK/agent_data/tests/tools::<event_loop>, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, class_mocker, cov, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_env_vars, mock_logging, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, session_mocker, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:792
+=================================== FAILURES ===================================
+___________ TestSaveMetadataToFaiss.test_save_openai_embedding_error ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f316770>
+MockFaissIndexFlatL2 = <AsyncMock name='get_openai_embedding' id='5357453072'>
+mock_get_embedding = <MagicMock name='IndexFlatL2' id='5357495696'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5357519392'>
+mock_pickle_dump = <MagicMock name='dump' id='5357527216'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x13f455de0>
+request = <FixtureRequest for <Coroutine test_save_openai_embedding_error>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    async def test_save_openai_embedding_error(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_get_embedding,
+                                               mock_faiss_write_index,
+                                               mock_pickle_dump,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock())
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss, EmbeddingGenerationError
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # For one successful embedding
+        input_metadata = {
+            "doc1": {"text": "Text that will succeed"},
+            "doc2": {"text": "Text that will cause embedding error"}
+        }
+        input_data = {
+            "index_name": "test_openai_error_index",
+            "metadata_dict": input_metadata,
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+>       assert result.get("status") == "success"  # Expect success as one doc is processed
+E       AssertionError: assert 'error' == 'success'
+E
+E         - success
+E         + error
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:378: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_openai_embedding_error: {'status': 'error', 'error': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'message': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'meta': {'error_type': 'EmbeddingGenerationError', 'index_name': 'test_openai_error_index', 'duration_seconds': 0.0009, 'embedding_generation_errors': {'doc1': 'No result from embedding function', 'doc2': 'No result from embedding function'}, 'original_docs_count': 2, 'embedded_docs_count': 0, 'failed_doc_ids': ['doc1', 'doc2']}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc1. Response: <AsyncMock name='get_openai_embedding()' id='5357798880'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc2. Response: <AsyncMock name='get_openai_embedding()' id='5357798880'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_openai_error_index': EmbeddingGenerationError - No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 264, in save_metadata_to_faiss
+    raise EmbeddingGenerationError(error_msg)
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+___________ TestSaveMetadataToFaiss.test_save_gcs_upload_faiss_fails ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f316b00>
+MockFaissIndexFlatL2 = <MagicMock name='dump.patch()' id='5358987024'>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='5359078176'>
+mock_faiss_write_index = <MagicMock name='IndexFlatL2' id='5359087248'>
+mock_pickle_dump = <MagicMock name='write_index' id='5358865184'>
+mocker = <MagicMock name='dump' id='5358873008'>
+request = <FixtureRequest for <Coroutine test_save_gcs_upload_faiss_fails>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_gcs_upload_faiss_fails(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_get_embedding,
+                                               mock_faiss_write_index,
+                                               mock_pickle_dump,
+                                               mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH)
+        # Define a side_effect function that will raise an error for any upload attempt
+        def gcs_upload_failure_side_effect(*args, **kwargs):
+            raise google_exceptions.NotFound("Mocked GCS upload failed")
+        mock_upload_with_retry_local.side_effect = gcs_upload_failure_side_effect
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        MockFaissIndexFlatL2 = mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # One document is processed
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+
+        def upload_side_effect(blob, source_file_name):
+            if source_file_name.endswith(".faiss"):
+                raise google_exceptions.NotFound("Mocked GCS FAISS upload failed")
+            elif source_file_name.endswith(".meta"):
+                return None
+            raise ValueError(f"Unexpected upload call: {source_file_name}")
+
+        mock_upload_with_retry_local.side_effect = upload_side_effect
+
+        input_data = {
+            "index_name": "test_index_gcs_upload_fails",
+            "metadata_dict": {
+                "doc1": {"text": "Hello world"},
+            },
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert isinstance(result, dict)
+        assert result.get("status") == "error"
+        # The tool structure for GCS error returns error in "message" and "meta.error_type"
+        assert "message" in result
+>       assert "Mocked GCS FAISS upload failed" in result["message"]
+E       assert 'Mocked GCS FAISS upload failed' in "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5359229520'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default."
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:475: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_gcs_upload_faiss_fails: {'status': 'error', 'error': "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5359229520'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.", 'message': "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5359229520'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.", 'meta': {'error_type': 'ValueError', 'index_name': 'test_index_gcs_upload_fails', 'duration_seconds': 0.0019, 'original_docs_count': 1, 'embedded_docs_count': 1, 'failed_doc_ids': []}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_index_gcs_upload_fails': ValueError - The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5359229520'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 291, in save_metadata_to_faiss
+    storage_client = storage.Client(project=FIRESTORE_PROJECT_ID) # Use consistent project ID
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/google/cloud/storage/client.py", line 238, in __init__
+    raise ValueError(
+ValueError: The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5359229520'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.
+___________ TestSaveMetadataToFaiss.test_save_gcs_upload_meta_fails ____________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f316ec0>
+mock_get_embedding = <MagicMock name='IndexFlatL2' id='5359810544'>
+mock_faiss_write_index = <AsyncMock name='get_openai_embedding' id='5359880416'>
+mock_pickle_dump = <MagicMock name='IndexFlatL2' id='5359889488'>
+mocker = <MagicMock name='write_index' id='5359630896'>
+request = <MagicMock name='dump' id='5359623648'>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_gcs_upload_meta_fails(self,
+                                              mock_get_embedding,
+                                              mock_faiss_write_index,
+                                              mock_pickle_dump,
+                                              mocker, request):
+        # Mock dependencies using mocker
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH)
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        MockFaissIndexFlatL2 = mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1 # One document is processed
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+
+        def upload_side_effect_meta_fail(blob, source_file_name):
+            if source_file_name.endswith(".meta"):
+                raise google_exceptions.NotFound("Mocked GCS META upload failed")
+            elif source_file_name.endswith(".faiss"):
+                return None
+            raise ValueError(f"Unexpected upload call: {source_file_name}")
+
+        mock_upload_with_retry_local.side_effect = upload_side_effect_meta_fail
+
+        input_data = {
+            "index_name": "test_index_gcs_meta_upload_fails",
+            "metadata_dict": {
+                "doc1": {"text": "Hello world for meta fail"},
+            },
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+        result = await save_metadata_to_faiss(
+            index_name=input_data["index_name"],
+            metadata_dict=input_data["metadata_dict"],
+            text_field_to_embed=input_data["text_field_to_embed"],
+            dimension=input_data["dimension"]
+        )
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+        assert result.get("status") == "error"
+        assert "message" in result
+>       assert "Mocked GCS META upload failed" in result["message"]
+E       assert 'Mocked GCS META upload failed' in "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function"
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:547: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for <MagicMock name='dump.node.name' id='5359541008'>: {'status': 'error', 'error': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'message': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'meta': {'error_type': 'EmbeddingGenerationError', 'index_name': 'test_index_gcs_meta_upload_fails', 'duration_seconds': 0.001, 'embedding_generation_errors': {'doc1': 'No result from embedding function'}, 'original_docs_count': 1, 'embedded_docs_count': 0, 'failed_doc_ids': ['doc1']}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc1. Response: <AsyncMock name='get_openai_embedding()' id='5359713488'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_index_gcs_meta_upload_fails': EmbeddingGenerationError - No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 264, in save_metadata_to_faiss
+    raise EmbeddingGenerationError(error_msg)
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+___________ TestSaveMetadataToFaiss.test_save_firestore_update_fails ___________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f317250>
+MockFaissIndexFlatL2 = <MagicMock name='IndexFlatL2' id='5360302688'>
+mock_get_embedding = <AsyncMock name='get_openai_embedding' id='5360292032'>
+mock_faiss_write_index = <MagicMock name='IndexFlatL2' id='5361585408'>
+mock_pickle_dump = <MagicMock name='write_index' id='5361592608'>
+mocker = <MagicMock name='dump' id='5361633072'>
+request = <FixtureRequest for <Coroutine test_save_firestore_update_fails>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    async def test_save_firestore_update_fails(self,
+                                               MockFaissIndexFlatL2,
+                                               mock_get_embedding,
+                                               mock_faiss_write_index,
+                                               mock_pickle_dump,
+                                               mocker, request):
+        # Mock dependencies
+        mock_firestore_constructor = mocker.patch(FIRESTORE_CLIENT_PATH)
+        mock_upload_with_retry_local = mocker.patch(UPLOAD_WITH_RETRY_PATH, return_value=MagicMock()) # GCS succeeds
+        mock_storage_client = mocker.patch(STORAGE_CLIENT_SAVE_PATH)
+
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+
+        # Setup mock instances
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_collection_ref = mock_fs_instance.collection.return_value
+        mock_doc_ref = mock_collection_ref.document.return_value
+        # Simulate Firestore .set() failure
+        mock_doc_ref.set.side_effect = api_core_exceptions.Aborted("Mocked Firestore update failed")
+
+        mock_actual_storage_client_instance = MagicMock(spec=storage.Client)
+        mock_storage_client.return_value = mock_actual_storage_client_instance
+        mock_bucket = MagicMock()
+        mock_blob = MagicMock()
+        mock_actual_storage_client_instance.bucket = MagicMock()
+        mock_actual_storage_client_instance.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+
+        input_data = {
+            "index_name": "test_firestore_fail_index",
+            "metadata_dict": {"doc1": {"text": "Firestore test text"}},
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+
+        result = await save_metadata_to_faiss(**input_data)
+
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+>       assert result.get("status") == "partial_success" # Corrected status
+E       AssertionError: assert 'error' == 'partial_success'
+E
+E         - partial_success
+E         + error
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:611: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_firestore_update_fails: {'status': 'error', 'error': "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5361783696'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.", 'message': "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5361783696'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.", 'meta': {'error_type': 'ValueError', 'index_name': 'test_firestore_fail_index', 'duration_seconds': 0.001, 'original_docs_count': 1, 'embedded_docs_count': 1, 'failed_doc_ids': []}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_firestore_fail_index': ValueError - The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5361783696'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 291, in save_metadata_to_faiss
+    storage_client = storage.Client(project=FIRESTORE_PROJECT_ID) # Use consistent project ID
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/google/cloud/storage/client.py", line 238, in __init__
+    raise ValueError(
+ValueError: The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (<MagicMock name='mock.universe_domain' id='5361783696'>). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.
+_________ TestSaveMetadataToFaiss.test_save_malformed_embedding_result _________
+
+self = <Coroutine test_save_malformed_embedding_result>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:549:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+setup/venv/lib/python3.10/site-packages/pytest_asyncio/plugin.py:1069: in inner
+    _loop.run_until_complete(task)
+/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/asyncio/base_events.py:649: in run_until_complete
+    return future.result()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = (<ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f317640>,)
+keywargs = {}
+newargs = (<ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f317640>, <MagicMock na...Client' id='5359993376'>, <MagicMock name='dump' id='5359450384'>, <MagicMock name='write_index' id='5359442128'>, ...)
+newkeywargs = {}
+
+    @wraps(func)
+    async def patched(*args, **keywargs):
+        with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+>           return await func(*newargs, **newkeywargs)
+E           TypeError: TestSaveMetadataToFaiss.test_save_malformed_embedding_result() takes 9 positional arguments but 13 were given
+
+/opt/homebrew/Cellar/python@3.10/3.10.17/Frameworks/Python.framework/Versions/3.10/lib/python3.10/unittest/mock.py:1396: TypeError
+__________ TestSaveMetadataToFaiss.test_save_temp_file_deletion_fails __________
+
+self = <ADK.agent_data.tests.tools.test_save_metadata_to_faiss.TestSaveMetadataToFaiss object at 0x13f317d90>
+mock_os_remove = <MagicMock name='Client' id='5356123232'>
+mock_os_path_exists = <MagicMock name='upload_with_retry' id='5356120784'>
+mock_pickle_dump = <MagicMock name='Client' id='5356456544'>
+MockFaissIndexFlatL2 = <AsyncMock name='get_openai_embedding' id='5356464416'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5356018112'>
+mock_get_embedding = <MagicMock name='IndexFlatL2' id='5356013024'>
+mock_firestore_constructor = <MagicMock name='dump' id='5356024448'>
+mock_upload_with_retry = <MagicMock name='exists' id='5356715312'>
+mock_storage_client_constructor = <MagicMock name='remove' id='5356706720'>
+mocker = <pytest_mock.plugin.MockerFixture object at 0x13f580460>
+request = <FixtureRequest for <Coroutine test_save_temp_file_deletion_fails>>
+
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.os.remove")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.os.path.exists", return_value=True)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.openai_client", MagicMock())
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.pickle.dump")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.write_index")
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding", new_callable=AsyncMock)
+    @patch(FIRESTORE_CLIENT_PATH)
+    @patch(UPLOAD_WITH_RETRY_PATH)
+    @patch(STORAGE_CLIENT_SAVE_PATH)
+    async def test_save_temp_file_deletion_fails(self,
+                                                 mock_os_remove,
+                                                 mock_os_path_exists,
+                                                 mock_pickle_dump,
+                                                 MockFaissIndexFlatL2,
+                                                 mock_faiss_write_index,
+                                                 mock_get_embedding,
+                                                 mock_firestore_constructor,
+                                                 mock_upload_with_retry,
+                                                 mock_storage_client_constructor,
+                                                 mocker, request):
+        """Test that the tool logs a warning but otherwise succeeds if temp file deletion fails."""
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+
+        mock_fs_instance = mock_firestore_constructor.return_value
+        mock_doc_ref = mock_fs_instance.collection.return_value.document.return_value
+        mock_storage_client_instance = mock_storage_client_constructor.return_value
+        mock_bucket_instance = mock_storage_client_instance.bucket.return_value
+        mock_blob_instance = mock_bucket_instance.blob.return_value
+        mock_upload_with_retry.return_value = MagicMock()
+
+        mock_index_instance = MockFaissIndexFlatL2.return_value
+        mock_index_instance.ntotal = 1
+        mock_get_embedding.return_value = {"embedding": np.array([0.1]*10, dtype=np.float32), "total_tokens": 5, "status": "success"}
+
+        mock_os_remove.side_effect = OSError("Mocked os.remove failed")
+        mock_log_warning = mocker.patch(f"{SAVE_TOOL_MODULE_PATH}.logging.warning")
+
+        input_data = {
+            "index_name": "test_temp_delete_fail_index",
+            "metadata_dict": {"doc1": {"text": "Successful run text"}},
+            "text_field_to_embed": "text",
+            "dimension": 10
+        }
+
+        result = await save_metadata_to_faiss(**input_data)
+
+        print(f"\nResult dictionary for {request.node.name}: {result}\n")
+        assert result is not None
+>       assert result.get("status") == "success"
+E       AssertionError: assert 'error' == 'success'
+E
+E         - success
+E         + error
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py:888: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+Result dictionary for test_save_temp_file_deletion_fails: {'status': 'error', 'error': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'message': "No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function", 'meta': {'error_type': 'EmbeddingGenerationError', 'index_name': 'test_temp_delete_fail_index', 'duration_seconds': 0.0008, 'embedding_generation_errors': {'doc1': 'No result from embedding function'}, 'original_docs_count': 1, 'embedded_docs_count': 0, 'failed_doc_ids': ['doc1']}}
+
+------------------------------ Captured log call -------------------------------
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:91 Failed to generate or received invalid embedding for doc_id: doc1. Response: <AsyncMock name='get_openai_embedding()' id='5357722384'>
+ERROR    ADK.agent_data.tools.save_metadata_to_faiss_tool:save_metadata_to_faiss_tool.py:411 Operational error during FAISS processing for index 'test_temp_delete_fail_index': EmbeddingGenerationError - No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+Traceback (most recent call last):
+  File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py", line 264, in save_metadata_to_faiss
+    raise EmbeddingGenerationError(error_msg)
+ADK.agent_data.tools.save_metadata_to_faiss_tool.EmbeddingGenerationError: No embeddings could be successfully processed. First detailed error for doc_id 'doc1': No result from embedding function
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py:85: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    embedding_value = embedding_response.get("embedding") # Extract embedding value
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails
+ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_temp_file_deletion_fails
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tools/save_metadata_to_faiss_tool.py:236: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    embedding_results_map = await _generate_embeddings_batch(texts_to_embed_with_ids, None) # agent_context=None for now
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_openai_embedding_error
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_faiss_fails
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_firestore_update_fails
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_malformed_embedding_result
+FAILED ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_temp_file_deletion_fails
+ERROR ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py::TestSaveMetadataToFaiss::test_save_firestore_client_init_fails
+=============== 6 failed, 3 passed, 7 warnings, 1 error in 1.75s ===============

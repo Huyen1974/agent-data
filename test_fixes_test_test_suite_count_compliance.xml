@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="4.248" timestamp="2025-06-18T17:35:48.305482+07:00" hostname="192.168.1.29"><testcase classname="tests.test_cli140e3_9_validation.TestCLI140e39Validation" name="test_test_suite_count_compliance" time="2.510"><failure message="AssertionError: Expected 515 tests, found 519&#10;assert 519 == 515">self = &lt;tests.test_cli140e3_9_validation.TestCLI140e39Validation object at 0x116da5c30&gt;
+
+    def test_test_suite_count_compliance(self):
+        """Test that the test suite count is compliant with CLI140m.44 target (512 tests)."""
+        result = subprocess.run(["pytest", "--collect-only", "-q"], capture_output=True, text=True)
+    
+        assert result.returncode == 0, "Test collection should succeed"
+    
+        # Count actual tests (excluding collection summary)
+        test_lines = [line for line in result.stdout.split("\n") if "::test_" in line]
+        test_count = len(test_lines)
+    
+        # Should be 515 tests (updated for CLI140m.46)
+        expected_count = 515
+&gt;       assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
+E       AssertionError: Expected 515 tests, found 519
+E       assert 519 == 515
+
+tests/test_cli140e3_9_validation.py:378: AssertionError</failure></testcase></testsuite></testsuites>

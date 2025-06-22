@@ -1,92 +1,68 @@
 import logging
 import os
-import json
-import time
 import sys
-from flask import Flask, request, jsonify
+import time
+
+from flask import Flask, jsonify, request
 
 # Removed storage import as it seems unused
 # from google.cloud import storage
 
-# Lazy import flag - tools will be loaded on first request
-_tools_loaded = False
-_all_tools = {}
-_tool_loading_error = None
+# Import tool registration and dependency flags
+try:
+    from agent_data_manager.tools.external_tool_registry import (
+        FAISS_AVAILABLE,
+        OPENAI_AVAILABLE,
+    )
+    from agent_data_manager.tools.register_tools import get_all_tool_functions
+
+    REGISTRY_IMPORTED = True
+except ImportError as e1:
+    print(f"Initial import failed ({e1}), attempting relative path adjustment...")
+    REGISTRY_IMPORTED = False
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
+        print(f"Added {project_root} to sys.path")
+        from agent_data_manager.tools.external_tool_registry import (
+            FAISS_AVAILABLE,
+            OPENAI_AVAILABLE,
+        )
+        from agent_data_manager.tools.register_tools import get_all_tool_functions
+
+        REGISTRY_IMPORTED = True
+        print("Successfully imported registry after path adjustment.")
+    except ImportError as e2:
+        print(f"CRITICAL: Failed to import registry even after path adjustment: {e2}")
+
+        def get_all_tool_functions():
+            return {}
+
+        FAISS_AVAILABLE = False
+        OPENAI_AVAILABLE = False
+        print("CRITICAL: Using dummy get_all_tool_functions and flags!")
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# -->> OPTIMIZED STARTUP LOGGING <<--
-logger.info(f"--- Web Server Starting (OPTIMIZED) ---")
+# -->> ADDED STARTUP LOGGING <<--
+logger.info("--- Web Server Starting ---")
 logger.info(f"Python Version: {sys.version}")
 logger.info(f"Flask App Name: {app.name}")
-# Defer dependency checking until first request
-logger.info("Tool loading deferred until first request for faster startup")
+if REGISTRY_IMPORTED:
+    logger.info(
+        f"Initial Dependency Check (web_server): FAISS_AVAILABLE={FAISS_AVAILABLE}, OPENAI_AVAILABLE={OPENAI_AVAILABLE}"
+    )
+else:
+    logger.error("Initial Dependency Check (web_server): Failed to import registry module.")
 # -->> END STARTUP LOGGING <<--
 
-
-def _lazy_load_tools():
-    """Lazy load tools on first request to reduce startup time."""
-    global _tools_loaded, _all_tools, _tool_loading_error
-    
-    if _tools_loaded:
-        return _all_tools, _tool_loading_error
-    
-    logger.info("Loading tools on first request...")
-    start_time = time.time()
-    
-    try:
-        # Import tool registration and dependency flags
-        try:
-            from ADK.agent_data.tools.register_tools import get_all_tool_functions
-            from ADK.agent_data.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
-            registry_imported = True
-        except ImportError as e1:
-            logger.warning(f"Initial import failed ({e1}), attempting relative path adjustment...")
-            registry_imported = False
-            try:
-                script_dir = os.path.dirname(os.path.abspath(__file__))
-                project_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
-                if project_root not in sys.path:
-                    sys.path.insert(0, project_root)
-                logger.info(f"Added {project_root} to sys.path")
-                from ADK.agent_data.tools.register_tools import get_all_tool_functions
-                from ADK.agent_data.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
-                registry_imported = True
-                logger.info("Successfully imported registry after path adjustment.")
-            except ImportError as e2:
-                logger.error(f"CRITICAL: Failed to import registry even after path adjustment: {e2}")
-                get_all_tool_functions = lambda: {}
-                FAISS_AVAILABLE = False
-                OPENAI_AVAILABLE = False
-                logger.error("CRITICAL: Using dummy get_all_tool_functions and flags!")
-                registry_imported = False
-
-        if registry_imported:
-            logger.info(f"Dependency Check: FAISS_AVAILABLE={FAISS_AVAILABLE}, OPENAI_AVAILABLE={OPENAI_AVAILABLE}")
-            _all_tools = get_all_tool_functions()
-            logger.info(f"Successfully loaded {len(_all_tools)} tools: {list(_all_tools.keys())}")
-        else:
-            _all_tools = {}
-            _tool_loading_error = "Failed to import registry module"
-            
-    except Exception as e:
-        logger.error(f"Failed to load tools: {e}", exc_info=True)
-        _all_tools = {}
-        _tool_loading_error = str(e)
-    
-    _tools_loaded = True
-    load_time = time.time() - start_time
-    logger.info(f"Tool loading completed in {load_time:.3f}s")
-    
-    return _all_tools, _tool_loading_error
-
-
-@app.route("/health", methods=["GET"])
-def health_check():
-    """Quick health check without loading tools."""
-    return jsonify({"status": "healthy", "timestamp": time.time()}), 200
+# Load tools at startup - REMOVED
+# ALL_TOOLS = get_all_tool_functions()
+# logger.info(f"Initial tool discovery (may be lazy): {list(ALL_TOOLS.keys())}")
 
 
 @app.route("/execute", methods=["POST"])
@@ -94,12 +70,17 @@ def execute_tool():
     """Executes a tool based on MCP JSON format."""
     start_time = time.time()
     data = request.get_json()
-    request_id = data.get("id", f"req-{int(start_time)}")  # Generate ID if missing
+    request_id = data.get("id", "req-{}".format(int(start_time)))  # Generate ID if missing
 
     if not data:
         logger.error(f"Request {request_id}: Received empty or invalid JSON data.")
         return (
-            jsonify({"error": "Invalid or empty JSON request", "meta": {"status": "error", "request_id": request_id}}),
+            jsonify(
+                {
+                    "error": "Invalid or empty JSON request",
+                    "meta": {"status": "error", "request_id": request_id},
+                }
+            ),
             400,
         )
 
@@ -120,25 +101,32 @@ def execute_tool():
 
     if not isinstance(args, list):
         logger.error(f"Request {request_id}: 'args' must be a list, got {type(args)}.")
-        return jsonify({"error": "'args' must be a list", "meta": {"status": "error", "request_id": request_id}}), 400
+        return (
+            jsonify(
+                {
+                    "error": "'args' must be a list",
+                    "meta": {"status": "error", "request_id": request_id},
+                }
+            ),
+            400,
+        )
 
     # --- Get tools lazily ---
-    all_tools, loading_error = _lazy_load_tools()
-    
-    if loading_error:
-        logger.error(f"Request {request_id}: Tool loading failed: {loading_error}")
-        return (
-            jsonify({
-                "error": f"Tool system unavailable: {loading_error}",
-                "meta": {"status": "error", "request_id": request_id}
-            }),
-            500,
+    try:
+        all_tools = get_all_tool_functions()
+        logger.info(f"Request {request_id}: Lazy tool discovery successful. Found tools: {list(all_tools.keys())}")
+    except Exception as e:
+        logger.error(
+            f"Request {request_id}: Failed to get tools via get_all_tool_functions: {e}",
+            exc_info=True,
         )
+        # Fallback to empty if discovery fails catastrophically
+        all_tools = {}
 
     tool_function = all_tools.get(tool_name)
 
     if not tool_function:
-        available_tools_msg = list(all_tools.keys()) if all_tools else "No tools available"
+        available_tools_msg = list(all_tools.keys()) if all_tools else "Discovery failed or no tools available"
         logger.error(f"Request {request_id}: Unknown tool: {tool_name}. Available: {available_tools_msg}")
         return (
             jsonify(
@@ -186,7 +174,8 @@ def execute_tool():
 
     except Exception as e:
         logger.error(
-            f"Request {request_id}: Error executing tool {tool_name}: {str(e)}", exc_info=True
+            f"Request {request_id}: Error executing tool {tool_name}: {str(e)}",
+            exc_info=True,
         )  # Log stack trace
         return (
             jsonify(

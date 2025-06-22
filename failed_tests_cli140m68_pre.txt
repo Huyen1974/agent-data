@@ -1,0 +1,68 @@
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit 
+FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
+Line 5074: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
+Line 5076: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling
+Line 5078: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting
++grep -n "FAILED" logs/test_errors.log
++- Search result: "No failing tests found" (from grep -n "FAILED" logs/test_errors.log)
++grep -n "FAILED" logs/test_errors.log
++- Search result: "No failing tests found after testing 47 tests" (from grep -n "FAILED")
++grep -n "FAILED" logs/test_errors.log
++- Test count: "87 test results logged" (from grep -c "PASSED\|FAILED\|SKIPPED")
++Line 5074: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
++Line 5076: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling
++Line 5078: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting
++Line 5080: FAILED tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit
++Line 5082: FAILED tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling
++Line 5084: FAILED tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting
++grep -n "FAILED" logs/test_errors.log | grep -v "Final Analysis" | wc -l
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery 
+FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery
+Test 1: TestCLI139Integration::test_end_to_end_error_recovery, Status: FAILED, Runtime: 3.42s
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery 
+FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery
+Test 2: TestCLI139::test_end_to_end_error_recovery, Status: FAILED
++- Test 1: TestCLI139Integration::test_end_to_end_error_recovery, Status: FAILED, Runtime: 3.42s
++- Test 2: TestCLI139::test_end_to_end_error_recovery, Status: FAILED  
+[2025-06-18 08:39:20] Test test_coverage_target_validation: FAILED (5.87s runtime, batch size: 1) - Coverage 70.9% below target 80%
+[2025-06-18 08:39:41] Test test_cli140m15_completion_readiness: FAILED (3.44s runtime, batch size: 1) - Missing test file: tests/test_cli140m13_coverage.py
+[2025-06-18 08:46:28] Test test_coverage_target_validation: FAILED (5.16s runtime, batch size: 1) - Overall coverage 19.7% below target 70%
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_pass_rate_target_validation 
+FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_pass_rate_target_validation
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation 
+FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
+[gw0] [100%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli 
+FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli - ...
+tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite FAILED [ 33%]
+FAILED tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation 
+FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
+Test 2: test_coverage_target_validation, Status: FAILED, Runtime: s
+tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite FAILED [ 33%]
+FAILED tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite
+Sentinel test: test_no_deferred, Status: FAILED
+tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite FAILED [ 33%]
+FAILED tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite
+Sentinel test: test_no_deferred, Status: FAILED
+logs/test_errors.log output (Lines 5074-5084): Line 5564: [gw0] [ 50%] FAILED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance, Line 5851: [gw0] [ 33%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli
+Test: test_test_suite_count_compliance, Status: FAILED, Runtime: 5.99s, Error: Expected 512 tests, found 515, Log: Line     4431: FAILED - AssertionError
+2025-06-18 11:49:49 +0700 - Action 1: grep -n FAILED logs/test_errors.log output logged, found failing tests at Lines 5564, 5851
+2025-06-18 12:06:32 +0700 - Line 5564: FAILED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance - FIXED
+2025-06-18 12:06:39 +0700 - Line 5851: FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli - NEEDS INVESTIGATION
+2025-06-18 13:41:55  - CSV Line 4: test_test_suite_count_compliance,tests/test_cli140e3_9_validation.py,FAILED,"assert test_count == expected_count, f""Expected {expected_count} tests, found {test_count}""",Line 13
+-        if "::" in line_stripped and ("PASSED" in line_stripped or "FAILED" in line_stripped or "SKIPPED" in line_stripped):
++            if "FAILED" in line_stripped and "[" in line_stripped:
++                # Extract test info from patterns like: tests/test_timeout_fake.py::TestTimeoutFake::test_timeout_fake FAILED [ 50%]
++                test_full_name = line_stripped.split(" FAILED")[0].strip()
+-                if status == "FAILED":
++                    csv_writer.writerow([test_name, test_file, "FAILED", error_info, f"Line {i+1}"])
+-                    csv_writer.writerow([test_name, test_file, "FAILED", error_info, log_line])
+2025-06-18 16:05:11: Test summary: {'PASSED': 1134, 'SKIPPED': 44, 'TIMEOUT': 54, 'FAILED': 27}
+2025-06-18 17:06:10: Filtering FAILED tests from test_summary_cli140m47.txt
+2025-06-18 17:06:10: Saved       27 FAILED tests to failed_tests_cli140m47.txt
+2025-06-18 22:21:20 CLI140m.52: Batch test completed successfully - 1620 PASSED, 72 SKIPPED, 6 TIMEOUT, 0 FAILED
+2025-06-20 09:33:03 - Sample batch test completed: Collected 513 tests (vs expected 557), Results: 172 PASSED, 412 UNKNOWN, 6 SKIPPED, 0 FAILED, 0 TIMEOUT
+2025-06-20 10:04:00 CLI140m.61 SAMPLE TEST SUCCESS: 5 batches, 15 tests, 15 PASSED, 0 UNKNOWN, 0 FAILED, 0 TIMEOUT, 0 SKIPPED
+2025-06-20 11:25:52: Test summary: {'SKIPPED': 370, 'PASSED': 129, 'FAILED': 14}
+2025-06-20 11:57:27 - CLI140m.64 sample batch test completed: 5 PASSED, 25 SKIPPED, 0 FAILED, 0 TIMEOUT, 0 UNKNOWN
+2025-06-20 14:36:34: Test summary: {'PASSED': 475, 'UNKNOWN': 7, 'SKIPPED': 14, 'FAILED': 17}

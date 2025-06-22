@@ -8,7 +8,8 @@ import asyncio
 from typing import Optional, List, Dict, Any, Union, Tuple, cast
 
 # Imports adjusted for Docker structure (/app is root)
-from agent.agent_data_agent import AgentDataAgent
+from agent_data_manager.agent.agent_data_agent import AgentDataAgent
+from agent_data_manager.agent.tools_manager import ToolsManager
 from agent_data_manager.tools.register_tools import register_tools
 
 # --- Configuration ---

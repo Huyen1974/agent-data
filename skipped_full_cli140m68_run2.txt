@@ -1,0 +1,12 @@
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:97: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:117: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:250: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:321: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:349: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:402: Authentication token not available
+SKIPPED [1] tests/api/test_cursor_e2e_real_cloud.py:457: Authentication token not available
+SKIPPED [1] tests/api/test_embeddings_api.py:217: OPENAI_API_KEY not set, skipping real embedding tests
+SKIPPED [3] conftest.py:509: need --runslow option to run
+SKIPPED [1] tests/test_cli140e3_9_validation.py:321: Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63
+SKIPPED [1] tests/test_cli140e3_9_validation.py:347: Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63
+SKIPPED [1] tests/test_timeout_fake.py:22: Testing skip functionality

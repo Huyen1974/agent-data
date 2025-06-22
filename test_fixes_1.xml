@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="2.242" timestamp="2025-06-18T21:42:47.275952+07:00" hostname="MacBook-Air-cua-Nguyen.local"><testcase classname="tests.test_cli140g1_shadow" name="test_cli140g1_shadow_traffic_validation_complete" time="0.008" /></testsuite></testsuites>

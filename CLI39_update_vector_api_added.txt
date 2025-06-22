@@ -1,0 +1,6 @@
+CLI39: /update_vector API endpoint and Pydantic models (UpdateVectorRequest, UpdateVectorResponse) added to api_vector_search.py.
+Unit tests for this endpoint were added to test_api_vector_search.py, covering success, validation errors, and store error scenarios.
+
+NOTE: The test suite (test_api_vector_search.py) is currently experiencing issues with how `await` interacts with mocked asynchronous methods of QdrantStore within the TestClient environment. This leads to some existing tests failing and affects the reliability of new async error path tests. Specifically, `await` on a mocked async method call appears to return the coroutine/mock object itself rather than its configured result (return_value or side_effect). This causes unexpected behavior in endpoints relying on the direct outcome of these awaited calls (e.g., truthiness evaluation or Pydantic model validation with return values).
+
+Further investigation into the test environment's asyncio handling (possibly related to unittest.TestCase + TestClient + pytest-asyncio interactions) is required to fully stabilize the test suite.

@@ -1,0 +1,4 @@
+usage: batch_test_cli140m47b.py [-h] [--batch-size BATCH_SIZE]
+                                [--max-batches MAX_BATCHES]
+                                [--timeout TIMEOUT]
+batch_test_cli140m47b.py: error: unrecognized arguments: --qdrant-mock

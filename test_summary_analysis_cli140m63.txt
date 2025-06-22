@@ -1,0 +1,29 @@
+BATCH TEST ANALYSIS - CLI140m.63
+Test Count: 513 unique tests (collected)
+Batches: 171 batches of ≤3 tests each
+Runtime: ~9 minutes total (~2.7s average per batch)
+Status Distribution:
+- PASSED: 129 tests
+- SKIPPED: 370 tests  
+- FAILED: 14 tests
+- TIMEOUT: 0 tests (eliminated successfully)
+- UNKNOWN: 0 tests (eliminated successfully)
+
+Success: Comprehensive mocking eliminated all timeout and unknown issues.
+M1 MacBook Safety: All batches completed under 8s timeout limit.
+
+Key Improvements:
+1. Global comprehensive mocking fixture added to conftest.py
+2. pytest.ini updated with strict mock environment variables
+3. ShadowTrafficMonitor mocking implemented
+4. All external service calls mocked (Google Cloud, Qdrant, OpenAI, requests)
+5. Subprocess calls mocked to prevent heavy operations
+
+Issues Remaining:
+- 370 skipped tests (need to reduce to ~6 intentional skips)
+- 14 failed tests (need investigation and fixes)
+
+Next Steps for CLI140m.64:
+- Analyze and fix the 14 failed tests
+- Reduce skipped tests by removing unnecessary @pytest.mark.deferred decorators
+- Achieve target of ~6 intentional skips only 

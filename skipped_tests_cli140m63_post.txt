@@ -1,0 +1,20 @@
++- Test count: "87 test results logged" (from grep -c "PASSED\|FAILED\|SKIPPED")
+-        if "::" in line_stripped and ("PASSED" in line_stripped or "FAILED" in line_stripped or "SKIPPED" in line_stripped):
+-                elif status == "SKIPPED":
+-                    log_with_timestamp(f"Test SKIPPED: {test_name}, File: {test_file}, Reason: {skip_reason}, Log: {log_line}")
+-                    csv_writer.writerow([test_name, test_file, "SKIPPED", skip_reason, log_line])
++            elif "SKIPPED" in line_stripped and "[" in line_stripped:
++                # Extract test info from patterns like: tests/test_name.py::TestClass::test_method SKIPPED [reason]
++                test_full_name = line_stripped.split(" SKIPPED")[0].strip()
++                log_with_timestamp(f"Test SKIPPED: {test_name}, File: {test_file}, Reason: {skip_reason}, Log: Line {i+1}")
++                csv_writer.writerow([test_name, test_file, "SKIPPED", skip_reason, f"Line {i+1}"])
+2025-06-18 16:05:11: Test summary: {'PASSED': 1134, 'SKIPPED': 44, 'TIMEOUT': 54, 'FAILED': 27}
+2025-06-18 22:21:05: Test summary: {'PASSED': 1620, 'SKIPPED': 72, 'TIMEOUT': 6}
+2025-06-18 22:21:20 CLI140m.52: Batch test completed successfully - 1620 PASSED, 72 SKIPPED, 6 TIMEOUT, 0 FAILED
+2025-06-20 09:32:55: Test summary: {'PASSED': 172, 'UNKNOWN': 412, 'SKIPPED': 6}
+2025-06-20 09:33:03 - Sample batch test completed: Collected 513 tests (vs expected 557), Results: 172 PASSED, 412 UNKNOWN, 6 SKIPPED, 0 FAILED, 0 TIMEOUT
+2025-06-20 10:04:00 CLI140m.61 SAMPLE TEST SUCCESS: 5 batches, 15 tests, 15 PASSED, 0 UNKNOWN, 0 FAILED, 0 TIMEOUT, 0 SKIPPED
+2025-06-20 10:21:27: Test summary: {'SKIPPED': 10, 'PASSED': 5}
+2025-06-20 10:33:21: Test summary: {'SKIPPED': 370, 'PASSED': 134, 'UNKNOWN': 3, 'TIMEOUT': 6}
+2025-06-20 11:16:05: Test summary: {'SKIPPED': 10, 'PASSED': 5}
+2025-06-20 11:16:05: Test summary: {'SKIPPED': 10, 'PASSED': 5}

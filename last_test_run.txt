@@ -1,0 +1,207 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.17, pytest-8.3.5, pluggy-1.5.0 -- /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.3.42, asyncio-0.26.0, mock-3.14.0, cov-6.1.1
+asyncio: mode=auto, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 52 items
+
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_auto_embed FAILED [  1%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_with_vector_data FAILED [  3%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_no_text_field_and_no_vector_data PASSED [  5%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_text_field_not_in_metadata PASSED [  7%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_vector_data_mismatch_metadata_length PASSED [  9%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_vector_data_dimension_mismatch_faiss_init PASSED [ 11%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_metadata_empty PASSED [ 13%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_openai_embedding_fails PASSED [ 15%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_invalid_vector_data_type PASSED [ 17%]
+ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails FAILED [ 19%]
+
+=================================== FAILURES ===================================
+_________________ TestSaveMetadataToFaiss.test_save_auto_embed _________________
+
+self = <test_faiss_tools.TestSaveMetadataToFaiss object at 0x11c56c5b0>
+mock_os_remove = <MagicMock name='remove' id='4770525968'>
+mock_os_path_exists = <MagicMock name='exists' id='5540259744'>
+mock_pickle_dump = <MagicMock name='dump' id='5540316784'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5540324608'>
+MockFaissIndexFlatL2_constructor = <MagicMock name='IndexFlatL2' id='5540348880'>
+mock_get_openai_embedding_in_save_tool = <MagicMock name='get_openai_embedding' id='5540356704'>
+mock_upload_with_retry_func = <MagicMock name='upload_with_retry' id='5540364592'>
+mock_firestore_client = (<MagicMock name='Client' id='4770527168'>, <MagicMock name='collection_ref' id='5540067888'>, <MagicMock name='document_ref' id='5540100176'>, <MagicMock name='document_snapshot' id='5540107968'>)
+mock_gcs_storage_client = (<MagicMock name='Client()' id='4773434976'>, <MagicMock name='gcs_bucket_instance' id='5540188112'>, <MagicMock name='gcs_blob_instance' id='5540195936'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x11c587460>
+
+    @patch(UPLOAD_WITH_RETRY_SAVE_PATH)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding")
+    @patch(FAISS_INDEX_FLAT_L2_SAVE_PATH)
+    @patch(FAISS_WRITE_INDEX_SAVE_PATH)
+    @patch(PICKLE_DUMP_SAVE_PATH)
+    @patch(OS_PATH_EXISTS_SAVE_PATH)
+    @patch(OS_REMOVE_SAVE_PATH)
+    def test_save_auto_embed(self, mock_os_remove, mock_os_path_exists,
+                             mock_pickle_dump, mock_faiss_write_index, MockFaissIndexFlatL2_constructor,
+                             mock_get_openai_embedding_in_save_tool,
+                             mock_upload_with_retry_func,
+                             mock_firestore_client, mock_gcs_storage_client, mocker):
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+
+        _, _, mock_fs_doc_ref, _ = mock_firestore_client
+        _, _, mock_gcs_blob = mock_gcs_storage_client
+
+        def os_exists_side_effect(path):
+            return path in [f"/tmp/test_index.faiss", f"/tmp/test_index.meta"]
+        mock_os_path_exists.side_effect = os_exists_side_effect
+
+        async def mock_embed_side_effect_auto(agent_context, text_to_embed):
+            if text_to_embed == "Hello world":
+                return {"embedding": [0.1]*10, "total_tokens": 1, "model_used": "mock_model_auto_1"}
+            elif text_to_embed == "Another document":
+                return {"embedding": [0.2]*10, "total_tokens": 1, "model_used": "mock_model_auto_2"}
+            raise ValueError(f"Unexpected text_to_embed in test_save_auto_embed: {text_to_embed}")
+        mock_get_openai_embedding_in_save_tool.side_effect = mock_embed_side_effect_auto
+
+        mock_index_instance = MockFaissIndexFlatL2_constructor.return_value
+
+        input_data = {"index_name": "test_index", "metadata_dict": {"doc1": {"text": "Hello world"}, "doc2": {"text": "Another document"}}, "text_field_to_embed": "text", "dimension": 10}
+        expected_pickle_arg = {'ids': ['doc1', 'doc2'], 'metadata': input_data["metadata_dict"]}
+
+        result = save_metadata_to_faiss(**input_data)
+
+        assert result.get("status") == "success"
+        MockFaissIndexFlatL2_constructor.assert_called_once_with(10)
+        mock_index_instance.add.assert_called_once()
+
+        expected_embedding_calls = [
+            call(agent_context=mocker.ANY, text_to_embed="Hello world"),
+            call(agent_context=mocker.ANY, text_to_embed="Another document")
+        ]
+        mock_get_openai_embedding_in_save_tool.assert_has_calls(expected_embedding_calls, any_order=True)
+        assert mock_get_openai_embedding_in_save_tool.call_count == 2
+
+        mock_faiss_write_index.assert_called_once_with(mock_index_instance, "/tmp/test_index.faiss")
+
+        actual_pickled_obj = mock_pickle_dump.call_args[0][0]
+        assert actual_pickled_obj.keys() == expected_pickle_arg.keys()
+        assert sorted(actual_pickled_obj['ids']) == sorted(expected_pickle_arg['ids'])
+        assert actual_pickled_obj['metadata'] == expected_pickle_arg['metadata']
+        assert isinstance(mock_pickle_dump.call_args[0][1], io.IOBase)
+
+        mock_upload_with_retry_func.assert_has_calls([
+            call(mocker.ANY, "/tmp/test_index.faiss"),
+            call(mocker.ANY, "/tmp/test_index.meta")
+        ], any_order=True)
+        assert mock_upload_with_retry_func.call_count == 2
+>       assert mock_fs_doc_ref.set.call_count == 2
+E       AssertionError: assert 0 == 2
+E        +  where 0 = <MagicMock name='document_ref.set' id='5542810320'>.call_count
+E        +    where <MagicMock name='document_ref.set' id='5542810320'> = <MagicMock name='document_ref' id='5540100176'>.set
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:188: AssertionError
+______________ TestSaveMetadataToFaiss.test_save_with_vector_data ______________
+
+self = <test_faiss_tools.TestSaveMetadataToFaiss object at 0x11c56c880>
+mock_os_remove = <MagicMock name='remove' id='5544060544'>
+mock_os_path_exists = <MagicMock name='exists' id='5543855632'>
+mock_pickle_dump = <MagicMock name='dump' id='5543863504'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5543904208'>
+MockFaissIndexFlatL2_constructor = <MagicMock name='IndexFlatL2' id='5543912080'>
+mock_upload_with_retry_func = <MagicMock name='upload_with_retry' id='5544608144'>
+mock_firestore_client = (<MagicMock name='Client' id='5540003744'>, <MagicMock name='collection_ref' id='5543482880'>, <MagicMock name='document_ref' id='5543547936'>, <MagicMock name='document_snapshot' id='5543555664'>)
+mock_gcs_storage_client = (<MagicMock name='Client()' id='5543596992'>, <MagicMock name='gcs_bucket_instance' id='5544111232'>, <MagicMock name='gcs_blob_instance' id='5544037152'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x14a3488e0>
+
+    @patch(UPLOAD_WITH_RETRY_SAVE_PATH)
+    @patch(FAISS_INDEX_FLAT_L2_SAVE_PATH)
+    @patch(FAISS_WRITE_INDEX_SAVE_PATH)
+    @patch(PICKLE_DUMP_SAVE_PATH)
+    @patch(OS_PATH_EXISTS_SAVE_PATH)
+    @patch(OS_REMOVE_SAVE_PATH)
+    def test_save_with_vector_data(self, mock_os_remove, mock_os_path_exists,
+                                    mock_pickle_dump, mock_faiss_write_index, MockFaissIndexFlatL2_constructor,
+                                    mock_upload_with_retry_func,
+                                    mock_firestore_client, mock_gcs_storage_client, mocker):
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        _, _, mock_fs_doc_ref, _ = mock_firestore_client
+
+        def os_exists_side_effect(path):
+            return path in ["/tmp/test_idx_vec.faiss", "/tmp/test_idx_vec.meta"]
+        mock_os_path_exists.side_effect = os_exists_side_effect
+
+        mock_index_instance = MockFaissIndexFlatL2_constructor.return_value
+        input_metadata_dict = {"d1": {"info": "i1"}}
+        input_vector_data_list = [np.array([0.1]*5, dtype=np.float32)]
+        input_data = {"index_name": "test_idx_vec", "metadata_dict": input_metadata_dict, "vector_data": input_vector_data_list, "dimension": 5}
+        expected_pickle_data = {'ids': ['d1'], 'metadata': input_metadata_dict}
+
+        result = save_metadata_to_faiss(**input_data)
+        assert result.get("status") == "success"
+        MockFaissIndexFlatL2_constructor.assert_called_once_with(5)
+        added_vectors = mock_index_instance.add.call_args[0][0]
+        np.testing.assert_array_almost_equal(added_vectors, np.array(input_vector_data_list, dtype=np.float32))
+        mock_faiss_write_index.assert_called_once_with(mock_index_instance, "/tmp/test_idx_vec.faiss")
+        actual_pickled_obj = mock_pickle_dump.call_args[0][0]
+        assert actual_pickled_obj.keys() == expected_pickle_data.keys()
+        assert sorted(actual_pickled_obj['ids']) == sorted(expected_pickle_data['ids'])
+        assert actual_pickled_obj['metadata'] == expected_pickle_data['metadata']
+        assert mock_upload_with_retry_func.call_count == 2
+>       assert mock_fs_doc_ref.set.call_count == 2
+E       AssertionError: assert 0 == 2
+E        +  where 0 = <MagicMock name='document_ref.set' id='5544623696'>.call_count
+E        +    where <MagicMock name='document_ref.set' id='5544623696'> = <MagicMock name='document_ref' id='5543547936'>.set
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:230: AssertionError
+___________ TestSaveMetadataToFaiss.test_save_gcs_upload_meta_fails ____________
+
+self = <test_faiss_tools.TestSaveMetadataToFaiss object at 0x11c56de10>
+mock_os_remove = <MagicMock name='remove' id='5544928656'>
+mock_os_path_exists = <MagicMock name='exists' id='5545415952'>
+mock_pickle_dump = <MagicMock name='dump' id='5545111664'>
+mock_faiss_write_index = <MagicMock name='write_index' id='5545104992'>
+MockFaissIndexFlatL2_constructor = <MagicMock name='IndexFlatL2' id='5545500224'>
+mock_get_openai_embedding_in_save_tool = <MagicMock name='get_openai_embedding' id='5545502384'>
+mock_upload_with_retry_func = <MagicMock name='upload_with_retry' id='5545186096'>
+mock_firestore_client = (<MagicMock name='Client' id='5545506416'>, <MagicMock name='collection_ref' id='5545884736'>, <MagicMock name='document_ref' id='5545868544'>, <MagicMock name='document_snapshot' id='5545171152'>)
+mock_gcs_storage_client = (<MagicMock name='Client()' id='5545589152'>, <MagicMock name='gcs_bucket_instance' id='5544874752'>, <MagicMock name='gcs_blob_instance' id='5544882528'>)
+mocker = <pytest_mock.plugin.MockerFixture object at 0x14a82ad40>
+
+    @patch(UPLOAD_WITH_RETRY_SAVE_PATH)
+    @patch(f"{SAVE_TOOL_MODULE_PATH}.get_openai_embedding")
+    @patch(FAISS_INDEX_FLAT_L2_SAVE_PATH)
+    @patch(FAISS_WRITE_INDEX_SAVE_PATH)
+    @patch(PICKLE_DUMP_SAVE_PATH)
+    @patch(OS_PATH_EXISTS_SAVE_PATH)
+    @patch(OS_REMOVE_SAVE_PATH)
+    def test_save_gcs_upload_meta_fails(self, mock_os_remove, mock_os_path_exists,
+                                       mock_pickle_dump, mock_faiss_write_index, MockFaissIndexFlatL2_constructor,
+                                       mock_get_openai_embedding_in_save_tool,
+                                       mock_upload_with_retry_func,
+                                       mock_firestore_client, mock_gcs_storage_client, mocker):
+        from ADK.agent_data.tools.save_metadata_to_faiss_tool import save_metadata_to_faiss
+        _, _, mock_fs_doc_ref, _ = mock_firestore_client
+
+        mock_os_path_exists.side_effect = lambda p: p in [f"/tmp/test_gcs_meta_fail.faiss", f"/tmp/test_gcs_meta_fail.meta"]
+
+        async def mock_create_embed_gcs_meta_fail_ext(agent_context, text_to_embed):
+            return {"embedding": [0.1]*10, "total_tokens": 1, "model_used": "mock_model_gcs_meta_fail"}
+        mock_get_openai_embedding_in_save_tool.side_effect = mock_create_embed_gcs_meta_fail_ext
+
+        mock_upload_with_retry_func.side_effect = [None, google_cloud_exceptions.ServiceUnavailable("GCS meta failed")]
+        input_data = {"index_name": "test_gcs_meta_fail", "metadata_dict": {"d1":{"text":"txt"}}, "text_field_to_embed":"text", "dimension":10}
+        result = save_metadata_to_faiss(**input_data)
+        assert result.get("status") == "error"
+        assert "GCS meta failed" in result.get("message", "")
+        assert mock_upload_with_retry_func.call_count == 2
+>       assert mock_fs_doc_ref.set.call_count == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <MagicMock name='document_ref.set' id='5545194208'>.call_count
+E        +    where <MagicMock name='document_ref.set' id='5545194208'> = <MagicMock name='document_ref' id='5545868544'>.set
+
+ADK/agent_data/tests/tools/test_faiss_tools.py:353: AssertionError
+=========================== short test summary info ============================
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_auto_embed
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_with_vector_data
+FAILED ADK/agent_data/tests/tools/test_faiss_tools.py::TestSaveMetadataToFaiss::test_save_gcs_upload_meta_fails
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 3 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+=================== 3 failed, 7 passed, 3 warnings in 1.67s ====================

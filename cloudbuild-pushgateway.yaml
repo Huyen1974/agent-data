@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'pushgateway.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/prometheus-pushgateway', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/prometheus-pushgateway']
+images:
+- 'gcr.io/$PROJECT_ID/prometheus-pushgateway'

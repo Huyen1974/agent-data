@@ -1,0 +1,227 @@
+# Cloud Workflows for Agent Data Document Ingestion
+# Orchestrates: save → vectorize → tag
+# Region: asia-southeast1
+
+main:
+  params: [input]
+  steps:
+    - init_workflow:
+        assign:
+          - project_id: "chatgpt-db-project"
+          - doc_id: ${input.doc_id}
+          - content: ${input.content}
+          - metadata: ${default(input.metadata, null)}
+          - workflow_id: ${"workflow_" + doc_id + "_" + string(int(sys.now()))}
+
+    - log_workflow_start:
+        try:
+          call: http.post
+          args:
+            url: "https://logging.googleapis.com/v2/entries:write"
+            auth:
+              type: OAuth2
+              scopes: ["https://www.googleapis.com/auth/logging.write"]
+            headers:
+              Content-Type: application/json
+            body:
+              entries:
+                - logName: "projects/chatgpt-db-project/logs/ingestion-workflow"
+                  resource:
+                    type: "global"
+                  jsonPayload:
+                    workflow_id: ${workflow_id}
+                    doc_id: ${doc_id}
+                    step: "workflow_start"
+                    message: "Starting ingestion workflow"
+                    timestamp: ${string(sys.now())}
+                  severity: "INFO"
+          result: log_start_result
+        except:
+          as: log_start_error
+          steps:
+            - continue_without_logging:
+                assign:
+                  - log_start_result: {"status": "logging_failed"}
+
+    - vectorize_document_step:
+        try:
+          call: http.post
+          args:
+            url: "https://api-a2a-1042559846495.asia-southeast1.run.app/vectorize"
+            auth:
+              type: OAuth2
+              scopes: ["https://www.googleapis.com/auth/cloud-platform"]
+            headers:
+              Content-Type: application/json
+            body:
+              doc_id: ${doc_id}
+              content: ${content}
+              metadata: ${metadata}
+              tag: "workflow"
+              update_firestore: true
+          result: vectorize_result
+        except:
+          as: vectorize_error
+          steps:
+            - log_vectorize_error:
+                try:
+                  call: http.post
+                  args:
+                    url: "https://logging.googleapis.com/v2/entries:write"
+                    auth:
+                      type: OAuth2
+                      scopes: ["https://www.googleapis.com/auth/logging.write"]
+                    headers:
+                      Content-Type: application/json
+                    body:
+                      entries:
+                        - logName: "projects/chatgpt-db-project/logs/ingestion-workflow"
+                          resource:
+                            type: "global"
+                          jsonPayload:
+                            workflow_id: ${workflow_id}
+                            doc_id: ${doc_id}
+                            step: "vectorize_error"
+                            message: "Vectorize step failed"
+                            error: ${string(vectorize_error)}
+                            timestamp: ${string(sys.now())}
+                          severity: "ERROR"
+                  result: log_vectorize_error_result
+                except:
+                  as: log_vectorize_error_failed
+                  assign:
+                    - log_vectorize_error_result: {"status": "logging_failed"}
+            - retry_vectorize:
+                call: sys.sleep
+                args:
+                  seconds: 3
+            - vectorize_retry:
+                try:
+                  call: http.post
+                  args:
+                    url: "https://api-a2a-1042559846495.asia-southeast1.run.app/vectorize"
+                    auth:
+                      type: OAuth2
+                      scopes: ["https://www.googleapis.com/auth/cloud-platform"]
+                    headers:
+                      Content-Type: application/json
+                    body:
+                      doc_id: ${doc_id}
+                      content: ${content}
+                      metadata: ${metadata}
+                      tag: "workflow"
+                      update_firestore: true
+                  result: vectorize_result
+                except:
+                  as: vectorize_retry_error
+                  raise: ${vectorize_retry_error}
+
+    - auto_tag_document_step:
+        try:
+          call: http.post
+          args:
+            url: "https://api-a2a-1042559846495.asia-southeast1.run.app/auto_tag"
+            auth:
+              type: OAuth2
+              scopes: ["https://www.googleapis.com/auth/cloud-platform"]
+            headers:
+              Content-Type: application/json
+            body:
+              content: ${content}
+              metadata: ${vectorize_result.metadata}
+              max_tags: 5
+          result: auto_tag_result
+        except:
+          as: auto_tag_error
+          steps:
+            - log_auto_tag_error:
+                try:
+                  call: http.post
+                  args:
+                    url: "https://logging.googleapis.com/v2/entries:write"
+                    auth:
+                      type: OAuth2
+                      scopes: ["https://www.googleapis.com/auth/logging.write"]
+                    headers:
+                      Content-Type: application/json
+                    body:
+                      entries:
+                        - logName: "projects/chatgpt-db-project/logs/ingestion-workflow"
+                          resource:
+                            type: "global"
+                          jsonPayload:
+                            workflow_id: ${workflow_id}
+                            doc_id: ${doc_id}
+                            step: "auto_tag_error"
+                            message: "Auto-tag step failed"
+                            error: ${string(auto_tag_error)}
+                            timestamp: ${string(sys.now())}
+                          severity: "ERROR"
+                  result: log_auto_tag_error_result
+                except:
+                  as: log_auto_tag_error_failed
+                  assign:
+                    - log_auto_tag_error_result: {"status": "logging_failed"}
+            - retry_auto_tag:
+                call: sys.sleep
+                args:
+                  seconds: 3
+            - auto_tag_retry:
+                try:
+                  call: http.post
+                  args:
+                    url: "https://api-a2a-1042559846495.asia-southeast1.run.app/auto_tag"
+                    auth:
+                      type: OAuth2
+                      scopes: ["https://www.googleapis.com/auth/cloud-platform"]
+                    headers:
+                      Content-Type: application/json
+                    body:
+                      content: ${content}
+                      metadata: ${vectorize_result.metadata}
+                      max_tags: 5
+                  result: auto_tag_result
+                except:
+                  as: auto_tag_retry_error
+                  raise: ${auto_tag_retry_error}
+
+    - log_workflow_complete:
+        try:
+          call: http.post
+          args:
+            url: "https://logging.googleapis.com/v2/entries:write"
+            auth:
+              type: OAuth2
+              scopes: ["https://www.googleapis.com/auth/cloud-platform"]
+            headers:
+              Content-Type: application/json
+            body:
+              entries:
+                - logName: "projects/chatgpt-db-project/logs/ingestion-workflow"
+                  resource:
+                    type: "global"
+                  jsonPayload:
+                    workflow_id: ${workflow_id}
+                    doc_id: ${doc_id}
+                    step: "workflow_complete"
+                    message: "Ingestion workflow completed successfully"
+                    vectorize_status: ${vectorize_result.status}
+                    auto_tag_status: ${auto_tag_result.status}
+                    timestamp: ${string(sys.now())}
+                  severity: "INFO"
+          result: log_complete_result
+        except:
+          as: log_complete_error
+          steps:
+            - continue_without_completion_logging:
+                assign:
+                  - log_complete_result: {"status": "logging_failed"}
+
+    - return_result:
+        return:
+          workflow_id: ${workflow_id}
+          doc_id: ${doc_id}
+          status: "completed"
+          vectorize_result: ${vectorize_result}
+          auto_tag_result: ${auto_tag_result}
+          timestamp: ${sys.now()}

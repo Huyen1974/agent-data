@@ -1,0 +1,88 @@
+{
+  "displayName": "Agent Data API Error Rate Alert",
+  "documentation": {
+    "content": "Alert when API error rates exceed 5% for A2A API, CSKH API, or RAG operations",
+    "mimeType": "text/markdown"
+  },
+  "conditions": [
+    {
+      "displayName": "CSKH API Error Rate High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/cskh/cskh_errors_total\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "groupByFields": ["metric.label.endpoint"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 0.05,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "A2A API Error Rate High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/a2a/a2a_errors_total\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "groupByFields": ["metric.label.endpoint"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 0.05,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "RAG Search Error Rate High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/rag/rag_search_errors_total\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 0.05,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "Qdrant API Error Rate High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_api_errors_total\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_RATE",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 0.05,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    }
+  ],
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  },
+  "severity": "ERROR"
+} 

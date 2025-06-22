@@ -1,0 +1,131 @@
+# Multi-stage build for optimized Qdrant Docker image with snapshot restore
+# Target size: <120 MB
+
+# Stage 1: Build Qdrant binary
+FROM rust:1.75-alpine AS qdrant-builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    musl-dev \
+    pkgconfig \
+    openssl-dev \
+    git
+
+# Clone and build Qdrant
+WORKDIR /build
+RUN git clone https://github.com/qdrant/qdrant.git --depth 1 --branch v1.7.4
+WORKDIR /build/qdrant
+RUN cargo build --release --bin qdrant
+
+# Stage 2: Python dependencies builder
+FROM python:3.11-alpine AS python-builder
+
+# Install build dependencies for Python packages
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev
+
+# Create virtual environment and install Python dependencies
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install required Python packages
+RUN pip install --no-cache-dir \
+    google-cloud-storage==2.10.0 \
+    qdrant-client==1.7.0
+
+# Stage 3: Final runtime image
+FROM alpine:3.18
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    libgcc \
+    libstdc++ \
+    openssl \
+    ca-certificates \
+    python3 \
+    py3-pip
+
+# Copy Qdrant binary from builder
+COPY --from=qdrant-builder /build/qdrant/target/release/qdrant /usr/local/bin/qdrant
+
+# Copy Python virtual environment
+COPY --from=python-builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Create app directory and copy restore script
+WORKDIR /app
+COPY scripts/qdrant_restore.py /app/qdrant_restore.py
+
+# Create data directory for Qdrant
+RUN mkdir -p /qdrant/storage
+
+# Set environment variables
+ENV QDRANT_URL="http://localhost:6333"
+ENV QDRANT_COLLECTION_NAME="my_collection"
+ENV GCS_BUCKET_NAME="qdrant-snapshots"
+ENV PYTHONPATH="/app"
+
+# Expose Qdrant port
+EXPOSE 6333
+
+# Create startup script that runs restore then starts Qdrant
+RUN echo '#!/bin/sh' > /app/startup.sh && \
+    echo 'set -e' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo 'echo "Starting Qdrant with snapshot restore..."' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Start Qdrant in background' >> /app/startup.sh && \
+    echo 'echo "Starting Qdrant server..."' >> /app/startup.sh && \
+    echo 'qdrant --config-path /app/qdrant-config.yaml &' >> /app/startup.sh && \
+    echo 'QDRANT_PID=$!' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Wait for Qdrant to be ready' >> /app/startup.sh && \
+    echo 'echo "Waiting for Qdrant to be ready..."' >> /app/startup.sh && \
+    echo 'for i in $(seq 1 30); do' >> /app/startup.sh && \
+    echo '    if wget -q --spider http://localhost:6333/health 2>/dev/null; then' >> /app/startup.sh && \
+    echo '        echo "Qdrant is ready!"' >> /app/startup.sh && \
+    echo '        break' >> /app/startup.sh && \
+    echo '    fi' >> /app/startup.sh && \
+    echo '    if [ $i -eq 30 ]; then' >> /app/startup.sh && \
+    echo '        echo "Qdrant failed to start within 30 seconds"' >> /app/startup.sh && \
+    echo '        exit 1' >> /app/startup.sh && \
+    echo '    fi' >> /app/startup.sh && \
+    echo '    sleep 1' >> /app/startup.sh && \
+    echo 'done' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Run snapshot restore' >> /app/startup.sh && \
+    echo 'echo "Running snapshot restore..."' >> /app/startup.sh && \
+    echo 'python3 /app/qdrant_restore.py' >> /app/startup.sh && \
+    echo '' >> /app/startup.sh && \
+    echo '# Keep Qdrant running in foreground' >> /app/startup.sh && \
+    echo 'echo "Snapshot restore completed. Qdrant is running..."' >> /app/startup.sh && \
+    echo 'wait $QDRANT_PID' >> /app/startup.sh
+
+# Create minimal Qdrant config
+RUN echo 'service:' > /app/qdrant-config.yaml && \
+    echo '  host: 0.0.0.0' >> /app/qdrant-config.yaml && \
+    echo '  http_port: 6333' >> /app/qdrant-config.yaml && \
+    echo '  grpc_port: 6334' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'storage:' >> /app/qdrant-config.yaml && \
+    echo '  storage_path: /qdrant/storage' >> /app/qdrant-config.yaml && \
+    echo '  snapshots_path: /qdrant/snapshots' >> /app/qdrant-config.yaml && \
+    echo '  on_disk_payload: true' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'cluster:' >> /app/qdrant-config.yaml && \
+    echo '  enabled: false' >> /app/qdrant-config.yaml && \
+    echo '' >> /app/qdrant-config.yaml && \
+    echo 'telemetry_disabled: true' >> /app/qdrant-config.yaml
+
+# Make startup script executable
+RUN chmod +x /app/startup.sh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget -q --spider http://localhost:6333/health || exit 1
+
+# Use startup script as entrypoint
+CMD ["/app/startup.sh"]

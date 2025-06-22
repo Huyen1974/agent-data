@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="1.698" timestamp="2025-06-18T17:33:05.024578+07:00" hostname="192.168.1.29"><testcase classname="tests.test_cli133_rag.TestCLI133RAG" name="test_rag_search_with_tags_filter" time="0.011"><failure message="assert 0 == 2">self = &lt;tests.test_cli133_rag.TestCLI133RAG object at 0x12c2e3e20&gt;
+rag_tool = &lt;src.agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool object at 0x12c17a0b0&gt;
+mock_qdrant_store = &lt;AsyncMock id='5079004256'&gt;, mock_firestore_manager = &lt;AsyncMock id='5079037120'&gt;
+
+    @pytest.mark.asyncio
+    async def test_rag_search_with_tags_filter(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+        """Test RAG search with tags filtering."""
+        # Setup mocks
+        rag_tool.qdrant_store = mock_qdrant_store
+        rag_tool.firestore_manager = mock_firestore_manager
+        rag_tool._initialized = True
+    
+        # Perform RAG search with tags filter
+        result = await rag_tool.rag_search(
+            query_text="machine learning",
+            tags=["python"],
+            limit=5,
+        )
+    
+        # Verify results - should return doc_001 and doc_002 (both have python tag)
+        assert result["status"] == "success"
+&gt;       assert result["count"] == 2
+E       assert 0 == 2
+
+tests/test_cli133_rag.py:197: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,17 +1,41 @@
-# Dockerfile for Agent Data
-FROM python:3.10.17-slim
-WORKDIR /app
-COPY requirements.txt .
-# Install build tools
-RUN apt-get update && apt-get install -y --no-install-recommends gcc build-essential && rm -rf /var/lib/apt/lists/*
+FROM python:3.10-slim
 
-# Install Python dependencies
-RUN pip install --no-cache-dir --timeout=600 -r requirements.txt
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install build dependencies needed for some packages (like pickle5)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libopenblas-dev \
+    libomp5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install dependencies from requirements.txt
+# Includes flask, firestore, gunicorn, etc.
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt --timeout=100
 
 # Copy application code
-COPY ADK ./ADK/
-COPY mcp ./mcp/
+COPY . .
 
-# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
-CMD ["python", "mcp/local_mcp_server.py"]
-# Test comment to verify edit_file functionality
+# Install the package
+RUN pip install --no-cache-dir -e . --timeout=100
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PORT=8080
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_ENV=production
+
+# Pre-warm Python module cache by importing critical modules
+RUN python -c "import sys, logging, json, time, os; \
+    from flask import Flask; \
+    print('Pre-warmed critical modules')"
+
+# Default Port for Cloud Run
+EXPOSE 8080
+
+# Use gunicorn for better production performance instead of Flask dev server
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "--timeout", "60", "--preload", "--max-requests", "1000", "ADK.agent_data.mcp.web_server:app"]

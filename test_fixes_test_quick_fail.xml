@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="1.679" timestamp="2025-06-18T17:36:44.905995+07:00" hostname="192.168.1.29"><testcase classname="tests.test_timeout_fake" name="test_quick_fail" time="0.007"><failure message="AssertionError: Intentional failure for testing&#10;assert False">def test_quick_fail():
+        """Quick failing test"""
+&gt;       assert False, "Intentional failure for testing"
+E       AssertionError: Intentional failure for testing
+E       assert False
+
+tests/test_timeout_fake.py:20: AssertionError</failure></testcase></testsuite></testsuites>

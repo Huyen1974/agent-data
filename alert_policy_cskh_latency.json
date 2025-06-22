@@ -1,0 +1,70 @@
+{
+  "displayName": "CSKH Agent API Latency Alert",
+  "documentation": {
+    "content": "Alert when CSKH Agent API request latency exceeds 1 second or error rates are high",
+    "mimeType": "text/markdown"
+  },
+  "conditions": [
+    {
+      "displayName": "CSKH API Request Latency High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/cskh/cskh_request_duration_seconds\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.endpoint"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "RAG Search Latency High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/rag/rag_search_duration_seconds\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.collection"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    },
+    {
+      "displayName": "A2A API Gateway Latency High",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/a2a/a2a_request_duration_seconds\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_MEAN",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": ["metric.label.endpoint"]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1.0,
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+      }
+    }
+  ],
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  },
+  "severity": "WARNING"
+} 

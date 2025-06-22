@@ -1,14 +1,15 @@
-import inspect
+import sys
 import json
 import logging
+import time
+import inspect
 
 # Ensure parent directory (ADK/agent_data) is in path if run directly
 import os
-import sys
-import time
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import mcp
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -16,7 +17,16 @@ logger = logging.getLogger(__name__)
 
 # Import necessary components using relative paths
 try:
-    from agent_data_manager.tools.register_tools import get_all_tool_functions  # Use the new helper
+    # from tools.echo_tool import echo
+    # from tools.save_text_tool import save_text
+    # from tools.add_numbers_tool import add_numbers
+    # from tools.get_registered_tools_tool import get_registered_tools
+    # from tools.register_tools import get_all_tool_functions # Use the new helper
+    from agent_data_manager.tools.echo_tool import echo
+    from agent_data_manager.tools.save_text_tool import save_text
+    from agent_data_manager.tools.add_numbers_tool import add_numbers
+    from agent_data_manager.tools.get_registered_tools_tool import get_registered_tools
+    from agent_data_manager.tools.register_tools import get_all_tool_functions  # Corrected import path
 except ImportError as e:
     logger.error(f"Failed to import tools using relative paths: {e}", exc_info=True)
     sys.exit(1)
@@ -89,7 +99,7 @@ def run_mcp_loop():
 
                         # Determine how to call based on input and signature
                         if tool_name == "get_registered_tools":  # Specific case
-                            tool_result_data = tool_function()  # Call without arguments
+                            tool_result_data = tool_function(available_tools=ALL_TOOLS)
                         elif isinstance(tool_input, dict):
                             # If input is dict, try to match kwargs
                             try:
@@ -117,8 +127,7 @@ def run_mcp_loop():
                     except Exception as exec_err:
                         # Catch any exception during signature inspection or execution
                         logger.error(
-                            f"Error executing tool '{tool_name}' (ID: {request_id}): {exec_err}",
-                            exc_info=True,
+                            f"Error executing tool '{tool_name}' (ID: {request_id}): {exec_err}", exc_info=True
                         )
                         # Raise it to be handled by the outer try-except block
                         raise exec_err
@@ -127,10 +136,7 @@ def run_mcp_loop():
                     # Standardize response structure
                     response = {
                         "result": None,  # Default to None
-                        "meta": {
-                            "status": "success",
-                            "request_id": request_id,
-                        },  # Default to success
+                        "meta": {"status": "success", "request_id": request_id},  # Default to success
                         "error": None,  # Default to None
                     }
 
@@ -139,8 +145,7 @@ def run_mcp_loop():
                         if tool_result_data["status"] == "failed":
                             response["meta"]["status"] = "error"
                             response["error"] = tool_result_data.get(
-                                "error",
-                                "Tool reported failure without specific error message.",
+                                "error", "Tool reported failure without specific error message."
                             )
                             response["result"] = tool_result_data.get(
                                 "result"
@@ -165,10 +170,7 @@ def run_mcp_loop():
                         logger.info(f"Tool '{tool_name}' executed successfully (ID: {request_id}).")
 
                 except Exception as e:
-                    logger.error(
-                        f"Error executing tool '{tool_name}' (ID: {request_id}): {e}",
-                        exc_info=True,
-                    )
+                    logger.error(f"Error executing tool '{tool_name}' (ID: {request_id}): {e}", exc_info=True)
                     response["result"] = None
                     response["meta"] = {"status": "error", "request_id": request_id}
                     response["error"] = f"Error in tool '{tool_name}': {type(e).__name__}: {e}"
@@ -187,10 +189,7 @@ def run_mcp_loop():
             logger.error(f"Invalid JSON received: {line.strip()}")
             error_response = {
                 "result": None,
-                "meta": {
-                    "status": "error",
-                    "request_id": None,
-                },  # request_id might not be available if JSON is invalid
+                "meta": {"status": "error", "request_id": None},  # request_id might not be available if JSON is invalid
                 "error": "Invalid JSON input",
             }
             print(json.dumps(error_response), flush=True)
@@ -206,10 +205,7 @@ def run_mcp_loop():
                 # Try to send a fatal error response if possible
                 fatal_response = {
                     "result": None,
-                    "meta": {
-                        "status": "fatal",
-                        "request_id": request_id,
-                    },  # Use request_id if available
+                    "meta": {"status": "fatal", "request_id": request_id},  # Use request_id if available
                     "error": f"Unhandled server error: {type(e).__name__}: {e}",
                 }
                 print(json.dumps(fatal_response), flush=True)

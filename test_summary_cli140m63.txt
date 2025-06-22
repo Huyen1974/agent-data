@@ -1,0 +1,524 @@
+2025-06-20 11:16:37: Starting CLI140m.61 batch test execution with optimized regex parsing
+2025-06-20 11:16:37: Cleaning up previous test data
+2025-06-20 11:16:37: Collecting all tests with pytest --collect-only --qdrant-mock
+2025-06-20 11:16:41: Collected 513 unique tests with optimized regex
+2025-06-20 11:16:41: Created 171 batches of ≤3 tests
+2025-06-20 11:16:41: Running batch 1/171
+2025-06-20 11:16:41: Running batch: ['test_all_tags_lowercase_in_fixtures', 'test_root_endpoint', 'test_health_endpoint_no_services']
+2025-06-20 11:16:43: Batch completed in 2.56s
+2025-06-20 11:16:44: Running batch 2/171
+2025-06-20 11:16:44: Running batch: ['test_save_document_success', 'test_save_document_service_unavailable', 'test_save_document_invalid_request']
+2025-06-20 11:16:46: Batch completed in 2.67s
+2025-06-20 11:16:47: Running batch 3/171
+2025-06-20 11:16:47: Running batch: ['test_query_vectors_success', 'test_query_vectors_service_unavailable', 'test_query_vectors_invalid_request']
+2025-06-20 11:16:50: Batch completed in 2.69s
+2025-06-20 11:16:50: Running batch 4/171
+2025-06-20 11:16:50: Running batch: ['test_search_documents_success', 'test_search_documents_service_unavailable', 'test_search_documents_with_vectors']
+2025-06-20 11:16:53: Batch completed in 2.68s
+2025-06-20 11:16:53: Running batch 5/171
+2025-06-20 11:16:53: Running batch: ['test_pydantic_models_validation', 'test_api_a2a_integration_flow', 'test_rate_limit_boundary_conditions']
+2025-06-20 11:16:56: Batch completed in 2.64s
+2025-06-20 11:16:56: Running batch 6/171
+2025-06-20 11:16:56: Running batch: ['test_concurrent_rate_limit_users', 'test_large_document_content', 'test_large_metadata_objects']
+2025-06-20 11:16:59: Batch completed in 2.70s
+2025-06-20 11:17:00: Running batch 7/171
+2025-06-20 11:17:00: Running batch: ['test_unicode_and_special_characters', 'test_concurrent_token_creation', 'test_concurrent_token_validation']
+2025-06-20 11:17:02: Batch completed in 2.67s
+2025-06-20 11:17:03: Running batch 8/171
+2025-06-20 11:17:03: Running batch: ['test_memory_pressure_simulation', 'test_rapid_token_expiration', 'test_malformed_input_handling']
+2025-06-20 11:17:05: Batch completed in 2.73s
+2025-06-20 11:17:06: Running batch 9/171
+2025-06-20 11:17:06: Running batch: ['test_boundary_value_testing', 'test_auth_manager_initialization', 'test_password_hashing_and_verification']
+2025-06-20 11:17:09: Batch completed in 2.97s
+2025-06-20 11:17:09: Running batch 10/171
+2025-06-20 11:17:09: Running batch: ['test_jwt_token_creation_and_validation', 'test_jwt_token_expiration', 'test_invalid_jwt_token']
+2025-06-20 11:17:12: Batch completed in 2.95s
+2025-06-20 11:17:13: Running batch 11/171
+2025-06-20 11:17:13: Running batch: ['test_user_token_creation', 'test_user_access_validation', 'test_jwt_secret_from_secret_manager']
+2025-06-20 11:17:16: Batch completed in 2.74s
+2025-06-20 11:17:16: Running batch 12/171
+2025-06-20 11:17:16: Running batch: ['test_malformed_token_handling', 'test_token_without_required_fields', 'test_user_creation']
+2025-06-20 11:17:19: Batch completed in 2.86s
+2025-06-20 11:17:20: Running batch 13/171
+2025-06-20 11:17:20: Running batch: ['test_user_authentication', 'test_rate_limiting_simulation', 'test_authentication_flow_simulation']
+2025-06-20 11:17:22: Batch completed in 2.68s
+2025-06-20 11:17:23: Running batch 14/171
+2025-06-20 11:17:23: Running batch: ['test_token_refresh_simulation', 'test_bad_topk_value_raises', 'test_batch_size_enforcement']
+2025-06-20 11:17:25: Batch completed in 2.64s
+2025-06-20 11:17:26: Running batch 15/171
+2025-06-20 11:17:26: Running batch: ['test_sleep_between_batches', 'test_rate_limit_applied_per_document', 'test_batch_policy_with_failures']
+2025-06-20 11:17:29: Batch completed in 2.69s
+2025-06-20 11:17:29: Running batch 16/171
+2025-06-20 11:17:29: Running batch: ['test_empty_documents_list', 'test_default_batch_configuration', 'test_query_text_blank_spaces']
+2025-06-20 11:17:32: Batch completed in 2.77s
+2025-06-20 11:17:32: Running batch 17/171
+2025-06-20 11:17:32: Running batch: ['test_bulk_upload_valid', 'test_bulk_upload_empty_collection', 'test_bulk_upload_empty_points']
+2025-06-20 11:17:35: Batch completed in 2.96s
+2025-06-20 11:17:36: Running batch 18/171
+2025-06-20 11:17:36: Running batch: ['test_bulk_upload_invalid_points', 'test_bulk_upload_mixed_valid_invalid', 'test_bulk_upload_with_custom_ids']
+2025-06-20 11:17:39: Batch completed in 2.83s
+2025-06-20 11:17:39: Running batch 19/171
+2025-06-20 11:17:39: Running batch: ['test_validate_metadata_valid_data', 'test_validate_metadata_missing_required_fields', 'test_validate_metadata_invalid_types']
+2025-06-20 11:17:42: Batch completed in 3.00s
+2025-06-20 11:17:43: Running batch 20/171
+2025-06-20 11:17:43: Running batch: ['test_validate_metadata_content_size_limits', 'test_validate_metadata_invalid_timestamps', 'test_validate_version_increment_valid']
+2025-06-20 11:17:45: Batch completed in 2.75s
+2025-06-20 11:17:46: Running batch 21/171
+2025-06-20 11:17:46: Running batch: ['test_validate_version_increment_auto_increment', 'test_validate_version_increment_decrease', 'test_validate_version_increment_skip']
+2025-06-20 11:17:49: Batch completed in 2.70s
+2025-06-20 11:17:49: Running batch 22/171
+2025-06-20 11:17:49: Running batch: ['test_get_metadata_statistics', 'test_calculate_string_similarity', 'test_analyze_change_impact']
+2025-06-20 11:17:52: Batch completed in 2.74s
+2025-06-20 11:17:52: Running batch 23/171
+2025-06-20 11:17:52: Running batch: ['test_calculate_data_quality_metrics', 'test_enhanced_change_analysis', 'test_firestore_rules_syntax']
+2025-06-20 11:17:55: Batch completed in 2.96s
+2025-06-20 11:17:56: Running batch 24/171
+2025-06-20 11:17:56: Running batch: ['test_firebase_json_configuration', 'test_firestore_indexes_configuration', 'test_alert_policy_configuration']
+2025-06-20 11:17:59: Batch completed in 2.95s
+2025-06-20 11:17:59: Running batch 25/171
+2025-06-20 11:17:59: Running batch: ['test_alert_policy_metrics_references', 'test_metadata_validation_integration', 'test_change_reporting_integration']
+2025-06-20 11:18:02: Batch completed in 3.02s
+2025-06-20 11:18:03: Running batch 26/171
+2025-06-20 11:18:03: Running batch: ['test_single_document_e2e_workflow', 'test_batch_document_e2e_workflow', 'test_cursor_query_workflow']
+2025-06-20 11:18:06: Batch completed in 3.24s
+2025-06-20 11:18:07: Running batch 27/171
+2025-06-20 11:18:07: Running batch: ['test_cursor_metadata_validation_workflow', 'test_cursor_integration_data_consistency', 'test_single_document_e2e_workflow']
+2025-06-20 11:18:10: Batch completed in 3.03s
+2025-06-20 11:18:10: Running batch 28/171
+2025-06-20 11:18:10: Running batch: ['test_batch_document_e2e_workflow', 'test_cursor_query_workflow', 'test_cursor_metadata_validation_workflow']
+2025-06-20 11:18:13: Batch completed in 3.10s
+2025-06-20 11:18:14: Running batch 29/171
+2025-06-20 11:18:14: Running batch: ['test_cursor_error_handling_workflow', 'test_cursor_integration_performance_requirements', 'test_cursor_integration_data_consistency']
+2025-06-20 11:18:16: Batch completed in 2.72s
+2025-06-20 11:18:17: Running batch 30/171
+2025-06-20 11:18:17: Running batch: ['test_01_health_check', 'test_02_authenticate_user', 'test_03_access_denied_without_token']
+2025-06-20 11:18:20: Batch completed in 2.70s
+2025-06-20 11:18:20: Running batch 31/171
+2025-06-20 11:18:20: Running batch: ['test_04_save_documents_with_auth', 'test_05_semantic_search_with_auth', 'test_06_document_search_with_auth']
+2025-06-20 11:18:23: Batch completed in 2.75s
+2025-06-20 11:18:23: Running batch 32/171
+2025-06-20 11:18:23: Running batch: ['test_07_performance_under_load', 'test_08_verify_firestore_sync', 'test_09_cleanup_and_verification']
+2025-06-20 11:18:26: Batch completed in 2.67s
+2025-06-20 11:18:27: Running batch 33/171
+2025-06-20 11:18:27: Running batch: ['test_handle_cursor_document_storage_success', 'test_handle_cursor_document_storage_minimal', 'test_handle_cursor_document_storage_missing_doc_id']
+2025-06-20 11:18:29: Batch completed in 2.68s
+2025-06-20 11:18:30: Running batch 34/171
+2025-06-20 11:18:30: Running batch: ['test_handle_cursor_document_storage_missing_content', 'test_handle_cursor_document_storage_vectorization_failure', 'test_cursor_metadata_enhancement']
+2025-06-20 11:18:32: Batch completed in 2.76s
+2025-06-20 11:18:33: Running batch 35/171
+2025-06-20 11:18:33: Running batch: ['test_cursor_json_format_compatibility', 'test_cursor_integration_different_save_dirs', 'test_cursor_integration_real_world_scenario']
+2025-06-20 11:18:36: Batch completed in 2.78s
+2025-06-20 11:18:36: Running batch 36/171
+2025-06-20 11:18:36: Running batch: ['test_delay_tool_completes_under_2s', 'test_delay_tool_short_delay', 'test_delete_by_tag_valid']
+2025-06-20 11:18:39: Batch completed in 2.94s
+2025-06-20 11:18:40: Running batch 37/171
+2025-06-20 11:18:40: Running batch: ['test_delete_by_tag_empty', 'test_delete_by_tag_non_existent', 'test_mock_embedding_provider_basic_functionality']
+2025-06-20 11:18:43: Batch completed in 2.95s
+2025-06-20 11:18:43: Running batch 38/171
+2025-06-20 11:18:43: Running batch: ['test_vectorization_tool_uses_custom_embedding_provider', 'test_generate_embedding_mock', 'test_generate_embedding_real']
+2025-06-20 11:18:46: Batch completed in 2.71s
+2025-06-20 11:18:46: Running batch 39/171
+2025-06-20 11:18:46: Running batch: ['test_semantic_search_cosine', 'test_clear_embeddings', 'test_empty_filter_tag_rejected']
+2025-06-20 11:18:49: Batch completed in 2.83s
+2025-06-20 11:18:50: Running batch 40/171
+2025-06-20 11:18:50: Running batch: ['test_whitespace_filter_tag_rejected', 'test_empty_query_rejected', 'test_empty_query_text']
+2025-06-20 11:18:52: Batch completed in 2.77s
+2025-06-20 11:18:53: Running batch 41/171
+2025-06-20 11:18:53: Running batch: ['test_env_config_valid', 'test_filter_tag_case_insensitive', 'test_filter_tag_with_no_matches']
+2025-06-20 11:18:56: Batch completed in 2.74s
+2025-06-20 11:18:56: Running batch 42/171
+2025-06-20 11:18:56: Running batch: ['test_filter_tag_trailing_spaces', 'test_firestore_connection_failure', 'test_firestore_timeout_handling']
+2025-06-20 11:18:59: Batch completed in 2.75s
+2025-06-20 11:18:59: Running batch 43/171
+2025-06-20 11:18:59: Running batch: ['test_firestore_permission_denied', 'test_email_validation_edge_cases', 'test_password_validation_edge_cases']
+2025-06-20 11:19:02: Batch completed in 2.70s
+2025-06-20 11:19:03: Running batch 44/171
+2025-06-20 11:19:03: Running batch: ['test_metadata_size_limits', 'test_concurrent_user_creation', 'test_concurrent_authentication_attempts']
+2025-06-20 11:19:05: Batch completed in 2.73s
+2025-06-20 11:19:06: Running batch 45/171
+2025-06-20 11:19:06: Running batch: ['test_user_data_integrity', 'test_timestamp_consistency', 'test_scope_validation']
+2025-06-20 11:19:09: Batch completed in 2.66s
+2025-06-20 11:19:09: Running batch 46/171
+2025-06-20 11:19:09: Running batch: ['test_score_threshold_over_one', 'test_invalid_score_threshold', 'test_negative_top_k']
+2025-06-20 11:19:12: Batch completed in 2.77s
+2025-06-20 11:19:12: Running batch 47/171
+2025-06-20 11:19:12: Running batch: ['test_basic_json_format', 'test_context_fields', 'test_exception_formatting']
+2025-06-20 11:19:15: Batch completed in 2.94s
+2025-06-20 11:19:16: Running batch 48/171
+2025-06-20 11:19:16: Running batch: ['test_error_always_passes', 'test_warning_always_passes', 'test_info_sampling']
+2025-06-20 11:19:18: Batch completed in 2.67s
+2025-06-20 11:19:19: Running batch 49/171
+2025-06-20 11:19:19: Running batch: ['test_metrics_handler_initialization', 'test_error_metrics_emit', 'test_logger_initialization']
+2025-06-20 11:19:22: Batch completed in 2.76s
+2025-06-20 11:19:22: Running batch 50/171
+2025-06-20 11:19:22: Running batch: ['test_log_levels', 'test_log_file_creation', 'test_get_logger_singleton']
+2025-06-20 11:19:25: Batch completed in 2.73s
+2025-06-20 11:19:25: Running batch 51/171
+2025-06-20 11:19:25: Running batch: ['test_get_logger_different_names', 'test_ten_log_entries_cli124_requirement', 'test_mcp_echo_tool_integration']
+2025-06-20 11:19:28: Batch completed in 2.69s
+2025-06-20 11:19:29: Running batch 52/171
+2025-06-20 11:19:29: Running batch: ['test_mcp_exit_gracefully', 'test_mcp_qdrant_upsert_and_query', 'test_metadata_versioning_logic']
+2025-06-20 11:19:31: Batch completed in 2.74s
+2025-06-20 11:19:32: Running batch 53/171
+2025-06-20 11:19:32: Running batch: ['test_hierarchical_structure_logic', 'test_content_hash_generation', 'test_get_auto_tagging_tool_singleton']
+2025-06-20 11:19:35: Batch completed in 2.71s
+2025-06-20 11:19:35: Running batch 54/171
+2025-06-20 11:19:35: Running batch: ['test_metrics_endpoint', 'test_migration_smoke', 'test_migration_dry_run_stats']
+2025-06-20 11:19:38: Batch completed in 2.68s
+2025-06-20 11:19:38: Running batch 55/171
+2025-06-20 11:19:38: Running batch: ['test_migration_handles_duplicate_ids', 'test_filter_tag_required_when_no_threshold', 'test_package_import']
+2025-06-20 11:19:41: Batch completed in 2.64s
+2025-06-20 11:19:41: Running batch 56/171
+2025-06-20 11:19:41: Running batch: ['test_core_modules_import', 'test_package_in_sys_modules', 'test_package_metadata']
+2025-06-20 11:19:44: Batch completed in 2.66s
+2025-06-20 11:19:45: Running batch 57/171
+2025-06-20 11:19:45: Running batch: ['test_new_imports_work', 'test_parallel_calls_under_threshold', 'test_parallel_calls_original_timing']
+2025-06-20 11:19:47: Batch completed in 2.65s
+2025-06-20 11:19:48: Running batch 58/171
+2025-06-20 11:19:48: Running batch: ['test_01_authenticate_for_performance', 'test_02_performance_save_documents', 'test_03_performance_search_queries']
+2025-06-20 11:19:50: Batch completed in 2.65s
+2025-06-20 11:19:51: Running batch 59/171
+2025-06-20 11:19:51: Running batch: ['test_04_performance_document_searches', 'test_05_overall_performance_summary', 'test_qdrant_tools_registration']
+2025-06-20 11:19:54: Batch completed in 2.65s
+2025-06-20 11:19:54: Running batch 60/171
+2025-06-20 11:19:54: Running batch: ['test_qdrant_upsert_vector_tool', 'test_qdrant_query_by_tag_tool', 'test_qdrant_health_check_tool']
+2025-06-20 11:19:57: Batch completed in 2.75s
+2025-06-20 11:19:57: Running batch 61/171
+2025-06-20 11:19:57: Running batch: ['test_qdrant_get_count_tool', 'test_qdrant_delete_by_tag_tool', 'test_semantic_search_qdrant_tool']
+2025-06-20 11:20:00: Batch completed in 2.69s
+2025-06-20 11:20:01: Running batch 62/171
+2025-06-20 11:20:01: Running batch: ['test_qdrant_tool_error_handling', 'test_qdrant_config_validation', 'test_qdrant_cluster_info']
+2025-06-20 11:20:03: Batch completed in 2.66s
+2025-06-20 11:20:04: Running batch 63/171
+2025-06-20 11:20:04: Running batch: ['test_points_selector_empty', 'test_points_selector_with_filter', 'test_vector_store_interface_methods']
+2025-06-20 11:20:06: Batch completed in 2.68s
+2025-06-20 11:20:07: Running batch 64/171
+2025-06-20 11:20:07: Running batch: ['test_firestore_sync_pending_to_completed', 'test_firestore_sync_failure_status', 'test_batch_vectorization_firestore_sync']
+2025-06-20 11:20:10: Batch completed in 3.30s
+2025-06-20 11:20:11: Running batch 65/171
+2025-06-20 11:20:11: Running batch: ['test_vectorization_without_firestore_sync', 'test_query_text_exceeds_max_length', 'test_query_vectors_by_score_threshold_passes']
+2025-06-20 11:20:13: Batch completed in 2.67s
+2025-06-20 11:20:14: Running batch 66/171
+2025-06-20 11:20:14: Running batch: ['test_query_vectors_by_score_threshold_filters_all', 'test_query_vectors_without_score_threshold', 'test_get_vector_by_id']
+2025-06-20 11:20:17: Batch completed in 2.70s
+2025-06-20 11:20:17: Running batch 67/171
+2025-06-20 11:20:17: Running batch: ['test_query_vectors_by_ids', 'test_save_metadata_roundtrip', 'test_score_threshold_one']
+2025-06-20 11:20:20: Batch completed in 2.76s
+2025-06-20 11:20:20: Running batch 68/171
+2025-06-20 11:20:20: Running batch: ['test_score_threshold_zero', 'test_search_by_payload_valid', 'test_search_by_payload_empty_field']
+2025-06-20 11:20:23: Batch completed in 2.60s
+2025-06-20 11:20:23: Running batch 69/171
+2025-06-20 11:20:23: Running batch: ['test_search_by_payload_none_value', 'test_search_by_payload_pagination', 'test_search_in_alt_collection']
+2025-06-20 11:20:26: Batch completed in 2.62s
+2025-06-20 11:20:27: Running batch 70/171
+2025-06-20 11:20:27: Running batch: ['test_search_with_tag_and_threshold', 'test_semantic_search_multiple_queries', 'test_session_creation']
+2025-06-20 11:20:29: Batch completed in 2.63s
+2025-06-20 11:20:30: Running batch 71/171
+2025-06-20 11:20:30: Running batch: ['test_session_creation_with_custom_id', 'test_session_retrieval', 'test_session_state_update']
+2025-06-20 11:20:32: Batch completed in 2.61s
+2025-06-20 11:20:33: Running batch 72/171
+2025-06-20 11:20:33: Running batch: ['test_session_deletion', 'test_multiple_sessions', 'test_save_document_event_publishing']
+2025-06-20 11:20:36: Batch completed in 2.71s
+2025-06-20 11:20:36: Running batch 73/171
+2025-06-20 11:20:36: Running batch: ['test_custom_event_publishing', 'test_multiple_event_publishing', 'test_event_publishing_without_pubsub']
+2025-06-20 11:20:39: Batch completed in 2.71s
+2025-06-20 11:20:39: Running batch 74/171
+2025-06-20 11:20:39: Running batch: ['test_agent_session_management', 'test_vectorization_with_events', 'test_session_context_in_vectorization']
+2025-06-20 11:20:42: Batch completed in 2.63s
+2025-06-20 11:20:42: Running batch 75/171
+2025-06-20 11:20:42: Running batch: ['test_session_manager_firestore_error', 'test_event_manager_pubsub_error', 'test_session_not_found_error']
+2025-06-20 11:20:45: Batch completed in 2.78s
+2025-06-20 11:20:46: Running batch 76/171
+2025-06-20 11:20:46: Running batch: ['test_tag_too_long', 'test_threshold_below_minimum', 'test_threshold_exact_equals']
+2025-06-20 11:20:48: Batch completed in 2.64s
+2025-06-20 11:20:49: Running batch 77/171
+2025-06-20 11:20:49: Running batch: ['test_top_k_exceeds_data_count', 'test_top_k_minimum_one', 'test_top_k_too_large']
+2025-06-20 11:20:51: Batch completed in 2.59s
+2025-06-20 11:20:52: Running batch 78/171
+2025-06-20 11:20:52: Running batch: ['test_upload_and_download_blob', 'test_get_vector_by_id_not_found', 'test_upsert_vector_invalid_input']
+2025-06-20 11:20:55: Batch completed in 2.68s
+2025-06-20 11:20:55: Running batch 79/171
+2025-06-20 11:20:55: Running batch: ['test_query_vectors_by_ids_partial_invalid', 'test_delete_vector_not_found', 'test_vector_id_collision']
+2025-06-20 11:20:58: Batch completed in 2.66s
+2025-06-20 11:20:58: Running batch 80/171
+2025-06-20 11:20:58: Running batch: ['test_vector_truncation_protection', 'test_workflow_deployment_exists', 'test_workflow_execution_simulation']
+2025-06-20 11:21:01: Batch completed in 2.69s
+2025-06-20 11:21:01: Running batch 81/171
+2025-06-20 11:21:01: Running batch: ['test_workflow_batch_execution_simulation', 'test_workflow_input_validation', 'test_workflow_error_handling']
+2025-06-20 11:21:04: Batch completed in 2.66s
+2025-06-20 11:21:05: Running batch 82/171
+2025-06-20 11:21:05: Running batch: ['test_workflow_metadata_enhancement', 'test_workflow_cli125_requirement', 'test_workflow_deployment_status']
+2025-06-20 11:21:07: Batch completed in 2.71s
+2025-06-20 11:21:08: Running batch 83/171
+2025-06-20 11:21:08: Running batch: ['test_workflow_performance_expectations', 'test_workflow_complete_orchestration_cli125', 'test_complete_e2e_pipeline']
+2025-06-20 11:21:11: Batch completed in 2.69s
+2025-06-20 11:21:11: Running batch 84/171
+2025-06-20 11:21:11: Running batch: ['test_e2e_error_handling', 'test_e2e_performance', 'test_e2e_markers']
+2025-06-20 11:21:14: Batch completed in 2.66s
+2025-06-20 11:21:14: Running batch 85/171
+2025-06-20 11:21:14: Running batch: ['test_meta_count', 'test_pytest_testmon_installed', 'test_pytest_xdist_installed']
+2025-06-20 11:21:17: Batch completed in 2.79s
+2025-06-20 11:21:18: Running batch 86/171
+2025-06-20 11:21:18: Running batch: ['test_selective_test_execution_markers', 'test_cli126a_optimization_goal_achieved', 'test_qdrant_mock_functionality']
+2025-06-20 11:21:20: Batch completed in 2.65s
+2025-06-20 11:21:21: Running batch 87/171
+2025-06-20 11:21:21: Running batch: ['test_openai_mock_functionality', 'test_embedding_cache_functionality', 'test_fast_e2e_mocks_integration']
+2025-06-20 11:21:23: Batch completed in 2.63s
+2025-06-20 11:21:24: Running batch 88/171
+2025-06-20 11:21:24: Running batch: ['test_auto_mock_external_services', 'test_mocking_performance_improvement', 'test_cache_persistence']
+2025-06-20 11:21:27: Batch completed in 2.67s
+2025-06-20 11:21:27: Running batch 89/171
+2025-06-20 11:21:27: Running batch: ['test_active_test_count_in_target_range', 'test_deferred_tests_excluded_from_fast_runs', 'test_deferred_tests_included_in_full_runs']
+2025-06-20 11:21:30: Batch completed in 2.65s
+2025-06-20 11:21:30: Running batch 90/171
+2025-06-20 11:21:30: Running batch: ['test_core_functionality_tests_remain_active', 'test_edge_case_tests_are_deferred', 'test_cli126c_strategy_documentation_ready']
+2025-06-20 11:21:33: Batch completed in 2.76s
+2025-06-20 11:21:33: Running batch 91/171
+2025-06-20 11:21:33: Running batch: ['test_nightly_workflow_exists_and_valid', 'test_git_pre_push_hook_exists_and_executable', 'test_git_hook_functionality_simulation']
+2025-06-20 11:21:36: Batch completed in 2.74s
+2025-06-20 11:21:37: Running batch 92/171
+2025-06-20 11:21:37: Running batch: ['test_nightly_ci_badge_ready', 'test_cli126d_requirements_met', 'test_development_workflow_optimization']
+2025-06-20 11:21:39: Batch completed in 2.68s
+2025-06-20 11:21:40: Running batch 93/171
+2025-06-20 11:21:40: Running batch: ['test_package_editable_installation', 'test_core_imports_work', 'test_package_structure_accessible']
+2025-06-20 11:21:43: Batch completed in 2.78s
+2025-06-20 11:21:43: Running batch 94/171
+2025-06-20 11:21:43: Running batch: ['test_import_consistency_across_codebase', 'test_comprehensive_metadata_management_logic', 'test_comprehensive_firestore_security_rules_validation']
+2025-06-20 11:21:46: Batch completed in 2.72s
+2025-06-20 11:21:46: Running batch 95/171
+2025-06-20 11:21:46: Running batch: ['test_comprehensive_tree_view_functionality', 'test_tree_view_implementation_completeness', 'test_comprehensive_advanced_search_functionality']
+2025-06-20 11:21:49: Batch completed in 2.62s
+2025-06-20 11:21:50: Running batch 96/171
+2025-06-20 11:21:50: Running batch: ['test_tree_view_endpoint_success', 'test_tree_view_endpoint_not_found', 'test_search_endpoint_by_path']
+2025-06-20 11:21:52: Batch completed in 2.60s
+2025-06-20 11:21:53: Running batch 97/171
+2025-06-20 11:21:53: Running batch: ['test_search_endpoint_by_tags', 'test_search_endpoint_by_metadata', 'test_search_endpoint_combined_parameters']
+2025-06-20 11:21:55: Batch completed in 2.67s
+2025-06-20 11:21:56: Running batch 98/171
+2025-06-20 11:21:56: Running batch: ['test_search_endpoint_invalid_metadata_json', 'test_search_endpoint_no_parameters', 'test_health_endpoint']
+2025-06-20 11:21:58: Batch completed in 2.65s
+2025-06-20 11:21:59: Running batch 99/171
+2025-06-20 11:21:59: Running batch: ['test_api_error_handling', 'test_rag_search_vector_only', 'test_rag_search_with_metadata_filters']
+2025-06-20 11:22:02: Batch completed in 2.74s
+2025-06-20 11:22:02: Running batch 100/171
+2025-06-20 11:22:02: Running batch: ['test_rag_search_with_tags_filter', 'test_rag_search_with_path_filter', 'test_rag_search_combined_filters']
+2025-06-20 11:22:05: Batch completed in 2.67s
+2025-06-20 11:22:05: Running batch 101/171
+2025-06-20 11:22:05: Running batch: ['test_rag_search_no_results', 'test_rag_search_qdrant_failure', 'test_qdrant_rag_search_function']
+2025-06-20 11:22:08: Batch completed in 2.65s
+2025-06-20 11:22:09: Running batch 102/171
+2025-06-20 11:22:09: Running batch: ['test_filter_by_metadata', 'test_filter_by_tags', 'test_filter_by_path']
+2025-06-20 11:22:11: Batch completed in 2.66s
+2025-06-20 11:22:12: Running batch 103/171
+2025-06-20 11:22:12: Running batch: ['test_build_hierarchy_path', 'test_qdrant_metrics_collection', 'test_firestore_metrics_collection']
+2025-06-20 11:22:14: Batch completed in 2.63s
+2025-06-20 11:22:15: Running batch 104/171
+2025-06-20 11:22:15: Running batch: ['test_metrics_export_integration', 'test_alert_policy_validation', 'test_dashboard_configuration']
+2025-06-20 11:22:17: Batch completed in 2.63s
+2025-06-20 11:22:18: Running batch 105/171
+2025-06-20 11:22:18: Running batch: ['test_observability_error_handling', 'test_metrics_performance', 'test_observability_with_8_documents']
+2025-06-20 11:22:21: Batch completed in 2.72s
+2025-06-20 11:22:21: Running batch 106/171
+2025-06-20 11:22:21: Running batch: ['test_automated_logging_functionality', 'test_query_by_hierarchy_optimized', 'test_query_by_version_range_optimized']
+2025-06-20 11:22:24: Batch completed in 2.66s
+2025-06-20 11:22:24: Running batch 107/171
+2025-06-20 11:22:24: Running batch: ['test_query_latest_by_category_optimized', 'test_query_multi_level_hierarchy_optimized', 'test_benchmark_query_performance']
+2025-06-20 11:22:27: Batch completed in 2.63s
+2025-06-20 11:22:27: Running batch 108/171
+2025-06-20 11:22:27: Running batch: ['test_query_error_handling', 'test_query_validation', 'test_query_performance_target']
+2025-06-20 11:22:30: Batch completed in 2.64s
+2025-06-20 11:22:31: Running batch 109/171
+2025-06-20 11:22:31: Running batch: ['test_batch_save_success', 'test_batch_query_success', 'test_batch_save_partial_failure']
+2025-06-20 11:22:33: Batch completed in 2.62s
+2025-06-20 11:22:34: Running batch 110/171
+2025-06-20 11:22:34: Running batch: ['test_batch_query_scenarios', 'test_batch_operations_performance', 'test_batch_request_validation']
+2025-06-20 11:22:36: Batch completed in 2.67s
+2025-06-20 11:22:37: Running batch 111/171
+2025-06-20 11:22:37: Running batch: ['test_batch_operations_error_handling', 'test_agent_data_final_report_exists', 'test_agent_data_final_report_required_sections']
+2025-06-20 11:22:40: Batch completed in 2.62s
+2025-06-20 11:22:40: Running batch 112/171
+2025-06-20 11:22:40: Running batch: ['test_agent_data_final_report_technical_details', 'test_integrate_with_cursor_updated', 'test_documentation_api_examples_valid_json']
+2025-06-20 11:22:43: Batch completed in 2.66s
+2025-06-20 11:22:43: Running batch 113/171
+2025-06-20 11:22:43: Running batch: ['test_documentation_contains_performance_metrics', 'test_documentation_deployment_instructions', 'test_documentation_validation_performance']
+2025-06-20 11:22:46: Batch completed in 2.68s
+2025-06-20 11:22:46: Running batch 114/171
+2025-06-20 11:22:46: Running batch: ['test_documentation_file_sizes_reasonable', 'test_documentation_encoding_utf8', 'test_batch_save_retry_logic_on_rate_limit']
+2025-06-20 11:22:49: Batch completed in 2.61s
+2025-06-20 11:22:50: Running batch 115/171
+2025-06-20 11:22:50: Running batch: ['test_batch_query_timeout_handling', 'test_error_categorization_and_reporting', 'test_batch_operations_performance_under_5_seconds']
+2025-06-20 11:22:52: Batch completed in 2.63s
+2025-06-20 11:22:53: Running batch 116/171
+2025-06-20 11:22:53: Running batch: ['test_concurrent_session_operations', 'test_api_error_classes_defined', 'test_end_to_end_error_recovery']
+2025-06-20 11:22:55: Batch completed in 2.64s
+2025-06-20 11:22:56: Running batch 117/171
+2025-06-20 11:22:56: Running batch: ['test_cskh_query_endpoint_basic', 'test_cskh_query_performance_under_1s', 'test_cskh_query_caching']
+2025-06-20 11:22:58: Batch completed in 2.64s
+2025-06-20 11:22:59: Running batch 118/171
+2025-06-20 11:22:59: Running batch: ['test_cskh_query_error_handling', 'test_cskh_query_timeout_handling', 'test_cskh_query_validation']
+2025-06-20 11:23:02: Batch completed in 2.63s
+2025-06-20 11:23:02: Running batch 119/171
+2025-06-20 11:23:02: Running batch: ['test_cskh_query_metrics_recording', 'test_api_root_includes_cskh_endpoint', 'test_cli140b_alerting_policies_and_ci_validation']
+2025-06-20 11:23:05: Batch completed in 2.62s
+2025-06-20 11:23:05: Running batch 120/171
+2025-06-20 11:23:05: Running batch: ['test_cskh_api_documentation_validation', 'test_firestore_index_deployment_and_cost_monitoring', 'test_rate_limit_enforcement']
+2025-06-20 11:23:08: Batch completed in 2.74s
+2025-06-20 11:23:08: Running batch 121/171
+2025-06-20 11:23:08: Running batch: ['test_initialization_states', 'test_vectorize_document_success_path', 'test_vectorize_document_embedding_error']
+2025-06-20 11:23:11: Batch completed in 2.67s
+2025-06-20 11:23:12: Running batch 122/171
+2025-06-20 11:23:12: Running batch: ['test_rag_search_with_mocked_components', 'test_rag_search_full_workflow', 'test_batch_vectorize_documents_success']
+2025-06-20 11:23:14: Batch completed in 2.71s
+2025-06-20 11:23:15: Running batch 123/171
+2025-06-20 11:23:15: Running batch: ['test_batch_vectorize_invalid_documents', 'test_update_vector_status_error_handling', 'test_vectorize_document_upsert_failure']
+2025-06-20 11:23:18: Batch completed in 2.69s
+2025-06-20 11:23:18: Running batch 124/171
+2025-06-20 11:23:18: Running batch: ['test_get_vectorization_tool_factory', 'test_qdrant_vectorize_document_function', 'test_qdrant_rag_search_function']
+2025-06-20 11:23:21: Batch completed in 2.66s
+2025-06-20 11:23:21: Running batch 125/171
+2025-06-20 11:23:21: Running batch: ['test_batch_vectorize_documents_function', 'test_api_mcp_gateway_additional_coverage', 'test_api_mcp_gateway_error_handling_coverage']
+2025-06-20 11:23:24: Batch completed in 2.70s
+2025-06-20 11:23:24: Running batch 126/171
+2025-06-20 11:23:24: Running batch: ['test_api_mcp_gateway_authentication_paths', 'test_api_mcp_gateway_comprehensive_coverage', 'test_api_mcp_gateway_edge_cases_coverage']
+2025-06-20 11:23:27: Batch completed in 2.73s
+2025-06-20 11:23:28: Running batch 127/171
+2025-06-20 11:23:28: Running batch: ['test_rag_latency_validation_with_auth_fix', 'test_cloud_profiler_validation_with_auth_fix', 'test_test_suite_count_compliance']
+2025-06-20 11:23:30: Batch completed in 2.64s
+2025-06-20 11:23:31: Running batch 128/171
+2025-06-20 11:23:31: Running batch: ['test_cli140e39_completion_marker', 'test_api_mcp_gateway_authentication_enabled_coverage', 'test_shadow_traffic_configuration_validation']
+2025-06-20 11:23:34: Batch completed in 2.69s
+2025-06-20 11:23:34: Running batch 129/171
+2025-06-20 11:23:34: Running batch: ['test_shadow_traffic_routing_behavior', 'test_shadow_traffic_monitoring_metrics', 'test_shadow_traffic_error_threshold_monitoring']
+2025-06-20 11:23:37: Batch completed in 2.92s
+2025-06-20 11:23:37: Running batch 130/171
+2025-06-20 11:23:37: Running batch: ['test_shadow_traffic_latency_threshold_monitoring', 'test_shadow_traffic_architecture_distribution', 'test_shadow_traffic_report_generation']
+2025-06-20 11:23:40: Batch completed in 2.79s
+2025-06-20 11:23:41: Running batch 131/171
+2025-06-20 11:23:41: Running batch: ['test_shadow_traffic_endpoint_coverage', 'test_cli140g1_shadow_traffic_validation_complete', 'test_multi_function_architecture_files_exist']
+2025-06-20 11:23:43: Batch completed in 2.66s
+2025-06-20 11:23:44: Running batch 132/171
+2025-06-20 11:23:44: Running batch: ['test_routing_logic_structure', 'test_architecture_split_documentation', 'test_document_ingestion_function_exists']
+2025-06-20 11:23:47: Batch completed in 2.67s
+2025-06-20 11:23:47: Running batch 133/171
+2025-06-20 11:23:47: Running batch: ['test_vector_search_function_exists', 'test_rag_search_function_exists', 'test_router_function_exists']
+2025-06-20 11:23:50: Batch completed in 2.64s
+2025-06-20 11:23:50: Running batch 134/171
+2025-06-20 11:23:50: Running batch: ['test_shadow_traffic_configuration_documented', 'test_latency_monitoring_configured', 'test_cli140g2_completion_validation']
+2025-06-20 11:23:53: Batch completed in 2.74s
+2025-06-20 11:23:53: Running batch 135/171
+2025-06-20 11:23:53: Running batch: ['test_api_gateway_health_check', 'test_api_gateway_auth_flow', 'test_api_gateway_document_save_flow']
+2025-06-20 11:23:56: Batch completed in 2.68s
+2025-06-20 11:23:57: Running batch 136/171
+2025-06-20 11:23:57: Running batch: ['test_api_gateway_vector_query_flow', 'test_api_gateway_rag_search_flow', 'test_api_gateway_cskh_endpoints']
+2025-06-20 11:23:59: Batch completed in 2.65s
+2025-06-20 11:24:00: Running batch 137/171
+2025-06-20 11:24:00: Running batch: ['test_api_gateway_latency_requirements', 'test_api_gateway_error_handling', 'test_api_gateway_architecture_distribution']
+2025-06-20 11:24:03: Batch completed in 2.71s
+2025-06-20 11:24:03: Running batch 138/171
+2025-06-20 11:24:03: Running batch: ['test_cli140g_migration_completion', 'test_optimized_dockerfile_exists', 'test_runtime_requirements_optimization']
+2025-06-20 11:24:06: Batch completed in 2.67s
+2025-06-20 11:24:06: Running batch 139/171
+2025-06-20 11:24:06: Running batch: ['test_build_script_configuration', 'test_dependency_reduction_calculation', 'test_docker_security_configuration']
+2025-06-20 11:24:09: Batch completed in 2.64s
+2025-06-20 11:24:09: Running batch 140/171
+2025-06-20 11:24:09: Running batch: ['test_cli140h_optimization_complete', 'test_cli140h_completion_summary', 'test_cli140m13_basic_coverage']
+2025-06-20 11:24:12: Batch completed in 2.68s
+2025-06-20 11:24:13: Running batch 141/171
+2025-06-20 11:24:13: Running batch: ['test_cli140m13_file_structure', 'test_cli140m13_completion_marker', 'test_startup_event_initialization_errors']
+2025-06-20 11:24:15: Batch completed in 2.63s
+2025-06-20 11:24:16: Running batch 142/171
+2025-06-20 11:24:16: Running batch: ['test_get_current_user_dependency_disabled_auth', 'test_get_current_user_service_unavailable', 'test_health_check_degraded_status']
+2025-06-20 11:24:18: Batch completed in 2.61s
+2025-06-20 11:24:19: Running batch 143/171
+2025-06-20 11:24:19: Running batch: ['test_login_authentication_disabled', 'test_login_service_unavailable', 'test_register_authentication_disabled']
+2025-06-20 11:24:21: Batch completed in 2.64s
+2025-06-20 11:24:22: Running batch 144/171
+2025-06-20 11:24:22: Running batch: ['test_api_endpoints_with_authentication_errors', 'test_cache_operations_and_initialization', 'test_rate_limiting_and_user_identification']
+2025-06-20 11:24:25: Batch completed in 2.62s
+2025-06-20 11:24:25: Running batch 145/171
+2025-06-20 11:24:25: Running batch: ['test_api_error_handling', 'test_batch_query_auth', 'test_startup_event_and_authentication_dependencies']
+2025-06-20 11:24:28: Batch completed in 2.67s
+2025-06-20 11:24:28: Running batch 146/171
+2025-06-20 11:24:28: Running batch: ['test_authentication_endpoints_and_save_document_coverage', 'test_query_vectors_endpoint_coverage', 'test_search_documents_endpoint_coverage']
+2025-06-20 11:24:31: Batch completed in 2.71s
+2025-06-20 11:24:31: Running batch 147/171
+2025-06-20 11:24:31: Running batch: ['test_rag_search_endpoint_coverage', 'test_initialization_edge_cases', 'test_tenacity_fallback_decorators']
+2025-06-20 11:24:35: Batch completed in 3.28s
+2025-06-20 11:24:35: Running batch 148/171
+2025-06-20 11:24:35: Running batch: ['test_batch_metadata_edge_cases', 'test_filter_building_comprehensive', 'test_rag_search_filter_combinations']
+2025-06-20 11:24:38: Batch completed in 2.65s
+2025-06-20 11:24:38: Running batch 149/171
+2025-06-20 11:24:38: Running batch: ['test_rag_search_empty_results_handling', 'test_rag_search_exception_handling', 'test_vectorize_document_openai_unavailable']
+2025-06-20 11:24:41: Batch completed in 2.71s
+2025-06-20 11:24:42: Running batch 150/171
+2025-06-20 11:24:42: Running batch: ['test_vectorize_document_timeout_scenarios', 'test_vectorize_document_embedding_failure', 'test_vectorize_document_auto_tagging_failure']
+2025-06-20 11:24:44: Batch completed in 2.66s
+2025-06-20 11:24:45: Running batch 151/171
+2025-06-20 11:24:45: Running batch: ['test_batch_operations_comprehensive', 'test_batch_vectorize_empty_documents', 'test_batch_vectorize_invalid_documents']
+2025-06-20 11:24:47: Batch completed in 2.65s
+2025-06-20 11:24:48: Running batch 152/171
+2025-06-20 11:24:48: Running batch: ['test_update_vector_status_scenarios', 'test_filter_methods_edge_cases', 'test_hierarchy_path_building']
+2025-06-20 11:24:51: Batch completed in 2.62s
+2025-06-20 11:24:51: Running batch 153/171
+2025-06-20 11:24:51: Running batch: ['test_filter_building_logic', 'test_batch_operation_processing', 'test_vectorization_error_handling']
+2025-06-20 11:24:54: Batch completed in 2.60s
+2025-06-20 11:24:54: Running batch 154/171
+2025-06-20 11:24:54: Running batch: ['test_search_query_processing', 'test_initialization_validation', 'test_search_result_formatting']
+2025-06-20 11:24:57: Batch completed in 2.66s
+2025-06-20 11:24:57: Running batch 155/171
+2025-06-20 11:24:57: Running batch: ['test_search_error_logging', 'test_result_pagination', 'test_search_result_processing']
+2025-06-20 11:25:00: Batch completed in 2.63s
+2025-06-20 11:25:01: Running batch 156/171
+2025-06-20 11:25:01: Running batch: ['test_error_logging_update_status', 'test_vectorize_document_comprehensive', 'test_vectorize_document_timeout']
+2025-06-20 11:25:03: Batch completed in 2.64s
+2025-06-20 11:25:04: Running batch 157/171
+2025-06-20 11:25:04: Running batch: ['test_vectorize_document_vector_upsert_failure', 'test_batch_vectorize_documents_comprehensive', 'test_batch_vectorize_timeout_scenarios']
+2025-06-20 11:25:06: Batch completed in 2.74s
+2025-06-20 11:25:07: Running batch 158/171
+2025-06-20 11:25:07: Running batch: ['test_batch_vectorize_large_batch', 'test_global_tool_functions', 'test_initialization_error_paths']
+2025-06-20 11:25:10: Batch completed in 2.62s
+2025-06-20 11:25:10: Running batch 159/171
+2025-06-20 11:25:10: Running batch: ['test_cache_operations_comprehensive', 'test_disk_operations_comprehensive', 'test_performance_metrics_edge_cases']
+2025-06-20 11:25:13: Batch completed in 2.67s
+2025-06-20 11:25:13: Running batch 160/171
+2025-06-20 11:25:13: Running batch: ['test_error_handling_comprehensive', 'test_batch_processing_edge_cases', 'test_batch_ingestion_validation']
+2025-06-20 11:25:16: Batch completed in 2.71s
+2025-06-20 11:25:16: Running batch 161/171
+2025-06-20 11:25:16: Running batch: ['test_cache_cleanup_edge_cases', 'test_cli140m14_coverage_validation', 'test_cli140m14_objectives_summary']
+2025-06-20 11:25:19: Batch completed in 2.75s
+2025-06-20 11:25:20: Running batch 162/171
+2025-06-20 11:25:20: Running batch: ['test_document_ingestion_tool_real_coverage', 'test_coverage_and_pass_rate_validation', 'test_document_ingestion_cache_and_hashing']
+2025-06-20 11:25:23: Batch completed in 2.90s
+2025-06-20 11:25:23: Running batch 163/171
+2025-06-20 11:25:23: Running batch: ['test_document_ingestion_metadata_processing', 'test_pass_rate_target_validation', 'test_coverage_target_validation']
+2025-06-20 11:25:26: Batch completed in 2.84s
+2025-06-20 11:25:26: Running batch 164/171
+2025-06-20 11:25:26: Running batch: ['test_deferred_tests_validation', 'test_cli140m15_objectives_summary', 'test_cli140m15_completion_readiness']
+2025-06-20 11:25:29: Batch completed in 2.85s
+2025-06-20 11:25:30: Running batch 165/171
+2025-06-20 11:25:30: Running batch: ['test_enforce_single_test_per_cli', 'test_cli_guide_documentation_exists', 'test_comprehensive_api_coverage_integration']
+2025-06-20 11:25:33: Batch completed in 2.83s
+2025-06-20 11:25:33: Running batch 166/171
+2025-06-20 11:25:33: Running batch: ['test_subprocess_single_save', 'test_subprocess_medium_scale', 'test_subprocess_mock_qdrant_environment']
+2025-06-20 11:25:36: Batch completed in 2.66s
+2025-06-20 11:25:36: Running batch 167/171
+2025-06-20 11:25:36: Running batch: ['test_subprocess_small_scale', 'test_subprocess_real_api_calls', 'test_timeout_retry_logic']
+2025-06-20 11:25:39: Batch completed in 2.79s
+2025-06-20 11:25:40: Running batch 168/171
+2025-06-20 11:25:40: Running batch: ['test_no_deferred_tests_in_main_suite', 'test_deferred_marker_functionality', 'test_fast_test_execution_target']
+2025-06-20 11:25:42: Batch completed in 2.88s
+2025-06-20 11:25:43: Running batch 169/171
+2025-06-20 11:25:43: Running batch: ['test_hybrid_query_latency_8_documents', 'test_hybrid_query_latency_50_documents', 'test_cache_key_generation_performance']
+2025-06-20 11:25:46: Batch completed in 2.64s
+2025-06-20 11:25:46: Running batch 170/171
+2025-06-20 11:25:46: Running batch: ['test_cache_operations_performance', 'test_rag_caching_effectiveness', 'test_timeout_fake']
+2025-06-20 11:25:49: Batch completed in 2.75s
+2025-06-20 11:25:49: Running batch 171/171
+2025-06-20 11:25:49: Running batch: ['test_quick_pass', 'test_quick_fail', 'test_skipped_fake']
+2025-06-20 11:25:52: Batch completed in 2.76s
+2025-06-20 11:25:52: Saving 513 test results to test_summary_cli140m61.txt
+2025-06-20 11:25:52: Test summary: {'SKIPPED': 370, 'PASSED': 129, 'FAILED': 14}
+2025-06-20 11:25:52: Completed: 171/171 batches successful
+
+Batch testing completed. Results saved to test_summary_cli140m61.txt
+Check logs/test_fixes.log for detailed execution log

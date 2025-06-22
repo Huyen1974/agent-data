@@ -1,0 +1,7 @@
+CLI38: QdrantStore.update_vector() method has been verified to meet CLI37 requirements.
+Unit tests have been created in tests/unit/test_qdrant_store_update_vector.py, covering:
+- Calls to self.upsert_vector with correct parameters.
+- Behavior with Firestore sync enabled/disabled (via mocking of upsert_vector).
+- Handling of exceptions from upsert_vector.
+- Support for both integer and string point_ids.
+All tests are passing.
