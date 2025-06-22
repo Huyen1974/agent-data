@@ -1,0 +1,30 @@
+# G02a CI Pipeline Errors Log
+Date: June 22, 2025, 20:55 +07
+
+## First CI Run Failure - Run ID: 15807318588
+**Status**: FAILED
+**Commit**: ce29290e3e426fc4e0a91784f83ae55cab13d4b9
+**Error Type**: Deprecated GitHub Actions
+
+### Error Details:
+```
+##[error]This request has been automatically failed because it uses a deprecated version of `actions/upload-artifact: v3`. 
+Learn more: https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/
+```
+
+### Root Cause:
+The CI workflow was using deprecated versions of GitHub Actions:
+- actions/cache@v3 (should be v4)
+- codecov/codecov-action@v3 (should be v4) 
+- actions/upload-artifact@v3 (should be v4)
+
+### Fix Applied:
+Updated all deprecated actions to their latest versions:
+- actions/cache@v3 → actions/cache@v4
+- codecov/codecov-action@v3 → codecov/codecov-action@v4
+- actions/upload-artifact@v3 → actions/upload-artifact@v4
+
+### Next Action:
+Commit the fixes and trigger a new CI run.
+
+--- 
