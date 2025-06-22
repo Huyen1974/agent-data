@@ -27,4 +27,37 @@ Updated all deprecated actions to their latest versions:
 ### Next Action:
 Commit the fixes and trigger a new CI run.
 
+---
+
+## Second CI Run Failure - Run ID: 15807334581
+**Status**: FAILED
+**Commit**: bc90173446ec69472a52c0cc4fef170b7511846e
+**Error Type**: Missing pytest configuration files
+
+### Error Details:
+```
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --qdrant-mock
+##[error]Process completed with exit code 4.
+```
+
+### Root Cause:
+The agent_data directory was missing essential pytest configuration files:
+- conftest.py (defines custom pytest options including --qdrant-mock)
+- pytest.ini (pytest configuration)
+
+### Fix Applied:
+Copied missing files from main project directory:
+- conftest.py (26,292 bytes) - defines --qdrant-mock option
+- pytest.ini (2,182 bytes) - pytest configuration
+
+### Verification:
+```bash
+python -m pytest --help | grep qdrant-mock
+  --qdrant-mock         Use mocked Qdrant client instead of real connections
+```
+
+### Next Action:
+Commit the missing configuration files and trigger third CI run.
+
 --- 
