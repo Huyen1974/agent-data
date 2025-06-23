@@ -1,11 +1,6 @@
+from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
 import pytest
 
-# Mock sample points for testing
-STANDARD_SAMPLE_POINTS_RAW = [
-    (9001, [0.1, 0.2, 0.8], {"original_text": "modern astronomy discoveries", "tag": "science"}),
-    (9002, [0.8, 0.1, 0.1], {"original_text": "new chicken recipe", "tag": "cooking"}),
-    (9003, [0.2, 0.8, 0.1], {"original_text": "ancient rome history", "tag": "history"}),
-]
 
 def test_all_tags_lowercase_in_fixtures():
     for point in STANDARD_SAMPLE_POINTS_RAW:
