@@ -54,6 +54,21 @@ jobs:
           gcloud auth list
           gcloud config list
 
+      - name: Debug test collection
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          RUN_DEFERRED: 0
+          PYTEST_TIMEOUT: 8
+          BATCH_SIZE: 3
+          GCP_PROJECT_ID: chatgpt-db-project
+          GCP_REGION: asia-southeast1
+          CI: true
+          GITHUB_ACTIONS: true
+        run: |
+          echo "Collecting tests to verify configuration..."
+          python -m pytest --collect-only -q --qdrant-mock | grep -E "test collected|tests collected" || echo "Collection failed"
+          echo "Test collection completed"
+
       - name: Run tests with coverage
         env:
           PYTHONDONTWRITEBYTECODE: 1
