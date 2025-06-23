@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ init, main ]
+    branches: [ init, main, fix/ci-pass ]
   pull_request:
     branches: [ init, main ]
   workflow_dispatch:
@@ -67,10 +67,36 @@ jobs:
         run: |
           echo "Running pytest with --qdrant-mock flag..."
           echo "Running full test suite..."
-          coverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v
+          coverage run -m pytest --disable-warnings --qdrant-mock -v --maxfail=1
           echo "Generating coverage report..."
           coverage report --show-missing
           coverage xml
+
+      - name: Log skipped tests
+        if: always()
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          RUN_DEFERRED: 0
+          PYTEST_TIMEOUT: 8
+          BATCH_SIZE: 3
+          GCP_PROJECT_ID: chatgpt-db-project
+          GCP_REGION: asia-southeast1
+          CI: true
+          GITHUB_ACTIONS: true
+        run: |
+          echo "Logging skipped tests..."
+          pytest --ra --qdrant-mock -v || echo "Test logging completed"
+
+      - name: Export test metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-metrics
+          path: |
+            .coverage
+            coverage.xml
+            htmlcov/
+            .pytest_cache/
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4

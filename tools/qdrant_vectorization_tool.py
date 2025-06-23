@@ -165,10 +165,10 @@ class QdrantVectorizationTool:
                 asyncio.gather(*tasks, return_exceptions=True),
                 timeout=0.3  # 300ms timeout for batch Firestore operations
             )
-        except asyncio.TimeoutError:
+        except asyncio.TimeoutError as timeout_error:
             logger.warning(f"Batch Firestore query timed out for {len(existing_doc_ids)} documents")
             # Fallback to individual queries with reduced concurrency
-            logger.warning(f"Batch Firestore query failed, falling back to individual queries: {e}")
+            logger.warning(f"Batch Firestore query failed, falling back to individual queries: {timeout_error}")
             semaphore = asyncio.Semaphore(3)  # Reduced concurrency for fallback
             results = await asyncio.gather(*tasks[:10], return_exceptions=True)  # Limit to 10 for fallback
 
