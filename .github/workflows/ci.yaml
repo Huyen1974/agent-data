@@ -66,8 +66,8 @@ jobs:
           GITHUB_ACTIONS: true
         run: |
           echo "Running pytest with --qdrant-mock flag..."
-          echo "Running meta tests and core working tests..."
-          coverage run -m pytest tests/test_meta_counts.py --maxfail=3 --disable-warnings --qdrant-mock -v
+          echo "Running full test suite..."
+          coverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v
           echo "Generating coverage report..."
           coverage report --show-missing
           coverage xml
