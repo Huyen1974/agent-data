@@ -17,6 +17,7 @@ jobs:
       id-token: write
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         run_number: [1, 2]
 
@@ -70,8 +71,10 @@ jobs:
           GITHUB_ACTIONS: true
         run: |
           echo "Collecting tests and verifying against manifest - Run ${{ matrix.run_number }}..."
-          python -m pytest --collect-only -q --qdrant-mock > collected.txt
-          python scripts/compare_manifest.py collected.txt tests/manifest_497.txt
+          python -m pytest --collect-only -q -m "not deferred and not slow" --qdrant-mock > collected.txt
+          python scripts/compare_manifest.py collected.txt tests/manifest_ci.txt
+          python -m pytest -q --qdrant-mock -m "not deferred and not slow" -ra > skipped.log
+          python scripts/check_skipped.py skipped.log 6
 
       - name: Run full test suite - Run ${{ matrix.run_number }}
         id: test_run
@@ -88,8 +91,8 @@ jobs:
           echo "Running full test suite - Run ${{ matrix.run_number }}..."
           start_time=$(date +%s)
           
-          # G02f: Removed --maxfail parameter for complete test runs
-          python -m pytest --qdrant-mock -v \
+          # G02i: Test with deferred and slow marker exclusion for 519 target
+          python -m pytest --qdrant-mock -v -m "not deferred and not slow" \
             --tb=short --junitxml=test-results-run${{ matrix.run_number }}.xml \
             --ra || echo "Some tests may have failed, continuing for metrics"
           

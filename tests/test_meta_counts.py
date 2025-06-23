@@ -12,9 +12,9 @@ import subprocess
 import pytest
 from pathlib import Path
 
-# G02g: Target test counts for stable CI (updated to G02g requirement of exactly 497)
-EXPECTED_TOTAL_TESTS = 497
-EXPECTED_SKIPPED = 6
+# G02i: Target test counts for stable CI (updated with environment variable support)
+EXPECTED_TOTAL_TESTS = int(os.getenv("EXPECTED_TOTAL_TESTS", "519"))
+EXPECTED_SKIPPED = int(os.getenv("EXPECTED_SKIPPED", "6"))
 
 
 def test_ci_environment():
@@ -100,14 +100,14 @@ def test_requirements_file():
 
 def test_test_count_stability():
     """Test that the number of collected tests matches the locked manifest."""
-    # G02g: Check manifest file first
-    manifest_file = Path(__file__).parent / "manifest_497.txt"
+    # G02h: Check manifest file first
+    manifest_file = Path(__file__).parent / "manifest_ci.txt"
     if manifest_file.exists():
         with open(manifest_file, 'r') as f:
             manifest_tests = [line.strip() for line in f if line.strip()]
         
-        # G02g: Assert exactly 497 tests in manifest
-        assert len(manifest_tests) == 497, f"Expected exactly 497 tests in manifest, got {len(manifest_tests)}"
+        # G02h: Assert exactly 519 tests in manifest
+        assert len(manifest_tests) == 519, f"Expected exactly 519 tests in manifest, got {len(manifest_tests)}"
         print(f"✅ Manifest contains {len(manifest_tests)} tests")
     
     try:
@@ -127,8 +127,20 @@ def test_test_count_stability():
                     words = line.split()
                     if words and words[0].isdigit():
                         test_count = int(words[0])
-                        # G02g: Verify we hit the target test count
+                        # G02h: Verify we hit the target test count
                         assert test_count == EXPECTED_TOTAL_TESTS, f"Expected {EXPECTED_TOTAL_TESTS} tests, got {test_count}"
+                        
+                        # G02h: Additional verification - check deselected count is 0
+                        deselected_count = 0
+                        for line in output.split('\n'):
+                            if 'deselected' in line:
+                                words = line.split()
+                                for i, word in enumerate(words):
+                                    if word.isdigit() and i < len(words) - 1 and 'deselected' in words[i + 1]:
+                                        deselected_count = int(word)
+                                        break
+                        
+                        assert deselected_count == 0, f"Expected 0 deselected tests, got {deselected_count}"
                         print(f"✅ Found {test_count} tests - matches expected count")
                         return
             

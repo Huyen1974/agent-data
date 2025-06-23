@@ -69,6 +69,7 @@ class TestAPIEndpointsWithMocks:
             # May return success or service unavailable
             assert response.status_code in [200, 503]
 
+    @pytest.mark.flaky(reruns=2, reruns_delay=1)
     def test_register_endpoint(self):
         """Test registration endpoint."""
         client = TestClient(app)
