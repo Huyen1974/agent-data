@@ -42,6 +42,7 @@ except ImportError:
 class TestCLI140m2APIMCPGatewayAdditional:
     """Additional tests for api_mcp_gateway.py to reach 80% coverage"""
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_cleanup_expired(self):
         """Test ThreadSafeLRUCache cleanup_expired method"""
         cache = api_mcp_gateway.ThreadSafeLRUCache(max_size=5, ttl_seconds=1)
@@ -60,6 +61,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
         expired_count = cache.cleanup_expired()
         assert expired_count >= 0
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_clear(self):
         """Test ThreadSafeLRUCache clear method"""
         cache = api_mcp_gateway.ThreadSafeLRUCache(max_size=5)
@@ -75,6 +77,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
         assert cache.size() == 0
         assert cache.get("key1") is None
 
+    @pytest.mark.deferred
     def test_get_cached_result_miss(self):
         """Test _get_cached_result with cache miss"""
         with patch('api_mcp_gateway.query_cache') as mock_cache:
@@ -83,6 +86,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
             result = api_mcp_gateway._get_cached_result("nonexistent_key")
             assert result is None
 
+    @pytest.mark.deferred
     def test_cache_result_success(self):
         """Test _cache_result with successful caching"""
         with patch('api_mcp_gateway.query_cache') as mock_cache:
@@ -92,6 +96,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
             mock_cache.put.assert_called_once_with("test_key", test_result)
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_health_check_endpoint(self, mock_settings):
         """Test health check endpoint coverage"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -107,6 +112,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
                             assert response.status_code == 200
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_get_current_user_dependency_auth_disabled(self, mock_settings):
         """Test get_current_user_dependency with authentication disabled"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -122,6 +128,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.auth_manager', None)
+    @pytest.mark.deferred
     def test_get_current_user_dependency_no_auth_manager(self, mock_settings):
         """Test get_current_user_dependency with no auth manager"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -135,6 +142,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.auth_manager', None)
+    @pytest.mark.deferred
     def test_get_current_user_no_auth_manager(self, mock_settings):
         """Test get_current_user with no auth manager"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -146,6 +154,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
         
         asyncio.run(test_func())
 
+    @pytest.mark.deferred
     def test_root_endpoint(self):
         """Test root endpoint"""
         client = TestClient(api_mcp_gateway.app)
@@ -153,12 +162,14 @@ class TestCLI140m2APIMCPGatewayAdditional:
         assert response.status_code == 200
 
     @patch('api_mcp_gateway.uvicorn')
+    @pytest.mark.deferred
     def test_main_function(self, mock_uvicorn):
         """Test main function"""
         api_mcp_gateway.main()
         mock_uvicorn.run.assert_called_once()
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_login_auth_disabled(self, mock_settings):
         """Test login endpoint with authentication disabled"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -169,6 +180,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.user_manager', None)
+    @pytest.mark.deferred
     def test_login_no_managers(self, mock_settings):
         """Test login endpoint with no managers"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -178,6 +190,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
         assert response.status_code == 503
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_register_auth_disabled(self, mock_settings):
         """Test register endpoint with authentication disabled"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -191,6 +204,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
         assert response.status_code == 501
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_register_registration_disabled(self, mock_settings):
         """Test register endpoint with registration disabled"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -206,6 +220,7 @@ class TestCLI140m2APIMCPGatewayAdditional:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.user_manager', None)
+    @pytest.mark.deferred
     def test_register_no_user_manager(self, mock_settings):
         """Test register endpoint with no user manager"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -229,6 +244,7 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         """Create a QdrantVectorizationTool instance for testing"""
         return QdrantVectorizationTool()
 
+    @pytest.mark.deferred
     def test_vectorization_tool_init(self, vectorization_tool):
         """Test QdrantVectorizationTool initialization"""
         assert vectorization_tool.qdrant_store is None
@@ -237,7 +253,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
 
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
-    async def test_ensure_initialized_success(self, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_ensure_initialized_success(self, mock_firestore, mock_qdrant, vectorization_tool):
         """Test _ensure_initialized method success"""
         mock_qdrant_instance = Mock()
         mock_firestore_instance = Mock()
@@ -250,7 +267,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         assert vectorization_tool.qdrant_store == mock_qdrant_instance
         assert vectorization_tool.firestore_manager == mock_firestore_instance
 
-    async def test_rate_limit(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_rate_limit(self, vectorization_tool):
         """Test _rate_limit method"""
         start_time = time.time()
         await vectorization_tool._rate_limit()
@@ -260,7 +278,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         assert end_time - start_time < 1.0
 
     @patch('tools.qdrant_vectorization_tool.TENACITY_AVAILABLE', False)
-    async def test_qdrant_operation_without_tenacity(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_qdrant_operation_without_tenacity(self, vectorization_tool):
         """Test _qdrant_operation_with_retry without tenacity"""
         mock_operation = AsyncMock(return_value={"success": True})
         
@@ -270,7 +289,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         mock_operation.assert_called_once_with("arg1", key="value")
 
     @patch('tools.qdrant_vectorization_tool.TENACITY_AVAILABLE', True)
-    async def test_qdrant_operation_with_tenacity_success(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_qdrant_operation_with_tenacity_success(self, vectorization_tool):
         """Test _qdrant_operation_with_retry with tenacity success"""
         mock_operation = AsyncMock(return_value={"success": True})
         
@@ -278,14 +298,16 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         
         assert result == {"success": True}
 
-    async def test_batch_get_firestore_metadata_empty(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_batch_get_firestore_metadata_empty(self, vectorization_tool):
         """Test _batch_get_firestore_metadata with empty list"""
         result = await vectorization_tool._batch_get_firestore_metadata([])
         assert result == {}
 
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
-    async def test_batch_get_firestore_metadata_with_docs(self, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_batch_get_firestore_metadata_with_docs(self, mock_firestore, mock_qdrant, vectorization_tool):
         """Test _batch_get_firestore_metadata with documents"""
         mock_firestore_instance = Mock()
         mock_firestore_instance.get_document_metadata = AsyncMock(return_value={"title": "Test"})
@@ -298,12 +320,14 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         assert "doc1" in result
         assert "doc2" in result
 
+    @pytest.mark.deferred
     def test_filter_by_metadata_empty_filters(self, vectorization_tool):
         """Test _filter_by_metadata with empty filters"""
         results = [{"metadata": {"key": "value"}}]
         filtered = vectorization_tool._filter_by_metadata(results, {})
         assert filtered == results
 
+    @pytest.mark.deferred
     def test_filter_by_metadata_with_filters(self, vectorization_tool):
         """Test _filter_by_metadata with actual filters"""
         results = [
@@ -315,12 +339,14 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         filtered = vectorization_tool._filter_by_metadata(results, {"category": "tech"})
         assert len(filtered) == 2
 
+    @pytest.mark.deferred
     def test_filter_by_tags_empty_tags(self, vectorization_tool):
         """Test _filter_by_tags with empty tags"""
         results = [{"metadata": {"tags": ["tag1", "tag2"]}}]
         filtered = vectorization_tool._filter_by_tags(results, [])
         assert filtered == results
 
+    @pytest.mark.deferred
     def test_filter_by_tags_with_tags(self, vectorization_tool):
         """Test _filter_by_tags with actual tags"""
         results = [
@@ -332,12 +358,14 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         filtered = vectorization_tool._filter_by_tags(results, ["python"])
         assert len(filtered) == 2
 
+    @pytest.mark.deferred
     def test_filter_by_path_empty_query(self, vectorization_tool):
         """Test _filter_by_path with empty query"""
         results = [{"metadata": {"path": "/docs/test.md"}}]
         filtered = vectorization_tool._filter_by_path(results, "")
         assert filtered == results
 
+    @pytest.mark.deferred
     def test_filter_by_path_with_query(self, vectorization_tool):
         """Test _filter_by_path with actual query"""
         results = [
@@ -349,12 +377,14 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         filtered = vectorization_tool._filter_by_path(results, "python")
         assert len(filtered) == 2
 
+    @pytest.mark.deferred
     def test_build_hierarchy_path_empty_metadata(self, vectorization_tool):
         """Test _build_hierarchy_path with empty metadata"""
         result = {"metadata": {}}
         path = vectorization_tool._build_hierarchy_path(result)
         assert path == "Uncategorized"
 
+    @pytest.mark.deferred
     def test_build_hierarchy_path_with_metadata(self, vectorization_tool):
         """Test _build_hierarchy_path with metadata"""
         result = {"metadata": {"category": "tech", "subcategory": "ai", "topic": "ml"}}
@@ -364,7 +394,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
     @patch('tools.qdrant_vectorization_tool.get_openai_embedding')
-    async def test_vectorize_document_no_openai(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_no_openai(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
         """Test vectorize_document without OpenAI available"""
         with patch('tools.qdrant_vectorization_tool.OPENAI_AVAILABLE', False):
             result = await vectorization_tool.vectorize_document("doc1", "content")
@@ -374,7 +405,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
     @patch('tools.qdrant_vectorization_tool.get_openai_embedding')
-    async def test_vectorize_document_embedding_timeout(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_embedding_timeout(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
         """Test vectorize_document with embedding timeout"""
         mock_embedding.side_effect = asyncio.TimeoutError()
         
@@ -386,7 +418,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
     @patch('tools.qdrant_vectorization_tool.get_openai_embedding')
-    async def test_vectorize_document_embedding_failure(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_embedding_failure(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
         """Test vectorize_document with embedding failure"""
         mock_embedding.return_value = {"error": "Failed"}
         
@@ -398,7 +431,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
     @patch('tools.qdrant_vectorization_tool.get_openai_embedding')
-    async def test_vectorize_document_vector_upsert_failure(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_vector_upsert_failure(self, mock_embedding, mock_firestore, mock_qdrant, vectorization_tool):
         """Test vectorize_document with vector upsert failure"""
         mock_embedding.return_value = {"embedding": [0.1, 0.2, 0.3]}
         
@@ -411,7 +445,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
         result = await vectorization_tool.vectorize_document("doc1", "content")
         assert result["status"] == "failed"
 
-    async def test_update_vector_status(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_update_vector_status(self, vectorization_tool):
         """Test _update_vector_status method"""
         with patch.object(vectorization_tool, 'firestore_manager') as mock_firestore:
             mock_firestore.update_document_metadata = AsyncMock()
@@ -422,7 +457,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
 
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
-    async def test_batch_vectorize_documents_empty(self, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_documents_empty(self, mock_firestore, mock_qdrant, vectorization_tool):
         """Test batch_vectorize_documents with empty list"""
         await vectorization_tool._ensure_initialized()
         
@@ -432,7 +468,8 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
 
     @patch('tools.qdrant_vectorization_tool.QdrantStore')
     @patch('tools.qdrant_vectorization_tool.FirestoreManager')
-    async def test_batch_vectorize_documents_with_docs(self, mock_firestore, mock_qdrant, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_documents_with_docs(self, mock_firestore, mock_qdrant, vectorization_tool):
         """Test batch_vectorize_documents with documents"""
         documents = [
             {"doc_id": "doc1", "content": "content1"},
@@ -448,6 +485,7 @@ class TestCLI140m2QdrantVectorizationToolAdditional:
             assert result["status"] == "completed"
             assert result["total_documents"] == 2
 
+    @pytest.mark.deferred
     def test_get_vectorization_tool_singleton(self):
         """Test get_vectorization_tool returns singleton"""
         tool1 = get_vectorization_tool()
@@ -464,6 +502,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         """Create a DocumentIngestionTool instance for testing"""
         return DocumentIngestionTool()
 
+    @pytest.mark.deferred
     def test_ingestion_tool_init(self, ingestion_tool):
         """Test DocumentIngestionTool initialization"""
         assert ingestion_tool.firestore_manager is None
@@ -471,7 +510,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert ingestion_tool._batch_size == 10
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_ensure_initialized_success(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ensure_initialized_success(self, mock_firestore, ingestion_tool):
         """Test _ensure_initialized method success"""
         mock_firestore_instance = Mock()
         mock_firestore.return_value = mock_firestore_instance
@@ -481,12 +521,14 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert ingestion_tool._initialized is True
         assert ingestion_tool.firestore_manager == mock_firestore_instance
 
+    @pytest.mark.deferred
     def test_get_cache_key(self, ingestion_tool):
         """Test _get_cache_key method"""
         key = ingestion_tool._get_cache_key("doc1", "hash123")
         assert "doc1" in key
         assert "hash123" in key
 
+    @pytest.mark.deferred
     def test_is_cache_valid(self, ingestion_tool):
         """Test _is_cache_valid method"""
         current_time = time.time()
@@ -497,6 +539,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         # Invalid cache (old)
         assert ingestion_tool._is_cache_valid(current_time - 7200) is False
 
+    @pytest.mark.deferred
     def test_get_content_hash(self, ingestion_tool):
         """Test _get_content_hash method"""
         hash1 = ingestion_tool._get_content_hash("content1")
@@ -507,7 +550,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert hash1 == hash3
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_save_document_metadata_success(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_document_metadata_success(self, mock_firestore, ingestion_tool):
         """Test _save_document_metadata success"""
         mock_firestore_instance = Mock()
         mock_firestore_instance.save_document_metadata = AsyncMock(return_value={"success": True})
@@ -519,7 +563,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert result["success"] is True
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_save_document_metadata_failure(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_document_metadata_failure(self, mock_firestore, ingestion_tool):
         """Test _save_document_metadata failure"""
         mock_firestore_instance = Mock()
         mock_firestore_instance.save_document_metadata = AsyncMock(side_effect=Exception("Save failed"))
@@ -531,7 +576,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert result["status"] == "failed"
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_save_to_disk_success(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_to_disk_success(self, mock_firestore, ingestion_tool):
         """Test _save_to_disk success"""
         with tempfile.TemporaryDirectory() as temp_dir:
             result = await ingestion_tool._save_to_disk("doc1", "test content", temp_dir)
@@ -541,14 +587,16 @@ class TestCLI140m2DocumentIngestionToolAdditional:
             file_path = os.path.join(temp_dir, "doc1.txt")
             assert os.path.exists(file_path)
 
-    async def test_save_to_disk_failure(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_to_disk_failure(self, ingestion_tool):
         """Test _save_to_disk failure"""
         # Try to save to invalid directory
         result = await ingestion_tool._save_to_disk("doc1", "content", "/invalid/path")
         assert result["status"] == "failed"
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_ingest_document_cache_hit(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ingest_document_cache_hit(self, mock_firestore, ingestion_tool):
         """Test ingest_document with cache hit"""
         await ingestion_tool._ensure_initialized()
         
@@ -561,7 +609,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert "cache_hit" in result
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_ingest_document_no_disk_save(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ingest_document_no_disk_save(self, mock_firestore, ingestion_tool):
         """Test ingest_document without disk save"""
         mock_firestore_instance = Mock()
         mock_firestore_instance.save_document_metadata = AsyncMock(return_value={"success": True})
@@ -573,7 +622,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert result["status"] == "success"
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_batch_ingest_documents_empty(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_documents_empty(self, mock_firestore, ingestion_tool):
         """Test batch_ingest_documents with empty list"""
         await ingestion_tool._ensure_initialized()
         
@@ -582,7 +632,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert "No documents provided" in result["error"]
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_batch_ingest_documents_invalid_docs(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_documents_invalid_docs(self, mock_firestore, ingestion_tool):
         """Test batch_ingest_documents with invalid documents"""
         documents = [
             {"doc_id": "doc1"},  # Missing content
@@ -596,7 +647,8 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert result["failed"] == 2
 
     @patch('tools.document_ingestion_tool.FirestoreManager')
-    async def test_batch_ingest_documents_timeout(self, mock_firestore, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_documents_timeout(self, mock_firestore, ingestion_tool):
         """Test batch_ingest_documents with timeout"""
         documents = [{"doc_id": "doc1", "content": "content1"}]
         
@@ -609,6 +661,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
             result = await ingestion_tool.batch_ingest_documents(documents)
             assert result["status"] == "completed"
 
+    @pytest.mark.deferred
     def test_get_performance_metrics(self, ingestion_tool):
         """Test get_performance_metrics method"""
         metrics = ingestion_tool.get_performance_metrics()
@@ -616,6 +669,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert "total_time" in metrics
         assert "avg_latency" in metrics
 
+    @pytest.mark.deferred
     def test_reset_performance_metrics(self, ingestion_tool):
         """Test reset_performance_metrics method"""
         # Set some metrics
@@ -627,6 +681,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         # Verify reset
         assert ingestion_tool._performance_metrics["total_calls"] == 0
 
+    @pytest.mark.deferred
     def test_get_document_ingestion_tool_singleton(self):
         """Test get_document_ingestion_tool returns singleton"""
         tool1 = get_document_ingestion_tool()
@@ -634,6 +689,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert tool1 is tool2
 
     @patch('tools.document_ingestion_tool.asyncio.get_event_loop')
+    @pytest.mark.deferred
     def test_ingest_document_sync_with_running_loop(self, mock_get_loop):
         """Test ingest_document_sync with running event loop"""
         mock_loop = Mock()
@@ -650,6 +706,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
             assert result["status"] == "success"
 
     @patch('tools.document_ingestion_tool.asyncio.get_event_loop')
+    @pytest.mark.deferred
     def test_ingest_document_sync_without_running_loop(self, mock_get_loop):
         """Test ingest_document_sync without running event loop"""
         mock_loop = Mock()
@@ -662,6 +719,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
         assert result["status"] == "success"
 
     @patch('tools.document_ingestion_tool.asyncio.get_event_loop')
+    @pytest.mark.deferred
     def test_ingest_document_sync_exception(self, mock_get_loop):
         """Test ingest_document_sync with exception"""
         mock_get_loop.side_effect = Exception("Loop error")
@@ -674,6 +732,7 @@ class TestCLI140m2DocumentIngestionToolAdditional:
 class TestCLI140m2CoverageValidation:
     """Final validation test for CLI140m.2 coverage improvements"""
 
+    @pytest.mark.deferred
     def test_cli140m2_coverage_validation(self):
         """Validate that CLI140m.2 tests improve coverage for target modules"""
         

@@ -29,7 +29,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
     """Enhanced coverage tests for qdrant_vectorization_tool.py to reach ≥80%"""
 
     @pytest.mark.asyncio
-    async def test_initialization_and_configuration(self):
+    @pytest.mark.deferred
+    async     def test_initialization_and_configuration(self):
         """Test tool initialization and configuration scenarios."""
         # Test initialization without mocking
         tool = QdrantVectorizationTool()
@@ -61,7 +62,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
             mock_firestore_class.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_initialization_error_handling(self):
+    @pytest.mark.deferred
+    async     def test_initialization_error_handling(self):
         """Test initialization error scenarios."""
         tool = QdrantVectorizationTool()
         
@@ -75,7 +77,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
             assert tool._initialized is False
 
     @pytest.mark.asyncio
-    async def test_rate_limiting_functionality(self):
+    @pytest.mark.deferred
+    async     def test_rate_limiting_functionality(self):
         """Test rate limiting functionality."""
         tool = QdrantVectorizationTool()
         
@@ -94,7 +97,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         assert time_diff >= tool._rate_limiter["min_interval"] * 0.8  # Allow some tolerance
 
     @pytest.mark.asyncio
-    async def test_qdrant_operation_with_retry(self):
+    @pytest.mark.deferred
+    async     def test_qdrant_operation_with_retry(self):
         """Test Qdrant operation retry logic."""
         tool = QdrantVectorizationTool()
         
@@ -124,7 +128,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
             await tool._qdrant_operation_with_retry(mock_other_operation)
 
     @pytest.mark.asyncio
-    async def test_batch_get_firestore_metadata(self):
+    @pytest.mark.deferred
+    async     def test_batch_get_firestore_metadata(self):
         """Test batch Firestore metadata retrieval with optimization."""
         tool = QdrantVectorizationTool()
         tool.firestore_manager = AsyncMock()
@@ -147,7 +152,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         assert "doc2" not in result
 
     @pytest.mark.asyncio
-    async def test_batch_get_firestore_metadata_fallback(self):
+    @pytest.mark.deferred
+    async     def test_batch_get_firestore_metadata_fallback(self):
         """Test batch Firestore metadata with fallback scenarios."""
         tool = QdrantVectorizationTool()
         tool.firestore_manager = AsyncMock()
@@ -159,7 +165,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         assert len(result) == 1
 
     @pytest.mark.asyncio
-    async def test_filter_methods(self):
+    @pytest.mark.deferred
+    async     def test_filter_methods(self):
         """Test filtering methods for search results."""
         tool = QdrantVectorizationTool()
         
@@ -197,7 +204,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         assert isinstance(filtered, list)
 
     @pytest.mark.asyncio
-    async def test_hierarchy_path_building(self):
+    @pytest.mark.deferred
+    async     def test_hierarchy_path_building(self):
         """Test hierarchy path building functionality."""
         tool = QdrantVectorizationTool()
         
@@ -220,7 +228,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         assert isinstance(path, str)
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_comprehensive(self):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_comprehensive(self):
         """Test comprehensive document vectorization scenarios."""
         tool = QdrantVectorizationTool()
         tool.qdrant_store = AsyncMock()
@@ -252,7 +261,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
                 assert "doc_id" in result
 
     @pytest.mark.asyncio
-    async def test_batch_vectorize_documents(self):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_documents(self):
         """Test batch document vectorization."""
         tool = QdrantVectorizationTool()
         tool.qdrant_store = AsyncMock()
@@ -274,7 +284,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
             assert "total_documents" in result
 
     @pytest.mark.asyncio
-    async def test_update_vector_status(self):
+    @pytest.mark.deferred
+    async     def test_update_vector_status(self):
         """Test vector status update functionality."""
         tool = QdrantVectorizationTool()
         tool.firestore_manager = AsyncMock()
@@ -290,7 +301,8 @@ class TestCLI140m12QdrantVectorizationCoverage:
         tool.firestore_manager.save_metadata.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_with_timeout(self):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_with_timeout(self):
         """Test document vectorization with timeout."""
         tool = QdrantVectorizationTool()
         tool.qdrant_store = AsyncMock()
@@ -319,6 +331,7 @@ class TestCLI140m12QdrantVectorizationCoverage:
 class TestCLI140m12ValidationAndCompliance:
     """Validation tests for CLI140m.12 objectives"""
 
+    @pytest.mark.deferred
     def test_cli140m12_coverage_objectives_validation(self):
         """Validate that CLI140m.12 coverage objectives are met."""
         coverage_targets = {

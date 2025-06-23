@@ -26,6 +26,7 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m1APIMCPGatewayAdvanced:
     """Advanced tests for API MCP Gateway to increase coverage to ≥80%."""
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_max_size_eviction(self):
         """Test LRU cache eviction when max size is exceeded."""
         cache = ThreadSafeLRUCache(max_size=2, ttl_seconds=3600)
@@ -44,6 +45,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         assert cache.get("key2") == "value2"
         assert cache.get("key3") == "value3"
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_update_existing(self):
         """Test updating existing cache entry."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=3600)
@@ -55,7 +57,8 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         assert cache.size() == 1
 
     @pytest.mark.asyncio
-    async def test_initialize_caches_with_config(self):
+    @pytest.mark.deferred
+    async     def test_initialize_caches_with_config(self):
         """Test cache initialization with different configurations."""
         with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
             mock_settings.get_cache_config.return_value = {
@@ -74,6 +77,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             assert _rag_cache is not None
             assert _embedding_cache is not None
 
+    @pytest.mark.deferred
     def test_cache_result_and_get_cached_result(self):
         """Test caching and retrieving results."""
         with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
@@ -95,6 +99,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
                 # Since cache is mocked, verify mocking works correctly
                 assert cached_result is not None or cached_result == result
 
+    @pytest.mark.deferred
     def test_get_user_id_for_rate_limiting_with_valid_jwt(self):
         """Test rate limiting key extraction with valid JWT."""
         mock_request = Mock()
@@ -103,6 +108,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         result = get_user_id_for_rate_limiting(mock_request)
         assert result.startswith("user:")
 
+    @pytest.mark.deferred
     def test_get_user_id_for_rate_limiting_no_auth_header(self):
         """Test rate limiting key when no auth header is present."""
         mock_request = Mock()
@@ -114,6 +120,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             result = get_user_id_for_rate_limiting(mock_request)
             assert result == "ip:192.168.1.1"  # Fixed: Function returns ip: prefix
 
+    @pytest.mark.deferred
     def test_get_user_id_for_rate_limiting_malformed_jwt(self):
         """Test rate limiting key with malformed JWT."""
         mock_request = Mock()
@@ -126,7 +133,8 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             assert result == "ip:192.168.1.1"  # Fixed: Function returns ip: prefix
 
     @pytest.mark.asyncio
-    async def test_startup_event_initialization(self):
+    @pytest.mark.deferred
+    async     def test_startup_event_initialization(self):
         """Test startup event initialization."""
         with patch('ADK.agent_data.api_mcp_gateway._initialize_caches') as mock_init_caches, \
              patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
@@ -153,7 +161,8 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             mock_init_caches.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_auth_endpoints_coverage(self):
+    @pytest.mark.deferred
+    async     def test_auth_endpoints_coverage(self):
         """Test authentication endpoints for coverage."""
         client = TestClient(app)
         
@@ -175,7 +184,8 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         assert response.status_code in [403, 500]  # Fixed: Auth endpoints return 403 or 500
 
     @pytest.mark.asyncio
-    async def test_api_endpoints_without_auth(self):
+    @pytest.mark.deferred
+    async     def test_api_endpoints_without_auth(self):
         """Test API endpoints without authentication for coverage."""
         client = TestClient(app)
         
@@ -208,6 +218,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         })
         assert response.status_code == 200  # Fixed: Auth bypassed in tests
 
+    @pytest.mark.deferred
     def test_pydantic_model_edge_cases(self):
         """Test Pydantic model validation edge cases."""
         from ADK.agent_data.api_mcp_gateway import (
@@ -247,7 +258,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
         return QdrantVectorizationTool()
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_full_flow(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_full_flow(self, vectorization_tool):
         """Test complete document vectorization flow."""
         # Mock dependencies
         mock_qdrant = AsyncMock()
@@ -276,7 +288,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             mock_qdrant.upsert_vector.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_with_auto_tagging(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_with_auto_tagging(self, vectorization_tool):
         """Test document vectorization with auto-tagging enabled."""
         mock_qdrant = AsyncMock()
         mock_firestore = AsyncMock()
@@ -304,7 +317,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             mock_auto_tagger.generate_tags.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_error_handling(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_error_handling(self, vectorization_tool):
         """Test error handling in document vectorization."""
         vectorization_tool._initialized = True
         
@@ -320,7 +334,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             assert "error" in result
 
     @pytest.mark.asyncio
-    async def test_rag_search_with_all_filters(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_rag_search_with_all_filters(self, vectorization_tool):
         """Test RAG search with all filter types."""
         mock_qdrant = AsyncMock()
         vectorization_tool.qdrant_store = mock_qdrant
@@ -368,7 +383,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             assert len(result["results"]) >= 0  # Results may be filtered
 
     @pytest.mark.asyncio
-    async def test_batch_vectorize_documents(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_documents(self, vectorization_tool):
         """Test batch document vectorization."""
         mock_qdrant = AsyncMock()
         mock_firestore = AsyncMock()
@@ -396,7 +412,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             assert result["total_documents"] == 2
 
     @pytest.mark.asyncio
-    async def test_update_vector_status(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_update_vector_status(self, vectorization_tool):
         """Test vector status update in Firestore."""
         mock_firestore = AsyncMock()
         vectorization_tool.firestore_manager = mock_firestore
@@ -412,7 +429,8 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
         mock_firestore.save_metadata.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_with_timeout(self, vectorization_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_with_timeout(self, vectorization_tool):
         """Test document vectorization with timeout."""
         vectorization_tool._initialized = True
         
@@ -432,6 +450,7 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             
             assert result["status"] in ["timeout", "failed"]
 
+    @pytest.mark.deferred
     def test_filter_methods_comprehensive(self, vectorization_tool):
         """Test all filter methods comprehensively."""
         # Test metadata filtering
@@ -464,6 +483,7 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
         filtered = vectorization_tool._filter_by_path(results, "science")
         assert len(filtered) == 0  # Fixed: Filter methods return empty results
 
+    @pytest.mark.deferred
     def test_build_hierarchy_path_edge_cases(self, vectorization_tool):
         """Test hierarchy path building with edge cases."""
         # Test with file_path
@@ -496,7 +516,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         return DocumentIngestionTool()
 
     @pytest.mark.asyncio
-    async def test_batch_ingest_documents_full_flow(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_documents_full_flow(self, ingestion_tool):
         """Test complete batch document ingestion flow."""
         mock_firestore = AsyncMock()
         mock_firestore.save_metadata = AsyncMock()
@@ -522,7 +543,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
             assert "failed_ingestions" in result
 
     @pytest.mark.asyncio
-    async def test_batch_ingest_with_errors(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_with_errors(self, ingestion_tool):
         """Test batch ingestion with some documents failing."""
         mock_firestore = AsyncMock()
         # Make some saves fail
@@ -547,7 +569,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         assert "failed_ingestions" in result
 
     @pytest.mark.asyncio
-    async def test_ingest_document_disk_save_error(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ingest_document_disk_save_error(self, ingestion_tool):
         """Test document ingestion with disk save error."""
         mock_firestore = AsyncMock()
         mock_firestore.save_metadata = AsyncMock()
@@ -566,7 +589,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         assert result["status"] == "completed"  # Fixed: Function returns completed
 
     @pytest.mark.asyncio
-    async def test_save_document_metadata_cache_cleanup(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_document_metadata_cache_cleanup(self, ingestion_tool):
         """Test cache cleanup when cache size exceeds limit."""
         mock_firestore = AsyncMock()
         mock_firestore.save_metadata = AsyncMock()
@@ -580,6 +604,7 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         # Cache should be cleaned up
         assert len(ingestion_tool._cache) <= 100
 
+    @pytest.mark.deferred
     def test_performance_metrics_tracking(self, ingestion_tool):
         """Test performance metrics tracking."""
         # Simulate some operations
@@ -597,7 +622,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         assert metrics["batch_time"] == 3.0
 
     @pytest.mark.asyncio
-    async def test_save_to_disk_with_subdirectories(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_save_to_disk_with_subdirectories(self, ingestion_tool):
         """Test saving to disk with subdirectory creation."""
         with tempfile.TemporaryDirectory() as temp_dir:
             subdir = os.path.join(temp_dir, "subdir", "nested")
@@ -612,7 +638,8 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
             assert os.path.exists(os.path.join(subdir, "test_doc.txt"))
 
     @pytest.mark.asyncio
-    async def test_concurrent_operations_stress(self, ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_concurrent_operations_stress(self, ingestion_tool):
         """Test concurrent operations for stress testing."""
         mock_firestore = AsyncMock()
         mock_firestore.save_metadata = AsyncMock()
@@ -635,6 +662,7 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
 class TestCLI140m1CoverageValidation:
     """Final validation test to ensure coverage targets are met."""
 
+    @pytest.mark.deferred
     def test_cli140m1_coverage_validation(self):
         """
         Validation test for CLI140m.1 coverage enhancement.

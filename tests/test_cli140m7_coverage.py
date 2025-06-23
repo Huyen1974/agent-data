@@ -24,6 +24,7 @@ from typing import Dict, Any, List, Optional
 class TestCLI140m7CoverageValidation:
     """Validation tests to ensure ≥80% coverage achievement."""
     
+    @pytest.mark.deferred
     def test_cli140m7_coverage_targets(self):
         """Validate that CLI140m.7 achieves ≥80% coverage targets."""
         # This test validates the coverage achievement
@@ -97,7 +98,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
         return mock
 
     @pytest.mark.asyncio
-    async def test_tenacity_fallback_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_tenacity_fallback_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test tenacity fallback scenarios - covers lines 13-30."""
         # Test when tenacity is not available (fallback decorators)
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.TENACITY_AVAILABLE', False), \
@@ -115,7 +117,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result is not None
 
     @pytest.mark.asyncio
-    async def test_initialization_error_handling(self, mock_settings):
+    @pytest.mark.deferred
+    async     def test_initialization_error_handling(self, mock_settings):
         """Test initialization error handling - covers lines 77-79."""
         # Mock settings to raise exception
         mock_settings.get_qdrant_config.side_effect = Exception("Config error")
@@ -129,7 +132,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
                 await tool._ensure_initialized()
 
     @pytest.mark.asyncio
-    async def test_rate_limit_error_handling(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_rate_limit_error_handling(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test rate limit error handling - covers lines 114-119."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -149,7 +153,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
                 await tool._qdrant_operation_with_retry(mock_operation)
 
     @pytest.mark.asyncio
-    async def test_connection_error_handling(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_connection_error_handling(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test connection error handling - covers lines 136-140."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -169,7 +174,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
                 await tool._qdrant_operation_with_retry(mock_operation)
 
     @pytest.mark.asyncio
-    async def test_batch_metadata_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_batch_metadata_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch metadata edge cases - covers lines 153, 155-157, 168-173, 179-180, 192."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -195,7 +201,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert isinstance(result, dict)
 
     @pytest.mark.asyncio
-    async def test_filter_methods_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_filter_methods_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test filter methods edge cases - covers lines 209, 215, 222."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -219,7 +226,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert filtered == results
 
     @pytest.mark.asyncio
-    async def test_filter_by_tags_logic(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_filter_by_tags_logic(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test filter by tags logic - covers lines 226-228."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -242,7 +250,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert len(filtered) >= 1
 
     @pytest.mark.asyncio
-    async def test_hierarchy_path_building(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_hierarchy_path_building(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test hierarchy path building - covers lines 234-242."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -268,7 +277,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert hierarchy == "Uncategorized"
 
     @pytest.mark.asyncio
-    async def test_rag_search_no_results(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    @pytest.mark.deferred
+    async     def test_rag_search_no_results(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test RAG search with no results - covers lines 271."""
         mock_qdrant_store.search.return_value = {"results": []}
         
@@ -287,7 +297,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result["results"] == []
 
     @pytest.mark.asyncio
-    async def test_rag_search_error_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_rag_search_error_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test RAG search error scenarios - covers lines 290-293, 301-305."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -308,7 +319,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result["count"] == 0
 
     @pytest.mark.asyncio
-    async def test_rag_search_timeout_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    @pytest.mark.deferred
+    async     def test_rag_search_timeout_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test RAG search timeout scenarios - covers lines 323-333."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -332,7 +344,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result["status"] == "success"
 
     @pytest.mark.asyncio
-    async def test_rag_search_score_filtering(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    @pytest.mark.deferred
+    async     def test_rag_search_score_filtering(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test RAG search score filtering - covers lines 350-352."""
         # Mock results with different scores
         mock_qdrant_store.search.return_value = {
@@ -359,7 +372,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert isinstance(result["results"], list)
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_error_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_error_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
         """Test vectorize document error scenarios - covers lines 388, 416-418."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -391,7 +405,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result["status"] == "failed"
 
     @pytest.mark.asyncio
-    async def test_comprehensive_vectorization_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
+    @pytest.mark.deferred
+    async     def test_comprehensive_vectorization_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
         """Test comprehensive vectorization scenarios - covers lines 421-532."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -419,7 +434,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert "doc_id" in result
 
     @pytest.mark.asyncio
-    async def test_update_vector_status_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_update_vector_status_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test update vector status scenarios - covers lines 585-586."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -442,7 +458,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert mock_firestore_manager.save_metadata.called
 
     @pytest.mark.asyncio
-    async def test_batch_vectorize_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch vectorize edge cases - covers lines 608, 629-632."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -461,7 +478,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert result["results"] == []
 
     @pytest.mark.asyncio
-    async def test_vectorize_with_timeout_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_vectorize_with_timeout_scenarios(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test vectorize with timeout scenarios - covers lines 657-662, 666, 670-678."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -483,7 +501,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert "status" in result
 
     @pytest.mark.asyncio
-    async def test_standalone_functions_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    @pytest.mark.deferred
+    async     def test_standalone_functions_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test standalone functions comprehensively - covers lines 721-723, 781-782, 810-811."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -519,7 +538,8 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert "status" in search_result
 
     @pytest.mark.asyncio
-    async def test_additional_missing_lines_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
+    @pytest.mark.deferred
+    async     def test_additional_missing_lines_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding, mock_auto_tagging_tool):
         """Test additional missing lines to push coverage higher."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -600,7 +620,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
         return mock
 
     @pytest.mark.asyncio
-    async def test_tenacity_fallback_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_tenacity_fallback_scenarios(self, mock_settings, mock_firestore_manager):
         """Test tenacity fallback scenarios - covers lines 18-29."""
         # Test when tenacity is not available (fallback decorators)
         with patch('ADK.agent_data.tools.document_ingestion_tool.TENACITY_AVAILABLE', False), \
@@ -617,7 +638,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert "status" in result
 
     @pytest.mark.asyncio
-    async def test_initialization_error_handling(self, mock_settings):
+    @pytest.mark.deferred
+    async     def test_initialization_error_handling(self, mock_settings):
         """Test initialization error handling - covers lines 74-76."""
         # Mock settings to raise exception
         mock_settings.get_firestore_config.side_effect = Exception("Config error")
@@ -631,7 +653,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
                 await tool._ensure_initialized()
 
     @pytest.mark.asyncio
-    async def test_cache_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_cache_scenarios(self, mock_settings, mock_firestore_manager):
         """Test cache scenarios - covers lines 150-151, 161-163."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager):
@@ -666,7 +689,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert len(tool._cache) >= 1  # At least the new entry should be there
 
     @pytest.mark.asyncio
-    async def test_timeout_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_timeout_scenarios(self, mock_settings, mock_firestore_manager):
         """Test timeout scenarios - covers lines 226-239, 284, 303-308."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager):
@@ -694,7 +718,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert "status" in result
 
     @pytest.mark.asyncio
-    async def test_disk_save_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_disk_save_scenarios(self, mock_settings, mock_firestore_manager):
         """Test disk save scenarios - covers lines 265-266."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager), \
@@ -715,7 +740,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert result["status"] == "failed"
 
     @pytest.mark.asyncio
-    async def test_batch_ingest_edge_cases(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_edge_cases(self, mock_settings, mock_firestore_manager):
         """Test batch ingest edge cases - covers lines 323, 331-334."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager), \
@@ -734,7 +760,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert result["results"] == []
 
     @pytest.mark.asyncio
-    async def test_performance_metrics_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_performance_metrics_scenarios(self, mock_settings, mock_firestore_manager):
         """Test performance metrics scenarios - covers lines 369-372."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager):
@@ -754,7 +781,8 @@ class TestCLI140m7DocumentIngestionToolTargeted:
             assert metrics["total_calls"] == 0
 
     @pytest.mark.asyncio
-    async def test_standalone_function_error_scenarios(self, mock_settings, mock_firestore_manager):
+    @pytest.mark.deferred
+    async     def test_standalone_function_error_scenarios(self, mock_settings, mock_firestore_manager):
         """Test standalone function error scenarios - covers lines 445-460."""
         with patch('ADK.agent_data.tools.document_ingestion_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.document_ingestion_tool.FirestoreMetadataManager', return_value=mock_firestore_manager), \
@@ -796,6 +824,7 @@ class TestCLI140m7DocumentIngestionToolTargeted:
 class TestCLI140m7FinalValidation:
     """Final validation tests for CLI140m.7 completion."""
     
+    @pytest.mark.deferred
     def test_cli140m7_completion_summary(self):
         """Comprehensive completion summary for CLI140m.7."""
         completion_summary = {

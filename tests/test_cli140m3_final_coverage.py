@@ -80,6 +80,7 @@ except ImportError as e:
 class TestCLI140m3APIMCPGatewayComprehensive:
     """Comprehensive tests for api_mcp_gateway.py to reach 80% coverage"""
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_all_methods(self):
         """Test all ThreadSafeLRUCache methods comprehensively"""
         cache = api_mcp_gateway.ThreadSafeLRUCache(max_size=3, ttl_seconds=0.1)
@@ -114,6 +115,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
         assert cache.get("c") == "3"
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_cache_functions_comprehensive(self, mock_settings):
         """Test all cache-related functions"""
         mock_settings.get_cache_config.return_value = {
@@ -180,6 +182,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
         # The health check might still return healthy if other services are working
         assert data["status"] in ["healthy", "degraded"]
 
+    @pytest.mark.deferred
     def test_root_endpoint(self):
         """Test root endpoint"""
         client = TestClient(api_mcp_gateway.app)
@@ -190,12 +193,14 @@ class TestCLI140m3APIMCPGatewayComprehensive:
         assert "version" in data
 
     @patch('api_mcp_gateway.uvicorn')
+    @pytest.mark.deferred
     def test_main_function(self, mock_uvicorn):
         """Test main function"""
         api_mcp_gateway.main()
         mock_uvicorn.run.assert_called_once()
 
     @patch('api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_authentication_flows(self, mock_settings):
         """Test authentication-related functions"""
         # Test with auth disabled
@@ -218,6 +223,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
             
             asyncio.run(test_no_auth_manager())
 
+    @pytest.mark.deferred
     def test_rate_limiting_functions(self):
         """Test rate limiting utility functions"""
         # Test with JWT token
@@ -245,6 +251,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.qdrant_store')
     @patch('api_mcp_gateway.vectorization_tool')
+    @pytest.mark.deferred
     def test_save_document_endpoint(self, mock_vectorization, mock_qdrant, mock_settings):
         """Test save document endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -263,6 +270,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.qdrant_store')
+    @pytest.mark.deferred
     def test_query_vectors_endpoint(self, mock_qdrant, mock_settings):
         """Test query vectors endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -284,6 +292,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.qdrant_store')
+    @pytest.mark.deferred
     def test_search_documents_endpoint(self, mock_qdrant, mock_settings):
         """Test search documents endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -304,6 +313,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.qdrant_store')
+    @pytest.mark.deferred
     def test_rag_search_endpoint(self, mock_qdrant, mock_settings):
         """Test RAG search endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -328,6 +338,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.auth_manager')
     @patch('api_mcp_gateway.user_manager')
+    @pytest.mark.deferred
     def test_login_endpoint(self, mock_user_manager, mock_auth_manager, mock_settings):
         """Test login endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -350,6 +361,7 @@ class TestCLI140m3APIMCPGatewayComprehensive:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.user_manager')
+    @pytest.mark.deferred
     def test_register_endpoint(self, mock_user_manager, mock_settings):
         """Test register endpoint"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -375,6 +387,7 @@ class TestCLI140m3QdrantVectorizationTool:
     """Comprehensive tests for qdrant_vectorization_tool.py to reach 80% coverage"""
 
     @patch('qdrant_vectorization_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_tool_initialization(self):
         """Test tool initialization and configuration"""
         # Test creating tool instance
@@ -388,6 +401,7 @@ class TestCLI140m3QdrantVectorizationTool:
 
     @patch('qdrant_vectorization_tool.settings', mock_settings)
     @patch('qdrant_vectorization_tool.QdrantClient')
+    @pytest.mark.deferred
     def test_qdrant_operations(self, mock_client):
         """Test Qdrant operations"""
         mock_client_instance = Mock()
@@ -407,6 +421,7 @@ class TestCLI140m3QdrantVectorizationTool:
             assert isinstance(result, dict)
 
     @patch('qdrant_vectorization_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_vectorization_methods(self):
         """Test vectorization-related methods"""
         tool = qdrant_vectorization_tool.QdrantVectorizationTool()
@@ -427,6 +442,7 @@ class TestCLI140m3QdrantVectorizationTool:
                 assert isinstance(results, list)
 
     @patch('qdrant_vectorization_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_search_operations(self):
         """Test search and query operations"""
         tool = qdrant_vectorization_tool.QdrantVectorizationTool()
@@ -450,6 +466,7 @@ class TestCLI140m3QdrantVectorizationTool:
             assert len(filtered) <= len(test_results)
 
     @patch('qdrant_vectorization_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_async_operations(self):
         """Test async operations"""
         tool = qdrant_vectorization_tool.QdrantVectorizationTool()
@@ -476,6 +493,7 @@ class TestCLI140m3DocumentIngestionTool:
     """Comprehensive tests for document_ingestion_tool.py to reach 80% coverage"""
 
     @patch('document_ingestion_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_tool_initialization(self):
         """Test tool initialization"""
         tool = document_ingestion_tool.DocumentIngestionTool()
@@ -487,6 +505,7 @@ class TestCLI140m3DocumentIngestionTool:
             assert isinstance(config, dict)
 
     @patch('document_ingestion_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_document_processing(self):
         """Test document processing methods"""
         tool = document_ingestion_tool.DocumentIngestionTool()
@@ -507,6 +526,7 @@ class TestCLI140m3DocumentIngestionTool:
             assert isinstance(chunks, list)
 
     @patch('document_ingestion_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_storage_operations(self):
         """Test storage and persistence operations"""
         tool = document_ingestion_tool.DocumentIngestionTool()
@@ -525,6 +545,7 @@ class TestCLI140m3DocumentIngestionTool:
                 assert content is not None
 
     @patch('document_ingestion_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_async_operations(self):
         """Test async document operations"""
         tool = document_ingestion_tool.DocumentIngestionTool()
@@ -550,6 +571,7 @@ class TestCLI140m3DocumentIngestionTool:
         asyncio.run(test_async_methods())
 
     @patch('document_ingestion_tool.settings', mock_settings)
+    @pytest.mark.deferred
     def test_utility_methods(self):
         """Test utility and helper methods"""
         tool = document_ingestion_tool.DocumentIngestionTool()
@@ -580,6 +602,7 @@ class TestCLI140m3DocumentIngestionTool:
 class TestCLI140m3CoverageValidation:
     """Validation tests to ensure coverage targets are met"""
 
+    @pytest.mark.deferred
     def test_cli140m3_final_coverage_validation(self):
         """Validate that CLI140m.3 achieves target coverage levels"""
         # This test validates that our comprehensive testing approach

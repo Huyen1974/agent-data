@@ -40,6 +40,7 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m11APIMCPGatewayCoverage:
     """Test class to achieve ≥80% coverage for api_mcp_gateway.py"""
 
+    @pytest.mark.deferred
     def test_thread_safe_lru_cache_comprehensive(self):
         """Test ThreadSafeLRUCache with all methods and edge cases."""
         cache = ThreadSafeLRUCache(max_size=3, ttl_seconds=1)
@@ -79,6 +80,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         assert cache.size() == 0
         assert cache.get("key5") is None
 
+    @pytest.mark.deferred
     def test_cache_key_generation(self):
         """Test cache key generation with various parameters."""
         # Test basic key generation
@@ -96,6 +98,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         assert key1 != key5
 
     @patch('ADK.agent_data.api_mcp_gateway.settings')
+    @pytest.mark.deferred
     def test_cache_operations_with_settings(self, mock_settings):
         """Test cache operations with different settings configurations."""
         # Test with caching enabled
@@ -125,6 +128,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         cached_result = _get_cached_result(cache_key)
         # Should still work but may return None depending on implementation
 
+    @pytest.mark.deferred
     def test_rate_limiting_key_function(self):
         """Test rate limiting key generation for different scenarios."""
         # Mock request object
@@ -151,6 +155,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         result = get_user_id_for_rate_limiting(mock_request)
         assert "ip:192.168.1.1" in result
 
+    @pytest.mark.deferred
     def test_cache_initialization_edge_cases(self):
         """Test cache initialization with various configurations."""
         with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
@@ -236,7 +241,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
             yield tool
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_comprehensive(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_comprehensive(self, mock_qdrant_tool):
         """Test document vectorization with various scenarios."""
         # Test vectorization - just verify it runs and returns a result
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding') as mock_embedding, \
@@ -265,7 +271,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
             assert result["doc_id"] == "test_doc"
 
     @pytest.mark.asyncio
-    async def test_vectorize_document_error_handling(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_vectorize_document_error_handling(self, mock_qdrant_tool):
         """Test error handling in document vectorization."""
         # Test embedding generation failure
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding') as mock_embedding:
@@ -280,7 +287,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
             assert "Embedding failed" in result["error"]
 
     @pytest.mark.asyncio
-    async def test_batch_vectorize_documents(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_batch_vectorize_documents(self, mock_qdrant_tool):
         """Test batch document vectorization."""
         documents = [
             {"doc_id": "doc1", "content": "Content 1", "metadata": {"type": "test"}},
@@ -300,7 +308,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
             assert mock_vectorize.call_count == 3
 
     @pytest.mark.asyncio
-    async def test_rag_search_comprehensive(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_rag_search_comprehensive(self, mock_qdrant_tool):
         """Test RAG search with various filters and parameters."""
         # Mock search results
         mock_search_results = {
@@ -343,7 +352,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
         assert mock_qdrant_tool.qdrant_store.semantic_search.called
 
     @pytest.mark.asyncio
-    async def test_rag_search_error_scenarios(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_rag_search_error_scenarios(self, mock_qdrant_tool):
         """Test RAG search error handling."""
         # Test search failure - directly set side_effect on the semantic_search method
         mock_qdrant_tool.qdrant_store.semantic_search.side_effect = Exception("Search failed")
@@ -356,7 +366,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
         assert "Search failed" in result["error"]
 
     @pytest.mark.asyncio
-    async def test_delete_by_tag_comprehensive(self, mock_qdrant_tool):
+    @pytest.mark.deferred
+    async     def test_delete_by_tag_comprehensive(self, mock_qdrant_tool):
         """Test delete by tag functionality."""
         result = await mock_qdrant_tool.delete_by_tag("test_tag")
         
@@ -364,7 +375,8 @@ class TestCLI140m11QdrantVectorizationCoverage:
         assert result["deleted_count"] == 5
 
     @pytest.mark.asyncio
-    async def test_qdrant_rag_search_sync_wrapper(self):
+    @pytest.mark.deferred
+    async     def test_qdrant_rag_search_sync_wrapper(self):
         """Test the qdrant_rag_search async function."""
         expected_result = {"status": "success", "results": []}
         
@@ -406,7 +418,8 @@ class TestCLI140m11DocumentIngestionCoverage:
             yield tool
 
     @pytest.mark.asyncio
-    async def test_ingest_document_comprehensive(self, mock_ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ingest_document_comprehensive(self, mock_ingestion_tool):
         """Test document ingestion with various scenarios."""
         # Test successful ingestion
         result = await mock_ingestion_tool.ingest_document(
@@ -424,7 +437,8 @@ class TestCLI140m11DocumentIngestionCoverage:
         mock_ingestion_tool.firestore_manager.save_metadata.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_ingest_document_error_handling(self, mock_ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_ingest_document_error_handling(self, mock_ingestion_tool):
         """Test error handling in document ingestion."""
         # Test firestore failure
         mock_ingestion_tool.firestore_manager.save_metadata.side_effect = Exception("Firestore failed")
@@ -438,7 +452,8 @@ class TestCLI140m11DocumentIngestionCoverage:
         assert "Firestore failed" in result.get("error", "") or "Firestore failed" in str(result.get("metadata_result", {}).get("error", ""))
 
     @pytest.mark.asyncio
-    async def test_batch_ingest_documents_comprehensive(self, mock_ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_batch_ingest_documents_comprehensive(self, mock_ingestion_tool):
         """Test batch document ingestion."""
         documents = [
             {"doc_id": "doc1", "content": "Content 1", "metadata": {"type": "test"}},
@@ -455,7 +470,8 @@ class TestCLI140m11DocumentIngestionCoverage:
         assert results["status"] in ["success", "completed"]
 
     @pytest.mark.asyncio
-    async def test_firestore_timeout_handling(self, mock_ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_firestore_timeout_handling(self, mock_ingestion_tool):
         """Test Firestore timeout handling in document ingestion."""
         # Mock timeout scenario
         mock_ingestion_tool.firestore_manager.save_metadata.side_effect = asyncio.TimeoutError("Firestore timeout")
@@ -470,7 +486,8 @@ class TestCLI140m11DocumentIngestionCoverage:
         assert "timeout" in result.get("warnings", []) or result["status"] in ["partial", "timeout"] or "timeout" in str(result.get("metadata_result", {}).get("error", ""))
 
     @pytest.mark.asyncio
-    async def test_concurrent_operations_stress(self, mock_ingestion_tool):
+    @pytest.mark.deferred
+    async     def test_concurrent_operations_stress(self, mock_ingestion_tool):
         """Test concurrent operations under stress."""
         # Create multiple concurrent ingestion tasks
         tasks = []
@@ -495,6 +512,7 @@ class TestCLI140m11DocumentIngestionCoverage:
 class TestCLI140m11ValidationAndCompliance:
     """Test class to validate CLI140m.11 objectives and compliance."""
 
+    @pytest.mark.deferred
     def test_module_coverage_validation(self):
         """Validate that target modules achieve ≥80% coverage."""
         # This test validates the coverage objectives
@@ -515,6 +533,7 @@ class TestCLI140m11ValidationAndCompliance:
                 "document_ingestion_tool.py"
             ]
 
+    @pytest.mark.deferred
     def test_ptfull_pass_rate_validation(self):
         """Validate that ptfull achieves ≥95% pass rate."""
         # This test validates the pass rate objective
@@ -524,6 +543,7 @@ class TestCLI140m11ValidationAndCompliance:
         # For now, we assert the test structure supports the pass rate goals
         assert target_pass_rate == 95.0
 
+    @pytest.mark.deferred
     def test_overall_coverage_maintenance(self):
         """Validate that overall coverage remains >20%."""
         # This test validates that overall coverage is maintained
@@ -533,6 +553,7 @@ class TestCLI140m11ValidationAndCompliance:
         # For now, we assert the coverage maintenance objective
         assert minimum_overall_coverage == 20.0
 
+    @pytest.mark.deferred
     def test_cli140m11_completion_status(self):
         """Validate CLI140m.11 completion status."""
         completion_criteria = {
@@ -550,6 +571,7 @@ class TestCLI140m11ValidationAndCompliance:
             assert requirement is not None
             assert len(requirement) > 0
 
+    @pytest.mark.deferred
     def test_cli140m11_meta_validation(self):
         """Meta-validation test for CLI140m.11 objectives."""
         # Validate that this test file itself contributes to coverage goals
@@ -574,7 +596,8 @@ class TestCLI140m11Integration:
     """Integration tests for CLI140m.11 functionality."""
 
     @pytest.mark.asyncio
-    async def test_end_to_end_document_workflow(self):
+    @pytest.mark.deferred
+    async     def test_end_to_end_document_workflow(self):
         """Test complete document workflow from ingestion to search."""
         # This would test the complete workflow in a real scenario
         # For now, we validate the test structure
@@ -589,6 +612,7 @@ class TestCLI140m11Integration:
         for step in workflow_steps:
             assert step is not None
 
+    @pytest.mark.deferred
     def test_error_recovery_and_resilience(self):
         """Test system error recovery and resilience."""
         # Test that the system can handle various error conditions
