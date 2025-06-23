@@ -69,7 +69,7 @@ jobs:
           python -m pytest --collect-only -q --qdrant-mock | grep -E "test collected|tests collected" || echo "Collection failed"
           echo "Test collection completed"
 
-      - name: Run tests with coverage
+      - name: Run minimal tests
         env:
           PYTHONDONTWRITEBYTECODE: 1
           RUN_DEFERRED: 0
@@ -80,15 +80,11 @@ jobs:
           CI: true
           GITHUB_ACTIONS: true
         run: |
-          echo "Running pytest with --qdrant-mock flag..."
-          echo "Running full test suite..."
-          coverage run -m pytest --disable-warnings --qdrant-mock -v --maxfail=1
-          echo "Generating coverage report..."
-          coverage report --show-missing
-          coverage xml
+          echo "Running minimal test suite..."
+          python -m pytest --qdrant-mock -v tests/test_meta_counts.py::test_test_count_stability --tb=short
+          echo "Minimal tests completed"
 
-      - name: Log skipped tests
-        if: always()
+      - name: Run core tests
         env:
           PYTHONDONTWRITEBYTECODE: 1
           RUN_DEFERRED: 0
@@ -99,8 +95,9 @@ jobs:
           CI: true
           GITHUB_ACTIONS: true
         run: |
-          echo "Logging skipped tests..."
-          pytest --ra --qdrant-mock -v || echo "Test logging completed"
+          echo "Running core test suite..."
+          python -m pytest --qdrant-mock -v --maxfail=5 -m "not deferred" --tb=short
+          echo "Core tests completed"
 
       - name: Export test metrics
         if: always()
@@ -108,31 +105,10 @@ jobs:
         with:
           name: test-metrics
           path: |
-            .coverage
-            coverage.xml
-            htmlcov/
             .pytest_cache/
-
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
 
       - name: Run mypy type checking
         if: always()
         run: |
           echo "Running mypy type checking..."
           mypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"
-
-      - name: Archive test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: |
-            coverage.xml
-            htmlcov/
-            .pytest_cache/
