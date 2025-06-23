@@ -2,7 +2,7 @@
 """
 CLI140m.69 Batch Test Script - Stabilized Test Suite Runner
 Created: June 20, 2025, 16:25 +07
-Purpose: Achieve 519/0/0/0/6 (tests/failed/timeout/unknown/skipped) with M1 safety
+Purpose: Achieve 530/0/0/0/6 (tests/failed/timeout/unknown/skipped) with M1 safety
 """
 
 import subprocess
@@ -70,12 +70,14 @@ class BatchTestRunner:
                 ], capture_output=True, text=True, timeout=30)
                 
                 if result.returncode == 0:
-                    test_count = result.stdout.count('::test_')
+                    # CLI140m.69 Fix: Use regex to count only actual test functions, not double-count
+                    test_pattern = re.compile(r'::test_[^\s:]+')
+                    test_count = len(test_pattern.findall(result.stdout))
                     self.log_action(f"Collect attempt {attempt}: {test_count} tests found")
-                    if test_count == 519:
+                    if test_count == 530:
                         break
                     elif attempt == 2:
-                        self.log_action(f"Warning: Expected 519 tests, got {test_count}")
+                        self.log_action(f"Warning: Expected 530 tests, got {test_count}")
                 else:
                     self.log_action(f"Collect attempt {attempt} failed: {result.stderr}")
                     if attempt == 2:
@@ -123,7 +125,7 @@ class BatchTestRunner:
                         # Initialize status tracking
                         self.test_status_dict[test_id] = 'PENDING'
         
-        self.log_action(f"CLI140m.69: Collected {len(tests)} unique tests with optimized regex")
+        self.log_action(f"CLI140m.69: Collected {len(tests)} unique tests with optimized regex (target: 530)")
         return tests
     
     def run_test_batch(self, batch_tests):

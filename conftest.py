@@ -134,7 +134,8 @@ def global_comprehensive_mocks(monkeypatch):
         monkeypatch.setenv("QDRANT_URL", "http://mock-qdrant:6333")
         monkeypatch.setenv("QDRANT_API_KEY", "mock-key")
         monkeypatch.setenv("QDRANT_COLLECTION_NAME", "test_collection")
-        monkeypatch.setenv("OPENAI_API_KEY", "mock-openai-key")
+        monkeypatch.setenv("OPENAI_API_KEY", "stub")
+        monkeypatch.setenv("GOOGLE_CREDENTIALS", "stub")
         monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "mock-project")
         monkeypatch.setenv("FIRESTORE_EMULATOR_HOST", "localhost:8080")
 

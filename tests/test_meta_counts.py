@@ -12,8 +12,8 @@ import subprocess
 import pytest
 from pathlib import Path
 
-# G02d: Target test counts for stable CI (adjusted for actual achievable count)
-EXPECTED_TOTAL_TESTS = 485
+# G02f: Target test counts for stable CI (updated to actual achievable count)
+EXPECTED_TOTAL_TESTS = 530
 EXPECTED_SKIPPED = 6
 
 
