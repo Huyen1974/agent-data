@@ -15,21 +15,36 @@ import shutil
 import pathlib
 from datetime import datetime
 from pathlib import Path
+from dataclasses import dataclass
+from typing import List, Dict, Optional, Tuple
+
+@dataclass
+class BatchResults:
+    total_tests: int = 0
+    passed_tests: int = 0
+    failed_tests: int = 0
+    skipped_tests: int = 0
+    timeout_tests: int = 0
+    unknown_tests: int = 0
+    total_runtime: float = 0.0
+    batches_run: int = 0
 
 class BatchTestRunner:
-    def __init__(self):
+    def __init__(self, batch_size: int = 3, timeout: int = 8, target_tests: int = 519):
         # CLI140m.69: Setup environment for stability
         self.setup_environment()
         
-        self.batch_size = 3  # ≤3 for M1 safety
-        self.timeout_per_test = 8  # 8s per test
-        self.batch_timeout = 24  # 3×8s
+        self.batch_size = batch_size
+        self.timeout = timeout
+        self.target_tests = target_tests  # G02f: Updated to 519
+        self.batch_timeout = batch_size * timeout
         self.sleep_between_batches = 0.5
         self.results = []
         self.seen_test_ids = set()  # Track unique test IDs to prevent duplication
         self.test_status_dict = {}  # Track test status for better parsing
         self.log_file = "logs/test_fixes.log"
         self.csv_file = "test_summary_cli140m69.txt"  # Updated for CLI140m.69
+        self.max_batches = None
         
     def setup_environment(self):
         """CLI140m.69: Setup clean environment for stable test runs"""
@@ -74,10 +89,10 @@ class BatchTestRunner:
                     test_pattern = re.compile(r'::test_[^\s:]+')
                     test_count = len(test_pattern.findall(result.stdout))
                     self.log_action(f"Collect attempt {attempt}: {test_count} tests found")
-                    if test_count == 530:
+                    if test_count == 519:
                         break
                     elif attempt == 2:
-                        self.log_action(f"Warning: Expected 530 tests, got {test_count}")
+                        self.log_action(f"Warning: Expected 519 tests, got {test_count}")
                 else:
                     self.log_action(f"Collect attempt {attempt} failed: {result.stderr}")
                     if attempt == 2:
@@ -125,7 +140,7 @@ class BatchTestRunner:
                         # Initialize status tracking
                         self.test_status_dict[test_id] = 'PENDING'
         
-        self.log_action(f"CLI140m.69: Collected {len(tests)} unique tests with optimized regex (target: 530)")
+        self.log_action(f"CLI140m.69: Collected {len(tests)} unique tests with optimized regex (target: 519)")
         return tests
     
     def run_test_batch(self, batch_tests):
@@ -433,14 +448,8 @@ def main():
     
     args = parser.parse_args()
     
-    runner = BatchTestRunner()
-    runner.batch_size = args.batch_size
-    runner.timeout_per_test = args.timeout
-    runner.batch_timeout = args.batch_size * args.timeout
-    
-    # If max_batches is specified, modify the run_all_tests method
-    if args.max_batches:
-        runner.max_batches = args.max_batches
+    runner = BatchTestRunner(batch_size=args.batch_size, timeout=args.timeout)
+    runner.max_batches = args.max_batches
     
     success = runner.run_all_tests()
     

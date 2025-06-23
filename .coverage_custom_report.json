@@ -1,1 +1,7 @@
-{}
+{
+    "tests/test_meta_counts.py::test_test_count_stability": {
+        "status": "passed",
+        "duration": 0.11662691600213293,
+        "timestamp": "2025-06-23T12:33:03.901186"
+    }
+}
