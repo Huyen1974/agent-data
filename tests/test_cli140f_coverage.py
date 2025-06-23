@@ -8,8 +8,8 @@ import pytest
 import time
 from unittest.mock import AsyncMock, patch, MagicMock
 
-# Import from src since that's what the existing tests use
-from src.agent_data_manager.tools.qdrant_vectorization_tool import (
+# Import from tools directly since we're in the agent_data directory
+from tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     get_vectorization_tool,
     qdrant_batch_vectorize_documents,
@@ -36,7 +36,7 @@ class TestCLI140fCoverage:
 
         # Mock initialization and settings to avoid complex dependencies
         with patch.object(tool, "_ensure_initialized") as mock_init, \
-             patch("src.agent_data_manager.tools.qdrant_vectorization_tool.settings") as mock_settings:
+             patch("tools.qdrant_vectorization_tool.settings") as mock_settings:
             
             mock_init.return_value = None
             tool.qdrant_store = AsyncMock()
@@ -210,7 +210,7 @@ class TestCLI140fCoverage:
     async def test_standalone_function_coverage(self):
         """Test standalone functions for additional coverage."""
         # Clear global instance
-        import src.agent_data_manager.tools.qdrant_vectorization_tool as module
+        import tools.qdrant_vectorization_tool as module
         module._vectorization_tool = None
         
         # Test qdrant_vectorize_document function
@@ -234,7 +234,7 @@ class TestCLI140fCoverage:
 def test_get_vectorization_tool_factory_performance():
     """Test the factory function for creating vectorization tools with performance validation."""
     # Clear the global instance first
-    import src.agent_data_manager.tools.qdrant_vectorization_tool as module
+    import tools.qdrant_vectorization_tool as module
     module._vectorization_tool = None
     
     # Test default creation
@@ -263,7 +263,7 @@ def test_get_vectorization_tool_factory_performance():
 async def test_qdrant_batch_vectorize_documents_function_performance():
     """Test the standalone batch vectorize function with performance validation."""
     # Clear global instance
-    import src.agent_data_manager.tools.qdrant_vectorization_tool as module
+    import tools.qdrant_vectorization_tool as module
     module._vectorization_tool = None
     
     # Mock the batch_vectorize_documents method
@@ -308,7 +308,7 @@ async def test_qdrant_batch_vectorize_documents_function_performance():
 async def test_qdrant_rag_search_function_performance():
     """Test the standalone RAG search function with performance validation."""
     # Clear global instance
-    import src.agent_data_manager.tools.qdrant_vectorization_tool as module
+    import tools.qdrant_vectorization_tool as module
     module._vectorization_tool = None
     
     # Mock the rag_search method

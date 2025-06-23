@@ -145,7 +145,7 @@ class TestCLI140m10CoverageValidation:
         
         # Test delete_by_tag_tool event loop fix
         try:
-            from src.agent_data_manager.tools.delete_by_tag_tool import delete_by_tag_sync
+            from tools.delete_by_tag_tool import delete_by_tag_sync
             
             # Mock the async function to avoid actual Qdrant calls
             with patch('src.agent_data_manager.tools.delete_by_tag_tool.delete_by_tag') as mock_delete:

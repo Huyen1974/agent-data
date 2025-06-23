@@ -1,25 +1,25 @@
-﻿2025-06-23T01:47:47.2126053Z ##[group]Run echo "Running mypy type checking..."
-2025-06-23T01:47:47.2126452Z [36;1mecho "Running mypy type checking..."[0m
-2025-06-23T01:47:47.2127167Z [36;1mmypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"[0m
-2025-06-23T01:47:47.2186817Z shell: /usr/bin/bash -e {0}
-2025-06-23T01:47:47.2187069Z env:
-2025-06-23T01:47:47.2187528Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:47.2188281Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:47.2188981Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:47.2189533Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T01:47:47.2189819Z   CLOUDSDK_PROJECT: ***
-2025-06-23T01:47:47.2190069Z   GCLOUD_PROJECT: ***
-2025-06-23T01:47:47.2190309Z   GCP_PROJECT: ***
-2025-06-23T01:47:47.2190552Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T01:47:47.2190904Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T01:47:47.2191287Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T01:47:47.2191660Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:47.2192106Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T01:47:47.2192542Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:47.2192934Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:47.2193503Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:47.2193902Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T01:47:47.2194237Z ##[endgroup]
-2025-06-23T01:47:47.2273691Z Running mypy type checking...
-2025-06-23T01:47:47.3810511Z agent-data is not a valid Python package name
-2025-06-23T01:47:47.3971034Z MyPy completed with warnings
+﻿2025-06-23T02:45:57.0660003Z ##[group]Run echo "Running mypy type checking..."
+2025-06-23T02:45:57.0660397Z [36;1mecho "Running mypy type checking..."[0m
+2025-06-23T02:45:57.0660876Z [36;1mmypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"[0m
+2025-06-23T02:45:57.0720876Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:45:57.0721129Z env:
+2025-06-23T02:45:57.0721565Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:57.0722283Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:57.0722926Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:57.0723413Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:45:57.0723677Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:45:57.0723921Z   GCLOUD_PROJECT: ***
+2025-06-23T02:45:57.0724143Z   GCP_PROJECT: ***
+2025-06-23T02:45:57.0724523Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:45:57.0724923Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:45:57.0725270Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:45:57.0725602Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:57.0726000Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:45:57.0726401Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:57.0726760Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:57.0727102Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:57.0727450Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:45:57.0727755Z ##[endgroup]
+2025-06-23T02:45:57.0810247Z Running mypy type checking...
+2025-06-23T02:45:57.2392462Z agent-data is not a valid Python package name
+2025-06-23T02:45:57.2576394Z MyPy completed with warnings

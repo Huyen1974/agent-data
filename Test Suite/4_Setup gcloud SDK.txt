@@ -1,16 +1,16 @@
-﻿2025-06-23T01:46:32.7557147Z ##[group]Run google-github-actions/setup-gcloud@v1
-2025-06-23T01:46:32.7557560Z with:
-2025-06-23T01:46:32.7557755Z   skip_install: false
-2025-06-23T01:46:32.7557973Z   version: latest
-2025-06-23T01:46:32.7558171Z env:
-2025-06-23T01:46:32.7558617Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:32.7559372Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:32.7560026Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:32.7560596Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T01:46:32.7560882Z   CLOUDSDK_PROJECT: ***
-2025-06-23T01:46:32.7561177Z   GCLOUD_PROJECT: ***
-2025-06-23T01:46:32.7561415Z   GCP_PROJECT: ***
-2025-06-23T01:46:32.7561653Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T01:46:32.7561879Z ##[endgroup]
-2025-06-23T01:46:33.9879288Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/2197b777-b7c2-4d95-b12d-7fa131f9791d -f /home/runner/work/_temp/938893f1-1720-4e91-ba07-c896f414ad60
-2025-06-23T01:46:50.7974078Z Successfully authenticated
+﻿2025-06-23T02:44:40.7132854Z ##[group]Run google-github-actions/setup-gcloud@v1
+2025-06-23T02:44:40.7133217Z with:
+2025-06-23T02:44:40.7133409Z   skip_install: false
+2025-06-23T02:44:40.7133616Z   version: latest
+2025-06-23T02:44:40.7133803Z env:
+2025-06-23T02:44:40.7134244Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:40.7135163Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:40.7135814Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:40.7136365Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:44:40.7136640Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:44:40.7136881Z   GCLOUD_PROJECT: ***
+2025-06-23T02:44:40.7137128Z   GCP_PROJECT: ***
+2025-06-23T02:44:40.7137415Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:44:40.7137635Z ##[endgroup]
+2025-06-23T02:44:41.8063686Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/8b23314a-7328-4522-bdc0-3abda82431cd -f /home/runner/work/_temp/3db6abc2-aa9a-4082-b551-fe09c2a03810
+2025-06-23T02:44:58.4133753Z Successfully authenticated

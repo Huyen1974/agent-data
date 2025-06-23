@@ -1,29 +1,34 @@
-﻿2025-06-23T01:46:51.0911981Z ##[group]Run actions/cache@v4
-2025-06-23T01:46:51.0912284Z with:
-2025-06-23T01:46:51.0912478Z   path: ~/.cache/pip
-2025-06-23T01:46:51.0912867Z   key: Linux-pip-59e921257d7d73f545cff662b2328faedde51b96c94ebfb33bb8e6c1689a639d
-2025-06-23T01:46:51.0913304Z   restore-keys: Linux-pip-
+﻿2025-06-23T02:44:58.7051773Z ##[group]Run actions/cache@v4
+2025-06-23T02:44:58.7052155Z with:
+2025-06-23T02:44:58.7052343Z   path: ~/.cache/pip
+2025-06-23T02:44:58.7052709Z   key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
+2025-06-23T02:44:58.7053150Z   restore-keys: Linux-pip-
 
-2025-06-23T01:46:51.0913559Z   enableCrossOsArchive: false
-2025-06-23T01:46:51.0913797Z   fail-on-cache-miss: false
-2025-06-23T01:46:51.0914023Z   lookup-only: false
-2025-06-23T01:46:51.0914226Z   save-always: false
-2025-06-23T01:46:51.0914416Z env:
-2025-06-23T01:46:51.0914842Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:51.0915583Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:51.0916236Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:46:51.0917212Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T01:46:51.0917490Z   CLOUDSDK_PROJECT: ***
-2025-06-23T01:46:51.0917779Z   GCLOUD_PROJECT: ***
-2025-06-23T01:46:51.0918001Z   GCP_PROJECT: ***
-2025-06-23T01:46:51.0918229Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T01:46:51.0918526Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T01:46:51.0918885Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T01:46:51.0919221Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:46:51.0919650Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T01:46:51.0920061Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:46:51.0920427Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:46:51.0920786Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:46:51.0921150Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T01:46:51.0921458Z ##[endgroup]
-2025-06-23T01:46:51.5350325Z Cache not found for input keys: Linux-pip-59e921257d7d73f545cff662b2328faedde51b96c94ebfb33bb8e6c1689a639d, Linux-pip-
+2025-06-23T02:44:58.7053416Z   enableCrossOsArchive: false
+2025-06-23T02:44:58.7053656Z   fail-on-cache-miss: false
+2025-06-23T02:44:58.7053871Z   lookup-only: false
+2025-06-23T02:44:58.7054074Z   save-always: false
+2025-06-23T02:44:58.7054264Z env:
+2025-06-23T02:44:58.7055179Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:58.7055911Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:58.7056535Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:44:58.7057078Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:44:58.7057340Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:44:58.7057610Z   GCLOUD_PROJECT: ***
+2025-06-23T02:44:58.7057832Z   GCP_PROJECT: ***
+2025-06-23T02:44:58.7058058Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:44:58.7058351Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:44:58.7058706Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:44:58.7059043Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:44:58.7059456Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:44:58.7059852Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:44:58.7060208Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:44:58.7060557Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:44:58.7060911Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:44:58.7061211Z ##[endgroup]
+2025-06-23T02:44:58.9466977Z Cache hit for: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
+2025-06-23T02:45:00.0414795Z Received 202146325 of 202146325 (100.0%), 185.9 MBs/sec
+2025-06-23T02:45:00.0417165Z Cache Size: ~193 MB (202146325 B)
+2025-06-23T02:45:00.0522835Z [command]/usr/bin/tar -xf /home/runner/work/_temp/668a204f-f9c7-4d69-a718-92bdd0638f16/cache.tzst -P -C /home/runner/work/agent-data/agent-data --use-compress-program unzstd
+2025-06-23T02:45:00.3860057Z Cache restored successfully
+2025-06-23T02:45:00.4333159Z Cache restored from key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c

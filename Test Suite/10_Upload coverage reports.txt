@@ -1,76 +1,75 @@
-﻿2025-06-23T01:47:43.8886445Z ##[group]Run codecov/codecov-action@v4
-2025-06-23T01:47:43.8886935Z with:
-2025-06-23T01:47:43.8887123Z   file: ./coverage.xml
-2025-06-23T01:47:43.8887329Z   flags: unittests
-2025-06-23T01:47:43.8887529Z   name: codecov-umbrella
-2025-06-23T01:47:43.8887743Z env:
-2025-06-23T01:47:43.8888179Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:43.8888892Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:43.8889523Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
-2025-06-23T01:47:43.8890190Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T01:47:43.8890453Z   CLOUDSDK_PROJECT: ***
-2025-06-23T01:47:43.8890681Z   GCLOUD_PROJECT: ***
-2025-06-23T01:47:43.8890900Z   GCP_PROJECT: ***
-2025-06-23T01:47:43.8891119Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T01:47:43.8891411Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T01:47:43.8891780Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T01:47:43.8892112Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:43.8892524Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T01:47:43.8892932Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:43.8893291Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:43.8893643Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T01:47:43.8893996Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T01:47:43.8894300Z ##[endgroup]
-2025-06-23T01:47:43.9714891Z eventName: push
-2025-06-23T01:47:43.9724330Z ==> linux OS detected
-2025-06-23T01:47:44.1396002Z https://cli.codecov.io/latest/linux/codecov.SHA256SUM
-2025-06-23T01:47:44.3219394Z gpg: directory '/home/runner/.gnupg' created
-2025-06-23T01:47:44.3223412Z gpg: keybox '/home/runner/.gnupg/pubring.kbx' created
-2025-06-23T01:47:44.3420522Z gpg: /home/runner/.gnupg/trustdb.gpg: trustdb created
-2025-06-23T01:47:44.3421827Z gpg: key 806BB28AED779869: public key "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" imported
-2025-06-23T01:47:44.3896938Z gpg: Total number processed: 1
-2025-06-23T01:47:44.3897438Z gpg:               imported: 1
-2025-06-23T01:47:44.3960688Z gpg: Signature made Thu May 29 21:23:31 2025 UTC
-2025-06-23T01:47:44.3961760Z gpg:                using RSA key 27034E7FDB850E0BBC2C62FF806BB28AED779869
-2025-06-23T01:47:44.3963986Z gpg: Good signature from "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" [unknown]
-2025-06-23T01:47:44.3965064Z gpg: WARNING: This key is not certified with a trusted signature!
-2025-06-23T01:47:44.3965824Z gpg:          There is no indication that the signature belongs to the owner.
-2025-06-23T01:47:44.3966823Z Primary key fingerprint: 2703 4E7F DB85 0E0B BC2C  62FF 806B B28A ED77 9869
-2025-06-23T01:47:44.4195223Z ==> Uploader SHASUM verified (8e0a7ea74f31ee893d11051143fa223cc30f110287ad275e275ca493ddd78eaa  codecov)
-2025-06-23T01:47:44.4196393Z ==> Running version latest
-2025-06-23T01:47:44.4921193Z Could not pull latest version information: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-2025-06-23T01:47:44.4923563Z ==> Running git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T01:47:44.5014853Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T01:47:44.5068666Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit'
-2025-06-23T01:47:44.5071206Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit --git-service github
-2025-06-23T01:47:44.8552352Z info - 2025-06-23 01:47:44,854 -- ci service found: github-actions
-2025-06-23T01:47:44.8655831Z warning - 2025-06-23 01:47:44,865 -- No config file could be found. Ignoring config.
-2025-06-23T01:47:44.8945022Z warning - 2025-06-23 01:47:44,894 -- Branch `init` is protected but no token was provided
-2025-06-23T01:47:44.8946275Z warning - 2025-06-23 01:47:44,894 -- For information on Codecov upload tokens, see https://docs.codecov.com/docs/codecov-tokens
-2025-06-23T01:47:45.2337658Z info - 2025-06-23 01:47:45,233 -- Process Commit creating complete
-2025-06-23T01:47:45.2339197Z error - 2025-06-23 01:47:45,233 -- Commit creating failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T01:47:45.3385937Z Sentry is attempting to send 3 pending events
-2025-06-23T01:47:45.3386775Z Waiting up to 2 seconds
-2025-06-23T01:47:45.3387502Z Press Ctrl-C to quit
-2025-06-23T01:47:45.4154521Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report'
-2025-06-23T01:47:45.4156859Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report --git-service github
-2025-06-23T01:47:45.7567045Z info - 2025-06-23 01:47:45,756 -- ci service found: github-actions
-2025-06-23T01:47:45.7666104Z warning - 2025-06-23 01:47:45,766 -- No config file could be found. Ignoring config.
-2025-06-23T01:47:46.0685886Z info - 2025-06-23 01:47:46,068 -- Process Report creating complete
-2025-06-23T01:47:46.0691710Z error - 2025-06-23 01:47:46,068 -- Report creating failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T01:47:46.1808210Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload'
-2025-06-23T01:47:46.1810466Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload -f ./coverage.xml -F unittests --git-service github -n codecov-umbrella
-2025-06-23T01:47:46.5267615Z info - 2025-06-23 01:47:46,526 -- ci service found: github-actions
-2025-06-23T01:47:46.5367732Z warning - 2025-06-23 01:47:46,536 -- No config file could be found. Ignoring config.
-2025-06-23T01:47:46.5672544Z warning - 2025-06-23 01:47:46,566 -- xcrun is not installed or can't be found.
-2025-06-23T01:47:46.5712709Z warning - 2025-06-23 01:47:46,571 -- No gcov data found.
-2025-06-23T01:47:46.5718970Z info - 2025-06-23 01:47:46,571 -- Generating coverage.xml report in /home/runner/work/agent-data/agent-data
-2025-06-23T01:47:46.7304711Z info - 2025-06-23 01:47:46,730 -- Wrote XML report to coverage.xml
-2025-06-23T01:47:46.7552699Z info - 2025-06-23 01:47:46,754 -- Found 2 coverage files to report
-2025-06-23T01:47:46.7553965Z info - 2025-06-23 01:47:46,755 -- > /home/runner/work/agent-data/agent-data/tests/test_cli140m12_coverage.py.backup
-2025-06-23T01:47:46.7554993Z info - 2025-06-23 01:47:46,755 -- > /home/runner/work/agent-data/agent-data/coverage.xml
-2025-06-23T01:47:47.0341269Z info - 2025-06-23 01:47:47,033 -- Process Upload complete
-2025-06-23T01:47:47.0342065Z error - 2025-06-23 01:47:47,033 -- Upload failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T01:47:47.1413323Z Sentry is attempting to send 2 pending events
-2025-06-23T01:47:47.1413830Z Waiting up to 2 seconds
-2025-06-23T01:47:47.1414160Z Press Ctrl-C to quit
+﻿2025-06-23T02:45:52.8802105Z ##[group]Run codecov/codecov-action@v4
+2025-06-23T02:45:52.8802394Z with:
+2025-06-23T02:45:52.8802582Z   file: ./coverage.xml
+2025-06-23T02:45:52.8802788Z   flags: unittests
+2025-06-23T02:45:52.8802989Z   name: codecov-umbrella
+2025-06-23T02:45:52.8803207Z env:
+2025-06-23T02:45:52.8803634Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:52.8804493Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:52.8805125Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
+2025-06-23T02:45:52.8805609Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:45:52.8805874Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:45:52.8806105Z   GCLOUD_PROJECT: ***
+2025-06-23T02:45:52.8806339Z   GCP_PROJECT: ***
+2025-06-23T02:45:52.8806560Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:45:52.8806853Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:45:52.8807226Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:45:52.8807565Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:52.8807973Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:45:52.8808376Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:52.8808724Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:52.8809073Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:45:52.8809427Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:45:52.8809730Z ##[endgroup]
+2025-06-23T02:45:52.9693116Z eventName: push
+2025-06-23T02:45:52.9703391Z ==> linux OS detected
+2025-06-23T02:45:53.2525605Z https://cli.codecov.io/latest/linux/codecov.SHA256SUM
+2025-06-23T02:45:53.3302850Z gpg: directory '/home/runner/.gnupg' created
+2025-06-23T02:45:53.3306734Z gpg: keybox '/home/runner/.gnupg/pubring.kbx' created
+2025-06-23T02:45:53.3332961Z gpg: /home/runner/.gnupg/trustdb.gpg: trustdb created
+2025-06-23T02:45:53.3334592Z gpg: key 806BB28AED779869: public key "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" imported
+2025-06-23T02:45:53.3451841Z gpg: Total number processed: 1
+2025-06-23T02:45:53.3452745Z gpg:               imported: 1
+2025-06-23T02:45:53.3517584Z gpg: Signature made Thu May 29 21:23:31 2025 UTC
+2025-06-23T02:45:53.3518557Z gpg:                using RSA key 27034E7FDB850E0BBC2C62FF806BB28AED779869
+2025-06-23T02:45:53.3522233Z gpg: Good signature from "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" [unknown]
+2025-06-23T02:45:53.3523760Z gpg: WARNING: This key is not certified with a trusted signature!
+2025-06-23T02:45:53.3525189Z gpg:          There is no indication that the signature belongs to the owner.
+2025-06-23T02:45:53.3526633Z Primary key fingerprint: 2703 4E7F DB85 0E0B BC2C  62FF 806B B28A ED77 9869
+2025-06-23T02:45:53.3779170Z ==> Uploader SHASUM verified (8e0a7ea74f31ee893d11051143fa223cc30f110287ad275e275ca493ddd78eaa  codecov)
+2025-06-23T02:45:53.3781538Z ==> Running version latest
+2025-06-23T02:45:53.4583000Z Could not pull latest version information: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+2025-06-23T02:45:53.4584923Z ==> Running git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:45:53.4674036Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:45:53.4726723Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit'
+2025-06-23T02:45:53.4729187Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit --git-service github
+2025-06-23T02:45:53.8196781Z info - 2025-06-23 02:45:53,819 -- ci service found: github-actions
+2025-06-23T02:45:53.8295179Z warning - 2025-06-23 02:45:53,829 -- No config file could be found. Ignoring config.
+2025-06-23T02:45:53.8596056Z warning - 2025-06-23 02:45:53,859 -- Branch `init` is protected but no token was provided
+2025-06-23T02:45:53.8597253Z warning - 2025-06-23 02:45:53,859 -- For information on Codecov upload tokens, see https://docs.codecov.com/docs/codecov-tokens
+2025-06-23T02:45:54.1270117Z info - 2025-06-23 02:45:54,126 -- Process Commit creating complete
+2025-06-23T02:45:54.1271097Z error - 2025-06-23 02:45:54,126 -- Commit creating failed: {"message":"Token required - not valid tokenless upload"}
+2025-06-23T02:45:54.2318847Z Sentry is attempting to send 2 pending events
+2025-06-23T02:45:54.2319299Z Waiting up to 2 seconds
+2025-06-23T02:45:54.2319581Z Press Ctrl-C to quit
+2025-06-23T02:45:54.2751706Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report'
+2025-06-23T02:45:54.2753610Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report --git-service github
+2025-06-23T02:45:54.6207555Z info - 2025-06-23 02:45:54,620 -- ci service found: github-actions
+2025-06-23T02:45:54.6312340Z warning - 2025-06-23 02:45:54,630 -- No config file could be found. Ignoring config.
+2025-06-23T02:45:54.8343087Z info - 2025-06-23 02:45:54,833 -- Process Report creating complete
+2025-06-23T02:45:54.8348630Z error - 2025-06-23 02:45:54,834 -- Report creating failed: {"message":"Token required - not valid tokenless upload"}
+2025-06-23T02:45:54.9274659Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload'
+2025-06-23T02:45:54.9276930Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload -f ./coverage.xml -F unittests --git-service github -n codecov-umbrella
+2025-06-23T02:45:55.2730156Z info - 2025-06-23 02:45:55,272 -- ci service found: github-actions
+2025-06-23T02:45:55.2829385Z warning - 2025-06-23 02:45:55,282 -- No config file could be found. Ignoring config.
+2025-06-23T02:45:55.3146341Z warning - 2025-06-23 02:45:55,314 -- xcrun is not installed or can't be found.
+2025-06-23T02:45:55.3190782Z warning - 2025-06-23 02:45:55,318 -- No gcov data found.
+2025-06-23T02:45:55.3198021Z info - 2025-06-23 02:45:55,319 -- Generating coverage.xml report in /home/runner/work/agent-data/agent-data
+2025-06-23T02:45:56.7669025Z info - 2025-06-23 02:45:56,766 -- Wrote XML report to coverage.xml
+2025-06-23T02:45:56.7918064Z info - 2025-06-23 02:45:56,791 -- Found 4 coverage files to report
+2025-06-23T02:45:56.7919110Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/coverage.xml
+2025-06-23T02:45:56.7922337Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/Test Suite/9_Run tests with coverage.txt
+2025-06-23T02:45:56.7923549Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/Test Suite/10_Upload coverage reports.txt
+2025-06-23T02:45:56.7925302Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/tests/test_cli140m12_coverage.py.backup
+2025-06-23T02:45:56.9520148Z info - 2025-06-23 02:45:56,951 -- Process Upload complete
+2025-06-23T02:45:56.9521088Z error - 2025-06-23 02:45:56,951 -- Upload failed: {"message":"Token required - not valid tokenless upload"}
