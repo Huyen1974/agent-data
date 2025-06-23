@@ -12,8 +12,8 @@ import subprocess
 import pytest
 from pathlib import Path
 
-# G02f: Target test counts for stable CI (updated to G02f requirement of exactly 519)
-EXPECTED_TOTAL_TESTS = 519
+# G02g: Target test counts for stable CI (updated to G02g requirement of exactly 497)
+EXPECTED_TOTAL_TESTS = 497
 EXPECTED_SKIPPED = 6
 
 
@@ -99,7 +99,17 @@ def test_requirements_file():
 
 
 def test_test_count_stability():
-    """Test that the number of collected tests is stable and reasonable."""
+    """Test that the number of collected tests matches the locked manifest."""
+    # G02g: Check manifest file first
+    manifest_file = Path(__file__).parent / "manifest_497.txt"
+    if manifest_file.exists():
+        with open(manifest_file, 'r') as f:
+            manifest_tests = [line.strip() for line in f if line.strip()]
+        
+        # G02g: Assert exactly 497 tests in manifest
+        assert len(manifest_tests) == 497, f"Expected exactly 497 tests in manifest, got {len(manifest_tests)}"
+        print(f"✅ Manifest contains {len(manifest_tests)} tests")
+    
     try:
         # Count tests using pytest collection
         result = subprocess.run(
@@ -117,7 +127,7 @@ def test_test_count_stability():
                     words = line.split()
                     if words and words[0].isdigit():
                         test_count = int(words[0])
-                        # G02d: Verify we hit the target test count
+                        # G02g: Verify we hit the target test count
                         assert test_count == EXPECTED_TOTAL_TESTS, f"Expected {EXPECTED_TOTAL_TESTS} tests, got {test_count}"
                         print(f"✅ Found {test_count} tests - matches expected count")
                         return

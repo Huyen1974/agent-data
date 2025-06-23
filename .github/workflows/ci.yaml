@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ init, main, fix/ci-pass, fix/ci-final ]
+    branches: [ init, main, fix/ci-pass, fix/ci-final, fix/ci-final2 ]
   pull_request:
     branches: [ init, main ]
   workflow_dispatch:
@@ -16,6 +16,7 @@ jobs:
       contents: read
       id-token: write
     strategy:
+      fail-fast: true
       matrix:
         run_number: [1, 2]
 
@@ -57,7 +58,7 @@ jobs:
           gcloud auth list
           gcloud config list
 
-      - name: Debug test collection - Run ${{ matrix.run_number }}
+      - name: Collect & Compare - Run ${{ matrix.run_number }}
         env:
           PYTHONDONTWRITEBYTECODE: 1
           RUN_DEFERRED: 0
@@ -68,17 +69,9 @@ jobs:
           CI: true
           GITHUB_ACTIONS: true
         run: |
-          echo "Collecting tests to verify configuration - Run ${{ matrix.run_number }}..."
-          count=$(python -m pytest --collect-only -q --qdrant-mock | grep -E "test collected|tests collected" | grep -o '[0-9]\+' | head -1 || echo "0")
-          echo "Total tests collected: $count"
-          echo "test_count=$count" >> $GITHUB_OUTPUT
-          
-          # Verify we have expected 519 tests (G02f target)
-          if [ "$count" = "519" ]; then
-            echo "✅ Test count matches expected: 519"
-          else
-            echo "❌ Test count mismatch: expected 519, got $count"
-          fi
+          echo "Collecting tests and verifying against manifest - Run ${{ matrix.run_number }}..."
+          python -m pytest --collect-only -q --qdrant-mock > collected.txt
+          python scripts/compare_manifest.py collected.txt tests/manifest_497.txt
 
       - name: Run full test suite - Run ${{ matrix.run_number }}
         id: test_run

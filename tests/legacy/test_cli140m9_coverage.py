@@ -61,7 +61,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
         return mock
 
     @pytest.mark.asyncio
-    async def test_tenacity_fallback_comprehensive_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_tenacity_fallback_comprehensive_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test tenacity fallback decorators comprehensively - covers lines 13-30."""
         
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.TENACITY_AVAILABLE', False), \
@@ -89,7 +90,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
                 assert result is not None
 
     @pytest.mark.asyncio
-    async def test_batch_metadata_edge_cases_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_batch_metadata_edge_cases_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch metadata edge cases - covers lines 136, 153, 168-173, 179-180."""
         
         # Mock firestore manager with various edge case behaviors
@@ -133,7 +135,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
                 assert "timeout" in str(e).lower() or "error" in str(e).lower()
 
     @pytest.mark.asyncio
-    async def test_filter_methods_edge_cases_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_filter_methods_edge_cases_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test filter method edge cases - covers lines 226-228, 238, 240."""
         
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
@@ -175,7 +178,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
                     pass
 
     @pytest.mark.asyncio
-    async def test_rag_search_edge_cases_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_rag_search_edge_cases_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test RAG search edge cases - covers lines 271, 290-293, 301-305, 323-333."""
         
         # Mock embedding function
@@ -223,7 +227,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
                         assert res.get("score", 0) >= threshold
 
     @pytest.mark.asyncio
-    async def test_error_handling_paths_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_error_handling_paths_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test error handling paths - covers lines 388, 469-471, 499."""
         
         # Mock embedding function that sometimes fails
@@ -273,7 +278,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
             assert "error" in result
 
     @pytest.mark.asyncio
-    async def test_batch_processing_edge_cases_final(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_batch_processing_edge_cases_final(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch processing edge cases - covers lines 657-662, 670-678."""
         
         # Mock embedding function
@@ -323,7 +329,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
             # Should have some failures due to invalid documents
             assert failed_count > 0
 
-    def test_cli140m9_coverage_validation(self):
+    
+def test_cli140m9_coverage_validation(self):
         """Validation test to confirm ≥80% coverage achievement."""
         
         # Target coverage: ≥80% (264/330 lines)

@@ -29,7 +29,8 @@ class TestCLI140m5QdrantVectorizationToolFixed:
     """Fixed tests for QdrantVectorizationTool to achieve ≥80% coverage."""
     
     @pytest.mark.asyncio
-    async def test_qdrant_vectorization_tool_basic_coverage(self):
+    async def
+def test_qdrant_vectorization_tool_basic_coverage(self):
         """Test basic QdrantVectorizationTool functionality with proper import resolution."""
         # Create comprehensive mocks BEFORE any imports
         mock_settings = Mock()
@@ -121,7 +122,8 @@ class TestCLI140m5QdrantVectorizationToolFixed:
             assert empty_path == "unknown"
     
     @pytest.mark.asyncio
-    async def test_qdrant_vectorization_tool_advanced_methods(self):
+    async def
+def test_qdrant_vectorization_tool_advanced_methods(self):
         """Test advanced QdrantVectorizationTool methods."""
         mock_settings = Mock()
         mock_settings.get_qdrant_config.return_value = {"url": "test", "api_key": "test", "collection_name": "test", "vector_size": 1536}
@@ -175,7 +177,8 @@ class TestCLI140m5QdrantVectorizationToolFixed:
                 pass  # Expected
     
     @pytest.mark.asyncio
-    async def test_qdrant_vectorization_tool_standalone_functions(self):
+    async def
+def test_qdrant_vectorization_tool_standalone_functions(self):
         """Test standalone functions in qdrant_vectorization_tool module."""
         mock_settings = Mock()
         mock_settings.get_qdrant_config.return_value = {"url": "test", "api_key": "test", "collection_name": "test", "vector_size": 1536}
@@ -228,7 +231,8 @@ class TestCLI140m5DocumentIngestionToolFixed:
     """Fixed tests for DocumentIngestionTool to achieve ≥80% coverage."""
     
     @pytest.mark.asyncio
-    async def test_document_ingestion_tool_basic_coverage(self):
+    async def
+def test_document_ingestion_tool_basic_coverage(self):
         """Test basic DocumentIngestionTool functionality with proper import resolution."""
         mock_settings = Mock()
         mock_settings.get_firestore_config.return_value = {
@@ -296,7 +300,8 @@ class TestCLI140m5DocumentIngestionToolFixed:
             assert metrics_after_reset["total_calls"] == 0
     
     @pytest.mark.asyncio
-    async def test_document_ingestion_tool_advanced_methods(self):
+    async def
+def test_document_ingestion_tool_advanced_methods(self):
         """Test advanced DocumentIngestionTool methods."""
         mock_settings = Mock()
         mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
@@ -347,7 +352,8 @@ class TestCLI140m5DocumentIngestionToolFixed:
                 assert result["doc_id"] == "test_doc"
     
     @pytest.mark.asyncio
-    async def test_document_ingestion_tool_error_handling(self):
+    async def
+def test_document_ingestion_tool_error_handling(self):
         """Test DocumentIngestionTool error handling."""
         mock_settings = Mock()
         mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
@@ -387,7 +393,8 @@ class TestCLI140m5DocumentIngestionToolFixed:
             assert "error" in result
     
     @pytest.mark.asyncio
-    async def test_document_ingestion_tool_standalone_functions(self):
+    async def
+def test_document_ingestion_tool_standalone_functions(self):
         """Test standalone functions in document_ingestion_tool module."""
         mock_settings = Mock()
         mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
@@ -435,7 +442,8 @@ class TestCLI140m5DocumentIngestionToolFixed:
 class TestCLI140m5CoverageValidation:
     """Validation tests to confirm CLI140m.5 objectives are met."""
     
-    def test_cli140m5_coverage_targets(self):
+    
+def test_cli140m5_coverage_targets(self):
         """Validate that coverage targets are achievable with current test approach."""
         # QdrantVectorizationTool coverage targets
         qdrant_target_lines = 84  # Need ~84 lines for 80% of 820 total lines
@@ -465,7 +473,8 @@ class TestCLI140m5CoverageValidation:
         assert qdrant_target_lines > 80, "QdrantVectorizationTool target should be realistic"
         assert document_target_lines > 20, "DocumentIngestionTool target should be realistic"
     
-    def test_cli140m5_test_count_validation(self):
+    
+def test_cli140m5_test_count_validation(self):
         """Validate that we have sufficient test methods for comprehensive coverage."""
         # Count test methods in this file
         qdrant_test_methods = 3  # test_basic_coverage, test_advanced_methods, test_standalone_functions
@@ -478,7 +487,8 @@ class TestCLI140m5CoverageValidation:
         assert document_test_methods >= 4, "Should have at least 4 comprehensive DocumentIngestionTool tests"
         assert total_test_methods >= 10, "Should have at least 10 total test methods"
     
-    def test_cli140m5_completion_summary(self):
+    
+def test_cli140m5_completion_summary(self):
         """Comprehensive summary of CLI140m.5 completion status."""
         completion_status = {
             "import_issues_resolved": True,

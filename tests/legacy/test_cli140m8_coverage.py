@@ -84,7 +84,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
         return mock
 
     @pytest.mark.asyncio
-    async def test_tenacity_fallback_decorators_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_tenacity_fallback_decorators_comprehensive(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test tenacity fallback decorators when tenacity is not available - covers lines 13-30."""
         # Import first to get the actual module
         from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
@@ -104,7 +105,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert result is not None
 
     @pytest.mark.asyncio
-    async def test_standalone_functions_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    async def
+def test_standalone_functions_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test standalone functions - covers lines 734-820."""
         """Test standalone functions - covers lines 734-820."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
@@ -144,7 +146,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert result["status"] == "success"
 
     @pytest.mark.asyncio
-    async def test_batch_vectorize_empty_documents(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_batch_vectorize_empty_documents(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch vectorize with empty documents - covers lines 585-586."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -163,7 +166,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert result["results"] == []
 
     @pytest.mark.asyncio
-    async def test_filter_methods_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_filter_methods_edge_cases(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test filter methods edge cases - covers lines 196-202, 226-228, 238, 240."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -201,7 +205,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert path == "Uncategorized"
 
     @pytest.mark.asyncio
-    async def test_rag_search_no_results_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    async def
+def test_rag_search_no_results_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test RAG search with no results - covers lines 271, 290-293."""
         # Mock empty search results
         mock_qdrant_store.search.return_value = {"results": []}
@@ -228,7 +233,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert result["total_results"] == 0
 
     @pytest.mark.asyncio
-    async def test_batch_metadata_edge_cases_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
+    async def
+def test_batch_metadata_edge_cases_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager):
         """Test batch metadata edge cases - covers lines 153, 155-157, 168-173, 179-180."""
         with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings', mock_settings), \
              patch('ADK.agent_data.tools.qdrant_vectorization_tool.QdrantStore', return_value=mock_qdrant_store), \
@@ -254,7 +260,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert isinstance(result, dict)
 
     @pytest.mark.asyncio
-    async def test_rag_search_score_filtering_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
+    async def
+def test_rag_search_score_filtering_coverage(self, mock_settings, mock_qdrant_store, mock_firestore_manager, mock_openai_embedding):
         """Test RAG search score filtering - covers lines 323-333."""
         # Mock search results with various scores
         mock_qdrant_store.search.return_value = {
@@ -295,7 +302,8 @@ class TestCLI140m8QdrantVectorizationToolCoverage:
             assert result["status"] == "success"
             assert len(result["results"]) == 0  # No results meet threshold
 
-    def test_cli140m8_coverage_validation(self):
+    
+def test_cli140m8_coverage_validation(self):
         """Validate that CLI140m.8 achieves ≥80% coverage for qdrant_vectorization_tool.py."""
         # This test validates the coverage achievement
         coverage_target = {

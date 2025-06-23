@@ -10,6 +10,27 @@ from unittest.mock import Mock, patch, MagicMock, AsyncMock
 # Import fixtures from mocks
 from tests.mocks.faiss_duplicate_id_fixture import faiss_index_with_duplicates  # noqa: F401
 
+# G02g: Network blocking fixture for CI safety
+@pytest.fixture(autouse=True)
+def _no_network(monkeypatch):
+    """Block network calls to prevent CI issues."""
+    import socket
+    import requests
+    try:
+        import httpx
+    except ImportError:
+        httpx = None
+    
+    def guard(*args, **kwargs):
+        raise RuntimeError("Network disabled in CI")
+    
+    monkeypatch.setattr(socket, "socket", guard, raising=False)
+    monkeypatch.setattr(requests, "get", guard, raising=False)
+    monkeypatch.setattr(requests, "post", guard, raising=False)
+    if httpx:
+        monkeypatch.setattr(httpx.AsyncClient, "get", guard, raising=False)
+        monkeypatch.setattr(httpx.AsyncClient, "post", guard, raising=False)
+
 # CLI140m.63: Global comprehensive mocking fixture
 @pytest.fixture(autouse=True, scope="function")
 def global_comprehensive_mocks(monkeypatch):
