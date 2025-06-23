@@ -509,6 +509,10 @@ def pytest_runtest_setup(item):
         pytest.skip("need --runslow option to run")
     if "deferred" in item.keywords and not item.config.getoption("--rundeferred"):
         pytest.skip("need --rundeferred option to run")
+    # CLI140m.69: Skip real API tests when using --qdrant-mock
+    if (item.config.getoption("--qdrant-mock") and 
+        "test_subprocess_real_api_calls" in item.nodeid):
+        pytest.skip("Skipping real API test in mock mode - CLI140m.69")
 
 
 # For CLI 87B: Collect coverage-like data

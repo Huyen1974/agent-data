@@ -1,0 +1,27 @@
+2025-06-20 14:24:29: Starting CLI140m.61 batch test execution with optimized regex parsing
+2025-06-20 14:24:29: Cleaning up previous test data
+2025-06-20 14:24:29: Collecting all tests with pytest --collect-only --qdrant-mock
+2025-06-20 14:24:33: Collected 513 unique tests with optimized regex
+2025-06-20 14:24:33: Created 171 batches of ≤3 tests
+2025-06-20 14:24:33: Limited to 5 batches for testing
+2025-06-20 14:24:33: Running batch 1/5
+2025-06-20 14:24:33: Running batch: ['test_all_tags_lowercase_in_fixtures', 'test_root_endpoint', 'test_health_endpoint_no_services']
+2025-06-20 14:24:35: Batch completed in 2.62s
+2025-06-20 14:24:36: Running batch 2/5
+2025-06-20 14:24:36: Running batch: ['test_save_document_success', 'test_save_document_service_unavailable', 'test_save_document_invalid_request']
+2025-06-20 14:24:39: Batch completed in 2.68s
+2025-06-20 14:24:39: Running batch 3/5
+2025-06-20 14:24:39: Running batch: ['test_query_vectors_success', 'test_query_vectors_service_unavailable', 'test_query_vectors_invalid_request']
+2025-06-20 14:24:42: Batch completed in 2.78s
+2025-06-20 14:24:42: Running batch 4/5
+2025-06-20 14:24:42: Running batch: ['test_search_documents_success', 'test_search_documents_service_unavailable', 'test_search_documents_with_vectors']
+2025-06-20 14:24:45: Batch completed in 2.66s
+2025-06-20 14:24:46: Running batch 5/5
+2025-06-20 14:24:46: Running batch: ['test_pydantic_models_validation', 'test_api_a2a_integration_flow', 'test_rate_limit_boundary_conditions']
+2025-06-20 14:24:51: Batch completed in 5.65s
+2025-06-20 14:24:51: Saving 15 test results to test_summary_cli140m61.txt
+2025-06-20 14:24:51: Test summary: {'PASSED': 15}
+2025-06-20 14:24:51: Completed: 5/5 batches successful
+
+Batch testing completed. Results saved to test_summary_cli140m61.txt
+Check logs/test_fixes.log for detailed execution log

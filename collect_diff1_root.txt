@@ -1,0 +1,8 @@
+--- list1_root.txt	2025-06-20 16:24:43
++++ list2_root.txt	2025-06-20 16:24:49
+@@ -518,4 +518,4 @@
+ tests/test_timeout_fake.py::test_quick_fail
+ tests/test_timeout_fake.py::test_skipped_fake
+ 
+-519 tests collected in 3.30s
++519 tests collected in 3.13s

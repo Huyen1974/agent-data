@@ -1,17 +1,7 @@
 {
-    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success": {
+    "tests/test__meta_count.py::test_meta_count": {
         "status": "passed",
-        "duration": 0.003913791999366367,
-        "timestamp": "2025-06-20T13:00:00.644041"
-    },
-    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable": {
-        "status": "passed",
-        "duration": 0.001575750000483822,
-        "timestamp": "2025-06-20T13:00:00.654555"
-    },
-    "tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request": {
-        "status": "passed",
-        "duration": 0.0011894580002262956,
-        "timestamp": "2025-06-20T13:00:00.660690"
+        "duration": 0.16416879100142978,
+        "timestamp": "2025-06-23T10:12:44.071392"
     }
 }
