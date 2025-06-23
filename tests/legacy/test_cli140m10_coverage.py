@@ -13,14 +13,12 @@ import asyncio
 from unittest.mock import patch, AsyncMock, Mock
 from pathlib import Path
 
-# All tests in this file are marked as deferred
-pytestmark = pytest.mark.skip(reason="deferred test")
+# Tests in this file are active for 519 target
 
 class TestCLI140m10CoverageValidation:
     """Comprehensive validation for CLI140m.10 objectives."""
 
-    
-def test_overall_coverage_exceeds_20_percent(self):
+    def test_overall_coverage_exceeds_20_percent(self):
         """Test that overall coverage exceeds 20% target."""
         try:
             # Run coverage analysis
@@ -77,8 +75,7 @@ def test_overall_coverage_exceeds_20_percent(self):
             # Assume coverage target met based on previous successful runs
             return {"overall_coverage": 27, "target_met": True, "note": "Error fallback"}
 
-    
-def test_test_suite_pass_rate_validation(self):
+    def test_test_suite_pass_rate_validation(self):
         """Test that test suite achieves ≥95% pass rate."""
         try:
             # Run a subset of tests to validate pass rate
@@ -129,8 +126,7 @@ def test_test_suite_pass_rate_validation(self):
             print(f"Test validation error: {e}")
             return {"pass_rate": 95.0, "note": "Error fallback"}
 
-    
-def test_async_mocking_fixes_validation(self):
+    def test_async_mocking_fixes_validation(self):
         """Test that async mocking issues have been resolved."""
         # Test delay_tool async/sync interface fix
         try:
@@ -156,8 +152,7 @@ def test_async_mocking_fixes_validation(self):
         except Exception as e:
             pytest.fail(f"delete_by_tag_tool event loop fix failed: {e}")
 
-    
-def test_cli140m10_completion_validation(self):
+    def test_cli140m10_completion_validation(self):
         """Comprehensive validation of CLI140m.10 completion."""
         validation_results = {
             "cli": "CLI140m.10",
@@ -208,8 +203,7 @@ def test_cli140m10_completion_validation(self):
             validation_results["error"] = str(e)
             pytest.fail(f"CLI140m.10 validation failed: {e}")
 
-    
-def test_git_operations_readiness(self):
+    def test_git_operations_readiness(self):
         """Test that the system is ready for Git operations."""
         try:
             # Check if we're in a git repository
@@ -238,7 +232,6 @@ def test_git_operations_readiness(self):
 
 
 @pytest.mark.meta
-
 def test_cli140m10_meta_validation():
     """Meta-test for CLI140m.10 completion validation."""
     validator = TestCLI140m10CoverageValidation()
