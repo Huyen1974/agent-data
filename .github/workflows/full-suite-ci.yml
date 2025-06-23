@@ -8,7 +8,7 @@ on:
         required: false
         default: '10'
   push:
-    branches: [ test ]
+    branches: [ test, fix/ci-pass-final ]
     paths:
       - 'tests/**'
       - 'ADK/**'
@@ -19,6 +19,9 @@ jobs:
   full-suite-test:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ fromJSON(github.event.inputs.timeout_minutes || '10') }}
+    strategy:
+      matrix:
+        run_number: [1, 2]
     
     steps:
       - name: Checkout code
@@ -50,18 +53,18 @@ jobs:
           echo "test_count=$count" >> $GITHUB_OUTPUT
           echo "Total tests found: $count"
           
-      - name: Run full test suite with timing
+      - name: Run full test suite with timing - Run ${{ matrix.run_number }}
         id: full_suite
         run: |
           start_time=$(date +%s)
-          echo "Starting full test suite at $(date)"
+          echo "Starting full test suite run ${{ matrix.run_number }} at $(date)"
           
           # Run full suite with parallel execution optimized for CI
-          python -m pytest -n 4 --dist worksteal --tb=short --maxfail=50 \
+          python -m pytest -n 4 --dist worksteal --tb=short \
             --durations=10 --strict-markers --strict-config \
-            -v --junitxml=test-results.xml \
-            --cov=src --cov=ADK --cov-report=xml \
-            || echo "Some tests failed, but continuing to measure runtime"
+            -v --junitxml=test-results-run${{ matrix.run_number }}.xml \
+            --cov=src --cov=ADK --cov-report=xml:coverage-run${{ matrix.run_number }}.xml \
+            --ra || echo "Some tests failed, but continuing to measure runtime"
           
           end_time=$(date +%s)
           runtime=$((end_time - start_time))
@@ -69,7 +72,7 @@ jobs:
           
           echo "runtime_seconds=$runtime" >> $GITHUB_OUTPUT
           echo "runtime_minutes=$runtime_minutes" >> $GITHUB_OUTPUT
-          echo "Full suite completed in ${runtime}s (${runtime_minutes}m)"
+          echo "Full suite run ${{ matrix.run_number }} completed in ${runtime}s (${runtime_minutes}m)"
           
           # Check if runtime meets <5min target (300s)
           if [ $runtime -lt 300 ]; then
@@ -84,12 +87,12 @@ jobs:
         id: test_results
         if: always()
         run: |
-          if [ -f test-results.xml ]; then
+          if [ -f test-results-run${{ matrix.run_number }}.xml ]; then
             # Extract test statistics from JUnit XML
-            total=$(grep -o 'tests="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
-            failures=$(grep -o 'failures="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
-            errors=$(grep -o 'errors="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
-            skipped=$(grep -o 'skipped="[0-9]*"' test-results.xml | grep -o '[0-9]*' || echo "0")
+            total=$(grep -o 'tests="[0-9]*"' test-results-run${{ matrix.run_number }}.xml | grep -o '[0-9]*' || echo "0")
+            failures=$(grep -o 'failures="[0-9]*"' test-results-run${{ matrix.run_number }}.xml | grep -o '[0-9]*' || echo "0")
+            errors=$(grep -o 'errors="[0-9]*"' test-results-run${{ matrix.run_number }}.xml | grep -o '[0-9]*' || echo "0")
+            skipped=$(grep -o 'skipped="[0-9]*"' test-results-run${{ matrix.run_number }}.xml | grep -o '[0-9]*' || echo "0")
             passed=$((total - failures - errors - skipped))
             
             echo "total_tests=$total" >> $GITHUB_OUTPUT
@@ -150,15 +153,15 @@ jobs:
         with:
           name: test-results
           path: |
-            test-results.xml
-            coverage.xml
+            test-results-run${{ matrix.run_number }}.xml
+            coverage-run${{ matrix.run_number }}.xml
             cli140k1_ci_report.md
             
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         if: always()
         with:
-          file: ./coverage.xml
+          file: ./coverage-run${{ matrix.run_number }}.xml
           flags: full-suite
           name: full-suite-coverage
           

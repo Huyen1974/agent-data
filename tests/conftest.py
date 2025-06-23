@@ -244,6 +244,12 @@ except AttributeError as e:
 
 
 # --- 3. Session-Scoped Cleanup Fixture ---
+def pytest_configure(config):
+    """Configure pytest with environment variable mocking."""
+    import os
+    os.environ["OPENAI_API_KEY"] = "mock_key"
+    os.environ["GCP_KEY"] = "mock_key"
+
 @pytest.fixture(scope="session", autouse=True)
 def _manage_env_and_qdrant_patch():
     # Setup part is done by global code execution above (env vars set, client patched)
