@@ -1,7 +1,7 @@
 {
-    "tests/test_cli140e_coverage_additional.py::TestQdrantVectorizationToolAdditional::test_vectorize_document_embedding_failure": {
+    "tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_basic_operations": {
         "status": "passed",
-        "duration": 0.003351042003487237,
-        "timestamp": "2025-06-23T10:33:18.711300"
+        "duration": 0.0001135420025093481,
+        "timestamp": "2025-06-23T11:09:27.954877"
     }
 }
