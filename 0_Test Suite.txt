@@ -1,937 +1,1009 @@
-﻿2025-06-23T02:44:37.8908101Z Current runner version: '2.325.0'
-2025-06-23T02:44:37.8944477Z ##[group]Operating System
-2025-06-23T02:44:37.8945692Z Ubuntu
-2025-06-23T02:44:37.8946603Z 24.04.2
-2025-06-23T02:44:37.8947399Z LTS
-2025-06-23T02:44:37.8948158Z ##[endgroup]
-2025-06-23T02:44:37.8949277Z ##[group]Runner Image
-2025-06-23T02:44:37.8950427Z Image: ubuntu-24.04
-2025-06-23T02:44:37.8951414Z Version: 20250615.1.0
-2025-06-23T02:44:37.8953232Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250615.1/images/ubuntu/Ubuntu2404-Readme.md
-2025-06-23T02:44:37.8955953Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250615.1
-2025-06-23T02:44:37.8957680Z ##[endgroup]
-2025-06-23T02:44:37.8958663Z ##[group]Runner Image Provisioner
-2025-06-23T02:44:37.8960187Z 2.0.437.1
-2025-06-23T02:44:37.8961035Z ##[endgroup]
-2025-06-23T02:44:37.8962832Z ##[group]GITHUB_TOKEN Permissions
-2025-06-23T02:44:37.8965937Z Contents: read
-2025-06-23T02:44:37.8966820Z Metadata: read
-2025-06-23T02:44:37.8968014Z ##[endgroup]
-2025-06-23T02:44:37.8971702Z Secret source: Actions
-2025-06-23T02:44:37.8973278Z Prepare workflow directory
-2025-06-23T02:44:37.9460253Z Prepare all required actions
-2025-06-23T02:44:37.9518452Z Getting action download info
-2025-06-23T02:44:38.2777366Z ##[group]Download immutable action package 'actions/checkout@v4'
-2025-06-23T02:44:38.2778392Z Version: 4.2.2
-2025-06-23T02:44:38.2779515Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
-2025-06-23T02:44:38.2780689Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
-2025-06-23T02:44:38.2781393Z ##[endgroup]
-2025-06-23T02:44:38.3924973Z ##[group]Download immutable action package 'google-github-actions/auth@v2'
-2025-06-23T02:44:38.3925790Z Version: 2.1.10
-2025-06-23T02:44:38.3926650Z Digest: sha256:b93ace6ed195e6261bd53d67ebdb3482b6d8175506667fb99ef8b161f9ebcf10
-2025-06-23T02:44:38.3927594Z Source commit SHA: ba79af03959ebeac9769e648f473a284504d9193
-2025-06-23T02:44:38.3928378Z ##[endgroup]
-2025-06-23T02:44:38.5613978Z ##[group]Download immutable action package 'google-github-actions/setup-gcloud@v1'
-2025-06-23T02:44:38.5615254Z Version: 1.1.1
-2025-06-23T02:44:38.5616059Z Digest: sha256:7c0c457e67cc7e0e43162b11dac4a6bd3c4e1482f56b7a22da9267d0dcc0f7f1
-2025-06-23T02:44:38.5617052Z Source commit SHA: e30db14379863a8c79331b04a9969f4c1e225e0b
-2025-06-23T02:44:38.5617753Z ##[endgroup]
-2025-06-23T02:44:38.6998160Z ##[group]Download immutable action package 'actions/setup-python@v5'
-2025-06-23T02:44:38.7000066Z Version: 5.6.0
-2025-06-23T02:44:38.7001729Z Digest: sha256:0b35a0c11c97499e4e0576589036d450b9f5f9da74b7774225b3614b57324404
-2025-06-23T02:44:38.7003855Z Source commit SHA: a26af69be951a213d495a4c3e4e4022e16d87065
-2025-06-23T02:44:38.7005803Z ##[endgroup]
-2025-06-23T02:44:38.9223371Z ##[group]Download immutable action package 'actions/cache@v4'
-2025-06-23T02:44:38.9224453Z Version: 4.2.3
-2025-06-23T02:44:38.9225486Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
-2025-06-23T02:44:38.9226788Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
-2025-06-23T02:44:38.9227637Z ##[endgroup]
-2025-06-23T02:44:39.0420230Z Download action repository 'codecov/codecov-action@v4' (SHA:b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238)
-2025-06-23T02:44:39.2223457Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
-2025-06-23T02:44:39.2224970Z Version: 4.6.2
-2025-06-23T02:44:39.2226060Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
-2025-06-23T02:44:39.2227747Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
-2025-06-23T02:44:39.2228704Z ##[endgroup]
-2025-06-23T02:44:39.4621664Z Complete job name: Test Suite
-2025-06-23T02:44:39.5363896Z ##[group]Run actions/checkout@v4
-2025-06-23T02:44:39.5365057Z with:
-2025-06-23T02:44:39.5365450Z   repository: Huyen1974/agent-data
-2025-06-23T02:44:39.5366329Z   token: ***
-2025-06-23T02:44:39.5366701Z   ssh-strict: true
-2025-06-23T02:44:39.5367094Z   ssh-user: git
-2025-06-23T02:44:39.5367516Z   persist-credentials: true
-2025-06-23T02:44:39.5368351Z   clean: true
-2025-06-23T02:44:39.5368776Z   sparse-checkout-cone-mode: true
-2025-06-23T02:44:39.5369360Z   fetch-depth: 1
-2025-06-23T02:44:39.5369753Z   fetch-tags: false
-2025-06-23T02:44:39.5370160Z   show-progress: true
-2025-06-23T02:44:39.5370593Z   lfs: false
-2025-06-23T02:44:39.5370965Z   submodules: false
-2025-06-23T02:44:39.5371399Z   set-safe-directory: true
-2025-06-23T02:44:39.5372155Z ##[endgroup]
-2025-06-23T02:44:39.8380478Z Syncing repository: Huyen1974/agent-data
-2025-06-23T02:44:39.8382390Z ##[group]Getting Git version info
-2025-06-23T02:44:39.8383291Z Working directory is '/home/runner/work/agent-data/agent-data'
-2025-06-23T02:44:39.8385140Z [command]/usr/bin/git version
-2025-06-23T02:44:39.8432680Z git version 2.49.0
-2025-06-23T02:44:39.8464723Z ##[endgroup]
-2025-06-23T02:44:39.8489506Z Temporarily overriding HOME='/home/runner/work/_temp/ca352e91-c69a-4714-9eda-a494f96936d4' before making global git config changes
-2025-06-23T02:44:39.8493299Z Adding repository directory to the temporary git global config as a safe directory
-2025-06-23T02:44:39.8497203Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T02:44:39.8541684Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
-2025-06-23T02:44:39.8548199Z ##[group]Initializing the repository
-2025-06-23T02:44:39.8553922Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
-2025-06-23T02:44:39.8644221Z hint: Using 'master' as the name for the initial branch. This default branch name
-2025-06-23T02:44:39.8646110Z hint: is subject to change. To configure the initial branch name to use in all
-2025-06-23T02:44:39.8647485Z hint: of your new repositories, which will suppress this warning, call:
-2025-06-23T02:44:39.8648382Z hint:
-2025-06-23T02:44:39.8648911Z hint: 	git config --global init.defaultBranch <name>
-2025-06-23T02:44:39.8649626Z hint:
-2025-06-23T02:44:39.8650293Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-2025-06-23T02:44:39.8651894Z hint: 'development'. The just-created branch can be renamed via this command:
-2025-06-23T02:44:39.8653220Z hint:
-2025-06-23T02:44:39.8653632Z hint: 	git branch -m <name>
-2025-06-23T02:44:39.8655655Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
-2025-06-23T02:44:39.8666985Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
-2025-06-23T02:44:39.8705212Z ##[endgroup]
-2025-06-23T02:44:39.8706675Z ##[group]Disabling automatic garbage collection
-2025-06-23T02:44:39.8711159Z [command]/usr/bin/git config --local gc.auto 0
-2025-06-23T02:44:39.8745774Z ##[endgroup]
-2025-06-23T02:44:39.8747882Z ##[group]Setting up auth
-2025-06-23T02:44:39.8754759Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2025-06-23T02:44:39.8789965Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2025-06-23T02:44:39.9163229Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2025-06-23T02:44:39.9200156Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2025-06-23T02:44:39.9455565Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
-2025-06-23T02:44:39.9494823Z ##[endgroup]
-2025-06-23T02:44:39.9496192Z ##[group]Fetching the repository
-2025-06-23T02:44:39.9506873Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +369be03a495af83b8d38611367db290cd3a74762:refs/remotes/origin/init
-2025-06-23T02:44:40.3879863Z From https://github.com/Huyen1974/agent-data
-2025-06-23T02:44:40.3880680Z  * [new ref]         369be03a495af83b8d38611367db290cd3a74762 -> origin/init
-2025-06-23T02:44:40.3909146Z ##[endgroup]
-2025-06-23T02:44:40.3909852Z ##[group]Determining the checkout info
-2025-06-23T02:44:40.3912537Z ##[endgroup]
-2025-06-23T02:44:40.3918346Z [command]/usr/bin/git sparse-checkout disable
-2025-06-23T02:44:40.3964527Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
-2025-06-23T02:44:40.3993047Z ##[group]Checking out the ref
-2025-06-23T02:44:40.3997924Z [command]/usr/bin/git checkout --progress --force -B init refs/remotes/origin/init
-2025-06-23T02:44:40.4220376Z Switched to a new branch 'init'
-2025-06-23T02:44:40.4221230Z branch 'init' set up to track 'origin/init'.
-2025-06-23T02:44:40.4228773Z ##[endgroup]
-2025-06-23T02:44:40.4267395Z [command]/usr/bin/git log -1 --format=%H
-2025-06-23T02:44:40.4291065Z 369be03a495af83b8d38611367db290cd3a74762
-2025-06-23T02:44:40.4517850Z ##[group]Run google-github-actions/auth@v2
-2025-06-23T02:44:40.4518187Z with:
-2025-06-23T02:44:40.4518902Z   workload_identity_provider: ***
+﻿2025-06-23T02:50:06.1084602Z Current runner version: '2.325.0'
+2025-06-23T02:50:06.1108927Z ##[group]Operating System
+2025-06-23T02:50:06.1109744Z Ubuntu
+2025-06-23T02:50:06.1110245Z 24.04.2
+2025-06-23T02:50:06.1110832Z LTS
+2025-06-23T02:50:06.1111283Z ##[endgroup]
+2025-06-23T02:50:06.1111778Z ##[group]Runner Image
+2025-06-23T02:50:06.1112454Z Image: ubuntu-24.04
+2025-06-23T02:50:06.1113027Z Version: 20250615.1.0
+2025-06-23T02:50:06.1114186Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250615.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-06-23T02:50:06.1115809Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250615.1
+2025-06-23T02:50:06.1116748Z ##[endgroup]
+2025-06-23T02:50:06.1117346Z ##[group]Runner Image Provisioner
+2025-06-23T02:50:06.1117967Z 2.0.437.1
+2025-06-23T02:50:06.1118444Z ##[endgroup]
+2025-06-23T02:50:06.1119483Z ##[group]GITHUB_TOKEN Permissions
+2025-06-23T02:50:06.1121237Z Contents: read
+2025-06-23T02:50:06.1121902Z Metadata: read
+2025-06-23T02:50:06.1122576Z ##[endgroup]
+2025-06-23T02:50:06.1124862Z Secret source: Actions
+2025-06-23T02:50:06.1125546Z Prepare workflow directory
+2025-06-23T02:50:06.1441811Z Prepare all required actions
+2025-06-23T02:50:06.1483389Z Getting action download info
+2025-06-23T02:50:06.6754146Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-06-23T02:50:06.6755342Z Version: 4.2.2
+2025-06-23T02:50:06.6756459Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-06-23T02:50:06.6757639Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-06-23T02:50:06.6758354Z ##[endgroup]
+2025-06-23T02:50:06.7599930Z ##[group]Download immutable action package 'google-github-actions/auth@v2'
+2025-06-23T02:50:06.7600847Z Version: 2.1.10
+2025-06-23T02:50:06.7601610Z Digest: sha256:b93ace6ed195e6261bd53d67ebdb3482b6d8175506667fb99ef8b161f9ebcf10
+2025-06-23T02:50:06.7602560Z Source commit SHA: ba79af03959ebeac9769e648f473a284504d9193
+2025-06-23T02:50:06.7603321Z ##[endgroup]
+2025-06-23T02:50:06.9881396Z ##[group]Download immutable action package 'google-github-actions/setup-gcloud@v1'
+2025-06-23T02:50:06.9882378Z Version: 1.1.1
+2025-06-23T02:50:06.9883160Z Digest: sha256:7c0c457e67cc7e0e43162b11dac4a6bd3c4e1482f56b7a22da9267d0dcc0f7f1
+2025-06-23T02:50:06.9884068Z Source commit SHA: e30db14379863a8c79331b04a9969f4c1e225e0b
+2025-06-23T02:50:06.9885216Z ##[endgroup]
+2025-06-23T02:50:07.2727766Z ##[group]Download immutable action package 'actions/setup-python@v5'
+2025-06-23T02:50:07.2729129Z Version: 5.6.0
+2025-06-23T02:50:07.2730360Z Digest: sha256:0b35a0c11c97499e4e0576589036d450b9f5f9da74b7774225b3614b57324404
+2025-06-23T02:50:07.2731938Z Source commit SHA: a26af69be951a213d495a4c3e4e4022e16d87065
+2025-06-23T02:50:07.2733097Z ##[endgroup]
+2025-06-23T02:50:07.5651878Z ##[group]Download immutable action package 'actions/cache@v4'
+2025-06-23T02:50:07.5653078Z Version: 4.2.3
+2025-06-23T02:50:07.5654292Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
+2025-06-23T02:50:07.5656541Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
+2025-06-23T02:50:07.5657627Z ##[endgroup]
+2025-06-23T02:50:07.6781830Z Download action repository 'codecov/codecov-action@v4' (SHA:b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238)
+2025-06-23T02:50:08.1455474Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-06-23T02:50:08.1456139Z Version: 4.6.2
+2025-06-23T02:50:08.1456716Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-06-23T02:50:08.1457409Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-06-23T02:50:08.1457931Z ##[endgroup]
+2025-06-23T02:50:08.3557494Z Complete job name: Test Suite
+2025-06-23T02:50:08.4250638Z ##[group]Run actions/checkout@v4
+2025-06-23T02:50:08.4251386Z with:
+2025-06-23T02:50:08.4251772Z   repository: Huyen1974/agent-data
+2025-06-23T02:50:08.4252341Z   token: ***
+2025-06-23T02:50:08.4252700Z   ssh-strict: true
+2025-06-23T02:50:08.4253043Z   ssh-user: git
+2025-06-23T02:50:08.4253414Z   persist-credentials: true
+2025-06-23T02:50:08.4254052Z   clean: true
+2025-06-23T02:50:08.4254661Z   sparse-checkout-cone-mode: true
+2025-06-23T02:50:08.4255089Z   fetch-depth: 1
+2025-06-23T02:50:08.4255435Z   fetch-tags: false
+2025-06-23T02:50:08.4255795Z   show-progress: true
+2025-06-23T02:50:08.4256165Z   lfs: false
+2025-06-23T02:50:08.4256527Z   submodules: false
+2025-06-23T02:50:08.4256882Z   set-safe-directory: true
+2025-06-23T02:50:08.4257572Z ##[endgroup]
+2025-06-23T02:50:08.6376691Z Syncing repository: Huyen1974/agent-data
+2025-06-23T02:50:08.6378202Z ##[group]Getting Git version info
+2025-06-23T02:50:08.6378807Z Working directory is '/home/runner/work/agent-data/agent-data'
+2025-06-23T02:50:08.6379663Z [command]/usr/bin/git version
+2025-06-23T02:50:08.6380069Z git version 2.49.0
+2025-06-23T02:50:08.6391488Z ##[endgroup]
+2025-06-23T02:50:08.6411940Z Temporarily overriding HOME='/home/runner/work/_temp/5be991c3-4933-44b9-a229-4c1c671d6b21' before making global git config changes
+2025-06-23T02:50:08.6412962Z Adding repository directory to the temporary git global config as a safe directory
+2025-06-23T02:50:08.6417233Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:50:08.6453227Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+2025-06-23T02:50:08.6456905Z ##[group]Initializing the repository
+2025-06-23T02:50:08.6460935Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+2025-06-23T02:50:08.6543714Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-06-23T02:50:08.6544869Z hint: is subject to change. To configure the initial branch name to use in all
+2025-06-23T02:50:08.6545578Z hint: of your new repositories, which will suppress this warning, call:
+2025-06-23T02:50:08.6546472Z hint:
+2025-06-23T02:50:08.6547285Z hint: 	git config --global init.defaultBranch <name>
+2025-06-23T02:50:08.6548095Z hint:
+2025-06-23T02:50:08.6548892Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-06-23T02:50:08.6550036Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-06-23T02:50:08.6550959Z hint:
+2025-06-23T02:50:08.6551361Z hint: 	git branch -m <name>
+2025-06-23T02:50:08.6551940Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+2025-06-23T02:50:08.6560677Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+2025-06-23T02:50:08.6594355Z ##[endgroup]
+2025-06-23T02:50:08.6595307Z ##[group]Disabling automatic garbage collection
+2025-06-23T02:50:08.6598515Z [command]/usr/bin/git config --local gc.auto 0
+2025-06-23T02:50:08.6626230Z ##[endgroup]
+2025-06-23T02:50:08.6626861Z ##[group]Setting up auth
+2025-06-23T02:50:08.6632798Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-06-23T02:50:08.6661855Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-06-23T02:50:08.7006468Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-06-23T02:50:08.7034203Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-06-23T02:50:08.7261825Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-06-23T02:50:08.7297433Z ##[endgroup]
+2025-06-23T02:50:08.7298466Z ##[group]Fetching the repository
+2025-06-23T02:50:08.7306942Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2fb6a5e409d67fa7ea81eed04ad1fb1564c6a506:refs/remotes/origin/init
+2025-06-23T02:50:09.3882815Z From https://github.com/Huyen1974/agent-data
+2025-06-23T02:50:09.3883830Z  * [new ref]         2fb6a5e409d67fa7ea81eed04ad1fb1564c6a506 -> origin/init
+2025-06-23T02:50:09.3908766Z ##[endgroup]
+2025-06-23T02:50:09.3909842Z ##[group]Determining the checkout info
+2025-06-23T02:50:09.3911764Z ##[endgroup]
+2025-06-23T02:50:09.3918513Z [command]/usr/bin/git sparse-checkout disable
+2025-06-23T02:50:09.3963712Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-06-23T02:50:09.3992547Z ##[group]Checking out the ref
+2025-06-23T02:50:09.3997652Z [command]/usr/bin/git checkout --progress --force -B init refs/remotes/origin/init
+2025-06-23T02:50:09.4239689Z Switched to a new branch 'init'
+2025-06-23T02:50:09.4240695Z branch 'init' set up to track 'origin/init'.
+2025-06-23T02:50:09.4250178Z ##[endgroup]
+2025-06-23T02:50:09.4298138Z [command]/usr/bin/git log -1 --format=%H
+2025-06-23T02:50:09.4320627Z 2fb6a5e409d67fa7ea81eed04ad1fb1564c6a506
+2025-06-23T02:50:09.4562837Z ##[group]Run google-github-actions/auth@v2
+2025-06-23T02:50:09.4563250Z with:
+2025-06-23T02:50:09.4564067Z   workload_identity_provider: ***
 
-2025-06-23T02:44:40.4519374Z   service_account: ***
+2025-06-23T02:50:09.4564812Z   service_account: ***
 
-2025-06-23T02:44:40.4519636Z   project_id: ***
+2025-06-23T02:50:09.4565182Z   project_id: ***
 
-2025-06-23T02:44:40.4519852Z   create_credentials_file: true
-2025-06-23T02:44:40.4520107Z   export_environment_variables: true
-2025-06-23T02:44:40.4520359Z   universe: googleapis.com
-2025-06-23T02:44:40.4520583Z   cleanup_credentials: true
-2025-06-23T02:44:40.4520817Z   access_token_lifetime: 3600s
-2025-06-23T02:44:40.4521164Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
-2025-06-23T02:44:40.4521535Z   id_token_include_email: false
-2025-06-23T02:44:40.4521765Z ##[endgroup]
-2025-06-23T02:44:40.6265449Z Created credentials file at "/home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json"
-2025-06-23T02:44:40.7132873Z ##[group]Run google-github-actions/setup-gcloud@v1
-2025-06-23T02:44:40.7133221Z with:
-2025-06-23T02:44:40.7133413Z   skip_install: false
-2025-06-23T02:44:40.7133619Z   version: latest
-2025-06-23T02:44:40.7133806Z env:
-2025-06-23T02:44:40.7134248Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:40.7135168Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:40.7135818Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:40.7136368Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:44:40.7136643Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:44:40.7136884Z   GCLOUD_PROJECT: ***
-2025-06-23T02:44:40.7137131Z   GCP_PROJECT: ***
-2025-06-23T02:44:40.7137418Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:44:40.7137638Z ##[endgroup]
-2025-06-23T02:44:41.8063812Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/8b23314a-7328-4522-bdc0-3abda82431cd -f /home/runner/work/_temp/3db6abc2-aa9a-4082-b551-fe09c2a03810
-2025-06-23T02:44:58.4133790Z Successfully authenticated
-2025-06-23T02:44:58.4332234Z ##[group]Run actions/setup-python@v5
-2025-06-23T02:44:58.4332540Z with:
-2025-06-23T02:44:58.4332750Z   python-version: 3.10
-2025-06-23T02:44:58.4332966Z   check-latest: false
-2025-06-23T02:44:58.4333296Z   token: ***
-2025-06-23T02:44:58.4333506Z   update-environment: true
-2025-06-23T02:44:58.4333742Z   allow-prereleases: false
-2025-06-23T02:44:58.4333957Z   freethreaded: false
-2025-06-23T02:44:58.4334154Z env:
-2025-06-23T02:44:58.4334800Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.4335497Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.4336121Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.4336582Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:44:58.4336846Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:44:58.4337083Z   GCLOUD_PROJECT: ***
-2025-06-23T02:44:58.4337346Z   GCP_PROJECT: ***
-2025-06-23T02:44:58.4337572Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:44:58.4338048Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:44:58.4338389Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:44:58.4338641Z ##[endgroup]
-2025-06-23T02:44:58.6013131Z ##[group]Installed versions
-2025-06-23T02:44:58.6074678Z Successfully set up CPython (3.10.18)
-2025-06-23T02:44:58.6075458Z ##[endgroup]
-2025-06-23T02:44:58.7051787Z ##[group]Run actions/cache@v4
-2025-06-23T02:44:58.7052163Z with:
-2025-06-23T02:44:58.7052346Z   path: ~/.cache/pip
-2025-06-23T02:44:58.7052713Z   key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
-2025-06-23T02:44:58.7053153Z   restore-keys: Linux-pip-
+2025-06-23T02:50:09.4565494Z   create_credentials_file: true
+2025-06-23T02:50:09.4565849Z   export_environment_variables: true
+2025-06-23T02:50:09.4566207Z   universe: googleapis.com
+2025-06-23T02:50:09.4566554Z   cleanup_credentials: true
+2025-06-23T02:50:09.4566889Z   access_token_lifetime: 3600s
+2025-06-23T02:50:09.4567343Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+2025-06-23T02:50:09.4567813Z   id_token_include_email: false
+2025-06-23T02:50:09.4568135Z ##[endgroup]
+2025-06-23T02:50:09.8477056Z Created credentials file at "/home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json"
+2025-06-23T02:50:09.9902167Z ##[group]Run google-github-actions/setup-gcloud@v1
+2025-06-23T02:50:09.9902519Z with:
+2025-06-23T02:50:09.9902704Z   skip_install: false
+2025-06-23T02:50:09.9902911Z   version: latest
+2025-06-23T02:50:09.9903096Z env:
+2025-06-23T02:50:09.9903518Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:09.9904224Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:09.9905098Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:09.9905684Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:50:09.9905956Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:50:09.9906189Z   GCLOUD_PROJECT: ***
+2025-06-23T02:50:09.9906416Z   GCP_PROJECT: ***
+2025-06-23T02:50:09.9906682Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:50:09.9906895Z ##[endgroup]
+2025-06-23T02:50:11.0670464Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1ab37929-f9cc-45b8-afd8-0bb1d634eaf7 -f /home/runner/work/_temp/b9b0b21b-19d2-4bc3-be18-77b4d0ba4612
+2025-06-23T02:50:27.4150764Z Successfully authenticated
+2025-06-23T02:50:27.4361713Z ##[group]Run actions/setup-python@v5
+2025-06-23T02:50:27.4362014Z with:
+2025-06-23T02:50:27.4362220Z   python-version: 3.10
+2025-06-23T02:50:27.4362432Z   check-latest: false
+2025-06-23T02:50:27.4362746Z   token: ***
+2025-06-23T02:50:27.4362948Z   update-environment: true
+2025-06-23T02:50:27.4363183Z   allow-prereleases: false
+2025-06-23T02:50:27.4363401Z   freethreaded: false
+2025-06-23T02:50:27.4363597Z env:
+2025-06-23T02:50:27.4364014Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.4364947Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.4365581Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.4366045Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:50:27.4366327Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:50:27.4366558Z   GCLOUD_PROJECT: ***
+2025-06-23T02:50:27.4366811Z   GCP_PROJECT: ***
+2025-06-23T02:50:27.4367035Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:50:27.4367520Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:50:27.4367863Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:50:27.4368122Z ##[endgroup]
+2025-06-23T02:50:27.6009591Z ##[group]Installed versions
+2025-06-23T02:50:27.6070766Z Successfully set up CPython (3.10.18)
+2025-06-23T02:50:27.6071523Z ##[endgroup]
+2025-06-23T02:50:27.7021532Z ##[group]Run actions/cache@v4
+2025-06-23T02:50:27.7021825Z with:
+2025-06-23T02:50:27.7022013Z   path: ~/.cache/pip
+2025-06-23T02:50:27.7022373Z   key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
+2025-06-23T02:50:27.7022817Z   restore-keys: Linux-pip-
 
-2025-06-23T02:44:58.7053418Z   enableCrossOsArchive: false
-2025-06-23T02:44:58.7053658Z   fail-on-cache-miss: false
-2025-06-23T02:44:58.7053874Z   lookup-only: false
-2025-06-23T02:44:58.7054076Z   save-always: false
-2025-06-23T02:44:58.7054266Z env:
-2025-06-23T02:44:58.7055186Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.7055915Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.7056544Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:44:58.7057081Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:44:58.7057377Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:44:58.7057612Z   GCLOUD_PROJECT: ***
-2025-06-23T02:44:58.7057835Z   GCP_PROJECT: ***
-2025-06-23T02:44:58.7058060Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:44:58.7058354Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:44:58.7058709Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:44:58.7059045Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:44:58.7059459Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:44:58.7059854Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:44:58.7060211Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:44:58.7060559Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:44:58.7060913Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:44:58.7061214Z ##[endgroup]
-2025-06-23T02:44:58.9467026Z Cache hit for: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
-2025-06-23T02:45:00.0414836Z Received 202146325 of 202146325 (100.0%), 185.9 MBs/sec
-2025-06-23T02:45:00.0417175Z Cache Size: ~193 MB (202146325 B)
-2025-06-23T02:45:00.0522868Z [command]/usr/bin/tar -xf /home/runner/work/_temp/668a204f-f9c7-4d69-a718-92bdd0638f16/cache.tzst -P -C /home/runner/work/agent-data/agent-data --use-compress-program unzstd
-2025-06-23T02:45:00.3860102Z Cache restored successfully
-2025-06-23T02:45:00.4333203Z Cache restored from key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
-2025-06-23T02:45:00.4487492Z ##[group]Run python -m pip install --upgrade pip
-2025-06-23T02:45:00.4487939Z [36;1mpython -m pip install --upgrade pip[0m
-2025-06-23T02:45:00.4488252Z [36;1mpip install -r requirements.txt[0m
-2025-06-23T02:45:00.4488556Z [36;1mpip install coverage mypy pytest-timeout[0m
-2025-06-23T02:45:00.4592531Z shell: /usr/bin/bash -e {0}
-2025-06-23T02:45:00.4592795Z env:
-2025-06-23T02:45:00.4593253Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:00.4593990Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:00.4594821Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:00.4595383Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:00.4595657Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:00.4595911Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:00.4596139Z   GCP_PROJECT: ***
-2025-06-23T02:45:00.4596420Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:00.4596718Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:00.4597279Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:00.4597613Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:00.4598014Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:00.4598406Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:00.4598754Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:00.4599105Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:00.4599463Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:00.4599763Z ##[endgroup]
-2025-06-23T02:45:01.1897511Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (25.1.1)
-2025-06-23T02:45:01.8384674Z Collecting annotated-types==0.7.0 (from -r requirements.txt (line 1))
-2025-06-23T02:45:01.8401540Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
-2025-06-23T02:45:01.8675590Z Collecting anyio==4.9.0 (from -r requirements.txt (line 2))
-2025-06-23T02:45:01.8690583Z   Using cached anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
-2025-06-23T02:45:01.8932460Z Collecting Authlib==1.5.2 (from -r requirements.txt (line 3))
-2025-06-23T02:45:01.8958585Z   Using cached authlib-1.5.2-py2.py3-none-any.whl.metadata (3.9 kB)
-2025-06-23T02:45:01.9173256Z Collecting cachetools==5.5.2 (from -r requirements.txt (line 4))
-2025-06-23T02:45:01.9191250Z   Using cached cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
-2025-06-23T02:45:01.9407623Z Collecting certifi==2025.4.26 (from -r requirements.txt (line 5))
-2025-06-23T02:45:01.9423769Z   Using cached certifi-2025.4.26-py3-none-any.whl.metadata (2.5 kB)
-2025-06-23T02:45:02.0622414Z Collecting cffi==1.17.1 (from -r requirements.txt (line 6))
-2025-06-23T02:45:02.0639967Z   Using cached cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
-2025-06-23T02:45:02.1503202Z Collecting charset-normalizer==3.4.1 (from -r requirements.txt (line 7))
-2025-06-23T02:45:02.1520957Z   Using cached charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
-2025-06-23T02:45:02.1750534Z Collecting click==8.1.8 (from -r requirements.txt (line 8))
-2025-06-23T02:45:02.1766669Z   Using cached click-8.1.8-py3-none-any.whl.metadata (2.3 kB)
-2025-06-23T02:45:02.2515263Z Collecting contourpy==1.3.2 (from -r requirements.txt (line 9))
-2025-06-23T02:45:02.2536470Z   Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.5 kB)
-2025-06-23T02:45:02.4763407Z Collecting cryptography==44.0.2 (from -r requirements.txt (line 10))
-2025-06-23T02:45:02.4780590Z   Using cached cryptography-44.0.2-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
-2025-06-23T02:45:02.4973833Z Collecting cycler==0.12.1 (from -r requirements.txt (line 11))
-2025-06-23T02:45:02.4989364Z   Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
-2025-06-23T02:45:02.5155381Z Collecting Deprecated==1.2.18 (from -r requirements.txt (line 12))
-2025-06-23T02:45:02.5170875Z   Using cached Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
-2025-06-23T02:45:02.5320063Z Collecting distro==1.9.0 (from -r requirements.txt (line 13))
-2025-06-23T02:45:02.5338770Z   Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
-2025-06-23T02:45:02.5478349Z Collecting docstring_parser==0.16 (from -r requirements.txt (line 14))
-2025-06-23T02:45:02.5492561Z   Using cached docstring_parser-0.16-py3-none-any.whl.metadata (3.0 kB)
-2025-06-23T02:45:02.5658049Z Collecting exceptiongroup==1.2.2 (from -r requirements.txt (line 15))
-2025-06-23T02:45:02.5672118Z   Using cached exceptiongroup-1.2.2-py3-none-any.whl.metadata (6.6 kB)
-2025-06-23T02:45:02.6035995Z Collecting faiss-cpu==1.11.0 (from -r requirements.txt (line 16))
-2025-06-23T02:45:02.6059542Z   Using cached faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.8 kB)
-2025-06-23T02:45:02.6540695Z Collecting fastapi==0.115.12 (from -r requirements.txt (line 17))
-2025-06-23T02:45:02.6556943Z   Using cached fastapi-0.115.12-py3-none-any.whl.metadata (27 kB)
-2025-06-23T02:45:02.6812638Z Collecting Flask<3.0,>=2.3 (from -r requirements.txt (line 18))
-2025-06-23T02:45:02.6827465Z   Using cached flask-2.3.3-py3-none-any.whl.metadata (3.6 kB)
-2025-06-23T02:45:02.8352476Z Collecting fonttools==4.57.0 (from -r requirements.txt (line 19))
-2025-06-23T02:45:02.8369364Z   Using cached fonttools-4.57.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (102 kB)
-2025-06-23T02:45:02.8685225Z Collecting freezegun==1.5.1 (from -r requirements.txt (line 20))
-2025-06-23T02:45:02.8700497Z   Using cached freezegun-1.5.1-py3-none-any.whl.metadata (11 kB)
-2025-06-23T02:45:02.8918451Z Collecting google-adk==0.3.0 (from -r requirements.txt (line 21))
-2025-06-23T02:45:02.8942132Z   Using cached google_adk-0.3.0-py3-none-any.whl.metadata (9.6 kB)
-2025-06-23T02:45:02.9391034Z Collecting google-api-core==2.24.2 (from -r requirements.txt (line 22))
-2025-06-23T02:45:02.9407545Z   Using cached google_api_core-2.24.2-py3-none-any.whl.metadata (3.0 kB)
-2025-06-23T02:45:02.9987129Z Collecting google-api-python-client==2.168.0 (from -r requirements.txt (line 23))
-2025-06-23T02:45:03.0002981Z   Using cached google_api_python_client-2.168.0-py3-none-any.whl.metadata (6.7 kB)
-2025-06-23T02:45:03.0412509Z Collecting google-auth==2.39.0 (from -r requirements.txt (line 24))
-2025-06-23T02:45:03.0429397Z   Using cached google_auth-2.39.0-py2.py3-none-any.whl.metadata (6.2 kB)
-2025-06-23T02:45:03.0645794Z Collecting google-auth-httplib2==0.2.0 (from -r requirements.txt (line 25))
-2025-06-23T02:45:03.0660287Z   Using cached google_auth_httplib2-0.2.0-py2.py3-none-any.whl.metadata (2.2 kB)
-2025-06-23T02:45:03.1020478Z Collecting google-cloud-aiplatform==1.90.0 (from -r requirements.txt (line 26))
-2025-06-23T02:45:03.1035959Z   Using cached google_cloud_aiplatform-1.90.0-py2.py3-none-any.whl.metadata (35 kB)
-2025-06-23T02:45:03.2883178Z Collecting google-cloud-bigquery==3.31.0 (from -r requirements.txt (line 27))
-2025-06-23T02:45:03.2899652Z   Using cached google_cloud_bigquery-3.31.0-py3-none-any.whl.metadata (7.7 kB)
-2025-06-23T02:45:03.3203312Z Collecting google-cloud-core==2.4.3 (from -r requirements.txt (line 28))
-2025-06-23T02:45:03.3218178Z   Using cached google_cloud_core-2.4.3-py2.py3-none-any.whl.metadata (2.7 kB)
-2025-06-23T02:45:03.3459269Z Collecting google-cloud-firestore<2.21.0,>=2.20.2 (from -r requirements.txt (line 29))
-2025-06-23T02:45:03.3473362Z   Using cached google_cloud_firestore-2.20.2-py3-none-any.whl.metadata (9.9 kB)
-2025-06-23T02:45:03.3710935Z Collecting google-cloud-resource-manager==1.14.2 (from -r requirements.txt (line 30))
-2025-06-23T02:45:03.3725321Z   Using cached google_cloud_resource_manager-1.14.2-py3-none-any.whl.metadata (9.6 kB)
-2025-06-23T02:45:03.3953167Z Collecting google-cloud-secret-manager==2.23.3 (from -r requirements.txt (line 31))
-2025-06-23T02:45:03.3967754Z   Using cached google_cloud_secret_manager-2.23.3-py3-none-any.whl.metadata (9.4 kB)
-2025-06-23T02:45:03.4244730Z Collecting google-cloud-speech==2.32.0 (from -r requirements.txt (line 32))
-2025-06-23T02:45:03.4259669Z   Using cached google_cloud_speech-2.32.0-py3-none-any.whl.metadata (9.5 kB)
-2025-06-23T02:45:03.4556357Z Collecting google-cloud-storage==2.19.0 (from -r requirements.txt (line 33))
-2025-06-23T02:45:03.4570649Z   Using cached google_cloud_storage-2.19.0-py2.py3-none-any.whl.metadata (9.1 kB)
-2025-06-23T02:45:03.4795744Z Collecting google-cloud-trace==1.16.1 (from -r requirements.txt (line 34))
-2025-06-23T02:45:03.4809950Z   Using cached google_cloud_trace-1.16.1-py3-none-any.whl.metadata (9.5 kB)
-2025-06-23T02:45:03.5378585Z Collecting google-crc32c==1.7.1 (from -r requirements.txt (line 35))
-2025-06-23T02:45:03.5394954Z   Using cached google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
-2025-06-23T02:45:03.5570716Z Collecting google-genai==1.12.1 (from -r requirements.txt (line 36))
-2025-06-23T02:45:03.5586047Z   Using cached google_genai-1.12.1-py3-none-any.whl.metadata (32 kB)
-2025-06-23T02:45:03.5802496Z Collecting google-resumable-media==2.7.2 (from -r requirements.txt (line 37))
-2025-06-23T02:45:03.5817533Z   Using cached google_resumable_media-2.7.2-py2.py3-none-any.whl.metadata (2.2 kB)
-2025-06-23T02:45:03.6021435Z Collecting googleapis-common-protos==1.70.0 (from -r requirements.txt (line 38))
-2025-06-23T02:45:03.6036154Z   Using cached googleapis_common_protos-1.70.0-py3-none-any.whl.metadata (9.3 kB)
-2025-06-23T02:45:03.6249776Z Collecting graphviz==0.20.3 (from -r requirements.txt (line 39))
-2025-06-23T02:45:03.6264139Z   Using cached graphviz-0.20.3-py3-none-any.whl.metadata (12 kB)
-2025-06-23T02:45:03.6425725Z Collecting grpc-google-iam-v1==0.14.2 (from -r requirements.txt (line 40))
-2025-06-23T02:45:03.6439904Z   Using cached grpc_google_iam_v1-0.14.2-py3-none-any.whl.metadata (9.1 kB)
-2025-06-23T02:45:04.2407872Z Collecting grpcio==1.68.0 (from -r requirements.txt (line 41))
-2025-06-23T02:45:04.2425205Z   Using cached grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.9 kB)
-2025-06-23T02:45:04.2761022Z Collecting grpcio-status==1.68.0 (from -r requirements.txt (line 42))
-2025-06-23T02:45:04.2775949Z   Using cached grpcio_status-1.68.0-py3-none-any.whl.metadata (1.1 kB)
-2025-06-23T02:45:04.2933897Z Collecting h11==0.16.0 (from -r requirements.txt (line 43))
-2025-06-23T02:45:04.2948410Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
-2025-06-23T02:45:04.3163236Z Collecting httpcore==1.0.9 (from -r requirements.txt (line 44))
-2025-06-23T02:45:04.3177746Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
-2025-06-23T02:45:04.3358152Z Collecting httplib2==0.22.0 (from -r requirements.txt (line 45))
-2025-06-23T02:45:04.3371934Z   Using cached httplib2-0.22.0-py3-none-any.whl.metadata (2.6 kB)
-2025-06-23T02:45:04.3704519Z Collecting httptools==0.6.4 (from -r requirements.txt (line 46))
-2025-06-23T02:45:04.3719598Z   Using cached httptools-0.6.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.6 kB)
-2025-06-23T02:45:04.3967896Z Collecting httpx==0.28.1 (from -r requirements.txt (line 47))
-2025-06-23T02:45:04.3981235Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
-2025-06-23T02:45:04.4115183Z Collecting httpx-sse==0.4.0 (from -r requirements.txt (line 48))
-2025-06-23T02:45:04.4128307Z   Using cached httpx_sse-0.4.0-py3-none-any.whl.metadata (9.0 kB)
-2025-06-23T02:45:04.4291267Z Collecting idna==3.10 (from -r requirements.txt (line 49))
-2025-06-23T02:45:04.4304778Z   Using cached idna-3.10-py3-none-any.whl.metadata (10 kB)
-2025-06-23T02:45:04.4630984Z Collecting importlib_metadata==8.6.1 (from -r requirements.txt (line 50))
-2025-06-23T02:45:04.4645811Z   Using cached importlib_metadata-8.6.1-py3-none-any.whl.metadata (4.7 kB)
-2025-06-23T02:45:04.4803111Z Collecting iniconfig==2.1.0 (from -r requirements.txt (line 51))
-2025-06-23T02:45:04.4816675Z   Using cached iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
-2025-06-23T02:45:04.6025425Z Collecting jiter==0.9.0 (from -r requirements.txt (line 52))
-2025-06-23T02:45:04.6042748Z   Using cached jiter-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
-2025-06-23T02:45:04.6274903Z Collecting joblib==1.4.2 (from -r requirements.txt (line 53))
-2025-06-23T02:45:04.6288603Z   Using cached joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
-2025-06-23T02:45:04.6898395Z Collecting kiwisolver==1.4.8 (from -r requirements.txt (line 54))
-2025-06-23T02:45:04.6913678Z   Using cached kiwisolver-1.4.8-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.2 kB)
-2025-06-23T02:45:04.8381362Z Collecting matplotlib==3.10.1 (from -r requirements.txt (line 55))
-2025-06-23T02:45:04.8398819Z   Using cached matplotlib-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
-2025-06-23T02:45:04.8571173Z Collecting mcp==1.6.0 (from -r requirements.txt (line 56))
-2025-06-23T02:45:04.8585701Z   Using cached mcp-1.6.0-py3-none-any.whl.metadata (20 kB)
-2025-06-23T02:45:05.0608886Z Collecting numpy==2.2.5 (from -r requirements.txt (line 57))
-2025-06-23T02:45:05.0625509Z   Using cached numpy-2.2.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
-2025-06-23T02:45:05.1194234Z Collecting openai==1.76.0 (from -r requirements.txt (line 58))
-2025-06-23T02:45:05.1210838Z   Using cached openai-1.76.0-py3-none-any.whl.metadata (25 kB)
-2025-06-23T02:45:05.1469672Z Collecting opentelemetry-api==1.32.1 (from -r requirements.txt (line 59))
-2025-06-23T02:45:05.1484886Z   Using cached opentelemetry_api-1.32.1-py3-none-any.whl.metadata (1.6 kB)
-2025-06-23T02:45:05.1669735Z Collecting opentelemetry-exporter-gcp-trace==1.9.0 (from -r requirements.txt (line 60))
-2025-06-23T02:45:05.1684003Z   Using cached opentelemetry_exporter_gcp_trace-1.9.0-py3-none-any.whl.metadata (3.3 kB)
-2025-06-23T02:45:05.1833083Z Collecting opentelemetry-resourcedetector-gcp==1.9.0a0 (from -r requirements.txt (line 61))
-2025-06-23T02:45:05.1847453Z   Using cached opentelemetry_resourcedetector_gcp-1.9.0a0-py3-none-any.whl.metadata (2.4 kB)
-2025-06-23T02:45:05.2085118Z Collecting opentelemetry-sdk==1.32.1 (from -r requirements.txt (line 62))
-2025-06-23T02:45:05.2100758Z   Using cached opentelemetry_sdk-1.32.1-py3-none-any.whl.metadata (1.6 kB)
-2025-06-23T02:45:05.2307498Z Collecting opentelemetry-semantic-conventions==0.53b1 (from -r requirements.txt (line 63))
-2025-06-23T02:45:05.2322302Z   Using cached opentelemetry_semantic_conventions-0.53b1-py3-none-any.whl.metadata (2.5 kB)
-2025-06-23T02:45:05.2515373Z Collecting packaging==25.0 (from -r requirements.txt (line 64))
-2025-06-23T02:45:05.2530009Z   Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
-2025-06-23T02:45:05.2674983Z Collecting passlib==1.7.4 (from passlib[bcrypt]==1.7.4->-r requirements.txt (line 65))
-2025-06-23T02:45:05.2696802Z   Using cached passlib-1.7.4-py2.py3-none-any.whl.metadata (1.7 kB)
-2025-06-23T02:45:05.5160137Z Collecting pillow==11.2.1 (from -r requirements.txt (line 66))
-2025-06-23T02:45:05.5176836Z   Using cached pillow-11.2.1-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (8.9 kB)
-2025-06-23T02:45:05.5380119Z Collecting pluggy==1.5.0 (from -r requirements.txt (line 67))
-2025-06-23T02:45:05.5394099Z   Using cached pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
-2025-06-23T02:45:05.5610012Z Collecting proto-plus==1.26.1 (from -r requirements.txt (line 68))
-2025-06-23T02:45:05.5625759Z   Using cached proto_plus-1.26.1-py3-none-any.whl.metadata (2.2 kB)
-2025-06-23T02:45:05.7652120Z Collecting protobuf<6.0.0,>=3.20.2 (from -r requirements.txt (line 69))
-2025-06-23T02:45:05.7668833Z   Using cached protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
-2025-06-23T02:45:05.7922705Z Collecting pyasn1==0.6.1 (from -r requirements.txt (line 70))
-2025-06-23T02:45:05.7940413Z   Using cached pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
-2025-06-23T02:45:05.8168638Z Collecting pyasn1_modules==0.4.2 (from -r requirements.txt (line 71))
-2025-06-23T02:45:05.8183826Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
-2025-06-23T02:45:05.8317889Z Collecting pycparser==2.22 (from -r requirements.txt (line 72))
-2025-06-23T02:45:05.8332378Z   Using cached pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
-2025-06-23T02:45:05.9632204Z Collecting pydantic==2.11.3 (from -r requirements.txt (line 73))
-2025-06-23T02:45:05.9649028Z   Using cached pydantic-2.11.3-py3-none-any.whl.metadata (65 kB)
-2025-06-23T02:45:05.9850272Z Collecting pydantic-settings==2.9.1 (from -r requirements.txt (line 74))
-2025-06-23T02:45:05.9865632Z   Using cached pydantic_settings-2.9.1-py3-none-any.whl.metadata (3.8 kB)
-2025-06-23T02:45:06.7606934Z Collecting pydantic_core==2.33.1 (from -r requirements.txt (line 75))
-2025-06-23T02:45:06.7624245Z   Using cached pydantic_core-2.33.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
-2025-06-23T02:45:06.7911296Z Collecting pyparsing==3.2.3 (from -r requirements.txt (line 76))
-2025-06-23T02:45:06.7926529Z   Using cached pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
-2025-06-23T02:45:06.8306993Z Collecting pytest==8.3.5 (from -r requirements.txt (line 77))
-2025-06-23T02:45:06.8322322Z   Using cached pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
-2025-06-23T02:45:06.8497809Z Collecting python-jose==3.3.0 (from python-jose[cryptography]==3.3.0->-r requirements.txt (line 78))
-2025-06-23T02:45:06.8511781Z   Using cached python_jose-3.3.0-py2.py3-none-any.whl.metadata (5.4 kB)
-2025-06-23T02:45:06.8660336Z Collecting python-multipart==0.0.9 (from -r requirements.txt (line 79))
-2025-06-23T02:45:06.8673683Z   Using cached python_multipart-0.0.9-py3-none-any.whl.metadata (2.5 kB)
-2025-06-23T02:45:06.9006992Z Collecting qdrant-client==1.12.1 (from -r requirements.txt (line 80))
-2025-06-23T02:45:06.9021104Z   Using cached qdrant_client-1.12.1-py3-none-any.whl.metadata (10 kB)
-2025-06-23T02:45:06.9254863Z Collecting pytest-asyncio==0.26.0 (from -r requirements.txt (line 81))
-2025-06-23T02:45:06.9269463Z   Using cached pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
-2025-06-23T02:45:06.9437831Z Collecting python-dateutil==2.9.0.post0 (from -r requirements.txt (line 82))
-2025-06-23T02:45:06.9451986Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
-2025-06-23T02:45:06.9640242Z Collecting python-dotenv==1.1.0 (from -r requirements.txt (line 83))
-2025-06-23T02:45:06.9653959Z   Using cached python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
-2025-06-23T02:45:07.0083644Z Collecting PyYAML==6.0.2 (from -r requirements.txt (line 84))
-2025-06-23T02:45:07.0100219Z   Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
-2025-06-23T02:45:07.0395619Z Collecting requests==2.32.3 (from -r requirements.txt (line 85))
-2025-06-23T02:45:07.0413274Z   Using cached requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
-2025-06-23T02:45:07.0559911Z Collecting retry>=0.9.2 (from -r requirements.txt (line 86))
-2025-06-23T02:45:07.0575446Z   Using cached retry-0.9.2-py2.py3-none-any.whl.metadata (5.8 kB)
-2025-06-23T02:45:07.0753268Z Collecting rsa==4.9.1 (from -r requirements.txt (line 87))
-2025-06-23T02:45:07.0770654Z   Using cached rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
-2025-06-23T02:45:07.2669335Z Collecting scikit-learn==1.6.1 (from -r requirements.txt (line 88))
-2025-06-23T02:45:07.2685894Z   Using cached scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
-2025-06-23T02:45:07.4125866Z Collecting scipy==1.15.2 (from -r requirements.txt (line 89))
-2025-06-23T02:45:07.4142314Z   Using cached scipy-1.15.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
-2025-06-23T02:45:07.5183281Z Collecting shapely==2.1.0 (from -r requirements.txt (line 90))
-2025-06-23T02:45:07.5200300Z   Using cached shapely-2.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
-2025-06-23T02:45:07.5365443Z Collecting six==1.17.0 (from -r requirements.txt (line 91))
-2025-06-23T02:45:07.5379777Z   Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
-2025-06-23T02:45:07.5504760Z Collecting slowapi==0.1.9 (from -r requirements.txt (line 92))
-2025-06-23T02:45:07.5519123Z   Using cached slowapi-0.1.9-py3-none-any.whl.metadata (3.0 kB)
-2025-06-23T02:45:07.5647819Z Collecting sniffio==1.3.1 (from -r requirements.txt (line 93))
-2025-06-23T02:45:07.5663243Z   Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
-2025-06-23T02:45:07.8756480Z Collecting SQLAlchemy==2.0.40 (from -r requirements.txt (line 94))
-2025-06-23T02:45:07.8772875Z   Using cached sqlalchemy-2.0.40-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.6 kB)
-2025-06-23T02:45:07.9111568Z Collecting sse-starlette==2.3.3 (from -r requirements.txt (line 95))
-2025-06-23T02:45:07.9126999Z   Using cached sse_starlette-2.3.3-py3-none-any.whl.metadata (7.8 kB)
-2025-06-23T02:45:07.9441697Z Collecting starlette==0.46.2 (from -r requirements.txt (line 96))
-2025-06-23T02:45:07.9458907Z   Using cached starlette-0.46.2-py3-none-any.whl.metadata (6.2 kB)
-2025-06-23T02:45:07.9605304Z Collecting threadpoolctl==3.6.0 (from -r requirements.txt (line 97))
-2025-06-23T02:45:07.9620996Z   Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
-2025-06-23T02:45:07.9876166Z Collecting tomli==2.2.1 (from -r requirements.txt (line 98))
-2025-06-23T02:45:07.9891938Z   Using cached tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
-2025-06-23T02:45:08.0262579Z Collecting tqdm==4.67.1 (from -r requirements.txt (line 99))
-2025-06-23T02:45:08.0279824Z   Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
-2025-06-23T02:45:08.0469840Z Collecting typing-inspection==0.4.0 (from -r requirements.txt (line 100))
-2025-06-23T02:45:08.0485375Z   Using cached typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
-2025-06-23T02:45:08.0714144Z Collecting typing_extensions==4.13.2 (from -r requirements.txt (line 101))
-2025-06-23T02:45:08.0730516Z   Using cached typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
-2025-06-23T02:45:08.0908609Z Collecting tzlocal==5.3.1 (from -r requirements.txt (line 102))
-2025-06-23T02:45:08.0924913Z   Using cached tzlocal-5.3.1-py3-none-any.whl.metadata (7.6 kB)
-2025-06-23T02:45:08.1066784Z Collecting uritemplate==4.1.1 (from -r requirements.txt (line 103))
-2025-06-23T02:45:08.1080826Z   Using cached uritemplate-4.1.1-py2.py3-none-any.whl.metadata (2.9 kB)
-2025-06-23T02:45:08.1342715Z Collecting urllib3==2.4.0 (from -r requirements.txt (line 104))
-2025-06-23T02:45:08.1356830Z   Using cached urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
-2025-06-23T02:45:08.1670782Z Collecting uvicorn==0.34.2 (from -r requirements.txt (line 105))
-2025-06-23T02:45:08.1685093Z   Using cached uvicorn-0.34.2-py3-none-any.whl.metadata (6.5 kB)
-2025-06-23T02:45:08.2253134Z Collecting uvloop==0.21.0 (from -r requirements.txt (line 106))
-2025-06-23T02:45:08.2270177Z   Using cached uvloop-0.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
-2025-06-23T02:45:08.3124969Z Collecting watchfiles==1.0.5 (from -r requirements.txt (line 107))
-2025-06-23T02:45:08.3142120Z   Using cached watchfiles-1.0.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
-2025-06-23T02:45:08.4209853Z Collecting websockets==15.0.1 (from -r requirements.txt (line 108))
-2025-06-23T02:45:08.4226806Z   Using cached websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
-2025-06-23T02:45:08.5699274Z Collecting Werkzeug<3.0,>=2.3 (from -r requirements.txt (line 109))
-2025-06-23T02:45:08.5716302Z   Using cached werkzeug-2.3.8-py3-none-any.whl.metadata (4.1 kB)
-2025-06-23T02:45:08.6750626Z Collecting wrapt==1.17.2 (from -r requirements.txt (line 110))
-2025-06-23T02:45:08.6768275Z   Using cached wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
-2025-06-23T02:45:08.6992357Z Collecting zipp==3.21.0 (from -r requirements.txt (line 111))
-2025-06-23T02:45:08.7007513Z   Using cached zipp-3.21.0-py3-none-any.whl.metadata (3.7 kB)
-2025-06-23T02:45:08.7928710Z Collecting google-cloud-logging>=3.9.0 (from -r requirements.txt (line 112))
-2025-06-23T02:45:08.7943565Z   Using cached google_cloud_logging-3.12.1-py2.py3-none-any.whl.metadata (5.0 kB)
-2025-06-23T02:45:08.8174665Z Collecting google-cloud-billing>=1.12.0 (from -r requirements.txt (line 113))
-2025-06-23T02:45:08.8188804Z   Using cached google_cloud_billing-1.16.3-py3-none-any.whl.metadata (9.6 kB)
-2025-06-23T02:45:08.8378657Z Collecting google-cloud-run>=0.10.18 (from -r requirements.txt (line 114))
-2025-06-23T02:45:08.8392687Z   Using cached google_cloud_run-0.10.18-py3-none-any.whl.metadata (9.3 kB)
-2025-06-23T02:45:08.8696759Z Collecting google-cloud-billing-budgets>=1.10.0 (from -r requirements.txt (line 115))
-2025-06-23T02:45:08.8713533Z   Using cached google_cloud_billing_budgets-1.17.2-py3-none-any.whl.metadata (9.9 kB)
-2025-06-23T02:45:08.9534818Z Collecting psutil>=5.9.0 (from -r requirements.txt (line 116))
-2025-06-23T02:45:08.9551821Z   Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
-2025-06-23T02:45:08.9875522Z Collecting google-cloud-monitoring>=2.0.0 (from -r requirements.txt (line 117))
-2025-06-23T02:45:08.9892704Z   Using cached google_cloud_monitoring-2.27.2-py3-none-any.whl.metadata (10 kB)
-2025-06-23T02:45:10.4130156Z Collecting ecdsa!=0.15 (from python-jose==3.3.0->python-jose[cryptography]==3.3.0->-r requirements.txt (line 78))
-2025-06-23T02:45:10.4145540Z   Using cached ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
-2025-06-23T02:45:11.0215399Z Collecting grpcio-tools>=1.41.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:11.0231562Z   Using cached grpcio_tools-1.73.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:11.0509208Z Collecting portalocker<3.0.0,>=2.7.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:11.0522827Z   Using cached portalocker-2.10.1-py3-none-any.whl.metadata (8.5 kB)
-2025-06-23T02:45:11.1677874Z Collecting limits>=2.3 (from slowapi==0.1.9->-r requirements.txt (line 92))
-2025-06-23T02:45:11.1692144Z   Using cached limits-5.4.0-py3-none-any.whl.metadata (10 kB)
-2025-06-23T02:45:11.3234215Z Collecting greenlet>=1 (from SQLAlchemy==2.0.40->-r requirements.txt (line 94))
-2025-06-23T02:45:11.3250499Z   Using cached greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
-2025-06-23T02:45:11.4479391Z Collecting bcrypt>=3.1.0 (from passlib[bcrypt]==1.7.4->-r requirements.txt (line 65))
-2025-06-23T02:45:11.4494522Z   Using cached bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)
-2025-06-23T02:45:11.4930959Z Collecting Jinja2>=3.1.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
-2025-06-23T02:45:11.4946636Z   Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
-2025-06-23T02:45:11.5095670Z Collecting itsdangerous>=2.1.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
-2025-06-23T02:45:11.5109895Z   Using cached itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
-2025-06-23T02:45:11.5279825Z Collecting blinker>=1.6.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
-2025-06-23T02:45:11.5294057Z   Using cached blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
-2025-06-23T02:45:11.9075243Z Collecting MarkupSafe>=2.1.1 (from Werkzeug<3.0,>=2.3->-r requirements.txt (line 109))
-2025-06-23T02:45:11.9091274Z   Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
-2025-06-23T02:45:11.9878436Z Collecting decorator>=3.4.2 (from retry>=0.9.2->-r requirements.txt (line 86))
-2025-06-23T02:45:11.9898771Z   Using cached decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
-2025-06-23T02:45:12.0087687Z Collecting py<2.0.0,>=1.4.26 (from retry>=0.9.2->-r requirements.txt (line 86))
-2025-06-23T02:45:12.0100762Z   Using cached py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
-2025-06-23T02:45:12.0420819Z Collecting google-cloud-appengine-logging<2.0.0,>=0.1.3 (from google-cloud-logging>=3.9.0->-r requirements.txt (line 112))
-2025-06-23T02:45:12.0434543Z   Using cached google_cloud_appengine_logging-1.6.2-py3-none-any.whl.metadata (9.9 kB)
-2025-06-23T02:45:12.0582631Z Collecting google-cloud-audit-log<1.0.0,>=0.3.1 (from google-cloud-logging>=3.9.0->-r requirements.txt (line 112))
-2025-06-23T02:45:12.0596157Z   Using cached google_cloud_audit_log-0.3.2-py3-none-any.whl.metadata (9.0 kB)
-2025-06-23T02:45:12.2555753Z INFO: pip is looking at multiple versions of grpcio-tools to determine which version is compatible with other requirements. This could take a while.
-2025-06-23T02:45:12.2563950Z Collecting grpcio-tools>=1.41.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:12.2580581Z   Using cached grpcio_tools-1.72.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.2696782Z   Using cached grpcio_tools-1.71.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.3040738Z   Using cached grpcio_tools-1.70.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.3371215Z   Using cached grpcio_tools-1.69.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.3853120Z   Using cached grpcio_tools-1.68.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.4148553Z   Using cached grpcio_tools-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
-2025-06-23T02:45:12.4250523Z Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from grpcio-tools>=1.41.0->qdrant-client==1.12.1->-r requirements.txt (line 80)) (65.5.0)
-2025-06-23T02:45:12.4485791Z Collecting h2<5,>=3 (from httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:12.4499517Z   Using cached h2-4.2.0-py3-none-any.whl.metadata (5.1 kB)
-2025-06-23T02:45:12.4696107Z Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:12.4709590Z   Using cached hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
-2025-06-23T02:45:12.4846729Z Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
-2025-06-23T02:45:12.4860435Z   Using cached hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
-2025-06-23T02:45:12.5385526Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
-2025-06-23T02:45:12.5398750Z Using cached anyio-4.9.0-py3-none-any.whl (100 kB)
-2025-06-23T02:45:12.5412824Z Using cached authlib-1.5.2-py2.py3-none-any.whl (232 kB)
-2025-06-23T02:45:12.5427622Z Using cached cachetools-5.5.2-py3-none-any.whl (10 kB)
-2025-06-23T02:45:12.5441215Z Using cached certifi-2025.4.26-py3-none-any.whl (159 kB)
-2025-06-23T02:45:12.5455667Z Using cached cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (446 kB)
-2025-06-23T02:45:12.5471798Z Using cached charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (146 kB)
-2025-06-23T02:45:12.5485492Z Using cached click-8.1.8-py3-none-any.whl (98 kB)
-2025-06-23T02:45:12.5498969Z Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (325 kB)
-2025-06-23T02:45:12.5513949Z Using cached cryptography-44.0.2-cp39-abi3-manylinux_2_34_x86_64.whl (4.2 MB)
-2025-06-23T02:45:12.5556675Z Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
-2025-06-23T02:45:12.5569382Z Using cached Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
-2025-06-23T02:45:12.5582578Z Using cached wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (82 kB)
-2025-06-23T02:45:12.5595968Z Using cached distro-1.9.0-py3-none-any.whl (20 kB)
-2025-06-23T02:45:12.5608207Z Using cached docstring_parser-0.16-py3-none-any.whl (36 kB)
-2025-06-23T02:45:12.5621018Z Using cached exceptiongroup-1.2.2-py3-none-any.whl (16 kB)
-2025-06-23T02:45:12.5633952Z Using cached faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl (31.3 MB)
-2025-06-23T02:45:12.5872149Z Using cached numpy-2.2.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
-2025-06-23T02:45:12.6002030Z Using cached fastapi-0.115.12-py3-none-any.whl (95 kB)
-2025-06-23T02:45:12.6016460Z Using cached pydantic-2.11.3-py3-none-any.whl (443 kB)
-2025-06-23T02:45:12.6032733Z Using cached starlette-0.46.2-py3-none-any.whl (72 kB)
-2025-06-23T02:45:12.6046601Z Using cached fonttools-4.57.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.6 MB)
-2025-06-23T02:45:12.6092517Z Using cached freezegun-1.5.1-py3-none-any.whl (17 kB)
-2025-06-23T02:45:12.6105479Z Using cached google_adk-0.3.0-py3-none-any.whl (1.2 MB)
-2025-06-23T02:45:12.6127098Z Using cached google_cloud_storage-2.19.0-py2.py3-none-any.whl (131 kB)
-2025-06-23T02:45:12.6141114Z Using cached google_api_core-2.24.2-py3-none-any.whl (160 kB)
-2025-06-23T02:45:12.6155374Z Using cached google_auth-2.39.0-py2.py3-none-any.whl (212 kB)
-2025-06-23T02:45:12.6169707Z Using cached google_cloud_core-2.4.3-py2.py3-none-any.whl (29 kB)
-2025-06-23T02:45:12.6183374Z Using cached google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38 kB)
-2025-06-23T02:45:12.6196981Z Using cached googleapis_common_protos-1.70.0-py3-none-any.whl (294 kB)
-2025-06-23T02:45:12.6211891Z Using cached proto_plus-1.26.1-py3-none-any.whl (50 kB)
-2025-06-23T02:45:12.6225207Z Using cached requests-2.32.3-py3-none-any.whl (64 kB)
-2025-06-23T02:45:12.6238483Z Using cached idna-3.10-py3-none-any.whl (70 kB)
-2025-06-23T02:45:12.6251530Z Using cached rsa-4.9.1-py3-none-any.whl (34 kB)
-2025-06-23T02:45:12.6265039Z Using cached urllib3-2.4.0-py3-none-any.whl (128 kB)
-2025-06-23T02:45:12.6279030Z Using cached google_api_python_client-2.168.0-py3-none-any.whl (13.3 MB)
-2025-06-23T02:45:12.6384247Z Using cached google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
-2025-06-23T02:45:12.6397483Z Using cached httplib2-0.22.0-py3-none-any.whl (96 kB)
-2025-06-23T02:45:12.6410965Z Using cached pyparsing-3.2.3-py3-none-any.whl (111 kB)
-2025-06-23T02:45:12.6424806Z Using cached uritemplate-4.1.1-py2.py3-none-any.whl (10 kB)
-2025-06-23T02:45:12.6437976Z Using cached google_cloud_aiplatform-1.90.0-py2.py3-none-any.whl (7.6 MB)
-2025-06-23T02:45:12.6505116Z Using cached google_cloud_bigquery-3.31.0-py3-none-any.whl (250 kB)
-2025-06-23T02:45:12.6520651Z Using cached google_cloud_resource_manager-1.14.2-py3-none-any.whl (394 kB)
-2025-06-23T02:45:12.6537116Z Using cached google_resumable_media-2.7.2-py2.py3-none-any.whl (81 kB)
-2025-06-23T02:45:12.6550684Z Using cached grpc_google_iam_v1-0.14.2-py3-none-any.whl (19 kB)
-2025-06-23T02:45:12.6564142Z Using cached grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.9 MB)
-2025-06-23T02:45:12.6618801Z Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
-2025-06-23T02:45:12.6633555Z Using cached shapely-2.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
-2025-06-23T02:45:12.6668046Z Using cached google_cloud_secret_manager-2.23.3-py3-none-any.whl (217 kB)
-2025-06-23T02:45:12.6682363Z Using cached google_cloud_speech-2.32.0-py3-none-any.whl (334 kB)
-2025-06-23T02:45:12.6697715Z Using cached google_cloud_trace-1.16.1-py3-none-any.whl (103 kB)
-2025-06-23T02:45:12.6712179Z Using cached google_genai-1.12.1-py3-none-any.whl (165 kB)
-2025-06-23T02:45:12.6726494Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
-2025-06-23T02:45:12.6739796Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
-2025-06-23T02:45:12.6753212Z Using cached typing_extensions-4.13.2-py3-none-any.whl (45 kB)
-2025-06-23T02:45:12.6769691Z Using cached websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
-2025-06-23T02:45:12.6782969Z Using cached graphviz-0.20.3-py3-none-any.whl (47 kB)
-2025-06-23T02:45:12.6796024Z Using cached grpcio_status-1.68.0-py3-none-any.whl (14 kB)
-2025-06-23T02:45:12.6808824Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
-2025-06-23T02:45:12.6822085Z Using cached httptools-0.6.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (442 kB)
-2025-06-23T02:45:12.6837432Z Using cached httpx_sse-0.4.0-py3-none-any.whl (7.8 kB)
-2025-06-23T02:45:12.6850456Z Using cached importlib_metadata-8.6.1-py3-none-any.whl (26 kB)
-2025-06-23T02:45:12.6863372Z Using cached iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
-2025-06-23T02:45:12.6876813Z Using cached jiter-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (352 kB)
-2025-06-23T02:45:12.6892486Z Using cached joblib-1.4.2-py3-none-any.whl (301 kB)
-2025-06-23T02:45:12.6908334Z Using cached kiwisolver-1.4.8-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)
-2025-06-23T02:45:12.6934029Z Using cached matplotlib-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.6 MB)
-2025-06-23T02:45:12.7009091Z Using cached mcp-1.6.0-py3-none-any.whl (76 kB)
-2025-06-23T02:45:12.7022683Z Using cached openai-1.76.0-py3-none-any.whl (661 kB)
-2025-06-23T02:45:12.7040587Z Using cached opentelemetry_api-1.32.1-py3-none-any.whl (65 kB)
-2025-06-23T02:45:12.7054194Z Using cached opentelemetry_exporter_gcp_trace-1.9.0-py3-none-any.whl (13 kB)
-2025-06-23T02:45:12.7067599Z Using cached opentelemetry_resourcedetector_gcp-1.9.0a0-py3-none-any.whl (20 kB)
-2025-06-23T02:45:12.7081415Z Using cached opentelemetry_sdk-1.32.1-py3-none-any.whl (118 kB)
-2025-06-23T02:45:12.7095423Z Using cached opentelemetry_semantic_conventions-0.53b1-py3-none-any.whl (188 kB)
-2025-06-23T02:45:12.7109511Z Using cached packaging-25.0-py3-none-any.whl (66 kB)
-2025-06-23T02:45:12.7122982Z Using cached passlib-1.7.4-py2.py3-none-any.whl (525 kB)
-2025-06-23T02:45:12.7140255Z Using cached pillow-11.2.1-cp310-cp310-manylinux_2_28_x86_64.whl (4.6 MB)
-2025-06-23T02:45:12.7185115Z Using cached pluggy-1.5.0-py3-none-any.whl (20 kB)
-2025-06-23T02:45:12.7198241Z Using cached pyasn1-0.6.1-py3-none-any.whl (83 kB)
-2025-06-23T02:45:12.7211851Z Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
-2025-06-23T02:45:12.7226041Z Using cached pycparser-2.22-py3-none-any.whl (117 kB)
-2025-06-23T02:45:12.7239517Z Using cached pydantic_settings-2.9.1-py3-none-any.whl (44 kB)
-2025-06-23T02:45:12.7253343Z Using cached pydantic_core-2.33.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
-2025-06-23T02:45:12.7280686Z Using cached pytest-8.3.5-py3-none-any.whl (343 kB)
-2025-06-23T02:45:12.7296028Z Using cached python_jose-3.3.0-py2.py3-none-any.whl (33 kB)
-2025-06-23T02:45:12.7309278Z Using cached python_multipart-0.0.9-py3-none-any.whl (22 kB)
-2025-06-23T02:45:12.7322401Z Using cached qdrant_client-1.12.1-py3-none-any.whl (267 kB)
-2025-06-23T02:45:12.7337471Z Using cached pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
-2025-06-23T02:45:12.7350699Z Using cached python_dotenv-1.1.0-py3-none-any.whl (20 kB)
-2025-06-23T02:45:12.7364484Z Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (751 kB)
-2025-06-23T02:45:12.7383000Z Using cached scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)
-2025-06-23T02:45:12.7490897Z Using cached scipy-1.15.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.6 MB)
-2025-06-23T02:45:12.7770147Z Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
-2025-06-23T02:45:12.7784212Z Using cached slowapi-0.1.9-py3-none-any.whl (14 kB)
-2025-06-23T02:45:12.7798415Z Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
-2025-06-23T02:45:12.7812101Z Using cached sqlalchemy-2.0.40-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
-2025-06-23T02:45:12.7847934Z Using cached sse_starlette-2.3.3-py3-none-any.whl (10 kB)
-2025-06-23T02:45:12.7861441Z Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
-2025-06-23T02:45:12.7874679Z Using cached tomli-2.2.1-py3-none-any.whl (14 kB)
-2025-06-23T02:45:12.7888002Z Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
-2025-06-23T02:45:12.7901832Z Using cached typing_inspection-0.4.0-py3-none-any.whl (14 kB)
-2025-06-23T02:45:12.7915028Z Using cached tzlocal-5.3.1-py3-none-any.whl (18 kB)
-2025-06-23T02:45:12.7928513Z Using cached uvicorn-0.34.2-py3-none-any.whl (62 kB)
-2025-06-23T02:45:12.7942555Z Using cached uvloop-0.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.8 MB)
-2025-06-23T02:45:12.7982605Z Using cached watchfiles-1.0.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (454 kB)
-2025-06-23T02:45:12.7998684Z Using cached zipp-3.21.0-py3-none-any.whl (9.6 kB)
-2025-06-23T02:45:12.8011968Z Using cached flask-2.3.3-py3-none-any.whl (96 kB)
-2025-06-23T02:45:12.8026064Z Using cached google_cloud_firestore-2.20.2-py3-none-any.whl (358 kB)
-2025-06-23T02:45:12.8041827Z Using cached protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl (319 kB)
-2025-06-23T02:45:12.8057204Z Using cached werkzeug-2.3.8-py3-none-any.whl (242 kB)
-2025-06-23T02:45:12.8071551Z Using cached portalocker-2.10.1-py3-none-any.whl (18 kB)
-2025-06-23T02:45:12.8085105Z Using cached retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
-2025-06-23T02:45:12.8098595Z Using cached py-1.11.0-py2.py3-none-any.whl (98 kB)
-2025-06-23T02:45:12.8112253Z Using cached google_cloud_logging-3.12.1-py2.py3-none-any.whl (229 kB)
-2025-06-23T02:45:12.8126974Z Using cached google_cloud_appengine_logging-1.6.2-py3-none-any.whl (16 kB)
-2025-06-23T02:45:12.8145085Z Using cached google_cloud_audit_log-0.3.2-py3-none-any.whl (32 kB)
-2025-06-23T02:45:12.8158808Z Using cached google_cloud_billing-1.16.3-py3-none-any.whl (115 kB)
-2025-06-23T02:45:12.8172618Z Using cached google_cloud_run-0.10.18-py3-none-any.whl (333 kB)
-2025-06-23T02:45:12.8188674Z Using cached google_cloud_billing_budgets-1.17.2-py3-none-any.whl (107 kB)
-2025-06-23T02:45:12.8203257Z Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
-2025-06-23T02:45:12.8218376Z Using cached google_cloud_monitoring-2.27.2-py3-none-any.whl (383 kB)
-2025-06-23T02:45:12.8234077Z Using cached bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl (284 kB)
-2025-06-23T02:45:12.8249461Z Using cached blinker-1.9.0-py3-none-any.whl (8.5 kB)
-2025-06-23T02:45:12.8262439Z Using cached decorator-5.2.1-py3-none-any.whl (9.2 kB)
-2025-06-23T02:45:12.8275817Z Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
-2025-06-23T02:45:12.8290126Z Using cached greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (582 kB)
-2025-06-23T02:45:12.8308472Z Using cached grpcio_tools-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.4 MB)
-2025-06-23T02:45:12.8337820Z Using cached h2-4.2.0-py3-none-any.whl (60 kB)
-2025-06-23T02:45:12.8351210Z Using cached hpack-4.1.0-py3-none-any.whl (34 kB)
-2025-06-23T02:45:12.8364480Z Using cached hyperframe-6.1.0-py3-none-any.whl (13 kB)
-2025-06-23T02:45:12.8377920Z Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
-2025-06-23T02:45:12.8391061Z Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
-2025-06-23T02:45:12.8404981Z Using cached limits-5.4.0-py3-none-any.whl (60 kB)
-2025-06-23T02:45:12.8419004Z Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
-2025-06-23T02:45:13.5722867Z Installing collected packages: passlib, zipp, wrapt, websockets, uvloop, urllib3, uritemplate, tzlocal, typing_extensions, tqdm, tomli, threadpoolctl, sniffio, six, PyYAML, python-multipart, python-dotenv, pyparsing, pycparser, pyasn1, py, psutil, protobuf, portalocker, pluggy, pillow, packaging, numpy, MarkupSafe, kiwisolver, joblib, jiter, itsdangerous, iniconfig, idna, hyperframe, httpx-sse, httptools, hpack, h11, grpcio, greenlet, graphviz, google-crc32c, fonttools, exceptiongroup, docstring_parser, distro, decorator, cycler, click, charset-normalizer, certifi, cachetools, blinker, bcrypt, annotated-types, Werkzeug, uvicorn, typing-inspection, SQLAlchemy, shapely, scipy, rsa, retry, requests, python-dateutil, pytest, pydantic_core, pyasn1_modules, proto-plus, Jinja2, importlib_metadata, httplib2, httpcore, h2, grpcio-tools, googleapis-common-protos, google-resumable-media, faiss-cpu, ecdsa, Deprecated, contourpy, cffi, anyio, watchfiles, starlette, scikit-learn, python-jose, pytest-asyncio, pydantic, opentelemetry-api, matplotlib, limits, httpx, grpcio-status, google-cloud-audit-log, google-auth, freezegun, Flask, cryptography, sse-starlette, slowapi, pydantic-settings, opentelemetry-semantic-conventions, openai, grpc-google-iam-v1, google-genai, google-auth-httplib2, google-api-core, fastapi, Authlib, qdrant-client, opentelemetry-sdk, mcp, google-cloud-core, google-api-python-client, opentelemetry-resourcedetector-gcp, google-cloud-trace, google-cloud-storage, google-cloud-speech, google-cloud-secret-manager, google-cloud-run, google-cloud-resource-manager, google-cloud-monitoring, google-cloud-firestore, google-cloud-billing-budgets, google-cloud-billing, google-cloud-bigquery, google-cloud-appengine-logging, opentelemetry-exporter-gcp-trace, google-cloud-logging, google-cloud-aiplatform, google-adk
-2025-06-23T02:45:38.9769592Z 
-2025-06-23T02:45:38.9981529Z Successfully installed Authlib-1.5.2 Deprecated-1.2.18 Flask-2.3.3 Jinja2-3.1.6 MarkupSafe-3.0.2 PyYAML-6.0.2 SQLAlchemy-2.0.40 Werkzeug-2.3.8 annotated-types-0.7.0 anyio-4.9.0 bcrypt-4.3.0 blinker-1.9.0 cachetools-5.5.2 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.1 click-8.1.8 contourpy-1.3.2 cryptography-44.0.2 cycler-0.12.1 decorator-5.2.1 distro-1.9.0 docstring_parser-0.16 ecdsa-0.19.1 exceptiongroup-1.2.2 faiss-cpu-1.11.0 fastapi-0.115.12 fonttools-4.57.0 freezegun-1.5.1 google-adk-0.3.0 google-api-core-2.24.2 google-api-python-client-2.168.0 google-auth-2.39.0 google-auth-httplib2-0.2.0 google-cloud-aiplatform-1.90.0 google-cloud-appengine-logging-1.6.2 google-cloud-audit-log-0.3.2 google-cloud-bigquery-3.31.0 google-cloud-billing-1.16.3 google-cloud-billing-budgets-1.17.2 google-cloud-core-2.4.3 google-cloud-firestore-2.20.2 google-cloud-logging-3.12.1 google-cloud-monitoring-2.27.2 google-cloud-resource-manager-1.14.2 google-cloud-run-0.10.18 google-cloud-secret-manager-2.23.3 google-cloud-speech-2.32.0 google-cloud-storage-2.19.0 google-cloud-trace-1.16.1 google-crc32c-1.7.1 google-genai-1.12.1 google-resumable-media-2.7.2 googleapis-common-protos-1.70.0 graphviz-0.20.3 greenlet-3.2.3 grpc-google-iam-v1-0.14.2 grpcio-1.68.0 grpcio-status-1.68.0 grpcio-tools-1.68.0 h11-0.16.0 h2-4.2.0 hpack-4.1.0 httpcore-1.0.9 httplib2-0.22.0 httptools-0.6.4 httpx-0.28.1 httpx-sse-0.4.0 hyperframe-6.1.0 idna-3.10 importlib_metadata-8.6.1 iniconfig-2.1.0 itsdangerous-2.2.0 jiter-0.9.0 joblib-1.4.2 kiwisolver-1.4.8 limits-5.4.0 matplotlib-3.10.1 mcp-1.6.0 numpy-2.2.5 openai-1.76.0 opentelemetry-api-1.32.1 opentelemetry-exporter-gcp-trace-1.9.0 opentelemetry-resourcedetector-gcp-1.9.0a0 opentelemetry-sdk-1.32.1 opentelemetry-semantic-conventions-0.53b1 packaging-25.0 passlib-1.7.4 pillow-11.2.1 pluggy-1.5.0 portalocker-2.10.1 proto-plus-1.26.1 protobuf-5.29.5 psutil-7.0.0 py-1.11.0 pyasn1-0.6.1 pyasn1_modules-0.4.2 pycparser-2.22 pydantic-2.11.3 pydantic-settings-2.9.1 pydantic_core-2.33.1 pyparsing-3.2.3 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 python-jose-3.3.0 python-multipart-0.0.9 qdrant-client-1.12.1 requests-2.32.3 retry-0.9.2 rsa-4.9.1 scikit-learn-1.6.1 scipy-1.15.2 shapely-2.1.0 six-1.17.0 slowapi-0.1.9 sniffio-1.3.1 sse-starlette-2.3.3 starlette-0.46.2 threadpoolctl-3.6.0 tomli-2.2.1 tqdm-4.67.1 typing-inspection-0.4.0 typing_extensions-4.13.2 tzlocal-5.3.1 uritemplate-4.1.1 urllib3-2.4.0 uvicorn-0.34.2 uvloop-0.21.0 watchfiles-1.0.5 websockets-15.0.1 wrapt-1.17.2 zipp-3.21.0
-2025-06-23T02:45:41.3293046Z Collecting coverage
-2025-06-23T02:45:41.3311675Z   Using cached coverage-7.9.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.9 kB)
-2025-06-23T02:45:41.4447658Z Collecting mypy
-2025-06-23T02:45:41.4465365Z   Using cached mypy-1.16.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl.metadata (2.1 kB)
-2025-06-23T02:45:41.4646185Z Collecting pytest-timeout
-2025-06-23T02:45:41.4661402Z   Using cached pytest_timeout-2.4.0-py3-none-any.whl.metadata (20 kB)
-2025-06-23T02:45:41.4689763Z Requirement already satisfied: typing_extensions>=4.6.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from mypy) (4.13.2)
-2025-06-23T02:45:41.4813419Z Collecting mypy_extensions>=1.0.0 (from mypy)
-2025-06-23T02:45:41.4828424Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
-2025-06-23T02:45:41.4983037Z Collecting pathspec>=0.9.0 (from mypy)
-2025-06-23T02:45:41.4997228Z   Using cached pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
-2025-06-23T02:45:41.5018787Z Requirement already satisfied: tomli>=1.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from mypy) (2.2.1)
-2025-06-23T02:45:41.5029324Z Requirement already satisfied: pytest>=7.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest-timeout) (8.3.5)
-2025-06-23T02:45:41.5069996Z Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (1.2.2)
-2025-06-23T02:45:41.5075385Z Requirement already satisfied: iniconfig in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (2.1.0)
-2025-06-23T02:45:41.5080583Z Requirement already satisfied: packaging in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (25.0)
-2025-06-23T02:45:41.5087721Z Requirement already satisfied: pluggy<2,>=1.5 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (1.5.0)
-2025-06-23T02:45:41.5143313Z Using cached coverage-7.9.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (240 kB)
-2025-06-23T02:45:41.5158501Z Using cached mypy-1.16.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl (12.6 MB)
-2025-06-23T02:45:41.5259858Z Using cached pytest_timeout-2.4.0-py3-none-any.whl (14 kB)
-2025-06-23T02:45:41.5272992Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
-2025-06-23T02:45:41.5286081Z Using cached pathspec-0.12.1-py3-none-any.whl (31 kB)
-2025-06-23T02:45:41.9186889Z Installing collected packages: pathspec, mypy_extensions, coverage, pytest-timeout, mypy
-2025-06-23T02:45:43.2476332Z 
-2025-06-23T02:45:43.2675438Z Successfully installed coverage-7.9.1 mypy-1.16.1 mypy_extensions-1.1.0 pathspec-0.12.1 pytest-timeout-2.4.0
-2025-06-23T02:45:43.3842044Z ##[group]Run gcloud auth list
-2025-06-23T02:45:43.3842365Z [36;1mgcloud auth list[0m
-2025-06-23T02:45:43.3842603Z [36;1mgcloud config list[0m
-2025-06-23T02:45:43.3901950Z shell: /usr/bin/bash -e {0}
-2025-06-23T02:45:43.3902189Z env:
-2025-06-23T02:45:43.3902631Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:43.3903354Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:43.3904005Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:43.3904853Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:43.3905149Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:43.3905392Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:43.3905627Z   GCP_PROJECT: ***
-2025-06-23T02:45:43.3905848Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:43.3906162Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:43.3906512Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:43.3906847Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:43.3907261Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:43.3907663Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:43.3908027Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:43.3908376Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:43.3908735Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:43.3909035Z ##[endgroup]
-2025-06-23T02:45:43.8535055Z                             Credentialed Accounts
-2025-06-23T02:45:43.8535686Z ACTIVE  ACCOUNT
-2025-06-23T02:45:43.8536525Z *       ***
-2025-06-23T02:45:43.8536704Z 
-2025-06-23T02:45:43.8537564Z To set the active account, run:
-2025-06-23T02:45:43.8538114Z     $ gcloud config set account `ACCOUNT`
-2025-06-23T02:45:43.8538498Z 
-2025-06-23T02:45:44.3723433Z [auth]
-2025-06-23T02:45:44.3724641Z credential_file_override = /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.3725498Z [core]
-2025-06-23T02:45:44.3726366Z account = ***
-2025-06-23T02:45:44.3726751Z disable_usage_reporting = True
-2025-06-23T02:45:44.3727245Z project = ***
-2025-06-23T02:45:44.3727967Z [metrics]
-2025-06-23T02:45:44.3728358Z environment = github-actions-setup-gcloud
-2025-06-23T02:45:44.3728865Z environment_version = 1.1.1
-2025-06-23T02:45:44.3729163Z 
-2025-06-23T02:45:44.3729359Z Your active configuration is: [default]
-2025-06-23T02:45:44.4446142Z ##[group]Run echo "Running pytest with --qdrant-mock flag..."
-2025-06-23T02:45:44.4446619Z [36;1mecho "Running pytest with --qdrant-mock flag..."[0m
-2025-06-23T02:45:44.4446961Z [36;1mecho "Running full test suite..."[0m
-2025-06-23T02:45:44.4447354Z [36;1mcoverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v[0m
-2025-06-23T02:45:44.4447755Z [36;1mecho "Generating coverage report..."[0m
-2025-06-23T02:45:44.4448045Z [36;1mcoverage report --show-missing[0m
-2025-06-23T02:45:44.4448310Z [36;1mcoverage xml[0m
-2025-06-23T02:45:44.4507421Z shell: /usr/bin/bash -e {0}
-2025-06-23T02:45:44.4507665Z env:
-2025-06-23T02:45:44.4508146Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4508880Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4509543Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4510060Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:44.4510331Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:44.4510567Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:44.4510832Z   GCP_PROJECT: ***
-2025-06-23T02:45:44.4511057Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:44.4511350Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:44.4511697Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:44.4512026Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4512426Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:44.4512832Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513189Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513540Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513892Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:44.4514218Z   PYTHONDONTWRITEBYTECODE: 1
-2025-06-23T02:45:44.4514713Z   RUN_DEFERRED: 0
-2025-06-23T02:45:44.4514908Z   PYTEST_TIMEOUT: 8
-2025-06-23T02:45:44.4515104Z   BATCH_SIZE: 3
-2025-06-23T02:45:44.4515329Z   GCP_PROJECT_ID: ***
-2025-06-23T02:45:44.4515541Z   GCP_REGION: asia-southeast1
-2025-06-23T02:45:44.4515757Z   CI: true
-2025-06-23T02:45:44.4515932Z   GITHUB_ACTIONS: true
-2025-06-23T02:45:44.4516130Z ##[endgroup]
-2025-06-23T02:45:44.4596126Z Running pytest with --qdrant-mock flag...
-2025-06-23T02:45:44.4596632Z Running full test suite...
-2025-06-23T02:45:45.2869024Z ============================= test session starts ==============================
-2025-06-23T02:45:45.2870032Z platform linux -- Python 3.10.18, pytest-8.3.5, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.18/x64/bin/python
-2025-06-23T02:45:45.2870870Z cachedir: .pytest_cache
-2025-06-23T02:45:45.2871322Z rootdir: /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:45.2871853Z configfile: pytest.ini
-2025-06-23T02:45:45.2872243Z testpaths: tests
-2025-06-23T02:45:45.2872676Z plugins: asyncio-0.26.0, timeout-2.4.0, anyio-4.9.0
-2025-06-23T02:45:45.2873551Z asyncio: mode=auto, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
-2025-06-23T02:45:45.2874659Z timeout: 8.0s
-2025-06-23T02:45:45.2875016Z timeout method: signal
-2025-06-23T02:45:45.2875399Z timeout func_only: False
-2025-06-23T02:45:52.3670343Z collecting ... collected 715 items / 1 error
-2025-06-23T02:45:52.3670766Z 
-2025-06-23T02:45:52.3670956Z ==================================== ERRORS ====================================
-2025-06-23T02:45:52.3671630Z _______________ ERROR collecting tests/test_cli140f_coverage.py ________________
-2025-06-23T02:45:52.3672722Z ImportError while importing test module '/home/runner/work/agent-data/agent-data/tests/test_cli140f_coverage.py'.
-2025-06-23T02:45:52.3676571Z Hint: make sure your test modules/packages have valid Python names.
-2025-06-23T02:45:52.3677187Z Traceback:
-2025-06-23T02:45:52.3678187Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/importlib/__init__.py:126: in import_module
-2025-06-23T02:45:52.3679158Z     return _bootstrap._gcd_import(name[level:], package, level)
-2025-06-23T02:45:52.3679792Z tests/test_cli140f_coverage.py:12: in <module>
-2025-06-23T02:45:52.3680492Z     from src.agent_data_manager.tools.qdrant_vectorization_tool import (
-2025-06-23T02:45:52.3681276Z E   ModuleNotFoundError: No module named 'src.agent_data_manager'
-2025-06-23T02:45:52.3681959Z =========================== short test summary info ============================
-2025-06-23T02:45:52.3682522Z ERROR tests/test_cli140f_coverage.py
-2025-06-23T02:45:52.3683146Z !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-2025-06-23T02:45:52.3683774Z =============================== 1 error in 7.09s ===============================
-2025-06-23T02:45:52.8730350Z ##[error]Process completed with exit code 2.
-2025-06-23T02:45:52.8802115Z ##[group]Run codecov/codecov-action@v4
-2025-06-23T02:45:52.8802397Z with:
-2025-06-23T02:45:52.8802584Z   file: ./coverage.xml
-2025-06-23T02:45:52.8802790Z   flags: unittests
-2025-06-23T02:45:52.8802991Z   name: codecov-umbrella
-2025-06-23T02:45:52.8803209Z env:
-2025-06-23T02:45:52.8803637Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:52.8804496Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:52.8805127Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:52.8805611Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:52.8805876Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:52.8806107Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:52.8806342Z   GCP_PROJECT: ***
-2025-06-23T02:45:52.8806562Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:52.8806880Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:52.8807229Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:52.8807567Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:52.8807976Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:52.8808378Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:52.8808726Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:52.8809075Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:52.8809429Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:52.8809732Z ##[endgroup]
-2025-06-23T02:45:52.9693158Z eventName: push
-2025-06-23T02:45:52.9703405Z ==> linux OS detected
-2025-06-23T02:45:53.2525629Z https://cli.codecov.io/latest/linux/codecov.SHA256SUM
-2025-06-23T02:45:53.3302890Z gpg: directory '/home/runner/.gnupg' created
-2025-06-23T02:45:53.3306782Z gpg: keybox '/home/runner/.gnupg/pubring.kbx' created
-2025-06-23T02:45:53.3332975Z gpg: /home/runner/.gnupg/trustdb.gpg: trustdb created
-2025-06-23T02:45:53.3334602Z gpg: key 806BB28AED779869: public key "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" imported
-2025-06-23T02:45:53.3451878Z gpg: Total number processed: 1
-2025-06-23T02:45:53.3452753Z gpg:               imported: 1
-2025-06-23T02:45:53.3517614Z gpg: Signature made Thu May 29 21:23:31 2025 UTC
-2025-06-23T02:45:53.3518566Z gpg:                using RSA key 27034E7FDB850E0BBC2C62FF806BB28AED779869
-2025-06-23T02:45:53.3522251Z gpg: Good signature from "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" [unknown]
-2025-06-23T02:45:53.3523765Z gpg: WARNING: This key is not certified with a trusted signature!
-2025-06-23T02:45:53.3525197Z gpg:          There is no indication that the signature belongs to the owner.
-2025-06-23T02:45:53.3526643Z Primary key fingerprint: 2703 4E7F DB85 0E0B BC2C  62FF 806B B28A ED77 9869
-2025-06-23T02:45:53.3779241Z ==> Uploader SHASUM verified (8e0a7ea74f31ee893d11051143fa223cc30f110287ad275e275ca493ddd78eaa  codecov)
-2025-06-23T02:45:53.3781557Z ==> Running version latest
-2025-06-23T02:45:53.4583036Z Could not pull latest version information: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-2025-06-23T02:45:53.4584931Z ==> Running git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:53.4674058Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:53.4726741Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit'
-2025-06-23T02:45:53.4729195Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit --git-service github
-2025-06-23T02:45:53.8196826Z info - 2025-06-23 02:45:53,819 -- ci service found: github-actions
-2025-06-23T02:45:53.8295618Z warning - 2025-06-23 02:45:53,829 -- No config file could be found. Ignoring config.
-2025-06-23T02:45:53.8596091Z warning - 2025-06-23 02:45:53,859 -- Branch `init` is protected but no token was provided
-2025-06-23T02:45:53.8597257Z warning - 2025-06-23 02:45:53,859 -- For information on Codecov upload tokens, see https://docs.codecov.com/docs/codecov-tokens
-2025-06-23T02:45:54.1270157Z info - 2025-06-23 02:45:54,126 -- Process Commit creating complete
-2025-06-23T02:45:54.1271102Z error - 2025-06-23 02:45:54,126 -- Commit creating failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T02:45:54.2318881Z Sentry is attempting to send 2 pending events
-2025-06-23T02:45:54.2319302Z Waiting up to 2 seconds
-2025-06-23T02:45:54.2319584Z Press Ctrl-C to quit
-2025-06-23T02:45:54.2751739Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report'
-2025-06-23T02:45:54.2753616Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report --git-service github
-2025-06-23T02:45:54.6207627Z info - 2025-06-23 02:45:54,620 -- ci service found: github-actions
-2025-06-23T02:45:54.6312375Z warning - 2025-06-23 02:45:54,630 -- No config file could be found. Ignoring config.
-2025-06-23T02:45:54.8343131Z info - 2025-06-23 02:45:54,833 -- Process Report creating complete
-2025-06-23T02:45:54.8348645Z error - 2025-06-23 02:45:54,834 -- Report creating failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T02:45:54.9274679Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload'
-2025-06-23T02:45:54.9276939Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload -f ./coverage.xml -F unittests --git-service github -n codecov-umbrella
-2025-06-23T02:45:55.2730195Z info - 2025-06-23 02:45:55,272 -- ci service found: github-actions
-2025-06-23T02:45:55.2829413Z warning - 2025-06-23 02:45:55,282 -- No config file could be found. Ignoring config.
-2025-06-23T02:45:55.3146401Z warning - 2025-06-23 02:45:55,314 -- xcrun is not installed or can't be found.
-2025-06-23T02:45:55.3190793Z warning - 2025-06-23 02:45:55,318 -- No gcov data found.
-2025-06-23T02:45:55.3198029Z info - 2025-06-23 02:45:55,319 -- Generating coverage.xml report in /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:56.7669059Z info - 2025-06-23 02:45:56,766 -- Wrote XML report to coverage.xml
-2025-06-23T02:45:56.7918117Z info - 2025-06-23 02:45:56,791 -- Found 4 coverage files to report
-2025-06-23T02:45:56.7919116Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/coverage.xml
-2025-06-23T02:45:56.7922353Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/Test Suite/9_Run tests with coverage.txt
-2025-06-23T02:45:56.7923555Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/Test Suite/10_Upload coverage reports.txt
-2025-06-23T02:45:56.7925308Z info - 2025-06-23 02:45:56,791 -- > /home/runner/work/agent-data/agent-data/tests/test_cli140m12_coverage.py.backup
-2025-06-23T02:45:56.9520233Z info - 2025-06-23 02:45:56,951 -- Process Upload complete
-2025-06-23T02:45:56.9521093Z error - 2025-06-23 02:45:56,951 -- Upload failed: {"message":"Token required - not valid tokenless upload"}
-2025-06-23T02:45:57.0660016Z ##[group]Run echo "Running mypy type checking..."
-2025-06-23T02:45:57.0660400Z [36;1mecho "Running mypy type checking..."[0m
-2025-06-23T02:45:57.0660879Z [36;1mmypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"[0m
-2025-06-23T02:45:57.0720887Z shell: /usr/bin/bash -e {0}
-2025-06-23T02:45:57.0721132Z env:
-2025-06-23T02:45:57.0721568Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.0722286Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.0722929Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.0723416Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:57.0723680Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:57.0723924Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:57.0724145Z   GCP_PROJECT: ***
-2025-06-23T02:45:57.0724566Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:57.0724926Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:57.0725272Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:57.0725604Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.0726002Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:57.0726403Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.0726762Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.0727104Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.0727453Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:57.0727757Z ##[endgroup]
-2025-06-23T02:45:57.0810263Z Running mypy type checking...
-2025-06-23T02:45:57.2392507Z agent-data is not a valid Python package name
-2025-06-23T02:45:57.2576421Z MyPy completed with warnings
-2025-06-23T02:45:57.2614947Z ##[group]Run actions/upload-artifact@v4
-2025-06-23T02:45:57.2615255Z with:
-2025-06-23T02:45:57.2615444Z   name: test-results
-2025-06-23T02:45:57.2615691Z   path: coverage.xml
+2025-06-23T02:50:27.7023093Z   enableCrossOsArchive: false
+2025-06-23T02:50:27.7023333Z   fail-on-cache-miss: false
+2025-06-23T02:50:27.7023556Z   lookup-only: false
+2025-06-23T02:50:27.7023766Z   save-always: false
+2025-06-23T02:50:27.7023957Z env:
+2025-06-23T02:50:27.7024633Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.7025423Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.7026058Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:27.7026589Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:50:27.7026882Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:50:27.7027118Z   GCLOUD_PROJECT: ***
+2025-06-23T02:50:27.7027342Z   GCP_PROJECT: ***
+2025-06-23T02:50:27.7027568Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:50:27.7027856Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:50:27.7028197Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:50:27.7028525Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:27.7028939Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:50:27.7029332Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:27.7029690Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:27.7030037Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:27.7030390Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:50:27.7030689Z ##[endgroup]
+2025-06-23T02:50:28.1582861Z Cache hit for: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
+2025-06-23T02:50:29.4806008Z Received 0 of 202146325 (0.0%), 0.0 MBs/sec
+2025-06-23T02:50:30.4810671Z Received 104857600 of 202146325 (51.9%), 50.0 MBs/sec
+2025-06-23T02:50:31.2559305Z Received 202146325 of 202146325 (100.0%), 69.4 MBs/sec
+2025-06-23T02:50:31.2562031Z Cache Size: ~193 MB (202146325 B)
+2025-06-23T02:50:31.2664200Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c3c478cc-9545-44b9-bdec-20f239e49bf2/cache.tzst -P -C /home/runner/work/agent-data/agent-data --use-compress-program unzstd
+2025-06-23T02:50:31.6126491Z Cache restored successfully
+2025-06-23T02:50:31.6604327Z Cache restored from key: Linux-pip-3ed8523373108a36d70e3e26bbcc24a7e4de0c582c36c19fde714906fa7d2f5c
+2025-06-23T02:50:31.6736727Z ##[group]Run python -m pip install --upgrade pip
+2025-06-23T02:50:31.6737395Z [36;1mpython -m pip install --upgrade pip[0m
+2025-06-23T02:50:31.6737930Z [36;1mpip install -r requirements.txt[0m
+2025-06-23T02:50:31.6738485Z [36;1mpip install coverage mypy pytest-timeout[0m
+2025-06-23T02:50:31.6871416Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:50:31.6871833Z env:
+2025-06-23T02:50:31.6872594Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:31.6873952Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:31.6875327Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:50:31.6876257Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:50:31.6876736Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:50:31.6877172Z   GCLOUD_PROJECT: ***
+2025-06-23T02:50:31.6877855Z   GCP_PROJECT: ***
+2025-06-23T02:50:31.6878319Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:50:31.6878857Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:50:31.6879482Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:50:31.6880059Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:31.6880775Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:50:31.6881471Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:31.6882134Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:31.6882793Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:50:31.6883463Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:50:31.6884035Z ##[endgroup]
+2025-06-23T02:50:32.3931658Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (25.1.1)
+2025-06-23T02:50:32.9939362Z Collecting annotated-types==0.7.0 (from -r requirements.txt (line 1))
+2025-06-23T02:50:32.9954610Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-06-23T02:50:33.0146470Z Collecting anyio==4.9.0 (from -r requirements.txt (line 2))
+2025-06-23T02:50:33.0160200Z   Using cached anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+2025-06-23T02:50:33.0356317Z Collecting Authlib==1.5.2 (from -r requirements.txt (line 3))
+2025-06-23T02:50:33.0369352Z   Using cached authlib-1.5.2-py2.py3-none-any.whl.metadata (3.9 kB)
+2025-06-23T02:50:33.0532970Z Collecting cachetools==5.5.2 (from -r requirements.txt (line 4))
+2025-06-23T02:50:33.0546749Z   Using cached cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+2025-06-23T02:50:33.0718891Z Collecting certifi==2025.4.26 (from -r requirements.txt (line 5))
+2025-06-23T02:50:33.0735256Z   Using cached certifi-2025.4.26-py3-none-any.whl.metadata (2.5 kB)
+2025-06-23T02:50:33.1945589Z Collecting cffi==1.17.1 (from -r requirements.txt (line 6))
+2025-06-23T02:50:33.1962212Z   Using cached cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+2025-06-23T02:50:33.2778077Z Collecting charset-normalizer==3.4.1 (from -r requirements.txt (line 7))
+2025-06-23T02:50:33.2794787Z   Using cached charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+2025-06-23T02:50:33.2976279Z Collecting click==8.1.8 (from -r requirements.txt (line 8))
+2025-06-23T02:50:33.2996759Z   Using cached click-8.1.8-py3-none-any.whl.metadata (2.3 kB)
+2025-06-23T02:50:33.3696363Z Collecting contourpy==1.3.2 (from -r requirements.txt (line 9))
+2025-06-23T02:50:33.3711105Z   Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.5 kB)
+2025-06-23T02:50:33.5770062Z Collecting cryptography==44.0.2 (from -r requirements.txt (line 10))
+2025-06-23T02:50:33.5787076Z   Using cached cryptography-44.0.2-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
+2025-06-23T02:50:33.5934770Z Collecting cycler==0.12.1 (from -r requirements.txt (line 11))
+2025-06-23T02:50:33.5948574Z   Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+2025-06-23T02:50:33.6075141Z Collecting Deprecated==1.2.18 (from -r requirements.txt (line 12))
+2025-06-23T02:50:33.6094273Z   Using cached Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
+2025-06-23T02:50:33.6195023Z Collecting distro==1.9.0 (from -r requirements.txt (line 13))
+2025-06-23T02:50:33.6208790Z   Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+2025-06-23T02:50:33.6306641Z Collecting docstring_parser==0.16 (from -r requirements.txt (line 14))
+2025-06-23T02:50:33.6320071Z   Using cached docstring_parser-0.16-py3-none-any.whl.metadata (3.0 kB)
+2025-06-23T02:50:33.6414198Z Collecting exceptiongroup==1.2.2 (from -r requirements.txt (line 15))
+2025-06-23T02:50:33.6432128Z   Using cached exceptiongroup-1.2.2-py3-none-any.whl.metadata (6.6 kB)
+2025-06-23T02:50:33.6771599Z Collecting faiss-cpu==1.11.0 (from -r requirements.txt (line 16))
+2025-06-23T02:50:33.6788040Z   Using cached faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.8 kB)
+2025-06-23T02:50:33.7234564Z Collecting fastapi==0.115.12 (from -r requirements.txt (line 17))
+2025-06-23T02:50:33.7249790Z   Using cached fastapi-0.115.12-py3-none-any.whl.metadata (27 kB)
+2025-06-23T02:50:33.7453979Z Collecting Flask<3.0,>=2.3 (from -r requirements.txt (line 18))
+2025-06-23T02:50:33.7467758Z   Using cached flask-2.3.3-py3-none-any.whl.metadata (3.6 kB)
+2025-06-23T02:50:33.8964182Z Collecting fonttools==4.57.0 (from -r requirements.txt (line 19))
+2025-06-23T02:50:33.8981167Z   Using cached fonttools-4.57.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (102 kB)
+2025-06-23T02:50:33.9259195Z Collecting freezegun==1.5.1 (from -r requirements.txt (line 20))
+2025-06-23T02:50:33.9273846Z   Using cached freezegun-1.5.1-py3-none-any.whl.metadata (11 kB)
+2025-06-23T02:50:33.9394613Z Collecting google-adk==0.3.0 (from -r requirements.txt (line 21))
+2025-06-23T02:50:33.9408326Z   Using cached google_adk-0.3.0-py3-none-any.whl.metadata (9.6 kB)
+2025-06-23T02:50:33.9794980Z Collecting google-api-core==2.24.2 (from -r requirements.txt (line 22))
+2025-06-23T02:50:33.9807777Z   Using cached google_api_core-2.24.2-py3-none-any.whl.metadata (3.0 kB)
+2025-06-23T02:50:34.0322434Z Collecting google-api-python-client==2.168.0 (from -r requirements.txt (line 23))
+2025-06-23T02:50:34.0337009Z   Using cached google_api_python_client-2.168.0-py3-none-any.whl.metadata (6.7 kB)
+2025-06-23T02:50:34.0691311Z Collecting google-auth==2.39.0 (from -r requirements.txt (line 24))
+2025-06-23T02:50:34.0705688Z   Using cached google_auth-2.39.0-py2.py3-none-any.whl.metadata (6.2 kB)
+2025-06-23T02:50:34.0874978Z Collecting google-auth-httplib2==0.2.0 (from -r requirements.txt (line 25))
+2025-06-23T02:50:34.0888573Z   Using cached google_auth_httplib2-0.2.0-py2.py3-none-any.whl.metadata (2.2 kB)
+2025-06-23T02:50:34.1204001Z Collecting google-cloud-aiplatform==1.90.0 (from -r requirements.txt (line 26))
+2025-06-23T02:50:34.1217603Z   Using cached google_cloud_aiplatform-1.90.0-py2.py3-none-any.whl.metadata (35 kB)
+2025-06-23T02:50:34.2963012Z Collecting google-cloud-bigquery==3.31.0 (from -r requirements.txt (line 27))
+2025-06-23T02:50:34.2977111Z   Using cached google_cloud_bigquery-3.31.0-py3-none-any.whl.metadata (7.7 kB)
+2025-06-23T02:50:34.3217127Z Collecting google-cloud-core==2.4.3 (from -r requirements.txt (line 28))
+2025-06-23T02:50:34.3230678Z   Using cached google_cloud_core-2.4.3-py2.py3-none-any.whl.metadata (2.7 kB)
+2025-06-23T02:50:34.3474648Z Collecting google-cloud-firestore<2.21.0,>=2.20.2 (from -r requirements.txt (line 29))
+2025-06-23T02:50:34.3488331Z   Using cached google_cloud_firestore-2.20.2-py3-none-any.whl.metadata (9.9 kB)
+2025-06-23T02:50:34.3682120Z Collecting google-cloud-resource-manager==1.14.2 (from -r requirements.txt (line 30))
+2025-06-23T02:50:34.3695420Z   Using cached google_cloud_resource_manager-1.14.2-py3-none-any.whl.metadata (9.6 kB)
+2025-06-23T02:50:34.3877418Z Collecting google-cloud-secret-manager==2.23.3 (from -r requirements.txt (line 31))
+2025-06-23T02:50:34.3890031Z   Using cached google_cloud_secret_manager-2.23.3-py3-none-any.whl.metadata (9.4 kB)
+2025-06-23T02:50:34.4119346Z Collecting google-cloud-speech==2.32.0 (from -r requirements.txt (line 32))
+2025-06-23T02:50:34.4132430Z   Using cached google_cloud_speech-2.32.0-py3-none-any.whl.metadata (9.5 kB)
+2025-06-23T02:50:34.4408076Z Collecting google-cloud-storage==2.19.0 (from -r requirements.txt (line 33))
+2025-06-23T02:50:34.4424752Z   Using cached google_cloud_storage-2.19.0-py2.py3-none-any.whl.metadata (9.1 kB)
+2025-06-23T02:50:34.4625648Z Collecting google-cloud-trace==1.16.1 (from -r requirements.txt (line 34))
+2025-06-23T02:50:34.4639795Z   Using cached google_cloud_trace-1.16.1-py3-none-any.whl.metadata (9.5 kB)
+2025-06-23T02:50:34.5182950Z Collecting google-crc32c==1.7.1 (from -r requirements.txt (line 35))
+2025-06-23T02:50:34.5197909Z   Using cached google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+2025-06-23T02:50:34.5345964Z Collecting google-genai==1.12.1 (from -r requirements.txt (line 36))
+2025-06-23T02:50:34.5359510Z   Using cached google_genai-1.12.1-py3-none-any.whl.metadata (32 kB)
+2025-06-23T02:50:34.5527917Z Collecting google-resumable-media==2.7.2 (from -r requirements.txt (line 37))
+2025-06-23T02:50:34.5541816Z   Using cached google_resumable_media-2.7.2-py2.py3-none-any.whl.metadata (2.2 kB)
+2025-06-23T02:50:34.5726962Z Collecting googleapis-common-protos==1.70.0 (from -r requirements.txt (line 38))
+2025-06-23T02:50:34.5741012Z   Using cached googleapis_common_protos-1.70.0-py3-none-any.whl.metadata (9.3 kB)
+2025-06-23T02:50:34.5909341Z Collecting graphviz==0.20.3 (from -r requirements.txt (line 39))
+2025-06-23T02:50:34.5923014Z   Using cached graphviz-0.20.3-py3-none-any.whl.metadata (12 kB)
+2025-06-23T02:50:34.6038605Z Collecting grpc-google-iam-v1==0.14.2 (from -r requirements.txt (line 40))
+2025-06-23T02:50:34.6052677Z   Using cached grpc_google_iam_v1-0.14.2-py3-none-any.whl.metadata (9.1 kB)
+2025-06-23T02:50:35.1927354Z Collecting grpcio==1.68.0 (from -r requirements.txt (line 41))
+2025-06-23T02:50:35.1943637Z   Using cached grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.9 kB)
+2025-06-23T02:50:35.2264595Z Collecting grpcio-status==1.68.0 (from -r requirements.txt (line 42))
+2025-06-23T02:50:35.2278381Z   Using cached grpcio_status-1.68.0-py3-none-any.whl.metadata (1.1 kB)
+2025-06-23T02:50:35.2406625Z Collecting h11==0.16.0 (from -r requirements.txt (line 43))
+2025-06-23T02:50:35.2419718Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-06-23T02:50:35.2596581Z Collecting httpcore==1.0.9 (from -r requirements.txt (line 44))
+2025-06-23T02:50:35.2609655Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-06-23T02:50:35.2751285Z Collecting httplib2==0.22.0 (from -r requirements.txt (line 45))
+2025-06-23T02:50:35.2764741Z   Using cached httplib2-0.22.0-py3-none-any.whl.metadata (2.6 kB)
+2025-06-23T02:50:35.3071936Z Collecting httptools==0.6.4 (from -r requirements.txt (line 46))
+2025-06-23T02:50:35.3086154Z   Using cached httptools-0.6.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.6 kB)
+2025-06-23T02:50:35.3267262Z Collecting httpx==0.28.1 (from -r requirements.txt (line 47))
+2025-06-23T02:50:35.3280480Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-06-23T02:50:35.3388343Z Collecting httpx-sse==0.4.0 (from -r requirements.txt (line 48))
+2025-06-23T02:50:35.3401558Z   Using cached httpx_sse-0.4.0-py3-none-any.whl.metadata (9.0 kB)
+2025-06-23T02:50:35.3542618Z Collecting idna==3.10 (from -r requirements.txt (line 49))
+2025-06-23T02:50:35.3556451Z   Using cached idna-3.10-py3-none-any.whl.metadata (10 kB)
+2025-06-23T02:50:35.3846615Z Collecting importlib_metadata==8.6.1 (from -r requirements.txt (line 50))
+2025-06-23T02:50:35.3860197Z   Using cached importlib_metadata-8.6.1-py3-none-any.whl.metadata (4.7 kB)
+2025-06-23T02:50:35.3978124Z Collecting iniconfig==2.1.0 (from -r requirements.txt (line 51))
+2025-06-23T02:50:35.3993901Z   Using cached iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+2025-06-23T02:50:35.5182570Z Collecting jiter==0.9.0 (from -r requirements.txt (line 52))
+2025-06-23T02:50:35.5199361Z   Using cached jiter-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+2025-06-23T02:50:35.5401188Z Collecting joblib==1.4.2 (from -r requirements.txt (line 53))
+2025-06-23T02:50:35.5415136Z   Using cached joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+2025-06-23T02:50:35.5988318Z Collecting kiwisolver==1.4.8 (from -r requirements.txt (line 54))
+2025-06-23T02:50:35.6002320Z   Using cached kiwisolver-1.4.8-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.2 kB)
+2025-06-23T02:50:35.7461508Z Collecting matplotlib==3.10.1 (from -r requirements.txt (line 55))
+2025-06-23T02:50:35.7478550Z   Using cached matplotlib-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+2025-06-23T02:50:35.7617888Z Collecting mcp==1.6.0 (from -r requirements.txt (line 56))
+2025-06-23T02:50:35.7631441Z   Using cached mcp-1.6.0-py3-none-any.whl.metadata (20 kB)
+2025-06-23T02:50:35.9627841Z Collecting numpy==2.2.5 (from -r requirements.txt (line 57))
+2025-06-23T02:50:35.9645417Z   Using cached numpy-2.2.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+2025-06-23T02:50:36.0151895Z Collecting openai==1.76.0 (from -r requirements.txt (line 58))
+2025-06-23T02:50:36.0167101Z   Using cached openai-1.76.0-py3-none-any.whl.metadata (25 kB)
+2025-06-23T02:50:36.0385167Z Collecting opentelemetry-api==1.32.1 (from -r requirements.txt (line 59))
+2025-06-23T02:50:36.0399000Z   Using cached opentelemetry_api-1.32.1-py3-none-any.whl.metadata (1.6 kB)
+2025-06-23T02:50:36.0501205Z Collecting opentelemetry-exporter-gcp-trace==1.9.0 (from -r requirements.txt (line 60))
+2025-06-23T02:50:36.0515089Z   Using cached opentelemetry_exporter_gcp_trace-1.9.0-py3-none-any.whl.metadata (3.3 kB)
+2025-06-23T02:50:36.1030337Z Collecting opentelemetry-resourcedetector-gcp==1.9.0a0 (from -r requirements.txt (line 61))
+2025-06-23T02:50:36.1044891Z   Using cached opentelemetry_resourcedetector_gcp-1.9.0a0-py3-none-any.whl.metadata (2.4 kB)
+2025-06-23T02:50:36.1223707Z Collecting opentelemetry-sdk==1.32.1 (from -r requirements.txt (line 62))
+2025-06-23T02:50:36.1237409Z   Using cached opentelemetry_sdk-1.32.1-py3-none-any.whl.metadata (1.6 kB)
+2025-06-23T02:50:36.1424349Z Collecting opentelemetry-semantic-conventions==0.53b1 (from -r requirements.txt (line 63))
+2025-06-23T02:50:36.1438992Z   Using cached opentelemetry_semantic_conventions-0.53b1-py3-none-any.whl.metadata (2.5 kB)
+2025-06-23T02:50:36.1579431Z Collecting packaging==25.0 (from -r requirements.txt (line 64))
+2025-06-23T02:50:36.1593219Z   Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-06-23T02:50:36.1693219Z Collecting passlib==1.7.4 (from passlib[bcrypt]==1.7.4->-r requirements.txt (line 65))
+2025-06-23T02:50:36.1712056Z   Using cached passlib-1.7.4-py2.py3-none-any.whl.metadata (1.7 kB)
+2025-06-23T02:50:36.4111925Z Collecting pillow==11.2.1 (from -r requirements.txt (line 66))
+2025-06-23T02:50:36.4128450Z   Using cached pillow-11.2.1-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (8.9 kB)
+2025-06-23T02:50:36.4297360Z Collecting pluggy==1.5.0 (from -r requirements.txt (line 67))
+2025-06-23T02:50:36.4310638Z   Using cached pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+2025-06-23T02:50:36.4482369Z Collecting proto-plus==1.26.1 (from -r requirements.txt (line 68))
+2025-06-23T02:50:36.4496168Z   Using cached proto_plus-1.26.1-py3-none-any.whl.metadata (2.2 kB)
+2025-06-23T02:50:36.6362232Z Collecting protobuf<6.0.0,>=3.20.2 (from -r requirements.txt (line 69))
+2025-06-23T02:50:36.6378942Z   Using cached protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+2025-06-23T02:50:36.6574550Z Collecting pyasn1==0.6.1 (from -r requirements.txt (line 70))
+2025-06-23T02:50:36.6589608Z   Using cached pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
+2025-06-23T02:50:36.6759304Z Collecting pyasn1_modules==0.4.2 (from -r requirements.txt (line 71))
+2025-06-23T02:50:36.6773108Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+2025-06-23T02:50:36.6874689Z Collecting pycparser==2.22 (from -r requirements.txt (line 72))
+2025-06-23T02:50:36.6888454Z   Using cached pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+2025-06-23T02:50:36.8142521Z Collecting pydantic==2.11.3 (from -r requirements.txt (line 73))
+2025-06-23T02:50:36.8158030Z   Using cached pydantic-2.11.3-py3-none-any.whl.metadata (65 kB)
+2025-06-23T02:50:36.8310706Z Collecting pydantic-settings==2.9.1 (from -r requirements.txt (line 74))
+2025-06-23T02:50:36.8324736Z   Using cached pydantic_settings-2.9.1-py3-none-any.whl.metadata (3.8 kB)
+2025-06-23T02:50:37.6060505Z Collecting pydantic_core==2.33.1 (from -r requirements.txt (line 75))
+2025-06-23T02:50:37.6077498Z   Using cached pydantic_core-2.33.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-06-23T02:50:37.6324034Z Collecting pyparsing==3.2.3 (from -r requirements.txt (line 76))
+2025-06-23T02:50:37.6338032Z   Using cached pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+2025-06-23T02:50:37.6676994Z Collecting pytest==8.3.5 (from -r requirements.txt (line 77))
+2025-06-23T02:50:37.6691150Z   Using cached pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+2025-06-23T02:50:37.6832441Z Collecting python-jose==3.3.0 (from python-jose[cryptography]==3.3.0->-r requirements.txt (line 78))
+2025-06-23T02:50:37.6846206Z   Using cached python_jose-3.3.0-py2.py3-none-any.whl.metadata (5.4 kB)
+2025-06-23T02:50:37.6966501Z Collecting python-multipart==0.0.9 (from -r requirements.txt (line 79))
+2025-06-23T02:50:37.6980235Z   Using cached python_multipart-0.0.9-py3-none-any.whl.metadata (2.5 kB)
+2025-06-23T02:50:37.7277935Z Collecting qdrant-client==1.12.1 (from -r requirements.txt (line 80))
+2025-06-23T02:50:37.7291983Z   Using cached qdrant_client-1.12.1-py3-none-any.whl.metadata (10 kB)
+2025-06-23T02:50:37.7500670Z Collecting pytest-asyncio==0.26.0 (from -r requirements.txt (line 81))
+2025-06-23T02:50:37.7514307Z   Using cached pytest_asyncio-0.26.0-py3-none-any.whl.metadata (4.0 kB)
+2025-06-23T02:50:37.7646511Z Collecting python-dateutil==2.9.0.post0 (from -r requirements.txt (line 82))
+2025-06-23T02:50:37.7660202Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2025-06-23T02:50:37.7817203Z Collecting python-dotenv==1.1.0 (from -r requirements.txt (line 83))
+2025-06-23T02:50:37.7830862Z   Using cached python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+2025-06-23T02:50:37.8203078Z Collecting PyYAML==6.0.2 (from -r requirements.txt (line 84))
+2025-06-23T02:50:37.8218415Z   Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+2025-06-23T02:50:37.8454699Z Collecting requests==2.32.3 (from -r requirements.txt (line 85))
+2025-06-23T02:50:37.8468870Z   Using cached requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+2025-06-23T02:50:37.8571525Z Collecting retry>=0.9.2 (from -r requirements.txt (line 86))
+2025-06-23T02:50:37.8585207Z   Using cached retry-0.9.2-py2.py3-none-any.whl.metadata (5.8 kB)
+2025-06-23T02:50:37.8709544Z Collecting rsa==4.9.1 (from -r requirements.txt (line 87))
+2025-06-23T02:50:37.8723851Z   Using cached rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+2025-06-23T02:50:38.0560451Z Collecting scikit-learn==1.6.1 (from -r requirements.txt (line 88))
+2025-06-23T02:50:38.0577259Z   Using cached scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+2025-06-23T02:50:38.1939611Z Collecting scipy==1.15.2 (from -r requirements.txt (line 89))
+2025-06-23T02:50:38.1955706Z   Using cached scipy-1.15.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+2025-06-23T02:50:38.2958623Z Collecting shapely==2.1.0 (from -r requirements.txt (line 90))
+2025-06-23T02:50:38.2974290Z   Using cached shapely-2.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+2025-06-23T02:50:38.3095355Z Collecting six==1.17.0 (from -r requirements.txt (line 91))
+2025-06-23T02:50:38.3108842Z   Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2025-06-23T02:50:38.3196248Z Collecting slowapi==0.1.9 (from -r requirements.txt (line 92))
+2025-06-23T02:50:38.3209920Z   Using cached slowapi-0.1.9-py3-none-any.whl.metadata (3.0 kB)
+2025-06-23T02:50:38.3300636Z Collecting sniffio==1.3.1 (from -r requirements.txt (line 93))
+2025-06-23T02:50:38.3315381Z   Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+2025-06-23T02:50:38.6317316Z Collecting SQLAlchemy==2.0.40 (from -r requirements.txt (line 94))
+2025-06-23T02:50:38.6333894Z   Using cached sqlalchemy-2.0.40-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.6 kB)
+2025-06-23T02:50:38.6621693Z Collecting sse-starlette==2.3.3 (from -r requirements.txt (line 95))
+2025-06-23T02:50:38.6635957Z   Using cached sse_starlette-2.3.3-py3-none-any.whl.metadata (7.8 kB)
+2025-06-23T02:50:38.6923269Z Collecting starlette==0.46.2 (from -r requirements.txt (line 96))
+2025-06-23T02:50:38.6937856Z   Using cached starlette-0.46.2-py3-none-any.whl.metadata (6.2 kB)
+2025-06-23T02:50:38.7042273Z Collecting threadpoolctl==3.6.0 (from -r requirements.txt (line 97))
+2025-06-23T02:50:38.7056121Z   Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+2025-06-23T02:50:38.7198070Z Collecting tomli==2.2.1 (from -r requirements.txt (line 98))
+2025-06-23T02:50:38.7211672Z   Using cached tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
+2025-06-23T02:50:38.7539938Z Collecting tqdm==4.67.1 (from -r requirements.txt (line 99))
+2025-06-23T02:50:38.7553708Z   Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+2025-06-23T02:50:38.7671024Z Collecting typing-inspection==0.4.0 (from -r requirements.txt (line 100))
+2025-06-23T02:50:38.7684710Z   Using cached typing_inspection-0.4.0-py3-none-any.whl.metadata (2.6 kB)
+2025-06-23T02:50:38.7826442Z Collecting typing_extensions==4.13.2 (from -r requirements.txt (line 101))
+2025-06-23T02:50:38.7840231Z   Using cached typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+2025-06-23T02:50:38.8668413Z Collecting tzlocal==5.3.1 (from -r requirements.txt (line 102))
+2025-06-23T02:50:38.8684288Z   Using cached tzlocal-5.3.1-py3-none-any.whl.metadata (7.6 kB)
+2025-06-23T02:50:38.8780675Z Collecting uritemplate==4.1.1 (from -r requirements.txt (line 103))
+2025-06-23T02:50:38.8794302Z   Using cached uritemplate-4.1.1-py2.py3-none-any.whl.metadata (2.9 kB)
+2025-06-23T02:50:38.9007903Z Collecting urllib3==2.4.0 (from -r requirements.txt (line 104))
+2025-06-23T02:50:38.9021611Z   Using cached urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
+2025-06-23T02:50:38.9279624Z Collecting uvicorn==0.34.2 (from -r requirements.txt (line 105))
+2025-06-23T02:50:38.9293387Z   Using cached uvicorn-0.34.2-py3-none-any.whl.metadata (6.5 kB)
+2025-06-23T02:50:38.9734080Z Collecting uvloop==0.21.0 (from -r requirements.txt (line 106))
+2025-06-23T02:50:38.9748375Z   Using cached uvloop-0.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-06-23T02:50:39.0787823Z Collecting watchfiles==1.0.5 (from -r requirements.txt (line 107))
+2025-06-23T02:50:39.0803403Z   Using cached watchfiles-1.0.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-06-23T02:50:39.1789959Z Collecting websockets==15.0.1 (from -r requirements.txt (line 108))
+2025-06-23T02:50:39.1805501Z   Using cached websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-06-23T02:50:39.3188020Z Collecting Werkzeug<3.0,>=2.3 (from -r requirements.txt (line 109))
+2025-06-23T02:50:39.3205087Z   Using cached werkzeug-2.3.8-py3-none-any.whl.metadata (4.1 kB)
+2025-06-23T02:50:39.4213463Z Collecting wrapt==1.17.2 (from -r requirements.txt (line 110))
+2025-06-23T02:50:39.4229271Z   Using cached wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+2025-06-23T02:50:39.4394992Z Collecting zipp==3.21.0 (from -r requirements.txt (line 111))
+2025-06-23T02:50:39.4408501Z   Using cached zipp-3.21.0-py3-none-any.whl.metadata (3.7 kB)
+2025-06-23T02:50:39.4632037Z Collecting google-cloud-logging>=3.9.0 (from -r requirements.txt (line 112))
+2025-06-23T02:50:39.4645298Z   Using cached google_cloud_logging-3.12.1-py2.py3-none-any.whl.metadata (5.0 kB)
+2025-06-23T02:50:39.5515074Z Collecting google-cloud-billing>=1.12.0 (from -r requirements.txt (line 113))
+2025-06-23T02:50:39.5528618Z   Using cached google_cloud_billing-1.16.3-py3-none-any.whl.metadata (9.6 kB)
+2025-06-23T02:50:39.5726490Z Collecting google-cloud-run>=0.10.18 (from -r requirements.txt (line 114))
+2025-06-23T02:50:39.5739717Z   Using cached google_cloud_run-0.10.18-py3-none-any.whl.metadata (9.3 kB)
+2025-06-23T02:50:39.6603005Z Collecting google-cloud-billing-budgets>=1.10.0 (from -r requirements.txt (line 115))
+2025-06-23T02:50:39.6617006Z   Using cached google_cloud_billing_budgets-1.17.2-py3-none-any.whl.metadata (9.9 kB)
+2025-06-23T02:50:39.7396845Z Collecting psutil>=5.9.0 (from -r requirements.txt (line 116))
+2025-06-23T02:50:39.7412018Z   Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+2025-06-23T02:50:39.7682877Z Collecting google-cloud-monitoring>=2.0.0 (from -r requirements.txt (line 117))
+2025-06-23T02:50:39.7697927Z   Using cached google_cloud_monitoring-2.27.2-py3-none-any.whl.metadata (10 kB)
+2025-06-23T02:50:41.0799266Z Collecting ecdsa!=0.15 (from python-jose==3.3.0->python-jose[cryptography]==3.3.0->-r requirements.txt (line 78))
+2025-06-23T02:50:41.0813061Z   Using cached ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+2025-06-23T02:50:41.6877563Z Collecting grpcio-tools>=1.41.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:41.6894271Z   Using cached grpcio_tools-1.73.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:41.7105024Z Collecting portalocker<3.0.0,>=2.7.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:41.7119062Z   Using cached portalocker-2.10.1-py3-none-any.whl.metadata (8.5 kB)
+2025-06-23T02:50:41.8286551Z Collecting limits>=2.3 (from slowapi==0.1.9->-r requirements.txt (line 92))
+2025-06-23T02:50:41.8300775Z   Using cached limits-5.4.0-py3-none-any.whl.metadata (10 kB)
+2025-06-23T02:50:41.9818261Z Collecting greenlet>=1 (from SQLAlchemy==2.0.40->-r requirements.txt (line 94))
+2025-06-23T02:50:41.9834990Z   Using cached greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-06-23T02:50:42.1067492Z Collecting bcrypt>=3.1.0 (from passlib[bcrypt]==1.7.4->-r requirements.txt (line 65))
+2025-06-23T02:50:42.1082076Z   Using cached bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)
+2025-06-23T02:50:42.1448524Z Collecting Jinja2>=3.1.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
+2025-06-23T02:50:42.1463069Z   Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+2025-06-23T02:50:42.1555122Z Collecting itsdangerous>=2.1.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
+2025-06-23T02:50:42.1568344Z   Using cached itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+2025-06-23T02:50:42.1694095Z Collecting blinker>=1.6.2 (from Flask<3.0,>=2.3->-r requirements.txt (line 18))
+2025-06-23T02:50:42.1708373Z   Using cached blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+2025-06-23T02:50:42.5279159Z Collecting MarkupSafe>=2.1.1 (from Werkzeug<3.0,>=2.3->-r requirements.txt (line 109))
+2025-06-23T02:50:42.5295288Z   Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+2025-06-23T02:50:42.6123663Z Collecting decorator>=3.4.2 (from retry>=0.9.2->-r requirements.txt (line 86))
+2025-06-23T02:50:42.6137230Z   Using cached decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+2025-06-23T02:50:42.6297336Z Collecting py<2.0.0,>=1.4.26 (from retry>=0.9.2->-r requirements.txt (line 86))
+2025-06-23T02:50:42.6310052Z   Using cached py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+2025-06-23T02:50:42.6584085Z Collecting google-cloud-appengine-logging<2.0.0,>=0.1.3 (from google-cloud-logging>=3.9.0->-r requirements.txt (line 112))
+2025-06-23T02:50:42.6597276Z   Using cached google_cloud_appengine_logging-1.6.2-py3-none-any.whl.metadata (9.9 kB)
+2025-06-23T02:50:42.6696335Z Collecting google-cloud-audit-log<1.0.0,>=0.3.1 (from google-cloud-logging>=3.9.0->-r requirements.txt (line 112))
+2025-06-23T02:50:42.6709291Z   Using cached google_cloud_audit_log-0.3.2-py3-none-any.whl.metadata (9.0 kB)
+2025-06-23T02:50:42.9017391Z INFO: pip is looking at multiple versions of grpcio-tools to determine which version is compatible with other requirements. This could take a while.
+2025-06-23T02:50:42.9025133Z Collecting grpcio-tools>=1.41.0 (from qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:42.9041352Z   Using cached grpcio_tools-1.72.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:42.9152259Z   Using cached grpcio_tools-1.71.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:42.9588641Z   Using cached grpcio_tools-1.70.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:42.9911726Z   Using cached grpcio_tools-1.69.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:43.0248664Z   Using cached grpcio_tools-1.68.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:43.0689909Z   Using cached grpcio_tools-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.3 kB)
+2025-06-23T02:50:43.0792322Z Requirement already satisfied: setuptools in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from grpcio-tools>=1.41.0->qdrant-client==1.12.1->-r requirements.txt (line 80)) (65.5.0)
+2025-06-23T02:50:43.0986958Z Collecting h2<5,>=3 (from httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:43.1000444Z   Using cached h2-4.2.0-py3-none-any.whl.metadata (5.1 kB)
+2025-06-23T02:50:43.1204636Z Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:43.1218048Z   Using cached hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+2025-06-23T02:50:43.1309355Z Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->-r requirements.txt (line 80))
+2025-06-23T02:50:43.1322722Z   Using cached hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
+2025-06-23T02:50:43.1840551Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-06-23T02:50:43.1853756Z Using cached anyio-4.9.0-py3-none-any.whl (100 kB)
+2025-06-23T02:50:43.1867851Z Using cached authlib-1.5.2-py2.py3-none-any.whl (232 kB)
+2025-06-23T02:50:43.1882304Z Using cached cachetools-5.5.2-py3-none-any.whl (10 kB)
+2025-06-23T02:50:43.1895595Z Using cached certifi-2025.4.26-py3-none-any.whl (159 kB)
+2025-06-23T02:50:43.1909962Z Using cached cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (446 kB)
+2025-06-23T02:50:43.1926547Z Using cached charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (146 kB)
+2025-06-23T02:50:43.1940263Z Using cached click-8.1.8-py3-none-any.whl (98 kB)
+2025-06-23T02:50:43.1953988Z Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (325 kB)
+2025-06-23T02:50:43.1969550Z Using cached cryptography-44.0.2-cp39-abi3-manylinux_2_34_x86_64.whl (4.2 MB)
+2025-06-23T02:50:43.2012147Z Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+2025-06-23T02:50:43.2025089Z Using cached Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
+2025-06-23T02:50:43.2039117Z Using cached wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (82 kB)
+2025-06-23T02:50:43.2052784Z Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+2025-06-23T02:50:43.2065744Z Using cached docstring_parser-0.16-py3-none-any.whl (36 kB)
+2025-06-23T02:50:43.2078799Z Using cached exceptiongroup-1.2.2-py3-none-any.whl (16 kB)
+2025-06-23T02:50:43.2092386Z Using cached faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl (31.3 MB)
+2025-06-23T02:50:43.2326150Z Using cached numpy-2.2.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)
+2025-06-23T02:50:43.2454938Z Using cached fastapi-0.115.12-py3-none-any.whl (95 kB)
+2025-06-23T02:50:43.2468693Z Using cached pydantic-2.11.3-py3-none-any.whl (443 kB)
+2025-06-23T02:50:43.2484594Z Using cached starlette-0.46.2-py3-none-any.whl (72 kB)
+2025-06-23T02:50:43.2498089Z Using cached fonttools-4.57.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.6 MB)
+2025-06-23T02:50:43.2542925Z Using cached freezegun-1.5.1-py3-none-any.whl (17 kB)
+2025-06-23T02:50:43.2555806Z Using cached google_adk-0.3.0-py3-none-any.whl (1.2 MB)
+2025-06-23T02:50:43.2576396Z Using cached google_cloud_storage-2.19.0-py2.py3-none-any.whl (131 kB)
+2025-06-23T02:50:43.2589839Z Using cached google_api_core-2.24.2-py3-none-any.whl (160 kB)
+2025-06-23T02:50:43.2603281Z Using cached google_auth-2.39.0-py2.py3-none-any.whl (212 kB)
+2025-06-23T02:50:43.2617322Z Using cached google_cloud_core-2.4.3-py2.py3-none-any.whl (29 kB)
+2025-06-23T02:50:43.2630656Z Using cached google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38 kB)
+2025-06-23T02:50:43.2643443Z Using cached googleapis_common_protos-1.70.0-py3-none-any.whl (294 kB)
+2025-06-23T02:50:43.2658259Z Using cached proto_plus-1.26.1-py3-none-any.whl (50 kB)
+2025-06-23T02:50:43.2671270Z Using cached requests-2.32.3-py3-none-any.whl (64 kB)
+2025-06-23T02:50:43.2684112Z Using cached idna-3.10-py3-none-any.whl (70 kB)
+2025-06-23T02:50:43.2697671Z Using cached rsa-4.9.1-py3-none-any.whl (34 kB)
+2025-06-23T02:50:43.2711277Z Using cached urllib3-2.4.0-py3-none-any.whl (128 kB)
+2025-06-23T02:50:43.2725157Z Using cached google_api_python_client-2.168.0-py3-none-any.whl (13.3 MB)
+2025-06-23T02:50:43.2829663Z Using cached google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
+2025-06-23T02:50:43.2842534Z Using cached httplib2-0.22.0-py3-none-any.whl (96 kB)
+2025-06-23T02:50:43.2856189Z Using cached pyparsing-3.2.3-py3-none-any.whl (111 kB)
+2025-06-23T02:50:43.2869827Z Using cached uritemplate-4.1.1-py2.py3-none-any.whl (10 kB)
+2025-06-23T02:50:43.2882951Z Using cached google_cloud_aiplatform-1.90.0-py2.py3-none-any.whl (7.6 MB)
+2025-06-23T02:50:43.2947565Z Using cached google_cloud_bigquery-3.31.0-py3-none-any.whl (250 kB)
+2025-06-23T02:50:43.2962522Z Using cached google_cloud_resource_manager-1.14.2-py3-none-any.whl (394 kB)
+2025-06-23T02:50:43.2978486Z Using cached google_resumable_media-2.7.2-py2.py3-none-any.whl (81 kB)
+2025-06-23T02:50:43.2991811Z Using cached grpc_google_iam_v1-0.14.2-py3-none-any.whl (19 kB)
+2025-06-23T02:50:43.3005237Z Using cached grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.9 MB)
+2025-06-23T02:50:43.3059052Z Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2025-06-23T02:50:43.3073876Z Using cached shapely-2.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+2025-06-23T02:50:43.3108181Z Using cached google_cloud_secret_manager-2.23.3-py3-none-any.whl (217 kB)
+2025-06-23T02:50:43.3122266Z Using cached google_cloud_speech-2.32.0-py3-none-any.whl (334 kB)
+2025-06-23T02:50:43.3138117Z Using cached google_cloud_trace-1.16.1-py3-none-any.whl (103 kB)
+2025-06-23T02:50:43.3151627Z Using cached google_genai-1.12.1-py3-none-any.whl (165 kB)
+2025-06-23T02:50:43.3165723Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-06-23T02:50:43.3179310Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-06-23T02:50:43.3192648Z Using cached typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+2025-06-23T02:50:43.3206713Z Using cached websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
+2025-06-23T02:50:43.3220105Z Using cached graphviz-0.20.3-py3-none-any.whl (47 kB)
+2025-06-23T02:50:43.3233175Z Using cached grpcio_status-1.68.0-py3-none-any.whl (14 kB)
+2025-06-23T02:50:43.3246332Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2025-06-23T02:50:43.3260222Z Using cached httptools-0.6.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (442 kB)
+2025-06-23T02:50:43.3275654Z Using cached httpx_sse-0.4.0-py3-none-any.whl (7.8 kB)
+2025-06-23T02:50:43.3288811Z Using cached importlib_metadata-8.6.1-py3-none-any.whl (26 kB)
+2025-06-23T02:50:43.3301798Z Using cached iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+2025-06-23T02:50:43.3315057Z Using cached jiter-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (352 kB)
+2025-06-23T02:50:43.3330449Z Using cached joblib-1.4.2-py3-none-any.whl (301 kB)
+2025-06-23T02:50:43.3345875Z Using cached kiwisolver-1.4.8-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)
+2025-06-23T02:50:43.3370250Z Using cached matplotlib-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.6 MB)
+2025-06-23T02:50:43.3441707Z Using cached mcp-1.6.0-py3-none-any.whl (76 kB)
+2025-06-23T02:50:43.3455308Z Using cached openai-1.76.0-py3-none-any.whl (661 kB)
+2025-06-23T02:50:43.3472750Z Using cached opentelemetry_api-1.32.1-py3-none-any.whl (65 kB)
+2025-06-23T02:50:43.3486581Z Using cached opentelemetry_exporter_gcp_trace-1.9.0-py3-none-any.whl (13 kB)
+2025-06-23T02:50:43.3499674Z Using cached opentelemetry_resourcedetector_gcp-1.9.0a0-py3-none-any.whl (20 kB)
+2025-06-23T02:50:43.3513400Z Using cached opentelemetry_sdk-1.32.1-py3-none-any.whl (118 kB)
+2025-06-23T02:50:43.3527463Z Using cached opentelemetry_semantic_conventions-0.53b1-py3-none-any.whl (188 kB)
+2025-06-23T02:50:43.3541397Z Using cached packaging-25.0-py3-none-any.whl (66 kB)
+2025-06-23T02:50:43.3554950Z Using cached passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+2025-06-23T02:50:43.3571766Z Using cached pillow-11.2.1-cp310-cp310-manylinux_2_28_x86_64.whl (4.6 MB)
+2025-06-23T02:50:43.3616988Z Using cached pluggy-1.5.0-py3-none-any.whl (20 kB)
+2025-06-23T02:50:43.3630010Z Using cached pyasn1-0.6.1-py3-none-any.whl (83 kB)
+2025-06-23T02:50:43.3643493Z Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+2025-06-23T02:50:43.3657796Z Using cached pycparser-2.22-py3-none-any.whl (117 kB)
+2025-06-23T02:50:43.3671311Z Using cached pydantic_settings-2.9.1-py3-none-any.whl (44 kB)
+2025-06-23T02:50:43.3685072Z Using cached pydantic_core-2.33.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+2025-06-23T02:50:43.3711702Z Using cached pytest-8.3.5-py3-none-any.whl (343 kB)
+2025-06-23T02:50:43.3727119Z Using cached python_jose-3.3.0-py2.py3-none-any.whl (33 kB)
+2025-06-23T02:50:43.3740066Z Using cached python_multipart-0.0.9-py3-none-any.whl (22 kB)
+2025-06-23T02:50:43.3753055Z Using cached qdrant_client-1.12.1-py3-none-any.whl (267 kB)
+2025-06-23T02:50:43.3768127Z Using cached pytest_asyncio-0.26.0-py3-none-any.whl (19 kB)
+2025-06-23T02:50:43.3781219Z Using cached python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+2025-06-23T02:50:43.3794769Z Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (751 kB)
+2025-06-23T02:50:43.3813041Z Using cached scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)
+2025-06-23T02:50:43.3919836Z Using cached scipy-1.15.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.6 MB)
+2025-06-23T02:50:43.4197525Z Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+2025-06-23T02:50:43.4210003Z Using cached slowapi-0.1.9-py3-none-any.whl (14 kB)
+2025-06-23T02:50:43.4223422Z Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+2025-06-23T02:50:43.4237050Z Using cached sqlalchemy-2.0.40-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+2025-06-23T02:50:43.4270894Z Using cached sse_starlette-2.3.3-py3-none-any.whl (10 kB)
+2025-06-23T02:50:43.4284045Z Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+2025-06-23T02:50:43.4297166Z Using cached tomli-2.2.1-py3-none-any.whl (14 kB)
+2025-06-23T02:50:43.4310022Z Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)
+2025-06-23T02:50:43.4323480Z Using cached typing_inspection-0.4.0-py3-none-any.whl (14 kB)
+2025-06-23T02:50:43.4336705Z Using cached tzlocal-5.3.1-py3-none-any.whl (18 kB)
+2025-06-23T02:50:43.4349611Z Using cached uvicorn-0.34.2-py3-none-any.whl (62 kB)
+2025-06-23T02:50:43.4363146Z Using cached uvloop-0.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.8 MB)
+2025-06-23T02:50:43.4403609Z Using cached watchfiles-1.0.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (454 kB)
+2025-06-23T02:50:43.4419755Z Using cached zipp-3.21.0-py3-none-any.whl (9.6 kB)
+2025-06-23T02:50:43.4432250Z Using cached flask-2.3.3-py3-none-any.whl (96 kB)
+2025-06-23T02:50:43.4445614Z Using cached google_cloud_firestore-2.20.2-py3-none-any.whl (358 kB)
+2025-06-23T02:50:43.4460698Z Using cached protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl (319 kB)
+2025-06-23T02:50:43.4475414Z Using cached werkzeug-2.3.8-py3-none-any.whl (242 kB)
+2025-06-23T02:50:43.4489369Z Using cached portalocker-2.10.1-py3-none-any.whl (18 kB)
+2025-06-23T02:50:43.4501916Z Using cached retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
+2025-06-23T02:50:43.4514732Z Using cached py-1.11.0-py2.py3-none-any.whl (98 kB)
+2025-06-23T02:50:43.4527955Z Using cached google_cloud_logging-3.12.1-py2.py3-none-any.whl (229 kB)
+2025-06-23T02:50:43.4542164Z Using cached google_cloud_appengine_logging-1.6.2-py3-none-any.whl (16 kB)
+2025-06-23T02:50:43.4554855Z Using cached google_cloud_audit_log-0.3.2-py3-none-any.whl (32 kB)
+2025-06-23T02:50:43.4567605Z Using cached google_cloud_billing-1.16.3-py3-none-any.whl (115 kB)
+2025-06-23T02:50:43.4580854Z Using cached google_cloud_run-0.10.18-py3-none-any.whl (333 kB)
+2025-06-23T02:50:43.4596439Z Using cached google_cloud_billing_budgets-1.17.2-py3-none-any.whl (107 kB)
+2025-06-23T02:50:43.4610198Z Using cached psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+2025-06-23T02:50:43.4624566Z Using cached google_cloud_monitoring-2.27.2-py3-none-any.whl (383 kB)
+2025-06-23T02:50:43.4639801Z Using cached bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl (284 kB)
+2025-06-23T02:50:43.4654234Z Using cached blinker-1.9.0-py3-none-any.whl (8.5 kB)
+2025-06-23T02:50:43.4667007Z Using cached decorator-5.2.1-py3-none-any.whl (9.2 kB)
+2025-06-23T02:50:43.4679662Z Using cached ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+2025-06-23T02:50:43.4693881Z Using cached greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (582 kB)
+2025-06-23T02:50:43.4710567Z Using cached grpcio_tools-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.4 MB)
+2025-06-23T02:50:43.4739330Z Using cached h2-4.2.0-py3-none-any.whl (60 kB)
+2025-06-23T02:50:43.4752395Z Using cached hpack-4.1.0-py3-none-any.whl (34 kB)
+2025-06-23T02:50:43.4764934Z Using cached hyperframe-6.1.0-py3-none-any.whl (13 kB)
+2025-06-23T02:50:43.4777838Z Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+2025-06-23T02:50:43.4790362Z Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+2025-06-23T02:50:43.4803581Z Using cached limits-5.4.0-py3-none-any.whl (60 kB)
+2025-06-23T02:50:43.4817405Z Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
+2025-06-23T02:50:44.2078844Z Installing collected packages: passlib, zipp, wrapt, websockets, uvloop, urllib3, uritemplate, tzlocal, typing_extensions, tqdm, tomli, threadpoolctl, sniffio, six, PyYAML, python-multipart, python-dotenv, pyparsing, pycparser, pyasn1, py, psutil, protobuf, portalocker, pluggy, pillow, packaging, numpy, MarkupSafe, kiwisolver, joblib, jiter, itsdangerous, iniconfig, idna, hyperframe, httpx-sse, httptools, hpack, h11, grpcio, greenlet, graphviz, google-crc32c, fonttools, exceptiongroup, docstring_parser, distro, decorator, cycler, click, charset-normalizer, certifi, cachetools, blinker, bcrypt, annotated-types, Werkzeug, uvicorn, typing-inspection, SQLAlchemy, shapely, scipy, rsa, retry, requests, python-dateutil, pytest, pydantic_core, pyasn1_modules, proto-plus, Jinja2, importlib_metadata, httplib2, httpcore, h2, grpcio-tools, googleapis-common-protos, google-resumable-media, faiss-cpu, ecdsa, Deprecated, contourpy, cffi, anyio, watchfiles, starlette, scikit-learn, python-jose, pytest-asyncio, pydantic, opentelemetry-api, matplotlib, limits, httpx, grpcio-status, google-cloud-audit-log, google-auth, freezegun, Flask, cryptography, sse-starlette, slowapi, pydantic-settings, opentelemetry-semantic-conventions, openai, grpc-google-iam-v1, google-genai, google-auth-httplib2, google-api-core, fastapi, Authlib, qdrant-client, opentelemetry-sdk, mcp, google-cloud-core, google-api-python-client, opentelemetry-resourcedetector-gcp, google-cloud-trace, google-cloud-storage, google-cloud-speech, google-cloud-secret-manager, google-cloud-run, google-cloud-resource-manager, google-cloud-monitoring, google-cloud-firestore, google-cloud-billing-budgets, google-cloud-billing, google-cloud-bigquery, google-cloud-appengine-logging, opentelemetry-exporter-gcp-trace, google-cloud-logging, google-cloud-aiplatform, google-adk
+2025-06-23T02:51:07.9233527Z 
+2025-06-23T02:51:07.9468529Z Successfully installed Authlib-1.5.2 Deprecated-1.2.18 Flask-2.3.3 Jinja2-3.1.6 MarkupSafe-3.0.2 PyYAML-6.0.2 SQLAlchemy-2.0.40 Werkzeug-2.3.8 annotated-types-0.7.0 anyio-4.9.0 bcrypt-4.3.0 blinker-1.9.0 cachetools-5.5.2 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.1 click-8.1.8 contourpy-1.3.2 cryptography-44.0.2 cycler-0.12.1 decorator-5.2.1 distro-1.9.0 docstring_parser-0.16 ecdsa-0.19.1 exceptiongroup-1.2.2 faiss-cpu-1.11.0 fastapi-0.115.12 fonttools-4.57.0 freezegun-1.5.1 google-adk-0.3.0 google-api-core-2.24.2 google-api-python-client-2.168.0 google-auth-2.39.0 google-auth-httplib2-0.2.0 google-cloud-aiplatform-1.90.0 google-cloud-appengine-logging-1.6.2 google-cloud-audit-log-0.3.2 google-cloud-bigquery-3.31.0 google-cloud-billing-1.16.3 google-cloud-billing-budgets-1.17.2 google-cloud-core-2.4.3 google-cloud-firestore-2.20.2 google-cloud-logging-3.12.1 google-cloud-monitoring-2.27.2 google-cloud-resource-manager-1.14.2 google-cloud-run-0.10.18 google-cloud-secret-manager-2.23.3 google-cloud-speech-2.32.0 google-cloud-storage-2.19.0 google-cloud-trace-1.16.1 google-crc32c-1.7.1 google-genai-1.12.1 google-resumable-media-2.7.2 googleapis-common-protos-1.70.0 graphviz-0.20.3 greenlet-3.2.3 grpc-google-iam-v1-0.14.2 grpcio-1.68.0 grpcio-status-1.68.0 grpcio-tools-1.68.0 h11-0.16.0 h2-4.2.0 hpack-4.1.0 httpcore-1.0.9 httplib2-0.22.0 httptools-0.6.4 httpx-0.28.1 httpx-sse-0.4.0 hyperframe-6.1.0 idna-3.10 importlib_metadata-8.6.1 iniconfig-2.1.0 itsdangerous-2.2.0 jiter-0.9.0 joblib-1.4.2 kiwisolver-1.4.8 limits-5.4.0 matplotlib-3.10.1 mcp-1.6.0 numpy-2.2.5 openai-1.76.0 opentelemetry-api-1.32.1 opentelemetry-exporter-gcp-trace-1.9.0 opentelemetry-resourcedetector-gcp-1.9.0a0 opentelemetry-sdk-1.32.1 opentelemetry-semantic-conventions-0.53b1 packaging-25.0 passlib-1.7.4 pillow-11.2.1 pluggy-1.5.0 portalocker-2.10.1 proto-plus-1.26.1 protobuf-5.29.5 psutil-7.0.0 py-1.11.0 pyasn1-0.6.1 pyasn1_modules-0.4.2 pycparser-2.22 pydantic-2.11.3 pydantic-settings-2.9.1 pydantic_core-2.33.1 pyparsing-3.2.3 pytest-8.3.5 pytest-asyncio-0.26.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 python-jose-3.3.0 python-multipart-0.0.9 qdrant-client-1.12.1 requests-2.32.3 retry-0.9.2 rsa-4.9.1 scikit-learn-1.6.1 scipy-1.15.2 shapely-2.1.0 six-1.17.0 slowapi-0.1.9 sniffio-1.3.1 sse-starlette-2.3.3 starlette-0.46.2 threadpoolctl-3.6.0 tomli-2.2.1 tqdm-4.67.1 typing-inspection-0.4.0 typing_extensions-4.13.2 tzlocal-5.3.1 uritemplate-4.1.1 urllib3-2.4.0 uvicorn-0.34.2 uvloop-0.21.0 watchfiles-1.0.5 websockets-15.0.1 wrapt-1.17.2 zipp-3.21.0
+2025-06-23T02:51:10.2367721Z Collecting coverage
+2025-06-23T02:51:10.2385162Z   Using cached coverage-7.9.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.9 kB)
+2025-06-23T02:51:10.3459793Z Collecting mypy
+2025-06-23T02:51:10.3474700Z   Using cached mypy-1.16.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl.metadata (2.1 kB)
+2025-06-23T02:51:10.3612668Z Collecting pytest-timeout
+2025-06-23T02:51:10.3626640Z   Using cached pytest_timeout-2.4.0-py3-none-any.whl.metadata (20 kB)
+2025-06-23T02:51:10.3653216Z Requirement already satisfied: typing_extensions>=4.6.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from mypy) (4.13.2)
+2025-06-23T02:51:10.3720613Z Collecting mypy_extensions>=1.0.0 (from mypy)
+2025-06-23T02:51:10.3734776Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-06-23T02:51:10.3838631Z Collecting pathspec>=0.9.0 (from mypy)
+2025-06-23T02:51:10.3852047Z   Using cached pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-06-23T02:51:10.3872502Z Requirement already satisfied: tomli>=1.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from mypy) (2.2.1)
+2025-06-23T02:51:10.3882846Z Requirement already satisfied: pytest>=7.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest-timeout) (8.3.5)
+2025-06-23T02:51:10.3922612Z Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (1.2.2)
+2025-06-23T02:51:10.3928043Z Requirement already satisfied: iniconfig in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (2.1.0)
+2025-06-23T02:51:10.3933264Z Requirement already satisfied: packaging in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (25.0)
+2025-06-23T02:51:10.3940432Z Requirement already satisfied: pluggy<2,>=1.5 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->pytest-timeout) (1.5.0)
+2025-06-23T02:51:10.3993203Z Using cached coverage-7.9.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (240 kB)
+2025-06-23T02:51:10.4008187Z Using cached mypy-1.16.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl (12.6 MB)
+2025-06-23T02:51:10.4111716Z Using cached pytest_timeout-2.4.0-py3-none-any.whl (14 kB)
+2025-06-23T02:51:10.4124875Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-06-23T02:51:10.4137656Z Using cached pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-06-23T02:51:10.7996923Z Installing collected packages: pathspec, mypy_extensions, coverage, pytest-timeout, mypy
+2025-06-23T02:51:12.0880365Z 
+2025-06-23T02:51:12.1073786Z Successfully installed coverage-7.9.1 mypy-1.16.1 mypy_extensions-1.1.0 pathspec-0.12.1 pytest-timeout-2.4.0
+2025-06-23T02:51:12.2070525Z ##[group]Run gcloud auth list
+2025-06-23T02:51:12.2070825Z [36;1mgcloud auth list[0m
+2025-06-23T02:51:12.2071055Z [36;1mgcloud config list[0m
+2025-06-23T02:51:12.2130552Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:51:12.2130790Z env:
+2025-06-23T02:51:12.2131221Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:12.2131929Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:12.2132570Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:12.2133078Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:12.2133336Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:12.2133570Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:12.2133791Z   GCP_PROJECT: ***
+2025-06-23T02:51:12.2134014Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:12.2134338Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:12.2134803Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:12.2135128Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:12.2135526Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:12.2135928Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:12.2136273Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:12.2136616Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:12.2136960Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:12.2137260Z ##[endgroup]
+2025-06-23T02:51:12.6710603Z                             Credentialed Accounts
+2025-06-23T02:51:12.6711036Z 
+2025-06-23T02:51:12.6711216Z To set the active account, run:
+2025-06-23T02:51:12.6711689Z     $ gcloud config set account `ACCOUNT`
+2025-06-23T02:51:12.6712013Z 
+2025-06-23T02:51:12.6712166Z ACTIVE  ACCOUNT
+2025-06-23T02:51:12.6712904Z *       ***
+2025-06-23T02:51:13.1653168Z [auth]
+2025-06-23T02:51:13.1654097Z credential_file_override = /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.1655270Z [core]
+2025-06-23T02:51:13.1656434Z account = ***
+2025-06-23T02:51:13.1656887Z disable_usage_reporting = True
+2025-06-23T02:51:13.1657426Z project = ***
+2025-06-23T02:51:13.1657809Z [metrics]
+2025-06-23T02:51:13.1658196Z environment = github-actions-setup-gcloud
+2025-06-23T02:51:13.1658579Z environment_version = 1.1.1
+2025-06-23T02:51:13.1658787Z 
+2025-06-23T02:51:13.1658926Z Your active configuration is: [default]
+2025-06-23T02:51:13.2241214Z ##[group]Run echo "Running pytest with --qdrant-mock flag..."
+2025-06-23T02:51:13.2241680Z [36;1mecho "Running pytest with --qdrant-mock flag..."[0m
+2025-06-23T02:51:13.2242026Z [36;1mecho "Running full test suite..."[0m
+2025-06-23T02:51:13.2242414Z [36;1mcoverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v[0m
+2025-06-23T02:51:13.2242824Z [36;1mecho "Generating coverage report..."[0m
+2025-06-23T02:51:13.2243124Z [36;1mcoverage report --show-missing[0m
+2025-06-23T02:51:13.2243390Z [36;1mcoverage xml[0m
+2025-06-23T02:51:13.2302155Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:51:13.2302408Z env:
+2025-06-23T02:51:13.2302844Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2303574Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2304226Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2304966Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:13.2305228Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:13.2305472Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:13.2305747Z   GCP_PROJECT: ***
+2025-06-23T02:51:13.2305976Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:13.2306266Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:13.2306608Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:13.2306938Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2307349Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:13.2307759Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308117Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308465Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308838Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:13.2309162Z   PYTHONDONTWRITEBYTECODE: 1
+2025-06-23T02:51:13.2309386Z   RUN_DEFERRED: 0
+2025-06-23T02:51:13.2309575Z   PYTEST_TIMEOUT: 8
+2025-06-23T02:51:13.2309760Z   BATCH_SIZE: 3
+2025-06-23T02:51:13.2309978Z   GCP_PROJECT_ID: ***
+2025-06-23T02:51:13.2310198Z   GCP_REGION: asia-southeast1
+2025-06-23T02:51:13.2310417Z   CI: true
+2025-06-23T02:51:13.2310595Z   GITHUB_ACTIONS: true
+2025-06-23T02:51:13.2310795Z ##[endgroup]
+2025-06-23T02:51:13.2387550Z Running pytest with --qdrant-mock flag...
+2025-06-23T02:51:13.2387998Z Running full test suite...
+2025-06-23T02:51:13.9188243Z ============================= test session starts ==============================
+2025-06-23T02:51:13.9189051Z platform linux -- Python 3.10.18, pytest-8.3.5, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.18/x64/bin/python
+2025-06-23T02:51:13.9190836Z cachedir: .pytest_cache
+2025-06-23T02:51:13.9191194Z rootdir: /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:13.9193179Z configfile: pytest.ini
+2025-06-23T02:51:13.9193482Z testpaths: tests
+2025-06-23T02:51:13.9195085Z plugins: asyncio-0.26.0, timeout-2.4.0, anyio-4.9.0
+2025-06-23T02:51:13.9195955Z asyncio: mode=auto, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+2025-06-23T02:51:13.9196427Z timeout: 8.0s
+2025-06-23T02:51:13.9196623Z timeout method: signal
+2025-06-23T02:51:20.4266973Z timeout func_only: False
+2025-06-23T02:51:20.4267540Z collecting ... collected 724 items
+2025-06-23T02:51:20.4267907Z 
+2025-06-23T02:51:20.6242347Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check PASSED [  0%]
+2025-06-23T02:51:20.6458015Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check PASSED [  0%]
+2025-06-23T02:51:20.6690162Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch PASSED [  0%]
+2025-06-23T02:51:20.6912837Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization PASSED [  0%]
+2025-06-23T02:51:20.8237977Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization PASSED [  0%]
+2025-06-23T02:51:20.8371473Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison PASSED [  0%]
+2025-06-23T02:51:20.8611645Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization PASSED [  0%]
+2025-06-23T02:51:20.8819328Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization PASSED [  1%]
+2025-06-23T02:51:20.8950961Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_basic_operations PASSED [  1%]
+2025-06-23T02:51:21.1087416Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_ttl_expiration PASSED [  1%]
+2025-06-23T02:51:21.1213994Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_lru_eviction PASSED [  1%]
+2025-06-23T02:51:21.3349874Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_cleanup_expired PASSED [  1%]
+2025-06-23T02:51:21.3479292Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_clear PASSED [  1%]
+2025-06-23T02:51:21.3605256Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_update_existing_key PASSED [  1%]
+2025-06-23T02:51:21.3727555Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_get_cache_key_generation PASSED [  2%]
+2025-06-23T02:51:21.3869061Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_initialize_caches PASSED [  2%]
+2025-06-23T02:51:21.4001728Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_initialize_caches_disabled PASSED [  2%]
+2025-06-23T02:51:21.4722678Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_health_endpoint_error_handling PASSED [  2%]
+2025-06-23T02:51:21.6092098Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_authentication_error_handling PASSED [  2%]
+2025-06-23T02:51:21.6237908Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_root_endpoint PASSED [  2%]
+2025-06-23T02:51:21.6386882Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_rate_limiting_key_generation PASSED [  2%]
+2025-06-23T02:51:21.6540265Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_save_endpoint_error_handling PASSED [  3%]
+2025-06-23T02:51:21.9685293Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limiting PASSED [  3%]
+2025-06-23T02:51:22.2749701Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_error_handling FAILED [  3%]
+2025-06-23T02:51:22.2904688Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_successful_initialization PASSED [  3%]
+2025-06-23T02:51:22.3046873Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_empty_list PASSED [  3%]
+2025-06-23T02:51:22.3197348Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_with_errors PASSED [  3%]
+2025-06-23T02:51:22.7204317Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_timeout FAILED [  3%]
+2025-06-23T02:51:22.7327756Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_metadata PASSED [  4%]
+2025-06-23T02:51:22.7447209Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_tags PASSED [  4%]
+2025-06-23T02:51:22.7573689Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_tags_empty PASSED [  4%]
+2025-06-23T02:51:22.7699301Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_path PASSED [  4%]
+2025-06-23T02:51:22.7821570Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_path_empty PASSED [  4%]
+2025-06-23T02:51:22.7950043Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_build_hierarchy_path PASSED [  4%]
+2025-06-23T02:51:22.8118977Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_build_hierarchy_path_uncategorized PASSED [  4%]
+2025-06-23T02:51:23.2876858Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_rate_limit PASSED [  4%]
+2025-06-23T02:51:23.3009461Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_connection_error PASSED [  5%]
+2025-06-23T02:51:23.3143510Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_success PASSED [  5%]
+2025-06-23T02:51:23.3277665Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_other_error PASSED [  5%]
+2025-06-23T02:51:23.3433292Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status PASSED [  5%]
+2025-06-23T02:51:23.3587354Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_no_results PASSED [  5%]
+2025-06-23T02:51:23.4976784Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_error PASSED [  5%]
+2025-06-23T02:51:23.5140724Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_no_openai PASSED [  5%]
+2025-06-23T02:51:23.5451554Z tests/test_cli140e_coverage_additional.py::TestAPIMCPGatewayCaching::test_get_cached_result FAILED [  6%]
+2025-06-23T02:51:23.5452386Z 
+2025-06-23T02:51:23.5452592Z =================================== FAILURES ===================================
+2025-06-23T02:51:23.5453408Z ____ TestQdrantVectorizationToolCoverage.test_initialization_error_handling ____
+2025-06-23T02:51:23.5454626Z tests/test_cli140e_coverage.py:228: in test_initialization_error_handling
+2025-06-23T02:51:23.5455360Z     with pytest.raises(Exception):
+2025-06-23T02:51:23.5455860Z E   Failed: DID NOT RAISE <class 'Exception'>
+2025-06-23T02:51:23.5456671Z _ TestQdrantVectorizationToolCoverage.test_batch_get_firestore_metadata_timeout _
+2025-06-23T02:51:23.5457535Z tests/test_cli140e_coverage.py:299: in slow_operation
+2025-06-23T02:51:23.5458144Z     await asyncio.sleep(1)  # Longer than 300ms timeout
+2025-06-23T02:51:23.5458933Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:605: in sleep
+2025-06-23T02:51:23.5459668Z     return await future
+2025-06-23T02:51:23.5460090Z E   asyncio.exceptions.CancelledError
+2025-06-23T02:51:23.5460419Z 
+2025-06-23T02:51:23.5460742Z During handling of the above exception, another exception occurred:
+2025-06-23T02:51:23.5461649Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:456: in wait_for
+2025-06-23T02:51:23.5462406Z     return fut.result()
+2025-06-23T02:51:23.5462826Z E   asyncio.exceptions.CancelledError
+2025-06-23T02:51:23.5463160Z 
+2025-06-23T02:51:23.5463476Z The above exception was the direct cause of the following exception:
+2025-06-23T02:51:23.5464607Z ADK/agent_data/tools/qdrant_vectorization_tool.py:164: in _batch_get_firestore_metadata
+2025-06-23T02:51:23.5465412Z     results = await asyncio.wait_for(
+2025-06-23T02:51:23.5466157Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:458: in wait_for
+2025-06-23T02:51:23.5466947Z     raise exceptions.TimeoutError() from exc
+2025-06-23T02:51:23.5467469Z E   asyncio.exceptions.TimeoutError
+2025-06-23T02:51:23.5467793Z 
+2025-06-23T02:51:23.5468098Z During handling of the above exception, another exception occurred:
+2025-06-23T02:51:23.5468954Z tests/test_cli140e_coverage.py:304: in test_batch_get_firestore_metadata_timeout
+2025-06-23T02:51:23.5470132Z     result = await tool._batch_get_firestore_metadata(["doc1"])
+2025-06-23T02:51:23.5470999Z ADK/agent_data/tools/qdrant_vectorization_tool.py:171: in _batch_get_firestore_metadata
+2025-06-23T02:51:23.5472029Z     logger.warning(f"Batch Firestore query failed, falling back to individual queries: {e}")
+2025-06-23T02:51:23.5473161Z E   UnboundLocalError: local variable 'e' referenced before assignment
+2025-06-23T02:51:23.5473973Z ------------------------------ Captured log call -------------------------------
+2025-06-23T02:51:23.5475348Z WARNING  ADK.agent_data.tools.qdrant_vectorization_tool:qdrant_vectorization_tool.py:169 Batch Firestore query timed out for 1 documents
+2025-06-23T02:51:23.5476586Z _______________ TestAPIMCPGatewayCaching.test_get_cached_result ________________
+2025-06-23T02:51:23.5477454Z tests/test_cli140e_coverage_additional.py:22: in test_get_cached_result
+2025-06-23T02:51:23.5478117Z     assert result == {"cached": "result"}
+2025-06-23T02:51:23.5478662Z E   AssertionError: assert None == {'cached': 'result'}
+2025-06-23T02:51:23.5479282Z =========================== short test summary info ============================
+2025-06-23T02:51:23.5480570Z FAILED tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_error_handling - Failed: DID NOT RAISE <class 'Exception'>
+2025-06-23T02:51:23.5482692Z FAILED tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_timeout - UnboundLocalError: local variable 'e' referenced before assignment
+2025-06-23T02:51:23.5484924Z FAILED tests/test_cli140e_coverage_additional.py::TestAPIMCPGatewayCaching::test_get_cached_result - AssertionError: assert None == {'cached': 'result'}
+2025-06-23T02:51:23.5486152Z !!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 3 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+2025-06-23T02:51:23.5486801Z =================== 3 failed, 41 passed, 2 warnings in 9.63s ===================
+2025-06-23T02:51:24.0717055Z ##[error]Process completed with exit code 1.
+2025-06-23T02:51:24.0791385Z ##[group]Run codecov/codecov-action@v4
+2025-06-23T02:51:24.0791678Z with:
+2025-06-23T02:51:24.0791870Z   file: ./coverage.xml
+2025-06-23T02:51:24.0792080Z   flags: unittests
+2025-06-23T02:51:24.0792292Z   name: codecov-umbrella
+2025-06-23T02:51:24.0792512Z env:
+2025-06-23T02:51:24.0792939Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:24.0793654Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:24.0794295Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:24.0795021Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:24.0795305Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:24.0795539Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:24.0795762Z   GCP_PROJECT: ***
+2025-06-23T02:51:24.0795987Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:24.0796317Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:24.0796682Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:24.0797018Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:24.0797421Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:24.0797820Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:24.0798175Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:24.0798528Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:24.0798889Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:24.0799196Z ##[endgroup]
+2025-06-23T02:51:24.1633049Z eventName: push
+2025-06-23T02:51:24.1642024Z ==> linux OS detected
+2025-06-23T02:51:24.3300950Z https://cli.codecov.io/latest/linux/codecov.SHA256SUM
+2025-06-23T02:51:24.4135503Z gpg: directory '/home/runner/.gnupg' created
+2025-06-23T02:51:24.4138533Z gpg: keybox '/home/runner/.gnupg/pubring.kbx' created
+2025-06-23T02:51:24.4164808Z gpg: /home/runner/.gnupg/trustdb.gpg: trustdb created
+2025-06-23T02:51:24.4165983Z gpg: key 806BB28AED779869: public key "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" imported
+2025-06-23T02:51:24.4341213Z gpg: Total number processed: 1
+2025-06-23T02:51:24.4341999Z gpg:               imported: 1
+2025-06-23T02:51:24.4405683Z gpg: Signature made Thu May 29 21:23:31 2025 UTC
+2025-06-23T02:51:24.4406605Z gpg:                using RSA key 27034E7FDB850E0BBC2C62FF806BB28AED779869
+2025-06-23T02:51:24.4409502Z gpg: Good signature from "Codecov Uploader (Codecov Uploader Verification Key) <security@codecov.io>" [unknown]
+2025-06-23T02:51:24.4410486Z gpg: WARNING: This key is not certified with a trusted signature!
+2025-06-23T02:51:24.4411213Z gpg:          There is no indication that the signature belongs to the owner.
+2025-06-23T02:51:24.4411994Z Primary key fingerprint: 2703 4E7F DB85 0E0B BC2C  62FF 806B B28A ED77 9869
+2025-06-23T02:51:24.4657342Z ==> Uploader SHASUM verified (8e0a7ea74f31ee893d11051143fa223cc30f110287ad275e275ca493ddd78eaa  codecov)
+2025-06-23T02:51:24.4658239Z ==> Running version latest
+2025-06-23T02:51:24.5524201Z Could not pull latest version information: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+2025-06-23T02:51:24.5525813Z ==> Running git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:24.5563194Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:24.5616283Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit'
+2025-06-23T02:51:24.5617957Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-commit --git-service github
+2025-06-23T02:51:24.9053919Z info - 2025-06-23 02:51:24,904 -- ci service found: github-actions
+2025-06-23T02:51:24.9148606Z warning - 2025-06-23 02:51:24,914 -- No config file could be found. Ignoring config.
+2025-06-23T02:51:24.9446267Z warning - 2025-06-23 02:51:24,944 -- Branch `init` is protected but no token was provided
+2025-06-23T02:51:24.9447467Z warning - 2025-06-23 02:51:24,944 -- For information on Codecov upload tokens, see https://docs.codecov.com/docs/codecov-tokens
+2025-06-23T02:51:25.2072363Z info - 2025-06-23 02:51:25,206 -- Process Commit creating complete
+2025-06-23T02:51:25.2073308Z error - 2025-06-23 02:51:25,207 -- Commit creating failed: {"message":"Token required - not valid tokenless upload"}
+2025-06-23T02:51:25.3143395Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report'
+2025-06-23T02:51:25.3145727Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov create-report --git-service github
+2025-06-23T02:51:25.6539683Z info - 2025-06-23 02:51:25,653 -- ci service found: github-actions
+2025-06-23T02:51:25.6636807Z warning - 2025-06-23 02:51:25,663 -- No config file could be found. Ignoring config.
+2025-06-23T02:51:25.8925764Z info - 2025-06-23 02:51:25,892 -- Process Report creating complete
+2025-06-23T02:51:25.8930582Z error - 2025-06-23 02:51:25,892 -- Report creating failed: {"message":"Token required - not valid tokenless upload"}
+2025-06-23T02:51:26.0082867Z ==> Running command '/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload'
+2025-06-23T02:51:26.0086397Z [command]/home/runner/work/_actions/codecov/codecov-action/v4/dist/codecov do-upload -f ./coverage.xml -F unittests --git-service github -n codecov-umbrella
+2025-06-23T02:51:26.3515779Z info - 2025-06-23 02:51:26,351 -- ci service found: github-actions
+2025-06-23T02:51:26.3611951Z warning - 2025-06-23 02:51:26,360 -- No config file could be found. Ignoring config.
+2025-06-23T02:51:26.3917645Z warning - 2025-06-23 02:51:26,391 -- xcrun is not installed or can't be found.
+2025-06-23T02:51:26.3961979Z warning - 2025-06-23 02:51:26,396 -- No gcov data found.
+2025-06-23T02:51:26.3969157Z info - 2025-06-23 02:51:26,396 -- Generating coverage.xml report in /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:27.7831208Z info - 2025-06-23 02:51:27,782 -- Wrote XML report to coverage.xml
+2025-06-23T02:51:27.8079532Z info - 2025-06-23 02:51:27,807 -- Found 4 coverage files to report
+2025-06-23T02:51:27.8080821Z info - 2025-06-23 02:51:27,807 -- > /home/runner/work/agent-data/agent-data/Test Suite/10_Upload coverage reports.txt
+2025-06-23T02:51:27.8082069Z info - 2025-06-23 02:51:27,807 -- > /home/runner/work/agent-data/agent-data/coverage.xml
+2025-06-23T02:51:27.8083249Z info - 2025-06-23 02:51:27,808 -- > /home/runner/work/agent-data/agent-data/Test Suite/9_Run tests with coverage.txt
+2025-06-23T02:51:27.8084093Z info - 2025-06-23 02:51:27,808 -- > /home/runner/work/agent-data/agent-data/tests/test_cli140m12_coverage.py.backup
+2025-06-23T02:51:28.3016382Z info - 2025-06-23 02:51:28,301 -- Process Upload complete
+2025-06-23T02:51:28.3017909Z error - 2025-06-23 02:51:28,301 -- Upload failed: {"message":"Token required - not valid tokenless upload"}
+2025-06-23T02:51:28.4255948Z ##[group]Run echo "Running mypy type checking..."
+2025-06-23T02:51:28.4256585Z [36;1mecho "Running mypy type checking..."[0m
+2025-06-23T02:51:28.4257473Z [36;1mmypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"[0m
+2025-06-23T02:51:28.4334993Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:51:28.4335255Z env:
+2025-06-23T02:51:28.4335702Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.4336416Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.4337038Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.4337532Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:28.4337807Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:28.4338040Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:28.4338259Z   GCP_PROJECT: ***
+2025-06-23T02:51:28.4338529Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:28.4338823Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:28.4339166Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:28.4339494Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.4339935Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:28.4340326Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.4340672Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.4341015Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.4341367Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:28.4341672Z ##[endgroup]
+2025-06-23T02:51:28.4423828Z Running mypy type checking...
+2025-06-23T02:51:28.5887237Z agent-data is not a valid Python package name
+2025-06-23T02:51:28.6054232Z MyPy completed with warnings
+2025-06-23T02:51:28.6092519Z ##[group]Run actions/upload-artifact@v4
+2025-06-23T02:51:28.6092839Z with:
+2025-06-23T02:51:28.6093026Z   name: test-results
+2025-06-23T02:51:28.6093269Z   path: coverage.xml
 htmlcov/
 .pytest_cache/
 
-2025-06-23T02:45:57.2615975Z   if-no-files-found: warn
-2025-06-23T02:45:57.2616200Z   compression-level: 6
-2025-06-23T02:45:57.2616404Z   overwrite: false
-2025-06-23T02:45:57.2616609Z   include-hidden-files: false
-2025-06-23T02:45:57.2616830Z env:
-2025-06-23T02:45:57.2617255Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.2617959Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.2618596Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:57.2619183Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:57.2619452Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:57.2619713Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:57.2619937Z   GCP_PROJECT: ***
-2025-06-23T02:45:57.2620160Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:57.2620453Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:57.2620809Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:57.2621151Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.2621564Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:57.2621967Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.2622324Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.2622678Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:57.2623276Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:57.2623582Z ##[endgroup]
-2025-06-23T02:45:57.4789018Z Multiple search paths detected. Calculating the least common ancestor of all paths
-2025-06-23T02:45:57.4794533Z The least common ancestor is /home/runner/work/agent-data/agent-data. This will be the root directory of the artifact
-2025-06-23T02:45:57.4795616Z With the provided path, there will be 1 file uploaded
-2025-06-23T02:45:57.4800698Z Artifact name is valid!
-2025-06-23T02:45:57.4801950Z Root directory input is valid!
-2025-06-23T02:45:57.5854737Z Beginning upload of artifact content to blob storage
-2025-06-23T02:45:57.6456359Z Uploaded bytes 28440
-2025-06-23T02:45:57.6588715Z Finished uploading artifact content to blob storage!
-2025-06-23T02:45:57.6592067Z SHA256 digest of uploaded artifact zip is 4f14767dff4771fb3b00d06a9c5d54a0b40c2ca9275e45bcd0686c1af824f4b8
-2025-06-23T02:45:57.6593953Z Finalizing artifact upload
-2025-06-23T02:45:57.7322285Z Artifact test-results.zip successfully finalized. Artifact ID 3379574828
-2025-06-23T02:45:57.7323545Z Artifact test-results has been successfully uploaded! Final size is 28440 bytes. Artifact ID is 3379574828
-2025-06-23T02:45:57.7330989Z Artifact download URL: https://github.com/Huyen1974/agent-data/actions/runs/15813993908/artifacts/3379574828
-2025-06-23T02:45:57.7495090Z Post job cleanup.
-2025-06-23T02:45:57.8355344Z Removed exported credentials at "/home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json".
-2025-06-23T02:45:57.8449645Z Post job cleanup.
-2025-06-23T02:45:57.9451108Z [command]/usr/bin/git version
-2025-06-23T02:45:57.9495160Z git version 2.49.0
-2025-06-23T02:45:57.9536701Z Copying '/home/runner/.gitconfig' to '/home/runner/work/_temp/e2c83655-f402-4c0f-ae1e-093e6986691d/.gitconfig'
-2025-06-23T02:45:57.9549075Z Temporarily overriding HOME='/home/runner/work/_temp/e2c83655-f402-4c0f-ae1e-093e6986691d' before making global git config changes
-2025-06-23T02:45:57.9550430Z Adding repository directory to the temporary git global config as a safe directory
-2025-06-23T02:45:57.9565078Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:57.9609090Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2025-06-23T02:45:57.9647546Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2025-06-23T02:45:57.9915898Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2025-06-23T02:45:57.9943628Z http.https://github.com/.extraheader
-2025-06-23T02:45:57.9959001Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-2025-06-23T02:45:57.9994202Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2025-06-23T02:45:58.0350108Z Cleaning up orphan processes
+2025-06-23T02:51:28.6093554Z   if-no-files-found: warn
+2025-06-23T02:51:28.6093781Z   compression-level: 6
+2025-06-23T02:51:28.6093998Z   overwrite: false
+2025-06-23T02:51:28.6094211Z   include-hidden-files: false
+2025-06-23T02:51:28.6094687Z env:
+2025-06-23T02:51:28.6095353Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.6096342Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.6096994Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:28.6097500Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:28.6097758Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:28.6098020Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:28.6098428Z   GCP_PROJECT: ***
+2025-06-23T02:51:28.6098651Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:28.6098946Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:28.6099297Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:28.6099626Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.6100039Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:28.6100436Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.6100783Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.6101130Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:28.6101492Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:28.6101790Z ##[endgroup]
+2025-06-23T02:51:28.8262934Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2025-06-23T02:51:28.8268246Z The least common ancestor is /home/runner/work/agent-data/agent-data. This will be the root directory of the artifact
+2025-06-23T02:51:28.8269264Z With the provided path, there will be 1 file uploaded
+2025-06-23T02:51:28.8273904Z Artifact name is valid!
+2025-06-23T02:51:28.8275503Z Root directory input is valid!
+2025-06-23T02:51:29.1005036Z Beginning upload of artifact content to blob storage
+2025-06-23T02:51:29.5042606Z Uploaded bytes 28933
+2025-06-23T02:51:29.5860943Z Finished uploading artifact content to blob storage!
+2025-06-23T02:51:29.5863964Z SHA256 digest of uploaded artifact zip is 557814db15f7c1668cb9ff88ece2a363126f7759b5b495f676044dcd76c97a50
+2025-06-23T02:51:29.5866285Z Finalizing artifact upload
+2025-06-23T02:51:29.7224796Z Artifact test-results.zip successfully finalized. Artifact ID 3379594094
+2025-06-23T02:51:29.7225917Z Artifact test-results has been successfully uploaded! Final size is 28933 bytes. Artifact ID is 3379594094
+2025-06-23T02:51:29.7232849Z Artifact download URL: https://github.com/Huyen1974/agent-data/actions/runs/15814059760/artifacts/3379594094
+2025-06-23T02:51:29.7369351Z Post job cleanup.
+2025-06-23T02:51:29.8390560Z Removed exported credentials at "/home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json".
+2025-06-23T02:51:29.8477988Z Post job cleanup.
+2025-06-23T02:51:29.9407718Z [command]/usr/bin/git version
+2025-06-23T02:51:29.9445142Z git version 2.49.0
+2025-06-23T02:51:29.9482856Z Copying '/home/runner/.gitconfig' to '/home/runner/work/_temp/9411c1ce-202a-4d26-adf6-3f0ddbc12130/.gitconfig'
+2025-06-23T02:51:29.9500905Z Temporarily overriding HOME='/home/runner/work/_temp/9411c1ce-202a-4d26-adf6-3f0ddbc12130' before making global git config changes
+2025-06-23T02:51:29.9502479Z Adding repository directory to the temporary git global config as a safe directory
+2025-06-23T02:51:29.9507675Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:29.9544030Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-06-23T02:51:29.9578314Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-06-23T02:51:29.9812765Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-06-23T02:51:29.9833160Z http.https://github.com/.extraheader
+2025-06-23T02:51:29.9846538Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-06-23T02:51:29.9878705Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-06-23T02:51:30.0218609Z Cleaning up orphan processes

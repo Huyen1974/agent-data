@@ -1,64 +1,137 @@
-﻿2025-06-23T02:45:44.4446129Z ##[group]Run echo "Running pytest with --qdrant-mock flag..."
-2025-06-23T02:45:44.4446616Z [36;1mecho "Running pytest with --qdrant-mock flag..."[0m
-2025-06-23T02:45:44.4446959Z [36;1mecho "Running full test suite..."[0m
-2025-06-23T02:45:44.4447351Z [36;1mcoverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v[0m
-2025-06-23T02:45:44.4447753Z [36;1mecho "Generating coverage report..."[0m
-2025-06-23T02:45:44.4448042Z [36;1mcoverage report --show-missing[0m
-2025-06-23T02:45:44.4448308Z [36;1mcoverage xml[0m
-2025-06-23T02:45:44.4507413Z shell: /usr/bin/bash -e {0}
-2025-06-23T02:45:44.4507662Z env:
-2025-06-23T02:45:44.4508118Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4508877Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4509517Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-438a069b7eb12f12.json
-2025-06-23T02:45:44.4510058Z   CLOUDSDK_CORE_PROJECT: ***
-2025-06-23T02:45:44.4510328Z   CLOUDSDK_PROJECT: ***
-2025-06-23T02:45:44.4510565Z   GCLOUD_PROJECT: ***
-2025-06-23T02:45:44.4510830Z   GCP_PROJECT: ***
-2025-06-23T02:45:44.4511055Z   GOOGLE_CLOUD_PROJECT: ***
-2025-06-23T02:45:44.4511348Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-2025-06-23T02:45:44.4511695Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
-2025-06-23T02:45:44.4512024Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4512424Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
-2025-06-23T02:45:44.4512822Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513187Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513538Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
-2025-06-23T02:45:44.4513890Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
-2025-06-23T02:45:44.4514211Z   PYTHONDONTWRITEBYTECODE: 1
-2025-06-23T02:45:44.4514710Z   RUN_DEFERRED: 0
-2025-06-23T02:45:44.4514906Z   PYTEST_TIMEOUT: 8
-2025-06-23T02:45:44.4515102Z   BATCH_SIZE: 3
-2025-06-23T02:45:44.4515327Z   GCP_PROJECT_ID: ***
-2025-06-23T02:45:44.4515539Z   GCP_REGION: asia-southeast1
-2025-06-23T02:45:44.4515755Z   CI: true
-2025-06-23T02:45:44.4515930Z   GITHUB_ACTIONS: true
-2025-06-23T02:45:44.4516128Z ##[endgroup]
-2025-06-23T02:45:44.4596100Z Running pytest with --qdrant-mock flag...
-2025-06-23T02:45:44.4596628Z Running full test suite...
-2025-06-23T02:45:45.2868976Z ============================= test session starts ==============================
-2025-06-23T02:45:45.2870018Z platform linux -- Python 3.10.18, pytest-8.3.5, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.18/x64/bin/python
-2025-06-23T02:45:45.2870864Z cachedir: .pytest_cache
-2025-06-23T02:45:45.2871314Z rootdir: /home/runner/work/agent-data/agent-data
-2025-06-23T02:45:45.2871848Z configfile: pytest.ini
-2025-06-23T02:45:45.2872223Z testpaths: tests
-2025-06-23T02:45:45.2872670Z plugins: asyncio-0.26.0, timeout-2.4.0, anyio-4.9.0
-2025-06-23T02:45:45.2873542Z asyncio: mode=auto, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
-2025-06-23T02:45:45.2874650Z timeout: 8.0s
-2025-06-23T02:45:45.2875010Z timeout method: signal
-2025-06-23T02:45:45.2875394Z timeout func_only: False
-2025-06-23T02:45:52.3670304Z collecting ... collected 715 items / 1 error
-2025-06-23T02:45:52.3670760Z 
-2025-06-23T02:45:52.3670950Z ==================================== ERRORS ====================================
-2025-06-23T02:45:52.3671624Z _______________ ERROR collecting tests/test_cli140f_coverage.py ________________
-2025-06-23T02:45:52.3672716Z ImportError while importing test module '/home/runner/work/agent-data/agent-data/tests/test_cli140f_coverage.py'.
-2025-06-23T02:45:52.3676560Z Hint: make sure your test modules/packages have valid Python names.
-2025-06-23T02:45:52.3677181Z Traceback:
-2025-06-23T02:45:52.3677892Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/importlib/__init__.py:126: in import_module
-2025-06-23T02:45:52.3679152Z     return _bootstrap._gcd_import(name[level:], package, level)
-2025-06-23T02:45:52.3679787Z tests/test_cli140f_coverage.py:12: in <module>
-2025-06-23T02:45:52.3680487Z     from src.agent_data_manager.tools.qdrant_vectorization_tool import (
-2025-06-23T02:45:52.3681270Z E   ModuleNotFoundError: No module named 'src.agent_data_manager'
-2025-06-23T02:45:52.3681954Z =========================== short test summary info ============================
-2025-06-23T02:45:52.3682518Z ERROR tests/test_cli140f_coverage.py
-2025-06-23T02:45:52.3683142Z !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-2025-06-23T02:45:52.3683767Z =============================== 1 error in 7.09s ===============================
-2025-06-23T02:45:52.8730323Z ##[error]Process completed with exit code 2.
+﻿2025-06-23T02:51:13.2241200Z ##[group]Run echo "Running pytest with --qdrant-mock flag..."
+2025-06-23T02:51:13.2241677Z [36;1mecho "Running pytest with --qdrant-mock flag..."[0m
+2025-06-23T02:51:13.2242023Z [36;1mecho "Running full test suite..."[0m
+2025-06-23T02:51:13.2242411Z [36;1mcoverage run -m pytest --maxfail=3 --disable-warnings --qdrant-mock -v[0m
+2025-06-23T02:51:13.2242822Z [36;1mecho "Generating coverage report..."[0m
+2025-06-23T02:51:13.2243122Z [36;1mcoverage report --show-missing[0m
+2025-06-23T02:51:13.2243388Z [36;1mcoverage xml[0m
+2025-06-23T02:51:13.2302149Z shell: /usr/bin/bash -e {0}
+2025-06-23T02:51:13.2302405Z env:
+2025-06-23T02:51:13.2302840Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2303571Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2304202Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-31e0b18f3820797c.json
+2025-06-23T02:51:13.2304962Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T02:51:13.2305225Z   CLOUDSDK_PROJECT: ***
+2025-06-23T02:51:13.2305468Z   GCLOUD_PROJECT: ***
+2025-06-23T02:51:13.2305745Z   GCP_PROJECT: ***
+2025-06-23T02:51:13.2305973Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T02:51:13.2306263Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T02:51:13.2306605Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T02:51:13.2306936Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2307347Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T02:51:13.2307756Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308109Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308462Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T02:51:13.2308836Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T02:51:13.2309157Z   PYTHONDONTWRITEBYTECODE: 1
+2025-06-23T02:51:13.2309384Z   RUN_DEFERRED: 0
+2025-06-23T02:51:13.2309573Z   PYTEST_TIMEOUT: 8
+2025-06-23T02:51:13.2309758Z   BATCH_SIZE: 3
+2025-06-23T02:51:13.2309975Z   GCP_PROJECT_ID: ***
+2025-06-23T02:51:13.2310196Z   GCP_REGION: asia-southeast1
+2025-06-23T02:51:13.2310414Z   CI: true
+2025-06-23T02:51:13.2310593Z   GITHUB_ACTIONS: true
+2025-06-23T02:51:13.2310792Z ##[endgroup]
+2025-06-23T02:51:13.2387536Z Running pytest with --qdrant-mock flag...
+2025-06-23T02:51:13.2387995Z Running full test suite...
+2025-06-23T02:51:13.9188205Z ============================= test session starts ==============================
+2025-06-23T02:51:13.9189047Z platform linux -- Python 3.10.18, pytest-8.3.5, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.18/x64/bin/python
+2025-06-23T02:51:13.9190831Z cachedir: .pytest_cache
+2025-06-23T02:51:13.9191190Z rootdir: /home/runner/work/agent-data/agent-data
+2025-06-23T02:51:13.9193168Z configfile: pytest.ini
+2025-06-23T02:51:13.9193462Z testpaths: tests
+2025-06-23T02:51:13.9195077Z plugins: asyncio-0.26.0, timeout-2.4.0, anyio-4.9.0
+2025-06-23T02:51:13.9195949Z asyncio: mode=auto, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+2025-06-23T02:51:13.9196424Z timeout: 8.0s
+2025-06-23T02:51:13.9196621Z timeout method: signal
+2025-06-23T02:51:20.4266922Z timeout func_only: False
+2025-06-23T02:51:20.4267534Z collecting ... collected 724 items
+2025-06-23T02:51:20.4267902Z 
+2025-06-23T02:51:20.6242307Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check PASSED [  0%]
+2025-06-23T02:51:20.6457996Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check PASSED [  0%]
+2025-06-23T02:51:20.6690147Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch PASSED [  0%]
+2025-06-23T02:51:20.6912542Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization PASSED [  0%]
+2025-06-23T02:51:20.8237937Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization PASSED [  0%]
+2025-06-23T02:51:20.8371453Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison PASSED [  0%]
+2025-06-23T02:51:20.8611632Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization PASSED [  0%]
+2025-06-23T02:51:20.8819314Z tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization PASSED [  1%]
+2025-06-23T02:51:20.8950946Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_basic_operations PASSED [  1%]
+2025-06-23T02:51:21.1087381Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_ttl_expiration PASSED [  1%]
+2025-06-23T02:51:21.1213978Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_lru_eviction PASSED [  1%]
+2025-06-23T02:51:21.3349823Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_cleanup_expired PASSED [  1%]
+2025-06-23T02:51:21.3479277Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_clear PASSED [  1%]
+2025-06-23T02:51:21.3605241Z tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_update_existing_key PASSED [  1%]
+2025-06-23T02:51:21.3727539Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_get_cache_key_generation PASSED [  2%]
+2025-06-23T02:51:21.3869037Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_initialize_caches PASSED [  2%]
+2025-06-23T02:51:21.4001702Z tests/test_cli140e_coverage.py::TestAPIMCPGatewayHelpers::test_initialize_caches_disabled PASSED [  2%]
+2025-06-23T02:51:21.4722646Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_health_endpoint_error_handling PASSED [  2%]
+2025-06-23T02:51:21.6092057Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_authentication_error_handling PASSED [  2%]
+2025-06-23T02:51:21.6237862Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_root_endpoint PASSED [  2%]
+2025-06-23T02:51:21.6386869Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_rate_limiting_key_generation PASSED [  2%]
+2025-06-23T02:51:21.6540251Z tests/test_cli140e_coverage.py::TestAPIEndpointErrorHandling::test_save_endpoint_error_handling PASSED [  3%]
+2025-06-23T02:51:21.9685257Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limiting PASSED [  3%]
+2025-06-23T02:51:22.2749661Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_error_handling FAILED [  3%]
+2025-06-23T02:51:22.2904669Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_successful_initialization PASSED [  3%]
+2025-06-23T02:51:22.3046857Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_empty_list PASSED [  3%]
+2025-06-23T02:51:22.3197308Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_with_errors PASSED [  3%]
+2025-06-23T02:51:22.7204280Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_timeout FAILED [  3%]
+2025-06-23T02:51:22.7327740Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_metadata PASSED [  4%]
+2025-06-23T02:51:22.7447195Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_tags PASSED [  4%]
+2025-06-23T02:51:22.7573674Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_tags_empty PASSED [  4%]
+2025-06-23T02:51:22.7699284Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_path PASSED [  4%]
+2025-06-23T02:51:22.7821555Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_filter_by_path_empty PASSED [  4%]
+2025-06-23T02:51:22.7949751Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_build_hierarchy_path PASSED [  4%]
+2025-06-23T02:51:22.8118960Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_build_hierarchy_path_uncategorized PASSED [  4%]
+2025-06-23T02:51:23.2876829Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_rate_limit PASSED [  4%]
+2025-06-23T02:51:23.3009446Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_connection_error PASSED [  5%]
+2025-06-23T02:51:23.3143494Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_success PASSED [  5%]
+2025-06-23T02:51:23.3277650Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_qdrant_operation_with_retry_other_error PASSED [  5%]
+2025-06-23T02:51:23.3433278Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status PASSED [  5%]
+2025-06-23T02:51:23.3587311Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_no_results PASSED [  5%]
+2025-06-23T02:51:23.4976741Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_error PASSED [  5%]
+2025-06-23T02:51:23.5140680Z tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_no_openai PASSED [  5%]
+2025-06-23T02:51:23.5451501Z tests/test_cli140e_coverage_additional.py::TestAPIMCPGatewayCaching::test_get_cached_result FAILED [  6%]
+2025-06-23T02:51:23.5452372Z 
+2025-06-23T02:51:23.5452587Z =================================== FAILURES ===================================
+2025-06-23T02:51:23.5453402Z ____ TestQdrantVectorizationToolCoverage.test_initialization_error_handling ____
+2025-06-23T02:51:23.5454616Z tests/test_cli140e_coverage.py:228: in test_initialization_error_handling
+2025-06-23T02:51:23.5455354Z     with pytest.raises(Exception):
+2025-06-23T02:51:23.5455856Z E   Failed: DID NOT RAISE <class 'Exception'>
+2025-06-23T02:51:23.5456646Z _ TestQdrantVectorizationToolCoverage.test_batch_get_firestore_metadata_timeout _
+2025-06-23T02:51:23.5457530Z tests/test_cli140e_coverage.py:299: in slow_operation
+2025-06-23T02:51:23.5458140Z     await asyncio.sleep(1)  # Longer than 300ms timeout
+2025-06-23T02:51:23.5458929Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:605: in sleep
+2025-06-23T02:51:23.5459663Z     return await future
+2025-06-23T02:51:23.5460085Z E   asyncio.exceptions.CancelledError
+2025-06-23T02:51:23.5460414Z 
+2025-06-23T02:51:23.5460737Z During handling of the above exception, another exception occurred:
+2025-06-23T02:51:23.5461644Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:456: in wait_for
+2025-06-23T02:51:23.5462402Z     return fut.result()
+2025-06-23T02:51:23.5462822Z E   asyncio.exceptions.CancelledError
+2025-06-23T02:51:23.5463156Z 
+2025-06-23T02:51:23.5463471Z The above exception was the direct cause of the following exception:
+2025-06-23T02:51:23.5464589Z ADK/agent_data/tools/qdrant_vectorization_tool.py:164: in _batch_get_firestore_metadata
+2025-06-23T02:51:23.5465407Z     results = await asyncio.wait_for(
+2025-06-23T02:51:23.5466152Z /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/tasks.py:458: in wait_for
+2025-06-23T02:51:23.5466942Z     raise exceptions.TimeoutError() from exc
+2025-06-23T02:51:23.5467464Z E   asyncio.exceptions.TimeoutError
+2025-06-23T02:51:23.5467789Z 
+2025-06-23T02:51:23.5468093Z During handling of the above exception, another exception occurred:
+2025-06-23T02:51:23.5468943Z tests/test_cli140e_coverage.py:304: in test_batch_get_firestore_metadata_timeout
+2025-06-23T02:51:23.5470127Z     result = await tool._batch_get_firestore_metadata(["doc1"])
+2025-06-23T02:51:23.5470995Z ADK/agent_data/tools/qdrant_vectorization_tool.py:171: in _batch_get_firestore_metadata
+2025-06-23T02:51:23.5472025Z     logger.warning(f"Batch Firestore query failed, falling back to individual queries: {e}")
+2025-06-23T02:51:23.5472952Z E   UnboundLocalError: local variable 'e' referenced before assignment
+2025-06-23T02:51:23.5473968Z ------------------------------ Captured log call -------------------------------
+2025-06-23T02:51:23.5475341Z WARNING  ADK.agent_data.tools.qdrant_vectorization_tool:qdrant_vectorization_tool.py:169 Batch Firestore query timed out for 1 documents
+2025-06-23T02:51:23.5476582Z _______________ TestAPIMCPGatewayCaching.test_get_cached_result ________________
+2025-06-23T02:51:23.5477449Z tests/test_cli140e_coverage_additional.py:22: in test_get_cached_result
+2025-06-23T02:51:23.5478112Z     assert result == {"cached": "result"}
+2025-06-23T02:51:23.5478658Z E   AssertionError: assert None == {'cached': 'result'}
+2025-06-23T02:51:23.5479278Z =========================== short test summary info ============================
+2025-06-23T02:51:23.5480565Z FAILED tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_error_handling - Failed: DID NOT RAISE <class 'Exception'>
+2025-06-23T02:51:23.5482680Z FAILED tests/test_cli140e_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_get_firestore_metadata_timeout - UnboundLocalError: local variable 'e' referenced before assignment
+2025-06-23T02:51:23.5484918Z FAILED tests/test_cli140e_coverage_additional.py::TestAPIMCPGatewayCaching::test_get_cached_result - AssertionError: assert None == {'cached': 'result'}
+2025-06-23T02:51:23.5486147Z !!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 3 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+2025-06-23T02:51:23.5486796Z =================== 3 failed, 41 passed, 2 warnings in 9.63s ===================
+2025-06-23T02:51:24.0717033Z ##[error]Process completed with exit code 1.
