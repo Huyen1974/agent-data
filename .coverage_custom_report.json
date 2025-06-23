@@ -1,0 +1,7 @@
+{
+    "tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_basic_operations": {
+        "status": "passed",
+        "duration": 0.00012233298912178725,
+        "timestamp": "2025-06-23T09:32:41.916102"
+    }
+}

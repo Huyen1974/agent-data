@@ -1,0 +1,29 @@
+﻿2025-06-23T01:46:51.0911981Z ##[group]Run actions/cache@v4
+2025-06-23T01:46:51.0912284Z with:
+2025-06-23T01:46:51.0912478Z   path: ~/.cache/pip
+2025-06-23T01:46:51.0912867Z   key: Linux-pip-59e921257d7d73f545cff662b2328faedde51b96c94ebfb33bb8e6c1689a639d
+2025-06-23T01:46:51.0913304Z   restore-keys: Linux-pip-
+
+2025-06-23T01:46:51.0913559Z   enableCrossOsArchive: false
+2025-06-23T01:46:51.0913797Z   fail-on-cache-miss: false
+2025-06-23T01:46:51.0914023Z   lookup-only: false
+2025-06-23T01:46:51.0914226Z   save-always: false
+2025-06-23T01:46:51.0914416Z env:
+2025-06-23T01:46:51.0914842Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:46:51.0915583Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:46:51.0916236Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:46:51.0917212Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T01:46:51.0917490Z   CLOUDSDK_PROJECT: ***
+2025-06-23T01:46:51.0917779Z   GCLOUD_PROJECT: ***
+2025-06-23T01:46:51.0918001Z   GCP_PROJECT: ***
+2025-06-23T01:46:51.0918229Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T01:46:51.0918526Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T01:46:51.0918885Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T01:46:51.0919221Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:46:51.0919650Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T01:46:51.0920061Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:46:51.0920427Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:46:51.0920786Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:46:51.0921150Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T01:46:51.0921458Z ##[endgroup]
+2025-06-23T01:46:51.5350325Z Cache not found for input keys: Linux-pip-59e921257d7d73f545cff662b2328faedde51b96c94ebfb33bb8e6c1689a639d, Linux-pip-

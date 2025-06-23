@@ -1,0 +1,42 @@
+﻿2025-06-23T01:47:47.4025401Z ##[group]Run actions/upload-artifact@v4
+2025-06-23T01:47:47.4025881Z with:
+2025-06-23T01:47:47.4026189Z   name: test-results
+2025-06-23T01:47:47.4026773Z   path: coverage.xml
+htmlcov/
+.pytest_cache/
+
+2025-06-23T01:47:47.4027242Z   if-no-files-found: warn
+2025-06-23T01:47:47.4027605Z   compression-level: 6
+2025-06-23T01:47:47.4027949Z   overwrite: false
+2025-06-23T01:47:47.4028296Z   include-hidden-files: false
+2025-06-23T01:47:47.4028675Z env:
+2025-06-23T01:47:47.4029404Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:47.4030721Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:47.4031891Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:47.4032802Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T01:47:47.4033266Z   CLOUDSDK_PROJECT: ***
+2025-06-23T01:47:47.4033669Z   GCLOUD_PROJECT: ***
+2025-06-23T01:47:47.4034096Z   GCP_PROJECT: ***
+2025-06-23T01:47:47.4034497Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T01:47:47.4035016Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T01:47:47.4035637Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T01:47:47.4036236Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:47.4037171Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T01:47:47.4037615Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:47.4037996Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:47.4038385Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:47.4038766Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T01:47:47.4039072Z ##[endgroup]
+2025-06-23T01:47:47.6185112Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2025-06-23T01:47:47.6191062Z The least common ancestor is /home/runner/work/agent-data/agent-data. This will be the root directory of the artifact
+2025-06-23T01:47:47.6192605Z With the provided path, there will be 1 file uploaded
+2025-06-23T01:47:47.6198251Z Artifact name is valid!
+2025-06-23T01:47:47.6199376Z Root directory input is valid!
+2025-06-23T01:47:47.9224545Z Beginning upload of artifact content to blob storage
+2025-06-23T01:47:48.2465259Z Uploaded bytes 1795
+2025-06-23T01:47:48.3271283Z Finished uploading artifact content to blob storage!
+2025-06-23T01:47:48.3275054Z SHA256 digest of uploaded artifact zip is 928638c50e558ad8c0c5e3e3e1395b65bb120e8f2e028cbe03de21a8605bf1cd
+2025-06-23T01:47:48.3276934Z Finalizing artifact upload
+2025-06-23T01:47:48.4641595Z Artifact test-results.zip successfully finalized. Artifact ID 3379409454
+2025-06-23T01:47:48.4643138Z Artifact test-results has been successfully uploaded! Final size is 1795 bytes. Artifact ID is 3379409454
+2025-06-23T01:47:48.4650316Z Artifact download URL: https://github.com/Huyen1974/agent-data/actions/runs/15813323774/artifacts/3379409454

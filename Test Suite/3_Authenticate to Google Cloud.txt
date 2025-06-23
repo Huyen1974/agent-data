@@ -1,0 +1,17 @@
+﻿2025-06-23T01:46:32.2302073Z ##[group]Run google-github-actions/auth@v2
+2025-06-23T01:46:32.2302507Z with:
+2025-06-23T01:46:32.2303387Z   workload_identity_provider: ***
+
+2025-06-23T01:46:32.2303920Z   service_account: ***
+
+2025-06-23T01:46:32.2304252Z   project_id: ***
+
+2025-06-23T01:46:32.2304517Z   create_credentials_file: true
+2025-06-23T01:46:32.2304820Z   export_environment_variables: true
+2025-06-23T01:46:32.2305130Z   universe: googleapis.com
+2025-06-23T01:46:32.2305406Z   cleanup_credentials: true
+2025-06-23T01:46:32.2305678Z   access_token_lifetime: 3600s
+2025-06-23T01:46:32.2306080Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+2025-06-23T01:46:32.2306744Z   id_token_include_email: false
+2025-06-23T01:46:32.2307097Z ##[endgroup]
+2025-06-23T01:46:32.6143019Z Created credentials file at "/home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json"

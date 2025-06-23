@@ -1,0 +1,6 @@
+﻿2025-06-23T01:47:48.5590963Z Post job cleanup.
+2025-06-23T01:47:48.6962025Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/agent-data/agent-data --files-from manifest.txt --use-compress-program zstdmt
+2025-06-23T01:47:50.3372184Z Sent 0 of 201294865 (0.0%), 0.0 MBs/sec
+2025-06-23T01:47:51.3370629Z Sent 0 of 201294865 (0.0%), 0.0 MBs/sec
+2025-06-23T01:47:51.9221849Z Sent 201294865 of 201294865 (100.0%), 74.3 MBs/sec
+2025-06-23T01:47:52.0724954Z Cache saved with key: Linux-pip-59e921257d7d73f545cff662b2328faedde51b96c94ebfb33bb8e6c1689a639d

@@ -1,0 +1,40 @@
+﻿2025-06-23T01:47:37.9238905Z ##[group]Run gcloud auth list
+2025-06-23T01:47:37.9239222Z [36;1mgcloud auth list[0m
+2025-06-23T01:47:37.9239444Z [36;1mgcloud config list[0m
+2025-06-23T01:47:37.9298995Z shell: /usr/bin/bash -e {0}
+2025-06-23T01:47:37.9299244Z env:
+2025-06-23T01:47:37.9299695Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:37.9300440Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:37.9301336Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:37.9301864Z   CLOUDSDK_CORE_PROJECT: ***
+2025-06-23T01:47:37.9302140Z   CLOUDSDK_PROJECT: ***
+2025-06-23T01:47:37.9302380Z   GCLOUD_PROJECT: ***
+2025-06-23T01:47:37.9302606Z   GCP_PROJECT: ***
+2025-06-23T01:47:37.9302834Z   GOOGLE_CLOUD_PROJECT: ***
+2025-06-23T01:47:37.9303128Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+2025-06-23T01:47:37.9303522Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
+2025-06-23T01:47:37.9303875Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:37.9304317Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+2025-06-23T01:47:37.9304758Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:37.9305145Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:37.9305536Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+2025-06-23T01:47:37.9305935Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+2025-06-23T01:47:37.9306266Z ##[endgroup]
+2025-06-23T01:47:38.3877163Z                             Credentialed Accounts
+2025-06-23T01:47:38.3888300Z ACTIVE  ACCOUNT
+2025-06-23T01:47:38.3888876Z *       ***
+2025-06-23T01:47:38.3889017Z 
+2025-06-23T01:47:38.3889120Z To set the active account, run:
+2025-06-23T01:47:38.3889394Z     $ gcloud config set account `ACCOUNT`
+2025-06-23T01:47:38.3889592Z 
+2025-06-23T01:47:38.9009565Z [auth]
+2025-06-23T01:47:38.9010581Z credential_file_override = /home/runner/work/agent-data/agent-data/gha-creds-aeb71034d3bc6564.json
+2025-06-23T01:47:38.9011541Z [core]
+2025-06-23T01:47:38.9012346Z account = ***
+2025-06-23T01:47:38.9012639Z disable_usage_reporting = True
+2025-06-23T01:47:38.9012947Z project = ***
+2025-06-23T01:47:38.9013167Z [metrics]
+2025-06-23T01:47:38.9013415Z environment = github-actions-setup-gcloud
+2025-06-23T01:47:38.9013746Z environment_version = 1.1.1
+2025-06-23T01:47:38.9013947Z 
+2025-06-23T01:47:38.9014073Z Your active configuration is: [default]
