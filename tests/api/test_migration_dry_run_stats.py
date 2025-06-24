@@ -1,7 +1,9 @@
 import pytest
 import faiss
 import numpy as np
+
 from migrate_faiss_to_qdrant import migrate_faiss_to_qdrant
+
 from tests.mocks.qdrant_basic import FakeQdrantClient
 
 

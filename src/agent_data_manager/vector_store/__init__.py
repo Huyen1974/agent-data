@@ -4,3 +4,5 @@ from .base import VectorStore
 from .qdrant_store import QdrantStore
 
 __all__ = ["VectorStore", "QdrantStore"]
+
+# vector_store package

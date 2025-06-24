@@ -1,0 +1,24 @@
+# List of test files with import errors preventing collection
+
+# Missing modules identified from pytest collection:
+# 1. api_vector_search
+# 2. migration_cli  
+# 3. migrate_faiss_to_qdrant
+
+tests/api/test_embeddings_api.py - ModuleNotFoundError: No module named 'api_vector_search'
+tests/api/test_migration.py - ModuleNotFoundError: No module named 'migration_cli'
+tests/api/test_migration_dry_run_stats.py - ModuleNotFoundError: No module named 'migrate_faiss_to_qdrant'
+tests/api/test_migration_handles_duplicate_ids.py - ModuleNotFoundError: No module named 'migrate_faiss_to_qdrant'
+tests/api/test_query_vector_by_score_threshold.py - ModuleNotFoundError: No module named 'api_vector_search'
+tests/api/test_query_vectors_api.py - ModuleNotFoundError: No module named 'api_vector_search'
+tests/api/test_vector_edge_cases.py - ModuleNotFoundError: No module named 'api_vector_search'
+tests/api/test_vector_safety_check.py - ModuleNotFoundError: No module named 'api_vector_search'
+
+# CLI tests need various modules (checking individually)
+tests/test_cli130_tree_view.py
+tests/test_cli131_search.py
+tests/test_cli132_api.py
+tests/test_cli133_rag.py
+tests/test_cli136_metadata.py
+tests/test_cli137_api.py
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py 

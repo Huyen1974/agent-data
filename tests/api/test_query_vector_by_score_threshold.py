@@ -7,9 +7,7 @@ from unittest.mock import patch  # Added for mocking
 # Assuming your FastAPI app instance is named `app` in `api_vector_search.py`
 # and qdrant_store is accessible for direct interaction or mocking if needed.
 # Adjust the import path according to your project structure.
-from api_vector_search import (
-    app,
-)  # app from main API file. Removed OPENAI_EMBEDDING_MODEL import as it's not directly used here now.
+from api_vector_search import app  # app from main API file
 
 client = TestClient(app)
 

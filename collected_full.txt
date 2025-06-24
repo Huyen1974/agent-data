@@ -1,0 +1,342 @@
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 289, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 342, in _main
+INTERNALERROR>     config.hook.pytest_collection(session=session)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_hooks.py", line 513, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     raise exception.with_traceback(exception.__traceback__)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/logging.py", line 788, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/warnings.py", line 99, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/config/__init__.py", line 1450, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 103, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 353, in pytest_collection
+INTERNALERROR>     session.perform_collect()
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 816, in perform_collect
+INTERNALERROR>     hook.pytest_collection_modifyitems(
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_hooks.py", line 513, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     raise exception.with_traceback(exception.__traceback__)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/cacheprovider.py", line 443, in pytest_collection_modifyitems
+INTERNALERROR>     res = yield
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/cacheprovider.py", line 373, in pytest_collection_modifyitems
+INTERNALERROR>     res = yield
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 103, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py", line 285, in pytest_collection_modifyitems
+INTERNALERROR>     assert len(items) == 519, f"Expected 519, got {len(items)}"
+INTERNALERROR> AssertionError: Expected 519, got 0
+INTERNALERROR> assert 0 == 519
+INTERNALERROR>  +  where 0 = len([])
+
+no tests collected in 0.03s
+tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing
+tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization
+tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration
+tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager
+tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling
+tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields
+tests/api/test_authentication.py::TestUserManager::test_user_creation
+tests/api/test_authentication.py::TestUserManager::test_user_authentication
+tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation
+tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement
+tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches
+tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures
+tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list
+tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration
+tests/api/test_blank_query_text.py::test_query_text_blank_spaces
+tests/api/test_bulk_upload.py::test_bulk_upload_valid
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_points
+tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points
+tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid
+tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario
+tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s
+tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay
+tests/api/test_delete_by_tag.py::test_delete_by_tag_valid
+tests/api/test_delete_by_tag.py::test_delete_by_tag_empty
+tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent
+tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality
+tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider
+tests/api/test_embeddings_api.py::test_generate_embedding_mock
+tests/api/test_embeddings_api.py::test_generate_embedding_real
+tests/api/test_embeddings_api.py::test_semantic_search_cosine
+tests/api/test_embeddings_api.py::test_clear_embeddings
+tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected
+tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected
+tests/api/test_empty_query_rejected.py::test_empty_query_rejected
+tests/api/test_empty_query_text.py::test_empty_query_text
+tests/api/test_env_config_valid.py::test_env_config_valid
+tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive
+tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches
+tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation
+tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one
+tests/api/test_invalid_threshold.py::test_invalid_score_threshold
+tests/api/test_invalid_top_k.py::test_negative_top_k
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting
+tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes
+tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes
+tests/api/test_logging.py::TestSamplingFilter::test_info_sampling
+tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization
+tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit
+tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization
+tests/api/test_logging.py::TestStructuredLogger::test_log_levels
+tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation
+tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton
+tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names
+tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement
+tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration
+tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully
+tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton
+tests/api/test_metrics.py::test_metrics_endpoint
+tests/api/test_migration.py::test_migration_smoke
+tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats
+tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids
+tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_import
+tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata
+tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary
+tests/api/test_qdrant_store.py::test_points_selector_empty
+tests/api/test_qdrant_store.py::test_points_selector_with_filter
+tests/api/test_qdrant_store.py::test_vector_store_interface_methods
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status
+tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync
+tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync
+tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold
+tests/api/test_query_vectors_api.py::test_get_vector_by_id
+tests/api/test_query_vectors_api.py::test_query_vectors_by_ids
+tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip
+tests/api/test_score_threshold_strict.py::test_score_threshold_one
+tests/api/test_score_threshold_zero.py::test_score_threshold_zero
+tests/api/test_search_by_payload.py::test_search_by_payload_valid
+tests/api/test_search_by_payload.py::test_search_by_payload_empty_field
+tests/api/test_search_by_payload.py::test_search_by_payload_none_value
+tests/api/test_search_by_payload.py::test_search_by_payload_pagination
+tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection
+tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold
+tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion
+tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions
+tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub
+tests/api/test_session_and_events.py::TestIntegration::test_agent_session_management
+tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events
+tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization
+tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error
+tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error
+tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error
+tests/api/test_tag_too_long.py::test_tag_too_long
+tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum
+tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals
+tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count
+tests/api/test_top_k_minimum.py::test_top_k_minimum_one
+tests/api/test_top_k_too_large.py::test_top_k_too_large
+tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob
+tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found
+tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input
+tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid
+tests/api/test_vector_edge_cases.py::test_delete_vector_not_found
+tests/api/test_vector_safety_check.py::test_vector_id_collision
+tests/api/test_vector_safety_check.py::test_vector_truncation_protection
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_batch_execution_simulation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 289, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 342, in _main
+INTERNALERROR>     config.hook.pytest_collection(session=session)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_hooks.py", line 513, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     raise exception.with_traceback(exception.__traceback__)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/logging.py", line 788, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/warnings.py", line 99, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/config/__init__.py", line 1450, in pytest_collection
+INTERNALERROR>     return (yield)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 103, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 353, in pytest_collection
+INTERNALERROR>     session.perform_collect()
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/main.py", line 816, in perform_collect
+INTERNALERROR>     hook.pytest_collection_modifyitems(
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_hooks.py", line 513, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     raise exception.with_traceback(exception.__traceback__)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/cacheprovider.py", line 443, in pytest_collection_modifyitems
+INTERNALERROR>     res = yield
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 122, in _multicall
+INTERNALERROR>     teardown.throw(exception)  # type: ignore[union-attr]
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/_pytest/cacheprovider.py", line 373, in pytest_collection_modifyitems
+INTERNALERROR>     res = yield
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/pluggy/_callers.py", line 103, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/conftest.py", line 285, in pytest_collection_modifyitems
+INTERNALERROR>     assert len(items) == 519, f"Expected 519, got {len(items)}"
+INTERNALERROR> AssertionError: Expected 519, got 236
+INTERNALERROR> assert 236 == 519
+INTERNALERROR>  +  where 236 = len([<Function test_all_tags_lowercase_in_fixtures>, <Function test_root_endpoint>, <Function test_health_endpoint_no_serv...cument_success>, <Function test_save_document_service_unavailable>, <Function test_save_document_invalid_request>, ...])
+
+248 tests collected in 1.84s
+
+no tests collected in 0.00s

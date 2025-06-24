@@ -2,6 +2,7 @@ import faiss
 import numpy as np
 import pytest
 from agent_data.vector_store.qdrant_store import QdrantStore
+
 from migration_cli import migrate_faiss_to_qdrant
 
 

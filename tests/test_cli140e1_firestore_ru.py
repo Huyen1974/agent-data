@@ -12,7 +12,7 @@ from typing import Dict, List, Any
 import logging
 
 # Test imports
-from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+from vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 logger = logging.getLogger(__name__)
 
