@@ -1,32 +1,23 @@
-name: auth-test
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+name: ci
+on: [push]
 jobs:
   test:
-    name: Authenticate to Google Cloud
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Auth
-        id: auth
-        uses: google-github-actions/auth@v2
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          workload_identity_provider: "projects/1042559846495/locations/global/workloadIdentityPools/github-test-pool/providers/github-test-provider"
-          service_account_email: "gemini-service-account@github-chatgpt-ggcloud.iam.gserviceaccount.com"
-
-      - name: Setup gcloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-
-      - name: Verify authentication
-        run: gcloud auth list
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install -r requirements.txt --timeout 180
+        
+      - name: Collect & verify
+        run: |
+          pytest --collect-only -q --qdrant-mock > collected.txt
+          python scripts/verify_manifest.py collected.txt tests/manifest_LOCK.txt
+          
+      - name: Run suite
+        run: pytest -v --qdrant-mock --maxfail=1 -ra
