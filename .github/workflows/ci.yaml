@@ -1,15 +1,20 @@
-name: auth-test
+name: CI Test Suite
 
 on:
   push:
+    branches:
+      - main
+      - ci/final-519
+  pull_request:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
   test:
-    name: Authenticate to Google Cloud
+    name: Test Suite (519 tests)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       id-token: write
       contents: read
@@ -17,6 +22,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-json-report
 
       - name: Auth
         id: auth
@@ -30,3 +46,23 @@ jobs:
 
       - name: Verify authentication
         run: gcloud auth list
+
+      - name: Run pytest with strict markers
+        run: |
+          python -m pytest -v --qdrant-mock --strict-markers -m "not deferred and not slow" --json-report --json-report-file=.report.json
+
+      - name: Validate skip count
+        run: |
+          python - <<'PY'
+          import json, sys, pathlib;
+          report=json.load(open('.report.json'));
+          if report['summary']['skipped']>6:
+            sys.exit('>6 skipped');
+          PY
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: .report.json
