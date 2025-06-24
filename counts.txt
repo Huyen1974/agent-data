@@ -1,0 +1,5 @@
+     200 missing.txt
+     620 extra.txt
+     934 collected.txt
+     514 ADK/agent_data/tests/manifest_519_fixed.txt
+    2268 total
