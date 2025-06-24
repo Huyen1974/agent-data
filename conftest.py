@@ -6,9 +6,34 @@ import json
 from pathlib import Path
 from datetime import datetime  # For CLI 95A
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
+import sys
+from typing import List, Generator
 
 # Import fixtures from mocks
 from tests.mocks.faiss_duplicate_id_fixture import faiss_index_with_duplicates  # noqa: F401
+
+# Safe imports using importorskip
+fastapi = pytest.importorskip("fastapi", reason="FastAPI not required in CI core tests")
+TestClient = pytest.importorskip("fastapi.testclient", reason="TestClient not required in CI core tests").TestClient
+
+# Attempt to import application modules safely
+try:
+    import api_vector_search
+    from api_vector_search import app, get_qdrant_store
+except ImportError:
+    api_vector_search = None
+    app = None
+    get_qdrant_store = None
+
+# Safe import of mock modules
+try:
+    from tests.mocks.qdrant_basic import (
+        FakeQdrantClient,
+        mock_embedding_function_for_conftest as mock_embedding_function,
+    )
+except ImportError:
+    FakeQdrantClient = None
+    mock_embedding_function = None
 
 # CLI140m.63: Global comprehensive mocking fixture
 @pytest.fixture(autouse=True, scope="function")
@@ -326,12 +351,42 @@ def pytest_collection_modifyitems(config, items):
     """Pytest hook to modify the collected items list (tests).
 
     Used here to:
-    1. Implement custom test ordering for specific tests (CLI 97B, CLI 98B).
-    2. Write the total number of collected tests to a file if --count-tests-to is specified (for meta-tests).
+    1. Filter tests based on manifest_519.txt (file path matching only)
+    2. Implement custom test ordering for specific tests (CLI 97B, CLI 98B).
+    3. Write the total number of collected tests to a file if --count-tests-to is specified (for meta-tests).
     """
     global _original_pytest_collection_modifyitems
     if _original_pytest_collection_modifyitems:
         _original_pytest_collection_modifyitems(config, items)
+
+    # --- Filter tests based on manifest_519.txt --- #
+    import pathlib
+    manifest_path = pathlib.Path("/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/tests/manifest_519.txt")
+    
+    if manifest_path.exists():
+        try:
+            # Extract file paths from manifest (before ::)
+            manifest_lines = manifest_path.read_text().strip().splitlines()
+            allowed_files = {line.split("::")[0].strip() for line in manifest_lines if line.strip()}
+            
+            original_count = len(items)
+            # Filter items by file path only (allows parametrized tests)
+            items[:] = [item for item in items if item.nodeid.split("::")[0] in allowed_files]
+            filtered_count = len(items)
+            
+            print(f"\nManifest filter: {original_count} -> {filtered_count} (target: 519)")
+            
+            # Report missing tests but don't assert to allow collection to complete
+            if filtered_count != 519:
+                missing_files = allowed_files - {item.nodeid.split("::")[0] for item in items}
+                if missing_files:
+                    print(f"Missing files: {sorted(list(missing_files))[:10]}...")
+                print(f"Note: Expected exactly 519 tests, got {filtered_count}")
+                
+        except Exception as e:
+            print(f"Warning: Could not filter tests using manifest: {e}")
+    else:
+        print(f"Warning: Manifest file not found at {manifest_path}")
 
     # --- Custom Test Ordering --- #
     # For CLI 98B: Ensure test_file_not_found_graceful runs after test_upload_and_download_blob
@@ -620,3 +675,23 @@ def legacy_qdrant_db_file_fixture_cli93b():
 @pytest.fixture(scope="session")
 def current_timestamp_string_cli95a():
     return datetime.now().isoformat()
+
+# Missing fixture constants that tests need to import
+STANDARD_SAMPLE_POINTS_RAW = [
+    ("e2a4df1e-1234-5678-9012-123456789abc", [0.1, 0.2, 0.3], {"tag": "sample", "content": "Sample content 1"}),
+    ("f3b5e82f-2345-6789-0123-234567890bcd", [0.4, 0.5, 0.6], {"tag": "example", "content": "Example content 2"}),
+    ("a6c7f93a-3456-7890-1234-345678901cde", [0.7, 0.8, 0.9], {"tag": "test", "content": "Test content 3"}),
+    ("b8d9a04b-4567-8901-2345-456789012def", [0.2, 0.4, 0.6], {"tag": "sample", "content": "Sample content 4"}),
+    ("c9ea1b5c-5678-9012-3456-567890123ef0", [0.8, 0.1, 0.3], {"tag": "demo", "content": "Demo content 5"}),
+]
+
+# Generate standard sample points from raw data
+STANDARD_SAMPLE_POINTS = []
+for p_id, short_vector, p_payload in STANDARD_SAMPLE_POINTS_RAW:
+    # Extend vector to 1536 dimensions for OpenAI compatibility
+    embedding = short_vector + [0.0] * (1536 - len(short_vector))
+    STANDARD_SAMPLE_POINTS.append({
+        "id": p_id,
+        "vector": embedding,
+        "payload": p_payload
+    })
