@@ -1,4 +1,4 @@
-from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
+from conftest import STANDARD_SAMPLE_POINTS_RAW
 import pytest
 
 
