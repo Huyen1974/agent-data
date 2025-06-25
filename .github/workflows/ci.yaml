@@ -66,7 +66,7 @@ jobs:
           GITHUB_ACTIONS: true
         run: |
           echo "Collecting tests to verify configuration..."
-          python -m pytest --collect-only -q --qdrant-mock | grep -E "test collected|tests collected" || echo "Collection failed"
+          python -m pytest --collect-only -q  | grep -E "test collected|tests collected" || echo "Collection failed"
           echo "Test collection completed"
 
       - name: Run minimal tests
@@ -81,7 +81,7 @@ jobs:
           GITHUB_ACTIONS: true
         run: |
           echo "Running minimal test suite..."
-          python -m pytest --qdrant-mock -v tests/test_meta_counts.py::test_test_count_stability --tb=short
+          python -m pytest  -v tests/test_meta_counts.py::test_test_count_stability --tb=short
           echo "Minimal tests completed"
 
       - name: Run core tests
@@ -96,7 +96,7 @@ jobs:
           GITHUB_ACTIONS: true
         run: |
           echo "Running core test suite..."
-          python -m pytest --qdrant-mock -v --maxfail=5 -m "not deferred" --tb=short
+          python -m pytest  -v --maxfail=5 -m "not deferred" --tb=short
           echo "Core tests completed"
 
       - name: Export test metrics
