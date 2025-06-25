@@ -222,8 +222,8 @@ class TestQdrantVectorizationToolCoverage:
         """Test initialization error handling."""
         tool = QdrantVectorizationTool()
         
-        with patch('ADK.agent_data.tools.qdrant_vectorization_tool.settings') as mock_settings:
-            mock_settings.get_qdrant_config.side_effect = Exception("Config error")
+        with patch('ADK.agent_data.config.settings.settings.get_qdrant_config') as mock_get_config:
+            mock_get_config.side_effect = Exception("Config error")
             
             with pytest.raises(Exception):
                 await tool._ensure_initialized()

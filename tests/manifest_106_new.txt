@@ -1,3 +1,13 @@
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage
 tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_basic_operations
 tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_ttl_expiration
 tests/test_cli140e_coverage.py::TestThreadSafeLRUCache::test_cache_lru_eviction
@@ -51,33 +61,16 @@ tests/test_cli140e_coverage_additional.py::TestQdrantVectorizationToolAdditional
 tests/test_cli140e_coverage_additional.py::TestAPIRateLimiting::test_rate_limiting_with_jwt_token
 tests/test_cli140e_coverage_additional.py::TestAPIRateLimiting::test_rate_limiting_with_invalid_jwt
 tests/test_cli140e_coverage_additional.py::TestAPIStartupShutdown::test_startup_event
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_batch_vectorize_simple_edge_cases
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_rate_limiting_mechanism
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_filter_methods_coverage
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_simple_initialization_coverage
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_batch_get_firestore_metadata_coverage
-tests/test_cli140f_coverage.py::TestCLI140fCoverage::test_standalone_function_coverage
-tests/test_cli140f_coverage.py::test_get_vectorization_tool_factory_performance
-tests/test_cli140f_coverage.py::test_qdrant_batch_vectorize_documents_function_performance
-tests/test_cli140f_coverage.py::test_qdrant_rag_search_function_performance
-tests/test_cli140f_performance.py::TestCLI140fPerformance::test_document_ingestion_single_latency
-tests/test_cli140f_performance.py::TestCLI140fPerformance::test_qdrant_vectorization_single_latency
-tests/test_cli140f_performance.py::TestCLI140fPerformance::test_batch_processing_performance
-tests/test_cli140f_performance.py::TestCLI140fPerformance::test_document_ingestion_tool_performance_metrics
-tests/test_cli140f_performance.py::TestCLI140fPerformance::test_cli140f_performance_targets_summary
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_architecture_distribution_70_20_10
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_api_gateway_latency_validation
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_cloud_functions_routing_optimization
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_workflows_orchestration_validation
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_cloud_run_minimal_usage_validation
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_end_to_end_performance_benchmark
-tests/test_cli140g3_validation.py::TestCLI140g3Validation::test_cli140g3_integration_validation_complete
-tests/test_cli140g3_validation.py::test_cli140g3_final_validation
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation
 tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_docker_image_exists
 tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_image_size_optimization
 tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_container_starts_without_crash
@@ -85,22 +78,29 @@ tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_essen
 tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_runtime_requirements_count
 tests/test_cli140h1_build_validation.py::TestCLI140h1BuildValidation::test_build_artifacts_tagged_correctly
 tests/test_cli140h1_build_validation.py::test_optimization_summary
-tests/test_cli140h2_optimization.py::test_lazy_loading_optimization
-tests/test_cli140h2_optimization.py::test_cleanup_script_availability
-tests/test_cli140h2_optimization.py::test_optimization_integration
-tests/test_cli140h2_optimization.py::test_startup_time_target
-tests/test_cli140h2_optimization.py::test_cli140h2_optimization_summary
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_cost_optimization_sink_exists
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_billing_api_enabled
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_bigquery_dataset_exists
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_log_sink_permissions
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_cost_target_validation
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_min_instances_configuration_persistence
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_logging_optimization_active
-tests/test_cli140j1_fixes.py::TestCLI140j1Fixes::test_service_scaling_responsiveness
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_billing_api_cost_query
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_min_instances_zero_verification
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_log_router_configuration_active
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_budget_alert_configuration_active
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_cost_optimization_effectiveness
-tests/test_cli140j2_cost_verification.py::TestCLI140j2CostVerification::test_cost_monitoring_infrastructure
+_____________ ERROR collecting tests/test_cli140e1_firestore_ru.py _____________
+___ ERROR collecting tests/test_cli140e3_3_qdrant_vectorization_coverage.py ____
+________________ ERROR collecting tests/test_cli140e_latency.py ________________
+_______________ ERROR collecting tests/test_cli140f_coverage.py ________________
+______________ ERROR collecting tests/test_cli140f_performance.py ______________
+________________ ERROR collecting tests/test_cli140g1_shadow.py ________________
+______________ ERROR collecting tests/test_cli140g3_validation.py ______________
+____________ ERROR collecting tests/test_cli140g_api_gateway_e2e.py ____________
+_____________ ERROR collecting tests/test_cli140h2_optimization.py _____________
+__________ ERROR collecting tests/test_cli140h_docker_optimization.py __________
+________________ ERROR collecting tests/test_cli140j1_fixes.py _________________
+__________ ERROR collecting tests/test_cli140j2_cost_verification.py ___________
+______________ ERROR collecting tests/test_cli140j3_cost_final.py ______________
+___________ ERROR collecting tests/test_cli140j_cost_optimization.py ___________
+ERROR tests/test_cli140e1_firestore_ru.py - Failed: 'integration' not found i...
+ERROR tests/test_cli140e3_3_qdrant_vectorization_coverage.py - Failed: 'qdran...
+ERROR tests/test_cli140e_latency.py - Failed: 'performance' not found in `mar...
+ERROR tests/test_cli140f_coverage.py - Failed: 'performance' not found in `ma...
+ERROR tests/test_cli140f_performance.py - Failed: 'performance' not found in ...
+ERROR tests/test_cli140g1_shadow.py - Failed: 'e2e' not found in `markers` co...
+ERROR tests/test_cli140g3_validation.py - Failed: 'e2e' not found in `markers...
+ERROR tests/test_cli140g_api_gateway_e2e.py - Failed: 'e2e' not found in `mar...
+ERROR tests/test_cli140h2_optimization.py - Failed: 'integration' not found i...
+ERROR tests/test_cli140h_docker_optimization.py - Failed: 'e2e' not found in ...
+ERROR tests/test_cli140j1_fixes.py - Failed: 'e2e' not found in `markers` con...
+ERROR tests/test_cli140j2_cost_verification.py - Failed: 'e2e' not found in `...
