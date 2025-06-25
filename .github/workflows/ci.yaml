@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ init, main, fix/ci-pass ]
+    branches: [ init, main, fix/ci-pass, ci/106-fix-3 ]
   pull_request:
     branches: [ init, main ]
   workflow_dispatch:
