@@ -1,114 +1,121 @@
-name: CI Pipeline
+name: CI Test Suite
 
 on:
   push:
-    branches: [ init, main, fix/ci-pass, ci/106-fix-3 ]
+    branches:
+      - main
+      - ci/106-final
+      - ci/106-fix-flag
+      - ci/106-fix-flag2
+      - ci/106-final-pass
+      - ci/106-fix-3
+      - ci/106-fix-4
   pull_request:
-    branches: [ init, main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   test:
-    name: Test Suite
+    name: Test Suite (106 tests)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
-      contents: read
       id-token: write
+      contents: read
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Authenticate to Google Cloud
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        working-directory: ./
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-json-report
+
+      - name: Auth
+        id: auth
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_TEST }}
-          project_id: ${{ secrets.GCP_PROJECT_ID_TEST }}
+          workload_identity_provider: "projects/1042559846495/locations/global/workloadIdentityPools/github-test-pool/providers/github-test-provider"
+          service_account: "gemini-service-account@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 
       - name: Setup gcloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      - name: Verify authentication
+        working-directory: ./
+        run: gcloud auth list
 
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
+      - name: Assert Collection Count = 106
+        working-directory: ./
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install coverage mypy pytest-timeout
+          echo "Checking test collection count..."
+          tests=$(pytest --collect-only -q 2>/dev/null | grep '^tests/' | wc -l)
+          echo "Collected tests: $tests"
+          if [ "$tests" != "106" ]; then
+            echo "ERROR: Expected exactly 106 tests, got $tests"
+            echo "Current collected tests:"
+            pytest --collect-only -q 2>/dev/null | grep '^tests/' | head -10
+            echo "..."
+            exit 1
+          fi
+          echo "✅ SUCCESS: Collected exactly 106 tests as expected"
 
-      - name: Verify GCP authentication
+      - name: Run full test suite
+        working-directory: ./
         run: |
-          gcloud auth list
-          gcloud config list
+          echo "Running full test suite with 106 tests..."
+          python -m pytest -v --strict-markers --json-report --json-report-file=.report.json
 
-      - name: Debug test collection
-        env:
-          PYTHONDONTWRITEBYTECODE: 1
-          RUN_DEFERRED: 0
-          PYTEST_TIMEOUT: 8
-          BATCH_SIZE: 3
-          GCP_PROJECT_ID: chatgpt-db-project
-          GCP_REGION: asia-southeast1
-          CI: true
-          GITHUB_ACTIONS: true
+      - name: Validate Results
+        working-directory: ./
         run: |
-          echo "Collecting tests to verify configuration..."
-          python -m pytest --collect-only -q  | grep -E "test collected|tests collected" || echo "Collection failed"
-          echo "Test collection completed"
+          echo "Validating test results..."
+          python - <<'PY'
+          import json, sys
+          try:
+            with open('.report.json', 'r') as f:
+              report = json.load(f)
+            
+            total = report['summary']['total']
+            failed = report['summary']['failed'] 
+            skipped = report['summary']['skipped']
+            passed = report['summary']['passed']
+            
+            print(f"Test Results: {passed} passed, {failed} failed, {skipped} skipped, {total} total")
+            
+            # Validate total count is 106
+            if total != 106:
+              print(f"ERROR: Expected 106 total tests, got {total}")
+              sys.exit(1)
+            
+            # Fail if any test failed
+            if failed > 0:
+              print(f"ERROR: {failed} tests failed")
+              sys.exit(1)
+              
+            # Warn if too many skipped (allow up to 6)
+            if skipped > 6:
+              print(f"ERROR: Too many tests skipped ({skipped} > 6)")
+              sys.exit(1)
+              
+            print("✅ All validations passed!")
+          except Exception as e:
+            print(f"ERROR reading test report: {e}")
+            sys.exit(1)
+          PY
 
-      - name: Run minimal tests
-        env:
-          PYTHONDONTWRITEBYTECODE: 1
-          RUN_DEFERRED: 0
-          PYTEST_TIMEOUT: 8
-          BATCH_SIZE: 3
-          GCP_PROJECT_ID: chatgpt-db-project
-          GCP_REGION: asia-southeast1
-          CI: true
-          GITHUB_ACTIONS: true
-        run: |
-          echo "Running minimal test suite..."
-          python -m pytest  -v tests/test_meta_counts.py::test_test_count_stability --tb=short
-          echo "Minimal tests completed"
-
-      - name: Run core tests
-        env:
-          PYTHONDONTWRITEBYTECODE: 1
-          RUN_DEFERRED: 0
-          PYTEST_TIMEOUT: 8
-          BATCH_SIZE: 3
-          GCP_PROJECT_ID: chatgpt-db-project
-          GCP_REGION: asia-southeast1
-          CI: true
-          GITHUB_ACTIONS: true
-        run: |
-          echo "Running core test suite..."
-          python -m pytest  -v --maxfail=5 -m "not deferred" --tb=short
-          echo "Core tests completed"
-
-      - name: Export test metrics
-        if: always()
+      - name: Upload test report
         uses: actions/upload-artifact@v4
-        with:
-          name: test-metrics
-          path: |
-            .pytest_cache/
-
-      - name: Run mypy type checking
         if: always()
-        run: |
-          echo "Running mypy type checking..."
-          mypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"
+        with:
+          name: test-report-106
+          path: .report.json
