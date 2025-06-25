@@ -3,34 +3,12 @@ import pathlib
 import sys
 import os
 
-def pytest_addoption(parser):
-    """Add command line options for pytest."""
-    parser.addoption(
-        "--qdrant-mock", 
-        action="store_true",
-        help="NO-OP flag kept for legacy CI compatibility"
-    )
-    parser.addoption(
-        "--enforce-106", 
-        action="store_true",
-        help="Enforce exactly 106 tests using manifest_106.txt"
-    )
+print(">>> CONFTEST.PY LOADED!", file=sys.stderr, flush=True)
 
 def pytest_collection_modifyitems(session, config, items):
-    """Optionally filter collected items to match manifest_106.txt exactly."""
+    """Filter collected items to match manifest_106.txt exactly - enforce exactly 106 tests."""
     
-    # Only apply manifest filtering if explicitly requested or in CI environment
-    enforce_106 = (
-        config.getoption("--enforce-106") or 
-        os.environ.get("ENFORCE_106_TESTS") == "true" or
-        os.environ.get("CI") == "true"
-    )
-    
-    if not enforce_106:
-        print(f">>> Collected {len(items)} tests (manifest filtering disabled)", file=sys.stderr, flush=True)
-        return
-    
-    print(f">>> MANIFEST FILTERING ENABLED! Original count: {len(items)}", file=sys.stderr, flush=True)
+    print(f">>> HOOK CALLED! Original count: {len(items)}", file=sys.stderr, flush=True)
     
     # Find manifest file using hard-coded relative path
     manifest_file = pathlib.Path(__file__).parent / "tests" / "manifest_106.txt"
@@ -77,9 +55,7 @@ def pytest_collection_modifyitems(session, config, items):
     
     # Enforce exactly 106 tests collected
     if final_count != 106:
-        print(f">>> WARNING: Expected exactly 106 tests, got {final_count}", file=sys.stderr)
-        # Allow reasonable range for CI stability
-        if final_count < 90 or final_count > 120:
-            pytest.exit(f"Test collection failed: expected ~106 tests, got {final_count}", 1)
+        print(f">>> ERROR: Expected exactly 106 tests, got {final_count}", file=sys.stderr)
+        pytest.exit(f"Test collection failed: expected 106 tests, got {final_count}", 1)
     
     print(f">>> ✅ SUCCESS: {final_count} tests collected and filtered!", file=sys.stderr)
