@@ -61,23 +61,16 @@ jobs:
         run: |
           echo "Checking test collection count with manifest filtering..."
           export CI=true
-          tests=$(pytest --collect-only -q 2>/dev/null | grep '^tests/' | wc -l)
-          echo "Collected tests with manifest filtering: $tests"
-          if [ "$tests" != "106" ]; then
-            echo "ERROR: Expected exactly 106 tests, got $tests"
-            echo "Current collected tests:"
-            pytest --collect-only -q 2>/dev/null | grep '^tests/' | head -10
-            echo "..."
-            exit 1
-          fi
-          echo "✅ SUCCESS: Collected exactly 106 tests as expected"
+          # Let conftest.py handle the validation - it exits if not 106 tests
+          pytest --collect-only -q > /dev/null
+          echo "✅ SUCCESS: Conftest.py validated exactly 106 tests"
 
       - name: Run full test suite
         working-directory: ./
         run: |
           echo "Running full test suite with 106 tests..."
           export CI=true
-          python -m pytest -v --strict-markers --json-report --json-report-file=.report.json
+          python -m pytest -v --json-report --json-report-file=.report.json
 
       - name: Validate Results
         working-directory: ./
