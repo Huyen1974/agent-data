@@ -1,0 +1,11 @@
+{
+  "total_tests": 485,
+  "active_tests": 480,
+  "deferred_tests": 5,
+  "estimated_total_runtime_seconds": 22.5,
+  "estimated_total_runtime_minutes": 0.375,
+  "target_seconds": 300,
+  "margin_seconds": 277.5,
+  "optimization_timestamp": 1751079457.4629152,
+  "cli_phase": "CLI140k.4"
+}
