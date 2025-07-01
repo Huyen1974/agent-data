@@ -1,4 +1,4 @@
-name: CI and Push Image
+name: CI & Push Image
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       - run: pytest -m "unit and not slow"
 
   test_full_build_push:
-    if: contains(fromJSON('["refs/heads/test", "refs/heads/main"]'), github.ref)
+    if: contains(fromJSON('["refs/heads/test","refs/heads/main"]'), github.ref)
     needs: test_fast
     runs-on: ubuntu-latest
     concurrency:
@@ -28,16 +28,13 @@ jobs:
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
-
       - uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
+          service_account:          ${{ secrets.GCP_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@v2
       - uses: docker/setup-buildx-action@v3
-
-      - name: Build and Push multi-arch
+      - name: Build & Push multi-arch
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -45,12 +42,11 @@ jobs:
           provenance: true
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to:   type=gha,mode=max
           tags: |
             asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data/agent-data:latest
             asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data/agent-data:${{ github.sha }}
-
-      - name: Trivy security scan
+      - name: Trivy scan
         uses: aquasecurity/trivy-action@0.16.1
         with:
           image-ref: asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data/agent-data:${{ github.sha }}
