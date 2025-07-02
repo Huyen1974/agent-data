@@ -1,0 +1,59 @@
+name: Deploy to Google Cloud
+# Trigger CI/CD re-run after IAM fix
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'functions/**'
+      - '.github/workflows/deploy_functions.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Debug Secrets
+        run: echo "Using PROJECT_ID=${{ secrets.PROJECT_ID }}"
+
+      - name: Deploy to Google Cloud Functions
+        run: |
+          set -e
+          for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do
+            FUNCTION_NAME=$(basename "$FUNCTION_DIR")
+            echo "Deploying $FUNCTION_NAME..."
+            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)
+            if ! gcloud functions deploy "$FUNCTION_NAME" \
+              --region=asia-southeast1 \
+              --runtime=python310 \
+              --trigger-http \
+              --allow-unauthenticated \
+              --source="$FUNCTION_DIR" \
+              --entry-point="$ENTRY_POINT" \
+              --project=${{ secrets.PROJECT_ID }}; then
+              echo "❌ Deployment failed for $FUNCTION_NAME"
+              exit 1
+            fi
+          done
