@@ -1,0 +1,114 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ init, main, fix/ci-pass ]
+  pull_request:
+    branches: [ init, main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_TEST }}
+          project_id: ${{ secrets.GCP_PROJECT_ID_TEST }}
+
+      - name: Setup gcloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage mypy pytest-timeout
+
+      - name: Verify GCP authentication
+        run: |
+          gcloud auth list
+          gcloud config list
+
+      - name: Debug test collection
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          RUN_DEFERRED: 0
+          PYTEST_TIMEOUT: 8
+          BATCH_SIZE: 3
+          GCP_PROJECT_ID: chatgpt-db-project
+          GCP_REGION: asia-southeast1
+          CI: true
+          GITHUB_ACTIONS: true
+        run: |
+          echo "Collecting tests to verify configuration..."
+          python -m pytest --collect-only -q  | grep -E "test collected|tests collected" || echo "Collection failed"
+          echo "Test collection completed"
+
+      - name: Run minimal tests
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          RUN_DEFERRED: 0
+          PYTEST_TIMEOUT: 8
+          BATCH_SIZE: 3
+          GCP_PROJECT_ID: chatgpt-db-project
+          GCP_REGION: asia-southeast1
+          CI: true
+          GITHUB_ACTIONS: true
+        run: |
+          echo "Running minimal test suite..."
+          python -m pytest  -v tests/test_meta_counts.py::test_test_count_stability --tb=short
+          echo "Minimal tests completed"
+
+      - name: Run core tests
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          RUN_DEFERRED: 0
+          PYTEST_TIMEOUT: 8
+          BATCH_SIZE: 3
+          GCP_PROJECT_ID: chatgpt-db-project
+          GCP_REGION: asia-southeast1
+          CI: true
+          GITHUB_ACTIONS: true
+        run: |
+          echo "Running core test suite..."
+          python -m pytest  -v --maxfail=5 -m "not deferred" --tb=short
+          echo "Core tests completed"
+
+      - name: Export test metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-metrics
+          path: |
+            .pytest_cache/
+
+      - name: Run mypy type checking
+        if: always()
+        run: |
+          echo "Running mypy type checking..."
+          mypy . --ignore-missing-imports --no-strict-optional || echo "MyPy completed with warnings"

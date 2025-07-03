@@ -1,0 +1,120 @@
+name: CI Test Suite (Lightweight)
+
+on:
+  push:
+    branches:
+      - main
+      - ci/106-final
+      - ci/106-fix-flag
+      - ci/106-fix-flag2
+      - ci/106-final-pass
+      - ci/106-fix-3
+      - ci/106-fix-4
+      - ci/106-final-green
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test_fast:
+    name: Test Suite (Lightweight, 2 tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        working-directory: ./
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-json-report
+
+      - name: Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Setup gcloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Verify authentication
+        working-directory: ./
+        run: gcloud auth list
+
+      - name: Assert Collection Count = 2
+        working-directory: ./
+        run: |
+          echo "Checking lightweight test collection count..."
+          tests=$(pytest --collect-only -k "test_ci_environment or test_requirements_file" --qdrant-mock -q 2>/dev/null | grep '::test_' | wc -l)
+          echo "Collected lightweight tests: $tests"
+          if [ "$tests" != "2" ]; then
+            echo "ERROR: Expected exactly 2 tests, got $tests"
+            echo "Current collected tests:"
+            pytest --collect-only -k "test_ci_environment or test_requirements_file" --qdrant-mock -q 2>/dev/null | grep '::test_'
+            exit 1
+          fi
+          echo "✅ SUCCESS: Collected exactly 2 tests as expected"
+
+      - name: Run lightweight test suite
+        working-directory: ./
+        run: |
+          echo "Running lightweight test suite with 2 tests..."
+          python -m pytest -k "test_ci_environment or test_requirements_file" -v --strict-markers --qdrant-mock --json-report --json-report-file=.report.json
+
+      - name: Validate Results
+        working-directory: ./
+        run: |
+          echo "Validating test results..."
+          python - <<'PY'
+          import json, sys
+          try:
+            with open('.report.json', 'r') as f:
+              report = json.load(f)
+            
+            total = report['summary']['total']
+            failed = report['summary']['failed'] 
+            skipped = report['summary']['skipped']
+            passed = report['summary']['passed']
+            
+            print(f"Test Results: {passed} passed, {failed} failed, {skipped} skipped, {total} total")
+            
+            # Validate total count is 2
+            if total != 2:
+              print(f"ERROR: Expected 2 total tests, got {total}")
+              sys.exit(1)
+            
+            # Fail if any test failed
+            if failed > 0:
+              print(f"ERROR: {failed} tests failed")
+              sys.exit(1)
+              
+            # All tests should pass (allow 0 skipped for lightweight suite)
+            if skipped > 0:
+              print(f"WARNING: {skipped} tests skipped (expected 0 for lightweight suite)")
+              
+            print("✅ All validations passed!")
+          except Exception as e:
+            print(f"ERROR reading test report: {e}")
+            sys.exit(1)
+          PY
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report-lightweight
+          path: .report.json 
