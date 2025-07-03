@@ -21,6 +21,8 @@ jobs:
 
     - name: Authenticate to Google Cloud (WIF)
       uses: google-github-actions/auth@v1
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
