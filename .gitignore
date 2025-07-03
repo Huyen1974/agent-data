@@ -71,3 +71,8 @@ coverage.xml
 baseline_mapped.txt
 collect_diff*.txt
 list*.txt
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate*
+*.tfplan
