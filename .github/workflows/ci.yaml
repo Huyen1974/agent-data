@@ -17,9 +17,9 @@ on:
 
 jobs:
   test_fast:
-    name: Test Suite (157 tests)
+    name: Test Suite (496 tests)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     permissions:
       id-token: write
       contents: read
@@ -54,25 +54,25 @@ jobs:
         working-directory: ./
         run: gcloud auth list
 
-      - name: Assert Collection Count = 157
+      - name: Assert Collection Count = 496
         working-directory: ./
         run: |
           echo "Checking test collection count..."
           tests=$(pytest --collect-only -q 2>/dev/null | grep '^tests/' | wc -l)
           echo "Collected tests: $tests"
-          if [ "$tests" != "157" ]; then
-            echo "ERROR: Expected exactly 157 tests, got $tests"
+          if [ "$tests" != "496" ]; then
+            echo "ERROR: Expected exactly 496 tests, got $tests"
             echo "Current collected tests:"
             pytest --collect-only -q 2>/dev/null | grep '^tests/' | head -10
             echo "..."
             exit 1
           fi
-          echo "✅ SUCCESS: Collected exactly 157 tests as expected"
+          echo "✅ SUCCESS: Collected exactly 496 tests as expected"
 
       - name: Run full test suite
         working-directory: ./
         run: |
-          echo "Running full test suite with 157 tests..."
+          echo "Running full test suite with 496 tests..."
           python -m pytest -v --strict-markers --json-report --json-report-file=.report.json
 
       - name: Validate Results
@@ -92,9 +92,9 @@ jobs:
             
             print(f"Test Results: {passed} passed, {failed} failed, {skipped} skipped, {total} total")
             
-            # Validate total count is 157
-            if total != 157:
-              print(f"ERROR: Expected 157 total tests, got {total}")
+            # Validate total count is 496
+            if total != 496:
+              print(f"ERROR: Expected 496 total tests, got {total}")
               sys.exit(1)
             
             # Fail if any test failed
@@ -117,5 +117,5 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-report-157
+          name: test-report-496
           path: .report.json
