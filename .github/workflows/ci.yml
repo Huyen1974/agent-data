@@ -59,12 +59,12 @@ jobs:
         working-directory: ./
         run: |
           echo "Checking lightweight test collection count..."
-          tests=$(pytest --collect-only -k "test_ci_environment or test_requirements_file" --qdrant-mock -q 2>/dev/null | grep '::test_' | wc -l)
+          tests=$(pytest --collect-only tests/test_meta_counts.py::test_requirements_file tests/test_meta_counts.py::test_github_workflow_files --qdrant-mock -q 2>/dev/null | grep '::test_' | wc -l)
           echo "Collected lightweight tests: $tests"
           if [ "$tests" != "2" ]; then
             echo "ERROR: Expected exactly 2 tests, got $tests"
             echo "Current collected tests:"
-            pytest --collect-only -k "test_ci_environment or test_requirements_file" --qdrant-mock -q 2>/dev/null | grep '::test_'
+            pytest --collect-only tests/test_meta_counts.py::test_requirements_file tests/test_meta_counts.py::test_github_workflow_files --qdrant-mock -q 2>/dev/null | grep '::test_'
             exit 1
           fi
           echo "✅ SUCCESS: Collected exactly 2 tests as expected"
@@ -73,7 +73,7 @@ jobs:
         working-directory: ./
         run: |
           echo "Running lightweight test suite with 2 tests..."
-          python -m pytest -k "test_ci_environment or test_requirements_file" -v --strict-markers --qdrant-mock --json-report --json-report-file=.report.json
+          python -m pytest tests/test_meta_counts.py::test_requirements_file tests/test_meta_counts.py::test_github_workflow_files -v --strict-markers --qdrant-mock --json-report --json-report-file=.report.json
 
       - name: Validate Results
         working-directory: ./
