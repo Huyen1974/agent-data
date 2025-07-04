@@ -18,7 +18,7 @@ import hashlib
 from datetime import datetime
 
 # Import modules under test
-from ADK.agent_data.api_mcp_gateway import (
+from api_mcp_gateway import (
     app, ThreadSafeLRUCache, _get_cache_key, _get_cached_result, _cache_result,
     get_user_id_for_rate_limiting, SaveDocumentRequest, QueryVectorsRequest,
     SearchDocumentsRequest, RAGSearchRequest, LoginRequest, UserRegistrationRequest
@@ -135,7 +135,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
     @pytest.mark.asyncio
     async def test_api_gateway_health_check(self):
         """Test health check endpoint."""
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings:
+        with patch("api_mcp_gateway.settings") as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = False
             
             client = TestClient(app)
@@ -162,8 +162,8 @@ class TestCLI140mAPIMCPGatewayCoverage:
     @pytest.mark.asyncio
     async def test_api_gateway_save_document_error_handling(self):
         """Test save document endpoint error handling."""
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.vectorization_tool") as mock_tool:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.vectorization_tool") as mock_tool:
             
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_tool.vectorize_document = AsyncMock(
@@ -171,7 +171,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
             )
             
             # Import get_current_user function
-            from ADK.agent_data.api_mcp_gateway import get_current_user
+            from api_mcp_gateway import get_current_user
             
             # Override auth dependency
             app.dependency_overrides[get_current_user] = lambda: {
@@ -193,14 +193,14 @@ class TestCLI140mAPIMCPGatewayCoverage:
     @pytest.mark.asyncio
     async def test_api_gateway_query_vectors_error_handling(self):
         """Test query vectors endpoint error handling."""
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_store:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.qdrant_store") as mock_store:
             
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_store.semantic_search = AsyncMock(side_effect=Exception("Test error"))
             
             # Import get_current_user function
-            from ADK.agent_data.api_mcp_gateway import get_current_user
+            from api_mcp_gateway import get_current_user
             
             # Override auth dependency
             app.dependency_overrides[get_current_user] = lambda: {

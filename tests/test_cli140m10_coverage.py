@@ -48,7 +48,7 @@ class TestCLI140m10CoverageValidation:
                 # Validate key module coverage
                 files = coverage_data.get('files', {})
                 key_modules = {
-                    'ADK/agent_data/api_mcp_gateway.py': 80,
+                    'api_mcp_gateway.py': 80,
                     'ADK/agent_data/tools/qdrant_vectorization_tool.py': 80,
                     'ADK/agent_data/tools/document_ingestion_tool.py': 80
                 }

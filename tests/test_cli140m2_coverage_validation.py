@@ -27,7 +27,7 @@ class TestCLI140m2CoverageValidation:
         result = subprocess.run([
             "python", "-m", "pytest", 
             "ADK/agent_data/tests/test_cli140m2_api_gateway_coverage.py",
-            "--cov=ADK/agent_data/api_mcp_gateway.py",
+            "--cov=api_mcp_gateway.py",
             "--cov-report=json:coverage_api_gateway_new.json",
             "-q"
         ], capture_output=True, text=True, cwd="/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents")

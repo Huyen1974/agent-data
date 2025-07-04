@@ -114,7 +114,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         mock_uvicorn.run.assert_called_once()
         call_args = mock_uvicorn.run.call_args
         # Fix: Check for the actual module path used
-        assert call_args[0][0] == "ADK.agent_data.api_mcp_gateway:app"  # First positional arg
+        assert call_args[0][0] == "api_mcp_gateway:app"  # First positional arg
         assert "host" in call_args[1]  # Keyword args
         assert "port" in call_args[1]
 

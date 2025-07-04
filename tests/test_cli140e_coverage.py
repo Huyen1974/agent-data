@@ -6,7 +6,7 @@ import pytest
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 from fastapi.testclient import TestClient
-from ADK.agent_data.api_mcp_gateway import app, ThreadSafeLRUCache, _get_cache_key, _initialize_caches
+from api_mcp_gateway import app, ThreadSafeLRUCache, _get_cache_key, _initialize_caches
 from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 
@@ -103,7 +103,7 @@ class TestAPIMCPGatewayHelpers:
         # Keys should be MD5 hashes (32 characters)
         assert len(key1) == 32
 
-    @patch('ADK.agent_data.api_mcp_gateway.settings')
+    @patch('api_mcp_gateway.settings')
     def test_initialize_caches(self, mock_settings):
         """Test cache initialization."""
         mock_settings.get_cache_config.return_value = {
@@ -118,7 +118,7 @@ class TestAPIMCPGatewayHelpers:
         _initialize_caches()
         # Test passes if no exception is raised
 
-    @patch('ADK.agent_data.api_mcp_gateway.settings')
+    @patch('api_mcp_gateway.settings')
     def test_initialize_caches_disabled(self, mock_settings):
         """Test cache initialization when caches are disabled."""
         mock_settings.get_cache_config.return_value = {
@@ -141,8 +141,8 @@ class TestAPIEndpointErrorHandling:
         """Test health endpoint with service failures."""
         client = TestClient(app)
         
-        with patch('ADK.agent_data.api_mcp_gateway.QdrantStore') as mock_qdrant, \
-             patch('ADK.agent_data.api_mcp_gateway.FirestoreMetadataManager') as mock_firestore:
+        with patch('api_mcp_gateway.QdrantStore') as mock_qdrant, \
+             patch('api_mcp_gateway.FirestoreMetadataManager') as mock_firestore:
             
             # Mock service initialization failures
             mock_qdrant.side_effect = Exception("Qdrant connection failed")
@@ -178,7 +178,7 @@ class TestAPIEndpointErrorHandling:
 
     def test_rate_limiting_key_generation(self):
         """Test rate limiting key generation."""
-        from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
+        from api_mcp_gateway import get_user_id_for_rate_limiting
         from fastapi import Request
         
         # Mock request with no auth header

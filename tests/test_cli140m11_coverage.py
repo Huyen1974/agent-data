@@ -18,7 +18,7 @@ from unittest.mock import Mock, AsyncMock, patch, MagicMock
 from typing import Dict, Any, List
 
 # API Gateway imports
-from ADK.agent_data.api_mcp_gateway import (
+from api_mcp_gateway import (
     ThreadSafeLRUCache,
     initialize_caches,
     _get_cache_key,
@@ -95,7 +95,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         key5 = _get_cache_key("different query")
         assert key1 != key5
 
-    @patch('ADK.agent_data.api_mcp_gateway.settings')
+    @patch('api_mcp_gateway.settings')
     def test_cache_operations_with_settings(self, mock_settings):
         """Test cache operations with different settings configurations."""
         # Test with caching enabled
@@ -153,7 +153,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
 
     def test_cache_initialization_edge_cases(self):
         """Test cache initialization with various configurations."""
-        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+        with patch('api_mcp_gateway.settings') as mock_settings:
             # Test with both caches enabled
             mock_settings.get_cache_config.return_value = {
                 "rag_cache_enabled": True,

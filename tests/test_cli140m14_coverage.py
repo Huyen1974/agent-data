@@ -17,7 +17,7 @@ from unittest.mock import Mock, AsyncMock, patch, MagicMock
 from fastapi.testclient import TestClient
 from fastapi import HTTPException
 
-from ADK.agent_data.api_mcp_gateway import app, get_current_user
+from api_mcp_gateway import app, get_current_user
 from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 
@@ -28,18 +28,18 @@ class TestCLI140m14APIMCPGatewayCoverage:
     def test_startup_event_initialization_errors(self):
         """Test startup event with initialization errors."""
         # Test that startup event can handle initialization failures gracefully
-        with patch("ADK.agent_data.api_mcp_gateway.QdrantStore") as mock_qdrant:
+        with patch("api_mcp_gateway.QdrantStore") as mock_qdrant:
             mock_qdrant.side_effect = Exception("Initialization failed")
             
             # The app should still be importable even if initialization fails
-            from ADK.agent_data.api_mcp_gateway import app
+            from api_mcp_gateway import app
             assert app is not None
 
     def test_get_current_user_dependency_disabled_auth(self):
         """Test get_current_user dependency when authentication is disabled."""
-        from ADK.agent_data.api_mcp_gateway import get_current_user
+        from api_mcp_gateway import get_current_user
         
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings:
+        with patch("api_mcp_gateway.settings") as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = False
             
             # Should return default user when auth is disabled
@@ -48,9 +48,9 @@ class TestCLI140m14APIMCPGatewayCoverage:
 
     def test_get_current_user_service_unavailable(self):
         """Test get_current_user when auth service is unavailable."""
-        from ADK.agent_data.api_mcp_gateway import get_current_user
+        from api_mcp_gateway import get_current_user
         
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings:
+        with patch("api_mcp_gateway.settings") as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = True
             
             # Test with missing token
@@ -64,7 +64,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test health check with degraded service status."""
         client = TestClient(app)
         
-        with patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant:
+        with patch("api_mcp_gateway.qdrant_store") as mock_qdrant:
             mock_qdrant.health_check = AsyncMock(return_value={"status": "degraded"})
             
             response = client.get("/health")
@@ -76,8 +76,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test login endpoint when authentication is disabled."""
         client = TestClient(app)
         
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_mgr:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_mgr:
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_auth_mgr.authenticate_user = MagicMock(return_value={"user_id": "test_user", "token": "test_token"})
             
@@ -90,7 +90,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test login when authentication service is unavailable."""
         client = TestClient(app)
         
-        with patch("ADK.agent_data.api_mcp_gateway.user_manager") as mock_user_manager:
+        with patch("api_mcp_gateway.user_manager") as mock_user_manager:
             mock_user_manager.authenticate_user = AsyncMock(side_effect=Exception("Service unavailable"))
             
             response = client.post("/auth/login", data={"username": "test", "password": "test"})
@@ -102,8 +102,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test registration when authentication is disabled."""
         client = TestClient(app)
         
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.user_manager") as mock_user_mgr:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.user_manager") as mock_user_mgr:
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_user_mgr.create_user = MagicMock(return_value={"user_id": "test_user", "email": "test@example.com"})
             
@@ -118,7 +118,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
 
     def test_api_endpoints_with_authentication_errors(self):
         """Test API endpoints with various authentication error scenarios."""
-        with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user:
+        with patch('api_mcp_gateway.get_current_user') as mock_get_user:
             # Mock authentication to return proper auth errors instead of 503
             mock_get_user.side_effect = HTTPException(status_code=401, detail="Invalid authentication")
             
@@ -143,7 +143,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
 
     def test_cache_operations_and_initialization(self):
         """Test cache operations and initialization."""
-        from ADK.agent_data.api_mcp_gateway import ThreadSafeLRUCache, _get_cache_key, initialize_caches
+        from api_mcp_gateway import ThreadSafeLRUCache, _get_cache_key, initialize_caches
         
         # Test ThreadSafeLRUCache
         cache = ThreadSafeLRUCache(max_size=5, ttl_seconds=1)
@@ -181,7 +181,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
         from unittest.mock import Mock, patch
         from fastapi import Request
         
-        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
+        import api_mcp_gateway as api_mcp_gateway
         
         # Test get_user_id_for_rate_limiting with various scenarios
         mock_request = Mock(spec=Request)
@@ -231,10 +231,10 @@ class TestCLI140m14APIMCPGatewayCoverage:
         from unittest.mock import Mock, patch, AsyncMock
         from fastapi import HTTPException, status
         from fastapi.testclient import TestClient
-        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
+        import api_mcp_gateway as api_mcp_gateway
         
         # Test error scenarios in authentication flow
-        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+        with patch('api_mcp_gateway.settings') as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = True
             
             # Test get_current_user_dependency when auth_manager is None
@@ -263,7 +263,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             asyncio.run(test_get_current_user())
         
         # Test cache initialization error handling
-        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+        with patch('api_mcp_gateway.settings') as mock_settings:
             mock_settings.get_cache_config.return_value = {
                 "rag_cache_enabled": True,
                 "rag_cache_max_size": 100,
@@ -300,10 +300,10 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test batch query and authentication endpoints for lines 246-258 coverage."""
         from unittest.mock import Mock, patch, AsyncMock
         from fastapi.testclient import TestClient
-        import ADK.agent_data.api_mcp_gateway as api_mcp_gateway
+        import api_mcp_gateway as api_mcp_gateway
         
         # Test authentication-related model validation
-        from ADK.agent_data.api_mcp_gateway import (
+        from api_mcp_gateway import (
             LoginRequest, LoginResponse, UserRegistrationRequest, 
             UserRegistrationResponse, HealthResponse
         )
@@ -353,7 +353,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
         assert "qdrant" in health_response.services
         
         # Test batch query models with various field combinations
-        from ADK.agent_data.api_mcp_gateway import (
+        from api_mcp_gateway import (
             QueryVectorsRequest, SearchDocumentsRequest, RAGSearchRequest
         )
         
@@ -404,13 +404,13 @@ class TestCLI140m14APIMCPGatewayCoverage:
         from unittest.mock import patch, AsyncMock, MagicMock
         
         # Test startup_event function coverage
-        with patch("ADK.agent_data.api_mcp_gateway.QdrantStore") as mock_qdrant_store, \
-             patch("ADK.agent_data.api_mcp_gateway.FirestoreMetadataManager") as mock_firestore, \
-             patch("ADK.agent_data.api_mcp_gateway.QdrantVectorizationTool") as mock_vectorization, \
-             patch("ADK.agent_data.api_mcp_gateway.AuthManager") as mock_auth_manager, \
-             patch("ADK.agent_data.api_mcp_gateway.UserManager") as mock_user_manager, \
-             patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway._initialize_caches") as mock_init_caches:
+        with patch("api_mcp_gateway.QdrantStore") as mock_qdrant_store, \
+             patch("api_mcp_gateway.FirestoreMetadataManager") as mock_firestore, \
+             patch("api_mcp_gateway.QdrantVectorizationTool") as mock_vectorization, \
+             patch("api_mcp_gateway.AuthManager") as mock_auth_manager, \
+             patch("api_mcp_gateway.UserManager") as mock_user_manager, \
+             patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway._initialize_caches") as mock_init_caches:
             
             # Configure mocks for enabled authentication path
             mock_settings.ENABLE_AUTHENTICATION = True
@@ -425,7 +425,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             mock_user_manager.return_value = mock_user_instance
             
             # Import and test startup_event
-            from ADK.agent_data.api_mcp_gateway import startup_event
+            from api_mcp_gateway import startup_event
             
             # Run startup event
             loop = asyncio.new_event_loop()
@@ -446,10 +446,10 @@ class TestCLI140m14APIMCPGatewayCoverage:
             mock_init_caches.assert_called()
         
         # Test get_current_user_dependency coverage with authentication disabled
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings:
+        with patch("api_mcp_gateway.settings") as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = False
             
-            from ADK.agent_data.api_mcp_gateway import get_current_user_dependency
+            from api_mcp_gateway import get_current_user_dependency
             
             # Run dependency function
             loop = asyncio.new_event_loop()
@@ -462,11 +462,11 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 loop.close()
         
         # Test get_current_user_dependency with authentication enabled but no auth_manager
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager", None):
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager", None):
             mock_settings.ENABLE_AUTHENTICATION = True
             
-            from ADK.agent_data.api_mcp_gateway import get_current_user_dependency
+            from api_mcp_gateway import get_current_user_dependency
             
             # Should raise HTTPException for service unavailable
             loop = asyncio.new_event_loop()
@@ -486,9 +486,9 @@ class TestCLI140m14APIMCPGatewayCoverage:
         client = TestClient(app)
         
         # Test login endpoint with authentication enabled
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.user_manager") as mock_user_manager, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_manager:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.user_manager") as mock_user_manager, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_manager:
             
             mock_settings.ENABLE_AUTHENTICATION = True
             
@@ -519,8 +519,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             assert response.status_code in [401, 422, 503]
         
         # Test registration endpoint with authentication enabled
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.user_manager") as mock_user_manager:
+        with patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.user_manager") as mock_user_manager:
             
             mock_settings.ENABLE_AUTHENTICATION = True
             mock_settings.ALLOW_REGISTRATION = True
@@ -541,7 +541,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             assert response.status_code in [200, 400, 422, 503]
         
         # Test registration when disabled
-        with patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings:
+        with patch("api_mcp_gateway.settings") as mock_settings:
             mock_settings.ENABLE_AUTHENTICATION = True
             mock_settings.ALLOW_REGISTRATION = False
             
@@ -555,10 +555,10 @@ class TestCLI140m14APIMCPGatewayCoverage:
             assert response.status_code in [403, 422]
         
         # Test save document endpoint
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user") as mock_get_user, \
-             patch("ADK.agent_data.api_mcp_gateway.vectorization_tool") as mock_vectorization, \
-             patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_manager:
+        with patch("api_mcp_gateway.get_current_user") as mock_get_user, \
+             patch("api_mcp_gateway.vectorization_tool") as mock_vectorization, \
+             patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_manager:
             
             # Mock authenticated user
             mock_get_user.return_value = {
@@ -587,10 +587,10 @@ class TestCLI140m14APIMCPGatewayCoverage:
             assert response.status_code in [200, 400, 401, 422, 503]
         
         # Test save document with vectorization failure
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user") as mock_get_user, \
-             patch("ADK.agent_data.api_mcp_gateway.vectorization_tool") as mock_vectorization, \
-             patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_manager:
+        with patch("api_mcp_gateway.get_current_user") as mock_get_user, \
+             patch("api_mcp_gateway.vectorization_tool") as mock_vectorization, \
+             patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_manager:
             
             mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
             mock_settings.ENABLE_AUTHENTICATION = True
@@ -621,12 +621,12 @@ class TestCLI140m14APIMCPGatewayCoverage:
         client = TestClient(app)
         
         # Test query endpoint with successful results
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user") as mock_get_user, \
-             patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, \
-             patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_manager, \
-             patch("ADK.agent_data.api_mcp_gateway._get_cached_result") as mock_cache_get, \
-             patch("ADK.agent_data.api_mcp_gateway._cache_result") as mock_cache_set:
+        with patch("api_mcp_gateway.get_current_user") as mock_get_user, \
+             patch("api_mcp_gateway.qdrant_store") as mock_qdrant, \
+             patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_manager, \
+             patch("api_mcp_gateway._get_cached_result") as mock_cache_get, \
+             patch("api_mcp_gateway._cache_result") as mock_cache_set:
             
             # Mock authenticated user
             mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
@@ -657,11 +657,11 @@ class TestCLI140m14APIMCPGatewayCoverage:
             mock_cache_set.assert_called()
         
         # Test query endpoint with cache hit
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user") as mock_get_user, \
-             patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, \
-             patch("ADK.agent_data.api_mcp_gateway.settings") as mock_settings, \
-             patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth_manager, \
-             patch("ADK.agent_data.api_mcp_gateway._get_cached_result") as mock_cache_get:
+        with patch("api_mcp_gateway.get_current_user") as mock_get_user, \
+             patch("api_mcp_gateway.qdrant_store") as mock_qdrant, \
+             patch("api_mcp_gateway.settings") as mock_settings, \
+             patch("api_mcp_gateway.auth_manager") as mock_auth_manager, \
+             patch("api_mcp_gateway._get_cached_result") as mock_cache_get:
             
             mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
             mock_settings.ENABLE_AUTHENTICATION = True
@@ -689,15 +689,15 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test search_documents endpoint for comprehensive coverage - targeting lines 732-774"""
         from unittest.mock import Mock, AsyncMock, patch
         from fastapi.testclient import TestClient
-        from ADK.agent_data.api_mcp_gateway import app
+        from api_mcp_gateway import app
         
         client = TestClient(app)
         
         # Mock the authentication and qdrant dependencies
-        with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user, \
-             patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
-             patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
-             patch('ADK.agent_data.api_mcp_gateway.auth_manager') as mock_auth_manager:
+        with patch('api_mcp_gateway.get_current_user') as mock_get_user, \
+             patch('api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
+             patch('api_mcp_gateway.settings') as mock_settings, \
+             patch('api_mcp_gateway.auth_manager') as mock_auth_manager:
             
             # Setup mocks
             mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
@@ -706,7 +706,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             
             # Test 1: Service unavailable (qdrant_store is None)
             mock_qdrant_store = None
-            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store', None):
+            with patch('api_mcp_gateway.qdrant_store', None):
                 response = client.post("/search", json={
                     "tag": "test_tag",
                     "offset": 0,
@@ -716,7 +716,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 assert response.status_code == 503
             
             # Re-setup qdrant store for successful tests
-            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant:
+            with patch('api_mcp_gateway.qdrant_store') as mock_qdrant:
                 # Test 2: Insufficient permissions 
                 mock_auth_manager.validate_user_access.return_value = False
                 response = client.post("/search", json={
@@ -799,18 +799,18 @@ class TestCLI140m14APIMCPGatewayCoverage:
         """Test rag_search endpoint for comprehensive coverage - targeting lines 794-851"""
         from unittest.mock import Mock, AsyncMock, patch
         from fastapi.testclient import TestClient
-        from ADK.agent_data.api_mcp_gateway import app
+        from api_mcp_gateway import app
         import asyncio
         
         client = TestClient(app)
         
         # Mock the authentication and qdrant dependencies
-        with patch('ADK.agent_data.api_mcp_gateway.get_current_user') as mock_get_user, \
-             patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
-             patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
-             patch('ADK.agent_data.api_mcp_gateway.auth_manager') as mock_auth_manager, \
-             patch('ADK.agent_data.api_mcp_gateway.qdrant_rag_search') as mock_rag_search, \
-             patch('ADK.agent_data.api_mcp_gateway._cache_result') as mock_cache:
+        with patch('api_mcp_gateway.get_current_user') as mock_get_user, \
+             patch('api_mcp_gateway.qdrant_store') as mock_qdrant_store, \
+             patch('api_mcp_gateway.settings') as mock_settings, \
+             patch('api_mcp_gateway.auth_manager') as mock_auth_manager, \
+             patch('api_mcp_gateway.qdrant_rag_search') as mock_rag_search, \
+             patch('api_mcp_gateway._cache_result') as mock_cache:
             
             # Setup mocks
             mock_get_user.return_value = {"user_id": "test_user", "email": "test@example.com"}
@@ -818,7 +818,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
             mock_auth_manager.validate_user_access.return_value = True
             
             # Test 1: Service unavailable (qdrant_store is None)
-            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store', None):
+            with patch('api_mcp_gateway.qdrant_store', None):
                 response = client.post("/rag", json={
                     "query_text": "test query",
                     "limit": 5,
@@ -827,7 +827,7 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 assert response.status_code == 503
             
             # Re-setup qdrant store for successful tests
-            with patch('ADK.agent_data.api_mcp_gateway.qdrant_store') as mock_qdrant:
+            with patch('api_mcp_gateway.qdrant_store') as mock_qdrant:
                 # Test 2: Insufficient permissions
                 mock_auth_manager.validate_user_access.return_value = False
                 response = client.post("/rag", json={
@@ -2320,7 +2320,7 @@ class TestCLI140m14ValidationAndCompliance:
         """Validate CLI140m.14 coverage objectives."""
         # This test validates that we're targeting the right modules
         target_modules = [
-            "ADK.agent_data.api_mcp_gateway",
+            "api_mcp_gateway",
             "ADK.agent_data.tools.qdrant_vectorization_tool", 
             "ADK.agent_data.tools.document_ingestion_tool"
         ]
