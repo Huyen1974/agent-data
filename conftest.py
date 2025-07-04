@@ -1,6 +1,4 @@
 import pytest
-import pathlib
-import sys
 import os
 
 def pytest_addoption(parser):
@@ -8,78 +6,15 @@ def pytest_addoption(parser):
     parser.addoption(
         "--qdrant-mock", 
         action="store_true",
-        help="NO-OP flag kept for legacy CI compatibility"
-    )
-    parser.addoption(
-        "--enforce-106", 
-        action="store_true",
-        help="Enforce exactly 106 tests using manifest_106.txt"
+        help="Use mocked Qdrant services (default: True)"
     )
 
-def pytest_collection_modifyitems(session, config, items):
-    """Optionally filter collected items to match manifest_106.txt exactly."""
-    
-    # Only apply manifest filtering if explicitly requested or in CI environment
-    enforce_106 = (
-        config.getoption("--enforce-106") or 
-        os.environ.get("ENFORCE_106_TESTS") == "true" or
-        os.environ.get("CI") == "true"
-    )
-    
-    if not enforce_106:
-        print(f">>> Collected {len(items)} tests (manifest filtering disabled)", file=sys.stderr, flush=True)
-        return
-    
-    print(f">>> MANIFEST FILTERING ENABLED! Original count: {len(items)}", file=sys.stderr, flush=True)
-    
-    # Find manifest file using hard-coded relative path
-    manifest_file = pathlib.Path(__file__).parent / "tests" / "manifest_106.txt"
-    
-    if not manifest_file.exists():
-        print(f">>> ERROR: manifest_106.txt not found at {manifest_file}", file=sys.stderr)
-        pytest.exit("manifest_106.txt not found - cannot enforce test collection", 1)
-    
-    print(f">>> Loading manifest from: {manifest_file}", file=sys.stderr)
-    
-    # Load manifest nodeids into set for O(1) lookup 
-    manifest_nodeids = set()
-    try:
-        with open(manifest_file, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#"):
-                    manifest_nodeids.add(line)
-    except Exception as e:
-        print(f">>> ERROR reading manifest: {e}", file=sys.stderr)
-        pytest.exit(f"Failed to read manifest_106.txt: {e}", 1)
-    
-    print(f">>> Loaded {len(manifest_nodeids)} nodeids from manifest", file=sys.stderr)
-    
-    # Enforce exactly 106 tests in manifest
-    if len(manifest_nodeids) != 106:
-        print(f">>> ERROR: Manifest contains {len(manifest_nodeids)} tests, expected exactly 106", file=sys.stderr)
-        pytest.exit(f"Manifest contains {len(manifest_nodeids)} tests, expected exactly 106", 1)
-    
-    # Filter items to only those in manifest - exact nodeid matching
-    original_count = len(items)
-    filtered_items = []
-    
-    for item in items:
-        nodeid = str(item.nodeid)
-        if nodeid in manifest_nodeids:
-            filtered_items.append(item)
-    
-    # Replace items list in-place
-    items[:] = filtered_items
-    final_count = len(items)
-    
-    print(f">>> Collection filter: {original_count} -> {final_count} tests", file=sys.stderr)
-    
-    # Enforce exactly 106 tests collected
-    if final_count != 106:
-        print(f">>> WARNING: Expected exactly 106 tests, got {final_count}", file=sys.stderr)
-        # Allow reasonable range for CI stability
-        if final_count < 90 or final_count > 120:
-            pytest.exit(f"Test collection failed: expected ~106 tests, got {final_count}", 1)
-    
-    print(f">>> ✅ SUCCESS: {final_count} tests collected and filtered!", file=sys.stderr)
+def pytest_configure(config):
+    """Configure pytest with environment variables."""
+    # Ensure mock environment is set by default
+    if not os.environ.get("QDRANT_MOCK"):
+        os.environ["QDRANT_MOCK"] = "1"
+    if not os.environ.get("FIRESTORE_MOCK"):
+        os.environ["FIRESTORE_MOCK"] = "1"
+    if not os.environ.get("DISABLE_REAL_SERVICES"):
+        os.environ["DISABLE_REAL_SERVICES"] = "1"
