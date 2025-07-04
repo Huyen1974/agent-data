@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 @pytest.mark.observability
-def test_cli140b_alerting_policies_and_ci_validation():
+    @pytest.mark.unitdef test_cli140b_alerting_policies_and_ci_validation():
     """
     CLI 140b: Validates alerting policy files exist and CI runtime documentation.
 

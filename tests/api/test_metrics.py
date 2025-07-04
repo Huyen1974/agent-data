@@ -15,7 +15,7 @@
 from fastapi.testclient import TestClient
 
 
-def test_metrics_endpoint(client: TestClient):
+    @pytest.mark.unitdef test_metrics_endpoint(client: TestClient):
     """Test that the /metrics endpoint returns Prometheus metrics in the correct format."""
     # Make a request to the /metrics endpoint
     response = client.get("/metrics")

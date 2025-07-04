@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from agent_data_manager.tools.delete_by_tag_tool import delete_by_tag_sync
 
 
-def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
     """
     Test DELETE_BY_TAG with a valid tag that exists in the data.
     Should successfully delete vectors with the specified tag.
@@ -22,7 +22,7 @@ def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
     assert "science" in result["message"]
 
 
-def test_delete_by_tag_empty():
+    @pytest.mark.unitdef test_delete_by_tag_empty():
     """
     Test DELETE_BY_TAG with empty or whitespace-only tag.
     Should fail with appropriate error message.
@@ -42,7 +42,7 @@ def test_delete_by_tag_empty():
     assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
 
 
-def test_delete_by_tag_non_existent(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_delete_by_tag_non_existent(client_with_qdrant_override: TestClient):
     """
     Test DELETE_BY_TAG with a tag that doesn't exist in the data.
     Should succeed but delete 0 vectors.

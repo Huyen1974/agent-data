@@ -13,7 +13,7 @@ from datetime import datetime
 class TestWorkflowOrchestration:
     """Test cases for workflow orchestration functionality."""
 
-    def test_workflow_deployment_exists(self):
+    @pytest.mark.unit    def test_workflow_deployment_exists(self):
         """Test that the workflow deployment exists and is accessible."""
         # This test validates that the workflow YAML exists and is properly structured
         import os
@@ -45,7 +45,7 @@ class TestWorkflowOrchestration:
         assert "return_result" in step_names, "Should have return_result step"
 
     @patch("subprocess.run")
-    def test_workflow_execution_simulation(self, mock_subprocess):
+    @pytest.mark.unit    def test_workflow_execution_simulation(self, mock_subprocess):
         """Test workflow execution simulation with mocked gcloud command."""
         # Mock successful workflow execution
         mock_result = Mock()
@@ -81,7 +81,7 @@ class TestWorkflowOrchestration:
 
     @patch("subprocess.run")
     @pytest.mark.xfail(reason="CLI140m.69: Batch workflow test with timeout issues")
-    def test_workflow_batch_execution_simulation(self, mock_subprocess):
+    @pytest.mark.unit    def test_workflow_batch_execution_simulation(self, mock_subprocess):
         """Test batch workflow execution with 8 documents."""
 
         # Mock successful workflow execution for all documents
@@ -143,7 +143,7 @@ class TestWorkflowOrchestration:
         assert summary["failed"] == 0, "No documents should fail"
         assert summary["success_rate"] == 100.0, "Should have 100% success rate"
 
-    def test_workflow_input_validation(self):
+    @pytest.mark.unit    def test_workflow_input_validation(self):
         """Test workflow input validation and parameter handling."""
         # Test required parameters
         required_params = ["doc_id", "content"]
@@ -164,7 +164,7 @@ class TestWorkflowOrchestration:
         assert isinstance(valid_input["content"], str), "content should be string"
 
     @patch("subprocess.run")
-    def test_workflow_error_handling(self, mock_subprocess):
+    @pytest.mark.unit    def test_workflow_error_handling(self, mock_subprocess):
         """Test workflow error handling and retry logic."""
         # Mock failed workflow execution on first try, success on retry
         call_count = 0
@@ -206,7 +206,7 @@ class TestWorkflowOrchestration:
 
         assert call_count >= 0, "Mock function should be callable"
 
-    def test_workflow_metadata_enhancement(self):
+    @pytest.mark.unit    def test_workflow_metadata_enhancement(self):
         """Test that workflow enhances metadata with workflow information."""
         # Test metadata enhancement
         original_metadata = {"source": "pytest", "test_type": "metadata_enhancement"}
@@ -225,7 +225,7 @@ class TestWorkflowOrchestration:
         assert enhanced_metadata["workflow_source"] == "cloud_workflows", "Should set correct workflow source"
         assert "processed_at" in enhanced_metadata, "Should add processing timestamp"
 
-    def test_workflow_cli125_requirement(self):
+    @pytest.mark.unit    def test_workflow_cli125_requirement(self):
         """Test specific CLI 125 requirement: workflow orchestration functionality."""
         # This test validates that the workflow meets CLI 125 requirements
 
@@ -262,7 +262,7 @@ class TestWorkflowOrchestration:
 class TestWorkflowIntegration:
     """Integration tests for workflow functionality."""
 
-    def test_workflow_deployment_status(self):
+    @pytest.mark.unit    def test_workflow_deployment_status(self):
         """Test that workflow is properly deployed and accessible."""
         # This test would check actual deployment status in a real environment
         # For now, we simulate the check
@@ -280,7 +280,7 @@ class TestWorkflowIntegration:
         assert deployment_status["state"] == "ACTIVE", "Workflow should be in ACTIVE state"
         assert location in deployment_status["name"], "Should be deployed in correct region"
 
-    def test_workflow_performance_expectations(self):
+    @pytest.mark.unit    def test_workflow_performance_expectations(self):
         """Test workflow performance expectations (simulated calculations)."""
         # Test that workflow execution time meets expectations
         # Expected: <5 minutes per document for small documents
@@ -301,7 +301,7 @@ class TestWorkflowIntegration:
         ), f"Batch processing should complete within {expected_max_batch_time} seconds"
 
     @patch("subprocess.run")
-    def test_workflow_complete_orchestration_cli125(self, mock_subprocess):
+    @pytest.mark.unit    def test_workflow_complete_orchestration_cli125(self, mock_subprocess):
         """Test CLI 125 complete workflow orchestration: save → vectorize → tag."""
         # Mock successful workflow execution with all three steps
         mock_result = Mock()

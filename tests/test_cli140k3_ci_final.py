@@ -25,7 +25,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_repository_access_issue_resolution(self):
+    @pytest.mark.unit    def test_repository_access_issue_resolution(self):
         """
         Documents and validates the repository access issue resolution.
         Since GitHub repository is not accessible, we simulate CI locally.
@@ -64,7 +64,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_local_ci_simulation_full_suite(self):
+    @pytest.mark.unit    def test_local_ci_simulation_full_suite(self):
         """
         Simulates CI environment locally and runs full test suite with timing.
         This is the core validation for CLI140k.3 objectives.
@@ -183,7 +183,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_enhanced_ci_results_parsing(self):
+    @pytest.mark.unit    def test_enhanced_ci_results_parsing(self):
         """
         Tests enhanced parsing capabilities for CI results.
         This addresses the "enhanced parsing" requirement from CLI140k.3.
@@ -227,7 +227,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_ci_trigger_issue_documentation(self):
+    @pytest.mark.unit    def test_ci_trigger_issue_documentation(self):
         """
         Documents the CI trigger issues and validates the resolution approach.
         """
@@ -275,7 +275,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_full_suite_runtime_validation_final(self):
+    @pytest.mark.unit    def test_full_suite_runtime_validation_final(self):
         """
         Final validation that combines all CLI140k.3 requirements.
         This is the comprehensive test that validates the complete solution.
@@ -330,7 +330,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
-    def test_cli140k3_completion_requirements(self):
+    @pytest.mark.unit    def test_cli140k3_completion_requirements(self):
         """
         Validates that all CLI140k.3 completion requirements are satisfied.
         """

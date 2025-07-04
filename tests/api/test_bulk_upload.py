@@ -14,7 +14,7 @@ if project_root not in sys.path:
 from agent_data_manager.tools.bulk_upload_tool import bulk_upload_sync
 
 
-def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with valid points.
     Should successfully upload vectors to the collection.
@@ -32,7 +32,7 @@ def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     assert "test_collection" in result["message"]
 
 
-def test_bulk_upload_empty_collection():
+    @pytest.mark.unitdef test_bulk_upload_empty_collection():
     """
     Test BULK_UPLOAD with empty or whitespace-only collection name.
     Should fail with appropriate error message.
@@ -54,7 +54,7 @@ def test_bulk_upload_empty_collection():
     assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
 
 
-def test_bulk_upload_empty_points():
+    @pytest.mark.unitdef test_bulk_upload_empty_points():
     """
     Test BULK_UPLOAD with empty points list.
     Should fail with appropriate error message.
@@ -67,7 +67,7 @@ def test_bulk_upload_empty_points():
     assert "empty" in result["error"].lower()
 
 
-def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with invalid points (missing vector).
     Should fail with appropriate error message.
@@ -85,7 +85,7 @@ def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
     assert "valid" in result["error"].lower()
 
 
-def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with a mix of valid and invalid points.
     Should upload only the valid points.
@@ -102,7 +102,7 @@ def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient
     assert result["uploaded_count"] == 2  # Only the valid points should be uploaded
 
 
-def test_bulk_upload_with_custom_ids(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_bulk_upload_with_custom_ids(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with custom point IDs.
     Should successfully upload vectors with the specified IDs.

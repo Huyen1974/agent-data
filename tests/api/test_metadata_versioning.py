@@ -36,7 +36,7 @@ class TestMetadataVersioning:
             manager.db = mock_client
             return manager, mock_doc_ref
 
-    def test_metadata_versioning_logic(self):
+    @pytest.mark.unit    def test_metadata_versioning_logic(self):
         """Test versioning logic without async complexity."""
         manager = FirestoreMetadataManager.__new__(FirestoreMetadataManager)
 
@@ -50,7 +50,7 @@ class TestMetadataVersioning:
         assert "added:title" in changes
         assert "modified:author" not in changes
 
-    def test_hierarchical_structure_logic(self):
+    @pytest.mark.unit    def test_hierarchical_structure_logic(self):
         """Test hierarchical structure logic without async complexity."""
         manager = FirestoreMetadataManager.__new__(FirestoreMetadataManager)
 
@@ -113,7 +113,7 @@ class TestAutoTagging:
             tool._initialized = True  # Skip initialization
             return tool
 
-    def test_content_hash_generation(self):
+    @pytest.mark.unit    def test_content_hash_generation(self):
         """Test content hash generation."""
         tool = AutoTaggingTool()
 
@@ -129,7 +129,7 @@ class TestAutoTagging:
         assert hash1 == hash3  # Same content should have same hash
         assert len(hash1) == 64  # SHA256 hash should be 64 characters
 
-    def test_get_auto_tagging_tool_singleton(self):
+    @pytest.mark.unit    def test_get_auto_tagging_tool_singleton(self):
         """Test that get_auto_tagging_tool returns singleton instance."""
         tool1 = get_auto_tagging_tool()
         tool2 = get_auto_tagging_tool()

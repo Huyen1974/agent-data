@@ -38,13 +38,13 @@ class TestJWTAuthentication:
             self.auth_manager = self.__class__._auth_manager_cache
             self.user_manager = self.__class__._user_manager_cache
 
-    def test_auth_manager_initialization(self):
+    @pytest.mark.unit    def test_auth_manager_initialization(self):
         """Test AuthManager initializes correctly"""
         assert self.auth_manager.algorithm == "HS256"
         assert self.auth_manager.access_token_expire_minutes == 30
         assert self.auth_manager.secret_key is not None
 
-    def test_password_hashing_and_verification(self):
+    @pytest.mark.unit    def test_password_hashing_and_verification(self):
         """Test password hashing and verification with optimized setup"""
         password = "test_password_123"
         
@@ -63,7 +63,7 @@ class TestJWTAuthentication:
             assert self.auth_manager.verify_password("fresh_test_password", fresh_hash)
             self.__class__._fresh_hash_tested = True
 
-    def test_jwt_token_creation_and_validation(self):
+    @pytest.mark.unit    def test_jwt_token_creation_and_validation(self):
         """Test JWT token creation and validation"""
         user_data = {"sub": "test@cursor.integration", "email": "test@cursor.integration", "scopes": ["read", "write"]}
 
@@ -78,7 +78,7 @@ class TestJWTAuthentication:
         assert payload["email"] == user_data["email"]
         assert payload["scopes"] == user_data["scopes"]
 
-    def test_jwt_token_expiration(self):
+    @pytest.mark.unit    def test_jwt_token_expiration(self):
         """Test JWT token expiration handling with optimized timing"""
         user_data = {"sub": "test@cursor.integration", "email": "test@cursor.integration"}
 
@@ -105,7 +105,7 @@ class TestJWTAuthentication:
         # Verify it's the correct type of HTTPException (401 Unauthorized)
         assert exc_info.value.status_code == 401
 
-    def test_invalid_jwt_token(self):
+    @pytest.mark.unit    def test_invalid_jwt_token(self):
         """Test handling of invalid JWT tokens"""
         invalid_tokens = [
             "invalid.token.here",
@@ -118,7 +118,7 @@ class TestJWTAuthentication:
             with pytest.raises(Exception):  # Should raise HTTPException
                 self.auth_manager.verify_token(invalid_token)
 
-    def test_user_token_creation(self):
+    @pytest.mark.unit    def test_user_token_creation(self):
         """Test user-specific token creation"""
         user_id = "test@cursor.integration"
         email = "test@cursor.integration"
@@ -132,7 +132,7 @@ class TestJWTAuthentication:
         assert payload["scopes"] == scopes
         assert payload["token_type"] == "access"
 
-    def test_user_access_validation(self):
+    @pytest.mark.unit    def test_user_access_validation(self):
         """Test user access scope validation"""
         # User with read access
         read_user = {"user_id": "read_user@test.com", "scopes": ["read"]}
@@ -155,7 +155,7 @@ class TestJWTAuthentication:
         assert not self.auth_manager.validate_user_access(no_access_user, "read")
 
     @patch("agent_data_manager.auth.auth_manager.secretmanager")
-    def test_jwt_secret_from_secret_manager(self, mock_secretmanager):
+    @pytest.mark.unit    def test_jwt_secret_from_secret_manager(self, mock_secretmanager):
         """Test JWT secret retrieval from Google Secret Manager"""
         # Mock Secret Manager response with faster setup
         mock_client = MagicMock()
@@ -170,7 +170,7 @@ class TestJWTAuthentication:
             # Should use the secret from Secret Manager
             assert auth_manager.secret_key == "secret_from_gcp"
 
-    def test_malformed_token_handling(self):
+    @pytest.mark.unit    def test_malformed_token_handling(self):
         """Test handling of malformed JWT tokens"""
         malformed_tokens = [
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",  # Missing payload and signature
@@ -183,7 +183,7 @@ class TestJWTAuthentication:
             with pytest.raises(Exception):  # Should raise HTTPException
                 self.auth_manager.verify_token(malformed_token)
 
-    def test_token_without_required_fields(self):
+    @pytest.mark.unit    def test_token_without_required_fields(self):
         """Test tokens missing required fields"""
         # Manually create JWT without 'sub'
         token_payload = {
@@ -264,7 +264,7 @@ class TestUserManager:
             result = await self.user_manager.authenticate_user("test@cursor.integration", "wrong_password")
             assert result is None
 
-    def test_rate_limiting_simulation(self):
+    @pytest.mark.unit    def test_rate_limiting_simulation(self):
         """Test rate limiting simulation with optimized timing"""
         # Simulate rate limiting without actual delays
         rate_limit_window = 60  # seconds
@@ -300,7 +300,7 @@ class TestAuthenticationIntegration:
             with patch("agent_data_manager.auth.auth_manager.secretmanager"):
                 self.auth_manager = AuthManager()
 
-    def test_authentication_flow_simulation(self):
+    @pytest.mark.unit    def test_authentication_flow_simulation(self):
         """Test complete authentication flow simulation"""
         # Simulate user login
         user_data = {
@@ -322,7 +322,7 @@ class TestAuthenticationIntegration:
         assert self.auth_manager.validate_user_access(payload, "write")
         assert not self.auth_manager.validate_user_access(payload, "admin")
 
-    def test_token_refresh_simulation(self):
+    @pytest.mark.unit    def test_token_refresh_simulation(self):
         """Test token refresh simulation with optimized approach"""
         # Create initial token with different expiry to ensure uniqueness
         user_data = {"sub": "refresh@test.com", "email": "refresh@test.com"}

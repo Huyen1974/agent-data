@@ -150,7 +150,7 @@ class CloudCleanupValidator:
         except (subprocess.TimeoutExpired, FileNotFoundError):
             return False
     
-    def test_cleanup_script_functionality(self) -> Dict[str, Any]:
+    @pytest.mark.unit    def test_cleanup_script_functionality(self) -> Dict[str, Any]:
         """Test the cleanup script without actually running destructive operations."""
         logger.info("🧹 Testing Google Cloud cleanup script functionality")
         
@@ -278,7 +278,7 @@ class OptimizationIntegrationTest:
 
 # Pytest test functions
 @pytest.mark.integration
-def test_lazy_loading_optimization():
+    @pytest.mark.unitdef test_lazy_loading_optimization():
     """Test that lazy loading is properly implemented."""
     validator = StartupTimeValidator()
     result = validator.measure_lazy_loading_benefit()
@@ -292,7 +292,7 @@ def test_lazy_loading_optimization():
     assert result["import_time"] < 1.0, f"Import time too slow: {result['import_time']:.3f}s"
 
 @pytest.mark.integration 
-def test_cleanup_script_availability():
+    @pytest.mark.unitdef test_cleanup_script_availability():
     """Test that the cleanup script is properly implemented."""
     validator = CloudCleanupValidator()
     result = validator.test_cleanup_script_functionality()
@@ -302,7 +302,7 @@ def test_cleanup_script_availability():
     assert result["required_functions_present"], "All required functions should be present"
 
 @pytest.mark.integration
-def test_optimization_integration():
+    @pytest.mark.unitdef test_optimization_integration():
     """Comprehensive integration test for all optimizations."""
     integration_test = OptimizationIntegrationTest()
     results = integration_test.run_comprehensive_test()
@@ -314,7 +314,7 @@ def test_optimization_integration():
         f"Optimization not ready: {results['overall']['tests_passed']}/{results['overall']['total_tests']} tests passed"
 
 @pytest.mark.performance
-def test_startup_time_target():
+    @pytest.mark.unitdef test_startup_time_target():
     """Test startup time meets the <2s target (if environment allows)."""
     validator = StartupTimeValidator()
     
@@ -332,7 +332,7 @@ def test_startup_time_target():
         pytest.skip(f"Startup test skipped due to environment: {e}")
 
 # Test configuration for CLI140h.2
-def test_cli140h2_optimization_summary():
+    @pytest.mark.unitdef test_cli140h2_optimization_summary():
     """Summary test that validates all CLI140h.2 optimizations."""
     logger.info("🎯 CLI140h.2 Optimization Summary Test")
     

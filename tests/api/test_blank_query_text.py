@@ -2,7 +2,7 @@ import pytest
 
 
 
-def test_query_text_blank_spaces(client):
+    @pytest.mark.unitdef test_query_text_blank_spaces(client):
     payload = {"query_text": "    ", "top_k": 3, "filter_tag": "science"}
     resp = client.post("/semantic_search_cosine", json=payload)
     assert resp.status_code == 422

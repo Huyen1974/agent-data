@@ -24,7 +24,7 @@ from typing import Dict, Any, List, Optional
 class TestCLI140m7CoverageValidation:
     """Validation tests to ensure ≥80% coverage achievement."""
     
-    def test_cli140m7_coverage_targets(self):
+    @pytest.mark.unit    def test_cli140m7_coverage_targets(self):
         """Validate that CLI140m.7 achieves ≥80% coverage targets."""
         # This test validates the coverage achievement
         coverage_targets = {
@@ -796,7 +796,7 @@ class TestCLI140m7DocumentIngestionToolTargeted:
 class TestCLI140m7FinalValidation:
     """Final validation tests for CLI140m.7 completion."""
     
-    def test_cli140m7_completion_summary(self):
+    @pytest.mark.unit    def test_cli140m7_completion_summary(self):
         """Comprehensive completion summary for CLI140m.7."""
         completion_summary = {
             "targeted_missing_lines_covered": True,

@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_empty_filter_tag_rejected(client):
+    @pytest.mark.unitdef test_empty_filter_tag_rejected(client):
 
     payload = {
         "query_text": "explain climate science",
@@ -21,7 +21,7 @@ def test_empty_filter_tag_rejected(client):
     ), f"Test for empty string failed. Expected specific filter_tag error, got {errs}"
 
 
-def test_whitespace_filter_tag_rejected(client):
+    @pytest.mark.unitdef test_whitespace_filter_tag_rejected(client):
     payload = {
         "query_text": "explain climate science",
         "top_k": 3,

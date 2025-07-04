@@ -28,7 +28,7 @@ import statistics
 class TestCLI140l1NightlyOptimized:
     """Test suite for CLI140l.1 nightly CI runtime optimization validation."""
 
-    def test_cli140l1_nightly_runtime_optimization_validation(self):
+    @pytest.mark.unit    def test_cli140l1_nightly_runtime_optimization_validation(self):
         """
         Validate that nightly CI runtime optimizations are working effectively.
         
@@ -70,7 +70,7 @@ class TestCLI140l1NightlyOptimized:
         
         print("✅ CLI140l.1 nightly runtime optimizations validated successfully")
 
-    def test_cli140l1_performance_test_runtime_estimation(self):
+    @pytest.mark.unit    def test_cli140l1_performance_test_runtime_estimation(self):
         """
         Estimate the runtime improvement from performance test optimizations.
         
@@ -121,7 +121,7 @@ class TestCLI140l1NightlyOptimized:
         
         assert estimated_new_runtime <= 50, f"Optimized runtime should be ≤50s, estimated {estimated_new_runtime}s"
 
-    def test_cli140l1_nightly_ci_target_validation(self):
+    @pytest.mark.unit    def test_cli140l1_nightly_ci_target_validation(self):
         """
         Validate that the optimizations should achieve nightly CI targets.
         
@@ -175,7 +175,7 @@ class TestCLI140l1NightlyOptimized:
         if not pass_rate_achievable:
             print(f"⚠️  Pass rate target requires fixing {int((pass_rate_target/100 * total_tests) - estimated_new_passing)} more tests")
 
-    def test_cli140l1_optimization_implementation_completeness(self):
+    @pytest.mark.unit    def test_cli140l1_optimization_implementation_completeness(self):
         """
         Verify that all planned optimizations have been implemented correctly.
         """
@@ -227,7 +227,7 @@ class TestCLI140l1NightlyOptimized:
         
         print(f"✅ All CLI140l.1 optimizations successfully implemented!")
 
-    def test_cli140l1_completion_requirements_validation(self):
+    @pytest.mark.unit    def test_cli140l1_completion_requirements_validation(self):
         """
         Final validation that CLI140l.1 meets all completion requirements.
         

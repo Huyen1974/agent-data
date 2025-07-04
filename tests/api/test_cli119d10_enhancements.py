@@ -25,7 +25,7 @@ class TestMetadataValidationEnhancements:
             manager.db = Mock()
             return manager
 
-    def test_validate_metadata_valid_data(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_metadata_valid_data(self, metadata_manager):
         """Test metadata validation with valid data."""
         valid_metadata = {
             "doc_id": "test_doc_123",
@@ -41,7 +41,7 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is True
         assert len(result["errors"]) == 0
 
-    def test_validate_metadata_missing_required_fields(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_metadata_missing_required_fields(self, metadata_manager):
         """Test metadata validation with missing required fields."""
         invalid_metadata = {"vectorStatus": "completed", "lastUpdated": "2025-01-27T19:00:00Z"}
 
@@ -50,7 +50,7 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is False
         assert "Missing required field: doc_id" in result["errors"]
 
-    def test_validate_metadata_invalid_types(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_metadata_invalid_types(self, metadata_manager):
         """Test metadata validation with invalid data types."""
         invalid_metadata = {
             "doc_id": 123,  # Should be string
@@ -65,7 +65,7 @@ class TestMetadataValidationEnhancements:
         assert "version must be an integer" in result["errors"]
         assert "level_1 must be a string or None" in result["errors"]
 
-    def test_validate_metadata_content_size_limits(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_metadata_content_size_limits(self, metadata_manager):
         """Test metadata validation with content size limits."""
         large_text = "x" * 60000  # Exceeds 50KB limit
         long_level = "x" * 150  # Exceeds 100 character limit
@@ -78,7 +78,7 @@ class TestMetadataValidationEnhancements:
         assert "original_text exceeds 50KB limit" in result["errors"]
         assert "level_1 must be 100 characters or less" in result["errors"]
 
-    def test_validate_metadata_invalid_timestamps(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_metadata_invalid_timestamps(self, metadata_manager):
         """Test metadata validation with invalid timestamp formats."""
         invalid_metadata = {
             "doc_id": "test_doc",
@@ -91,7 +91,7 @@ class TestMetadataValidationEnhancements:
         assert result["valid"] is False
         assert any("must be a valid ISO format timestamp" in error for error in result["errors"])
 
-    def test_validate_version_increment_valid(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_version_increment_valid(self, metadata_manager):
         """Test version increment validation with valid increments."""
         existing_data = {"version": 5}
         new_metadata = {"version": 6}
@@ -100,7 +100,7 @@ class TestMetadataValidationEnhancements:
 
         assert result is True
 
-    def test_validate_version_increment_auto_increment(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_version_increment_auto_increment(self, metadata_manager):
         """Test version increment validation with auto-increment (no version specified)."""
         existing_data = {"version": 5}
         new_metadata = {"doc_id": "test"}  # No version specified
@@ -109,7 +109,7 @@ class TestMetadataValidationEnhancements:
 
         assert result is True
 
-    def test_validate_version_increment_decrease(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_version_increment_decrease(self, metadata_manager):
         """Test version increment validation with version decrease."""
         existing_data = {"version": 5}
         new_metadata = {"version": 3}  # Decrease
@@ -118,7 +118,7 @@ class TestMetadataValidationEnhancements:
 
         assert result is False
 
-    def test_validate_version_increment_skip(self, metadata_manager):
+    @pytest.mark.unit    def test_validate_version_increment_skip(self, metadata_manager):
         """Test version increment validation with version skip."""
         existing_data = {"version": 5}
         new_metadata = {"version": 8}  # Skip versions 6 and 7
@@ -206,7 +206,7 @@ class TestChangeReportingEnhancements:
         except ImportError as e:
             pytest.skip(f"Failed to import {function_name}: {e}")
 
-    def test_calculate_string_similarity(self):
+    @pytest.mark.unit    def test_calculate_string_similarity(self):
         """Test string similarity calculation."""
         calculate_string_similarity = self._import_function_safely("calculate_string_similarity")
 
@@ -224,7 +224,7 @@ class TestChangeReportingEnhancements:
         assert calculate_string_similarity("", "") == 0.0
         assert calculate_string_similarity("hello", "") == 0.0
 
-    def test_analyze_change_impact(self):
+    @pytest.mark.unit    def test_analyze_change_impact(self):
         """Test change impact analysis."""
         analyze_change_impact = self._import_function_safely("analyze_change_impact")
 
@@ -241,7 +241,7 @@ class TestChangeReportingEnhancements:
         assert "vector_search" in impact["affected_systems"]
         assert "vectorization_completed" in impact["workflow_impact"]
 
-    def test_calculate_data_quality_metrics(self):
+    @pytest.mark.unit    def test_calculate_data_quality_metrics(self):
         """Test data quality metrics calculation."""
         calculate_data_quality_metrics = self._import_function_safely("calculate_data_quality_metrics")
 
@@ -261,7 +261,7 @@ class TestChangeReportingEnhancements:
         assert metrics["validity_score"] == 1.0  # All required fields present
         assert metrics["quality_trend"] == "improving"  # More complete than before
 
-    def test_enhanced_change_analysis(self):
+    @pytest.mark.unit    def test_enhanced_change_analysis(self):
         """Test enhanced change analysis with detailed metrics."""
         analyze_changes = self._import_function_safely("analyze_changes")
 
@@ -296,7 +296,7 @@ class TestChangeReportingEnhancements:
 class TestFirestoreRulesValidation:
     """Test Firestore rules deployment and validation."""
 
-    def test_firestore_rules_syntax(self):
+    @pytest.mark.unit    def test_firestore_rules_syntax(self):
         """Test that Firestore rules file has valid syntax."""
         import os
 
@@ -316,7 +316,7 @@ class TestFirestoreRulesValidation:
         assert "agent_sessions" in content
         assert "agent_data" in content
 
-    def test_firebase_json_configuration(self):
+    @pytest.mark.unit    def test_firebase_json_configuration(self):
         """Test Firebase configuration file."""
         import json
         import os
@@ -331,7 +331,7 @@ class TestFirestoreRulesValidation:
         assert config["firestore"]["rules"] == "firestore.rules"
         assert config["firestore"]["indexes"] == "firestore.indexes.json"
 
-    def test_firestore_indexes_configuration(self):
+    @pytest.mark.unit    def test_firestore_indexes_configuration(self):
         """Test Firestore indexes configuration."""
         import json
         import os
@@ -355,7 +355,7 @@ class TestFirestoreRulesValidation:
 class TestAlertingPolicyValidation:
     """Test alerting policy configuration and deployment."""
 
-    def test_alert_policy_configuration(self):
+    @pytest.mark.unit    def test_alert_policy_configuration(self):
         """Test alerting policy JSON configuration."""
         import json
         import os
@@ -383,7 +383,7 @@ class TestAlertingPolicyValidation:
             assert "comparison" in threshold
             assert "thresholdValue" in threshold
 
-    def test_alert_policy_metrics_references(self):
+    @pytest.mark.unit    def test_alert_policy_metrics_references(self):
         """Test that alert policy references correct metrics."""
         import json
 
@@ -462,7 +462,7 @@ class TestCLI119D10Integration:
             # Verify that set was called (metadata was saved)
             manager.db.collection.return_value.document.return_value.set.assert_called_once()
 
-    def test_change_reporting_integration(self):
+    @pytest.mark.unit    def test_change_reporting_integration(self):
         """Test change reporting with enhanced analytics."""
         generate_change_report = self._import_function_safely("generate_change_report")
 

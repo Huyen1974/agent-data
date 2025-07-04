@@ -3,7 +3,7 @@ from tests.mocks.qdrant_basic import FakeQdrantClient
 import pytest
 
 
-def test_migration_handles_duplicate_ids(faiss_index_with_duplicates):
+    @pytest.mark.unitdef test_migration_handles_duplicate_ids(faiss_index_with_duplicates):
     client = FakeQdrantClient(url="http://mock-qdrant:6333")
     index_path = faiss_index_with_duplicates["index_path"]
     payloads = faiss_index_with_duplicates["payloads"]

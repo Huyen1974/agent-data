@@ -86,7 +86,7 @@ from fastapi.testclient import TestClient
 #     monkeypatch.undo()
 
 
-def test_search_with_tag_and_threshold(client_with_qdrant_override: TestClient):
+    @pytest.mark.unitdef test_search_with_tag_and_threshold(client_with_qdrant_override: TestClient):
     payload = {
         "query_text": "modern astronomy discoveries",
         "top_k": 5,

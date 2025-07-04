@@ -2,7 +2,7 @@ import pytest
 
 
 
-def test_filter_tag_case_insensitive(client_with_qdrant_override):
+    @pytest.mark.unitdef test_filter_tag_case_insensitive(client_with_qdrant_override):
 
     payload = {
         "query_text": "modern astronomy discoveries",

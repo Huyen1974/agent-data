@@ -52,7 +52,7 @@ class TestCLI140gAPIGatewayE2E:
         self.access_token = None
     
     @pytest.mark.e2e
-    def test_api_gateway_health_check(self):
+    @pytest.mark.unit    def test_api_gateway_health_check(self):
         """Test API Gateway health check endpoint (no auth required)."""
         with patch('requests.get') as mock_get:
             mock_response = Mock()
@@ -75,7 +75,7 @@ class TestCLI140gAPIGatewayE2E:
             assert "services" in data
     
     @pytest.mark.e2e
-    def test_api_gateway_auth_flow(self):
+    @pytest.mark.unit    def test_api_gateway_auth_flow(self):
         """Test authentication flow through API Gateway."""
         # Test user registration
         register_data = {
@@ -142,7 +142,7 @@ class TestCLI140gAPIGatewayE2E:
             self.access_token = data["access_token"]
     
     @pytest.mark.e2e
-    def test_api_gateway_document_save_flow(self):
+    @pytest.mark.unit    def test_api_gateway_document_save_flow(self):
         """Test document save flow through API Gateway to Cloud Functions."""
         if not self.access_token:
             self.access_token = "mock_jwt_token_12345"
@@ -191,7 +191,7 @@ class TestCLI140gAPIGatewayE2E:
             assert "vector_id" in data
     
     @pytest.mark.e2e
-    def test_api_gateway_vector_query_flow(self):
+    @pytest.mark.unit    def test_api_gateway_vector_query_flow(self):
         """Test vector query flow through API Gateway."""
         if not self.access_token:
             self.access_token = "mock_jwt_token_12345"
@@ -241,7 +241,7 @@ class TestCLI140gAPIGatewayE2E:
             assert "results" in data
     
     @pytest.mark.e2e
-    def test_api_gateway_rag_search_flow(self):
+    @pytest.mark.unit    def test_api_gateway_rag_search_flow(self):
         """Test RAG search flow through API Gateway."""
         if not self.access_token:
             self.access_token = "mock_jwt_token_12345"
@@ -297,7 +297,7 @@ class TestCLI140gAPIGatewayE2E:
             assert "rag_info" in data
     
     @pytest.mark.e2e
-    def test_api_gateway_cskh_endpoints(self):
+    @pytest.mark.unit    def test_api_gateway_cskh_endpoints(self):
         """Test CSKH endpoints through API Gateway."""
         if not self.access_token:
             self.access_token = "mock_jwt_token_12345"
@@ -363,7 +363,7 @@ class TestCLI140gAPIGatewayE2E:
             assert len(data["categories"]) > 0
     
     @pytest.mark.e2e
-    def test_api_gateway_latency_requirements(self):
+    @pytest.mark.unit    def test_api_gateway_latency_requirements(self):
         """Test that API Gateway meets latency requirements (<0.5s)."""
         if not self.access_token:
             self.access_token = "mock_jwt_token_12345"
@@ -414,7 +414,7 @@ class TestCLI140gAPIGatewayE2E:
             assert latency < 2.0  # Generous timeout for mocked tests
     
     @pytest.mark.e2e
-    def test_api_gateway_error_handling(self):
+    @pytest.mark.unit    def test_api_gateway_error_handling(self):
         """Test error handling through API Gateway."""
         # Test unauthorized access
         with patch('requests.post') as mock_post:
@@ -455,7 +455,7 @@ class TestCLI140gAPIGatewayE2E:
             assert response.status_code == 404
     
     @pytest.mark.e2e
-    def test_api_gateway_architecture_distribution(self):
+    @pytest.mark.unit    def test_api_gateway_architecture_distribution(self):
         """Test that the architecture meets the distribution requirements."""
         # This test verifies the conceptual architecture distribution
         # In a real deployment, this would check actual service usage
@@ -487,7 +487,7 @@ class TestCLI140gAPIGatewayE2E:
 
 
 @pytest.mark.e2e
-def test_cli140g_migration_completion():
+    @pytest.mark.unitdef test_cli140g_migration_completion():
     """Test that CLI140g migration is complete and functional."""
     # Verify all required files exist
     required_files = [

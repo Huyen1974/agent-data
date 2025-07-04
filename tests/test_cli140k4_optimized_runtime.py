@@ -19,7 +19,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_runtime_optimization_infrastructure(self):
+    @pytest.mark.unit    def test_runtime_optimization_infrastructure(self):
         """
         Validates that runtime optimization infrastructure is in place.
         This test ensures optimizations have been applied to slow tests.
@@ -42,7 +42,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_authentication_setup_optimization(self):
+    @pytest.mark.unit    def test_authentication_setup_optimization(self):
         """
         Validates that authentication setup time has been optimized.
         This addresses the 64.47s setup time issue.
@@ -66,7 +66,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_full_suite_runtime_estimation(self):
+    @pytest.mark.unit    def test_full_suite_runtime_estimation(self):
         """
         Estimates optimized full suite runtime based on current test performance.
         This provides a prediction of whether the <300s target will be met.
@@ -145,7 +145,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_optimization_target_validation(self):
+    @pytest.mark.unit    def test_optimization_target_validation(self):
         """
         Validates that the runtime optimization target is achievable.
         """
@@ -179,7 +179,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_cli140k4_completion_requirements(self):
+    @pytest.mark.unit    def test_cli140k4_completion_requirements(self):
         """
         Validates that all CLI140k.4 requirements are met for completion.
         """
@@ -214,7 +214,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_runtime_monitoring_capability(self):
+    @pytest.mark.unit    def test_runtime_monitoring_capability(self):
         """
         Tests the capability to monitor and measure optimized runtime.
         This validates that timing infrastructure works correctly.
@@ -243,7 +243,7 @@ class TestCLI140k4OptimizedRuntime:
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
     @pytest.mark.slow  # Mark as slow since it's a comprehensive test
-    def test_full_suite_runtime_validation(self):
+    @pytest.mark.unit    def test_full_suite_runtime_validation(self):
         """
         Performs actual full suite runtime validation to confirm <300s target.
         This test is marked as slow and should only run when specifically requested.
@@ -300,7 +300,7 @@ class TestCLI140k4OptimizedRuntime:
 
     @pytest.mark.cli140k4
     @pytest.mark.runtime_optimization
-    def test_optimization_effectiveness_analysis(self):
+    @pytest.mark.unit    def test_optimization_effectiveness_analysis(self):
         """
         Analyzes the effectiveness of runtime optimizations applied.
         """

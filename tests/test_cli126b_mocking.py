@@ -11,7 +11,7 @@ from pathlib import Path
 class TestCLI126BMocking:
     """Test cases for CLI 126B mocking and caching functionality."""
 
-    def test_qdrant_mock_functionality(self, qdrant_cloud_mock):
+    @pytest.mark.unit    def test_qdrant_mock_functionality(self, qdrant_cloud_mock):
         """Test that Qdrant mock returns expected responses."""
         # Test get_collections
         collections = qdrant_cloud_mock.get_collections()
@@ -40,7 +40,7 @@ class TestCLI126BMocking:
         assert search_results[0].score == 0.92
         assert search_results[0].payload["tag"] == "science"
 
-    def test_openai_mock_functionality(self, openai_mock):
+    @pytest.mark.unit    def test_openai_mock_functionality(self, openai_mock):
         """Test that OpenAI mock returns static embeddings."""
         # Test embedding creation
         response = openai_mock.embeddings.create(input="test text for embedding", model="text-embedding-ada-002")
@@ -54,7 +54,7 @@ class TestCLI126BMocking:
 
         assert response.data[0].embedding == response2.data[0].embedding
 
-    def test_embedding_cache_functionality(self, openai_embedding_cache):
+    @pytest.mark.unit    def test_embedding_cache_functionality(self, openai_embedding_cache):
         """Test that cached embeddings are used instead of generating new ones."""
         test_text = "This is a test sentence for caching"
 
@@ -88,7 +88,7 @@ class TestCLI126BMocking:
         assert cache_data[cache_key1] == embedding1
         assert cache_data[cache_key2] == embedding3
 
-    def test_fast_e2e_mocks_integration(self, fast_e2e_mocks):
+    @pytest.mark.unit    def test_fast_e2e_mocks_integration(self, fast_e2e_mocks):
         """Test that the combined E2E mocks provide realistic responses."""
         mocks = fast_e2e_mocks
 
@@ -125,7 +125,7 @@ class TestCLI126BMocking:
         embedding = embedding_cache("integration test text")
         assert len(embedding) == 1536
 
-    def test_auto_mock_external_services(self):
+    @pytest.mark.unit    def test_auto_mock_external_services(self):
         """Test that external services are automatically mocked by default."""
         # This test runs without explicit fixtures to verify auto-mocking
 
@@ -149,7 +149,7 @@ class TestCLI126BMocking:
             # Skip if libraries not available
             pytest.skip("External libraries not available for auto-mock test")
 
-    def test_mocking_performance_improvement(self, openai_embedding_cache):
+    @pytest.mark.unit    def test_mocking_performance_improvement(self, openai_embedding_cache):
         """Test that mocking provides performance improvement over real API calls."""
         import time
 
@@ -183,7 +183,7 @@ class TestCLI126BMocking:
         assert embeddings[0] != embeddings[1]
         assert embeddings[1] != embeddings[2]
 
-    def test_cache_persistence(self, openai_embedding_cache):
+    @pytest.mark.unit    def test_cache_persistence(self, openai_embedding_cache):
         """Test that embedding cache persists across test runs."""
         cache_file = Path(".cache/test_embeddings.json")
         test_text = "Persistence test text"
