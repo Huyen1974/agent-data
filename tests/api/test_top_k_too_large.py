@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_top_k_too_large(client):
+    @pytest.mark.unitdef test_top_k_too_large(client):
 
     payload = {"query_text": "limit check", "top_k": 200, "score_threshold": 0.3}  # over maximum
     resp = client.post("/semantic_search_cosine", json=payload)

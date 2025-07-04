@@ -231,7 +231,7 @@ class TestCLI140fCoverage:
 
 
 @pytest.mark.performance
-def test_get_vectorization_tool_factory_performance():
+    @pytest.mark.unitdef test_get_vectorization_tool_factory_performance():
     """Test the factory function for creating vectorization tools with performance validation."""
     # Clear the global instance first
     import src.agent_data_manager.tools.qdrant_vectorization_tool as module

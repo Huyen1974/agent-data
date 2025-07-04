@@ -376,7 +376,7 @@ class TestHybridQueryPerformance:
                 assert result["count"] <= 50
                 assert latency < 0.7, f"Hybrid query latency {latency:.3f}s exceeds 0.7s target for 50 documents"
 
-    def test_cache_key_generation_performance(self):
+    @pytest.mark.unit    def test_cache_key_generation_performance(self):
         """Test performance of cache key generation for queries."""
         start_time = time.time()
 
@@ -393,7 +393,7 @@ class TestHybridQueryPerformance:
         # Should be very fast
         assert latency < 0.1, f"Cache key generation too slow: {latency:.3f}s for 100 keys"
 
-    def test_cache_operations_performance(self):
+    @pytest.mark.unit    def test_cache_operations_performance(self):
         """Test performance of cache operations (get/set)."""
         test_data = {
             "results": [{"doc_id": f"doc_{i}", "score": 0.8} for i in range(10)],

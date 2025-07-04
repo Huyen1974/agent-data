@@ -187,7 +187,7 @@ class TestE2EPipeline:
         assert result["status"] == "success"
         assert execution_time < 0.5  # Target: <0.5s
 
-    def test_e2e_markers(self):
+    @pytest.mark.unit    def test_e2e_markers(self):
         """Test E2E marker validation (ultra-lightweight)."""
         # Simple validation test - should be instant
         methods = [name for name in dir(self) if name.startswith("test_")]

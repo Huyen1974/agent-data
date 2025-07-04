@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_filter_tag_required_when_no_threshold(client):
+    @pytest.mark.unitdef test_filter_tag_required_when_no_threshold(client):
 
     payload = {
         "query_text": "great galaxies",

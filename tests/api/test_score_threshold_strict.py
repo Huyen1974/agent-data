@@ -2,7 +2,7 @@ import pytest
 
 
 
-def test_score_threshold_one(client_with_qdrant_override):
+    @pytest.mark.unitdef test_score_threshold_one(client_with_qdrant_override):
 
     payload = {
         "query_text": "modern astronomy discoveries",  # matches point 9001 exactly

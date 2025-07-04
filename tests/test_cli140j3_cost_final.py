@@ -53,7 +53,7 @@ class TestCLI140j3CostFinalConfirmation:
         print(f"📊 Final cost targets: Dev=${self.dev_cost_target}/day, Prod=${self.prod_cost_target}/day")
         print(f"🔍 Confidence threshold: {self.confidence_threshold*100}%")
     
-    def test_cli140j3_final_cost_confirmation(self):
+    @pytest.mark.unit    def test_cli140j3_final_cost_confirmation(self):
         """
         FINAL CONFIRMATION: Comprehensive validation of all cost optimization targets.
         

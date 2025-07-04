@@ -33,7 +33,7 @@ from agent_data_manager.utils.structured_logger import (
 class TestStructuredJSONFormatter:
     """Test JSON formatting functionality."""
 
-    def test_basic_json_format(self):
+    @pytest.mark.unit    def test_basic_json_format(self):
         """Test basic log record JSON formatting."""
         formatter = StructuredJSONFormatter()
 
@@ -62,7 +62,7 @@ class TestStructuredJSONFormatter:
         assert "thread" in log_data
         assert "thread_name" in log_data
 
-    def test_context_fields(self):
+    @pytest.mark.unit    def test_context_fields(self):
         """Test that context fields are included in JSON output."""
         formatter = StructuredJSONFormatter()
 
@@ -93,7 +93,7 @@ class TestStructuredJSONFormatter:
         assert log_data["request_id"] == "req_789"
         assert log_data["duration_ms"] == 250
 
-    def test_exception_formatting(self):
+    @pytest.mark.unit    def test_exception_formatting(self):
         """Test exception info formatting."""
         formatter = StructuredJSONFormatter()
 
@@ -126,7 +126,7 @@ class TestStructuredJSONFormatter:
 class TestSamplingFilter:
     """Test log sampling functionality."""
 
-    def test_error_always_passes(self):
+    @pytest.mark.unit    def test_error_always_passes(self):
         """Test that ERROR and above always pass the filter."""
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
 
@@ -142,7 +142,7 @@ class TestSamplingFilter:
         assert sampling_filter.filter(error_record) is True
         assert sampling_filter.filter(critical_record) is True
 
-    def test_warning_always_passes(self):
+    @pytest.mark.unit    def test_warning_always_passes(self):
         """Test that WARNING always passes the filter."""
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
 
@@ -154,7 +154,7 @@ class TestSamplingFilter:
         assert sampling_filter.filter(warning_record) is True
 
     @patch("random.random")
-    def test_info_sampling(self, mock_random):
+    @pytest.mark.unit    def test_info_sampling(self, mock_random):
         """Test INFO log sampling at 10% rate."""
         sampling_filter = SamplingFilter(info_sample_rate=0.1)
 
@@ -176,7 +176,7 @@ class TestSamplingFilter:
 class TestErrorMetricsHandler:
     """Test error metrics functionality."""
 
-    def test_metrics_handler_initialization(self):
+    @pytest.mark.unit    def test_metrics_handler_initialization(self):
         """Test that metrics handler initializes correctly."""
         handler = ErrorMetricsHandler()
 
@@ -185,7 +185,7 @@ class TestErrorMetricsHandler:
         assert hasattr(handler, "error_gauge")
 
     @patch("agent_data_manager.utils.structured_logger.PROMETHEUS_AVAILABLE", True)
-    def test_error_metrics_emit(self):
+    @pytest.mark.unit    def test_error_metrics_emit(self):
         """Test that error metrics are emitted correctly."""
         handler = ErrorMetricsHandler()
 
@@ -216,7 +216,7 @@ class TestErrorMetricsHandler:
 class TestStructuredLogger:
     """Test the main StructuredLogger class."""
 
-    def test_logger_initialization(self):
+    @pytest.mark.unit    def test_logger_initialization(self):
         """Test logger initialization with temporary file."""
         with tempfile.TemporaryDirectory() as temp_dir:
             log_file = os.path.join(temp_dir, "test.log")
@@ -227,7 +227,7 @@ class TestStructuredLogger:
             assert logger.logger.level == logging.DEBUG
             assert len(logger.logger.handlers) >= 2  # File + stderr handlers
 
-    def test_log_levels(self):
+    @pytest.mark.unit    def test_log_levels(self):
         """Test all log level methods."""
         with tempfile.TemporaryDirectory() as temp_dir:
             log_file = os.path.join(temp_dir, "test.log")
@@ -241,7 +241,7 @@ class TestStructuredLogger:
             logger.error("Error message", exc_info=False, duration_ms=100)
             logger.critical("Critical message", exc_info=False)
 
-    def test_log_file_creation(self):
+    @pytest.mark.unit    def test_log_file_creation(self):
         """Test that log file is created and contains JSON entries."""
         with tempfile.TemporaryDirectory() as temp_dir:
             log_file = os.path.join(temp_dir, "logs", "test.log")
@@ -270,14 +270,14 @@ class TestStructuredLogger:
 class TestLoggerRegistry:
     """Test the global logger registry functionality."""
 
-    def test_get_logger_singleton(self):
+    @pytest.mark.unit    def test_get_logger_singleton(self):
         """Test that get_logger returns the same instance for the same name."""
         logger1 = get_logger("test.singleton")
         logger2 = get_logger("test.singleton")
 
         assert logger1 is logger2
 
-    def test_get_logger_different_names(self):
+    @pytest.mark.unit    def test_get_logger_different_names(self):
         """Test that different names return different logger instances."""
         logger1 = get_logger("test.logger1")
         logger2 = get_logger("test.logger2")
@@ -291,7 +291,7 @@ class TestLoggerRegistry:
 class TestLoggingIntegration:
     """Integration tests for the complete logging system."""
 
-    def test_ten_log_entries_cli124_requirement(self):
+    @pytest.mark.unit    def test_ten_log_entries_cli124_requirement(self):
         """Test generating 10 log entries as required by CLI 124.
 
         This test generates exactly 10 log entries (7 INFO, 3 ERROR) to verify

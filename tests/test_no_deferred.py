@@ -10,7 +10,7 @@ import pytest
 class TestNoDeferredSentinel:
     """Sentinel test class to validate deferred test exclusion."""
     
-    def test_no_deferred_tests_in_main_suite(self):
+    @pytest.mark.unit    def test_no_deferred_tests_in_main_suite(self):
         """
         Sentinel test: Ensure no deferred tests are running in main test suite.
         
@@ -64,7 +64,7 @@ class TestNoDeferredSentinel:
         else:
             pytest.fail("Could not find collection summary in pytest output")
     
-    def test_deferred_marker_functionality(self):
+    @pytest.mark.unit    def test_deferred_marker_functionality(self):
         """
         Test that deferred marker properly excludes tests when used.
         
@@ -106,7 +106,7 @@ class TestNoDeferredSentinel:
         else:
             pytest.fail("Could not find deferred collection summary in pytest output")
     
-    def test_fast_test_execution_target(self):
+    @pytest.mark.unit    def test_fast_test_execution_target(self):
         """
         Validate that active test suite can execute within time targets.
         

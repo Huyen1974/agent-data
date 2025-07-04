@@ -56,7 +56,7 @@ class TestDockerImagePerformance:
         except Exception as e:
             print(f"Warning: Could not remove image {image_name}: {e}")
     
-    def test_image_size_under_500mb(self, build_optimized_image):
+    @pytest.mark.unit    def test_image_size_under_500mb(self, build_optimized_image):
         """Test that the optimized Docker image is under 500MB."""
         image = build_optimized_image
         image_size_bytes = image.attrs['Size']
@@ -70,7 +70,7 @@ class TestDockerImagePerformance:
         # Log achievement if under target
         print(f"✅ Image size optimization successful: {image_size_mb:.2f} MB < 500 MB")
     
-    def test_container_startup_time(self, docker_client, build_optimized_image, image_name):
+    @pytest.mark.unit    def test_container_startup_time(self, docker_client, build_optimized_image, image_name):
         """Test that container startup time is under 2 seconds."""
         container = None
         try:
@@ -130,7 +130,7 @@ class TestDockerImagePerformance:
                 except Exception as e:
                     print(f"Warning: Could not cleanup container: {e}")
     
-    def test_functionality_after_optimization(self, docker_client, build_optimized_image, image_name):
+    @pytest.mark.unit    def test_functionality_after_optimization(self, docker_client, build_optimized_image, image_name):
         """Test that core functionality works after optimization."""
         container = None
         try:
@@ -193,7 +193,7 @@ class TestDockerImagePerformance:
 class TestDockerOptimizationIntegration:
     """Integration tests for Docker optimization."""
     
-    def test_docker_build_success(self):
+    @pytest.mark.unit    def test_docker_build_success(self):
         """Test that the optimized Docker build completes successfully."""
         build_context = Path(__file__).parent.parent.parent.parent
         dockerfile_path = build_context / "ADK" / "agent_data" / "docker" / "Dockerfile"

@@ -18,7 +18,7 @@ import os
 class TestCLI140m15Validation:
     """Validation tests for CLI140m.15 objectives."""
 
-    def test_pass_rate_target_validation(self):
+    @pytest.mark.unit    def test_pass_rate_target_validation(self):
         """Validate that pass rate meets ≥95% target."""
         # For CLI140m.44, use a simple validation approach to prevent hanging
         # Simply validate that basic test infrastructure is working
@@ -56,7 +56,7 @@ class TestCLI140m15Validation:
         else:
             pytest.fail("Could not parse test collection summary")
 
-    def test_coverage_target_validation(self):
+    @pytest.mark.unit    def test_coverage_target_validation(self):
         """Validate that coverage targets are met."""
         # For CLI140m.45, use simplified validation to prevent hangs
         # Check that target modules exist
@@ -81,7 +81,7 @@ class TestCLI140m15Validation:
         print(f"   Target modules found: {len(existing_modules)}/{len(target_modules)}")
         print(f"   Note: CLI140m.45 uses simplified validation to prevent hangs")
 
-    def test_deferred_tests_validation(self):
+    @pytest.mark.unit    def test_deferred_tests_validation(self):
         """Validate that skipped tests are properly managed - CLI140m.68."""
         # For CLI140m.68, validate that we have the expected ~6 skipped tests and 519 total
         
@@ -120,7 +120,7 @@ class TestCLI140m15Validation:
             'active_tests': active_tests
         }
 
-    def test_cli140m15_objectives_summary(self):
+    @pytest.mark.unit    def test_cli140m15_objectives_summary(self):
         """Document CLI140m.15 objectives and current status."""
         objectives = {
             "primary_objectives": {
@@ -158,7 +158,7 @@ class TestCLI140m15Validation:
         for key, value in objectives["git_operations"].items():
             print(f"     {key}: {value}")
 
-    def test_cli140m15_completion_readiness(self):
+    @pytest.mark.unit    def test_cli140m15_completion_readiness(self):
         """Test readiness for CLI140m.15 completion."""
         # This is a meta-test that checks if we're ready for completion
         

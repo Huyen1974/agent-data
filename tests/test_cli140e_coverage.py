@@ -13,7 +13,7 @@ from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTo
 class TestThreadSafeLRUCache:
     """Test ThreadSafeLRUCache implementation for improved api_mcp_gateway.py coverage."""
 
-    def test_cache_basic_operations(self):
+    @pytest.mark.unit    def test_cache_basic_operations(self):
         """Test basic cache put/get operations."""
         cache = ThreadSafeLRUCache(max_size=3, ttl_seconds=60)
         
@@ -25,7 +25,7 @@ class TestThreadSafeLRUCache:
         # Test non-existent key
         assert cache.get("nonexistent") is None
 
-    def test_cache_ttl_expiration(self):
+    @pytest.mark.unit    def test_cache_ttl_expiration(self):
         """Test TTL expiration functionality."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=0.1)  # 100ms TTL
         
@@ -37,7 +37,7 @@ class TestThreadSafeLRUCache:
         time.sleep(0.2)
         assert cache.get("key1") is None
 
-    def test_cache_lru_eviction(self):
+    @pytest.mark.unit    def test_cache_lru_eviction(self):
         """Test LRU eviction when max size is exceeded."""
         cache = ThreadSafeLRUCache(max_size=2, ttl_seconds=60)
         
@@ -50,7 +50,7 @@ class TestThreadSafeLRUCache:
         assert cache.get("key3") == "value3"
         assert cache.size() == 2
 
-    def test_cache_cleanup_expired(self):
+    @pytest.mark.unit    def test_cache_cleanup_expired(self):
         """Test cleanup of expired entries."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=0.1)
         
@@ -64,7 +64,7 @@ class TestThreadSafeLRUCache:
         assert expired_count == 2
         assert cache.size() == 0
 
-    def test_cache_clear(self):
+    @pytest.mark.unit    def test_cache_clear(self):
         """Test cache clear functionality."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=60)
         
@@ -76,7 +76,7 @@ class TestThreadSafeLRUCache:
         assert cache.size() == 0
         assert cache.get("key1") is None
 
-    def test_cache_update_existing_key(self):
+    @pytest.mark.unit    def test_cache_update_existing_key(self):
         """Test updating existing cache entries."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=60)
         
@@ -90,7 +90,7 @@ class TestThreadSafeLRUCache:
 class TestAPIMCPGatewayHelpers:
     """Test helper functions in api_mcp_gateway.py for improved coverage."""
 
-    def test_get_cache_key_generation(self):
+    @pytest.mark.unit    def test_get_cache_key_generation(self):
         """Test cache key generation with different parameters."""
         key1 = _get_cache_key("test query", limit=10, threshold=0.7)
         key2 = _get_cache_key("test query", limit=10, threshold=0.7)
@@ -104,7 +104,7 @@ class TestAPIMCPGatewayHelpers:
         assert len(key1) == 32
 
     @patch('api_mcp_gateway.settings')
-    def test_initialize_caches(self, mock_settings):
+    @pytest.mark.unit    def test_initialize_caches(self, mock_settings):
         """Test cache initialization."""
         mock_settings.get_cache_config.return_value = {
             "rag_cache_enabled": True,
@@ -119,7 +119,7 @@ class TestAPIMCPGatewayHelpers:
         # Test passes if no exception is raised
 
     @patch('api_mcp_gateway.settings')
-    def test_initialize_caches_disabled(self, mock_settings):
+    @pytest.mark.unit    def test_initialize_caches_disabled(self, mock_settings):
         """Test cache initialization when caches are disabled."""
         mock_settings.get_cache_config.return_value = {
             "rag_cache_enabled": False,
@@ -137,7 +137,7 @@ class TestAPIMCPGatewayHelpers:
 class TestAPIEndpointErrorHandling:
     """Test error handling in API endpoints for improved coverage."""
 
-    def test_health_endpoint_error_handling(self):
+    @pytest.mark.unit    def test_health_endpoint_error_handling(self):
         """Test health endpoint with service failures."""
         client = TestClient(app)
         
@@ -152,7 +152,7 @@ class TestAPIEndpointErrorHandling:
             # Should still return 200 but with error status
             assert response.status_code in [200, 503]
 
-    def test_authentication_error_handling(self):
+    @pytest.mark.unit    def test_authentication_error_handling(self):
         """Test authentication error scenarios."""
         client = TestClient(app)
         
@@ -170,13 +170,13 @@ class TestAPIEndpointErrorHandling:
         # May return 401 (auth required) or 503 (service unavailable)
         assert response.status_code in [401, 503]
 
-    def test_root_endpoint(self):
+    @pytest.mark.unit    def test_root_endpoint(self):
         """Test root endpoint."""
         client = TestClient(app)
         response = client.get("/")
         assert response.status_code == 200
 
-    def test_rate_limiting_key_generation(self):
+    @pytest.mark.unit    def test_rate_limiting_key_generation(self):
         """Test rate limiting key generation."""
         from api_mcp_gateway import get_user_id_for_rate_limiting
         from fastapi import Request
@@ -188,7 +188,7 @@ class TestAPIEndpointErrorHandling:
         key = get_user_id_for_rate_limiting(mock_request)
         assert isinstance(key, str)
 
-    def test_save_endpoint_error_handling(self):
+    @pytest.mark.unit    def test_save_endpoint_error_handling(self):
         """Test save endpoint error scenarios."""
         client = TestClient(app)
         
@@ -304,7 +304,7 @@ class TestQdrantVectorizationToolCoverage:
         result = await tool._batch_get_firestore_metadata(["doc1"])
         assert isinstance(result, dict)
 
-    def test_filter_by_metadata(self):
+    @pytest.mark.unit    def test_filter_by_metadata(self):
         """Test metadata filtering functionality."""
         tool = QdrantVectorizationTool()
         
@@ -328,7 +328,7 @@ class TestQdrantVectorizationToolCoverage:
         filtered = tool._filter_by_metadata(results, {})
         assert len(filtered) == 3
 
-    def test_filter_by_tags(self):
+    @pytest.mark.unit    def test_filter_by_tags(self):
         """Test tag filtering functionality."""
         tool = QdrantVectorizationTool()
         
@@ -346,7 +346,7 @@ class TestQdrantVectorizationToolCoverage:
         filtered = tool._filter_by_tags(results, ["physics", "history"])
         assert len(filtered) == 2
 
-    def test_filter_by_tags_empty(self):
+    @pytest.mark.unit    def test_filter_by_tags_empty(self):
         """Test tag filtering with empty tag list."""
         tool = QdrantVectorizationTool()
         
@@ -354,7 +354,7 @@ class TestQdrantVectorizationToolCoverage:
         filtered = tool._filter_by_tags(results, [])
         assert len(filtered) == 1
 
-    def test_filter_by_path(self):
+    @pytest.mark.unit    def test_filter_by_path(self):
         """Test path filtering functionality."""
         tool = QdrantVectorizationTool()
         
@@ -372,7 +372,7 @@ class TestQdrantVectorizationToolCoverage:
         assert len(filtered) == 1
         assert filtered[0]["doc_id"] == "1"
 
-    def test_filter_by_path_empty(self):
+    @pytest.mark.unit    def test_filter_by_path_empty(self):
         """Test path filtering with empty path query."""
         tool = QdrantVectorizationTool()
         
@@ -380,7 +380,7 @@ class TestQdrantVectorizationToolCoverage:
         filtered = tool._filter_by_path(results, "")
         assert len(filtered) == 1
 
-    def test_build_hierarchy_path(self):
+    @pytest.mark.unit    def test_build_hierarchy_path(self):
         """Test hierarchy path building."""
         tool = QdrantVectorizationTool()
         
@@ -397,7 +397,7 @@ class TestQdrantVectorizationToolCoverage:
         path = tool._build_hierarchy_path(result)
         assert path == "Science"
 
-    def test_build_hierarchy_path_uncategorized(self):
+    @pytest.mark.unit    def test_build_hierarchy_path_uncategorized(self):
         """Test hierarchy path building with no categories."""
         tool = QdrantVectorizationTool()
         

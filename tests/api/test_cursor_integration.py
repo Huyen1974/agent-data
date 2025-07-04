@@ -175,7 +175,7 @@ class TestCursorIntegration:
         assert enhanced_metadata["integration_type"] == "mcp_stdio"
         assert "processed_at" in enhanced_metadata
 
-    def test_cursor_json_format_compatibility(self):
+    @pytest.mark.unit    def test_cursor_json_format_compatibility(self):
         """Test that Cursor request format is compatible with JSON parsing"""
         cursor_json = {
             "tool_name": "cursor_save_document",

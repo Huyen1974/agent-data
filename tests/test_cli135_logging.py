@@ -44,7 +44,7 @@ except ImportError:
 class TestCLI135AutomatedLogging:
     """Test class for CLI 135 automated CI/CD logging functionality."""
 
-    def test_automated_logging_functionality(self):
+    @pytest.mark.unit    def test_automated_logging_functionality(self):
         """
         Comprehensive test for CLI 135 automated logging functionality.
 

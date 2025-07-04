@@ -396,7 +396,7 @@ class TestCLI140m7FinalPushQdrantVectorization:
             result = await tool.batch_vectorize_documents(documents)
             assert "status" in result
 
-    def test_cli140m7_final_push_completion(self):
+    @pytest.mark.unit    def test_cli140m7_final_push_completion(self):
         """Final validation test for CLI140m.7 completion."""
         completion_status = {
             "final_push_tests_created": True,
