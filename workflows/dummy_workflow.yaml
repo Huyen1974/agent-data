@@ -1,0 +1,23 @@
+name: Dummy Workflow
+on:
+  push:
+    branches: [main, test]
+  workflow_dispatch:
+
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run dummy task
+        run: echo "Dummy workflow executed successfully"
+        
+      - name: Check timestamp
+        run: date
+        
+      - name: Environment info
+        run: |
+          echo "Branch: ${{ github.ref }}"
+          echo "Event: ${{ github.event_name }}"
