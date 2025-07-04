@@ -31,7 +31,8 @@ class TestCursorRealCloudIntegration:
         cls.test_session.timeout = TEST_TIMEOUT
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_01_health_check(self):
+    @pytest.mark.unit
+    def test_01_health_check(self):
         """Test Cloud Run service health and authentication status"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -56,7 +57,8 @@ class TestCursorRealCloudIntegration:
             pytest.skip(f"Cloud Run service not accessible: {e}")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_02_authenticate_user(self):
+    @pytest.mark.unit
+    def test_02_authenticate_user(self):
         """Test user authentication and JWT token retrieval"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -92,7 +94,8 @@ class TestCursorRealCloudIntegration:
             pytest.skip(f"Authentication service not accessible: {e}")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_03_access_denied_without_token(self):
+    @pytest.mark.unit
+    def test_03_access_denied_without_token(self):
         """Test that API endpoints require authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -113,7 +116,8 @@ class TestCursorRealCloudIntegration:
         print("✅ Unauthorized access properly blocked")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_04_save_documents_with_auth(self):
+    @pytest.mark.unit
+    def test_04_save_documents_with_auth(self):
         """Test saving multiple documents with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -247,7 +251,8 @@ class TestCursorRealCloudIntegration:
         print(f"✅ Successfully saved {len(saved_docs)} documents with authentication")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_05_semantic_search_with_auth(self):
+    @pytest.mark.unit
+    def test_05_semantic_search_with_auth(self):
         """Test semantic search with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -319,7 +324,8 @@ class TestCursorRealCloudIntegration:
         print(f"✅ Completed {successful_searches} semantic searches with authentication")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_06_document_search_with_auth(self):
+    @pytest.mark.unit
+    def test_06_document_search_with_auth(self):
         """Test document search by tag with authentication"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -348,7 +354,8 @@ class TestCursorRealCloudIntegration:
             pytest.fail(f"Document search failed: {e}")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_07_performance_under_load(self):
+    @pytest.mark.unit
+    def test_07_performance_under_load(self):
         """Test API performance with multiple authenticated requests"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -402,7 +409,8 @@ class TestCursorRealCloudIntegration:
         print(f"✅ Rate limiting test completed - {rate_limited_requests} requests were rate limited")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_08_verify_firestore_sync(self):
+    @pytest.mark.unit
+    def test_08_verify_firestore_sync(self):
         """Test that document metadata is properly synced to Firestore"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")
@@ -458,7 +466,8 @@ class TestCursorRealCloudIntegration:
             pytest.fail(f"Firestore sync test failed: {e}")
 
     @pytest.mark.xfail(reason="CLI140m.69: Real cloud integration test requires live services")
-    @pytest.mark.unit    def test_09_cleanup_and_verification(self):
+    @pytest.mark.unit
+    def test_09_cleanup_and_verification(self):
         """Cleanup test and verify system state"""
         # Skip real cloud tests when timeout constraints exist (CLI140m timeout fix)
         # pytest.skip("Skipping real cloud integration test for timeout optimization")

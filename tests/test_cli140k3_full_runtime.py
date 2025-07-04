@@ -20,7 +20,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_full_suite_runtime_validation(self):
+    @pytest.mark.unit
+    def test_full_suite_runtime_validation(self):
         """
         Validates that the full test suite runtime is close to the <5min target.
         This test analyzes the actual runtime from the recent full suite execution.
@@ -64,7 +65,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_runtime_performance_analysis(self):
+    @pytest.mark.unit
+    def test_runtime_performance_analysis(self):
         """
         Analyzes the performance characteristics of the full suite execution.
         """
@@ -98,7 +100,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_slowest_tests_analysis(self):
+    @pytest.mark.unit
+    def test_slowest_tests_analysis(self):
         """
         Analyzes the slowest tests from the full suite execution to identify optimization opportunities.
         """
@@ -139,7 +142,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_parallel_execution_efficiency(self):
+    @pytest.mark.unit
+    def test_parallel_execution_efficiency(self):
         """
         Validates that parallel execution with 4 workers was effective.
         """
@@ -171,7 +175,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_ci_vs_local_runtime_comparison(self):
+    @pytest.mark.unit
+    def test_ci_vs_local_runtime_comparison(self):
         """
         Compares local MacBook M1 runtime with expected CI performance.
         """
@@ -203,7 +208,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_cli140k3_completion_requirements(self):
+    @pytest.mark.unit
+    def test_cli140k3_completion_requirements(self):
         """
         Validates that all CLI140k.3 requirements are met for completion.
         """
@@ -238,7 +244,8 @@ class TestCLI140k3FullRuntime:
 
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
-    @pytest.mark.unit    def test_runtime_milestone_documentation(self):
+    @pytest.mark.unit
+    def test_runtime_milestone_documentation(self):
         """
         Documents the runtime milestone for CLI140k.3 completion.
         """
@@ -294,7 +301,8 @@ class TestCLI140k3FullRuntime:
     @pytest.mark.cli140k3
     @pytest.mark.ci_runtime
     @pytest.mark.slow  # Mark as slow since it's a comprehensive analysis
-    @pytest.mark.unit    def test_comprehensive_runtime_report(self):
+    @pytest.mark.unit
+    def test_comprehensive_runtime_report(self):
         """
         Generates a comprehensive runtime report for CLI140k.3 completion.
         """

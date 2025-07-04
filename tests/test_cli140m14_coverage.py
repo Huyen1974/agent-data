@@ -25,7 +25,8 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m14APIMCPGatewayCoverage:
     """Comprehensive API MCP Gateway coverage tests."""
 
-    @pytest.mark.unit    def test_startup_event_initialization_errors(self):
+    @pytest.mark.unit
+    def test_startup_event_initialization_errors(self):
         """Test startup event with initialization errors."""
         # Test that startup event can handle initialization failures gracefully
         with patch("api_mcp_gateway.QdrantStore") as mock_qdrant:
@@ -35,7 +36,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             from api_mcp_gateway import app
             assert app is not None
 
-    @pytest.mark.unit    def test_get_current_user_dependency_disabled_auth(self):
+    @pytest.mark.unit
+    def test_get_current_user_dependency_disabled_auth(self):
         """Test get_current_user dependency when authentication is disabled."""
         from api_mcp_gateway import get_current_user
         
@@ -46,7 +48,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             result = get_current_user()
             assert result is not None
 
-    @pytest.mark.unit    def test_get_current_user_service_unavailable(self):
+    @pytest.mark.unit
+    def test_get_current_user_service_unavailable(self):
         """Test get_current_user when auth service is unavailable."""
         from api_mcp_gateway import get_current_user
         
@@ -60,7 +63,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             except Exception:
                 pass  # Expected for missing auth
 
-    @pytest.mark.unit    def test_health_check_degraded_status(self):
+    @pytest.mark.unit
+    def test_health_check_degraded_status(self):
         """Test health check with degraded service status."""
         client = TestClient(app)
         
@@ -72,7 +76,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should return health status even if degraded
             assert response.status_code in [200, 503]
 
-    @pytest.mark.unit    def test_login_authentication_disabled(self):
+    @pytest.mark.unit
+    def test_login_authentication_disabled(self):
         """Test login endpoint when authentication is disabled."""
         client = TestClient(app)
         
@@ -86,7 +91,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle disabled auth appropriately
             assert response.status_code in [200, 400, 404, 501]
 
-    @pytest.mark.unit    def test_login_service_unavailable(self):
+    @pytest.mark.unit
+    def test_login_service_unavailable(self):
         """Test login when authentication service is unavailable."""
         client = TestClient(app)
         
@@ -98,7 +104,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle service errors gracefully
             assert response.status_code in [400, 500, 503]
 
-    @pytest.mark.unit    def test_register_authentication_disabled(self):
+    @pytest.mark.unit
+    def test_register_authentication_disabled(self):
         """Test registration when authentication is disabled."""
         client = TestClient(app)
         
@@ -116,7 +123,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle disabled auth appropriately
             assert response.status_code in [200, 400, 404, 501]
 
-    @pytest.mark.unit    def test_api_endpoints_with_authentication_errors(self):
+    @pytest.mark.unit
+    def test_api_endpoints_with_authentication_errors(self):
         """Test API endpoints with various authentication error scenarios."""
         with patch('api_mcp_gateway.get_current_user') as mock_get_user:
             # Mock authentication to return proper auth errors instead of 503
@@ -141,7 +149,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 # Should handle missing auth appropriately
                 assert response.status_code in [200, 401, 403, 404, 503]
 
-    @pytest.mark.unit    def test_cache_operations_and_initialization(self):
+    @pytest.mark.unit
+    def test_cache_operations_and_initialization(self):
         """Test cache operations and initialization."""
         from api_mcp_gateway import ThreadSafeLRUCache, _get_cache_key, initialize_caches
         
@@ -176,7 +185,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         # Test cache initialization
         initialize_caches()  # Should not raise
 
-    @pytest.mark.unit    def test_rate_limiting_and_user_identification(self):
+    @pytest.mark.unit
+    def test_rate_limiting_and_user_identification(self):
         """Test rate limiting and user identification functions for comprehensive coverage"""
         from unittest.mock import Mock, patch
         from fastapi import Request
@@ -226,7 +236,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         # May be None if cache is disabled in test environment
         assert cached_result is None or cached_result == test_result
 
-    @pytest.mark.unit    def test_api_error_handling(self):
+    @pytest.mark.unit
+    def test_api_error_handling(self):
         """Test API error handling for lines 132-197 coverage."""
         from unittest.mock import Mock, patch, AsyncMock
         from fastapi import HTTPException, status
@@ -296,7 +307,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         rate_limit_key = api_mcp_gateway.get_user_id_for_rate_limiting(mock_request)
         assert rate_limit_key.startswith("ip:")
 
-    @pytest.mark.unit    def test_batch_query_auth(self):
+    @pytest.mark.unit
+    def test_batch_query_auth(self):
         """Test batch query and authentication endpoints for lines 246-258 coverage."""
         from unittest.mock import Mock, patch, AsyncMock
         from fastapi.testclient import TestClient
@@ -398,7 +410,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
         assert minimal_rag.limit == 10  # default value
         assert minimal_rag.score_threshold == 0.5  # default value
 
-    @pytest.mark.unit    def test_startup_event_and_authentication_dependencies(self):
+    @pytest.mark.unit
+    def test_startup_event_and_authentication_dependencies(self):
         """Test startup event initialization and authentication dependencies for coverage."""
         import asyncio
         from unittest.mock import patch, AsyncMock, MagicMock
@@ -478,7 +491,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             finally:
                 loop.close()
 
-    @pytest.mark.unit    def test_authentication_endpoints_and_save_document_coverage(self):
+    @pytest.mark.unit
+    def test_authentication_endpoints_and_save_document_coverage(self):
         """Test authentication endpoints and save document endpoint for comprehensive coverage."""
         from fastapi.testclient import TestClient
         from unittest.mock import patch, AsyncMock, MagicMock
@@ -613,7 +627,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Should handle failure gracefully
             assert response.status_code in [200, 400, 401, 422, 503]
 
-    @pytest.mark.unit    def test_query_vectors_endpoint_coverage(self):
+    @pytest.mark.unit
+    def test_query_vectors_endpoint_coverage(self):
         """Test query vectors endpoint for additional coverage to reach 75%+"""
         from fastapi.testclient import TestClient
         from unittest.mock import patch, AsyncMock
@@ -685,7 +700,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
             # Verify qdrant search was not called (cache hit)
             mock_qdrant.semantic_search.assert_not_called()
 
-    @pytest.mark.unit    def test_search_documents_endpoint_coverage(self):
+    @pytest.mark.unit
+    def test_search_documents_endpoint_coverage(self):
         """Test search_documents endpoint for comprehensive coverage - targeting lines 732-774"""
         from unittest.mock import Mock, AsyncMock, patch
         from fastapi.testclient import TestClient
@@ -795,7 +811,8 @@ class TestCLI140m14APIMCPGatewayCoverage:
                 assert data["status"] == "error"
                 assert "Internal error during document search" in data["message"]
 
-    @pytest.mark.unit    def test_rag_search_endpoint_coverage(self):
+    @pytest.mark.unit
+    def test_rag_search_endpoint_coverage(self):
         """Test rag_search endpoint for comprehensive coverage - targeting lines 794-851"""
         from unittest.mock import Mock, AsyncMock, patch
         from fastapi.testclient import TestClient
@@ -2316,7 +2333,8 @@ class TestCLI140m14DocumentIngestionCoverage:
 class TestCLI140m14ValidationAndCompliance:
     """Validation tests for CLI140m.14 objectives."""
 
-    @pytest.mark.unit    def test_cli140m14_coverage_validation(self):
+    @pytest.mark.unit
+    def test_cli140m14_coverage_validation(self):
         """Validate CLI140m.14 coverage objectives."""
         # This test validates that we're targeting the right modules
         target_modules = [
@@ -2336,7 +2354,8 @@ class TestCLI140m14ValidationAndCompliance:
         assert hasattr(TestCLI140m14QdrantVectorizationCoverage, 'test_initialization_edge_cases')
         assert hasattr(TestCLI140m14DocumentIngestionCoverage, 'test_initialization_error_paths')
 
-    @pytest.mark.unit    def test_cli140m14_objectives_summary(self):
+    @pytest.mark.unit
+    def test_cli140m14_objectives_summary(self):
         """Document CLI140m.14 objectives and achievements."""
         objectives = {
             "coverage_targets": {
@@ -2355,7 +2374,8 @@ class TestCLI140m14ValidationAndCompliance:
         assert objectives["pass_rate_target"] == "≥95%"
         assert objectives["cli140m13_fixes"] == "27/27 tests passing"
 
-    @pytest.mark.unit    def test_document_ingestion_tool_real_coverage(self):
+    @pytest.mark.unit
+    def test_document_ingestion_tool_real_coverage(self):
         """Test document ingestion tool to provide real coverage."""
         # Import the module to ensure coverage is measured
         from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool, get_document_ingestion_tool, ingest_document_sync
@@ -2406,7 +2426,8 @@ class TestCLI140m14ValidationAndCompliance:
             # Expected in test environment without proper config
             pass
 
-    @pytest.mark.unit    def test_coverage_and_pass_rate_validation(self):
+    @pytest.mark.unit
+    def test_coverage_and_pass_rate_validation(self):
         """Validate that coverage and pass rate targets are achievable."""
         import subprocess
         
@@ -2428,7 +2449,8 @@ class TestCLI140m14ValidationAndCompliance:
         
         print(f"✅ CLI140m14 coverage validation: {cli140m14_test_count} comprehensive tests")
 
-    @pytest.mark.unit    def test_document_ingestion_cache_and_hashing(self):
+    @pytest.mark.unit
+    def test_document_ingestion_cache_and_hashing(self):
         """Test document ingestion cache and hashing mechanisms."""
         from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
         import time

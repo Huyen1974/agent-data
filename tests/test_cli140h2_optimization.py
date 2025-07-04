@@ -150,7 +150,8 @@ class CloudCleanupValidator:
         except (subprocess.TimeoutExpired, FileNotFoundError):
             return False
     
-    @pytest.mark.unit    def test_cleanup_script_functionality(self) -> Dict[str, Any]:
+    @pytest.mark.unit
+    def test_cleanup_script_functionality(self) -> Dict[str, Any]:
         """Test the cleanup script without actually running destructive operations."""
         logger.info("🧹 Testing Google Cloud cleanup script functionality")
         

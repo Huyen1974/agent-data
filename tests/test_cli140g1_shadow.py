@@ -62,7 +62,8 @@ class TestCLI140gShadowTraffic:
         
     @pytest.mark.e2e
     @pytest.mark.shadow
-    @pytest.mark.unit    def test_shadow_traffic_configuration_validation(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_configuration_validation(self):
         """Test that API Gateway is properly configured for shadow traffic routing."""
         # Mock API Gateway configuration check
         with patch('requests.get') as mock_get:
@@ -96,7 +97,8 @@ class TestCLI140gShadowTraffic:
             
     @pytest.mark.e2e 
     @pytest.mark.shadow
-    @pytest.mark.unit    def test_shadow_traffic_routing_behavior(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_routing_behavior(self):
         """Test that shadow traffic is properly routed to shadow backends."""
         test_requests = 100
         shadow_requests_expected = 1  # 1% of 100 requests
@@ -150,7 +152,8 @@ class TestCLI140gShadowTraffic:
     @pytest.mark.e2e
     @pytest.mark.shadow
     @pytest.mark.xfail(reason="CLI140m.68: Shadow traffic monitoring requires real cloud infrastructure")
-    @pytest.mark.unit    def test_shadow_traffic_monitoring_metrics(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_monitoring_metrics(self):
         """Test that shadow traffic monitoring correctly collects metrics."""
         with patch.object(self.shadow_monitor, 'monitoring_client') as mock_monitoring:
             # Mock Cloud Monitoring API responses
@@ -178,7 +181,8 @@ class TestCLI140gShadowTraffic:
     @pytest.mark.e2e
     @pytest.mark.shadow
     @pytest.mark.xfail(reason="CLI140m.68: Shadow traffic monitoring requires real cloud infrastructure")
-    @pytest.mark.unit    def test_shadow_traffic_error_threshold_monitoring(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_error_threshold_monitoring(self):
         """Test that shadow traffic monitoring detects high error rates."""
         # Mock high error rate scenario
         self.shadow_monitor.metrics = {
@@ -201,7 +205,8 @@ class TestCLI140gShadowTraffic:
     @pytest.mark.e2e
     @pytest.mark.shadow  
     @pytest.mark.xfail(reason="CLI140m.68: Shadow traffic monitoring requires real cloud infrastructure")
-    @pytest.mark.unit    def test_shadow_traffic_latency_threshold_monitoring(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_latency_threshold_monitoring(self):
         """Test that shadow traffic monitoring detects high latency."""
         # Mock high latency scenario
         self.shadow_monitor.metrics = {
@@ -223,7 +228,8 @@ class TestCLI140gShadowTraffic:
             
     @pytest.mark.e2e
     @pytest.mark.shadow
-    @pytest.mark.unit    def test_shadow_traffic_architecture_distribution(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_architecture_distribution(self):
         """Test that architecture distribution meets 70%/20%/<10% targets."""
         # Mock architecture metrics endpoint
         with patch('requests.get') as mock_get:
@@ -273,7 +279,8 @@ class TestCLI140gShadowTraffic:
             
     @pytest.mark.e2e
     @pytest.mark.shadow
-    @pytest.mark.unit    def test_shadow_traffic_report_generation(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_report_generation(self):
         """Test that shadow traffic monitoring generates comprehensive reports."""
         # Mock monitoring data
         self.shadow_monitor.metrics = {
@@ -302,7 +309,8 @@ class TestCLI140gShadowTraffic:
             
     @pytest.mark.e2e
     @pytest.mark.shadow
-    @pytest.mark.unit    def test_shadow_traffic_endpoint_coverage(self):
+    @pytest.mark.unit
+    def test_shadow_traffic_endpoint_coverage(self):
         """Test that all major endpoints support shadow traffic routing."""
         endpoints_to_test = [
             ("/auth/login", "POST", {"username": "test", "password": "test"}),

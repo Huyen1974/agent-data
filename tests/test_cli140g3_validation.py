@@ -52,7 +52,8 @@ class TestCLI140g3Validation:
         ]
         
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_architecture_distribution_70_20_10(self):
+    @pytest.mark.unit
+    def test_cli140g3_architecture_distribution_70_20_10(self):
         """Test 1/7: Validate architecture distribution meets 70%/20%/<10% targets."""
         # Mock architecture metrics endpoint
         with patch('requests.get') as mock_get:
@@ -111,7 +112,8 @@ class TestCLI140g3Validation:
             print(f"  Cloud Run: {arch_dist['cloud_run']['percentage']}%")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_api_gateway_latency_validation(self):
+    @pytest.mark.unit
+    def test_cli140g3_api_gateway_latency_validation(self):
         """Test 2/7: Validate API Gateway latency <0.5s requirement."""
         latency_measurements = []
         test_endpoints = [
@@ -161,7 +163,8 @@ class TestCLI140g3Validation:
         print(f"  All endpoints < 0.5s requirement")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_cloud_functions_routing_optimization(self):
+    @pytest.mark.unit
+    def test_cli140g3_cloud_functions_routing_optimization(self):
         """Test 3/7: Validate Cloud Functions routing optimization."""
         routing_config = {
             "document_ingestion": {
@@ -220,7 +223,8 @@ class TestCLI140g3Validation:
             print(f"  Average response time: {opt_metrics['average_response_time']}s")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_workflows_orchestration_validation(self):
+    @pytest.mark.unit
+    def test_cli140g3_workflows_orchestration_validation(self):
         """Test 4/7: Validate Workflows handle 20% of complex operations."""
         workflow_operations = {
             "mcp_orchestration": {
@@ -271,7 +275,8 @@ class TestCLI140g3Validation:
             print(f"  Execution efficiency: {complex_metrics['parallel_execution_efficiency']}%")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_cloud_run_minimal_usage_validation(self):
+    @pytest.mark.unit
+    def test_cli140g3_cloud_run_minimal_usage_validation(self):
         """Test 5/7: Validate Cloud Run usage <10% for legacy services."""
         cloud_run_services = {
             "legacy_compatibility": {
@@ -315,7 +320,8 @@ class TestCLI140g3Validation:
             print(f"  Services remaining: {migration_metrics['services_remaining']}")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_end_to_end_performance_benchmark(self):
+    @pytest.mark.unit
+    def test_cli140g3_end_to_end_performance_benchmark(self):
         """Test 6/7: Comprehensive E2E performance benchmark."""
         benchmark_scenarios = [
             {"operation": "save_document", "expected_latency": 0.4},
@@ -372,7 +378,8 @@ class TestCLI140g3Validation:
         print(f"  Average performance ratio: {avg_performance_ratio:.2f}")
 
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140g3_integration_validation_complete(self):
+    @pytest.mark.unit
+    def test_cli140g3_integration_validation_complete(self):
         """Test 7/7: Complete CLI140g.3 integration validation."""
         # Comprehensive validation of all CLI140g.3 objectives
         validation_checklist = {

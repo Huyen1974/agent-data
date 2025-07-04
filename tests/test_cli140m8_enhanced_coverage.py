@@ -597,7 +597,8 @@ class TestCLI140m8EnhancedQdrantVectorizationToolCoverage:
             assert result["doc_id"] == "test_doc"
             assert "latency" in result
 
-    @pytest.mark.unit    def test_cli140m8_enhanced_coverage_validation(self):
+    @pytest.mark.unit
+    def test_cli140m8_enhanced_coverage_validation(self):
         """Validation test to ensure we're targeting the right missing lines."""
         
         # Key missing line ranges we're targeting
