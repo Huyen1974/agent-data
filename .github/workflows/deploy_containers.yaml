@@ -22,8 +22,8 @@ jobs:
     - name: Authenticate to Google Cloud (WIF)
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
 
     - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v1
@@ -47,5 +47,5 @@ jobs:
           docker push "$IMAGE"
 
           echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
-          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
+          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
         done
