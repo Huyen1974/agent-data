@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 from fastapi import Request
 
 # Import modules under test
-from ADK.agent_data.api_mcp_gateway import (
+from api_mcp_gateway import (
     app, ThreadSafeLRUCache, get_user_id_for_rate_limiting, 
     initialize_caches, _cache_result, _get_cached_result,
     SaveDocumentRequest, QueryVectorsRequest, RAGSearchRequest

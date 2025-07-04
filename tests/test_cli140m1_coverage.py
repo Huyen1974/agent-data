@@ -15,7 +15,7 @@ from fastapi.testclient import TestClient
 from fastapi import HTTPException
 
 # Import modules under test
-from ADK.agent_data.api_mcp_gateway import (
+from api_mcp_gateway import (
     ThreadSafeLRUCache, _get_cache_key, _get_cached_result, _cache_result,
     _initialize_caches, get_user_id_for_rate_limiting, app
 )
@@ -57,7 +57,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
     @pytest.mark.asyncio
     async def test_initialize_caches_with_config(self):
         """Test cache initialization with different configurations."""
-        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+        with patch('api_mcp_gateway.settings') as mock_settings:
             mock_settings.get_cache_config.return_value = {
                 "rag_cache_enabled": True,
                 "rag_cache_max_size": 500,
@@ -70,17 +70,17 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             _initialize_caches()
             
             # Verify caches are initialized
-            from ADK.agent_data.api_mcp_gateway import _rag_cache, _embedding_cache
+            from api_mcp_gateway import _rag_cache, _embedding_cache
             assert _rag_cache is not None
             assert _embedding_cache is not None
 
     def test_cache_result_and_get_cached_result(self):
         """Test caching and retrieving results."""
-        with patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings:
+        with patch('api_mcp_gateway.settings') as mock_settings:
             mock_settings.RAG_CACHE_ENABLED = True
             
             # Initialize cache properly using MagicMock
-            with patch('ADK.agent_data.api_mcp_gateway._rag_cache') as mock_cache:
+            with patch('api_mcp_gateway._rag_cache') as mock_cache:
                 mock_cache_instance = MagicMock()
                 mock_cache.get.return_value = {"status": "success", "data": "test_data"}
                 mock_cache.put = MagicMock()
@@ -109,7 +109,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         mock_request.headers.get.return_value = None
         mock_request.client.host = "192.168.1.1"
         
-        with patch('ADK.agent_data.api_mcp_gateway.get_remote_address') as mock_get_remote:
+        with patch('api_mcp_gateway.get_remote_address') as mock_get_remote:
             mock_get_remote.return_value = "192.168.1.1"
             result = get_user_id_for_rate_limiting(mock_request)
             assert result == "ip:192.168.1.1"  # Fixed: Function returns ip: prefix
@@ -120,7 +120,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         mock_request.headers.get.return_value = "Bearer invalid.jwt.token"
         mock_request.client.host = "192.168.1.1"
         
-        with patch('ADK.agent_data.api_mcp_gateway.get_remote_address') as mock_get_remote:
+        with patch('api_mcp_gateway.get_remote_address') as mock_get_remote:
             mock_get_remote.return_value = "192.168.1.1"
             result = get_user_id_for_rate_limiting(mock_request)
             assert result == "ip:192.168.1.1"  # Fixed: Function returns ip: prefix
@@ -128,12 +128,12 @@ class TestCLI140m1APIMCPGatewayAdvanced:
     @pytest.mark.asyncio
     async def test_startup_event_initialization(self):
         """Test startup event initialization."""
-        with patch('ADK.agent_data.api_mcp_gateway._initialize_caches') as mock_init_caches, \
-             patch('ADK.agent_data.api_mcp_gateway.settings') as mock_settings, \
-             patch('ADK.agent_data.api_mcp_gateway.QdrantStore') as mock_qdrant, \
-             patch('ADK.agent_data.api_mcp_gateway.FirestoreMetadataManager') as mock_firestore, \
-             patch('ADK.agent_data.api_mcp_gateway.AuthManager') as mock_auth, \
-             patch('ADK.agent_data.api_mcp_gateway.UserManager') as mock_user:
+        with patch('api_mcp_gateway._initialize_caches') as mock_init_caches, \
+             patch('api_mcp_gateway.settings') as mock_settings, \
+             patch('api_mcp_gateway.QdrantStore') as mock_qdrant, \
+             patch('api_mcp_gateway.FirestoreMetadataManager') as mock_firestore, \
+             patch('api_mcp_gateway.AuthManager') as mock_auth, \
+             patch('api_mcp_gateway.UserManager') as mock_user:
             
             mock_settings.get_qdrant_config.return_value = {
                 "url": "http://localhost:6333",
@@ -147,7 +147,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             }
             
             # Import and call startup event
-            from ADK.agent_data.api_mcp_gateway import startup_event
+            from api_mcp_gateway import startup_event
             await startup_event()
             
             mock_init_caches.assert_called_once()
@@ -210,7 +210,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
 
     def test_pydantic_model_edge_cases(self):
         """Test Pydantic model validation edge cases."""
-        from ADK.agent_data.api_mcp_gateway import (
+        from api_mcp_gateway import (
             SaveDocumentRequest, QueryVectorsRequest, SearchDocumentsRequest,
             RAGSearchRequest, LoginRequest, UserRegistrationRequest
         )

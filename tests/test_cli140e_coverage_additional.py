@@ -6,14 +6,14 @@ import pytest
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 from fastapi.testclient import TestClient
-from ADK.agent_data.api_mcp_gateway import app, _get_cached_result, _cache_result
+from api_mcp_gateway import app, _get_cached_result, _cache_result
 from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool, get_vectorization_tool
 
 
 class TestAPIMCPGatewayCaching:
     """Test caching functionality in api_mcp_gateway.py."""
 
-    @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @patch('api_mcp_gateway._rag_cache')
     def test_get_cached_result(self, mock_cache):
         """Test getting cached results."""
         mock_cache.get.return_value = {"cached": "result"}
@@ -22,25 +22,25 @@ class TestAPIMCPGatewayCaching:
         assert result == {"cached": "result"}
         mock_cache.get.assert_called_once_with("test_key")
 
-    @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @patch('api_mcp_gateway._rag_cache')
     def test_get_cached_result_none(self, mock_cache):
         """Test getting cached results when cache is None."""
         mock_cache = None
         
-        with patch('ADK.agent_data.api_mcp_gateway._rag_cache', None):
+        with patch('api_mcp_gateway._rag_cache', None):
             result = _get_cached_result("test_key")
             assert result is None
 
-    @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @patch('api_mcp_gateway._rag_cache')
     def test_cache_result(self, mock_cache):
         """Test caching results."""
         _cache_result("test_key", {"test": "data"})
         mock_cache.put.assert_called_once_with("test_key", {"test": "data"})
 
-    @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @patch('api_mcp_gateway._rag_cache')
     def test_cache_result_none(self, mock_cache):
         """Test caching results when cache is None."""
-        with patch('ADK.agent_data.api_mcp_gateway._rag_cache', None):
+        with patch('api_mcp_gateway._rag_cache', None):
             _cache_result("test_key", {"test": "data"})
             # Should not raise an exception
 
@@ -52,7 +52,7 @@ class TestAPIEndpointsWithMocks:
         """Test login endpoint."""
         client = TestClient(app)
         
-        with patch('ADK.agent_data.api_mcp_gateway.AuthManager') as mock_auth_manager:
+        with patch('api_mcp_gateway.AuthManager') as mock_auth_manager:
             mock_auth_manager.return_value.authenticate_user.return_value = {
                 "success": True,
                 "user_id": "test_user",
@@ -253,7 +253,7 @@ class TestAPIRateLimiting:
 
     def test_rate_limiting_with_jwt_token(self):
         """Test rate limiting with JWT token."""
-        from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
+        from api_mcp_gateway import get_user_id_for_rate_limiting
         from fastapi import Request
         import base64
         import json
@@ -271,7 +271,7 @@ class TestAPIRateLimiting:
 
     def test_rate_limiting_with_invalid_jwt(self):
         """Test rate limiting with invalid JWT token."""
-        from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
+        from api_mcp_gateway import get_user_id_for_rate_limiting
         from fastapi import Request
         
         mock_request = MagicMock(spec=Request)
@@ -284,7 +284,7 @@ class TestAPIRateLimiting:
 class TestAPIStartupShutdown:
     """Test API startup and shutdown events."""
 
-    @patch('ADK.agent_data.api_mcp_gateway._initialize_caches')
+    @patch('api_mcp_gateway._initialize_caches')
     def test_startup_event(self, mock_init_caches):
         """Test startup event handler."""
         # The startup event should initialize caches

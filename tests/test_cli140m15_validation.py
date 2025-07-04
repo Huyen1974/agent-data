@@ -63,7 +63,7 @@ class TestCLI140m15Validation:
         target_modules = [
             'ADK/agent_data/tools/qdrant_vectorization_tool.py',
             'ADK/agent_data/tools/document_ingestion_tool.py',
-            'ADK/agent_data/api_mcp_gateway.py'
+            'api_mcp_gateway.py'
         ]
         
         existing_modules = []

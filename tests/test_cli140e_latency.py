@@ -16,7 +16,7 @@ import json
 import logging
 
 # Test imports
-from ADK.agent_data.api_mcp_gateway import (
+from api_mcp_gateway import (
     app,
     ThreadSafeLRUCache,
     _get_cache_key,
@@ -142,9 +142,9 @@ class TestLatencyProfiling:
         from fastapi.testclient import TestClient
         
         # Mock dependencies
-        with patch("ADK.agent_data.api_mcp_gateway.QdrantStore") as mock_qdrant_class, \
-             patch("ADK.agent_data.api_mcp_gateway.FirestoreMetadataManager") as mock_firestore_class, \
-             patch("ADK.agent_data.api_mcp_gateway.get_current_user") as mock_auth:
+        with patch("api_mcp_gateway.QdrantStore") as mock_qdrant_class, \
+             patch("api_mcp_gateway.FirestoreMetadataManager") as mock_firestore_class, \
+             patch("api_mcp_gateway.get_current_user") as mock_auth:
             
             # Setup mocks
             mock_qdrant = AsyncMock()

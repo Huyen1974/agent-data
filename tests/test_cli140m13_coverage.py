@@ -23,7 +23,7 @@ class TestCLI140m13Coverage:
         # Check that some key files exist
         key_files = [
             "ADK/agent_data/tools/qdrant_vectorization_tool.py",
-            "ADK/agent_data/api_mcp_gateway.py"
+            "api_mcp_gateway.py"
         ]
         
         for file_path in key_files:

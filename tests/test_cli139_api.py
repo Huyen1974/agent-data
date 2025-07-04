@@ -11,13 +11,13 @@ import time
 from unittest.mock import AsyncMock, patch
 from fastapi.testclient import TestClient
 
-from ADK.agent_data.api_mcp_gateway import app
+from api_mcp_gateway import app
 
 
 @pytest.fixture
 def client():
     """Create test client for API testing."""
-    from ADK.agent_data.api_mcp_gateway import get_current_user
+    from api_mcp_gateway import get_current_user
     
     # Override authentication dependency for testing
     def mock_get_current_user():
@@ -44,9 +44,9 @@ class TestCLI139APIErrorHandling:
         """Test that batch_save retries on rate limit errors with exponential backoff."""
 
         # Mock dependencies
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -89,9 +89,9 @@ class TestCLI139APIErrorHandling:
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that batch_query handles timeouts properly."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.qdrant_store"
-        ) as mock_qdrant, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.qdrant_store"
+        ) as mock_qdrant, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -125,9 +125,9 @@ class TestCLI139APIErrorHandling:
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -160,10 +160,10 @@ class TestCLI139APIErrorHandling:
     async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
         """Test that batch operations complete within 5 seconds for reasonable loads."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
-            "ADK.agent_data.api_mcp_gateway.auth_manager"
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
+            "api_mcp_gateway.auth_manager"
         ) as mock_auth:
 
             # Setup mocks for fast responses
@@ -294,9 +294,9 @@ class TestCLI139Integration:
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             mock_auth.validate_user_access.return_value = True
 
@@ -336,9 +336,9 @@ class TestCLI139:
         """Test that save endpoint handles retry logic properly."""
 
         # Mock dependencies
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -381,9 +381,9 @@ class TestCLI139:
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that query endpoint handles requests properly."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.qdrant_store"
-        ) as mock_qdrant, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.qdrant_store"
+        ) as mock_qdrant, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -417,9 +417,9 @@ class TestCLI139:
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -452,10 +452,10 @@ class TestCLI139:
     async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
         """Test that operations complete within 5 seconds for reasonable loads."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
-            "ADK.agent_data.api_mcp_gateway.auth_manager"
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
+            "api_mcp_gateway.auth_manager"
         ) as mock_auth:
 
             # Setup mocks for fast responses
@@ -560,9 +560,9 @@ class TestCLI139:
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with patch("api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
+            "api_mcp_gateway.vectorization_tool"
+        ) as mock_vectorization, patch("api_mcp_gateway.auth_manager") as mock_auth:
 
             mock_auth.validate_user_access.return_value = True
 
