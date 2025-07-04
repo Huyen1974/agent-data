@@ -29,7 +29,7 @@ import api_mcp_gateway
 class TestCLI140m2APIMCPGatewaySpecific:
     """Specific tests targeting missing coverage lines in api_mcp_gateway.py"""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_cleanup_expired_direct(self):
         """Test ThreadSafeLRUCache cleanup_expired method - lines 88-89"""
         cache = api_mcp_gateway.ThreadSafeLRUCache(max_size=3, ttl_seconds=0.1)
@@ -45,7 +45,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         expired_count = cache.cleanup_expired()
         assert expired_count >= 0
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_clear_direct(self):
         """Test ThreadSafeLRUCache clear method - lines 98-109"""
         cache = api_mcp_gateway.ThreadSafeLRUCache(max_size=5)
@@ -64,7 +64,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         assert cache.get("key3") is None
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_health_check_endpoint_full_coverage(self, mock_settings):
         """Test health check endpoint - lines 453, 459, 466"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -94,7 +94,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
                             assert "services" in data
                             assert "authentication" in data
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_root_endpoint_direct(self):
         """Test root endpoint - line 860"""
         client = TestClient(api_mcp_gateway.app)
@@ -109,7 +109,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         assert "endpoints" in data
 
     @patch('api_mcp_gateway.uvicorn')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_main_function_direct(self, mock_uvicorn):
         """Test main function - lines 884-889"""
         # This should hit lines 884-889
@@ -124,7 +124,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         assert "port" in call_args[1]
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_current_user_dependency_auth_disabled_path(self, mock_settings):
         """Test get_current_user_dependency with auth disabled - authentication edge cases"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -141,7 +141,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.auth_manager', None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_current_user_dependency_no_auth_manager_path(self, mock_settings):
         """Test get_current_user_dependency with no auth manager - lines 413-426"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -157,7 +157,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         asyncio.run(test_func())
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_login_endpoint_auth_disabled_path(self, mock_settings):
         """Test login endpoint with authentication disabled"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -169,7 +169,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         assert response.status_code == 501
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_register_endpoint_auth_disabled_path(self, mock_settings):
         """Test register endpoint with authentication disabled"""
         mock_settings.ENABLE_AUTHENTICATION = False
@@ -184,7 +184,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         # Should return 501 Not Implemented when auth is disabled
         assert response.status_code == 501
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_cached_result_cache_miss_direct(self):
         """Test _get_cached_result with cache miss"""
         with patch('api_mcp_gateway._rag_cache') as mock_cache:
@@ -194,7 +194,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
             assert result is None
             mock_cache.get.assert_called_once_with("nonexistent_key")
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cache_result_success_direct(self):
         """Test _cache_result success path"""
         with patch('api_mcp_gateway._rag_cache') as mock_cache:
@@ -205,7 +205,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.auth_manager', None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_current_user_no_auth_manager_direct(self, mock_settings):
         """Test get_current_user with no auth manager"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -219,7 +219,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.user_manager', None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_login_no_managers_direct(self, mock_settings):
         """Test login endpoint with no managers"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -231,7 +231,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         assert response.status_code == 503
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_register_registration_disabled_direct(self, mock_settings):
         """Test register endpoint with registration disabled"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -249,7 +249,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
 
     @patch('api_mcp_gateway.settings')
     @patch('api_mcp_gateway.user_manager', None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_register_no_user_manager_direct(self, mock_settings):
         """Test register endpoint with no user manager"""
         mock_settings.ENABLE_AUTHENTICATION = True
@@ -265,7 +265,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         # Should return 503 Service Unavailable when user manager is not available
         assert response.status_code == 503
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_cache_key_function_direct(self):
         """Test _get_cache_key function"""
         # Test the cache key generation function
@@ -278,7 +278,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
         # Different inputs should produce different keys
         assert key1 != key3
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_initialize_caches_function_direct(self):
         """Test _initialize_caches function"""
         # This function should initialize the global caches
@@ -292,7 +292,7 @@ class TestCLI140m2APIMCPGatewaySpecific:
 class TestCLI140m2APIMCPGatewayCoverageValidation:
     """Validation test to ensure API Gateway coverage targets are met"""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_api_gateway_coverage_validation(self):
         """Validate that API Gateway tests improve coverage to 80%"""
         # This test serves as a marker for coverage validation

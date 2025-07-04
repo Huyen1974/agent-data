@@ -253,7 +253,7 @@ class TestCLI140fPerformance:
         }
 
     @pytest.mark.performance
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_document_ingestion_tool_performance_metrics(self):
         """Test performance metrics tracking in DocumentIngestionTool."""
         tool = get_document_ingestion_tool()
@@ -269,7 +269,7 @@ class TestCLI140fPerformance:
         assert initial_metrics["batch_time"] == 0.0
 
     @pytest.mark.performance
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140f_performance_targets_summary(self):
         """
         Summary test documenting CLI140f performance targets and optimizations.

@@ -175,7 +175,7 @@ class TestCursorIntegration:
         assert enhanced_metadata["integration_type"] == "mcp_stdio"
         assert "processed_at" in enhanced_metadata
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cursor_json_format_compatibility(self):
         """Test that Cursor request format is compatible with JSON parsing"""
         cursor_json = {

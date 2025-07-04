@@ -102,7 +102,7 @@ class TestCLI132CSAgentAPI:
 
         return mock_manager
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_tree_view_endpoint_success(self, client, mock_firestore_manager):
         """Test /tree-view endpoint returns correct path and share data."""
         with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
@@ -126,7 +126,7 @@ class TestCLI132CSAgentAPI:
             )
             mock_firestore_manager.get_metadata_with_version.assert_called_once_with("doc_001")
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_tree_view_endpoint_not_found(self, client, mock_firestore_manager):
         """Test /tree-view endpoint handles document not found."""
         # Mock all methods to return None (document not found)
@@ -140,7 +140,7 @@ class TestCLI132CSAgentAPI:
             assert response.status_code == 404
             assert "not found" in response.json()["detail"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_by_path(self, client, mock_firestore_manager):
         """Test /search endpoint with path parameter."""
         with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
@@ -163,7 +163,7 @@ class TestCLI132CSAgentAPI:
             # Verify mock call
             mock_firestore_manager.search_by_path.assert_called_once_with("research_paper")
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_by_tags(self, client, mock_firestore_manager):
         """Test /search endpoint with tags parameter."""
         with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
@@ -186,7 +186,7 @@ class TestCLI132CSAgentAPI:
             # Verify mock call
             mock_firestore_manager.search_by_tags.assert_called_once_with(["python", "tutorial"])
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_by_metadata(self, client, mock_firestore_manager):
         """Test /search endpoint with metadata parameter."""
         metadata_json = json.dumps({"author": "John Doe", "year": 2024})
@@ -211,7 +211,7 @@ class TestCLI132CSAgentAPI:
             # Verify mock call
             mock_firestore_manager.search_by_metadata.assert_called_once_with({"author": "John Doe", "year": 2024})
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_combined_parameters(self, client, mock_firestore_manager):
         """Test /search endpoint with multiple parameters (deduplication)."""
         # Set up overlapping results to test deduplication
@@ -236,7 +236,7 @@ class TestCLI132CSAgentAPI:
             assert "doc_002" in doc_ids
             assert len(set(doc_ids)) == 2  # No duplicates
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_invalid_metadata_json(self, client, mock_firestore_manager):
         """Test /search endpoint with invalid JSON metadata."""
         with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
@@ -245,7 +245,7 @@ class TestCLI132CSAgentAPI:
             assert response.status_code == 400
             assert "Invalid JSON format" in response.json()["detail"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_endpoint_no_parameters(self, client, mock_firestore_manager):
         """Test /search endpoint with no parameters returns empty results."""
         with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
@@ -258,7 +258,7 @@ class TestCLI132CSAgentAPI:
             assert data["total"] == 0
             assert data["results"] == []
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_health_endpoint(self, client):
         """Test /health endpoint."""
         response = client.get("/health")
@@ -268,7 +268,7 @@ class TestCLI132CSAgentAPI:
         assert data["status"] == "ok"
         assert data["service"] == "CS Agent API"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_api_error_handling(self, client, mock_firestore_manager):
         """Test API error handling for internal server errors."""
         # Mock an exception in the firestore manager

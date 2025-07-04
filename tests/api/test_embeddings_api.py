@@ -168,7 +168,7 @@ async def mock_generate_openai_embedding(text: str, model: str = "text-embedding
     return {"embedding": embedding_vector, "model": model, "text": text}
 
 
-    @pytest.mark.unitdef test_generate_embedding_mock():
+    @pytest.mark.slowdef test_generate_embedding_mock():
     """
     Tests the /generate_embedding_real endpoint with mocked OpenAI API.
     - Sends text.
@@ -215,7 +215,7 @@ async def mock_generate_openai_embedding(text: str, model: str = "text-embedding
 
 
 @pytest.mark.skipif(not OPENAI_API_KEY_AVAILABLE, reason="OPENAI_API_KEY not set, skipping real embedding tests")
-    @pytest.mark.unitdef test_generate_embedding_real():
+    @pytest.mark.slowdef test_generate_embedding_real():
     """
     Tests the /generate_embedding_real endpoint.
     - Sends text.
@@ -306,7 +306,7 @@ def setup_qdrant_for_search_tests(client_with_qdrant_override: TestClient, mock_
             app.dependency_overrides.pop(_generate_openai_embedding, None)
 
 
-    @pytest.mark.unitdef test_semantic_search_cosine(
+    @pytest.mark.slowdef test_semantic_search_cosine(
     setup_qdrant_for_search_tests, client_with_qdrant_override: TestClient, mock_vector_store: MockVectorStore
 ):
     """
@@ -370,7 +370,7 @@ def setup_qdrant_for_search_tests(client_with_qdrant_override: TestClient, mock_
             app.dependency_overrides.pop(_generate_openai_embedding, None)
 
 
-    @pytest.mark.unitdef test_clear_embeddings(
+    @pytest.mark.slowdef test_clear_embeddings(
     setup_qdrant_for_search_tests, client_with_qdrant_override: TestClient, mock_vector_store: MockVectorStore
 ):
     """

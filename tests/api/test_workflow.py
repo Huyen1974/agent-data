@@ -13,7 +13,7 @@ from datetime import datetime
 class TestWorkflowOrchestration:
     """Test cases for workflow orchestration functionality."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_deployment_exists(self):
         """Test that the workflow deployment exists and is accessible."""
         # This test validates that the workflow YAML exists and is properly structured
@@ -46,7 +46,7 @@ class TestWorkflowOrchestration:
         assert "return_result" in step_names, "Should have return_result step"
 
     @patch("subprocess.run")
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_execution_simulation(self, mock_subprocess):
         """Test workflow execution simulation with mocked gcloud command."""
         # Mock successful workflow execution
@@ -83,7 +83,7 @@ class TestWorkflowOrchestration:
 
     @patch("subprocess.run")
     @pytest.mark.xfail(reason="CLI140m.69: Batch workflow test with timeout issues")
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_batch_execution_simulation(self, mock_subprocess):
         """Test batch workflow execution with 8 documents."""
 
@@ -146,7 +146,7 @@ class TestWorkflowOrchestration:
         assert summary["failed"] == 0, "No documents should fail"
         assert summary["success_rate"] == 100.0, "Should have 100% success rate"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_input_validation(self):
         """Test workflow input validation and parameter handling."""
         # Test required parameters
@@ -168,7 +168,7 @@ class TestWorkflowOrchestration:
         assert isinstance(valid_input["content"], str), "content should be string"
 
     @patch("subprocess.run")
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_error_handling(self, mock_subprocess):
         """Test workflow error handling and retry logic."""
         # Mock failed workflow execution on first try, success on retry
@@ -211,7 +211,7 @@ class TestWorkflowOrchestration:
 
         assert call_count >= 0, "Mock function should be callable"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_metadata_enhancement(self):
         """Test that workflow enhances metadata with workflow information."""
         # Test metadata enhancement
@@ -231,7 +231,7 @@ class TestWorkflowOrchestration:
         assert enhanced_metadata["workflow_source"] == "cloud_workflows", "Should set correct workflow source"
         assert "processed_at" in enhanced_metadata, "Should add processing timestamp"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_cli125_requirement(self):
         """Test specific CLI 125 requirement: workflow orchestration functionality."""
         # This test validates that the workflow meets CLI 125 requirements
@@ -269,7 +269,7 @@ class TestWorkflowOrchestration:
 class TestWorkflowIntegration:
     """Integration tests for workflow functionality."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_deployment_status(self):
         """Test that workflow is properly deployed and accessible."""
         # This test would check actual deployment status in a real environment
@@ -288,7 +288,7 @@ class TestWorkflowIntegration:
         assert deployment_status["state"] == "ACTIVE", "Workflow should be in ACTIVE state"
         assert location in deployment_status["name"], "Should be deployed in correct region"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_performance_expectations(self):
         """Test workflow performance expectations (simulated calculations)."""
         # Test that workflow execution time meets expectations
@@ -310,7 +310,7 @@ class TestWorkflowIntegration:
         ), f"Batch processing should complete within {expected_max_batch_time} seconds"
 
     @patch("subprocess.run")
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_workflow_complete_orchestration_cli125(self, mock_subprocess):
         """Test CLI 125 complete workflow orchestration: save → vectorize → tag."""
         # Mock successful workflow execution with all three steps

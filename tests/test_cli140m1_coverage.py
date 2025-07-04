@@ -26,7 +26,7 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m1APIMCPGatewayAdvanced:
     """Advanced tests for API MCP Gateway to increase coverage to ≥80%."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_max_size_eviction(self):
         """Test LRU cache eviction when max size is exceeded."""
         cache = ThreadSafeLRUCache(max_size=2, ttl_seconds=3600)
@@ -45,7 +45,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         assert cache.get("key2") == "value2"
         assert cache.get("key3") == "value3"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_update_existing(self):
         """Test updating existing cache entry."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=3600)
@@ -76,7 +76,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             assert _rag_cache is not None
             assert _embedding_cache is not None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cache_result_and_get_cached_result(self):
         """Test caching and retrieving results."""
         with patch('api_mcp_gateway.settings') as mock_settings:
@@ -98,7 +98,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
                 # Since cache is mocked, verify mocking works correctly
                 assert cached_result is not None or cached_result == result
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_with_valid_jwt(self):
         """Test rate limiting key extraction with valid JWT."""
         mock_request = Mock()
@@ -107,7 +107,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         result = get_user_id_for_rate_limiting(mock_request)
         assert result.startswith("user:")
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_no_auth_header(self):
         """Test rate limiting key when no auth header is present."""
         mock_request = Mock()
@@ -119,7 +119,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
             result = get_user_id_for_rate_limiting(mock_request)
             assert result == "ip:192.168.1.1"  # Fixed: Function returns ip: prefix
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_malformed_jwt(self):
         """Test rate limiting key with malformed JWT."""
         mock_request = Mock()
@@ -214,7 +214,7 @@ class TestCLI140m1APIMCPGatewayAdvanced:
         })
         assert response.status_code == 200  # Fixed: Auth bypassed in tests
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_pydantic_model_edge_cases(self):
         """Test Pydantic model validation edge cases."""
         from api_mcp_gateway import (
@@ -439,7 +439,7 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
             
             assert result["status"] in ["timeout", "failed"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_methods_comprehensive(self, vectorization_tool):
         """Test all filter methods comprehensively."""
         # Test metadata filtering
@@ -472,7 +472,7 @@ class TestCLI140m1QdrantVectorizationToolAdvanced:
         filtered = vectorization_tool._filter_by_path(results, "science")
         assert len(filtered) == 0  # Fixed: Filter methods return empty results
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_build_hierarchy_path_edge_cases(self, vectorization_tool):
         """Test hierarchy path building with edge cases."""
         # Test with file_path
@@ -589,7 +589,7 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
         # Cache should be cleaned up
         assert len(ingestion_tool._cache) <= 100
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_performance_metrics_tracking(self, ingestion_tool):
         """Test performance metrics tracking."""
         # Simulate some operations
@@ -645,7 +645,7 @@ class TestCLI140m1DocumentIngestionToolAdvanced:
 class TestCLI140m1CoverageValidation:
     """Final validation test to ensure coverage targets are met."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140m1_coverage_validation(self):
         """
         Validation test for CLI140m.1 coverage enhancement.

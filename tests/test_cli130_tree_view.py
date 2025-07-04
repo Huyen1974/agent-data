@@ -153,7 +153,7 @@ class TestCLI130TreeView:
                 assert "created_at" in share_metadata
                 assert "expires_at" in share_metadata
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_tree_view_implementation_completeness(self):
         """
         Test that Tree View methods are properly implemented in FirestoreMetadataManager.

@@ -322,7 +322,7 @@ class TestCLI140m12QdrantVectorizationCoverage:
 class TestCLI140m12ValidationAndCompliance:
     """Validation tests for CLI140m.12 objectives"""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140m12_coverage_objectives_validation(self):
         """Validate that CLI140m.12 coverage objectives are met."""
         coverage_targets = {

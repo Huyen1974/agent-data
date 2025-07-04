@@ -40,7 +40,7 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140m11APIMCPGatewayCoverage:
     """Test class to achieve ≥80% coverage for api_mcp_gateway.py"""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_comprehensive(self):
         """Test ThreadSafeLRUCache with all methods and edge cases."""
         cache = ThreadSafeLRUCache(max_size=3, ttl_seconds=1)
@@ -80,7 +80,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         assert cache.size() == 0
         assert cache.get("key5") is None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cache_key_generation(self):
         """Test cache key generation with various parameters."""
         # Test basic key generation
@@ -98,7 +98,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         assert key1 != key5
 
     @patch('api_mcp_gateway.settings')
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cache_operations_with_settings(self, mock_settings):
         """Test cache operations with different settings configurations."""
         # Test with caching enabled
@@ -128,7 +128,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         cached_result = _get_cached_result(cache_key)
         # Should still work but may return None depending on implementation
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_rate_limiting_key_function(self):
         """Test rate limiting key generation for different scenarios."""
         # Mock request object
@@ -155,7 +155,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         result = get_user_id_for_rate_limiting(mock_request)
         assert "ip:192.168.1.1" in result
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cache_initialization_edge_cases(self):
         """Test cache initialization with various configurations."""
         with patch('api_mcp_gateway.settings') as mock_settings:
@@ -500,7 +500,7 @@ class TestCLI140m11DocumentIngestionCoverage:
 class TestCLI140m11ValidationAndCompliance:
     """Test class to validate CLI140m.11 objectives and compliance."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_module_coverage_validation(self):
         """Validate that target modules achieve ≥80% coverage."""
         # This test validates the coverage objectives
@@ -521,7 +521,7 @@ class TestCLI140m11ValidationAndCompliance:
                 "document_ingestion_tool.py"
             ]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_ptfull_pass_rate_validation(self):
         """Validate that ptfull achieves ≥95% pass rate."""
         # This test validates the pass rate objective
@@ -531,7 +531,7 @@ class TestCLI140m11ValidationAndCompliance:
         # For now, we assert the test structure supports the pass rate goals
         assert target_pass_rate == 95.0
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_overall_coverage_maintenance(self):
         """Validate that overall coverage remains >20%."""
         # This test validates that overall coverage is maintained
@@ -541,7 +541,7 @@ class TestCLI140m11ValidationAndCompliance:
         # For now, we assert the coverage maintenance objective
         assert minimum_overall_coverage == 20.0
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140m11_completion_status(self):
         """Validate CLI140m.11 completion status."""
         completion_criteria = {
@@ -559,7 +559,7 @@ class TestCLI140m11ValidationAndCompliance:
             assert requirement is not None
             assert len(requirement) > 0
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140m11_meta_validation(self):
         """Meta-validation test for CLI140m.11 objectives."""
         # Validate that this test file itself contributes to coverage goals
@@ -599,7 +599,7 @@ class TestCLI140m11Integration:
         for step in workflow_steps:
             assert step is not None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_error_recovery_and_resilience(self):
         """Test system error recovery and resilience."""
         # Test that the system can handle various error conditions

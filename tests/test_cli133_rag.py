@@ -339,7 +339,7 @@ class TestCLI133RAG:
             assert "results" in result
             assert "rag_info" in result
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_metadata(self, rag_tool):
         """Test metadata filtering logic."""
         results = [
@@ -357,7 +357,7 @@ class TestCLI133RAG:
         assert len(filtered) == 1
         assert filtered[0]["year"] == 2024
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_tags(self, rag_tool):
         """Test tags filtering logic."""
         results = [
@@ -374,7 +374,7 @@ class TestCLI133RAG:
         filtered = rag_tool._filter_by_tags(results, ["python", "web"])
         assert len(filtered) == 3
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_path(self, rag_tool):
         """Test hierarchical path filtering logic."""
         results = [
@@ -390,7 +390,7 @@ class TestCLI133RAG:
         filtered = rag_tool._filter_by_path(results, "machine_learning")
         assert len(filtered) == 1
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_build_hierarchy_path(self, rag_tool):
         """Test hierarchy path building logic."""
         result = {

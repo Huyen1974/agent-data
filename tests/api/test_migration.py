@@ -27,7 +27,7 @@ def faiss_index_file(tmp_path):
     return index_path
 
 
-    @pytest.mark.unitdef test_migration_smoke(faiss_index_file):
+    @pytest.mark.slowdef test_migration_smoke(faiss_index_file):
     """Smoke test for FAISS to Qdrant migration functionality."""
     collection_name = "test_collection_smoke"
 

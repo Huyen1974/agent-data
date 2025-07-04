@@ -30,7 +30,7 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 class TestCLI140mAPIMCPGatewayCoverage:
     """Comprehensive tests for api_mcp_gateway.py to achieve ≥80% coverage."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_basic_operations(self):
         """Test ThreadSafeLRUCache basic operations."""
         cache = ThreadSafeLRUCache(max_size=3, ttl_seconds=1)
@@ -52,7 +52,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         assert cache.get("key4") == "value4"
         assert cache.size() == 3
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_ttl_expiration(self):
         """Test ThreadSafeLRUCache TTL expiration."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=0.1)
@@ -64,7 +64,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         time.sleep(0.2)
         assert cache.get("key1") is None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_cleanup_expired(self):
         """Test ThreadSafeLRUCache cleanup_expired method."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=0.1)
@@ -77,7 +77,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         assert expired_count == 2
         assert cache.size() == 0
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_thread_safe_lru_cache_clear(self):
         """Test ThreadSafeLRUCache clear method."""
         cache = ThreadSafeLRUCache(max_size=10, ttl_seconds=60)
@@ -90,7 +90,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         assert cache.size() == 0
         assert cache.get("key1") is None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_cache_key_generation(self):
         """Test cache key generation function."""
         key1 = _get_cache_key("test query", limit=10, tag="test")
@@ -104,7 +104,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         # Keys should be MD5 hashes (32 characters)
         assert len(key1) == 32
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_with_jwt(self):
         """Test rate limiting key extraction from JWT token."""
         # Mock request with JWT token
@@ -120,7 +120,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
             result = get_user_id_for_rate_limiting(mock_request)
             assert result == "user:test_user_123"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_fallback_to_ip(self):
         """Test rate limiting fallback to IP address."""
         mock_request = Mock()
@@ -130,7 +130,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
         result = get_user_id_for_rate_limiting(mock_request)
         assert result.startswith("ip:")
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_user_id_for_rate_limiting_invalid_jwt(self):
         """Test rate limiting with invalid JWT token."""
         mock_request = Mock()
@@ -225,7 +225,7 @@ class TestCLI140mAPIMCPGatewayCoverage:
             data = response.json()
             assert data["status"] == "error"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_pydantic_models_validation(self):
         """Test Pydantic model validation."""
         # Test valid requests first
@@ -385,7 +385,7 @@ class TestCLI140mQdrantVectorizationToolCoverage:
         # Should handle timeout gracefully - result may be empty or contain partial data
         assert isinstance(result, dict)
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_metadata(self, vectorization_tool):
         """Test metadata filtering functionality."""
         results = [
@@ -408,7 +408,7 @@ class TestCLI140mQdrantVectorizationToolCoverage:
         filtered = vectorization_tool._filter_by_metadata(results, {})
         assert len(filtered) == 3
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_tags(self, vectorization_tool):
         """Test tag filtering functionality."""
         results = [
@@ -429,7 +429,7 @@ class TestCLI140mQdrantVectorizationToolCoverage:
         filtered = vectorization_tool._filter_by_tags(results, [])
         assert len(filtered) == 3
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_filter_by_path(self, vectorization_tool):
         """Test path filtering functionality."""
         results = [
@@ -446,7 +446,7 @@ class TestCLI140mQdrantVectorizationToolCoverage:
         assert len(filtered) == 1
         assert filtered[0]["doc_id"] == "1"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_build_hierarchy_path(self, vectorization_tool):
         """Test hierarchy path building."""
         result = {
@@ -505,13 +505,13 @@ class TestCLI140mDocumentIngestionToolCoverage:
             with pytest.raises(Exception, match="Config error"):
                 await ingestion_tool._ensure_initialized()
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_cache_key(self, ingestion_tool):
         """Test cache key generation."""
         key = ingestion_tool._get_cache_key("doc1", "hash123")
         assert key == "doc1:hash123"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_is_cache_valid(self, ingestion_tool):
         """Test cache validity checking."""
         current_time = time.time()
@@ -522,7 +522,7 @@ class TestCLI140mDocumentIngestionToolCoverage:
         # Invalid cache (old timestamp)
         assert not ingestion_tool._is_cache_valid(current_time - 400)
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_content_hash(self, ingestion_tool):
         """Test content hash generation."""
         hash1 = ingestion_tool._get_content_hash("test content")
@@ -652,7 +652,7 @@ class TestCLI140mDocumentIngestionToolCoverage:
         assert result["status"] in ["timeout", "partial", "success"]
         assert result["doc_id"] == "test_doc"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_get_performance_metrics(self, ingestion_tool):
         """Test performance metrics retrieval."""
         metrics = ingestion_tool.get_performance_metrics()
@@ -663,7 +663,7 @@ class TestCLI140mDocumentIngestionToolCoverage:
         assert "batch_calls" in metrics
         assert "batch_time" in metrics
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_reset_performance_metrics(self, ingestion_tool):
         """Test performance metrics reset."""
         # Set some metrics
@@ -679,7 +679,7 @@ class TestCLI140mDocumentIngestionToolCoverage:
 class TestCLI140mCoverageValidation:
     """Validation test to ensure coverage targets are met."""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140m_coverage_validation(self):
         """
         Validation test for CLI140m coverage enhancement.

@@ -127,7 +127,7 @@ class TestAPIAGateway:
         """Sample document search request"""
         return {"tag": "api_testing", "limit": 10, "offset": 0, "include_vectors": False}
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_root_endpoint(self, client):
         """Test root endpoint returns API information"""
         response = client.get("/")
@@ -146,7 +146,7 @@ class TestAPIAGateway:
         assert "/query" in str(endpoints.values())
         assert "/search" in str(endpoints.values())
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_health_endpoint_no_services(self, client):
         """Test health endpoint when no services are initialized"""
         response = client.get("/health")
@@ -163,7 +163,7 @@ class TestAPIAGateway:
         assert services["firestore"] == "disconnected"
         assert services["vectorization"] == "unavailable"
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_save_document_success(self, client, sample_save_request):
         """Test successful document save via API A2A"""
         with patch("agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
@@ -187,14 +187,14 @@ class TestAPIAGateway:
             assert data["firestore_updated"] is True
 
     @patch("agent_data_manager.api_mcp_gateway.vectorization_tool", None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_save_document_service_unavailable(self, client, sample_save_request):
         """Test save document when vectorization service is unavailable"""
         response = client.post("/save", json=sample_save_request)
         assert response.status_code == 503
         assert "Vectorization service unavailable" in response.json()["detail"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_save_document_invalid_request(self, client):
         """Test save document with invalid request data"""
         with patch("agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
@@ -206,7 +206,7 @@ class TestAPIAGateway:
             response = client.post("/save", json=invalid_request)
             assert response.status_code == 422  # Unprocessable Entity for validation errors
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_query_vectors_success(self, client, sample_query_request):
         """Test successful semantic query via API A2A"""
         with patch("agent_data_manager.api_mcp_gateway.qdrant_store") as mock_store:
@@ -233,14 +233,14 @@ class TestAPIAGateway:
             assert "total_found" in data
 
     @patch("agent_data_manager.api_mcp_gateway.qdrant_store", None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_query_vectors_service_unavailable(self, client, sample_query_request):
         """Test query vectors when Qdrant service is unavailable"""
         response = client.post("/query", json=sample_query_request)
         assert response.status_code == 503
         assert "Qdrant service unavailable" in response.json()["detail"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_query_vectors_invalid_request(self, client):
         """Test query vectors with invalid request data"""
         invalid_request = {
@@ -251,7 +251,7 @@ class TestAPIAGateway:
         response = client.post("/query", json=invalid_request)
         assert response.status_code == 422
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_documents_success(self, client, sample_search_request):
         """Test successful document search via API A2A"""
         with patch("agent_data_manager.api_mcp_gateway.qdrant_store") as mock_store:
@@ -269,14 +269,14 @@ class TestAPIAGateway:
             assert "total_found" in data
 
     @patch("agent_data_manager.api_mcp_gateway.qdrant_store", None)
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_documents_service_unavailable(self, client, sample_search_request):
         """Test search documents when Qdrant service is unavailable"""
         response = client.post("/search", json=sample_search_request)
         assert response.status_code == 503
         assert "Qdrant service unavailable" in response.json()["detail"]
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_search_documents_with_vectors(self, client):
         """Test search documents including vector embeddings"""
         request_with_vectors = {"tag": "test_tag", "limit": 5, "offset": 0, "include_vectors": True}
@@ -295,7 +295,7 @@ class TestAPIAGateway:
             assert data["status"] == "success"
             assert "results" in data
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_pydantic_models_validation(self):
         """Test Pydantic model validation for API requests"""
         # Test SaveDocumentRequest validation

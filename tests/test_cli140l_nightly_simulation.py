@@ -314,7 +314,7 @@ class NightlyCISimulator:
 class TestCLI140lNightlySimulation:
     """Test suite for CLI140l nightly CI runtime simulation."""
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_nightly_ci_simulation_infrastructure(self):
         """Test that nightly CI simulation infrastructure is properly set up."""
         simulator = NightlyCISimulator()
@@ -334,7 +334,7 @@ class TestCLI140lNightlySimulation:
         
         simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_clean_environment_simulation(self):
         """Test clean environment simulation functionality."""
         simulator = NightlyCISimulator()
@@ -361,7 +361,7 @@ class TestCLI140lNightlySimulation:
             simulator.cleanup()
     
     @pytest.mark.slow
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_nightly_ci_runtime_simulation_full(self):
         """
         CORE TEST: Full nightly CI runtime simulation with clean environment.
@@ -413,7 +413,7 @@ class TestCLI140lNightlySimulation:
         finally:
             simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_nightly_simulation_performance_analysis(self):
         """Test performance analysis capabilities of nightly simulation."""
         simulator = NightlyCISimulator()
@@ -437,7 +437,7 @@ class TestCLI140lNightlySimulation:
         
         simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_cli140l_completion_requirements(self):
         """Test that CLI140l completion requirements are met."""
         # Requirement 1: Simulate nightly CI runtime locally
@@ -458,7 +458,7 @@ class TestCLI140lNightlySimulation:
         
         simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_nightly_simulation_error_handling(self):
         """Test error handling in nightly simulation."""
         simulator = NightlyCISimulator()
@@ -475,7 +475,7 @@ class TestCLI140lNightlySimulation:
         finally:
             simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_nightly_simulation_timeout_handling(self):
         """Test timeout handling in nightly simulation."""
         simulator = NightlyCISimulator()
@@ -492,7 +492,7 @@ class TestCLI140lNightlySimulation:
         finally:
             simulator.cleanup()
     
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_runtime_comparison_with_cli140k5(self):
         """Test runtime comparison with CLI140k.5 non-mock results."""
         # CLI140k.5 non-mock runtime: 252.82s

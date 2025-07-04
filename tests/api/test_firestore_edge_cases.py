@@ -14,7 +14,7 @@ from agent_data_manager.auth.user_manager import UserManager
 class TestFirestoreConnectionEdgeCases:
     """Test Firestore connection and error handling edge cases"""
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_firestore_connection_failure(self):
         """Test handling of Firestore connection failures"""
         with patch("agent_data_manager.auth.user_manager.firestore.Client") as mock_client:
@@ -24,7 +24,7 @@ class TestFirestoreConnectionEdgeCases:
             with pytest.raises(Exception):
                 UserManager()
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_firestore_timeout_handling(self):
         """Test handling of Firestore operation timeouts"""
         user_manager = UserManager()
@@ -37,7 +37,7 @@ class TestFirestoreConnectionEdgeCases:
             result = asyncio.run(user_manager.get_user_by_email("timeout@test.com"))
             assert result is None
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_firestore_permission_denied(self):
         """Test handling of Firestore permission denied errors"""
         user_manager = UserManager()
@@ -57,7 +57,7 @@ class TestDataValidationEdgeCases:
         """Setup test environment"""
         self.user_manager = UserManager()
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_email_validation_edge_cases(self):
         """Test email validation with edge cases"""
         invalid_emails = [
@@ -87,7 +87,7 @@ class TestDataValidationEdgeCases:
                 # Expected for some invalid inputs
                 pass
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_password_validation_edge_cases(self):
         """Test password validation with edge cases"""
         edge_case_passwords = [
@@ -123,7 +123,7 @@ class TestDataValidationEdgeCases:
                 # Some edge cases might fail, which is acceptable
                 pass
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_metadata_size_limits(self):
         """Test handling of large metadata objects"""
         # Create very large metadata
@@ -159,7 +159,7 @@ class TestConcurrentFirestoreOperations:
         """Setup test environment"""
         self.user_manager = UserManager()
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_concurrent_user_creation(self):
         """Test concurrent user creation scenarios"""
         from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -192,7 +192,7 @@ class TestConcurrentFirestoreOperations:
         successful_creations = [r for r in results if r["success"]]
         assert len(successful_creations) >= 8  # Allow for some failures due to concurrency
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_concurrent_authentication_attempts(self):
         """Test concurrent authentication attempts"""
         from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -235,7 +235,7 @@ class TestFirestoreDataConsistency:
         """Setup test environment"""
         self.user_manager = UserManager()
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_user_data_integrity(self):
         """Test user data integrity during operations"""
         # Test that user data maintains integrity
@@ -273,7 +273,7 @@ class TestFirestoreDataConsistency:
             assert "created_at" in result
             assert result["is_active"] is True
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_timestamp_consistency(self):
         """Test timestamp consistency in user operations"""
         # Test that timestamps are consistent and logical
@@ -298,7 +298,7 @@ class TestFirestoreDataConsistency:
             time_diff = abs((result["created_at"] - result["updated_at"]).total_seconds())
             assert time_diff < 1.0  # Should be very close
 
-    @pytest.mark.unit
+    @pytest.mark.slow
     def test_scope_validation(self):
         """Test scope validation and consistency"""
         valid_scopes = [
