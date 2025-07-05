@@ -51,7 +51,8 @@ class TestCLI140j2CostVerification:
         print(f"Testing project: {self.project_id}")
         print(f"Cost targets: Dev=${self.dev_cost_target}/day, Prod=${self.prod_cost_target}/day")
     
-    @pytest.mark.unit    def test_billing_api_cost_query(self):
+    @pytest.mark.slow
+    def test_billing_api_cost_query(self):
         """Query Billing API to get current costs and verify targets."""
         try:
             # Get billing account
@@ -96,7 +97,8 @@ class TestCLI140j2CostVerification:
         except Exception as e:
             pytest.fail(f"Failed to query billing API: {e}")
     
-    @pytest.mark.unit    def test_min_instances_zero_verification(self):
+    @pytest.mark.slow
+    def test_min_instances_zero_verification(self):
         """Verify all Cloud Run services have min-instances=0."""
         services = self.run_client.list_services(
             parent=f"projects/{self.project_id}/locations/{self.region}"
@@ -125,7 +127,8 @@ class TestCLI140j2CostVerification:
         for config in service_configs:
             print(f"   - {config['name']}: min_instances={config['min_instances']}")
     
-    @pytest.mark.unit    def test_log_router_configuration_active(self):
+    @pytest.mark.slow
+    def test_log_router_configuration_active(self):
         """Verify Log Router configuration is active for cost optimization."""
         try:
             # Check for cost optimization log sink
@@ -163,7 +166,8 @@ class TestCLI140j2CostVerification:
             # Don't fail the test if we can't check log routing
             # The important thing is that the API is accessible
     
-    @pytest.mark.unit    def test_budget_alert_configuration_active(self):
+    @pytest.mark.slow
+    def test_budget_alert_configuration_active(self):
         """Verify budget alert configuration is active."""
         budget_client = BudgetServiceClient()
         
@@ -201,7 +205,8 @@ class TestCLI140j2CostVerification:
             print(f"⚠️  Budget API check encountered: {e}")
             # Don't fail if we can access the API but encounter other issues
     
-    @pytest.mark.unit    def test_cost_optimization_effectiveness(self):
+    @pytest.mark.slow
+    def test_cost_optimization_effectiveness(self):
         """Test that cost optimization configurations are effective."""
         # Verify serverless architecture is properly configured
         services = self.run_client.list_services(
@@ -240,7 +245,8 @@ class TestCLI140j2CostVerification:
         print(f"   - Services with min_instances=0: {optimization_metrics['services_with_min_instances_zero']}/{optimization_metrics['total_services']}")
         print(f"   - Services with scaling enabled: {optimization_metrics['services_with_scaling_enabled']}/{optimization_metrics['total_services']}")
     
-    @pytest.mark.unit    def test_cost_monitoring_infrastructure(self):
+    @pytest.mark.slow
+    def test_cost_monitoring_infrastructure(self):
         """Verify cost monitoring infrastructure is in place."""
         monitoring_components = {
             'billing_api_enabled': False,
@@ -289,7 +295,8 @@ class TestCLI140j2CostVerification:
             status = "✅" if enabled else "❌"
             print(f"   {status} {component}")
     
-    @pytest.mark.unit    def test_cost_target_compliance_validation(self):
+    @pytest.mark.slow
+    def test_cost_target_compliance_validation(self):
         """Validate that current configuration supports cost targets."""
         # This test validates that the infrastructure is configured to meet cost targets
         # without requiring actual billing data which may not be immediately available

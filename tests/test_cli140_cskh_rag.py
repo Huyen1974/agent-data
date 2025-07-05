@@ -277,7 +277,8 @@ class TestCLI140CSKHRag:
             assert "timeout" in data["error"].lower()
             assert data["message"] == "Query processing timed out"
 
-    @pytest.mark.unit    def test_cskh_query_validation(self, client, mock_auth_disabled):
+    @pytest.mark.unit
+    def test_cskh_query_validation(self, client, mock_auth_disabled):
         """Test CSKH query input validation."""
         with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings, patch(
             "src.agent_data_manager.api_mcp_gateway.auth_manager"
@@ -346,7 +347,8 @@ class TestCLI140CSKHRag:
             assert api_call_args[0] == "cskh_query"  # endpoint
             assert api_call_args[1] == "success"  # status
 
-    @pytest.mark.unit    def test_api_root_includes_cskh_endpoint(self, client):
+    @pytest.mark.unit
+    def test_api_root_includes_cskh_endpoint(self, client):
         """Test that the root endpoint includes the new CSKH endpoint."""
         response = client.get("/")
         assert response.status_code == 200

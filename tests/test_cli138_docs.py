@@ -13,7 +13,8 @@ from pathlib import Path
 class TestCLI138Docs:
     """Test suite for CLI 138 documentation validation."""
 
-    @pytest.mark.unit    def test_agent_data_final_report_exists(self):
+    @pytest.mark.unit
+    def test_agent_data_final_report_exists(self):
         """Test that Agent_Data_Final_Report.md exists and is readable."""
         report_path = Path("Agent_Data_Final_Report.md")
         assert report_path.exists(), "Agent_Data_Final_Report.md file does not exist"
@@ -26,7 +27,8 @@ class TestCLI138Docs:
         assert len(content) > 1000, "Agent_Data_Final_Report.md appears to be too short"
         assert content.strip(), "Agent_Data_Final_Report.md appears to be empty"
 
-    @pytest.mark.unit    def test_agent_data_final_report_required_sections(self):
+    @pytest.mark.unit
+    def test_agent_data_final_report_required_sections(self):
         """Test that Agent_Data_Final_Report.md contains all required sections."""
         report_path = Path("Agent_Data_Final_Report.md")
 
@@ -54,7 +56,8 @@ class TestCLI138Docs:
         for section in required_sections:
             assert section in content, f"Missing required section: {section}"
 
-    @pytest.mark.unit    def test_agent_data_final_report_technical_details(self):
+    @pytest.mark.unit
+    def test_agent_data_final_report_technical_details(self):
         """Test that Agent_Data_Final_Report.md contains key technical details."""
         report_path = Path("Agent_Data_Final_Report.md")
 
@@ -79,7 +82,8 @@ class TestCLI138Docs:
         for detail in technical_details:
             assert detail in content, f"Missing technical detail: {detail}"
 
-    @pytest.mark.unit    def test_integrate_with_cursor_updated(self):
+    @pytest.mark.unit
+    def test_integrate_with_cursor_updated(self):
         """Test that INTEGRATE_WITH_CURSOR.md has been updated with CLI 138 information."""
         cursor_doc_path = Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md")
         assert cursor_doc_path.exists(), "INTEGRATE_WITH_CURSOR.md file does not exist"
@@ -101,7 +105,8 @@ class TestCLI138Docs:
         for update in cli138_updates:
             assert update in content, f"Missing CLI 138 update: {update}"
 
-    @pytest.mark.unit    def test_documentation_api_examples_valid_json(self):
+    @pytest.mark.unit
+    def test_documentation_api_examples_valid_json(self):
         """Test that API examples in documentation contain valid JSON."""
         report_path = Path("Agent_Data_Final_Report.md")
 
@@ -123,7 +128,8 @@ class TestCLI138Docs:
                 "{" in json_block and "}" in json_block
             ), f"JSON block {i+1} doesn't appear to be valid JSON structure"
 
-    @pytest.mark.unit    def test_documentation_contains_performance_metrics(self):
+    @pytest.mark.unit
+    def test_documentation_contains_performance_metrics(self):
         """Test that documentation includes current performance metrics."""
         report_path = Path("Agent_Data_Final_Report.md")
 
@@ -142,7 +148,8 @@ class TestCLI138Docs:
         for metric in performance_metrics:
             assert metric in content, f"Missing performance metric: {metric}"
 
-    @pytest.mark.unit    def test_documentation_deployment_instructions(self):
+    @pytest.mark.unit
+    def test_documentation_deployment_instructions(self):
         """Test that documentation includes comprehensive deployment instructions."""
         report_path = Path("Agent_Data_Final_Report.md")
 
@@ -164,7 +171,8 @@ class TestCLI138Docs:
             assert element in content, f"Missing deployment element: {element}"
 
     @pytest.mark.performance
-    @pytest.mark.unit    def test_documentation_validation_performance(self):
+    @pytest.mark.unit
+    def test_documentation_validation_performance(self):
         """Test that documentation validation completes quickly."""
         import time
 
@@ -185,7 +193,8 @@ class TestCLI138Docs:
         # Should complete in under 1 second
         assert execution_time < 1.0, f"Documentation validation took too long: {execution_time:.2f}s"
 
-    @pytest.mark.unit    def test_documentation_file_sizes_reasonable(self):
+    @pytest.mark.unit
+    def test_documentation_file_sizes_reasonable(self):
         """Test that documentation files are reasonably sized."""
         report_path = Path("Agent_Data_Final_Report.md")
         cursor_doc_path = Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md")
@@ -200,7 +209,8 @@ class TestCLI138Docs:
         # INTEGRATE_WITH_CURSOR.md should be comprehensive
         assert 5000 < cursor_doc_size < 1000000, f"INTEGRATE_WITH_CURSOR.md size unexpected: {cursor_doc_size} bytes"
 
-    @pytest.mark.unit    def test_documentation_encoding_utf8(self):
+    @pytest.mark.unit
+    def test_documentation_encoding_utf8(self):
         """Test that documentation files use UTF-8 encoding."""
         docs_to_check = [Path("Agent_Data_Final_Report.md"), Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md")]
 

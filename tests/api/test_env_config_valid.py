@@ -1,8 +1,9 @@
-import os
+import pytestimport os
 from dotenv import load_dotenv
 
 
-    @pytest.mark.unitdef test_env_config_valid():
+    @pytest.mark.unit
+    def test_env_config_valid():
     base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
     env_sample_path = os.path.join(base_dir, ".env.sample")
     env_example_path = os.path.join(base_dir, ".env.example")

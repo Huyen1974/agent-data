@@ -691,7 +691,8 @@ class TestCLI140m6CoverageValidation:
         
         print(f"CLI140m.6 Coverage Summary: {coverage_summary}")
 
-    @pytest.mark.unit    def test_cli140m6_test_infrastructure_complete(self):
+    @pytest.mark.unit
+    def test_cli140m6_test_infrastructure_complete(self):
         """Validate that test infrastructure is complete and ready"""
         
         # Verify test class structure
@@ -748,7 +749,8 @@ class TestCLI140m6CoverageValidation:
         print(f"CLI140m.6 Test Infrastructure: {test_summary}")
         assert test_summary["total_test_methods"] >= 20
 
-    @pytest.mark.unit    def test_cli140m6_completion_summary(self):
+    @pytest.mark.unit
+    def test_cli140m6_completion_summary(self):
         """Final completion summary for CLI140m.6"""
         
         completion_status = {

@@ -2,7 +2,8 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-    @pytest.mark.unitdef test_bad_topk_value_raises(client_with_qdrant_override: TestClient):
+    @pytest.mark.unit
+    def test_bad_topk_value_raises(client_with_qdrant_override: TestClient):
     for invalid_top_k in [0, -1]:
         response = client_with_qdrant_override.post(
             "/semantic_search_cosine",

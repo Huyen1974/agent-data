@@ -3,7 +3,8 @@ import pytest
 
 
 
-    @pytest.mark.unitdef test_negative_top_k(client: TestClient):
+    @pytest.mark.unit
+    def test_negative_top_k(client: TestClient):
     payload = {"query_text": "quick check", "top_k": -5, "score_threshold": 0.3}
     resp = client.post("/semantic_search_cosine", json=payload)
     assert resp.status_code == 422  # FastAPI/Pydantic validation

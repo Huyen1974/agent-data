@@ -5,7 +5,8 @@ from agent_data.vector_store.qdrant_store import QdrantStore
 from agent_data_manager.local_mcp_server import handle_qdrant_tool
 
 
-    @pytest.mark.unitdef test_mcp_qdrant_upsert_and_query():
+    @pytest.mark.slow
+    def test_mcp_qdrant_upsert_and_query():
     """Test MCP server integration with QdrantStore for upsert and query operations"""
     # Initialize QdrantStore and clean up any existing test data
     qdrant_store = QdrantStore()

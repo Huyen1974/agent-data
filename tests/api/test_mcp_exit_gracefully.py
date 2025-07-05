@@ -9,7 +9,8 @@ def mcp_mock():
     yield client
 
 
-    @pytest.mark.unitdef test_mcp_exit_gracefully(mcp_mock):
+    @pytest.mark.unit
+    def test_mcp_exit_gracefully(mcp_mock):
     # Register a tool and send a message
     tool_config = {"name": "test_tool", "type": "test"}
     mcp_mock.register_tool("test_tool", tool_config)

@@ -9,7 +9,8 @@ import sys
 class TestPackageInstallation:
     """Test that the agent_data_manager package is properly installed and importable."""
 
-    @pytest.mark.unit    def test_package_import(self):
+    @pytest.mark.unit
+    def test_package_import(self):
         """Test that the main package can be imported."""
         import agent_data_manager
 
@@ -18,7 +19,8 @@ class TestPackageInstallation:
         assert hasattr(agent_data_manager, "__author__")
         assert agent_data_manager.__author__ == "Agent Data Team"
 
-    @pytest.mark.unit    def test_core_modules_import(self):
+    @pytest.mark.unit
+    def test_core_modules_import(self):
         """Test that core modules can be imported."""
         # Test individual module imports
         try:
@@ -42,14 +44,16 @@ class TestPackageInstallation:
         except ImportError as e:
             pytest.skip(f"Settings import failed (may be expected in test env): {e}")
 
-    @pytest.mark.unit    def test_package_in_sys_modules(self):
+    @pytest.mark.unit
+    def test_package_in_sys_modules(self):
         """Test that the package is properly registered in sys.modules."""
         import agent_data_manager
 
         assert "agent_data_manager" in sys.modules
         assert sys.modules["agent_data_manager"] is agent_data_manager
 
-    @pytest.mark.unit    def test_package_metadata(self):
+    @pytest.mark.unit
+    def test_package_metadata(self):
         """Test package metadata is accessible."""
         import agent_data_manager
 
@@ -59,7 +63,8 @@ class TestPackageInstallation:
             assert "__version__" in agent_data_manager.__all__
             assert "__author__" in agent_data_manager.__all__
 
-    @pytest.mark.unit    def test_new_imports_work(self):
+    @pytest.mark.unit
+    def test_new_imports_work(self):
         """Test that new import paths work correctly."""
         # Test that the new import paths work
         try:

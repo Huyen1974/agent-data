@@ -315,7 +315,8 @@ class TestCLI140e39Validation:
                 finally:
                     app.dependency_overrides.clear()
 
-    @pytest.mark.unit    def test_rag_latency_validation_with_auth_fix(self):
+    @pytest.mark.unit
+    def test_rag_latency_validation_with_auth_fix(self):
         """Test that RAG latency validation works with fixed authentication."""
         # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
         pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
@@ -341,7 +342,8 @@ class TestCLI140e39Validation:
         # except Exception as e:
         #     pytest.fail(f"RAG latency test failed: {e}")
 
-    @pytest.mark.unit    def test_cloud_profiler_validation_with_auth_fix(self):
+    @pytest.mark.unit
+    def test_cloud_profiler_validation_with_auth_fix(self):
         """Test that Cloud Profiler validation works with fixed authentication."""
         # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
         pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
@@ -368,7 +370,8 @@ class TestCLI140e39Validation:
         # except Exception as e:
         #     pytest.fail(f"Cloud Profiler test failed: {e}")
 
-    @pytest.mark.unit    def test_test_suite_count_compliance(self):
+    @pytest.mark.unit
+    def test_test_suite_count_compliance(self):
         """Test that the test suite count is compliant with CLI140m.44 target (512 tests)."""
         result = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], capture_output=True, text=True)
 
@@ -397,7 +400,8 @@ class TestCLI140e39Validation:
 
         print(f"✅ Test suite count compliance: {test_count} tests")
 
-    @pytest.mark.unit    def test_cli140e39_completion_marker(self):
+    @pytest.mark.unit
+    def test_cli140e39_completion_marker(self):
         """Test that marks the completion of CLI140e.3.9 objectives."""
         # Verify that all objectives have been met
         objectives_met = {

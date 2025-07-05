@@ -1,4 +1,4 @@
-import random
+import pytestimport random
 import uuid
 from fastapi.testclient import TestClient
 from api_vector_search import app  # Assuming your FastAPI app instance is here
@@ -16,7 +16,8 @@ def generate_unique_tag():
     return f"test-tag-{uuid.uuid4()}"
 
 
-    @pytest.mark.unitdef test_get_vector_by_id():
+    @pytest.mark.slow
+    def test_get_vector_by_id():
     """
     Tests retrieving a single vector by its point_id.
     """
@@ -62,7 +63,8 @@ def generate_unique_tag():
     #     f"Expected vector {vector}, but got {retrieved_vector_data['vector']}"
 
 
-    @pytest.mark.unitdef test_query_vectors_by_ids():
+    @pytest.mark.slow
+    def test_query_vectors_by_ids():
     """
     Tests querying multiple vectors by a list of point_ids.
     """

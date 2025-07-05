@@ -2,7 +2,8 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-    @pytest.mark.unitdef test_filter_tag_trailing_spaces(client_with_qdrant_override: TestClient):
+    @pytest.mark.unit
+    def test_filter_tag_trailing_spaces(client_with_qdrant_override: TestClient):
     response = client_with_qdrant_override.post(
         "/semantic_search_cosine",
         json={
