@@ -26,7 +26,7 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,7 +38,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug Secrets
-        run: echo "Using PROJECT_ID=${{ secrets.PROJECT_ID }}"
+        run: echo "Using PROJECT_ID_TEST=${{ secrets.PROJECT_ID_TEST }}"
 
       - name: Deploy to Google Cloud Functions
         run: |
@@ -54,7 +54,7 @@ jobs:
               --allow-unauthenticated \
               --source="$FUNCTION_DIR" \
               --entry-point="$ENTRY_POINT" \
-              --project=${{ secrets.PROJECT_ID }}; then
+              --project=${{ secrets.PROJECT_ID_TEST }}; then
               echo "❌ Deployment failed for $FUNCTION_NAME"
               exit 1
             fi

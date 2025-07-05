@@ -20,7 +20,7 @@ from typing import Dict, Any, List
 # API Gateway imports
 from ADK.agent_data.api_mcp_gateway import (
     ThreadSafeLRUCache,
-    initialize_caches,
+    _initialize_caches,
     _get_cache_key,
     _get_cached_result,
     _cache_result,
@@ -110,7 +110,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
         }
         
         # Initialize caches
-        initialize_caches()
+        _initialize_caches()
         
         # Test caching operations
         test_result = {"status": "success", "data": "test"}
@@ -164,7 +164,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
                 "embedding_cache_ttl": 900,
             }
             
-            initialize_caches()
+            _initialize_caches()
             
             # Test with only RAG cache enabled
             mock_settings.get_cache_config.return_value = {
@@ -176,7 +176,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
                 "embedding_cache_ttl": 900,
             }
             
-            initialize_caches()
+            _initialize_caches()
             
             # Test with no caches enabled
             mock_settings.get_cache_config.return_value = {
@@ -188,7 +188,7 @@ class TestCLI140m11APIMCPGatewayCoverage:
                 "embedding_cache_ttl": 900,
             }
             
-            initialize_caches()
+            _initialize_caches()
 
 
 class TestCLI140m11QdrantVectorizationCoverage:

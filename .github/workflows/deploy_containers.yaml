@@ -2,7 +2,7 @@ name: Deploy Containers
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main", "test" ]
     paths:
       - 'containers/**'
       - '.github/workflows/deploy_containers.yaml'
@@ -25,12 +25,12 @@ jobs:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Configure Docker
       run: |
@@ -41,7 +41,7 @@ jobs:
         set -e
         for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
           CONTAINER_NAME=$(basename "$CONTAINER_DIR")
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
+          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/docker-repo/$CONTAINER_NAME:latest"
 
           echo "🔨 Building Docker image: $IMAGE"
           docker build -t "$IMAGE" "$CONTAINER_DIR"

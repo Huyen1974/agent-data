@@ -18,7 +18,7 @@ from fastapi import Request
 # Import modules under test
 from ADK.agent_data.api_mcp_gateway import (
     app, ThreadSafeLRUCache, get_user_id_for_rate_limiting, 
-    initialize_caches, _cache_result, _get_cached_result,
+    _initialize_caches, _cache_result, _get_cached_result,
     SaveDocumentRequest, QueryVectorsRequest, RAGSearchRequest
 )
 from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool

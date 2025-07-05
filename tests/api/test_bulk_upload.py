@@ -14,6 +14,7 @@ if project_root not in sys.path:
 from agent_data_manager.tools.bulk_upload_tool import bulk_upload_sync
 
 
+@pytest.mark.slow
 def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with valid points.

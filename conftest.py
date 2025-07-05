@@ -275,15 +275,18 @@ def _manage_env_and_qdrant_patch():
 # --- 4. CLI Option for Test Counting ---
 # Removing pytest_addoption and pytest_collection_modifyitems from tests/conftest.py
 
+# CLI149: Whitelist filtering removed to collect all tests (~941 total)
 # Re-adding pytest_collection_modifyitems for 519 test whitelist enforcement
-import pathlib
-MANIFEST_PATH = pathlib.Path(__file__).parent / "tests" / "manifest_519.txt"
-WHITELIST = {l.strip() for l in MANIFEST_PATH.read_text().splitlines() if l.strip()}
+# import pathlib
+# MANIFEST_PATH = pathlib.Path(__file__).parent / "tests" / "manifest_519.txt"
+# WHITELIST = {l.strip() for l in MANIFEST_PATH.read_text().splitlines() if l.strip()}
 
-def pytest_collection_modifyitems(session, config, items):
-    """Filter collected tests to only include those in the 519 test whitelist."""
-    items[:] = [i for i in items if i.nodeid in WHITELIST]
-    assert len(items) == 519, f"Expected 519 selected, got {len(items)}"
+# def pytest_collection_modifyitems(session, config, items):
+#     """Filter collected tests to only include those in the 519 test whitelist."""
+#     items[:] = [i for i in items if i.nodeid in WHITELIST]
+#     # CLI148: Temporarily disable assertion to fix collection issues
+#     # assert len(items) == 519, f"Expected 519 selected, got {len(items)}"
+#     print(f"CLI148: Test collection found {len(items)} tests from whitelist")
 # as these are now handled by the root conftest.py
 
 

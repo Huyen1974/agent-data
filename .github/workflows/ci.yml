@@ -1,0 +1,171 @@
+name: CI - Test Count Verification and Quality Gates
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-count-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-json-report
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Verify Test Count
+      run: |
+        echo "Verifying test count compliance..."
+        cd ADK/agent_data
+        python scripts/verify_test_count_simple.py 157 10
+    
+    - name: Upload test count report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-count-report
+        path: ADK/agent_data/.cursor/logs/CLI150_*.log
+        retention-days: 7
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: test-count-verification
+    timeout-minutes: 15
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-mock pytest-asyncio
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run Unit Tests (Fast)
+      run: |
+        cd ADK/agent_data
+        export PYTHONPATH=$PWD:$PYTHONPATH
+        pytest -m "unit and not slow" --tb=short --maxfail=5 -v
+    
+    - name: Upload unit test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: unit-test-results
+        path: pytest-results.xml
+        retention-days: 7
+
+  slow-tests:
+    runs-on: ubuntu-latest
+    needs: test-count-verification
+    timeout-minutes: 30
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-mock pytest-asyncio
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run Slow Tests
+      run: |
+        cd ADK/agent_data
+        export PYTHONPATH=$PWD:$PYTHONPATH
+        pytest -m "slow" --tb=short --maxfail=3 -v
+    
+    - name: Upload slow test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: slow-test-results
+        path: pytest-results.xml
+        retention-days: 7
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    timeout-minutes: 20
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-mock pytest-asyncio
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run Integration Tests
+      run: |
+        cd ADK/agent_data
+        export PYTHONPATH=$PWD:$PYTHONPATH
+        pytest -m "integration" --tb=short --maxfail=2 -v
+    
+    - name: Upload integration test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: integration-test-results
+        path: pytest-results.xml
+        retention-days: 7
+
+  quality-gates:
+    runs-on: ubuntu-latest
+    needs: [test-count-verification, unit-tests]
+    if: always()
+    
+    steps:
+    - name: Check Test Count Verification
+      run: |
+        if [ "${{ needs.test-count-verification.result }}" != "success" ]; then
+          echo "❌ Test count verification failed"
+          exit 1
+        else
+          echo "✅ Test count verification passed"
+        fi
+    
+    - name: Check Unit Tests
+      run: |
+        if [ "${{ needs.unit-tests.result }}" != "success" ]; then
+          echo "❌ Unit tests failed"
+          exit 1
+        else
+          echo "✅ Unit tests passed"
+        fi
+    
+    - name: Final Status
+      run: |
+        echo "🎉 All quality gates passed!"
+        echo "📊 Test count: 157 unit tests (not slow)"
+        echo "✅ CI pipeline completed successfully" 

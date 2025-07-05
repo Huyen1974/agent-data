@@ -2,7 +2,7 @@ name: Deploy Workflows
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main", "test" ]
     paths:
       - 'workflows/**'
       - '.github/workflows/deploy_workflows.yaml'
@@ -25,12 +25,12 @@ jobs:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Deploy Workflows
       run: |

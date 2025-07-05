@@ -1,0 +1,33 @@
+name: Deploy Dummy Workflow
+
+on:
+  push:
+    branches: [main, test]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy dummy workflow
+        run: |
+          gcloud workflows deploy dummy-workflow \
+            --source=workflows/dummy_workflow.yaml \
+            --location=asia-southeast1 \
+            --project=${{ secrets.PROJECT_ID_TEST }}
+
+      - name: Verify deployment
+        run: |
+          echo "Dummy workflow deployed successfully"
+          gcloud workflows describe dummy-workflow --location=asia-southeast1 --project=${{ secrets.PROJECT_ID_TEST }} 
