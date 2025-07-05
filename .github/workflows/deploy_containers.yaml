@@ -19,29 +19,43 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Check if secrets are available
+      id: check-secrets
+      run: |
+        if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ] || [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+          echo "::warning::Skipping deployment - GCP secrets not configured"
+          echo "skip=true" >> $GITHUB_OUTPUT
+        else
+          echo "skip=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Authenticate to Google Cloud (WIF)
+      if: steps.check-secrets.outputs.skip != 'true'
       uses: google-github-actions/auth@v1
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Set up gcloud
+      if: steps.check-secrets.outputs.skip != 'true'
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Configure Docker
+      if: steps.check-secrets.outputs.skip != 'true'
       run: |
         gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
 
     - name: Build & Push Docker images
+      if: steps.check-secrets.outputs.skip != 'true'
       run: |
         set -e
         for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
           CONTAINER_NAME=$(basename "$CONTAINER_DIR")
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
+          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/docker-repo/$CONTAINER_NAME:latest"
 
           echo "🔨 Building Docker image: $IMAGE"
           docker build -t "$IMAGE" "$CONTAINER_DIR"
