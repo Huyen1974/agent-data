@@ -2,26 +2,38 @@ name: Deploy Dummy Workflow
 
 on:
   push:
-    branches: [main]
+    branches: [test]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check if secrets are available
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}" ] || [ -z "${{ secrets.PROJECT_ID_TEST }}" ]; then
+            echo "::warning::Skipping deployment - GCP secrets not configured"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Authenticate to Google Cloud
+        if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
 
       - name: Set up Cloud SDK
+        if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Deploy dummy workflow
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           gcloud workflows deploy dummy-workflow \
             --source=workflows/dummy_workflow.yaml \
@@ -29,6 +41,7 @@ jobs:
             --project=${{ secrets.PROJECT_ID_TEST }}
 
       - name: Verify deployment
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           echo "Dummy workflow deployed successfully"
           gcloud workflows describe dummy-workflow --location=asia-southeast1 --project=${{ secrets.PROJECT_ID_TEST }}
