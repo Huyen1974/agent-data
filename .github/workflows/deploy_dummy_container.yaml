@@ -12,23 +12,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check if secrets are available
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}" ] || [ -z "${{ secrets.PROJECT_ID_TEST }}" ]; then
+            echo "::warning::Skipping deployment - GCP secrets not configured"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Authenticate to Google Cloud
+        if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
 
       - name: Set up Cloud SDK
+        if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Configure Docker to use gcloud
+        if: steps.check-secrets.outputs.skip != 'true'
         run: gcloud auth configure-docker asia-southeast1-docker.pkg.dev
 
       - name: Build and push container
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           docker build -t asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/agent-data/dummy-container:${{ github.sha }} containers/dummy_container
           docker push asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/agent-data/dummy-container:${{ github.sha }}
 
       - name: Deploy to Cloud Run
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           gcloud run deploy dummy-container \
             --image=asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/agent-data/dummy-container:${{ github.sha }} \
@@ -38,6 +53,7 @@ jobs:
             --project=${{ secrets.PROJECT_ID_TEST }}
 
       - name: Verify deployment
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           echo "Dummy container deployed successfully"
           gcloud run services describe dummy-container --region=asia-southeast1 --project=${{ secrets.PROJECT_ID_TEST }}

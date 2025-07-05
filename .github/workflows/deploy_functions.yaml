@@ -20,13 +20,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Check if secrets are available
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ] || [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+            echo "::warning::Skipping deployment - GCP secrets not configured"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Authenticate to Google Cloud
+        if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-        token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
+          token_format: 'access_token'
+          project_id: ${{ secrets.PROJECT_ID_TEST }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,9 +49,11 @@ jobs:
           pip install -r ADK/agent_data/requirements.txt
 
       - name: Debug Secrets
+        if: steps.check-secrets.outputs.skip != 'true'
         run: echo "Using PROJECT_ID_TEST=${{ secrets.PROJECT_ID_TEST }}"
 
       - name: Deploy to Google Cloud Functions
+        if: steps.check-secrets.outputs.skip != 'true'
         run: |
           set -e
           for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do

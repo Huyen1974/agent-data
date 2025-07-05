@@ -2,12 +2,13 @@ name: Deploy Dummy Workflow
 
 on:
   push:
-    branches: [main, test]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
