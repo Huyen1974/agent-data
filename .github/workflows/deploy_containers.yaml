@@ -44,6 +44,15 @@ jobs:
       with:
         project_id: ${{ secrets.PROJECT_ID_TEST }}
 
+    - name: Create Artifact Registry repository
+      if: steps.check-secrets.outputs.skip != 'true'
+      run: |
+        gcloud artifacts repositories create docker-repo \
+          --repository-format=docker \
+          --location=asia-southeast1 \
+          --description="Docker repository for agent-data containers" \
+          --project=${{ secrets.PROJECT_ID_TEST }} || echo "Repository already exists"
+
     - name: Configure Docker
       if: steps.check-secrets.outputs.skip != 'true'
       run: |
@@ -63,5 +72,10 @@ jobs:
           docker push "$IMAGE"
 
           echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
-          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
+          gcloud run deploy "$CONTAINER_NAME" \
+            --image "$IMAGE" \
+            --region asia-southeast1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
         done

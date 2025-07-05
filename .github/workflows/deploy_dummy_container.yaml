@@ -2,7 +2,7 @@ name: Deploy Dummy Container
 
 on:
   push:
-    branches: [main, test]
+    branches: [test]
   workflow_dispatch:
 
 jobs:
@@ -32,11 +32,20 @@ jobs:
         if: steps.check-secrets.outputs.skip != 'true'
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Create Artifact Registry repository
+        if: steps.check-secrets.outputs.skip != 'true'
+        run: |
+          gcloud artifacts repositories create agent-data \
+            --repository-format=docker \
+            --location=asia-southeast1 \
+            --description="Docker repository for agent-data project" \
+            --project=${{ secrets.PROJECT_ID_TEST }} || echo "Repository already exists"
+
       - name: Configure Docker to use gcloud
         if: steps.check-secrets.outputs.skip != 'true'
         run: gcloud auth configure-docker asia-southeast1-docker.pkg.dev
 
-      - name: Build and push container
+      - name: Build and Push Docker Image
         if: steps.check-secrets.outputs.skip != 'true'
         run: |
           docker build -t asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/agent-data/dummy-container:${{ github.sha }} containers/dummy_container
