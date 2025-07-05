@@ -10,7 +10,8 @@ import re
 class TestCLI140hDockerOptimization:
     """Test Docker optimization configuration and setup."""
     
-    @pytest.mark.unit    def test_optimized_dockerfile_exists(self):
+    @pytest.mark.unit
+    def test_optimized_dockerfile_exists(self):
         """Test that the optimized Dockerfile exists and has correct structure."""
         dockerfile_path = Path("ADK/agent_data/docker/Dockerfile")
         assert dockerfile_path.exists(), "Optimized Dockerfile not found"
@@ -31,7 +32,8 @@ class TestCLI140hDockerOptimization:
         
         print("✅ Optimized Dockerfile structure validated")
     
-    @pytest.mark.unit    def test_runtime_requirements_optimization(self):
+    @pytest.mark.unit
+    def test_runtime_requirements_optimization(self):
         """Test that runtime requirements are optimized for minimal size."""
         runtime_req_path = Path("ADK/agent_data/docker/requirements.runtime.txt")
         assert runtime_req_path.exists(), "Runtime requirements file not found"
@@ -67,7 +69,8 @@ class TestCLI140hDockerOptimization:
         
         print(f"✅ Runtime requirements optimized: {package_count} packages")
     
-    @pytest.mark.unit    def test_build_script_configuration(self):
+    @pytest.mark.unit
+    def test_build_script_configuration(self):
         """Test that the build script is properly configured."""
         build_script_path = Path("ADK/agent_data/docker/build.sh")
         assert build_script_path.exists(), "Build script not found"
@@ -87,7 +90,8 @@ class TestCLI140hDockerOptimization:
         
         print("✅ Build script configuration validated")
     
-    @pytest.mark.unit    def test_dependency_reduction_calculation(self):
+    @pytest.mark.unit
+    def test_dependency_reduction_calculation(self):
         """Test and document the dependency reduction achieved."""
         # Original requirements
         original_req_path = Path("ADK/agent_data/requirements.txt")
@@ -119,7 +123,8 @@ class TestCLI140hDockerOptimization:
         
         print(f"✅ Dependency reduction achieved: {reduction_percentage:.1f}%")
     
-    @pytest.mark.unit    def test_docker_security_configuration(self):
+    @pytest.mark.unit
+    def test_docker_security_configuration(self):
         """Test that Docker security best practices are implemented."""
         dockerfile_path = Path("ADK/agent_data/docker/Dockerfile")
         content = dockerfile_path.read_text()
@@ -139,7 +144,8 @@ class TestCLI140hDockerOptimization:
         print("✅ Docker security configuration validated")
     
     @pytest.mark.e2e
-    @pytest.mark.unit    def test_cli140h_optimization_complete(self):
+    @pytest.mark.unit
+    def test_cli140h_optimization_complete(self):
         """Test that CLI140h Docker optimization is complete and ready."""
         required_files = [
             "ADK/agent_data/docker/Dockerfile",
@@ -171,7 +177,8 @@ class TestCLI140hDockerOptimization:
         }
 
 
-    @pytest.mark.unitdef test_cli140h_completion_summary():
+    @pytest.mark.unit
+    def test_cli140h_completion_summary():
     """Summary test for CLI140h completion."""
     optimization_test = TestCLI140hDockerOptimization()
     result = optimization_test.test_cli140h_optimization_complete()

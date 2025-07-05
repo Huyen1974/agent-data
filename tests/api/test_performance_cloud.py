@@ -44,7 +44,8 @@ class TestCloudPerformance:
         cls.rate_limited_operations = 0
         cls.failed_operations = 0
 
-    @pytest.mark.unit    def test_01_authenticate_for_performance(self):
+    @pytest.mark.slow
+    def test_01_authenticate_for_performance(self):
         """Authenticate user for performance testing"""
         if MOCK_MODE:
             # Mock authentication for fast execution
@@ -74,7 +75,8 @@ class TestCloudPerformance:
         except requests.exceptions.RequestException as e:
             pytest.skip(f"Authentication service not accessible: {e}")
 
-    @pytest.mark.unit    def test_02_performance_save_documents(self):
+    @pytest.mark.slow
+    def test_02_performance_save_documents(self):
         """Test saving 20 documents with performance monitoring"""
         if not self.access_token:
             pytest.skip("Authentication token not available")
@@ -179,7 +181,8 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_saves
             self.__class__.response_times.extend(save_times)
 
-    @pytest.mark.unit    def test_03_performance_search_queries(self):
+    @pytest.mark.slow
+    def test_03_performance_search_queries(self):
         """Test 15 search queries with performance monitoring"""
         if not self.access_token:
             pytest.skip("Authentication token not available")
@@ -293,7 +296,8 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_searches
             self.__class__.response_times.extend(search_times)
 
-    @pytest.mark.unit    def test_04_performance_document_searches(self):
+    @pytest.mark.slow
+    def test_04_performance_document_searches(self):
         """Test 15 document searches with performance monitoring"""
         if not self.access_token:
             pytest.skip("Authentication token not available")
@@ -388,7 +392,8 @@ class TestCloudPerformance:
             self.__class__.rate_limited_operations += rate_limited_doc_searches
             self.__class__.response_times.extend(doc_search_times)
 
-    @pytest.mark.unit    def test_05_overall_performance_summary(self):
+    @pytest.mark.slow
+    def test_05_overall_performance_summary(self):
         """Generate overall performance summary"""
         if MOCK_MODE:
             # Mock overall performance summary

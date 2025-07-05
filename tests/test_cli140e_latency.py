@@ -194,7 +194,8 @@ class TestLatencyProfiling:
                 "profile_stats": performance_profile_context.get_stats()
             }
 
-    @pytest.mark.unit    def test_lru_cache_performance(self):
+    @pytest.mark.slow
+    def test_lru_cache_performance(self):
         """Test LRU cache performance for CLI140e optimization."""
         cache = ThreadSafeLRUCache(max_size=1000, ttl_seconds=3600)
         

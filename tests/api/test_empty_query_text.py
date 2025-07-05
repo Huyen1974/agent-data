@@ -2,7 +2,8 @@ import pytest
 
 
 
-    @pytest.mark.unitdef test_empty_query_text(client):
+    @pytest.mark.unit
+    def test_empty_query_text(client):
 
     payload = {"query_text": "", "top_k": 3, "score_threshold": 0.4}  # invalid – empty
     resp = client.post("/semantic_search_cosine", json=payload)

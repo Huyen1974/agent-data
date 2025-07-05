@@ -9,7 +9,8 @@ def mcp_mock():
     yield client
 
 
-    @pytest.mark.unitdef test_mcp_echo_tool_integration(mcp_mock):
+    @pytest.mark.slow
+    def test_mcp_echo_tool_integration(mcp_mock):
     tool_config = {"name": "echo_tool", "type": "echo"}
     mcp_mock.register_tool("echo_tool", tool_config)
 

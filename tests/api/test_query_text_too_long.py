@@ -1,7 +1,8 @@
 import pytest
 
 
-    @pytest.mark.unitdef test_query_text_exceeds_max_length(client):
+    @pytest.mark.unit
+    def test_query_text_exceeds_max_length(client):
 
     long_text = "x" * 3000
     payload = {"query_text": long_text, "top_k": 3, "filter_tag": "science", "score_threshold": 0.3}

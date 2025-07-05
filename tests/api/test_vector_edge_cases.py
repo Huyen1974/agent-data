@@ -1,4 +1,4 @@
-import random
+import pytestimport random
 import uuid
 import sys
 import os
@@ -33,7 +33,8 @@ def generate_unique_tag():
     return f"test-tag-edge-{uuid.uuid4()}"
 
 
-    @pytest.mark.unitdef test_get_vector_by_id_not_found():
+    @pytest.mark.slow
+    def test_get_vector_by_id_not_found():
     """
     Tests retrieving a non-existent vector by ID.
     Expected behavior: 404 Not Found.
@@ -60,7 +61,8 @@ def generate_unique_tag():
     ), f"Error detail should indicate 'not found' or 'does not exist'. Got: {response_json['detail']}"
 
 
-    @pytest.mark.unitdef test_upsert_vector_invalid_input():
+    @pytest.mark.slow
+    def test_upsert_vector_invalid_input():
     """
     Tests upserting a vector with invalid input (e.g., wrong vector dimension).
     Expected behavior: 422 Unprocessable Entity.
@@ -104,7 +106,8 @@ def generate_unique_tag():
     # Assuming 'tag' is optional or not strictly validated at this level for this test.
 
 
-    @pytest.mark.unitdef test_query_vectors_by_ids_partial_invalid():
+    @pytest.mark.slow
+    def test_query_vectors_by_ids_partial_invalid():
     """
     Tests querying by a list of IDs where some are valid and some are not.
     Expected behavior: 200 OK, returns only the valid vectors.
@@ -172,7 +175,8 @@ def generate_unique_tag():
     ), f"Returned point payload {returned_point['payload']} does not match valid_payload_metadata {valid_payload_metadata}"
 
 
-    @pytest.mark.unitdef test_delete_vector_not_found():
+    @pytest.mark.slow
+    def test_delete_vector_not_found():
     """
     Tests attempting to delete a vector that doesn't exist.
     Expected behavior: 200 OK (as Qdrant delete is idempotent) with a status confirming deletion attempt,

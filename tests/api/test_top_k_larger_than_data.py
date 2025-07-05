@@ -2,7 +2,8 @@ import pytest
 
 
 
-    @pytest.mark.unitdef test_top_k_exceeds_data_count(client_with_qdrant_override):
+    @pytest.mark.unit
+    def test_top_k_exceeds_data_count(client_with_qdrant_override):
 
     payload = {
         "query_text": "modern astronomy discoveries",

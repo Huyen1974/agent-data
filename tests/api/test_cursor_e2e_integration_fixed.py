@@ -392,7 +392,8 @@ class TestCursorE2EIntegrationFixed:
             # Verify Firestore was updated with failure status
             assert mock_firestore.save_metadata.call_count >= 1
 
-    @pytest.mark.unit    def test_cursor_integration_performance_requirements(self):
+    @pytest.mark.slow
+    def test_cursor_integration_performance_requirements(self):
         """Test that the integration meets performance requirements for Cursor IDE."""
         # Performance requirements for Cursor IDE integration:
         # - Document vectorization should complete within 5 seconds

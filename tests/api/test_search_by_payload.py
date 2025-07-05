@@ -3,7 +3,8 @@ from agent_data_manager.tools.search_by_payload_tool import search_by_payload_sy
 import pytest
 
 
-    @pytest.mark.unitdef test_search_by_payload_valid(client_with_qdrant_override: TestClient):
+    @pytest.mark.unit
+    def test_search_by_payload_valid(client_with_qdrant_override: TestClient):
     """Test search_by_payload with valid field and value."""
     result = search_by_payload_sync(collection_name="test_collection", field="tag", value="science", limit=5)
     assert result["status"] == "success"
@@ -16,7 +17,8 @@ import pytest
         assert item["payload"]["tag"] == "science"
 
 
-    @pytest.mark.unitdef test_search_by_payload_empty_field():
+    @pytest.mark.unit
+    def test_search_by_payload_empty_field():
     """Test search_by_payload with empty field."""
     result = search_by_payload_sync(collection_name="test_collection", field="", value="science")
     assert result["status"] == "failed"
@@ -25,7 +27,8 @@ import pytest
     assert "Field cannot be empty" in result["error"]
 
 
-    @pytest.mark.unitdef test_search_by_payload_none_value():
+    @pytest.mark.unit
+    def test_search_by_payload_none_value():
     """Test search_by_payload with None value."""
     result = search_by_payload_sync(collection_name="test_collection", field="tag", value=None)
     assert result["status"] == "failed"
@@ -34,7 +37,8 @@ import pytest
     assert "Value cannot be None" in result["error"]
 
 
-    @pytest.mark.unitdef test_search_by_payload_pagination(client_with_qdrant_override: TestClient):
+    @pytest.mark.unit
+    def test_search_by_payload_pagination(client_with_qdrant_override: TestClient):
     """Test search_by_payload with pagination using offset."""
     # First request with limit=2
     result1 = search_by_payload_sync(collection_name="test_collection", field="tag", value="science", limit=2)

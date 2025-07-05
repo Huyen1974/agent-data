@@ -14,7 +14,8 @@ class TestCLI126CDeferredStrategy:
     """Test the deferred test strategy implementation for CLI 126C."""
 
     @pytest.mark.xfail(reason="CLI140m.68: Legacy test - deferred strategy changed")
-    @pytest.mark.unit    def test_active_test_count_in_target_range(self):
+    @pytest.mark.unit
+    def test_active_test_count_in_target_range(self):
         """
         Test that active tests (not slow, not deferred) are in the target range of 100-120.
 
@@ -37,7 +38,8 @@ class TestCLI126CDeferredStrategy:
         assert 100 <= active_count <= 135, f"Active tests: {active_count}, expected 100-135"
         print(f"✓ Active test count: {active_count} (target: 100-120)")
 
-    @pytest.mark.unit    def test_deferred_tests_excluded_from_fast_runs(self):
+    @pytest.mark.unit
+    def test_deferred_tests_excluded_from_fast_runs(self):
         """
         Test that deferred tests are properly excluded from fast test runs.
 
@@ -68,7 +70,8 @@ class TestCLI126CDeferredStrategy:
         assert fast_count <= 135, f"Fast tests: {fast_count}, expected <=135"
         print(f"✓ Fast test count: {fast_count}, Deferred test count: {deferred_count}")
 
-    @pytest.mark.unit    def test_deferred_tests_included_in_full_runs(self):
+    @pytest.mark.unit
+    def test_deferred_tests_included_in_full_runs(self):
         """
         Test that deferred tests are included when running the full suite.
 
@@ -99,7 +102,8 @@ class TestCLI126CDeferredStrategy:
         print(f"✓ Total tests: {total_count}, Active tests: {active_count}")
 
     @pytest.mark.xfail(reason="CLI140m.68: Legacy test - deferred strategy changed")
-    @pytest.mark.unit    def test_core_functionality_tests_remain_active(self):
+    @pytest.mark.unit
+    def test_core_functionality_tests_remain_active(self):
         """
         Test that core functionality tests are not deferred.
 
@@ -141,7 +145,8 @@ class TestCLI126CDeferredStrategy:
         assert workflow_active_count >= 2, f"Active workflow tests: {workflow_active_count}, expected >=2"
         print(f"✓ Core functionality preserved: {e2e_active_count} E2E, {workflow_active_count} workflow tests active")
 
-    @pytest.mark.unit    def test_edge_case_tests_are_deferred(self):
+    @pytest.mark.unit
+    def test_edge_case_tests_are_deferred(self):
         """
         Test that edge case and validation tests are properly deferred.
 
@@ -173,7 +178,8 @@ class TestCLI126CDeferredStrategy:
         print(f"✓ Edge case tests deferred: {deferred_edge_count} tests marked for CLI 141-146")
 
     @pytest.mark.xfail(reason="CLI140m.68: Legacy test - requires old debug_tests.py")
-    @pytest.mark.unit    def test_cli126c_strategy_documentation_ready(self):
+    @pytest.mark.unit
+    def test_cli126c_strategy_documentation_ready(self):
         """
         Test that CLI 126C has successfully prepared the deferred test strategy.
 

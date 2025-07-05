@@ -17,7 +17,8 @@ class TestCLI140h1BuildValidation:
     MAX_SIZE_MB = 500
     MAX_STARTUP_TIME = 2  # Relaxed for testing
     
-    @pytest.mark.unit    def test_docker_image_exists(self):
+    @pytest.mark.unit
+    def test_docker_image_exists(self):
         """Test that the optimized Docker image exists."""
         result = subprocess.run(
             ["docker", "images", "-q", self.IMAGE_NAME],
@@ -27,7 +28,8 @@ class TestCLI140h1BuildValidation:
         assert result.returncode == 0, "Docker command failed"
         assert result.stdout.strip() != "", f"Docker image {self.IMAGE_NAME} not found"
     
-    @pytest.mark.unit    def test_image_size_optimization(self):
+    @pytest.mark.unit
+    def test_image_size_optimization(self):
         """Test that the Docker image size is under 500MB."""
         result = subprocess.run(
             ["docker", "inspect", self.IMAGE_NAME, "--format={{.Size}}"],
@@ -42,7 +44,8 @@ class TestCLI140h1BuildValidation:
         print(f"Image size: {size_mb:.2f} MB")
         assert size_mb < self.MAX_SIZE_MB, f"Image size {size_mb:.2f} MB exceeds limit of {self.MAX_SIZE_MB} MB"
     
-    @pytest.mark.unit    def test_container_starts_without_crash(self):
+    @pytest.mark.unit
+    def test_container_starts_without_crash(self):
         """Test that the container starts without immediate crash."""
         # Start container
         start_result = subprocess.run(
@@ -91,7 +94,8 @@ class TestCLI140h1BuildValidation:
             subprocess.run(["docker", "stop", "test-validation"], capture_output=True)
             subprocess.run(["docker", "rm", "test-validation"], capture_output=True)
     
-    @pytest.mark.unit    def test_essential_dependencies_present(self):
+    @pytest.mark.unit
+    def test_essential_dependencies_present(self):
         """Test that essential dependencies are present in the image."""
         # Test by running python import commands
         import_tests = [
@@ -115,7 +119,8 @@ class TestCLI140h1BuildValidation:
             )
             assert result.returncode == 0, f"Import test failed: {import_test}\nError: {result.stderr}"
     
-    @pytest.mark.unit    def test_runtime_requirements_count(self):
+    @pytest.mark.unit
+    def test_runtime_requirements_count(self):
         """Test that we maintained a minimal dependency count."""
         # Read the runtime requirements file
         with open("ADK/agent_data/docker/requirements.runtime.txt", "r") as f:
@@ -131,7 +136,8 @@ class TestCLI140h1BuildValidation:
         assert len(packages) <= 35, f"Too many dependencies: {len(packages)} (target: ≤35)"
         assert len(packages) >= 20, f"Too few dependencies: {len(packages)} (minimum viable: ≥20)"
     
-    @pytest.mark.unit    def test_build_artifacts_tagged_correctly(self):
+    @pytest.mark.unit
+    def test_build_artifacts_tagged_correctly(self):
         """Test that the image is properly tagged."""
         # Check for the cli140h_all_green tag
         result = subprocess.run(
@@ -147,7 +153,8 @@ class TestCLI140h1BuildValidation:
             print("⚠️ cli140h_all_green tag not found (may not have run full build script)")
 
 
-    @pytest.mark.unitdef test_optimization_summary():
+    @pytest.mark.unit
+    def test_optimization_summary():
     """Generate optimization summary for reporting."""
     try:
         # Get image size

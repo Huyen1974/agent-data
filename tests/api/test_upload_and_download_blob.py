@@ -11,7 +11,8 @@ def gcs_mock():
     yield client
 
 
-    @pytest.mark.unitdef test_upload_and_download_blob(gcs_mock, client_with_qdrant_override: TestClient):
+    @pytest.mark.unit
+    def test_upload_and_download_blob(gcs_mock, client_with_qdrant_override: TestClient):
     bucket_name = "test_bucket"
     blob_name = "test_blob.txt"
     content = b"Hello, GCS!"

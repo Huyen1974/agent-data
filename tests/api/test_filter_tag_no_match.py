@@ -1,7 +1,8 @@
 import pytest
 
 
-    @pytest.mark.unitdef test_filter_tag_with_no_matches(client_with_qdrant_override):
+    @pytest.mark.unit
+    def test_filter_tag_with_no_matches(client_with_qdrant_override):
 
     payload = {
         "query_text": "science topics",
