@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-json-report pytest-mock pytest-asyncio
+        pip install pytest pytest-json-report pytest-mock pytest-asyncio pytest-timeout pytest-cov
         echo "Checking for requirements file..."
         if [ -f requirements.txt ]; then 
           echo "Found requirements.txt, installing..."
@@ -72,7 +72,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-mock pytest-asyncio
+        pip install pytest pytest-mock pytest-asyncio pytest-timeout pytest-cov
         if [ -f requirements.txt ]; then 
           pip install -r requirements.txt || echo "Some dependencies may have conflicts, continuing..."
         fi
@@ -108,7 +108,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-mock pytest-asyncio
+        pip install pytest pytest-mock pytest-asyncio pytest-timeout pytest-cov
         if [ -f requirements.txt ]; then 
           pip install -r requirements.txt || echo "Some dependencies may have conflicts, continuing..."
         fi
@@ -144,7 +144,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-mock pytest-asyncio
+        pip install pytest pytest-mock pytest-asyncio pytest-timeout pytest-cov
         if [ -f requirements.txt ]; then 
           pip install -r requirements.txt || echo "Some dependencies may have conflicts, continuing..."
         fi
