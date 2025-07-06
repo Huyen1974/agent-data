@@ -24,10 +24,13 @@ def run_pytest_collection(marker_filter):
     cmd = [
         "python", "-m", "pytest", 
         "--collect-only", 
-        "-m", marker_filter,
         "-q",
         "--tb=no"
     ]
+    
+    # Only add marker filter if it's not empty
+    if marker_filter:
+        cmd.extend(["-m", marker_filter])
     
     env = os.environ.copy()
     env["PYTHONPATH"] = f"{os.getcwd()}:{env.get('PYTHONPATH', '')}"
