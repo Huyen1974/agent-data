@@ -34,7 +34,7 @@ jobs:
     
     - name: Upload test count report
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-count-report
         path: ADK/agent_data/.cursor/logs/CLI150_*.log
@@ -67,7 +67,7 @@ jobs:
     
     - name: Upload unit test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: unit-test-results
         path: pytest-results.xml
@@ -101,7 +101,7 @@ jobs:
     
     - name: Upload slow test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: slow-test-results
         path: pytest-results.xml
@@ -135,7 +135,7 @@ jobs:
     
     - name: Upload integration test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: integration-test-results
         path: pytest-results.xml
