@@ -10,8 +10,8 @@ Usage:
     python scripts/verify_test_count_simple.py [expected_unit_count] [tolerance]
     
 Arguments:
-    expected_unit_count: Expected number of unit tests (default: 157)
-    tolerance: Allowed deviation (default: 10)
+    expected_unit_count: Expected number of unit tests (default: 855)
+    tolerance: Allowed deviation (default: 50)
 """
 
 import subprocess
@@ -69,19 +69,19 @@ def run_pytest_collection(marker_filter):
         return 0, f"Error: {str(e)}"
 
 
-def verify_test_count(expected_count=157, tolerance=10):
+def verify_test_count(expected_count=855, tolerance=50):
     """Verify test counts meet requirements."""
     print(f"Verifying test count...")
-    print(f"Expected unit tests (not slow): {expected_count}±{tolerance}")
+    print(f"Expected unit tests (not slow/integration/e2e): {expected_count}±{tolerance}")
     print("-" * 50)
     
-    # Count unit tests (not slow)
-    unit_count, unit_errors = run_pytest_collection("unit and not slow")
-    print(f"Unit tests (not slow): {unit_count}")
+    # Count unit tests (not slow, integration, or e2e)
+    unit_count, unit_errors = run_pytest_collection("not slow and not integration and not e2e")
+    print(f"Unit tests (not slow/integration/e2e): {unit_count}")
     
-    # Count all unit tests
-    all_unit_count, all_unit_errors = run_pytest_collection("unit")
-    print(f"Total unit tests: {all_unit_count}")
+    # Count all tests
+    all_count, all_errors = run_pytest_collection("")
+    print(f"Total tests: {all_count}")
     
     # Count slow tests
     slow_count, slow_errors = run_pytest_collection("slow")
@@ -91,6 +91,10 @@ def verify_test_count(expected_count=157, tolerance=10):
     integration_count, integration_errors = run_pytest_collection("integration")
     print(f"Integration tests: {integration_count}")
     
+    # Count e2e tests
+    e2e_count, e2e_errors = run_pytest_collection("e2e")
+    print(f"E2E tests: {e2e_count}")
+    
     # Check if unit test count is within tolerance
     expected_min = expected_count - tolerance
     expected_max = expected_count + tolerance
@@ -98,11 +102,11 @@ def verify_test_count(expected_count=157, tolerance=10):
     success = expected_min <= unit_count <= expected_max
     
     if success:
-        print(f"\n✓ Unit tests (not slow): {unit_count} (target: {expected_count}±{tolerance})")
+        print(f"\n✓ Unit tests (not slow/integration/e2e): {unit_count} (target: {expected_count}±{tolerance})")
         print("✓ Test count verification PASSED")
         return True
     else:
-        print(f"\n✗ Unit tests (not slow): {unit_count} (expected: {expected_count}±{tolerance})")
+        print(f"\n✗ Unit tests (not slow/integration/e2e): {unit_count} (expected: {expected_count}±{tolerance})")
         print("✗ Test count verification FAILED")
         
         # Show errors if any
@@ -115,8 +119,8 @@ def verify_test_count(expected_count=157, tolerance=10):
 
 def main():
     """Main function."""
-    expected_count = int(sys.argv[1]) if len(sys.argv) > 1 else 157
-    tolerance = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+    expected_count = int(sys.argv[1]) if len(sys.argv) > 1 else 855
+    tolerance = int(sys.argv[2]) if len(sys.argv) > 2 else 50
     
     success = verify_test_count(expected_count, tolerance)
     
