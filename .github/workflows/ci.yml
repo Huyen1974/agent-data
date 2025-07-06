@@ -44,7 +44,7 @@ jobs:
         echo "Checking if script exists:"
         ls -la scripts/verify_test_count_simple.py
         echo "Running test count verification..."
-        python scripts/verify_test_count_simple.py 157 10
+        python scripts/verify_test_count_simple.py 855 50
     
     - name: Upload test count report
       if: always()
@@ -81,7 +81,7 @@ jobs:
       run: |
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PYTHONPATH
-        pytest -m "unit and not slow" --tb=short --maxfail=5 -v
+        pytest -m "not slow and not integration and not e2e" --tb=short --maxfail=5 -v
     
     - name: Upload unit test results
       if: always()
@@ -190,5 +190,5 @@ jobs:
     - name: Final Status
       run: |
         echo "🎉 All quality gates passed!"
-        echo "📊 Test count: 157 unit tests (not slow)"
+        echo "📊 Test count: 855 unit tests (not slow/integration/e2e)"
         echo "✅ CI pipeline completed successfully" 
