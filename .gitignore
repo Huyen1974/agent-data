@@ -57,3 +57,4 @@ agent-data-config.yaml
 
 # ⬛ Tests or large auto-generated files (if needed)
 test_*.json
+terraform/.terraform/
