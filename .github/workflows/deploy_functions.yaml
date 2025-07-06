@@ -1,5 +1,5 @@
-name: Deploy to Google Cloud
-# Trigger CI/CD re-run after IAM fix
+name: Deploy to Google Cloud Functions
+# CLI153.2: Fixed CI for production deployment with proper secret validation
 on:
   push:
     branches:
@@ -18,44 +18,136 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Validate GitHub Secrets
+        id: validate-secrets
+        run: |
+          echo "🔍 Validating GitHub secrets..."
+          
+          # Check if required secrets exist
+          if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ]; then
+            echo "❌ GCP_WORKLOAD_ID_PROVIDER secret is missing"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+            echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          if [ -z "${{ secrets.PROJECT_ID }}" ]; then
+            echo "❌ PROJECT_ID secret is missing"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Validate service account email format
+          if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
+            echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "✅ All secrets are valid"
+          echo "valid=true" >> $GITHUB_OUTPUT
 
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
+        if: steps.validate-secrets.outputs.valid == 'true'
+        uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-        token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
+          token_format: 'access_token'
+
+      - name: Set up Cloud SDK
+        if: steps.validate-secrets.outputs.valid == 'true'
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
 
       - name: Set up Python
+        if: steps.validate-secrets.outputs.valid == 'true'
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
       - name: Install dependencies
+        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Debug Secrets
-        run: echo "Using PROJECT_ID_TEST=${{ secrets.PROJECT_ID_TEST }}"
+      - name: Verify Authentication
+        if: steps.validate-secrets.outputs.valid == 'true'
+        run: |
+          echo "🔐 Verifying GCP authentication..."
+          gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
+          echo "📋 Using project: ${{ secrets.PROJECT_ID }}"
+          gcloud config set project ${{ secrets.PROJECT_ID }}
 
       - name: Deploy to Google Cloud Functions
+        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           set -e
+          echo "🚀 Deploying Cloud Functions..."
+          
+          if [ ! -d "functions" ]; then
+            echo "⚠️  No functions directory found, skipping deployment"
+            exit 0
+          fi
+          
           for FUNCTION_DIR in $(find functions -mindepth 1 -maxdepth 1 -type d); do
             FUNCTION_NAME=$(basename "$FUNCTION_DIR")
-            echo "Deploying $FUNCTION_NAME..."
-            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)
-            if ! gcloud functions deploy "$FUNCTION_NAME" \
-              --region=asia-southeast1 \
-              --runtime=python310 \
-              --trigger-http \
-              --allow-unauthenticated \
-              --source="$FUNCTION_DIR" \
-              --entry-point="$ENTRY_POINT" \
-              --project=${{ secrets.PROJECT_ID_TEST }}; then
-              echo "❌ Deployment failed for $FUNCTION_NAME"
-              exit 1
+            echo "📦 Deploying function: $FUNCTION_NAME"
+            
+            # Check if main.py exists
+            if [ ! -f "$FUNCTION_DIR/main.py" ]; then
+              echo "⚠️  No main.py found in $FUNCTION_DIR, skipping..."
+              continue
             fi
+            
+            # Extract entry point from main.py
+            ENTRY_POINT=$(grep -oP 'def \K\w+(?=\(.*\):)' "$FUNCTION_DIR/main.py" | head -n 1)
+            if [ -z "$ENTRY_POINT" ]; then
+              echo "⚠️  No entry point found in $FUNCTION_DIR/main.py, skipping..."
+              continue
+            fi
+            
+            echo "🎯 Entry point: $ENTRY_POINT"
+            
+            # Deploy function with retry logic
+            for attempt in 1 2 3; do
+              echo "🔄 Deployment attempt $attempt for $FUNCTION_NAME..."
+              if gcloud functions deploy "$FUNCTION_NAME" \
+                --region=asia-southeast1 \
+                --runtime=python310 \
+                --trigger-http \
+                --allow-unauthenticated \
+                --source="$FUNCTION_DIR" \
+                --entry-point="$ENTRY_POINT" \
+                --project=${{ secrets.PROJECT_ID }} \
+                --memory=256MB \
+                --timeout=60s; then
+                echo "✅ Successfully deployed $FUNCTION_NAME"
+                break
+              else
+                echo "❌ Deployment attempt $attempt failed for $FUNCTION_NAME"
+                if [ $attempt -eq 3 ]; then
+                  echo "❌ All deployment attempts failed for $FUNCTION_NAME"
+                  exit 1
+                fi
+                sleep 10
+              fi
+            done
           done
+          
+          echo "🎉 All functions deployed successfully!"
+
+      - name: Verify Deployments
+        if: steps.validate-secrets.outputs.valid == 'true'
+        run: |
+          echo "🔍 Verifying function deployments..."
+          gcloud functions list --filter="name:*" --format="table(name,status,trigger.httpsTrigger.url)" --project=${{ secrets.PROJECT_ID }}

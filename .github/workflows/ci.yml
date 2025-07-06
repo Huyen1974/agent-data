@@ -2,9 +2,10 @@ name: CI - Test Count Verification and Quality Gates
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, test ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, test ]
+  workflow_dispatch:
 
 jobs:
   test-count-verification:
@@ -23,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-json-report
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f ADK/agent_data/requirements.txt ]; then pip install -r ADK/agent_data/requirements.txt; fi
     
     - name: Verify Test Count
       run: |
@@ -56,7 +57,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-mock pytest-asyncio
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f ADK/agent_data/requirements.txt ]; then pip install -r ADK/agent_data/requirements.txt; fi
     
     - name: Run Unit Tests (Fast)
       run: |
@@ -90,7 +91,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-mock pytest-asyncio
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f ADK/agent_data/requirements.txt ]; then pip install -r ADK/agent_data/requirements.txt; fi
     
     - name: Run Slow Tests
       run: |
@@ -124,7 +125,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-mock pytest-asyncio
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f ADK/agent_data/requirements.txt ]; then pip install -r ADK/agent_data/requirements.txt; fi
     
     - name: Run Integration Tests
       run: |

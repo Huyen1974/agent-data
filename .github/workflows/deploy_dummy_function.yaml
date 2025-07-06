@@ -1,4 +1,5 @@
 name: Deploy Dummy Function
+# CLI153.2: Fixed CI for production deployment with proper secret validation
 
 on:
   push:
@@ -8,30 +9,126 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate GitHub Secrets
+        id: validate-secrets
+        run: |
+          echo "🔍 Validating GitHub secrets..."
+          
+          # Check if required secrets exist
+          if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ]; then
+            echo "❌ GCP_WORKLOAD_ID_PROVIDER secret is missing"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+            echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Determine project ID based on branch
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
+            PROJECT_NAME="production"
+          else
+            PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
+            PROJECT_NAME="test"
+          fi
+          
+          if [ -z "$PROJECT_SECRET" ]; then
+            echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Validate service account email format
+          if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
+            echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "✅ All secrets are valid for $PROJECT_NAME environment"
+          echo "valid=true" >> $GITHUB_OUTPUT
+          echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
+          echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
+
       - name: Authenticate to Google Cloud
+        if: steps.validate-secrets.outputs.valid == 'true'
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_TEST }}
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          token_format: 'access_token'
 
       - name: Set up Cloud SDK
+        if: steps.validate-secrets.outputs.valid == 'true'
         uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ steps.validate-secrets.outputs.project_id }}
+
+      - name: Verify Authentication
+        if: steps.validate-secrets.outputs.valid == 'true'
+        run: |
+          echo "🔐 Verifying GCP authentication..."
+          gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
+          echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
+          echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
+          gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
 
       - name: Deploy dummy function
+        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
-          gcloud functions deploy dummy-function \
-            --gen2 \
-            --runtime=python310 \
-            --trigger-http \
-            --allow-unauthenticated \
-            --region=asia-southeast1 \
-            --source=functions/dummy_function \
-            --project=${{ secrets.PROJECT_ID_TEST }}
+          echo "🚀 Deploying dummy function..."
+          
+          # Check if dummy function exists
+          if [ ! -d "functions/dummy_function" ]; then
+            echo "⚠️  No dummy_function directory found, skipping deployment"
+            exit 0
+          fi
+          
+          # Check if main.py exists
+          if [ ! -f "functions/dummy_function/main.py" ]; then
+            echo "⚠️  No main.py found in dummy_function, skipping deployment"
+            exit 0
+          fi
+          
+          # Deploy with retry logic
+          for attempt in 1 2 3; do
+            echo "🔄 Deploy attempt $attempt..."
+            if gcloud functions deploy dummy-function \
+              --gen2 \
+              --runtime=python310 \
+              --trigger-http \
+              --allow-unauthenticated \
+              --region=asia-southeast1 \
+              --source=functions/dummy_function \
+              --memory=256MB \
+              --timeout=60s \
+              --project=${{ steps.validate-secrets.outputs.project_id }}; then
+              echo "✅ Successfully deployed dummy function"
+              break
+            else
+              echo "❌ Deploy attempt $attempt failed"
+              if [ $attempt -eq 3 ]; then
+                echo "❌ All deploy attempts failed"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
 
       - name: Verify deployment
+        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
-          echo "Dummy function deployed successfully"
-          gcloud functions describe dummy-function --region=asia-southeast1 --project=${{ secrets.PROJECT_ID_TEST }} 
+          echo "🔍 Verifying deployment..."
+          gcloud functions describe dummy-function --region=asia-southeast1 --project=${{ steps.validate-secrets.outputs.project_id }} --format="value(name,status)" 

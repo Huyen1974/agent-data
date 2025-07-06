@@ -1,4 +1,5 @@
-name: Deploy Containers
+name: Deploy Containers to Cloud Run
+# CLI153.2: Fixed CI for production deployment with proper secret validation
 
 on:
   push:
@@ -17,37 +18,180 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Validate GitHub Secrets
+      id: validate-secrets
+      run: |
+        echo "🔍 Validating GitHub secrets..."
+        
+        # Check if required secrets exist
+        if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ]; then
+          echo "❌ GCP_WORKLOAD_ID_PROVIDER secret is missing"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+          echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        # Determine project ID based on branch
+        if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
+          PROJECT_NAME="production"
+        else
+          PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
+          PROJECT_NAME="test"
+        fi
+        
+        if [ -z "$PROJECT_SECRET" ]; then
+          echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        # Validate service account email format
+        if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
+          echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        echo "✅ All secrets are valid for $PROJECT_NAME environment"
+        echo "valid=true" >> $GITHUB_OUTPUT
+        echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
+        echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
 
     - name: Authenticate to Google Cloud (WIF)
-      uses: google-github-actions/auth@v1
+      if: steps.validate-secrets.outputs.valid == 'true'
+      uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Set up gcloud
+      if: steps.validate-secrets.outputs.valid == 'true'
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
+        project_id: ${{ steps.validate-secrets.outputs.project_id }}
+
+    - name: Verify Authentication
+      if: steps.validate-secrets.outputs.valid == 'true'
+      run: |
+        echo "🔐 Verifying GCP authentication..."
+        gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
+        echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
+        echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
+        gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
+
+    - name: Create Artifact Registry repository
+      if: steps.validate-secrets.outputs.valid == 'true'
+      run: |
+        echo "📦 Creating Artifact Registry repository..."
+        gcloud artifacts repositories create docker-repo \
+          --repository-format=docker \
+          --location=asia-southeast1 \
+          --description="Docker repository for agent-data containers" \
+          --project=${{ steps.validate-secrets.outputs.project_id }} || echo "Repository already exists"
 
     - name: Configure Docker
+      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
+        echo "🐳 Configuring Docker authentication..."
         gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
 
     - name: Build & Push Docker images
+      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
         set -e
+        echo "🚀 Building and deploying containers..."
+        
+        if [ ! -d "containers" ]; then
+          echo "⚠️  No containers directory found, skipping deployment"
+          exit 0
+        fi
+        
         for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
           CONTAINER_NAME=$(basename "$CONTAINER_DIR")
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID_TEST }}/docker-repo/$CONTAINER_NAME:latest"
+          IMAGE="asia-southeast1-docker.pkg.dev/${{ steps.validate-secrets.outputs.project_id }}/docker-repo/$CONTAINER_NAME:latest"
+          
+          echo "📦 Processing container: $CONTAINER_NAME"
+          
+          # Check if Dockerfile exists
+          if [ ! -f "$CONTAINER_DIR/Dockerfile" ]; then
+            echo "⚠️  No Dockerfile found in $CONTAINER_DIR, skipping..."
+            continue
+          fi
 
-          echo "🔨 Building Docker image: $IMAGE"
-          docker build -t "$IMAGE" "$CONTAINER_DIR"
-          echo "🚀 Pushing Docker image: $IMAGE"
-          docker push "$IMAGE"
+          # Build with retry logic
+          for attempt in 1 2 3; do
+            echo "🔄 Build attempt $attempt for $CONTAINER_NAME..."
+            if docker build -t "$IMAGE" "$CONTAINER_DIR"; then
+              echo "✅ Successfully built $CONTAINER_NAME"
+              break
+            else
+              echo "❌ Build attempt $attempt failed for $CONTAINER_NAME"
+              if [ $attempt -eq 3 ]; then
+                echo "❌ All build attempts failed for $CONTAINER_NAME"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
 
-          echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
-          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
+          # Push with retry logic
+          for attempt in 1 2 3; do
+            echo "🔄 Push attempt $attempt for $CONTAINER_NAME..."
+            if docker push "$IMAGE"; then
+              echo "✅ Successfully pushed $CONTAINER_NAME"
+              break
+            else
+              echo "❌ Push attempt $attempt failed for $CONTAINER_NAME"
+              if [ $attempt -eq 3 ]; then
+                echo "❌ All push attempts failed for $CONTAINER_NAME"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
+
+          # Deploy to Cloud Run with retry logic
+          for attempt in 1 2 3; do
+            echo "🔄 Deploy attempt $attempt for $CONTAINER_NAME..."
+            if gcloud run deploy "$CONTAINER_NAME" \
+              --image "$IMAGE" \
+              --region asia-southeast1 \
+              --platform managed \
+              --allow-unauthenticated \
+              --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }} \
+              --memory=512Mi \
+              --cpu=1 \
+              --min-instances=0 \
+              --max-instances=10 \
+              --timeout=300 \
+              --port=8080 \
+              --project=${{ steps.validate-secrets.outputs.project_id }}; then
+              echo "✅ Successfully deployed $CONTAINER_NAME to Cloud Run"
+              break
+            else
+              echo "❌ Deploy attempt $attempt failed for $CONTAINER_NAME"
+              if [ $attempt -eq 3 ]; then
+                echo "❌ All deploy attempts failed for $CONTAINER_NAME"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
         done
+        
+        echo "🎉 All containers deployed successfully!"
+
+    - name: Verify Deployments
+      if: steps.validate-secrets.outputs.valid == 'true'
+      run: |
+        echo "🔍 Verifying Cloud Run deployments..."
+        gcloud run services list --format="table(metadata.name,status.url,status.conditions[0].status)" --project=${{ steps.validate-secrets.outputs.project_id }}

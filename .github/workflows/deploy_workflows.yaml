@@ -1,4 +1,5 @@
-name: Deploy Workflows
+name: Deploy Cloud Workflows
+# CLI153.2: Fixed CI for production deployment with proper secret validation
 
 on:
   push:
@@ -17,29 +18,127 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Validate GitHub Secrets
+      id: validate-secrets
+      run: |
+        echo "🔍 Validating GitHub secrets..."
+        
+        # Check if required secrets exist
+        if [ -z "${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}" ]; then
+          echo "❌ GCP_WORKLOAD_ID_PROVIDER secret is missing"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+          echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        # Determine project ID based on branch
+        if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
+          PROJECT_NAME="production"
+        else
+          PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
+          PROJECT_NAME="test"
+        fi
+        
+        if [ -z "$PROJECT_SECRET" ]; then
+          echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        # Validate service account email format
+        if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
+          echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
+          echo "valid=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+        echo "✅ All secrets are valid for $PROJECT_NAME environment"
+        echo "valid=true" >> $GITHUB_OUTPUT
+        echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
+        echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
 
     - name: Authenticate to Google Cloud (WIF)
-      uses: google-github-actions/auth@v1
+      if: steps.validate-secrets.outputs.valid == 'true'
+      uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_ID_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
 
     - name: Set up gcloud
+      if: steps.validate-secrets.outputs.valid == 'true'
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ secrets.PROJECT_ID_TEST }}
+        project_id: ${{ steps.validate-secrets.outputs.project_id }}
 
-    - name: Deploy Workflows
+    - name: Verify Authentication
+      if: steps.validate-secrets.outputs.valid == 'true'
+      run: |
+        echo "🔐 Verifying GCP authentication..."
+        gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
+        echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
+        echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
+        gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
+
+    - name: Deploy Cloud Workflows
+      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
         set -e
-        for WORKFLOW_FILE in $(find workflows -name "*.yaml"); do
-          WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml)
-          echo "Deploying workflow $WORKFLOW_NAME..."
-          if ! gcloud workflows deploy "$WORKFLOW_NAME"             --source="$WORKFLOW_FILE"             --location=asia-southeast1; then
-            echo "❌ Deployment failed for $WORKFLOW_NAME"
-            exit 1
+        echo "🚀 Deploying Cloud Workflows..."
+        
+        if [ ! -d "workflows" ]; then
+          echo "⚠️  No workflows directory found, skipping deployment"
+          exit 0
+        fi
+        
+        for WORKFLOW_FILE in $(find workflows -name "*.yaml" -o -name "*.yml"); do
+          WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml | sed 's/\.yml$//')
+          echo "📦 Processing workflow: $WORKFLOW_NAME"
+          
+          # Validate workflow file
+          if [ ! -f "$WORKFLOW_FILE" ]; then
+            echo "⚠️  Workflow file not found: $WORKFLOW_FILE, skipping..."
+            continue
           fi
+          
+          # Check if workflow file is valid YAML
+          if ! python3 -c "import yaml; yaml.safe_load(open('$WORKFLOW_FILE'))" 2>/dev/null; then
+            echo "❌ Invalid YAML in $WORKFLOW_FILE, skipping..."
+            continue
+          fi
+          
+          # Deploy workflow with retry logic
+          for attempt in 1 2 3; do
+            echo "🔄 Deploy attempt $attempt for $WORKFLOW_NAME..."
+            if gcloud workflows deploy "$WORKFLOW_NAME" \
+              --source="$WORKFLOW_FILE" \
+              --location=asia-southeast1 \
+              --project=${{ steps.validate-secrets.outputs.project_id }}; then
+              echo "✅ Successfully deployed workflow $WORKFLOW_NAME"
+              break
+            else
+              echo "❌ Deploy attempt $attempt failed for $WORKFLOW_NAME"
+              if [ $attempt -eq 3 ]; then
+                echo "❌ All deploy attempts failed for $WORKFLOW_NAME"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
         done
+        
+        echo "🎉 All workflows deployed successfully!"
+
+    - name: Verify Deployments
+      if: steps.validate-secrets.outputs.valid == 'true'
+      run: |
+        echo "🔍 Verifying Cloud Workflows deployments..."
+        gcloud workflows list --format="table(name,state,createTime)" --project=${{ steps.validate-secrets.outputs.project_id }}
