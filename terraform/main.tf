@@ -11,6 +11,7 @@ module "buckets" {
   buckets = [
     "huyen1974-agent-data-terraform-state",
     "huyen1974-faiss-index-storage-test",
+    "huyen1974-qdrant-snapshots",
     "huyen1974-artifact-storage-test",
     "huyen1974-log-storage-test"
   ]
