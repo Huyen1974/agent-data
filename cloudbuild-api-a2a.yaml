@@ -48,17 +48,19 @@ steps:
 
 substitutions:
   _IMAGE_NAME: 'gcr.io/chatgpt-db-project/api-a2a-gateway'
-  _SERVICE_NAME: 'api-a2a-gateway'
+  _SERVICE_NAME: 'api-a2a'
   _REGION: 'asia-southeast1'
-  _SERVICE_ACCOUNT: 'gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com'
+  _SERVICE_ACCOUNT: 'chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com'
   _QDRANT_URL: 'https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io'
   _QDRANT_COLLECTION_NAME: 'agent_data_vectors'
   _VECTOR_DIMENSION: '1536'
   _FIRESTORE_PROJECT_ID: 'chatgpt-db-project'
   _FIRESTORE_DATABASE_ID: 'test-default'
+  _DOCKER_REPO: 'agent-data-docker-repo'
 
 options:
   machineType: 'E2_HIGHCPU_8'
   diskSizeGb: '100'
+  logging: CLOUD_LOGGING_ONLY
 
 timeout: '1200s'

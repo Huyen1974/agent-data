@@ -33,7 +33,7 @@ gcloud run deploy ${SERVICE_NAME} \
   --region ${REGION} \
   --platform managed \
   --allow-unauthenticated \
-  --service-account gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com \
+  --service-account chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com \
   --set-env-vars="QDRANT_URL=https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io,QDRANT_COLLECTION_NAME=agent_data_vectors,VECTOR_DIMENSION=1536,FIRESTORE_PROJECT_ID=chatgpt-db-project,FIRESTORE_DATABASE_ID=test-default,ENABLE_FIRESTORE_SYNC=true,ENABLE_METRICS=true,HOST=0.0.0.0" \
   --set-secrets="QDRANT_API_KEY=qdrant-api-key-sg:latest,OPENAI_API_KEY=openai-api-key-sg:latest" \
   --memory 1Gi \

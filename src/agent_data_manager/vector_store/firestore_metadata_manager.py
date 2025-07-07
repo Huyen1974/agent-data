@@ -873,7 +873,7 @@ class FirestoreMetadataManager:
 
             # Default shared_by to service account if not provided
             if not shared_by:
-                shared_by = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+                shared_by = "chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 
             # Prepare share metadata
             share_metadata = {

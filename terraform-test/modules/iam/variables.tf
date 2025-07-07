@@ -4,7 +4,7 @@ variable "project_id" {
 }
 
 variable "service_account_email" {
-  description = "Service account email for IAM roles"
+  description = "The email of the service account"
   type        = string
-  default     = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+  default     = "chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 }

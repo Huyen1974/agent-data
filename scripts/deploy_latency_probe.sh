@@ -6,16 +6,20 @@
 set -e
 
 # Configuration
-PROJECT_ID="chatgpt-db-project"
+PROJECT_ID="github-chatgpt-ggcloud"
 REGION="asia-southeast1"
-FUNCTION_NAME="qdrant-latency-probe"
-SERVICE_ACCOUNT="gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+FUNCTION_NAME="latency-probe"
+SERVICE_ACCOUNT="chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 RUNTIME="python310"
-ENTRY_POINT="latency_probe_function"
+ENTRY_POINT="latency_probe"
 MEMORY="512Mi"
 TIMEOUT="60s"
 MIN_INSTANCES="0"
 MAX_INSTANCES="1"
+SOURCE_DIR="functions/latency_probe"
+TOPIC_NAME="matrix-dev-test-topic"
+SCHEDULE="*/15 * * * *" # Every 15 minutes
+TIME_ZONE="Asia/Singapore"
 
 echo "🚀 Deploying Qdrant Latency Probe Cloud Function"
 echo "=================================================="
