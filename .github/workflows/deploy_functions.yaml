@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
     paths:
       - 'functions/**'
       - '.github/workflows/deploy_functions.yaml'
@@ -20,53 +21,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Validate GitHub Secrets
-        id: validate-secrets
+      - name: Determine Project ID
+        id: get_project
         run: |
-          echo "🔍 Validating GitHub secrets..."
-          
-          # Check if required secrets exist
-          if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
-            echo "❌ GCP_WORKLOAD_IDENTITY_PROVIDER secret is missing"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
-            echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          # Determine project ID based on branch
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
-            PROJECT_NAME="production"
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "project_id=${{ secrets.PROJECT_ID }}" >> $GITHUB_OUTPUT
           else
-            PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
-            PROJECT_NAME="test"
+            echo "project_id=${{ secrets.PROJECT_ID_TEST }}" >> $GITHUB_OUTPUT
           fi
-          
-          if [ -z "$PROJECT_SECRET" ]; then
-            echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          # Validate service account email format
-          if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
-            echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          echo "✅ All secrets are valid for $PROJECT_NAME environment"
-          echo "valid=true" >> $GITHUB_OUTPUT
-          echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
-          echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
 
       - name: Authenticate to Google Cloud
-        if: steps.validate-secrets.outputs.valid == 'true'
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
@@ -74,34 +38,28 @@ jobs:
           token_format: 'access_token'
 
       - name: Set up Cloud SDK
-        if: steps.validate-secrets.outputs.valid == 'true'
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ steps.validate-secrets.outputs.project_id }}
+          project_id: ${{ steps.get_project.outputs.project_id }}
 
       - name: Set up Python
-        if: steps.validate-secrets.outputs.valid == 'true'
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
       - name: Install dependencies
-        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Verify Authentication
-        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           echo "🔐 Verifying GCP authentication..."
           gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
-          echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
-          echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
-          gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
+          echo "📋 Using project: ${{ steps.get_project.outputs.project_id }}"
+          gcloud config set project ${{ steps.get_project.outputs.project_id }}
 
       - name: Deploy to Google Cloud Functions
-        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           set -e
           echo "🚀 Deploying Cloud Functions..."
@@ -140,7 +98,7 @@ jobs:
                 --allow-unauthenticated \
                 --source="$FUNCTION_DIR" \
                 --entry-point="$ENTRY_POINT" \
-                --project=${{ steps.validate-secrets.outputs.project_id }} \
+                --project=${{ steps.get_project.outputs.project_id }} \
                 --memory=256MB \
                 --timeout=60s; then
                 echo "✅ Successfully deployed $FUNCTION_NAME"
@@ -159,7 +117,6 @@ jobs:
           echo "🎉 All functions deployed successfully!"
 
       - name: Verify Deployments
-        if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           echo "🔍 Verifying function deployments..."
-          gcloud functions list --filter="name:*" --format="table(name,status,trigger.httpsTrigger.url)" --project=${{ steps.validate-secrets.outputs.project_id }}
+          gcloud functions list --filter="name:*" --format="table(name,status,trigger.httpsTrigger.url)" --project=${{ steps.get_project.outputs.project_id }}

@@ -20,53 +20,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Validate GitHub Secrets
-      id: validate-secrets
+    - name: Determine Project ID
+      id: get_project
       run: |
-        echo "🔍 Validating GitHub secrets..."
-        
-        # Check if required secrets exist
-        if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
-          echo "❌ GCP_WORKLOAD_IDENTITY_PROVIDER secret is missing"
-          echo "valid=false" >> $GITHUB_OUTPUT
-          exit 1
-        fi
-        
-        if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
-          echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
-          echo "valid=false" >> $GITHUB_OUTPUT
-          exit 1
-        fi
-        
-        # Determine project ID based on branch
-        if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-          PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
-          PROJECT_NAME="production"
+        if [[ "${{ github.ref_name }}" == "main" ]]; then
+          echo "project_id=${{ secrets.PROJECT_ID }}" >> $GITHUB_OUTPUT
         else
-          PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
-          PROJECT_NAME="test"
+          echo "project_id=${{ secrets.PROJECT_ID_TEST }}" >> $GITHUB_OUTPUT
         fi
-        
-        if [ -z "$PROJECT_SECRET" ]; then
-          echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
-          echo "valid=false" >> $GITHUB_OUTPUT
-          exit 1
-        fi
-        
-        # Validate service account email format
-        if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
-          echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
-          echo "valid=false" >> $GITHUB_OUTPUT
-          exit 1
-        fi
-        
-        echo "✅ All secrets are valid for $PROJECT_NAME environment"
-        echo "valid=true" >> $GITHUB_OUTPUT
-        echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
-        echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
 
     - name: Authenticate to Google Cloud (WIF)
-      if: steps.validate-secrets.outputs.valid == 'true'
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
@@ -74,22 +37,18 @@ jobs:
         token_format: 'access_token'
 
     - name: Set up gcloud
-      if: steps.validate-secrets.outputs.valid == 'true'
       uses: google-github-actions/setup-gcloud@v2
       with:
-        project_id: ${{ steps.validate-secrets.outputs.project_id }}
+        project_id: ${{ steps.get_project.outputs.project_id }}
 
     - name: Verify Authentication
-      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
         echo "🔐 Verifying GCP authentication..."
         gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
-        echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
-        echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
-        gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
+        echo "📋 Using project: ${{ steps.get_project.outputs.project_id }}"
+        gcloud config set project ${{ steps.get_project.outputs.project_id }}
 
     - name: Deploy Cloud Workflows
-      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
         set -e
         echo "🚀 Deploying Cloud Workflows..."
@@ -100,7 +59,7 @@ jobs:
         fi
         
         for WORKFLOW_FILE in $(find workflows -name "*.yaml" -o -name "*.yml"); do
-          WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml | sed 's/\.yml$//')
+          WORKFLOW_NAME=$(basename "$WORKFLOW_FILE" .yaml | sed 's/\\.yml$//')
           echo "📦 Processing workflow: $WORKFLOW_NAME"
           
           # Validate workflow file
@@ -121,7 +80,7 @@ jobs:
             if gcloud workflows deploy "$WORKFLOW_NAME" \
               --source="$WORKFLOW_FILE" \
               --location=asia-southeast1 \
-              --project=${{ steps.validate-secrets.outputs.project_id }}; then
+              --project=${{ steps.get_project.outputs.project_id }}; then
               echo "✅ Successfully deployed workflow $WORKFLOW_NAME"
               break
             else
@@ -138,7 +97,6 @@ jobs:
         echo "🎉 All workflows deployed successfully!"
 
     - name: Verify Deployments
-      if: steps.validate-secrets.outputs.valid == 'true'
       run: |
         echo "🔍 Verifying Cloud Workflows deployments..."
-        gcloud workflows list --format="table(name,state,createTime)" --project=${{ steps.validate-secrets.outputs.project_id }}
+        gcloud workflows list --format="table(name,state,createTime)" --project=${{ steps.get_project.outputs.project_id }}

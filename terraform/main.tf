@@ -20,7 +20,7 @@ module "buckets" {
 module "cloud_run" {
   source = "./modules/cloud_run"
   project_id = "chatgpt-db-project"
-  service_account_email = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+  service_account_email = "chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 }
 
 module "workflows" {
@@ -32,5 +32,5 @@ module "workflows" {
 module "iam" {
   source = "./modules/iam"
   project_id = "chatgpt-db-project"
-  service_account_email = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+  service_account_email = "chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com"
 } 
