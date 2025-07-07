@@ -60,15 +60,16 @@ resource "google_project_iam_member" "compute_service_account_user" {
 }
 
 # Allow workflows service to act as the service account
-resource "google_project_iam_member" "workflows_service_account_user" {
-  project = var.project_id
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:service-${data.google_project.current.number}@workflows-system.iam.gserviceaccount.com"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
+# Commented out temporarily - Workflows service account is created automatically
+# resource "google_project_iam_member" "workflows_service_account_user" {
+#   project = var.project_id
+#   role    = "roles/iam.serviceAccountUser"
+#   member  = "serviceAccount:service-${data.google_project.current.number}@workflows-system.iam.gserviceaccount.com"
+# 
+#   lifecycle {
+#     prevent_destroy = true
+#   }
+# }
 
 # Allow the project to impersonate the cross-project service account
 resource "google_service_account_iam_member" "cross_project_token_creator" {
@@ -83,11 +84,12 @@ resource "google_service_account_iam_member" "cross_project_user" {
   member             = "serviceAccount:service-${data.google_project.current.number}@compute-system.iam.gserviceaccount.com"
 }
 
-resource "google_service_account_iam_member" "workflows_cross_project_user" {
-  service_account_id = "projects/github-chatgpt-ggcloud/serviceAccounts/${var.service_account_email}"
-  role               = "roles/iam.serviceAccountUser"
-  member             = "serviceAccount:service-${data.google_project.current.number}@workflows-system.iam.gserviceaccount.com"
-}
+# Commented out temporarily - Workflows service account is created automatically
+# resource "google_service_account_iam_member" "workflows_cross_project_user" {
+#   service_account_id = "projects/github-chatgpt-ggcloud/serviceAccounts/${var.service_account_email}"
+#   role               = "roles/iam.serviceAccountUser"
+#   member             = "serviceAccount:service-${data.google_project.current.number}@workflows-system.iam.gserviceaccount.com"
+# }
 
 # Data source to get project information
 data "google_project" "current" {
