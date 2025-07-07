@@ -78,7 +78,7 @@ jobs:
           
           if grep -q "GCP_SERVICE_ACCOUNT.*missing" failure_log.txt; then
             FAILURE_REASON="missing_service_account"
-          elif grep -q "GCP_WORKLOAD_ID_PROVIDER.*missing" failure_log.txt; then
+          elif grep -q "GCP_WORKLOAD_IDENTITY_PROVIDER.*missing" failure_log.txt; then
             FAILURE_REASON="missing_workload_identity"
           elif grep -q "PROJECT_ID.*missing" failure_log.txt; then
             FAILURE_REASON="missing_project_id"
@@ -134,8 +134,8 @@ jobs:
               echo "**Fix:** Configure the GCP_SERVICE_ACCOUNT secret in repository settings." >> failure_report.md
               ;;
             "missing_workload_identity")
-              echo "❌ **Missing Workload Identity**: The GCP_WORKLOAD_ID_PROVIDER secret is not configured." >> failure_report.md
-              echo "**Fix:** Configure the GCP_WORKLOAD_ID_PROVIDER secret in repository settings." >> failure_report.md
+                          echo "❌ **Missing Workload Identity**: The GCP_WORKLOAD_IDENTITY_PROVIDER secret is not configured." >> failure_report.md
+            echo "**Fix:** Configure the GCP_WORKLOAD_IDENTITY_PROVIDER secret in repository settings." >> failure_report.md
               ;;
             "missing_project_id")
               echo "❌ **Missing Project ID**: The PROJECT_ID secret is not configured." >> failure_report.md
