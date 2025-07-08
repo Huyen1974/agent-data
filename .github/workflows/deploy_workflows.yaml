@@ -1,13 +1,13 @@
 name: Deploy Cloud Workflows
 # CLI153.2: Fixed CI for production deployment with proper secret validation
 
-on:
-  push:
-    branches: [ "main", "test" ]
-    paths:
-      - 'workflows/**'
-      - '.github/workflows/deploy_workflows.yaml'
-  workflow_dispatch:
+#on:
+#  push:
+#    branches: [ "main", "test" ]
+#    paths:
+#      - 'workflows/**'
+#      - '.github/workflows/deploy_workflows.yaml'
+#  workflow_dispatch:
 
 jobs:
   deploy:

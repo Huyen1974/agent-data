@@ -1,14 +1,14 @@
 name: Deploy to Google Cloud Functions
 # CLI153.2: Fixed CI for production deployment with proper secret validation
-on:
-  push:
-    branches:
-      - main
-      - test
-    paths:
-      - 'functions/**'
-      - '.github/workflows/deploy_functions.yaml'
-  workflow_dispatch:
+#on:
+#  push:
+#    branches:
+#      - main
+#      - test # Add test branch for CI
+#    paths:
+#      - 'functions/**'
+#      - '.github/workflows/deploy_functions.yaml'
+#  workflow_dispatch:
 
 jobs:
   deploy:

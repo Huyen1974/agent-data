@@ -1,13 +1,13 @@
 name: Deploy Containers to Cloud Run
 # CLI153.2: Fixed CI for production deployment with proper secret validation
 
-on:
-  push:
-    branches: [ "main", "test" ]
-    paths:
-      - 'containers/**'
-      - '.github/workflows/deploy_containers.yaml'
-  workflow_dispatch: {}
+#on:
+#  push:
+#    branches: [ "main", "test" ]
+#    paths:
+#      - 'containers/**'
+#      - '.github/workflows/deploy_containers.yaml'
+#  workflow_dispatch: {}
 
 jobs:
   build_and_deploy:
