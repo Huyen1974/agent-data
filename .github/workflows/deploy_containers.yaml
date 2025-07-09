@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "test" ]
     paths:
-      - 'containers/**'
+      - 'dummy_container/**'
       - '.github/workflows/deploy_containers.yaml'
   workflow_dispatch: {}
 
@@ -37,15 +37,18 @@ jobs:
     - name: Build & Push Docker images
       run: |
         set -e
-        for CONTAINER_DIR in $(find containers -mindepth 1 -maxdepth 1 -type d); do
-          CONTAINER_NAME=$(basename "$CONTAINER_DIR")
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
+        CONTAINER_NAME="dummy-container"
+        IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
 
-          echo "🔨 Building Docker image: $IMAGE"
-          docker build -t "$IMAGE" "$CONTAINER_DIR"
-          echo "🚀 Pushing Docker image: $IMAGE"
-          docker push "$IMAGE"
+        echo "🔨 Building Docker image: $IMAGE"
+        docker build -t "$IMAGE" ./dummy_container
+        echo "🚀 Pushing Docker image: $IMAGE"
+        docker push "$IMAGE"
 
-          echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
-          gcloud run deploy "$CONTAINER_NAME"             --image "$IMAGE"             --region asia-southeast1             --platform managed             --allow-unauthenticated             --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
-        done
+        echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
+        gcloud run deploy "$CONTAINER_NAME" \
+          --image "$IMAGE" \
+          --region asia-southeast1 \
+          --platform managed \
+          --allow-unauthenticated \
+          --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
