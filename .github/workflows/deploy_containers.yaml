@@ -1,0 +1,54 @@
+name: Deploy Containers
+
+on:
+  push:
+    branches: [ "test" ]
+    paths:
+      - 'dummy_container/**'
+      - '.github/workflows/deploy_containers.yaml'
+  workflow_dispatch: {}
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud (WIF)
+      uses: google-github-actions/auth@v1
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+    - name: Set up gcloud
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}
+
+    - name: Configure Docker
+      run: |
+        gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
+
+    - name: Build & Push Docker images
+      run: |
+        set -e
+        CONTAINER_NAME="dummy-container"
+        IMAGE="asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/docker-repo/$CONTAINER_NAME:latest"
+
+        echo "🔨 Building Docker image: $IMAGE"
+        docker build -t "$IMAGE" ./dummy_container
+        echo "🚀 Pushing Docker image: $IMAGE"
+        docker push "$IMAGE"
+
+        echo "📡 Deploying to Cloud Run: $CONTAINER_NAME"
+        gcloud run deploy "$CONTAINER_NAME" \
+          --image "$IMAGE" \
+          --region asia-southeast1 \
+          --platform managed \
+          --allow-unauthenticated \
+          --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}

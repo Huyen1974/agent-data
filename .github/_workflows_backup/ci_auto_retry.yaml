@@ -1,0 +1,263 @@
+name: CI Auto-Retry and Analysis
+# CLI153.2: Automatically retry CI failures up to 5 times with analysis
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Google Cloud Functions", "Deploy Containers to Cloud Run", "Deploy Cloud Workflows"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      workflow_name:
+        description: 'Workflow to retry'
+        required: true
+        type: choice
+        options:
+          - 'Deploy to Google Cloud Functions'
+          - 'Deploy Containers to Cloud Run'
+          - 'Deploy Cloud Workflows'
+      max_retries:
+        description: 'Maximum number of retries'
+        required: false
+        default: '5'
+        type: string
+
+jobs:
+  analyze_and_retry:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      actions: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up GitHub CLI
+        run: |
+          echo "🔧 Setting up GitHub CLI..."
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          gh --version
+
+      - name: Analyze Failure
+        id: analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Analyzing CI failure..."
+          
+          # Get workflow information
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            WORKFLOW_NAME="${{ github.event.inputs.workflow_name }}"
+            MAX_RETRIES="${{ github.event.inputs.max_retries }}"
+          else
+            WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
+            MAX_RETRIES="5"
+          fi
+          
+          echo "workflow_name=$WORKFLOW_NAME" >> $GITHUB_OUTPUT
+          echo "max_retries=$MAX_RETRIES" >> $GITHUB_OUTPUT
+          
+          # Get the latest failed run
+          FAILED_RUN=$(gh run list --workflow="$WORKFLOW_NAME" --status=failure --limit=1 --json databaseId --jq '.[0].databaseId')
+          
+          if [ -z "$FAILED_RUN" ] || [ "$FAILED_RUN" == "null" ]; then
+            echo "❌ No failed runs found for workflow: $WORKFLOW_NAME"
+            echo "should_retry=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "failed_run_id=$FAILED_RUN" >> $GITHUB_OUTPUT
+          
+          # Get failure details
+          echo "📋 Analyzing failure details..."
+          gh run view $FAILED_RUN --log > failure_log.txt 2>&1 || true
+          
+          # Analyze common failure patterns
+          FAILURE_REASON=""
+          
+          if grep -q "GCP_SERVICE_ACCOUNT.*missing" failure_log.txt; then
+            FAILURE_REASON="missing_service_account"
+          elif grep -q "GCP_WORKLOAD_IDENTITY_PROVIDER.*missing" failure_log.txt; then
+            FAILURE_REASON="missing_workload_identity"
+          elif grep -q "PROJECT_ID.*missing" failure_log.txt; then
+            FAILURE_REASON="missing_project_id"
+          elif grep -q "invalid.*JSON" failure_log.txt; then
+            FAILURE_REASON="invalid_json"
+          elif grep -q "authentication.*failed" failure_log.txt; then
+            FAILURE_REASON="auth_failure"
+          elif grep -q "permission.*denied" failure_log.txt; then
+            FAILURE_REASON="permission_denied"
+          elif grep -q "quota.*exceeded" failure_log.txt; then
+            FAILURE_REASON="quota_exceeded"
+          elif grep -q "timeout" failure_log.txt; then
+            FAILURE_REASON="timeout"
+          else
+            FAILURE_REASON="unknown"
+          fi
+          
+          echo "failure_reason=$FAILURE_REASON" >> $GITHUB_OUTPUT
+          
+          # Check retry count
+          RETRY_COUNT=$(gh run list --workflow="$WORKFLOW_NAME" --status=failure --created="$(date -d '1 hour ago' --iso-8601)" --json conclusion | jq length)
+          echo "retry_count=$RETRY_COUNT" >> $GITHUB_OUTPUT
+          
+          if [ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]; then
+            echo "❌ Maximum retries ($MAX_RETRIES) reached for workflow: $WORKFLOW_NAME"
+            echo "should_retry=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Will retry workflow: $WORKFLOW_NAME (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)"
+            echo "should_retry=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate Failure Report
+        if: always()
+        run: |
+          echo "📊 Generating failure analysis report..."
+          
+          cat > failure_report.md << EOF
+          # CI Failure Analysis Report
+          
+          **Workflow:** ${{ steps.analyze.outputs.workflow_name }}
+          **Failed Run ID:** ${{ steps.analyze.outputs.failed_run_id }}
+          **Failure Reason:** ${{ steps.analyze.outputs.failure_reason }}
+          **Retry Count:** ${{ steps.analyze.outputs.retry_count }}/${{ steps.analyze.outputs.max_retries }}
+          **Timestamp:** $(date -u)
+          
+          ## Failure Analysis
+          
+          EOF
+          
+          case "${{ steps.analyze.outputs.failure_reason }}" in
+            "missing_service_account")
+              echo "❌ **Missing Service Account**: The GCP_SERVICE_ACCOUNT secret is not configured or empty." >> failure_report.md
+              echo "**Fix:** Configure the GCP_SERVICE_ACCOUNT secret in repository settings." >> failure_report.md
+              ;;
+            "missing_workload_identity")
+                          echo "❌ **Missing Workload Identity**: The GCP_WORKLOAD_IDENTITY_PROVIDER secret is not configured." >> failure_report.md
+            echo "**Fix:** Configure the GCP_WORKLOAD_IDENTITY_PROVIDER secret in repository settings." >> failure_report.md
+              ;;
+            "missing_project_id")
+              echo "❌ **Missing Project ID**: The PROJECT_ID secret is not configured." >> failure_report.md
+              echo "**Fix:** Configure the PROJECT_ID secret in repository settings." >> failure_report.md
+              ;;
+            "invalid_json")
+              echo "❌ **Invalid JSON**: The service account JSON is malformed." >> failure_report.md
+              echo "**Fix:** Validate and update the service account JSON secret." >> failure_report.md
+              ;;
+            "auth_failure")
+              echo "❌ **Authentication Failure**: Unable to authenticate with GCP." >> failure_report.md
+              echo "**Fix:** Check service account permissions and workload identity configuration." >> failure_report.md
+              ;;
+            "permission_denied")
+              echo "❌ **Permission Denied**: Service account lacks required permissions." >> failure_report.md
+              echo "**Fix:** Grant necessary IAM roles to the service account." >> failure_report.md
+              ;;
+            "quota_exceeded")
+              echo "❌ **Quota Exceeded**: GCP quota limits reached." >> failure_report.md
+              echo "**Fix:** Check GCP quotas and request increases if needed." >> failure_report.md
+              ;;
+            "timeout")
+              echo "❌ **Timeout**: Operation timed out." >> failure_report.md
+              echo "**Fix:** Check network connectivity and resource availability." >> failure_report.md
+              ;;
+            *)
+              echo "❓ **Unknown Failure**: Unable to determine specific cause." >> failure_report.md
+              echo "**Fix:** Check the full workflow logs for more details." >> failure_report.md
+              ;;
+          esac
+          
+          echo "" >> failure_report.md
+          echo "## Recommended Actions" >> failure_report.md
+          echo "1. Review the failure analysis above" >> failure_report.md
+          echo "2. Apply the recommended fix" >> failure_report.md
+          echo "3. Re-run the workflow manually if needed" >> failure_report.md
+          echo "4. Check GCP console for additional error details" >> failure_report.md
+          
+          echo "📋 Failure report generated"
+          cat failure_report.md
+
+      - name: Wait Before Retry
+        if: steps.analyze.outputs.should_retry == 'true'
+        run: |
+          echo "⏳ Waiting before retry..."
+          # Exponential backoff: 2^retry_count minutes
+          WAIT_TIME=$((2 ** ${{ steps.analyze.outputs.retry_count }}))
+          echo "Waiting $WAIT_TIME minutes before retry..."
+          sleep $((WAIT_TIME * 60))
+
+      - name: Retry Workflow
+        if: steps.analyze.outputs.should_retry == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔄 Retrying workflow: ${{ steps.analyze.outputs.workflow_name }}"
+          
+          # Determine the workflow file name
+          case "${{ steps.analyze.outputs.workflow_name }}" in
+            "Deploy to Google Cloud Functions")
+              WORKFLOW_FILE="deploy_functions.yaml"
+              ;;
+            "Deploy Containers to Cloud Run")
+              WORKFLOW_FILE="deploy_containers.yaml"
+              ;;
+            "Deploy Cloud Workflows")
+              WORKFLOW_FILE="deploy_workflows.yaml"
+              ;;
+            *)
+              echo "❌ Unknown workflow name: ${{ steps.analyze.outputs.workflow_name }}"
+              exit 1
+              ;;
+          esac
+          
+          # Trigger the workflow
+          gh workflow run "$WORKFLOW_FILE" --ref main
+          
+          echo "✅ Workflow retry triggered successfully"
+
+      - name: Monitor Retry
+        if: steps.analyze.outputs.should_retry == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "👀 Monitoring retry progress..."
+          
+          # Wait for the new run to start
+          sleep 30
+          
+          # Get the latest run
+          LATEST_RUN=$(gh run list --workflow="${{ steps.analyze.outputs.workflow_name }}" --limit=1 --json databaseId --jq '.[0].databaseId')
+          
+          echo "📊 Latest run ID: $LATEST_RUN"
+          echo "🔗 View run: https://github.com/${{ github.repository }}/actions/runs/$LATEST_RUN"
+          
+          # Wait for completion (up to 10 minutes)
+          for i in {1..20}; do
+            STATUS=$(gh run view $LATEST_RUN --json status --jq '.status')
+            if [ "$STATUS" == "completed" ]; then
+              CONCLUSION=$(gh run view $LATEST_RUN --json conclusion --jq '.conclusion')
+              if [ "$CONCLUSION" == "success" ]; then
+                echo "✅ Retry succeeded!"
+                exit 0
+              else
+                echo "❌ Retry failed with conclusion: $CONCLUSION"
+                exit 1
+              fi
+            fi
+            echo "⏳ Waiting for completion... ($i/20)"
+            sleep 30
+          done
+          
+          echo "⏰ Monitoring timeout reached"
+
+      - name: Final Status Report
+        if: always()
+        run: |
+          echo "📋 Final CI Auto-Retry Status Report"
+          echo "=================================="
+          echo "Workflow: ${{ steps.analyze.outputs.workflow_name }}"
+          echo "Failure Reason: ${{ steps.analyze.outputs.failure_reason }}"
+          echo "Retry Attempted: ${{ steps.analyze.outputs.should_retry }}"
+          echo "Retry Count: ${{ steps.analyze.outputs.retry_count }}/${{ steps.analyze.outputs.max_retries }}"
+          echo "Timestamp: $(date -u)"
+          echo "==================================" 

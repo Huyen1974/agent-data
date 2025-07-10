@@ -11,7 +11,7 @@ The Agent Data project provides a comprehensive data management and search solut
 - **API Gateway**: FastAPI-based REST API for data operations
 - **MCP Integration**: Model Context Protocol for agent interactions
 - **Tools**: Various data processing and search tools
-- **Testing Suite**: Comprehensive test coverage (~519 tests)
+- **Testing Suite**: Comprehensive test coverage (~932 tests)
 
 ## Architecture
 
@@ -52,7 +52,7 @@ The project includes a comprehensive test suite optimized for MacBook M1:
 - Batch size ≤3 for memory efficiency
 - 8-second timeout for stability
 - Mock Qdrant for local testing
-- ~519 unique tests covering all components
+- ~932 unique tests covering all components (as of CLI 182.5)
 
 ## Infrastructure
 
@@ -64,10 +64,12 @@ The project includes a comprehensive test suite optimized for MacBook M1:
 ## CI/CD
 
 GitHub Actions workflows handle:
-- Automated testing
+- Automated testing with test count verification
 - Docker image building
 - GCP deployment
 - Infrastructure provisioning
+
+Recent CI/CD improvements include test count verification and enhanced stability.
 
 ## Contributing
 
@@ -78,4 +80,4 @@ GitHub Actions workflows handle:
 
 ## License
 
-Internal project - All rights reserved. 
+Internal project - All rights reserved.

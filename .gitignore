@@ -1,17 +1,20 @@
 # ⬛ MacOS system files
 .DS_Store
+Thumbs.db
 
 # ⬛ Python cache & compiled files
 __pycache__/
 *.py[cod]
 *.so
 *.pyo
+*.pyc
 
 # ⬛ Environment
 .env
 .venv/
 venv/
 env/
+*.env
 
 # ⬛ Logs and debug outputs
 *.log
@@ -49,6 +52,16 @@ build/
 *.tar
 *.img
 *.container
+
+# ⬛ Terraform state files and directories
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# ⬛ Credentials and keys
+*.json
+*.key
 
 # ⬛ Optional
 # Remove below if you want to keep local test data or examples

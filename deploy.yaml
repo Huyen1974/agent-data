@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: google-docs-updater
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: google-docs-updater
+          image: gcr.io/github-chatgpt-ggcloud/google-docs-updater
+          ports:
+            - containerPort: 8080
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
