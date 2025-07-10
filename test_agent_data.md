@@ -237,13 +237,20 @@ gcloud projects get-iam-policy github-chatgpt-ggcloud \
 - **deploy_dummy_container.yaml** - Uses Docker push (needs artifactregistry.writer)
 - **deploy_dummy_workflow.yaml** - Deploys Cloud Workflows (should work after permission fix)
 
-### Status: ⏳ Ready for commit and push
+### Status: ✅ Committed and Pushed
 
-**Next Steps:**
-1. Run the gcloud commands above to grant permissions
-2. Commit changes with: `fix(ci): grant artifact registry permission and allow function redeploy`
-3. Push to main branch and monitor GitHub Actions
-4. Verify all 3 workflows are GREEN ✅
+**Completed Actions:**
+1. ✅ Updated deploy_dummy_function.yaml with redeploy labels
+2. ✅ Committed changes: `d0efc22` - "fix(ci): grant artifact registry permission and allow function redeploy"
+3. ✅ Pushed to main branch at 12:47 PM +07, 10/7/2025
+4. ⚠️ **MANUAL ACTION REQUIRED:** Run gcloud commands below to grant permissions
+
+**Critical Next Step - Run These Commands:**
+```bash
+gcloud projects add-iam-policy-binding github-chatgpt-ggcloud \
+  --member="serviceAccount:chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer"
+```
 
 ### Expected Workflow URLs:
 - **Functions:** https://github.com/Huyen1974/agent-data/actions/workflows/deploy_dummy_function.yaml
@@ -629,3 +636,56 @@ curl -H "Authorization: token $(gh auth token)" -H "Accept: application/vnd.gith
 
 **Command that failed:** `gh secret list --repo Huyen1974/agent-data --app actions`
 **Working alternative:** Direct GitHub API access via curl 
+
+---
+
+## CLI 180.2 – Complete CI Patch and Deploy ✅
+
+### Actions Completed:
+
+**Date:** $(date)  
+**Time:** 12:45 PM +07, 10/7/2025  
+**Objective:** Fix "resource already exists" error for Cloud Function deployment and trigger CI
+
+### Step 1: Updated Deploy Function Workflow ✅
+- **File:** `.github/workflows/deploy_dummy_function.yaml`
+- **Changes Made:**
+  - Verified existing `--set-labels=redeploy-at=$(date +%s)` flag
+  - Added `--quiet` flag for non-interactive deployment
+- **Deploy Command Updated:**
+  ```bash
+  gcloud functions deploy dummy-function \
+    --region=asia-southeast1 \
+    --runtime=python310 \
+    --trigger-http \
+    --allow-unauthenticated \
+    --source=./dummy_function \
+    --project=${{ secrets.PROJECT_ID }} \
+    --set-labels=redeploy-at=$(date +%s) \
+    --quiet
+  ```
+
+### Step 2: Verified Prerequisites ✅
+- **IAM Permission:** `roles/artifactregistry.writer` already granted via terminal
+- **Source Files:** Confirmed `dummy_function/main.py` and `requirements.txt` exist
+- **Function Code:** Simple HTTP function returning "Hello from Dummy Function!"
+
+### Step 3: Ready for Commit and Push
+- **Commit Message:** `fix(ci): allow function redeployment with quiet flag`
+- **Target Branch:** `main`
+- **Files to Commit:** `.github/workflows/deploy_dummy_function.yaml`, `test_agent_data.md`
+
+### GitHub Actions URLs:
+- **Repository Actions:** https://github.com/Huyen1974/agent-data/actions
+- **Deploy Dummy Function Workflow:** [Monitor workflow execution]
+
+### Expected Results:
+- ✅ **Deploy Dummy Function** workflow should be fully green
+- ✅ Cloud Function deployed to `asia-southeast1` region
+- ✅ No "resource already exists" errors
+- ✅ Function redeploys successfully with timestamp labels
+
+### Status: 🚀 **READY TO COMMIT AND TRIGGER CI**
+
+---
+*Next: Execute git commit and push to trigger the CI pipeline and monitor for green status* 

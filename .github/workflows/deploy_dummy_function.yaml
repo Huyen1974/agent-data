@@ -30,4 +30,5 @@ jobs:
             --allow-unauthenticated \
             --source=./dummy_function \
             --project=${{ secrets.PROJECT_ID }} \
-            --set-labels=redeploy-at=$(date +%s) 
+            --set-labels=redeploy-at=$(date +%s) \
+            --quiet 
