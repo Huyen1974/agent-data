@@ -11,26 +11,23 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: 'write'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          
-      - name: 'Clean up existing function (if any)'
+
+      - name: 'Deploy Dummy Function with Retry'
         run: |
-          echo "🧹 Cleaning up any existing dummy-function..."
-          gcloud functions delete dummy-function --region=asia-southeast1 --project=${{ secrets.PROJECT_ID }} --quiet || echo "No existing function to delete"
-          
-      - name: 'Deploy Dummy Function'
-        run: |
-          echo "🚀 Deploying dummy function..."
           for attempt in 1 2 3; do
-            echo "🔄 Deploy attempt $attempt..."
+            echo "Deploy attempt $attempt..."
             if gcloud functions deploy dummy-function \
               --gen2 \
               --region=asia-southeast1 \
@@ -39,16 +36,12 @@ jobs:
               --allow-unauthenticated \
               --source=./dummy_function \
               --project=${{ secrets.PROJECT_ID }} \
-              --update-labels=redeploy-at=$(date +%s) \
-              --quiet; then
+              --update-labels=redeploy-at=$(date +%s); then
               echo "✅ Successfully deployed dummy function"
-              break
-            else
-              echo "❌ Deploy attempt $attempt failed"
-              if [ $attempt -eq 3 ]; then
-                echo "❌ All deploy attempts failed"
-                exit 1
-              fi
-              sleep 10
+              exit 0
             fi
-          done 
+            echo "❌ Deploy attempt $attempt failed, retrying in 15 seconds..."
+            sleep 15
+          done
+          echo "❌ All deploy attempts failed"
+          exit 1 
