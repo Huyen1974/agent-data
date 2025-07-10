@@ -1,0 +1,32 @@
+name: Deploy Dummy Function
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  id-token: 'write'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          
+      - name: 'Deploy Dummy Function'
+        run: |
+          gcloud functions deploy dummy-function \
+            --region=asia-southeast1 \
+            --runtime=python310 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --source=./dummy_function \
+            --project=${{ secrets.PROJECT_ID }} 

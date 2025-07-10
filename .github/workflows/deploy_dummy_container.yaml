@@ -1,0 +1,42 @@
+name: Deploy Dummy Container
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  id-token: 'write'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          
+      - name: 'Build and Push Container'
+        run: |
+          docker build -t asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/agent-data/dummy-container:${{ github.sha }} ./dummy_container
+          docker push asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/agent-data/dummy-container:${{ github.sha }}
+          
+      - name: 'Deploy to Cloud Run'
+        run: |
+          gcloud run deploy dummy-container \
+            --image=asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/agent-data/dummy-container:${{ github.sha }} \
+            --region=asia-southeast1 \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=256Mi \
+            --cpu=1 \
+            --min-instances=0 \
+            --max-instances=3 \
+            --timeout=60 \
+            --port=8080 \
+            --project=${{ secrets.PROJECT_ID }} 
