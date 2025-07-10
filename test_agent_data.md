@@ -497,4 +497,61 @@ The workflow files themselves are correctly structured for WIF authentication, b
 ### Status: 🎯 **WORKFLOW TRIGGERED - AWAITING RESULTS**
 
 ---
-*Next: Commit, push, and analyze debug workflow results* 
+*Next: Commit, push, and analyze debug workflow results*
+
+## CLI 178.2 – Rebuild Workflows from Clean Base ✅
+
+### Actions Completed:
+
+**Date:** Thu Jul 10 11:22:56 +07 2025  
+**Time:** 11:22 AM +07, 10/7/2025  
+**Objective:** Delete old errored workflow files and recreate from clean base
+
+### Step 1: Clean Up Old Files ✅
+- **Deleted:** `.github/workflows/debug_checkout.yaml` (diagnostic purpose complete)
+- **Deleted:** `.github/workflows/deploy_dummy_function.yaml.disabled` (old corrupted file)
+- **Deleted:** `.github/workflows/deploy_dummy_container.yaml.disabled` (old corrupted file)
+- **Status:** All old workflow files successfully removed
+
+### Step 2: Recreated Deploy Dummy Function Workflow ✅
+- **File:** `.github/workflows/deploy_dummy_function.yaml`
+- **Base:** Used clean debug_checkout.yaml structure
+- **Features:**
+  - Clean permissions block (`contents: read`, `id-token: write`)
+  - WIF authentication with `google-github-actions/auth@v2`
+  - Function deployment to `asia-southeast1` region
+  - Python 3.10 runtime with HTTP trigger
+  - Source from `./dummy_function` directory
+
+### Step 3: Recreated Deploy Dummy Container Workflow ✅
+- **File:** `.github/workflows/deploy_dummy_container.yaml`
+- **Base:** Used clean debug_checkout.yaml structure
+- **Features:**
+  - Clean permissions block (`contents: read`, `id-token: write`)
+  - WIF authentication with `google-github-actions/auth@v2`
+  - Docker build & push to Artifact Registry
+  - Cloud Run deployment with optimized configuration
+  - Container specs: 256Mi memory, 1 CPU, autoscaling 0-3
+
+### Step 4: Committed and Pushed ✅
+- **Commit Hash:** `3570024`
+- **Commit Message:** `fix(ci): recreate dummy workflows from clean base`
+- **Branch:** `main`
+- **Files Changed:** 5 files changed, 74 insertions(+), 306 deletions(-)
+- **Push Status:** ✅ Successfully pushed to origin/main
+
+### GitHub Actions URLs:
+- **Repository Actions:** https://github.com/Huyen1974/agent-data/actions
+- **Functions Workflow:** [Monitor "Deploy Dummy Function" workflow]
+- **Containers Workflow:** [Monitor "Deploy Dummy Container" workflow]
+
+### Expected Results:
+- ✅ **Deploy Dummy Function** workflow should be fully green
+- ✅ **Deploy Dummy Container** workflow should be fully green
+- ✅ Cloud Function deployed to `asia-southeast1` region
+- ✅ Cloud Run service deployed with proper configuration
+
+### Status: 🎯 **WORKFLOWS RECREATED - READY FOR VALIDATION**
+
+---
+*Next: Monitor GitHub Actions tab to confirm both workflows are fully green ✅* 
