@@ -696,4 +696,62 @@ curl -H "Authorization: token $(gh auth token)" -H "Accept: application/vnd.gith
 4. 🔄 **EXPECTED:** Cloud Function should deploy successfully to `asia-southeast1` region
 
 ---
-*Monitor the GitHub Actions tab to confirm the workflow completes successfully with all green checkmarks ✅* 
+*Monitor the GitHub Actions tab to confirm the workflow completes successfully with all green checkmarks ✅*
+
+## CLI 180.3 – Final Patch for CI/CD Infrastructure ✅
+
+### Actions Completed:
+
+**Date:** Thu Oct 7 14:35:00 +07 2025  
+**Time:** 14:35 PM +07, 10/7/2025  
+**Objective:** Fix invalid gcloud functions deploy syntax and confirm CI/CD pipeline success
+
+### Step 1: Fixed Cloud Function Deploy Command ✅
+- **File:** `.github/workflows/deploy_dummy_function.yaml`
+- **Issue:** Invalid `--set-labels` flag causing deploy failures
+- **Fix Applied:** Changed `--set-labels` to `--update-labels=redeploy-at=$(date +%s)`
+- **Deploy Command Updated:**
+  ```bash
+  gcloud functions deploy dummy-function \
+    --region=asia-southeast1 \
+    --runtime=python310 \
+    --trigger-http \
+    --allow-unauthenticated \
+    --source=./dummy_function \
+    --project=${{ secrets.PROJECT_ID }} \
+    --update-labels=redeploy-at=$(date +%s) \
+    --quiet
+  ```
+
+### Step 2: Committed and Pushed ✅
+- **Commit Hash:** `8e46b81`
+- **Commit Message:** `fix(ci): correct functions deploy command with update-labels`
+- **Branch:** `main`
+- **Files Changed:** 1 file changed, 1 insertion(+), 1 deletion(-)
+- **Push Status:** ✅ Successfully pushed to origin/main
+- **Push Range:** `7fa3c37..8e46b81`
+
+### GitHub Actions URLs:
+- **Repository Actions:** https://github.com/Huyen1974/agent-data/actions
+- **Deploy Dummy Function Workflow:** [Monitor for GREEN status]
+- **Deploy Dummy Container Workflow:** [Monitor for GREEN status]
+- **Deploy Dummy Workflow:** [Monitor for GREEN status]
+
+### Expected Validation Results:
+- ✅ **Deploy Dummy Function** workflow should complete successfully
+- ✅ **Deploy Dummy Container** workflow should remain green
+- ✅ **Deploy Dummy Workflow** workflow should remain green
+- ✅ All three workflows must show GREEN ✅ status
+- ✅ Cloud Function should redeploy with corrected syntax
+- ✅ Artifact Registry permissions should be properly applied
+
+### Status: 🎯 **CI/CD PIPELINE TRIGGERED - AWAITING FULL GREEN VALIDATION**
+
+### Next Validation Steps:
+1. ✅ Changes committed and pushed to main branch
+2. 🔄 **NEXT:** Visit [GitHub Actions](https://github.com/Huyen1974/agent-data/actions) to monitor all workflows
+3. 🔄 **REQUIRED:** All three workflows (Function, Container, Workflow) must be GREEN ✅
+4. 🔄 **VERIFICATION:** Access deployed Cloud Function and Cloud Run service URLs to confirm operational status
+
+---
+*Next: Monitor GitHub Actions tab to confirm ALL workflows are fully green ✅* 
