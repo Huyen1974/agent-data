@@ -50,14 +50,14 @@ jobs:
           echo "🚀 Deploying dummy workflow..."
           
           # Check if dummy workflow exists
-          if [ ! -f "workflows/dummy_workflow.yaml" ]; then
-            echo "⚠️  No dummy_workflow.yaml found, skipping deployment"
+          if [ ! -f "workflows/workflow_dummy.yaml" ]; then
+            echo "⚠️  No workflow_dummy.yaml found, skipping deployment"
             exit 0
           fi
           
           # Validate workflow file
-          if ! python3 -c "import yaml; yaml.safe_load(open('workflows/dummy_workflow.yaml'))" 2>/dev/null; then
-            echo "❌ Invalid YAML in dummy_workflow.yaml, skipping..."
+          if ! python3 -c "import yaml; yaml.safe_load(open('workflows/workflow_dummy.yaml'))" 2>/dev/null; then
+            echo "❌ Invalid YAML in workflow_dummy.yaml, skipping..."
             exit 1
           fi
           
@@ -65,7 +65,7 @@ jobs:
           for attempt in 1 2 3; do
             echo "🔄 Deploy attempt $attempt..."
             if gcloud workflows deploy dummy-workflow \
-              --source=workflows/dummy_workflow.yaml \
+              --source=workflows/workflow_dummy.yaml \
               --location=asia-southeast1 \
               --project=${{ steps.get_project.outputs.project_id }}; then
               echo "✅ Successfully deployed dummy workflow"

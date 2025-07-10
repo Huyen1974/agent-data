@@ -24,6 +24,7 @@ jobs:
       - name: 'Deploy Dummy Function'
         run: |
           gcloud functions deploy dummy-function \
+            --gen2 \
             --region=asia-southeast1 \
             --runtime=python310 \
             --trigger-http \
