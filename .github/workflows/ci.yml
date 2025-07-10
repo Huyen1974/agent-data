@@ -2,7 +2,7 @@ name: CI - Test Count Verification and Quality Gates
 
 on:
   push:
-    branches: [ main, develop, test ]
+    branches: [ develop, test ]
   pull_request:
     branches: [ main, develop, test ]
   workflow_dispatch:
