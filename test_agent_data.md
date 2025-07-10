@@ -198,203 +198,96 @@ jobs:
           # Determine project ID based on branch
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
-            PROJECT_NAME="production"
-          else
-            PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
-            PROJECT_NAME="test"
-          fi
-          
-          if [ -z "$PROJECT_SECRET" ]; then
-            echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          # Validate service account email format
-          if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
-            echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
-            echo "valid=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          
-          echo "✅ All secrets are valid for $PROJECT_NAME environment"
-          echo "valid=true" >> $GITHUB_OUTPUT
-          echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
-          echo "environment=$PROJECT_NAME" >> $GITHUB_OUTPUT
-
-      - name: Authenticate to Google Cloud
-        if: steps.validate-secrets.outputs.valid == 'true'
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          token_format: 'access_token'
-
-      - name: Set up Cloud SDK
-        if: steps.validate-secrets.outputs.valid == 'true'
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ steps.validate-secrets.outputs.project_id }}
-
-      - name: Verify Authentication
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "🔐 Verifying GCP authentication..."
-          gcloud auth list --filter=status:ACTIVE --format="value(account)" | head -1
-          echo "📋 Using project: ${{ steps.validate-secrets.outputs.project_id }}"
-          echo "🌍 Environment: ${{ steps.validate-secrets.outputs.environment }}"
-          gcloud config set project ${{ steps.validate-secrets.outputs.project_id }}
-
-      - name: Create Artifact Registry repository
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "📦 Creating Artifact Registry repository..."
-          gcloud artifacts repositories create agent-data \
-            --repository-format=docker \
-            --location=asia-southeast1 \
-            --description="Docker repository for agent-data project" \
-            --project=${{ steps.validate-secrets.outputs.project_id }} || echo "Repository already exists"
-
-      - name: Configure Docker to use gcloud
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "🐳 Configuring Docker authentication..."
-          gcloud auth configure-docker asia-southeast1-docker.pkg.dev
-
-      - name: Build and push container
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "🔨 Building and pushing dummy container..."
-          
-          # Check if dummy container exists
-          if [ ! -d "containers/dummy_container" ]; then
-            echo "⚠️  No dummy_container directory found, skipping deployment"
-            exit 0
-          fi
-          
-          # Build with retry logic
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ steps.validate-secrets.outputs.project_id }}/agent-data/dummy-container:${{ github.sha }}"
-          
-          for attempt in 1 2 3; do
-            echo "🔄 Build attempt $attempt..."
-            if docker build -t "$IMAGE" containers/dummy_container; then
-              echo "✅ Successfully built dummy container"
-              break
-            else
-              echo "❌ Build attempt $attempt failed"
-              if [ $attempt -eq 3 ]; then
-                echo "❌ All build attempts failed"
-                exit 1
-              fi
-              sleep 10
-            fi
-          done
-          
-          # Push with retry logic
-          for attempt in 1 2 3; do
-            echo "🔄 Push attempt $attempt..."
-            if docker push "$IMAGE"; then
-              echo "✅ Successfully pushed dummy container"
-              break
-            else
-              echo "❌ Push attempt $attempt failed"
-              if [ $attempt -eq 3 ]; then
-                echo "❌ All push attempts failed"
-                exit 1
-              fi
-              sleep 10
-            fi
-          done
-
-      - name: Deploy to Cloud Run
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "🚀 Deploying to Cloud Run..."
-          
-          IMAGE="asia-southeast1-docker.pkg.dev/${{ steps.validate-secrets.outputs.project_id }}/agent-data/dummy-container:${{ github.sha }}"
-          
-          # Deploy with retry logic
-          for attempt in 1 2 3; do
-            echo "🔄 Deploy attempt $attempt..."
-            if gcloud run deploy dummy-container \
-              --image="$IMAGE" \
-              --platform=managed \
-              --region=asia-southeast1 \
-              --allow-unauthenticated \
-              --memory=256Mi \
-              --cpu=1 \
-              --min-instances=0 \
-              --max-instances=3 \
-              --timeout=60 \
-              --port=8080 \
-              --project=${{ steps.validate-secrets.outputs.project_id }}; then
-              echo "✅ Successfully deployed dummy container"
-              break
-            else
-              echo "❌ Deploy attempt $attempt failed"
-              if [ $attempt -eq 3 ]; then
-                echo "❌ All deploy attempts failed"
-                exit 1
-              fi
-              sleep 10
-            fi
-          done
-
-      - name: Verify deployment
-        if: steps.validate-secrets.outputs.valid == 'true'
-        run: |
-          echo "🔍 Verifying deployment..."
-          gcloud run services describe dummy-container --region=asia-southeast1 --project=${{ steps.validate-secrets.outputs.project_id }} --format="value(status.url)"
 ```
 
-### Analysis and Conclusion:
+---
 
-#### ✅ **Permissions Block Check:**
-- Both files have the correct permissions block at the start:
-  ```yaml
-  permissions:
-    contents: 'read'
-    id-token: 'write'
-  ```
+## CLI 179.3 – Final Patch for CI/CD Infrastructure
 
-#### ✅ **Google Cloud Authentication Check:**
-- Both files have the `google-github-actions/auth` step correctly configured with WIF:
-  ```yaml
-  - name: Authenticate to Google Cloud
-    uses: google-github-actions/auth@v2
-    with:
-      workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-      service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-      token_format: 'access_token'
-  ```
+**Date:** December 10, 2024, 12:45 PM +07
+**Objective:** Fix 3 critical CI/CD errors: (1) Function redeploy conflicts, (2) Artifact Registry write permission, (3) Workflow deployment issues
 
-#### ❌ **Potential Issue Identified:**
-- **Root Cause of "Input required and not supplied: token" Error:**
-  Both workflow files use `token: ${{ secrets.GH_PAT }}` in the checkout step:
-  ```yaml
-  - name: Checkout code
-    uses: actions/checkout@v4
-    with:
-      token: ${{ secrets.GH_PAT }}
-      submodules: 'recursive'
-  ```
-  
-  **The error is likely occurring because the `GH_PAT` secret is missing or not configured in the GitHub repository secrets.**
+### Actions Completed
 
-#### Recommendations:
-1. **Verify GH_PAT Secret:** Check if the `GH_PAT` secret exists in the repository settings
-2. **Alternative Solution:** If GH_PAT is not needed, remove the `token` parameter from the checkout step
-3. **Secret Dependencies:** Ensure all referenced secrets exist:
-   - `GH_PAT`
-   - `GCP_WORKLOAD_IDENTITY_PROVIDER`
-   - `GCP_SERVICE_ACCOUNT`
-   - `PROJECT_ID`
-   - `PROJECT_ID_TEST`
+#### Step 1: Updated Function Deployment Workflow ✅
+- **File:** `.github/workflows/deploy_dummy_function.yaml`
+- **Change:** Added `--set-labels=redeploy-at=$(date +%s)` flag to allow function redeployment
+- **Before:** `--project=${{ secrets.PROJECT_ID }}`
+- **After:** `--project=${{ secrets.PROJECT_ID }} \ --set-labels=redeploy-at=$(date +%s)`
+- **Effect:** Each deployment now has a unique timestamp label, allowing Cloud Functions to accept redeployments
 
-The workflow files themselves are correctly structured for WIF authentication, but the missing `GH_PAT` secret is preventing the workflows from executing successfully.
+#### Step 2: Artifact Registry Permission (Manual Action Required) ⚠️
+**Required gcloud command to grant artifactregistry.writer permission:**
+```bash
+gcloud projects add-iam-policy-binding github-chatgpt-ggcloud \
+  --member="serviceAccount:chatgpt-deployer@github-chatgpt-ggcloud.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer"
+```
+
+**Verification command:**
+```bash
+gcloud projects get-iam-policy github-chatgpt-ggcloud \
+  --flatten="bindings[].members" \
+  --filter="bindings.role=roles/artifactregistry.writer AND bindings.members:chatgpt-deployer" \
+  --format="value(bindings.members)"
+```
+
+#### Step 3: Workflow Analysis ✅
+- **deploy_dummy_function.yaml** - Fixed with redeploy label
+- **deploy_dummy_container.yaml** - Uses Docker push (needs artifactregistry.writer)
+- **deploy_dummy_workflow.yaml** - Deploys Cloud Workflows (should work after permission fix)
+
+### Status: ⏳ Ready for commit and push
+
+**Next Steps:**
+1. Run the gcloud commands above to grant permissions
+2. Commit changes with: `fix(ci): grant artifact registry permission and allow function redeploy`
+3. Push to main branch and monitor GitHub Actions
+4. Verify all 3 workflows are GREEN ✅
+
+### Expected Workflow URLs:
+- **Functions:** https://github.com/Huyen1974/agent-data/actions/workflows/deploy_dummy_function.yaml
+- **Containers:** https://github.com/Huyen1974/agent-data/actions/workflows/deploy_dummy_container.yaml  
+- **Workflows:** https://github.com/Huyen1974/agent-data/actions/workflows/deploy_dummy_workflow.yaml
 
 ---
-*Workflow diagnostic complete. Ready for CLI 177.3 implementation.*
+
+## CLI 179.2 – Fix Token Error by Removing GH_PAT from Checkout Step
+
+### Date: Thursday, July 10, 2025 at 12:26 PM +07
+
+### Task Completed ✅
+**Objective:** Remove GH_PAT from checkout steps to fix token error
+
+### Actions Taken:
+1. **Analyzed workflow files** - Found GH_PAT token usage in `.github/workflows/deploy_dummy_workflow.yaml`
+2. **Removed problematic `with:` block** - Eliminated the entire `with:` block containing:
+   ```yaml
+   with:
+     token: ${{ secrets.GH_PAT }}
+     submodules: 'recursive'
+   ```
+3. **Updated checkout step** - Changed from errored structure to clean minimal structure:
+   ```yaml
+   - name: Checkout code
+     uses: actions/checkout@v4
+   ```
+
+### Git Actions:
+- **Commit:** `5fa3849` - "fix(ci): remove GH_PAT from checkout step to use default token"
+- **Push:** Successfully pushed to `origin/main`
+- **Branch:** `main`
+- **Files modified:** 1 file changed, 3 deletions
+
+### Status: ✅ COMPLETED
+**Next:** Monitor GitHub Actions workflows for successful green runs
+
+### GitHub Actions URLs:
+- **Repository Actions:** https://github.com/Huyen1974/agent-data/actions
+- **Deploy Dummy Workflow:** Monitor for successful completion
+- **Expected Result:** All workflows should now run without token errors
+
+---
 
 ## CLI 177.3 – Fix Token Error by Moving Permissions to Workflow Level ✅
 
@@ -601,3 +494,138 @@ The workflow files themselves are correctly structured for WIF authentication, b
 
 ---
 *Next: Monitor GitHub Actions tab to confirm both workflows are fully green ✅* 
+
+# Test Agent Data - GitHub Secrets Analysis
+
+## CLI Prompt 179.1 - Repository Secrets Diagnostic Results
+
+**Timestamp:** 2025-07-10 12:13:48
+
+### Command Executed
+```bash
+curl -H "Authorization: token $(gh auth token)" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/Huyen1974/agent-data/actions/secrets
+```
+
+**Note:** GitHub CLI (`gh secret list`) was experiencing shell configuration issues with head/cat commands, so we used the direct API approach.
+
+### Full Command Output
+```json
+{
+  "total_count": 15,
+  "secrets": [
+    {
+      "name": "DOCKERHUB_PASSWORD",
+      "created_at": "2025-07-04T10:05:18Z",
+      "updated_at": "2025-07-04T10:05:18Z"
+    },
+    {
+      "name": "DOCKERHUB_USERNAME",
+      "created_at": "2025-07-04T10:05:11Z",
+      "updated_at": "2025-07-04T10:05:11Z"
+    },
+    {
+      "name": "GCP_PROJECT_ID_TEST",
+      "created_at": "2025-06-22T13:46:59Z",
+      "updated_at": "2025-06-22T13:46:59Z"
+    },
+    {
+      "name": "GCP_SERVICE_ACCOUNT",
+      "created_at": "2025-07-01T08:32:53Z",
+      "updated_at": "2025-07-07T10:51:25Z"
+    },
+    {
+      "name": "GCP_SERVICE_ACCOUNT_EMAIL_TEST",
+      "created_at": "2025-06-22T13:45:37Z",
+      "updated_at": "2025-06-22T13:45:37Z"
+    },
+    {
+      "name": "GCP_SERVICE_ACCOUNT_TEST",
+      "created_at": "2025-07-03T03:23:09Z",
+      "updated_at": "2025-07-04T10:05:37Z"
+    },
+    {
+      "name": "GCP_WORKLOAD_IDENTITY_PROVIDER",
+      "created_at": "2025-07-03T02:28:18Z",
+      "updated_at": "2025-07-07T10:51:18Z"
+    },
+    {
+      "name": "GCP_WORKLOAD_IDENTITY_PROVIDER_TEST",
+      "created_at": "2025-06-22T13:44:14Z",
+      "updated_at": "2025-07-04T10:05:43Z"
+    },
+    {
+      "name": "GCP_WORKLOAD_ID_PROVIDER",
+      "created_at": "2025-07-01T08:32:51Z",
+      "updated_at": "2025-07-01T08:32:51Z"
+    },
+    {
+      "name": "GH_TOKEN",
+      "created_at": "2025-07-04T10:05:25Z",
+      "updated_at": "2025-07-07T08:39:23Z"
+    },
+    {
+      "name": "JWT_SECRET_KEY",
+      "created_at": "2025-07-03T08:53:10Z",
+      "updated_at": "2025-07-03T08:53:10Z"
+    },
+    {
+      "name": "OPENAI_API_KEY",
+      "created_at": "2025-07-03T08:53:04Z",
+      "updated_at": "2025-07-03T08:53:04Z"
+    },
+    {
+      "name": "PROJECT_ID",
+      "created_at": "2025-07-02T04:50:34Z",
+      "updated_at": "2025-07-07T10:51:31Z"
+    },
+    {
+      "name": "PROJECT_ID_TEST",
+      "created_at": "2025-07-03T03:54:45Z",
+      "updated_at": "2025-07-07T10:51:39Z"
+    },
+    {
+      "name": "QDRANT_API_KEY",
+      "created_at": "2025-07-03T08:53:07Z",
+      "updated_at": "2025-07-03T08:53:07Z"
+    }
+  ]
+}
+```
+
+### Analysis of Required Secrets
+
+**Required secrets for workflow:**
+- `GCP_WORKLOAD_IDENTITY_PROVIDER` ✅ **PRESENT** (created: 2025-07-03, updated: 2025-07-07)
+- `GCP_SERVICE_ACCOUNT` ✅ **PRESENT** (created: 2025-07-01, updated: 2025-07-07)
+- `PROJECT_ID` ✅ **PRESENT** (created: 2025-07-02, updated: 2025-07-07)
+
+### Conclusion - Scenario 2
+
+**Result:** All three required secrets are PRESENT and correctly named in the repository.
+
+**Implication:** This confirms we are in **Scenario 2** from the task description. The token error is NOT caused by missing secrets. This indicates either:
+1. A potential GitHub Actions bug
+2. An unclear security policy issue
+3. Configuration issues with the secret values themselves
+4. Workflow file reference errors
+
+### Recommended Next Actions
+
+1. **Immediate:** Verify that the secret values are correctly configured (not just present)
+2. **Next:** Check workflow file syntax for proper secret references
+3. **If issue persists:** Consider creating a completely new, clean repository to isolate and eliminate any historical factors
+4. **Alternative:** Review recent changes to the workflow files for any breaking changes
+
+### Additional Observations
+
+- Total of 15 secrets are configured in the repository
+- Recent activity on the required secrets (all updated within the last week)
+- Multiple test variants exist (e.g., `GCP_SERVICE_ACCOUNT_TEST`, `PROJECT_ID_TEST`)
+- All secrets have proper creation and update timestamps
+
+### GitHub CLI Technical Issue
+
+**Issue encountered:** The `gh secret list` command was experiencing shell configuration problems with head/cat commands, requiring the use of direct API calls via curl.
+
+**Command that failed:** `gh secret list --repo Huyen1974/agent-data --app actions`
+**Working alternative:** Direct GitHub API access via curl 
