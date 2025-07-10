@@ -12,7 +12,7 @@ from .external_tool_registry import get_openai_embedding, openai_client, FAISS_A
 logger = logging.getLogger(__name__)
 
 # Constants
-FAISS_DIR = "ADK/agent_data/faiss_indices"
+FAISS_DIR = "faiss_indices"
 MAX_RETRIES = 3  # Local I/O retries mainly
 RETRY_DELAY = 1  # seconds
 

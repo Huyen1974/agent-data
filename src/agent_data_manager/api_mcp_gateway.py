@@ -1228,7 +1228,7 @@ def main():
     logger.info(f"Starting Agent Data API A2A Gateway on {host}:{port}")
 
     uvicorn.run(
-        "ADK.agent_data.api_mcp_gateway:app",
+        "api_mcp_gateway:app",
         host=host,
         port=port,
         reload=False,  # Set to True for development

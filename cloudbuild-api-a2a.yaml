@@ -4,7 +4,7 @@ steps:
   args:
     - 'build'
     - '-f'
-    - 'ADK/agent_data/Dockerfile.api'
+    - 'src/agent_data_manager/Dockerfile.api'
     - '-t'
     - '${_IMAGE_NAME}'
     - '.'

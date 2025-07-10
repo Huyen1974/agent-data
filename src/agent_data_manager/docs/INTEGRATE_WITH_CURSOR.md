@@ -16,7 +16,7 @@ The MCP agent is designed to run as a standalone process, communicating via JSON
 
 1.  **Navigate to the agent directory:**
     ```bash
-    cd /path/to/your/project/ADK/agent_data
+    cd /path/to/your/project
     ```
 
 2.  **Activate your virtual environment:**
@@ -27,7 +27,7 @@ The MCP agent is designed to run as a standalone process, communicating via JSON
     ```
 
 3.  **Run the MCP server script:**
-    There should be a script dedicated to running the agent in MCP mode. Assuming it's named `local_mcp_server.py` inside the `ADK/agent_data` directory:
+    There should be a script dedicated to running the agent in MCP mode. Assuming it's named `local_mcp_server.py` inside the root directory:
     ```bash
     python local_mcp_server.py
     ```
@@ -55,7 +55,7 @@ Cursor can interact with external tools/LSPs (Language Server Protocol) via stdi
                 ```
             *   Make sure the command runs the script directly, not via `python -m ...` unless the script is designed for that.
         *   **Arguments (Optional):** If the script requires specific command-line arguments, add them here.
-        *   **Working Directory (Optional but Recommended):** Set this to the agent's directory (`ADK/agent_data`) to ensure correct relative path resolution for data files (like FAISS indices).
+        *   **Working Directory (Optional but Recommended):** Set this to the root directory to ensure correct relative path resolution for data files (like FAISS indices).
             *   Example:
                 ```
                 /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data

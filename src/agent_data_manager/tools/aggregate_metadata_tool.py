@@ -4,7 +4,7 @@ import time
 from typing import Dict, Any
 from collections import Counter
 
-FAISS_DIR = "ADK/agent_data/faiss_indices"
+FAISS_DIR = "faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 

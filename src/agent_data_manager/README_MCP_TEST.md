@@ -4,7 +4,7 @@ This document describes how to run and manually test the `local_mcp_server.py`.
 
 ## Running the Server
 
-Open a terminal, navigate to the `ADK/agent_data` directory, and run:
+Open a terminal, navigate to the root directory, and run:
 
 ```bash
 python3 local_mcp_server.py

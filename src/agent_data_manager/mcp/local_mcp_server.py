@@ -2,7 +2,7 @@ import inspect
 import json
 import logging
 
-# Ensure parent directory (ADK/agent_data) is in path if run directly
+# Ensure root directory is in path if run directly
 import os
 import sys
 import time

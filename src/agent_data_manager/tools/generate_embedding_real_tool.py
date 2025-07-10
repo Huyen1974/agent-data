@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Constants remain for local use if needed, registry defines primary ones
-FAISS_DIR = "ADK/agent_data/faiss_indices"
+FAISS_DIR = "faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY_IO = 1
 

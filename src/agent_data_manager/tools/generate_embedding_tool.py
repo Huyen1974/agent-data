@@ -4,7 +4,7 @@ import time
 import numpy as np
 from typing import Dict, Any
 
-FAISS_DIR = "ADK/agent_data/faiss_indices"
+FAISS_DIR = "faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 EMBEDDING_DIM = 8  # Example dimension for mock embeddings

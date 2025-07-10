@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gcc build-essen
 RUN pip install --no-cache-dir --timeout=600 -r requirements.txt
 
 # Copy application code
-COPY ADK ./ADK/
+COPY . ./
 COPY mcp ./mcp/
 
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]

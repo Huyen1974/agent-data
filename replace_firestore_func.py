@@ -1,6 +1,6 @@
 import re
 
-file_path = "ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py"
+file_path = "tests/tools/test_save_metadata_to_faiss.py"
 
 new_func = """
 @patch(f"{SAVE_TOOL_MODULE_PATH}.OPENAI_AVAILABLE", True)

@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY ADK/agent_data/requirements.txt ./requirements.txt
+COPY requirements.txt ./requirements.txt
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --timeout=600 -r requirements.txt
 
 # Copy application code
-COPY ADK ./ADK/
+COPY . ./
 COPY conftest.py ./conftest.py
 
 # Set environment variables for Cloud Run
@@ -33,4 +33,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
 # Run the API A2A Gateway
-CMD ["python", "-m", "ADK.agent_data.api_mcp_gateway"]
+CMD ["python", "-m", "api_mcp_gateway"]
