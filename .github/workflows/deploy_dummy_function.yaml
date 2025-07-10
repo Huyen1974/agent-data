@@ -39,6 +39,7 @@ jobs:
             --trigger-http \
             --allow-unauthenticated \
             --source=./dummy_function \
+            --entry-point=hello_world \
             --project=${{ secrets.PROJECT_ID }} \
             --quiet
           
