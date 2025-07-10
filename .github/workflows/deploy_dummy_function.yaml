@@ -24,24 +24,26 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-      - name: 'Deploy Dummy Function with Retry'
+      - name: 'Deploy Dummy Function with Unique Naming'
         run: |
-          for attempt in 1 2 3; do
-            echo "Deploy attempt $attempt..."
-            if gcloud functions deploy dummy-function \
-              --gen2 \
-              --region=asia-southeast1 \
-              --runtime=python310 \
-              --trigger-http \
-              --allow-unauthenticated \
-              --source=./dummy_function \
-              --project=${{ secrets.PROJECT_ID }} \
-              --update-labels=redeploy-at=$(date +%s); then
-              echo "✅ Successfully deployed dummy function"
-              exit 0
-            fi
-            echo "❌ Deploy attempt $attempt failed, retrying in 15 seconds..."
-            sleep 15
-          done
-          echo "❌ All deploy attempts failed"
-          exit 1 
+          # Generate unique function name with timestamp to avoid conflicts
+          TIMESTAMP=$(date +%s)
+          FUNCTION_NAME="dummy-function-${TIMESTAMP}"
+          
+          echo "🚀 Deploying function with unique name: $FUNCTION_NAME"
+          
+          gcloud functions deploy $FUNCTION_NAME \
+            --gen2 \
+            --region=asia-southeast1 \
+            --runtime=python310 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --source=./dummy_function \
+            --project=${{ secrets.PROJECT_ID }} \
+            --quiet
+          
+          echo "✅ Successfully deployed dummy function: $FUNCTION_NAME"
+          
+          # Get the function URL for verification
+          FUNCTION_URL=$(gcloud functions describe $FUNCTION_NAME --region=asia-southeast1 --format="value(serviceConfig.uri)")
+          echo "🌐 Function URL: $FUNCTION_URL" 
