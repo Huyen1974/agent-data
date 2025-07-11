@@ -99,7 +99,7 @@ jobs:
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PWD/ADK:$PWD/ADK/agent_data:$PYTHONPATH
         echo "PYTHONPATH set to: $PYTHONPATH"
-        pytest -m "not slow and not integration and not e2e" --tb=short --maxfail=5 -v --json-report=pytest-report.json
+        pytest -m "not slow and not integration and not e2e" --tb=short --maxfail=5 -v --json-report --json-report-file=pytest-report.json
     
     - name: Upload unit test results
       if: always()
@@ -146,7 +146,7 @@ jobs:
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PWD/ADK:$PWD/ADK/agent_data:$PYTHONPATH
         echo "PYTHONPATH set to: $PYTHONPATH"
-        pytest -m "slow" --tb=short --maxfail=3 -v --json-report=pytest-slow-report.json
+        pytest -m "slow" --tb=short --maxfail=3 -v --json-report --json-report-file=pytest-slow-report.json
     
     - name: Upload slow test results
       if: always()
@@ -193,7 +193,7 @@ jobs:
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PWD/ADK:$PWD/ADK/agent_data:$PYTHONPATH
         echo "PYTHONPATH set to: $PYTHONPATH"
-        pytest -m "integration" --tb=short --maxfail=2 -v --json-report=pytest-integration-report.json
+        pytest -m "integration" --tb=short --maxfail=2 -v --json-report --json-report-file=pytest-integration-report.json
     
     - name: Upload integration test results
       if: always()

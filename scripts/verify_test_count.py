@@ -18,8 +18,8 @@ def run_pytest_collect_with_json():
         "--collect-only", 
         "-m", "not slow and not integration and not e2e", 
         "--tb=no",
-        "--json-report=.report.json",
-        "--json-report-summary"
+        "--json-report",
+        "--json-report-file=.report.json"
     ]
     
     result = subprocess.run(command, capture_output=True, text=True)
@@ -39,6 +39,9 @@ def run_pytest_collect_with_json():
         
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Warning: Could not read JSON report ({e}), falling back to text parsing")
+        print(f"Pytest stdout: {result.stdout}")
+        print(f"Pytest stderr: {result.stderr}")
+        print(f"Pytest return code: {result.returncode}")
         return parse_test_count_from_text(result.stdout), result.stdout
 
 def parse_test_count_from_text(output):
