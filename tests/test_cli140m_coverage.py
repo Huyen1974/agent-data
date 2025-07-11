@@ -1,3 +1,6 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 CLI140m Coverage Enhancement Tests
 Comprehensive tests to increase coverage for main modules:
@@ -7,24 +10,12 @@ Comprehensive tests to increase coverage for main modules:
 - Overall coverage: Target >20%
 """
 
-import pytest
-import asyncio
-import time
-from unittest.mock import Mock, AsyncMock, patch, MagicMock
-from fastapi.testclient import TestClient
-from typing import Dict, Any, List, Optional
-import json
-import hashlib
-from datetime import datetime
 
 # Import modules under test
-from ADK.agent_data.api_mcp_gateway import (
     app, ThreadSafeLRUCache, _get_cache_key, _get_cached_result, _cache_result,
     get_user_id_for_rate_limiting, SaveDocumentRequest, QueryVectorsRequest,
     SearchDocumentsRequest, RAGSearchRequest, LoginRequest, UserRegistrationRequest
 )
-from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
-from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 
 
 class TestCLI140mAPIMCPGatewayCoverage:

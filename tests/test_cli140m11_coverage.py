@@ -1,3 +1,6 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 CLI140m.11 Coverage Enhancement Tests
 ====================================
@@ -10,15 +13,8 @@ Comprehensive test suite to achieve ≥80% coverage for:
 Also validates ≥95% pass rate for ptfull test suite.
 """
 
-import pytest
-import asyncio
-import json
-import time
-from unittest.mock import Mock, AsyncMock, patch, MagicMock
-from typing import Dict, Any, List
 
 # API Gateway imports
-from ADK.agent_data.api_mcp_gateway import (
     ThreadSafeLRUCache,
     initialize_caches,
     _get_cache_key,
@@ -28,13 +24,11 @@ from ADK.agent_data.api_mcp_gateway import (
 )
 
 # Qdrant Vectorization Tool imports
-from ADK.agent_data.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     qdrant_rag_search,
 )
 
 # Document Ingestion Tool imports
-from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 
 
 class TestCLI140m11APIMCPGatewayCoverage:

@@ -1,13 +1,10 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 CLI140e Coverage Tests - Targeted tests to improve coverage for api_mcp_gateway.py and qdrant_vectorization_tool.py
 """
 
-import pytest
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
-from fastapi.testclient import TestClient
-from ADK.agent_data.api_mcp_gateway import app, ThreadSafeLRUCache, _get_cache_key, _initialize_caches
-from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 
 class TestThreadSafeLRUCache:

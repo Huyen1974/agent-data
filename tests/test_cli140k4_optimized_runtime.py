@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140k.4 Optimized Runtime Validation Test
 

@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140m.7 Final Push Tests
 ==========================

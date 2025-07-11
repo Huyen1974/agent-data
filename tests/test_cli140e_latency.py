@@ -1,29 +1,20 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 CLI140e Latency Profiling and Optimization Tests
 Tests for CSKH API and RAG query performance optimization
 Target: <0.5s (CSKH API), <0.7s (RAG, 8-50 docs)
 """
 
-import pytest
-import asyncio
-import time
-import cProfile
-import pstats
-import io
-from unittest.mock import AsyncMock, patch, MagicMock
-from typing import Dict, List, Any
-import json
-import logging
 
 # Test imports
-from ADK.agent_data.api_mcp_gateway import (
     app,
     ThreadSafeLRUCache,
     _get_cache_key,
     _get_cached_result,
     _cache_result
 )
-from ADK.agent_data.tools.qdrant_vectorization_tool import qdrant_rag_search, QdrantVectorizationTool
 
 logger = logging.getLogger(__name__)
 

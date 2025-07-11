@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140m.9 Final Coverage Tests for ≥80% Coverage Achievement
 ===========================================================

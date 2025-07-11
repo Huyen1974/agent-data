@@ -1,18 +1,12 @@
+@pytest.mark.slow
+
 #!/usr/bin/env python3
 """
 Performance tests for hybrid query functionality with caching.
 Tests latency expectations and cache effectiveness for RAG queries.
 """
 
-import pytest
-import asyncio
-import time
-import hashlib
-from unittest.mock import AsyncMock, patch, MagicMock
-from typing import Dict, Any, List
 
-from agent_data_manager.tools.qdrant_vectorization_tool import qdrant_rag_search
-from agent_data_manager.api_mcp_gateway import _get_cache_key, _get_cached_result, _cache_result
 
 
 class TestHybridQueryPerformance:

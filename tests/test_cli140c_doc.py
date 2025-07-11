@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140c Documentation Validation Test
 

@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140k.5 Non-Mock Runtime Validation Test
 

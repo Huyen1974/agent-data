@@ -1,3 +1,6 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 CLI140m.12 Coverage Enhancement Tests
 ====================================
@@ -8,21 +11,12 @@ Comprehensive tests to achieve ≥80% coverage for:
 - document_ingestion_tool.py (current: 72%, target: ≥80%)
 """
 
-import pytest
-import asyncio
-import time
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
-from fastapi.testclient import TestClient
-from fastapi import Request
 
 # Import modules under test
-from ADK.agent_data.api_mcp_gateway import (
     app, ThreadSafeLRUCache, get_user_id_for_rate_limiting, 
     initialize_caches, _cache_result, _get_cached_result,
     SaveDocumentRequest, QueryVectorsRequest, RAGSearchRequest
 )
-from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
-from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 
 
 class TestCLI140m12QdrantVectorizationCoverage:

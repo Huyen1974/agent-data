@@ -1,13 +1,10 @@
+@pytest.mark.slow
+@pytest.mark.integration
+
 """
 Additional CLI140e Coverage Tests - More targeted tests to reach coverage goals
 """
 
-import pytest
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
-from fastapi.testclient import TestClient
-from ADK.agent_data.api_mcp_gateway import app, _get_cached_result, _cache_result
-from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool, get_vectorization_tool
 
 
 class TestAPIMCPGatewayCaching:

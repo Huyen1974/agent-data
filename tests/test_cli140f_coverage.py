@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 Test coverage for qdrant_vectorization_tool.py - CLI140f
 Target: Increase coverage from 38% to ≥50% with 1-2 new performance tests

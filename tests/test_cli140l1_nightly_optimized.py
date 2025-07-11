@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140l.1 Nightly CI Runtime Optimization Test
 ==============================================

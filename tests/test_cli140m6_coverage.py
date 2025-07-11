@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140m.6 Coverage Enhancement Tests
 Target: ≥80% coverage for qdrant_vectorization_tool.py and document_ingestion_tool.py

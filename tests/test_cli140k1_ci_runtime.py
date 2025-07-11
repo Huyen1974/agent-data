@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140k.1 CI Runtime Validation Test
 

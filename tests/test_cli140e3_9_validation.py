@@ -1,3 +1,4 @@
+@pytest.mark.integration
 #!/usr/bin/env python3
 """
 Test class for CLI140e.3.9 validation

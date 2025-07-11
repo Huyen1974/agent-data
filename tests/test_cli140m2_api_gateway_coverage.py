@@ -1,3 +1,4 @@
+@pytest.mark.integration
 #!/usr/bin/env python3
 """
 CLI140m.2 - API Gateway Coverage Tests

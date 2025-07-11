@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140m.14 - Comprehensive Coverage Enhancement Tests
 ====================================================

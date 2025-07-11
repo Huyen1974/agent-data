@@ -1,3 +1,4 @@
+@pytest.mark.integration
 """
 CLI140m.10 Coverage and Test Validation
 =======================================

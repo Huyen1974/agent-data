@@ -1,3 +1,4 @@
+@pytest.mark.integration
 import pytest
 """
 CLI 140d Test: Firestore Index Deployment and Cost Monitoring Validation
