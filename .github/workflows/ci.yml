@@ -36,6 +36,8 @@ jobs:
           echo "No requirements.txt found!"
           ls -la
         fi
+        echo "Installing package in development mode for proper test discovery..."
+        pip install -e .
     
     - name: Verify Test Count
       run: |
