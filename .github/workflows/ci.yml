@@ -198,7 +198,7 @@ jobs:
           file: ./Dockerfile.test
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:latest,asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:${{ github.sha }}
+          tags: asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-test-images/agent-data-test:latest,asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-test-images/agent-data-test:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
