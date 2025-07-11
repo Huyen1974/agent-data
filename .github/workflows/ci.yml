@@ -43,7 +43,7 @@ jobs:
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PYTHONPATH
         echo "Running test count verification..."
-        python scripts/verify_test_count.py
+        python3 scripts/verify_test_count.py
     
     - name: Upload test count report
       if: always()
