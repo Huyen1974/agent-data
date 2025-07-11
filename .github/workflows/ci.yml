@@ -165,45 +165,42 @@ jobs:
         retention-days: 7
 
   build-and-push-test-image:
-    runs-on: ubuntu-latest
+    name: Build and Push Test Image
+    # Run after test jobs succeed
     needs: [test-count-verification, unit-tests]
+    # Only run on push to main branch
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-        service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
-    - name: Configure Docker to use gcloud as credential helper
-      run: |
-        gcloud auth configure-docker asia-southeast1-docker.pkg.dev
-    
-    - name: Build and push multi-platform test image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./Dockerfile.test
-        platforms: linux/amd64,linux/arm64
-        push: true
-        tags: |
-          asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:latest
-          asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:${{ github.sha }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-    
-    - name: Verify multi-platform image
-      run: |
-        echo "🔍 Verifying multi-platform image..."
-        docker manifest inspect asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:latest
-        echo "✅ Multi-platform test image built and pushed successfully"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
+
+      - name: Build and push multi-platform test image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.test
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:latest,asia-southeast1-docker.pkg.dev/github-chatgpt-ggcloud/agent-data-images/agent-data-test:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   quality-gates:
     runs-on: ubuntu-latest

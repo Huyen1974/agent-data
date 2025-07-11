@@ -1,38 +1,19 @@
-# Multi-stage Dockerfile for testing environment
-# Stage 1: Builder - Install dependencies
+# Stage 1: Builder - Install libraries
 FROM python:3.10-slim AS builder
-
-# Set working directory
 WORKDIR /app
-
-# Copy requirements file
 COPY requirements.txt .
-
-# Install Python dependencies with retry and timeout
+# Add retry and timeout for network stability
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --timeout=600 --retries=3 -r requirements.txt
 
-# Stage 2: Runtime - Copy code and setup for testing
+# Stage 2: Runtime - Final environment for running tests
 FROM python:3.10-slim
-
-# Set working directory
 WORKDIR /app
-
-# Copy Python packages from builder stage
+# Copy installed libraries from builder stage
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+# Copy installed binaries from builder stage
 COPY --from=builder /usr/local/bin /usr/local/bin
-
-# Copy application code
+# Copy application source code
 COPY . .
-
-# Set environment variables
-ENV PYTHONPATH=/app:$PYTHONPATH
-ENV PYTHONUNBUFFERED=1
-
-# Install system dependencies if needed
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Default command to run tests
-CMD ["pytest", "--tb=short", "-v"] 
+# Default command when running container is to execute pytest
+CMD ["pytest"] 
