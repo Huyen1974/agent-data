@@ -291,6 +291,7 @@ class TestCLI136MetadataOptimization:
         results = await manager.query_multi_level_hierarchy_optimized(level_1="")
         assert results == []
 
+    @pytest.mark.unit
     def test_query_performance_target(self):
         """Test that query performance meets the <2s target."""
         # This test validates the performance requirement

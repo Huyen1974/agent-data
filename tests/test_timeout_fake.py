@@ -7,19 +7,23 @@ Purpose: Test timeout handling in batch test script
 import time
 import pytest
 
+@pytest.mark.unit
 def test_timeout_fake():
     """Fake test that should complete quickly"""
     assert True
 
+@pytest.mark.unit
 def test_quick_pass():
     """Quick passing test"""
     assert 1 + 1 == 2
 
+@pytest.mark.unit
 def test_quick_fail():
     """Quick test that was previously failing - now fixed to pass"""
     assert True, "Test now passes successfully"
 
 @pytest.mark.skip(reason="Testing skip functionality")
+@pytest.mark.unit
 def test_skipped_fake():
     """Test that should be skipped"""
     assert True 

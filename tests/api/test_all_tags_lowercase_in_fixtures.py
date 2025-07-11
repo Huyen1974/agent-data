@@ -2,6 +2,7 @@ from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
 import pytest
 
 
+@pytest.mark.unit
 def test_all_tags_lowercase_in_fixtures():
     for point in STANDARD_SAMPLE_POINTS_RAW:
         # Ensure payload exists and is a dictionary

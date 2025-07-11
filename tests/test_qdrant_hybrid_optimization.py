@@ -19,6 +19,7 @@ class TestQdrantHybridOptimization:
         """Return the optimized image name."""
         return "qdrant-hybrid-optimized:latest"
 
+    @pytest.mark.unit
     def test_docker_image_exists(self, image_name):
         """Test that the optimized Docker image exists."""
         result = subprocess.run(
@@ -29,6 +30,7 @@ class TestQdrantHybridOptimization:
         assert result.returncode == 0, "Docker command failed"
         assert result.stdout.strip() != "", f"Image {image_name} not found"
 
+    @pytest.mark.unit
     def test_image_size_under_500mb(self, image_name):
         """Test that the Docker image size is under 500MB."""
         # Get image size in bytes
@@ -45,6 +47,7 @@ class TestQdrantHybridOptimization:
         print(f"Image size: {size_mb:.2f} MB")
         assert size_mb < 500, f"Image size {size_mb:.2f}MB exceeds 500MB limit"
 
+    @pytest.mark.unit
     def test_container_startup_time_under_2s(self, image_name):
         """Test that container startup time is under 2 seconds."""
         # Start container
@@ -89,6 +92,7 @@ class TestQdrantHybridOptimization:
             subprocess.run(["docker", "stop", container_id], capture_output=True)
             subprocess.run(["docker", "rm", container_id], capture_output=True)
 
+    @pytest.mark.unit
     def test_qdrant_functionality_intact(self, image_name):
         """Test that Qdrant functionality remains intact after optimization."""
         # Start container
@@ -150,6 +154,7 @@ class TestQdrantHybridOptimization:
             subprocess.run(["docker", "stop", container_id], capture_output=True)
             subprocess.run(["docker", "rm", container_id], capture_output=True)
 
+    @pytest.mark.unit
     def test_container_logs_no_errors(self, image_name):
         """Test that container startup produces no critical errors."""
         # Start container
@@ -207,6 +212,7 @@ class TestQdrantHybridOptimization:
             subprocess.run(["docker", "stop", container_id], capture_output=True)
             subprocess.run(["docker", "rm", container_id], capture_output=True)
 
+    @pytest.mark.unit
     def test_optimization_improvement_metrics(self):
         """Test that optimization provides measurable improvements."""
         # This test documents the expected improvements
@@ -225,6 +231,7 @@ class TestQdrantHybridOptimization:
         assert improvements["startup_time_target_s"] == 2
 
     @pytest.mark.integration
+    @pytest.mark.unit
     def test_hybrid_sync_functionality_preserved(self):
         """Test that hybrid sync functionality is preserved after optimization."""
         # Mock test since we can't test real hybrid sync in unit tests

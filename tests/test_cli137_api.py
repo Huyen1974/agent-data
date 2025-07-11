@@ -297,6 +297,7 @@ class TestCLI137BatchAPI:
                             assert response.status == "completed"
                             assert response.successful_saves == 10
 
+    @pytest.mark.unit
     def test_batch_request_validation(self):
         """Test batch request validation limits"""
         # Test document limit validation - using min_length/max_length instead of min_items/max_items

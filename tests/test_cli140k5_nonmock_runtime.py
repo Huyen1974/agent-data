@@ -19,6 +19,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_nonmock_runtime_validation_infrastructure(self):
         """
         Validates that non-mock runtime validation infrastructure is in place.
@@ -44,6 +45,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_mock_vs_nonmock_performance_difference(self):
         """
         Validates that there is a measurable performance difference between mock and non-mock modes.
@@ -72,6 +74,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_nonmock_runtime_target_validation(self):
         """
         Validates that the non-mock runtime meets the <5min (300s) target.
@@ -100,6 +103,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_nonmock_performance_test_analysis(self):
         """
         Analyzes the performance characteristics of non-mock mode execution.
@@ -136,6 +140,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_cli140k5_completion_requirements(self):
         """
         Validates that all CLI140k.5 requirements are met for completion.
@@ -177,6 +182,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_runtime_comparison_with_previous_phases(self):
         """
         Compares CLI140k.5 non-mock runtime with previous CLI phases.
@@ -224,6 +230,7 @@ class TestCLI140k5NonMockRuntime:
 
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
+    @pytest.mark.unit
     def test_nonmock_runtime_stability_analysis(self):
         """
         Analyzes the stability and reliability of non-mock runtime measurements.
@@ -263,6 +270,7 @@ class TestCLI140k5NonMockRuntime:
     @pytest.mark.cli140k5
     @pytest.mark.runtime_optimization
     @pytest.mark.slow  # Mark as slow since it's a meta-analysis test
+    @pytest.mark.unit
     def test_full_suite_nonmock_runtime_estimation(self):
         """
         Provides estimation capability for non-mock runtime based on test characteristics.

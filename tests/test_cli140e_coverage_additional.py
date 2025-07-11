@@ -14,6 +14,7 @@ class TestAPIMCPGatewayCaching:
     """Test caching functionality in api_mcp_gateway.py."""
 
     @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @pytest.mark.unit
     def test_get_cached_result(self, mock_cache):
         """Test getting cached results."""
         mock_cache.get.return_value = {"cached": "result"}
@@ -23,6 +24,7 @@ class TestAPIMCPGatewayCaching:
         mock_cache.get.assert_called_once_with("test_key")
 
     @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @pytest.mark.unit
     def test_get_cached_result_none(self, mock_cache):
         """Test getting cached results when cache is None."""
         mock_cache = None
@@ -32,12 +34,14 @@ class TestAPIMCPGatewayCaching:
             assert result is None
 
     @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @pytest.mark.unit
     def test_cache_result(self, mock_cache):
         """Test caching results."""
         _cache_result("test_key", {"test": "data"})
         mock_cache.put.assert_called_once_with("test_key", {"test": "data"})
 
     @patch('ADK.agent_data.api_mcp_gateway._rag_cache')
+    @pytest.mark.unit
     def test_cache_result_none(self, mock_cache):
         """Test caching results when cache is None."""
         with patch('ADK.agent_data.api_mcp_gateway._rag_cache', None):
@@ -48,6 +52,7 @@ class TestAPIMCPGatewayCaching:
 class TestAPIEndpointsWithMocks:
     """Test API endpoints with proper mocking."""
 
+    @pytest.mark.unit
     def test_login_endpoint(self):
         """Test login endpoint."""
         client = TestClient(app)
@@ -69,6 +74,7 @@ class TestAPIEndpointsWithMocks:
             # May return success or service unavailable
             assert response.status_code in [200, 503]
 
+    @pytest.mark.unit
     def test_register_endpoint(self):
         """Test registration endpoint."""
         client = TestClient(app)
@@ -82,6 +88,7 @@ class TestAPIEndpointsWithMocks:
         # May return success, error, or service unavailable
         assert response.status_code in [200, 400, 503]
 
+    @pytest.mark.unit
     def test_search_endpoint(self):
         """Test search endpoint."""
         client = TestClient(app)
@@ -94,6 +101,7 @@ class TestAPIEndpointsWithMocks:
         # Should require authentication
         assert response.status_code in [401, 503]
 
+    @pytest.mark.unit
     def test_rag_endpoint(self):
         """Test RAG search endpoint."""
         client = TestClient(app)
@@ -110,6 +118,7 @@ class TestAPIEndpointsWithMocks:
 class TestQdrantVectorizationToolAdditional:
     """Additional tests for QdrantVectorizationTool."""
 
+    @pytest.mark.unit
     def test_get_vectorization_tool(self):
         """Test getting vectorization tool instance."""
         tool = get_vectorization_tool()
@@ -251,6 +260,7 @@ class TestQdrantVectorizationToolAdditional:
 class TestAPIRateLimiting:
     """Test rate limiting functionality."""
 
+    @pytest.mark.unit
     def test_rate_limiting_with_jwt_token(self):
         """Test rate limiting with JWT token."""
         from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
@@ -269,6 +279,7 @@ class TestAPIRateLimiting:
         key = get_user_id_for_rate_limiting(mock_request)
         assert isinstance(key, str)
 
+    @pytest.mark.unit
     def test_rate_limiting_with_invalid_jwt(self):
         """Test rate limiting with invalid JWT token."""
         from ADK.agent_data.api_mcp_gateway import get_user_id_for_rate_limiting
@@ -285,6 +296,7 @@ class TestAPIStartupShutdown:
     """Test API startup and shutdown events."""
 
     @patch('ADK.agent_data.api_mcp_gateway._initialize_caches')
+    @pytest.mark.unit
     def test_startup_event(self, mock_init_caches):
         """Test startup event handler."""
         # The startup event should initialize caches

@@ -15,6 +15,7 @@ from pathlib import Path
 class TestCLI126DCISetup:
     """Tests for CLI 126D CI/CD setup and Git hooks."""
 
+    @pytest.mark.unit
     def test_nightly_workflow_exists_and_valid(self):
         """Test that nightly.yml workflow exists and is properly configured."""
         workflow_path = Path(".github/workflows/nightly.yml")
@@ -63,6 +64,7 @@ class TestCLI126DCISetup:
 
         assert test_step_found, "Should have a step that runs pytest"
 
+    @pytest.mark.unit
     def test_git_pre_push_hook_exists_and_executable(self):
         """Test that Git pre-push hook exists and is executable."""
         hook_path = Path(".git/hooks/pre-push")
@@ -88,6 +90,7 @@ class TestCLI126DCISetup:
         # Should exit with error code on test failure
         assert "exit 1" in content, "Should exit with error on test failure"
 
+    @pytest.mark.unit
     def test_git_hook_functionality_simulation(self):
         """Test Git hook functionality by simulating its behavior."""
         # Simulate running the same command as the pre-push hook
@@ -111,6 +114,7 @@ class TestCLI126DCISetup:
             # Just ensure the command structure is correct
             pytest.skip("Test execution timed out - hook command is valid but system is slow")
 
+    @pytest.mark.unit
     def test_nightly_ci_badge_ready(self):
         """Test that the nightly CI is ready for badge integration."""
         workflow_path = Path(".github/workflows/nightly.yml")
@@ -124,6 +128,7 @@ class TestCLI126DCISetup:
         assert "name:" in content, "Workflow should have a name for badge"
         assert "Nightly" in content or "nightly" in content, "Name should indicate nightly nature"
 
+    @pytest.mark.unit
     def test_cli126d_requirements_met(self):
         """Test that all CLI 126D requirements are satisfied."""
         # 1. Nightly CI setup
@@ -150,6 +155,7 @@ class TestCLI126DCISetup:
                 content = f.read()
             assert "markers" in content, "Should have test markers configured"
 
+    @pytest.mark.unit
     def test_development_workflow_optimization(self):
         """Test that development workflow is optimized for CLI 127-140."""
         # Should be able to run fast tests quickly

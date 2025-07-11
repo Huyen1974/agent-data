@@ -17,6 +17,7 @@ class TestCLI140cDocumentation:
     """Test suite for CLI140c documentation validation."""
 
     @pytest.mark.doc
+    @pytest.mark.unit
     def test_cskh_api_documentation_validation(self):
         """
         Validates CSKH API specifications in documentation files.

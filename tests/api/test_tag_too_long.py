@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 
+@pytest.mark.unit
 def test_tag_too_long(client_with_qdrant_override: TestClient):
     long_tag = "x" * 65
     response = client_with_qdrant_override.post(

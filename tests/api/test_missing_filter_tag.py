@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.unit
 def test_filter_tag_required_when_no_threshold(client):
 
     payload = {

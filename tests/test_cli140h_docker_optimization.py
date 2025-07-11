@@ -171,6 +171,7 @@ class TestCLI140hDockerOptimization:
         }
 
 
+@pytest.mark.unit
 def test_cli140h_completion_summary():
     """Summary test for CLI140h completion."""
     optimization_test = TestCLI140hDockerOptimization()

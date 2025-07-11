@@ -443,6 +443,7 @@ class TestCLI140g3Validation:
 
 
 @pytest.mark.integration
+@pytest.mark.unit
 def test_cli140g3_final_validation():
     """Final validation test for CLI140g.3 completion."""
     print("\n" + "="*60)

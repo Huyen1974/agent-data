@@ -14,6 +14,7 @@ if project_root not in sys.path:
 from agent_data_manager.tools.bulk_upload_tool import bulk_upload_sync
 
 
+@pytest.mark.unit
 def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with valid points.
@@ -32,6 +33,7 @@ def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     assert "test_collection" in result["message"]
 
 
+@pytest.mark.unit
 def test_bulk_upload_empty_collection():
     """
     Test BULK_UPLOAD with empty or whitespace-only collection name.
@@ -54,6 +56,7 @@ def test_bulk_upload_empty_collection():
     assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
 
 
+@pytest.mark.unit
 def test_bulk_upload_empty_points():
     """
     Test BULK_UPLOAD with empty points list.
@@ -67,6 +70,7 @@ def test_bulk_upload_empty_points():
     assert "empty" in result["error"].lower()
 
 
+@pytest.mark.unit
 def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with invalid points (missing vector).
@@ -85,6 +89,7 @@ def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
     assert "valid" in result["error"].lower()
 
 
+@pytest.mark.unit
 def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with a mix of valid and invalid points.
@@ -102,6 +107,7 @@ def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient
     assert result["uploaded_count"] == 2  # Only the valid points should be uploaded
 
 
+@pytest.mark.unit
 def test_bulk_upload_with_custom_ids(client_with_qdrant_override: TestClient):
     """
     Test BULK_UPLOAD with custom point IDs.

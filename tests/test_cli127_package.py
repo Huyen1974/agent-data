@@ -14,6 +14,7 @@ class TestCLI127PackageSetup:
     """Test CLI 127 package setup and import validation."""
 
     @pytest.mark.xfail(reason="CLI140m.68: Package installation test - not critical for stability")
+    @pytest.mark.unit
     def test_package_editable_installation(self):
         """Test that agent_data_manager is installed as editable package."""
         # Check if package is installed
@@ -31,6 +32,7 @@ class TestCLI127PackageSetup:
         assert "agent_data_manager" in output, "Package name mismatch"
         assert "Version: 0.1.0" in output, "Package version mismatch"
 
+    @pytest.mark.unit
     def test_core_imports_work(self):
         """Test that core agent_data_manager imports work correctly."""
         # Test basic tool import
@@ -48,6 +50,7 @@ class TestCLI127PackageSetup:
         # If we reach here, all imports succeeded
         assert True
 
+    @pytest.mark.unit
     def test_package_structure_accessible(self):
         """Test that package structure is accessible and organized correctly."""
         import agent_data_manager
@@ -63,6 +66,7 @@ class TestCLI127PackageSetup:
 
         assert True
 
+    @pytest.mark.unit
     def test_import_consistency_across_codebase(self):
         """Test that imports are consistent and don't have old 'from tools.*' patterns."""
         import os

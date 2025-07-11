@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 from agent_data_manager.tools.delete_by_tag_tool import delete_by_tag_sync
 
 
+@pytest.mark.unit
 def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
     """
     Test DELETE_BY_TAG with a valid tag that exists in the data.
@@ -22,6 +23,7 @@ def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
     assert "science" in result["message"]
 
 
+@pytest.mark.unit
 def test_delete_by_tag_empty():
     """
     Test DELETE_BY_TAG with empty or whitespace-only tag.
@@ -42,6 +44,7 @@ def test_delete_by_tag_empty():
     assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
 
 
+@pytest.mark.unit
 def test_delete_by_tag_non_existent(client_with_qdrant_override: TestClient):
     """
     Test DELETE_BY_TAG with a tag that doesn't exist in the data.

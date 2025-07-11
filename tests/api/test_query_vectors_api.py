@@ -1,3 +1,4 @@
+import pytest
 import random
 import uuid
 from fastapi.testclient import TestClient
@@ -16,6 +17,7 @@ def generate_unique_tag():
     return f"test-tag-{uuid.uuid4()}"
 
 
+@pytest.mark.unit
 def test_get_vector_by_id():
     """
     Tests retrieving a single vector by its point_id.
@@ -62,6 +64,7 @@ def test_get_vector_by_id():
     #     f"Expected vector {vector}, but got {retrieved_vector_data['vector']}"
 
 
+@pytest.mark.unit
 def test_query_vectors_by_ids():
     """
     Tests querying multiple vectors by a list of point_ids.

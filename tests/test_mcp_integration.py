@@ -103,6 +103,7 @@ async def _read_response(process: subprocess.Popen) -> Optional[Dict[str, Any]]:
 class TestMCPIntegration:
 
     @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.unit
     def test_subprocess_single_save(self):
         """Test single save_document call with mock QdrantStore via subprocess."""
         # Virtual environment path
@@ -199,6 +200,7 @@ class TestMCPIntegration:
                 process.wait()
 
     @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.unit
     def test_subprocess_medium_scale(self):
         """Test medium-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path
@@ -300,6 +302,7 @@ class TestMCPIntegration:
                 process.wait()
 
     @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.unit
     def test_subprocess_mock_qdrant_environment(self):
         """Test that mock QdrantStore is properly initialized via environment variable."""
         # Virtual environment path
@@ -350,6 +353,7 @@ class TestMCPIntegration:
                 process.wait()
 
     @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.unit
     def test_subprocess_small_scale(self):
         """Test small-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path
@@ -451,6 +455,7 @@ class TestMCPIntegration:
                 process.wait()
 
     @pytest.mark.skipif(not os.getenv("QDRANT_API_KEY"), reason="QDRANT_API_KEY not set, skipping real API tests")
+    @pytest.mark.unit
     def test_subprocess_real_api_calls(self):
         """Test Agent functionalities with real Qdrant API calls - CLI 119D6 Enhanced."""
         # Virtual environment path
@@ -585,6 +590,7 @@ class TestMCPIntegration:
                 process.wait()
 
     @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.unit
     def test_timeout_retry_logic(self):
         """Test timeout and retry logic with simulated delays and failures - CLI 119D6."""
         # Virtual environment path

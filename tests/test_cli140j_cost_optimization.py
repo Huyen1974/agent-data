@@ -21,6 +21,7 @@ class TestCostOptimization:
         self.billing_client = billing.CloudBillingClient()
         self.run_client = run_v2.ServicesClient()
         
+    @pytest.mark.unit
     def test_min_instances_zero(self):
         """Verify all services have min_instances=0."""
         services = self.run_client.list_services(
@@ -31,6 +32,7 @@ class TestCostOptimization:
             assert service.template.scaling.min_instance_count == 0, \
                 f"Service {service.name} has min_instances != 0"
     
+    @pytest.mark.unit
     def test_log_router_configuration(self):
         """Verify Log Router is properly configured."""
         # Try Python API first
@@ -54,6 +56,7 @@ class TestCostOptimization:
         assert len(cost_sinks) > 0, \
             f"No cost/budget/optimization log sink found. Python API sinks: {[sink.name for sink in sinks]}"
     
+    @pytest.mark.unit
     def test_budget_alert_configuration(self):
         """Verify budget alerts are configured or can be configured."""
         budget_client = BudgetServiceClient()
@@ -125,6 +128,7 @@ class TestCostOptimization:
             print(f"Could not create budget: {e}")
             return False
     
+    @pytest.mark.unit
     def test_service_scaling(self):
         """Verify services scale to zero when idle."""
         services = self.run_client.list_services(

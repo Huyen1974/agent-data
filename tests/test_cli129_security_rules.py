@@ -1,3 +1,4 @@
+import pytest
 """
 CLI 129 Test: Firestore Security Rules Validation
 Tests security rules structure and validates access control concepts.
@@ -7,6 +8,7 @@ Tests security rules structure and validates access control concepts.
 class TestCLI129SecurityRules:
     """Test Firestore security rules validation for CLI 129."""
 
+    @pytest.mark.unit
     def test_comprehensive_firestore_security_rules_validation(self):
         """
         Comprehensive test validating all Firestore security rule scenarios for CLI 129.

@@ -1,6 +1,8 @@
 import pytest
 
 
+@pytest.mark.unit
+@pytest.mark.unit
 def test_top_k_minimum_one(client_with_qdrant_override):
 
     payload = {"query_text": "historical events", "top_k": 1, "filter_tag": "history", "score_threshold": 0.0}

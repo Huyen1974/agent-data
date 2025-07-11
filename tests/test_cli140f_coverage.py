@@ -231,6 +231,7 @@ class TestCLI140fCoverage:
 
 
 @pytest.mark.performance
+@pytest.mark.unit
 def test_get_vectorization_tool_factory_performance():
     """Test the factory function for creating vectorization tools with performance validation."""
     # Clear the global instance first

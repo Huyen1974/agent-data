@@ -18,6 +18,7 @@ class TestCLI140k1CIRuntime:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
+    @pytest.mark.unit
     def test_ci_runtime_validation_requirements(self):
         """
         Validates that CI runtime validation infrastructure is in place.
@@ -40,6 +41,7 @@ class TestCLI140k1CIRuntime:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
+    @pytest.mark.unit
     def test_local_full_suite_runtime_estimation(self):
         """
         Estimates full suite runtime based on current test count and performance.
@@ -100,6 +102,7 @@ class TestCLI140k1CIRuntime:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
+    @pytest.mark.unit
     def test_ci_runtime_target_definition(self):
         """
         Validates that the CI runtime target is properly defined and reasonable.
@@ -136,6 +139,7 @@ class TestCLI140k1CIRuntime:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
+    @pytest.mark.unit
     def test_cli140k1_completion_requirements(self):
         """
         Validates that all CLI140k.1 requirements are met for completion.
@@ -168,6 +172,7 @@ class TestCLI140k1CIRuntime:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
+    @pytest.mark.unit
     def test_runtime_monitoring_capability(self):
         """
         Tests the capability to monitor and measure test runtime.
@@ -197,6 +202,7 @@ class TestCLI140k1CIRuntime:
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k1
     @pytest.mark.slow  # Mark as slow since it's a meta-test
+    @pytest.mark.unit
     def test_full_suite_runtime_benchmark(self):
         """
         Performs a local benchmark of full suite runtime for comparison with CI.

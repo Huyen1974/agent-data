@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 
+@pytest.mark.unit
 def test_threshold_exact_equals(client_with_qdrant_override: TestClient):
     response = client_with_qdrant_override.post(
         "/semantic_search_cosine",

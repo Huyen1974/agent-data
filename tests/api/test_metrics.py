@@ -1,3 +1,4 @@
+import pytest
 # tests/api/test_metrics.py
 # This file is part of the MPC Back End for Agents project.
 #
@@ -15,6 +16,7 @@
 from fastapi.testclient import TestClient
 
 
+@pytest.mark.unit
 def test_metrics_endpoint(client: TestClient):
     """Test that the /metrics endpoint returns Prometheus metrics in the correct format."""
     # Make a request to the /metrics endpoint

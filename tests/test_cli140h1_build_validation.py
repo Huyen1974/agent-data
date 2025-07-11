@@ -147,6 +147,7 @@ class TestCLI140h1BuildValidation:
             print("⚠️ cli140h_all_green tag not found (may not have run full build script)")
 
 
+@pytest.mark.unit
 def test_optimization_summary():
     """Generate optimization summary for reporting."""
     try:

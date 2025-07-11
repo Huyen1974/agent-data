@@ -253,6 +253,7 @@ class TestFirestoreRUOptimization:
         
         logger.info(f"Batch existence check: {sum(existence_map.values())}/10 documents exist")
 
+    @pytest.mark.unit
     def test_ru_cost_comparison(self, ru_cost_tracker):
         """
         Test and compare RU costs between optimized and unoptimized approaches.

@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.unit
 def test_query_text_exceeds_max_length(client):
 
     long_text = "x" * 3000

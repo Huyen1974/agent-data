@@ -2,6 +2,7 @@ import pytest
 
 
 
+@pytest.mark.unit
 def test_score_threshold_one(client_with_qdrant_override):
 
     payload = {

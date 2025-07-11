@@ -2,6 +2,7 @@ import pytest
 
 
 
+@pytest.mark.unit
 def test_top_k_exceeds_data_count(client_with_qdrant_override):
 
     payload = {

@@ -3,6 +3,7 @@ import pytest
 
 
 
+@pytest.mark.unit
 def test_negative_top_k(client: TestClient):
     payload = {"query_text": "quick check", "top_k": -5, "score_threshold": 0.3}
     resp = client.post("/semantic_search_cosine", json=payload)

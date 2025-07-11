@@ -1,0 +1,833 @@
+test-count-verification	Set up job	﻿2025-07-11T08:59:06.5465683Z Current runner version: '2.325.0'
+test-count-verification	Set up job	2025-07-11T08:59:06.5491398Z ##[group]Operating System
+test-count-verification	Set up job	2025-07-11T08:59:06.5492267Z Ubuntu
+test-count-verification	Set up job	2025-07-11T08:59:06.5492773Z 24.04.2
+test-count-verification	Set up job	2025-07-11T08:59:06.5493359Z LTS
+test-count-verification	Set up job	2025-07-11T08:59:06.5493855Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:06.5494397Z ##[group]Runner Image
+test-count-verification	Set up job	2025-07-11T08:59:06.5494976Z Image: ubuntu-24.04
+test-count-verification	Set up job	2025-07-11T08:59:06.5495589Z Version: 20250629.1.0
+test-count-verification	Set up job	2025-07-11T08:59:06.5496662Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250629.1/images/ubuntu/Ubuntu2404-Readme.md
+test-count-verification	Set up job	2025-07-11T08:59:06.5498009Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250629.1
+test-count-verification	Set up job	2025-07-11T08:59:06.5499454Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:06.5499970Z ##[group]Runner Image Provisioner
+test-count-verification	Set up job	2025-07-11T08:59:06.5500616Z 2.0.449.1
+test-count-verification	Set up job	2025-07-11T08:59:06.5501186Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:06.5502193Z ##[group]GITHUB_TOKEN Permissions
+test-count-verification	Set up job	2025-07-11T08:59:06.5504658Z Contents: read
+test-count-verification	Set up job	2025-07-11T08:59:06.5505274Z Metadata: read
+test-count-verification	Set up job	2025-07-11T08:59:06.5505768Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:06.5508994Z Secret source: Actions
+test-count-verification	Set up job	2025-07-11T08:59:06.5509961Z Prepare workflow directory
+test-count-verification	Set up job	2025-07-11T08:59:06.5839215Z Prepare all required actions
+test-count-verification	Set up job	2025-07-11T08:59:06.5878717Z Getting action download info
+test-count-verification	Set up job	2025-07-11T08:59:06.9644640Z ##[group]Download immutable action package 'actions/checkout@v4'
+test-count-verification	Set up job	2025-07-11T08:59:06.9645940Z Version: 4.2.2
+test-count-verification	Set up job	2025-07-11T08:59:06.9646962Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+test-count-verification	Set up job	2025-07-11T08:59:06.9648246Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+test-count-verification	Set up job	2025-07-11T08:59:06.9649339Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:07.0427711Z ##[group]Download immutable action package 'actions/setup-python@v4'
+test-count-verification	Set up job	2025-07-11T08:59:07.0428895Z Version: 4.9.1
+test-count-verification	Set up job	2025-07-11T08:59:07.0429796Z Digest: sha256:f03e505388af670b5a108629e0ba26befc08d5c62b41f46146a45fe29ae509a5
+test-count-verification	Set up job	2025-07-11T08:59:07.0430854Z Source commit SHA: 7f4fc3e22c37d6ff65e88745f38bd3157c663f7c
+test-count-verification	Set up job	2025-07-11T08:59:07.0431617Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:07.4114985Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+test-count-verification	Set up job	2025-07-11T08:59:07.4116566Z Version: 4.6.2
+test-count-verification	Set up job	2025-07-11T08:59:07.4117955Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+test-count-verification	Set up job	2025-07-11T08:59:07.4119999Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+test-count-verification	Set up job	2025-07-11T08:59:07.4121476Z ##[endgroup]
+test-count-verification	Set up job	2025-07-11T08:59:07.6096604Z Complete job name: test-count-verification
+test-count-verification	Run actions/checkout@v4	﻿2025-07-11T08:59:07.6797543Z ##[group]Run actions/checkout@v4
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6798837Z with:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6799363Z   repository: Huyen1974/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6800106Z   token: ***
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6800564Z   ssh-strict: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6801002Z   ssh-user: git
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6801470Z   persist-credentials: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6801968Z   clean: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6802415Z   sparse-checkout-cone-mode: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6802985Z   fetch-depth: 1
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6803428Z   fetch-tags: false
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6803892Z   show-progress: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6804374Z   lfs: false
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6804824Z   submodules: false
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6805304Z   set-safe-directory: true
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.6806109Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8476196Z Syncing repository: Huyen1974/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8478091Z ##[group]Getting Git version info
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8479195Z Working directory is '/home/runner/work/agent-data/agent-data'
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8480299Z [command]/usr/bin/git version
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8521651Z git version 2.49.0
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8549162Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8569552Z Temporarily overriding HOME='/home/runner/work/_temp/3dd5214b-a1ad-45a0-862f-dc6b28624294' before making global git config changes
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8571870Z Adding repository directory to the temporary git global config as a safe directory
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8574248Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8606896Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8610640Z ##[group]Initializing the repository
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8614505Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8672481Z hint: Using 'master' as the name for the initial branch. This default branch name
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8673883Z hint: is subject to change. To configure the initial branch name to use in all
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8675635Z hint: of your new repositories, which will suppress this warning, call:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8676961Z hint:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8677782Z hint: 	git config --global init.defaultBranch <name>
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8678967Z hint:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8679614Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8680581Z hint: 'development'. The just-created branch can be renamed via this command:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8681344Z hint:
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8681770Z hint: 	git branch -m <name>
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8682659Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8689211Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8721649Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8722880Z ##[group]Disabling automatic garbage collection
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8725313Z [command]/usr/bin/git config --local gc.auto 0
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8753398Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8754168Z ##[group]Setting up auth
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8761470Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.8793001Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9066898Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9097391Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9320784Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9358361Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9360291Z ##[group]Fetching the repository
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:07.9369099Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ccee8b9cc88a648bdcb9999e17e1f8948aae8dc7:refs/remotes/origin/main
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6589353Z From https://github.com/Huyen1974/agent-data
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6591197Z  * [new ref]         ccee8b9cc88a648bdcb9999e17e1f8948aae8dc7 -> origin/main
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6620697Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6622816Z ##[group]Determining the checkout info
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6624481Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6628239Z [command]/usr/bin/git sparse-checkout disable
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6672776Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6700511Z ##[group]Checking out the ref
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.6703963Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.7508725Z Switched to a new branch 'main'
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.7513097Z branch 'main' set up to track 'origin/main'.
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.7523774Z ##[endgroup]
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.7566813Z [command]/usr/bin/git log -1 --format=%H
+test-count-verification	Run actions/checkout@v4	2025-07-11T08:59:08.7589800Z ccee8b9cc88a648bdcb9999e17e1f8948aae8dc7
+test-count-verification	Set up Python 3.10	﻿2025-07-11T08:59:08.7944662Z ##[group]Run actions/setup-python@v4
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7946575Z with:
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7947916Z   python-version: 3.10
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7949749Z   check-latest: false
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7951654Z   token: ***
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7952568Z   update-environment: true
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7953610Z   allow-prereleases: false
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.7954621Z ##[endgroup]
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.9647493Z ##[group]Installed versions
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.9713279Z Successfully set up CPython (3.10.18)
+test-count-verification	Set up Python 3.10	2025-07-11T08:59:08.9715729Z ##[endgroup]
+test-count-verification	Install dependencies	﻿2025-07-11T08:59:08.9859059Z ##[group]Run python -m pip install --upgrade pip
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9860538Z [36;1mpython -m pip install --upgrade pip[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9862629Z [36;1mpip install pytest pytest-json-report pytest-mock pytest-asyncio pytest-timeout pytest-cov[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9864715Z [36;1mecho "Checking for requirements file..."[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9865994Z [36;1mif [ -f requirements.txt ]; then [0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9867321Z [36;1m  echo "Found requirements.txt, installing..."[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9869663Z [36;1m  pip install -r requirements.txt || echo "Some dependencies may have conflicts, continuing..."[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9871528Z [36;1melse[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9872413Z [36;1m  echo "No requirements.txt found!"[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9873519Z [36;1m  ls -la[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9874300Z [36;1mfi[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9875648Z [36;1mecho "Installing package in development mode for proper test discovery..."[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9877352Z [36;1mpip install -e .[0m
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9974394Z shell: /usr/bin/bash -e {0}
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9975362Z env:
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9976358Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9978094Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9979976Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9981487Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9983022Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9984579Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+test-count-verification	Install dependencies	2025-07-11T08:59:08.9985876Z ##[endgroup]
+test-count-verification	Install dependencies	2025-07-11T08:59:09.5432444Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (25.1.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.3279851Z Collecting pytest
+test-count-verification	Install dependencies	2025-07-11T08:59:10.3934943Z   Downloading pytest-8.4.1-py3-none-any.whl.metadata (7.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.4234994Z Collecting pytest-json-report
+test-count-verification	Install dependencies	2025-07-11T08:59:10.4378959Z   Downloading pytest_json_report-1.5.0-py3-none-any.whl.metadata (15 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.4832877Z Collecting pytest-mock
+test-count-verification	Install dependencies	2025-07-11T08:59:10.4975725Z   Downloading pytest_mock-3.14.1-py3-none-any.whl.metadata (3.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.5311654Z Collecting pytest-asyncio
+test-count-verification	Install dependencies	2025-07-11T08:59:10.5455320Z   Downloading pytest_asyncio-1.0.0-py3-none-any.whl.metadata (4.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.5760298Z Collecting pytest-timeout
+test-count-verification	Install dependencies	2025-07-11T08:59:10.5918189Z   Downloading pytest_timeout-2.4.0-py3-none-any.whl.metadata (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.6232022Z Collecting pytest-cov
+test-count-verification	Install dependencies	2025-07-11T08:59:10.6390246Z   Downloading pytest_cov-6.2.1-py3-none-any.whl.metadata (30 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.6684896Z Collecting exceptiongroup>=1 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.6829076Z   Downloading exceptiongroup-1.3.0-py3-none-any.whl.metadata (6.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.7049037Z Collecting iniconfig>=1 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.7227947Z   Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.7523061Z Collecting packaging>=20 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.7665672Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.7911638Z Collecting pluggy<2,>=1.5 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.8056700Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.8412317Z Collecting pygments>=2.7.2 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.8557382Z   Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.8829005Z Collecting tomli>=1 (from pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.8970390Z   Downloading tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.9396863Z Collecting pytest-metadata (from pytest-json-report)
+test-count-verification	Install dependencies	2025-07-11T08:59:10.9545315Z   Downloading pytest_metadata-3.1.1-py3-none-any.whl.metadata (8.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.3745611Z Collecting coverage>=7.5 (from coverage[toml]>=7.5->pytest-cov)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.3894314Z   Downloading coverage-7.9.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.4242688Z Collecting typing-extensions>=4.6.0 (from exceptiongroup>=1->pytest)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.4393625Z   Downloading typing_extensions-4.14.1-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.4634636Z Downloading pytest-8.4.1-py3-none-any.whl (365 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5097078Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5260032Z Downloading pytest_json_report-1.5.0-py3-none-any.whl (13 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5423991Z Downloading pytest_mock-3.14.1-py3-none-any.whl (9.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5588013Z Downloading pytest_asyncio-1.0.0-py3-none-any.whl (15 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5757342Z Downloading pytest_timeout-2.4.0-py3-none-any.whl (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.5921583Z Downloading pytest_cov-6.2.1-py3-none-any.whl (24 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.6085531Z Downloading coverage-7.9.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (240 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.6274696Z Downloading exceptiongroup-1.3.0-py3-none-any.whl (16 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.6438425Z Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.6598007Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.6759510Z Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.7021259Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 45.2 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:11.7243080Z Downloading tomli-2.2.1-py3-none-any.whl (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.7485201Z Downloading typing_extensions-4.14.1-py3-none-any.whl (43 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.7701001Z Downloading pytest_metadata-3.1.1-py3-none-any.whl (11 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:11.8196588Z Installing collected packages: typing-extensions, tomli, pygments, pluggy, packaging, iniconfig, coverage, exceptiongroup, pytest, pytest-timeout, pytest-mock, pytest-metadata, pytest-cov, pytest-asyncio, pytest-json-report
+test-count-verification	Install dependencies	2025-07-11T08:59:12.8928843Z 
+test-count-verification	Install dependencies	2025-07-11T08:59:12.8961648Z Successfully installed coverage-7.9.2 exceptiongroup-1.3.0 iniconfig-2.1.0 packaging-25.0 pluggy-1.6.0 pygments-2.19.2 pytest-8.4.1 pytest-asyncio-1.0.0 pytest-cov-6.2.1 pytest-json-report-1.5.0 pytest-metadata-3.1.1 pytest-mock-3.14.1 pytest-timeout-2.4.0 tomli-2.2.1 typing-extensions-4.14.1
+test-count-verification	Install dependencies	2025-07-11T08:59:12.9757635Z Checking for requirements file...
+test-count-verification	Install dependencies	2025-07-11T08:59:12.9758358Z Found requirements.txt, installing...
+test-count-verification	Install dependencies	2025-07-11T08:59:13.4760659Z Collecting annotated-types==0.7.0 (from -r requirements.txt (line 1))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.5388991Z   Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.5774780Z Collecting anyio==4.9.0 (from -r requirements.txt (line 2))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.5919725Z   Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.6184007Z Collecting blinker==1.9.0 (from -r requirements.txt (line 3))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.6322084Z   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.6618217Z Collecting cachetools==5.5.2 (from -r requirements.txt (line 4))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.6757290Z   Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.7079927Z Collecting certifi==2025.4.26 (from -r requirements.txt (line 5))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.7219020Z   Downloading certifi-2025.4.26-py3-none-any.whl.metadata (2.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.8771849Z Collecting cffi==1.17.1 (from -r requirements.txt (line 6))
+test-count-verification	Install dependencies	2025-07-11T08:59:13.8914506Z   Downloading cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:13.9897434Z Collecting charset-normalizer==3.4.2 (from -r requirements.txt (line 7))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.0039879Z   Downloading charset_normalizer-3.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.0421926Z Collecting click==8.2.1 (from -r requirements.txt (line 8))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.0575294Z   Downloading click-8.2.1-py3-none-any.whl.metadata (2.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.0609640Z Requirement already satisfied: coverage==7.9.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 9)) (7.9.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.2740073Z Collecting cryptography==45.0.5 (from -r requirements.txt (line 10))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.2882701Z   Downloading cryptography-45.0.5-cp37-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.3219886Z Collecting decorator==5.2.1 (from -r requirements.txt (line 11))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.3358301Z   Downloading decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.3594539Z Collecting Deprecated==1.2.18 (from -r requirements.txt (line 12))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.3737350Z   Downloading Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.3963618Z Collecting distro==1.9.0 (from -r requirements.txt (line 13))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.4106999Z   Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.4462586Z Collecting docstring_parser==0.16 (from -r requirements.txt (line 14))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.4614492Z   Downloading docstring_parser-0.16-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.4843882Z Collecting ecdsa==0.19.1 (from -r requirements.txt (line 15))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.4986412Z   Downloading ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.5244281Z Collecting execnet==2.1.1 (from -r requirements.txt (line 16))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.5381977Z   Downloading execnet-2.1.1-py3-none-any.whl.metadata (2.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.5831042Z Collecting faiss-cpu==1.11.0 (from -r requirements.txt (line 17))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.5973872Z   Downloading faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.6528858Z Collecting fastapi==0.115.12 (from -r requirements.txt (line 18))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.6672924Z   Downloading fastapi-0.115.12-py3-none-any.whl.metadata (27 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.7072832Z Collecting Flask==3.1.1 (from -r requirements.txt (line 19))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.7151929Z   Downloading flask-3.1.1-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.7439163Z Collecting functions-framework (from -r requirements.txt (line 20))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.7583298Z   Downloading functions_framework-3.8.3-py3-none-any.whl.metadata (15 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.8051329Z Collecting google-api-core==2.24.2 (from -r requirements.txt (line 21))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.8191631Z   Downloading google_api_core-2.24.2-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.8850724Z Collecting google-api-python-client==2.170.0 (from -r requirements.txt (line 22))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.8995234Z   Downloading google_api_python_client-2.170.0-py3-none-any.whl.metadata (6.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.9493180Z Collecting google-auth==2.40.2 (from -r requirements.txt (line 23))
+test-count-verification	Install dependencies	2025-07-11T08:59:14.9638076Z   Downloading google_auth-2.40.2-py2.py3-none-any.whl.metadata (6.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:14.9929604Z Collecting google-auth-httplib2==0.2.0 (from -r requirements.txt (line 24))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.0066749Z   Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl.metadata (2.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.0305250Z Collecting google-auth-oauthlib==1.2.2 (from -r requirements.txt (line 25))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.0444992Z   Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl.metadata (2.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.0907721Z Collecting google-cloud-aiplatform==1.95.1 (from -r requirements.txt (line 26))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.1051313Z   Downloading google_cloud_aiplatform-1.95.1-py2.py3-none-any.whl.metadata (35 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.2443298Z Collecting google-cloud-appengine-logging==1.6.2 (from -r requirements.txt (line 27))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.2581520Z   Downloading google_cloud_appengine_logging-1.6.2-py3-none-any.whl.metadata (9.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.2822934Z Collecting google-cloud-audit-log==0.3.2 (from -r requirements.txt (line 28))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.2960892Z   Downloading google_cloud_audit_log-0.3.2-py3-none-any.whl.metadata (9.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.3449810Z Collecting google-cloud-bigquery==3.34.0 (from -r requirements.txt (line 29))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.3589712Z   Downloading google_cloud_bigquery-3.34.0-py3-none-any.whl.metadata (8.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.4268938Z Collecting google-cloud-billing==1.16.3 (from -r requirements.txt (line 30))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.4411987Z   Downloading google_cloud_billing-1.16.3-py3-none-any.whl.metadata (9.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.5007323Z Collecting google-cloud-billing-budgets==1.17.2 (from -r requirements.txt (line 31))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.5163161Z   Downloading google_cloud_billing_budgets-1.17.2-py3-none-any.whl.metadata (9.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.5478199Z Collecting google-cloud-core==2.4.3 (from -r requirements.txt (line 32))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.5616475Z   Downloading google_cloud_core-2.4.3-py2.py3-none-any.whl.metadata (2.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.5953070Z Collecting google-cloud-firestore==2.20.2 (from -r requirements.txt (line 33))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.6097121Z   Downloading google_cloud_firestore-2.20.2-py3-none-any.whl.metadata (9.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.6420075Z Collecting google-cloud-logging==3.12.1 (from -r requirements.txt (line 34))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.6558090Z   Downloading google_cloud_logging-3.12.1-py2.py3-none-any.whl.metadata (5.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.7013048Z Collecting google-cloud-pubsub==2.31.0 (from -r requirements.txt (line 35))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.7161619Z   Downloading google_cloud_pubsub-2.31.0-py3-none-any.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.7503172Z Collecting google-cloud-resource-manager==1.14.2 (from -r requirements.txt (line 36))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.7641687Z   Downloading google_cloud_resource_manager-1.14.2-py3-none-any.whl.metadata (9.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.7909867Z Collecting google-cloud-run==0.10.18 (from -r requirements.txt (line 37))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.8068679Z   Downloading google_cloud_run-0.10.18-py3-none-any.whl.metadata (9.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.8386554Z Collecting google-cloud-secret-manager==2.24.0 (from -r requirements.txt (line 38))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.8529648Z   Downloading google_cloud_secret_manager-2.24.0-py3-none-any.whl.metadata (9.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.8929737Z Collecting google-cloud-storage==2.19.0 (from -r requirements.txt (line 39))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.9106451Z   Downloading google_cloud_storage-2.19.0-py2.py3-none-any.whl.metadata (9.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:15.9775891Z Collecting google-crc32c==1.7.1 (from -r requirements.txt (line 40))
+test-count-verification	Install dependencies	2025-07-11T08:59:15.9915314Z   Downloading google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.0185339Z Collecting google-genai==1.18.0 (from -r requirements.txt (line 41))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.0328009Z   Downloading google_genai-1.18.0-py3-none-any.whl.metadata (35 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.0910823Z Collecting google-resumable-media==2.7.2 (from -r requirements.txt (line 42))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.1052479Z   Downloading google_resumable_media-2.7.2-py2.py3-none-any.whl.metadata (2.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.1353481Z Collecting googleapis-common-protos==1.70.0 (from -r requirements.txt (line 43))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.1492004Z   Downloading googleapis_common_protos-1.70.0-py3-none-any.whl.metadata (9.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.1718831Z Collecting grpc-google-iam-v1==0.14.2 (from -r requirements.txt (line 44))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.1856358Z   Downloading grpc_google_iam_v1-0.14.2-py3-none-any.whl.metadata (9.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.8020838Z Collecting grpcio==1.71.0 (from -r requirements.txt (line 45))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.8169050Z   Downloading grpcio-1.71.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.8597802Z Collecting grpcio-status==1.71.0 (from -r requirements.txt (line 46))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.8738077Z   Downloading grpcio_status-1.71.0-py3-none-any.whl.metadata (1.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9024882Z Collecting gunicorn==23.0.0 (from -r requirements.txt (line 47))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9164870Z   Downloading gunicorn-23.0.0-py3-none-any.whl.metadata (4.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9394538Z Collecting h11==0.16.0 (from -r requirements.txt (line 48))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9532456Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9800342Z Collecting h2==4.2.0 (from -r requirements.txt (line 49))
+test-count-verification	Install dependencies	2025-07-11T08:59:16.9940399Z   Downloading h2-4.2.0-py3-none-any.whl.metadata (5.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.0150301Z Collecting hpack==4.1.0 (from -r requirements.txt (line 50))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.0289123Z   Downloading hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.0573395Z Collecting httpcore==1.0.9 (from -r requirements.txt (line 51))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.0712211Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.0981890Z Collecting httplib2==0.22.0 (from -r requirements.txt (line 52))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.1121037Z   Downloading httplib2-0.22.0-py3-none-any.whl.metadata (2.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.1434448Z Collecting httpx==0.28.1 (from -r requirements.txt (line 53))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.1573657Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.1819213Z Collecting hyperframe==6.1.0 (from -r requirements.txt (line 54))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.1956413Z   Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.2191887Z Collecting idna==3.10 (from -r requirements.txt (line 55))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.2330137Z   Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.2750889Z Collecting importlib_metadata==8.7.0 (from -r requirements.txt (line 56))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.2891712Z   Downloading importlib_metadata-8.7.0-py3-none-any.whl.metadata (4.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.2965431Z Requirement already satisfied: iniconfig==2.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 57)) (2.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.3157589Z Collecting itsdangerous==2.2.0 (from -r requirements.txt (line 58))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.3295434Z   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.3556775Z Collecting Jinja2==3.1.6 (from -r requirements.txt (line 59))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.3694355Z   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.4481708Z Collecting jiter==0.10.0 (from -r requirements.txt (line 60))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.4626047Z   Downloading jiter-0.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.4939960Z Collecting joblib==1.5.1 (from -r requirements.txt (line 61))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.5076915Z   Downloading joblib-1.5.1-py3-none-any.whl.metadata (5.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.5321451Z Collecting jsonpatch==1.33 (from -r requirements.txt (line 62))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.5460870Z   Downloading jsonpatch-1.33-py2.py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.5684320Z Collecting jsonpointer==3.0.0 (from -r requirements.txt (line 63))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.5822207Z   Downloading jsonpointer-3.0.0-py2.py3-none-any.whl.metadata (2.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.6342144Z Collecting langchain-core==0.3.63 (from -r requirements.txt (line 64))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.6487341Z   Downloading langchain_core-0.3.63-py3-none-any.whl.metadata (5.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.6851022Z Collecting langchain-openai==0.3.18 (from -r requirements.txt (line 65))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.7032179Z   Downloading langchain_openai-0.3.18-py3-none-any.whl.metadata (2.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.7784042Z Collecting langsmith==0.3.43 (from -r requirements.txt (line 66))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.7926918Z   Downloading langsmith-0.3.43-py3-none-any.whl.metadata (15 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.8298355Z Collecting limits==5.4.0 (from -r requirements.txt (line 67))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.8436933Z   Downloading limits-5.4.0-py3-none-any.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:17.9626362Z Collecting MarkupSafe==3.0.2 (from -r requirements.txt (line 68))
+test-count-verification	Install dependencies	2025-07-11T08:59:17.9769767Z   Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.1916814Z Collecting numpy==2.2.6 (from -r requirements.txt (line 69))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.2059238Z   Downloading numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.2361704Z Collecting oauthlib==3.2.2 (from -r requirements.txt (line 70))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.2497874Z   Downloading oauthlib-3.2.2-py3-none-any.whl.metadata (7.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.3133506Z Collecting openai==1.82.1 (from -r requirements.txt (line 71))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.3278880Z   Downloading openai-1.82.1-py3-none-any.whl.metadata (25 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.3611834Z Collecting opentelemetry-api==1.34.1 (from -r requirements.txt (line 72))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.3750497Z   Downloading opentelemetry_api-1.34.1-py3-none-any.whl.metadata (1.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.4063466Z Collecting opentelemetry-sdk==1.34.1 (from -r requirements.txt (line 73))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.4208025Z   Downloading opentelemetry_sdk-1.34.1-py3-none-any.whl.metadata (1.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.4496502Z Collecting opentelemetry-semantic-conventions==0.55b1 (from -r requirements.txt (line 74))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.4636341Z   Downloading opentelemetry_semantic_conventions-0.55b1-py3-none-any.whl.metadata (2.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.8026045Z Collecting orjson==3.10.18 (from -r requirements.txt (line 75))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.8168391Z   Downloading orjson-3.10.18-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (41 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.8450531Z Collecting packaging==24.2 (from -r requirements.txt (line 76))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.8621011Z   Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.8914950Z Collecting passlib==1.7.4 (from -r requirements.txt (line 77))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9053476Z   Downloading passlib-1.7.4-py2.py3-none-any.whl.metadata (1.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9100767Z Requirement already satisfied: pluggy==1.6.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 78)) (1.6.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9338337Z Collecting portalocker==2.10.1 (from -r requirements.txt (line 79))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9475949Z   Downloading portalocker-2.10.1-py3-none-any.whl.metadata (8.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9752405Z Collecting prometheus_client==0.22.0 (from -r requirements.txt (line 80))
+test-count-verification	Install dependencies	2025-07-11T08:59:18.9896846Z   Downloading prometheus_client-0.22.0-py3-none-any.whl.metadata (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.0196870Z Collecting proto-plus==1.26.1 (from -r requirements.txt (line 81))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.0340935Z   Downloading proto_plus-1.26.1-py3-none-any.whl.metadata (2.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.2217392Z Collecting protobuf==5.29.5 (from -r requirements.txt (line 82))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.2360389Z   Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.3234138Z Collecting psutil==7.0.0 (from -r requirements.txt (line 83))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.3377308Z   Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.3689981Z Collecting py==1.11.0 (from -r requirements.txt (line 84))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.3829847Z   Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.4148841Z Collecting pyasn1==0.6.1 (from -r requirements.txt (line 85))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.4287188Z   Downloading pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.4590904Z Collecting pyasn1_modules==0.4.2 (from -r requirements.txt (line 86))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.4838053Z   Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.5055319Z Collecting pycparser==2.22 (from -r requirements.txt (line 87))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.5193238Z   Downloading pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+test-count-verification	Install dependencies	2025-07-11T08:59:19.6547694Z Collecting pydantic==2.11.5 (from -r requirements.txt (line 88))
+test-count-verification	Install dependencies	2025-07-11T08:59:19.6694628Z   Downloading pydantic-2.11.5-py3-none-any.whl.metadata (67 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.4782077Z Collecting pydantic_core==2.33.2 (from -r requirements.txt (line 89))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.4925730Z   Downloading pydantic_core-2.33.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.5309121Z Collecting pyparsing==3.2.3 (from -r requirements.txt (line 90))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.5449028Z   Downloading pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.5912628Z Collecting pytest==8.3.5 (from -r requirements.txt (line 91))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6051131Z   Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6105581Z Requirement already satisfied: pytest-asyncio==1.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 92)) (1.0.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6111242Z Requirement already satisfied: pytest-cov==6.2.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 93)) (6.2.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6116946Z Requirement already satisfied: pytest-json-report==1.5.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 94)) (1.5.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6122644Z Requirement already satisfied: pytest-metadata==3.1.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 95)) (3.1.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6131736Z Requirement already satisfied: pytest-mock==3.14.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 96)) (3.14.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6362507Z Collecting pytest-randomly==3.16.0 (from -r requirements.txt (line 97))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6509465Z   Downloading pytest_randomly-3.16.0-py3-none-any.whl.metadata (8.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6758029Z Collecting pytest-rerunfailures==15.1 (from -r requirements.txt (line 98))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6897149Z   Downloading pytest_rerunfailures-15.1-py3-none-any.whl.metadata (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.6937048Z Requirement already satisfied: pytest-timeout==2.4.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from -r requirements.txt (line 99)) (2.4.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.7194004Z Collecting pytest-xdist==3.8.0 (from -r requirements.txt (line 100))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.7332762Z   Downloading pytest_xdist-3.8.0-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.7580921Z Collecting python-dateutil==2.9.0.post0 (from -r requirements.txt (line 101))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.7719898Z   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8049772Z Collecting python-dotenv==1.1.0 (from -r requirements.txt (line 102))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8186747Z   Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8437081Z Collecting python-jose==3.5.0 (from -r requirements.txt (line 103))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8580642Z   Downloading python_jose-3.5.0-py2.py3-none-any.whl.metadata (5.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8821297Z Collecting python-multipart==0.0.20 (from -r requirements.txt (line 104))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.8958902Z   Downloading python_multipart-0.0.20-py3-none-any.whl.metadata (1.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.9453566Z Collecting PyYAML==6.0.2 (from -r requirements.txt (line 105))
+test-count-verification	Install dependencies	2025-07-11T08:59:20.9595611Z   Downloading PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:20.9999337Z Collecting qdrant-client==1.14.2 (from -r requirements.txt (line 106))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.0148959Z   Downloading qdrant_client-1.14.2-py3-none-any.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.4831028Z Collecting regex==2024.11.6 (from -r requirements.txt (line 107))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.4974218Z   Downloading regex-2024.11.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.5358100Z Collecting requests==2.32.3 (from -r requirements.txt (line 108))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.5504992Z   Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.5751028Z Collecting requests-oauthlib==2.0.0 (from -r requirements.txt (line 109))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.5890294Z   Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl.metadata (11 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.6138866Z Collecting requests-toolbelt==1.0.0 (from -r requirements.txt (line 110))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.6276763Z   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.6497976Z Collecting retry==0.9.2 (from -r requirements.txt (line 111))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.6636578Z   Downloading retry-0.9.2-py2.py3-none-any.whl.metadata (5.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.6887990Z Collecting rsa==4.9.1 (from -r requirements.txt (line 112))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.7028366Z   Downloading rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.8064271Z Collecting scikit-learn==1.6.1 (from -r requirements.txt (line 113))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.8209544Z   Downloading scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:21.9716933Z Collecting scipy==1.15.3 (from -r requirements.txt (line 114))
+test-count-verification	Install dependencies	2025-07-11T08:59:21.9859267Z   Downloading scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1027715Z Collecting shapely==2.1.1 (from -r requirements.txt (line 115))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1168936Z   Downloading shapely-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1422419Z Collecting six==1.17.0 (from -r requirements.txt (line 116))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1559541Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1778733Z Collecting slowapi==0.1.9 (from -r requirements.txt (line 117))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.1916530Z   Downloading slowapi-0.1.9-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.2123234Z Collecting sniffio==1.3.1 (from -r requirements.txt (line 118))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.2262120Z   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.2645961Z Collecting starlette==0.46.2 (from -r requirements.txt (line 119))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.2788198Z   Downloading starlette-0.46.2-py3-none-any.whl.metadata (6.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.3078108Z Collecting tenacity==9.1.2 (from -r requirements.txt (line 120))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.3236260Z   Downloading tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.3451168Z Collecting threadpoolctl==3.6.0 (from -r requirements.txt (line 121))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.3591485Z   Downloading threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.4048658Z Collecting tiktoken==0.9.0 (from -r requirements.txt (line 122))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.4190173Z   Downloading tiktoken-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.4647709Z Collecting tqdm==4.67.1 (from -r requirements.txt (line 123))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.4800730Z   Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5044634Z Collecting typing-inspection==0.4.1 (from -r requirements.txt (line 124))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5183603Z   Downloading typing_inspection-0.4.1-py3-none-any.whl.metadata (2.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5454566Z Collecting typing_extensions==4.13.2 (from -r requirements.txt (line 125))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5592419Z   Downloading typing_extensions-4.13.2-py3-none-any.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5801861Z Collecting uritemplate==4.1.1 (from -r requirements.txt (line 126))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.5939117Z   Downloading uritemplate-4.1.1-py2.py3-none-any.whl.metadata (2.9 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.6297777Z Collecting urllib3==2.4.0 (from -r requirements.txt (line 127))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.6437457Z   Downloading urllib3-2.4.0-py3-none-any.whl.metadata (6.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.6831257Z Collecting uvicorn==0.34.3 (from -r requirements.txt (line 128))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.6970050Z   Downloading uvicorn-0.34.3-py3-none-any.whl.metadata (6.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.8113639Z Collecting websockets==15.0.1 (from -r requirements.txt (line 129))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.8254753Z   Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.8598990Z Collecting Werkzeug==3.1.3 (from -r requirements.txt (line 130))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.8737405Z   Downloading werkzeug-3.1.3-py3-none-any.whl.metadata (3.7 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:22.9844393Z Collecting wrapt==1.17.2 (from -r requirements.txt (line 131))
+test-count-verification	Install dependencies	2025-07-11T08:59:22.9989104Z   Downloading wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:23.0294104Z Collecting zipp==3.23.0 (from -r requirements.txt (line 132))
+test-count-verification	Install dependencies	2025-07-11T08:59:23.0434713Z   Downloading zipp-3.23.0-py3-none-any.whl.metadata (3.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:23.1333484Z Collecting zstandard==0.23.0 (from -r requirements.txt (line 133))
+test-count-verification	Install dependencies	2025-07-11T08:59:23.1484031Z   Downloading zstandard-0.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:23.1557987Z Requirement already satisfied: exceptiongroup>=1.0.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from anyio==4.9.0->-r requirements.txt (line 2)) (1.3.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:25.3203761Z Requirement already satisfied: tomli>=1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest==8.3.5->-r requirements.txt (line 91)) (2.2.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:25.8962098Z Collecting watchdog>=1.0.0 (from functions-framework->-r requirements.txt (line 20))
+test-count-verification	Install dependencies	2025-07-11T08:59:25.9101599Z   Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl.metadata (44 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:25.9422303Z Collecting cloudevents<2.0.0,>=1.2.0 (from functions-framework->-r requirements.txt (line 20))
+test-count-verification	Install dependencies	2025-07-11T08:59:25.9566400Z   Downloading cloudevents-1.12.0-py3-none-any.whl.metadata (7.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:25.9901256Z Collecting deprecation<3.0,>=2.0 (from cloudevents<2.0.0,>=1.2.0->functions-framework->-r requirements.txt (line 20))
+test-count-verification	Install dependencies	2025-07-11T08:59:26.0042245Z   Downloading deprecation-2.1.0-py2.py3-none-any.whl.metadata (4.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.0438775Z Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.0597254Z Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.0784979Z Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.0943020Z Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.1101183Z Downloading certifi-2025.4.26-py3-none-any.whl (159 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.1291523Z Downloading cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (446 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.1589430Z Downloading charset_normalizer-3.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (149 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.1751385Z Downloading click-8.2.1-py3-none-any.whl (102 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.1923999Z Downloading cryptography-45.0.5-cp37-abi3-manylinux_2_34_x86_64.whl (4.4 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.2358822Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 103.7 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:26.2501779Z Downloading decorator-5.2.1-py3-none-any.whl (9.2 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.2660418Z Downloading Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.2819491Z Downloading wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (82 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.2985801Z Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.3143446Z Downloading docstring_parser-0.16-py3-none-any.whl (36 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.3305700Z Downloading ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.3467170Z Downloading execnet-2.1.1-py3-none-any.whl (40 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.3629718Z Downloading faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl (31.3 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.5251590Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 31.3/31.3 MB 195.1 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:26.5394241Z Downloading numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.8 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.6271338Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.8/16.8 MB 194.9 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:26.6411853Z Downloading fastapi-0.115.12-py3-none-any.whl (95 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.6574604Z Downloading pydantic-2.11.5-py3-none-any.whl (444 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.6757309Z Downloading starlette-0.46.2-py3-none-any.whl (72 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.6920012Z Downloading flask-3.1.1-py3-none-any.whl (103 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7081962Z Downloading google_api_core-2.24.2-py3-none-any.whl (160 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7248148Z Downloading google_auth-2.40.2-py2.py3-none-any.whl (216 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7424317Z Downloading googleapis_common_protos-1.70.0-py3-none-any.whl (294 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7594765Z Downloading proto_plus-1.26.1-py3-none-any.whl (50 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7767603Z Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl (319 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.7949383Z Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.8107689Z Downloading idna-3.10-py3-none-any.whl (70 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.8269405Z Downloading rsa-4.9.1-py3-none-any.whl (34 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.8430507Z Downloading urllib3-2.4.0-py3-none-any.whl (128 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.8608798Z Downloading google_api_python_client-2.170.0-py3-none-any.whl (13.5 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.9324889Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 193.8 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:26.9467099Z Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.9626447Z Downloading httplib2-0.22.0-py3-none-any.whl (96 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.9795934Z Downloading pyparsing-3.2.3-py3-none-any.whl (111 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:26.9963976Z Downloading uritemplate-4.1.1-py2.py3-none-any.whl (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.0120760Z Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl (19 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.0287179Z Downloading google_cloud_aiplatform-1.95.1-py2.py3-none-any.whl (7.7 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.0932061Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.7/7.7 MB 120.9 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1096107Z Downloading google_cloud_bigquery-3.34.0-py3-none-any.whl (253 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1271798Z Downloading google_cloud_core-2.4.3-py2.py3-none-any.whl (29 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1431678Z Downloading google_cloud_resource_manager-1.14.2-py3-none-any.whl (394 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1613997Z Downloading google_cloud_storage-2.19.0-py2.py3-none-any.whl (131 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1779428Z Downloading google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.1947033Z Downloading google_genai-1.18.0-py3-none-any.whl (199 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.2111455Z Downloading google_resumable_media-2.7.2-py2.py3-none-any.whl (81 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.2270558Z Downloading grpc_google_iam_v1-0.14.2-py3-none-any.whl (19 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.2436100Z Downloading grpcio-1.71.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.9 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.2859473Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.9/5.9 MB 155.4 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3000633Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3162280Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3326287Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3514720Z Downloading shapely-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3703019Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 178.1 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.3841533Z Downloading typing_extensions-4.13.2-py3-none-any.whl (45 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4003571Z Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4169192Z Downloading google_cloud_appengine_logging-1.6.2-py3-none-any.whl (16 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4327137Z Downloading google_cloud_audit_log-0.3.2-py3-none-any.whl (32 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4491012Z Downloading google_cloud_billing-1.16.3-py3-none-any.whl (115 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4660182Z Downloading google_cloud_billing_budgets-1.17.2-py3-none-any.whl (107 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.4839935Z Downloading google_cloud_firestore-2.20.2-py3-none-any.whl (358 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5012543Z Downloading google_cloud_logging-3.12.1-py2.py3-none-any.whl (229 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5233193Z Downloading google_cloud_pubsub-2.31.0-py3-none-any.whl (319 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5406459Z Downloading google_cloud_run-0.10.18-py3-none-any.whl (333 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5586049Z Downloading google_cloud_secret_manager-2.24.0-py3-none-any.whl (218 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5752578Z Downloading grpcio_status-1.71.0-py3-none-any.whl (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.5910690Z Downloading gunicorn-23.0.0-py3-none-any.whl (85 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6071439Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6232704Z Downloading h2-4.2.0-py3-none-any.whl (60 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6391276Z Downloading hpack-4.1.0-py3-none-any.whl (34 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6550295Z Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6708651Z Downloading importlib_metadata-8.7.0-py3-none-any.whl (27 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.6865814Z Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7025798Z Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7189923Z Downloading jiter-0.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (352 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7370170Z Downloading joblib-1.5.1-py3-none-any.whl (307 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7540766Z Downloading jsonpatch-1.33-py2.py3-none-any.whl (12 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7709263Z Downloading jsonpointer-3.0.0-py2.py3-none-any.whl (7.6 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.7884554Z Downloading langchain_core-0.3.63-py3-none-any.whl (438 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8066256Z Downloading langsmith-0.3.43-py3-none-any.whl (361 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8240307Z Downloading orjson-3.10.18-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (132 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8402120Z Downloading packaging-24.2-py3-none-any.whl (65 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8561434Z Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8718998Z Downloading tenacity-9.1.2-py3-none-any.whl (28 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.8882140Z Downloading zstandard-0.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.4 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9190582Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 186.9 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9341020Z Downloading langchain_openai-0.3.18-py3-none-any.whl (63 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9528946Z Downloading openai-1.82.1-py3-none-any.whl (720 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9603140Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 720.5/720.5 kB 106.8 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9747949Z Downloading tiktoken-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9843880Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 138.4 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:27.9979897Z Downloading limits-5.4.0-py3-none-any.whl (60 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0140128Z Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0295799Z Downloading oauthlib-3.2.2-py3-none-any.whl (151 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0460024Z Downloading opentelemetry_api-1.34.1-py3-none-any.whl (65 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0620908Z Downloading opentelemetry_sdk-1.34.1-py3-none-any.whl (118 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0781632Z Downloading opentelemetry_semantic_conventions-0.55b1-py3-none-any.whl (196 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.0951841Z Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1021233Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 72.5 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1165568Z Downloading portalocker-2.10.1-py3-none-any.whl (18 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1337829Z Downloading prometheus_client-0.22.0-py3-none-any.whl (62 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1500163Z Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1672164Z Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1834647Z Downloading pyasn1-0.6.1-py3-none-any.whl (83 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.1998313Z Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2162024Z Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2324988Z Downloading pydantic_core-2.33.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2468178Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 158.1 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2609226Z Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2781220Z Downloading pytest_randomly-3.16.0-py3-none-any.whl (8.4 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.2938321Z Downloading pytest_rerunfailures-15.1-py3-none-any.whl (13 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3098259Z Downloading pytest_xdist-3.8.0-py3-none-any.whl (46 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3257498Z Downloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3414971Z Downloading python_jose-3.5.0-py2.py3-none-any.whl (34 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3588616Z Downloading python_multipart-0.0.20-py3-none-any.whl (24 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3746693Z Downloading PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (751 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3825983Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 751.2/751.2 kB 106.7 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.3972604Z Downloading qdrant_client-1.14.2-py3-none-any.whl (327 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.4149111Z Downloading regex-2024.11.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (781 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.4225228Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 781.7/781.7 kB 109.3 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.4365483Z Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.4526276Z Downloading retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.4683920Z Downloading scikit_learn-1.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.5378235Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 199.5 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.5520803Z Downloading scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.7 MB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.7348340Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.7/37.7 MB 207.9 MB/s eta 0:00:00
+test-count-verification	Install dependencies	2025-07-11T08:59:28.7511019Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.7666180Z Downloading slowapi-0.1.9-py3-none-any.whl (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.7824974Z Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.7981265Z Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8139253Z Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8300157Z Downloading typing_inspection-0.4.1-py3-none-any.whl (14 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8456775Z Downloading uvicorn-0.34.3-py3-none-any.whl (62 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8618720Z Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8785000Z Downloading zipp-3.23.0-py3-none-any.whl (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.8949389Z Downloading functions_framework-3.8.3-py3-none-any.whl (36 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.9117622Z Downloading cloudevents-1.12.0-py3-none-any.whl (55 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.9279305Z Downloading deprecation-2.1.0-py2.py3-none-any.whl (11 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:28.9437714Z Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl (79 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:29.6027788Z Installing collected packages: passlib, zstandard, zipp, wrapt, websockets, watchdog, urllib3, uritemplate, typing_extensions, tqdm, threadpoolctl, tenacity, sniffio, six, regex, PyYAML, python-multipart, python-dotenv, pyparsing, pycparser, pyasn1, py, psutil, protobuf, prometheus_client, portalocker, packaging, orjson, oauthlib, numpy, MarkupSafe, jsonpointer, joblib, jiter, itsdangerous, idna, hyperframe, hpack, h11, grpcio, google-crc32c, execnet, docstring_parser, distro, decorator, click, charset-normalizer, certifi, cachetools, blinker, annotated-types, Werkzeug, uvicorn, typing-inspection, shapely, scipy, rsa, retry, requests, python-dateutil, pydantic_core, pyasn1_modules, proto-plus, jsonpatch, Jinja2, importlib_metadata, httplib2, httpcore, h2, gunicorn, googleapis-common-protos, google-resumable-media, faiss-cpu, ecdsa, deprecation, Deprecated, cffi, tiktoken, scikit-learn, requests-toolbelt, requests-oauthlib, python-jose, pytest, pydantic, opentelemetry-api, limits, grpcio-status, google-cloud-audit-log, google-auth, Flask, cryptography, cloudevents, anyio, starlette, slowapi, pytest-xdist, pytest-rerunfailures, pytest-randomly, opentelemetry-semantic-conventions, httpx, grpc-google-iam-v1, google-auth-oauthlib, google-auth-httplib2, google-api-core, functions-framework, opentelemetry-sdk, openai, langsmith, google-genai, google-cloud-core, google-api-python-client, fastapi, qdrant-client, langchain-core, google-cloud-storage, google-cloud-secret-manager, google-cloud-run, google-cloud-resource-manager, google-cloud-pubsub, google-cloud-firestore, google-cloud-billing-budgets, google-cloud-billing, google-cloud-bigquery, google-cloud-appengine-logging, langchain-openai, google-cloud-logging, google-cloud-aiplatform
+test-count-verification	Install dependencies	2025-07-11T08:59:30.1325766Z   Attempting uninstall: typing_extensions
+test-count-verification	Install dependencies	2025-07-11T08:59:30.1332712Z     Found existing installation: typing_extensions 4.14.1
+test-count-verification	Install dependencies	2025-07-11T08:59:30.1350609Z     Uninstalling typing_extensions-4.14.1:
+test-count-verification	Install dependencies	2025-07-11T08:59:30.1490349Z       Successfully uninstalled typing_extensions-4.14.1
+test-count-verification	Install dependencies	2025-07-11T08:59:31.0088860Z   Attempting uninstall: packaging
+test-count-verification	Install dependencies	2025-07-11T08:59:31.0094423Z     Found existing installation: packaging 25.0
+test-count-verification	Install dependencies	2025-07-11T08:59:31.0125431Z     Uninstalling packaging-25.0:
+test-count-verification	Install dependencies	2025-07-11T08:59:31.0135363Z       Successfully uninstalled packaging-25.0
+test-count-verification	Install dependencies	2025-07-11T08:59:40.7276391Z   Attempting uninstall: pytest
+test-count-verification	Install dependencies	2025-07-11T08:59:40.7282982Z     Found existing installation: pytest 8.4.1
+test-count-verification	Install dependencies	2025-07-11T08:59:40.7367728Z     Uninstalling pytest-8.4.1:
+test-count-verification	Install dependencies	2025-07-11T08:59:40.7924667Z       Successfully uninstalled pytest-8.4.1
+test-count-verification	Install dependencies	2025-07-11T08:59:50.4642830Z 
+test-count-verification	Install dependencies	2025-07-11T08:59:50.4854067Z Successfully installed Deprecated-1.2.18 Flask-3.1.1 Jinja2-3.1.6 MarkupSafe-3.0.2 PyYAML-6.0.2 Werkzeug-3.1.3 annotated-types-0.7.0 anyio-4.9.0 blinker-1.9.0 cachetools-5.5.2 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.2 click-8.2.1 cloudevents-1.12.0 cryptography-45.0.5 decorator-5.2.1 deprecation-2.1.0 distro-1.9.0 docstring_parser-0.16 ecdsa-0.19.1 execnet-2.1.1 faiss-cpu-1.11.0 fastapi-0.115.12 functions-framework-3.8.3 google-api-core-2.24.2 google-api-python-client-2.170.0 google-auth-2.40.2 google-auth-httplib2-0.2.0 google-auth-oauthlib-1.2.2 google-cloud-aiplatform-1.95.1 google-cloud-appengine-logging-1.6.2 google-cloud-audit-log-0.3.2 google-cloud-bigquery-3.34.0 google-cloud-billing-1.16.3 google-cloud-billing-budgets-1.17.2 google-cloud-core-2.4.3 google-cloud-firestore-2.20.2 google-cloud-logging-3.12.1 google-cloud-pubsub-2.31.0 google-cloud-resource-manager-1.14.2 google-cloud-run-0.10.18 google-cloud-secret-manager-2.24.0 google-cloud-storage-2.19.0 google-crc32c-1.7.1 google-genai-1.18.0 google-resumable-media-2.7.2 googleapis-common-protos-1.70.0 grpc-google-iam-v1-0.14.2 grpcio-1.71.0 grpcio-status-1.71.0 gunicorn-23.0.0 h11-0.16.0 h2-4.2.0 hpack-4.1.0 httpcore-1.0.9 httplib2-0.22.0 httpx-0.28.1 hyperframe-6.1.0 idna-3.10 importlib_metadata-8.7.0 itsdangerous-2.2.0 jiter-0.10.0 joblib-1.5.1 jsonpatch-1.33 jsonpointer-3.0.0 langchain-core-0.3.63 langchain-openai-0.3.18 langsmith-0.3.43 limits-5.4.0 numpy-2.2.6 oauthlib-3.2.2 openai-1.82.1 opentelemetry-api-1.34.1 opentelemetry-sdk-1.34.1 opentelemetry-semantic-conventions-0.55b1 orjson-3.10.18 packaging-24.2 passlib-1.7.4 portalocker-2.10.1 prometheus_client-0.22.0 proto-plus-1.26.1 protobuf-5.29.5 psutil-7.0.0 py-1.11.0 pyasn1-0.6.1 pyasn1_modules-0.4.2 pycparser-2.22 pydantic-2.11.5 pydantic_core-2.33.2 pyparsing-3.2.3 pytest-8.3.5 pytest-randomly-3.16.0 pytest-rerunfailures-15.1 pytest-xdist-3.8.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 python-jose-3.5.0 python-multipart-0.0.20 qdrant-client-1.14.2 regex-2024.11.6 requests-2.32.3 requests-oauthlib-2.0.0 requests-toolbelt-1.0.0 retry-0.9.2 rsa-4.9.1 scikit-learn-1.6.1 scipy-1.15.3 shapely-2.1.1 six-1.17.0 slowapi-0.1.9 sniffio-1.3.1 starlette-0.46.2 tenacity-9.1.2 threadpoolctl-3.6.0 tiktoken-0.9.0 tqdm-4.67.1 typing-inspection-0.4.1 typing_extensions-4.13.2 uritemplate-4.1.1 urllib3-2.4.0 uvicorn-0.34.3 watchdog-6.0.0 websockets-15.0.1 wrapt-1.17.2 zipp-3.23.0 zstandard-0.23.0
+test-count-verification	Install dependencies	2025-07-11T08:59:51.5654334Z Installing package in development mode for proper test discovery...
+test-count-verification	Install dependencies	2025-07-11T08:59:51.9541147Z Obtaining file:///home/runner/work/agent-data/agent-data
+test-count-verification	Install dependencies	2025-07-11T08:59:51.9568837Z   Installing build dependencies: started
+test-count-verification	Install dependencies	2025-07-11T08:59:53.4592861Z   Installing build dependencies: finished with status 'done'
+test-count-verification	Install dependencies	2025-07-11T08:59:53.4600892Z   Checking if build backend supports build_editable: started
+test-count-verification	Install dependencies	2025-07-11T08:59:53.7319431Z   Checking if build backend supports build_editable: finished with status 'done'
+test-count-verification	Install dependencies	2025-07-11T08:59:53.7328021Z   Getting requirements to build editable: started
+test-count-verification	Install dependencies	2025-07-11T08:59:54.0471811Z   Getting requirements to build editable: finished with status 'done'
+test-count-verification	Install dependencies	2025-07-11T08:59:54.0481791Z   Preparing editable metadata (pyproject.toml): started
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2416751Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2590492Z Requirement already satisfied: flask in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (3.1.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2595710Z Requirement already satisfied: google-cloud-storage in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.19.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2600320Z Requirement already satisfied: google-cloud-firestore in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.20.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2605722Z Requirement already satisfied: google-cloud-aiplatform>=1.40.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.95.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2610174Z Requirement already satisfied: google-api-python-client in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.170.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2614371Z Requirement already satisfied: google-auth-httplib2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.2.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2618705Z Requirement already satisfied: google-auth-oauthlib in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.2.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2622946Z Requirement already satisfied: faiss-cpu in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.11.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2627187Z Requirement already satisfied: fastapi in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.115.12)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2631692Z Requirement already satisfied: uvicorn in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.34.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2636013Z Requirement already satisfied: python-dotenv in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2640490Z Requirement already satisfied: gunicorn in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (23.0.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2644796Z Requirement already satisfied: scikit-learn in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.6.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2649138Z Requirement already satisfied: openai in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.82.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2653931Z Requirement already satisfied: numpy in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.2.6)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2658128Z Requirement already satisfied: retry in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.9.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2662657Z Requirement already satisfied: langchain-openai in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.3.18)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2668009Z Requirement already satisfied: pytest>=7.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (8.3.5)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2673776Z Requirement already satisfied: pytest-mock>=3.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (3.14.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2678598Z Requirement already satisfied: prometheus_client in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.22.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2684096Z Requirement already satisfied: pydantic==2.11.* in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.11.5)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2689676Z Requirement already satisfied: qdrant-client==1.14.* in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.14.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2696309Z Requirement already satisfied: passlib[bcrypt] in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (1.7.4)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2702367Z Requirement already satisfied: python-jose[cryptography] in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (3.5.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2706879Z Requirement already satisfied: python-multipart in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.0.20)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2712020Z Requirement already satisfied: slowapi in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (0.1.9)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2740185Z Requirement already satisfied: annotated-types>=0.6.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (0.7.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2746011Z Requirement already satisfied: pydantic-core==2.33.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (2.33.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2752014Z Requirement already satisfied: typing-extensions>=4.12.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (4.13.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2757453Z Requirement already satisfied: typing-inspection>=0.4.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (0.4.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2805761Z Requirement already satisfied: grpcio>=1.41.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (1.71.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2816514Z Requirement already satisfied: httpx>=0.20.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (0.28.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2830553Z Requirement already satisfied: portalocker<3.0.0,>=2.7.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (2.10.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2837263Z Requirement already satisfied: protobuf>=3.20.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (5.29.5)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.2848805Z Requirement already satisfied: urllib3<3,>=1.26.14 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (2.4.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4116646Z Requirement already satisfied: google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.24.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4130752Z Requirement already satisfied: google-auth<3.0.0,>=2.14.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.40.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4138060Z Requirement already satisfied: proto-plus<2.0.0,>=1.22.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.26.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4153398Z Requirement already satisfied: packaging>=14.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (24.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4163815Z Requirement already satisfied: google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (3.34.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4171326Z Requirement already satisfied: google-cloud-resource-manager<3.0.0,>=1.3.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.14.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4177685Z Requirement already satisfied: shapely<3.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.1.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4185823Z Requirement already satisfied: google-genai<2.0.0,>=1.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.18.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4199374Z Requirement already satisfied: docstring-parser<1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (0.16)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4256717Z Requirement already satisfied: googleapis-common-protos<2.0.0,>=1.56.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.70.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4277750Z Requirement already satisfied: requests<3.0.0,>=2.18.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.32.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4318777Z Requirement already satisfied: grpcio-status<2.0.dev0,>=1.33.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.71.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4425032Z Requirement already satisfied: cachetools<6.0,>=2.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (5.5.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4432059Z Requirement already satisfied: pyasn1-modules>=0.2.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (0.4.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4439796Z Requirement already satisfied: rsa<5,>=3.1.4 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (4.9.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4569431Z Requirement already satisfied: google-cloud-core<3.0.0,>=2.4.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.4.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4575770Z Requirement already satisfied: google-resumable-media<3.0.0,>=2.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.7.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4584850Z Requirement already satisfied: python-dateutil<3.0.0,>=2.8.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.9.0.post0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4679449Z Requirement already satisfied: grpc-google-iam-v1<1.0.0,>=0.14.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-resource-manager<3.0.0,>=1.3.3->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (0.14.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4733226Z Requirement already satisfied: google-crc32c<2.0dev,>=1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-cloud-storage->agent_data_manager==0.1.0) (1.7.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4781884Z Requirement already satisfied: anyio<5.0.0,>=4.8.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (4.9.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4802883Z Requirement already satisfied: websockets<15.1.0,>=13.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (15.0.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4862140Z Requirement already satisfied: exceptiongroup>=1.0.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.3.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4867709Z Requirement already satisfied: idna>=2.8 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (3.10)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.4873613Z Requirement already satisfied: sniffio>=1.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.3.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5105616Z Requirement already satisfied: certifi in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (2025.4.26)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5111606Z Requirement already satisfied: httpcore==1.* in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (1.0.9)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5145483Z Requirement already satisfied: h11>=0.16 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httpcore==1.*->httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (0.16.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5227361Z Requirement already satisfied: six>=1.5 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from python-dateutil<3.0.0,>=2.8.2->google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.17.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5256334Z Requirement already satisfied: charset-normalizer<4,>=2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from requests<3.0.0,>=2.18.0->google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (3.4.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5327851Z Requirement already satisfied: pyasn1>=0.1.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from rsa<5,>=3.1.4->google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (0.6.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5458664Z Requirement already satisfied: h2<5,>=3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (4.2.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5483694Z Requirement already satisfied: hyperframe<7,>=6.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (6.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5490118Z Requirement already satisfied: hpack<5,>=4.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (4.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5631759Z Requirement already satisfied: iniconfig in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (2.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5639659Z Requirement already satisfied: pluggy<2,>=1.5 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (1.6.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5647637Z Requirement already satisfied: tomli>=1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (2.2.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5836319Z Requirement already satisfied: starlette<0.47.0,>=0.40.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from fastapi->agent_data_manager==0.1.0) (0.46.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5911733Z Requirement already satisfied: blinker>=1.9.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (1.9.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5917401Z Requirement already satisfied: click>=8.1.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (8.2.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5922905Z Requirement already satisfied: itsdangerous>=2.2.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (2.2.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5928384Z Requirement already satisfied: jinja2>=3.1.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (3.1.6)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5934172Z Requirement already satisfied: markupsafe>=2.1.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (3.0.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.5939647Z Requirement already satisfied: werkzeug>=3.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (3.1.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6078298Z Requirement already satisfied: httplib2<1.0.0,>=0.19.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-python-client->agent_data_manager==0.1.0) (0.22.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6099891Z Requirement already satisfied: uritemplate<5,>=3.0.1 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-api-python-client->agent_data_manager==0.1.0) (4.1.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6163858Z Requirement already satisfied: pyparsing!=3.0.0,!=3.0.1,!=3.0.2,!=3.0.3,<4,>=2.4.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from httplib2<1.0.0,>=0.19.0->google-api-python-client->agent_data_manager==0.1.0) (3.2.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6233454Z Requirement already satisfied: requests-oauthlib>=0.7.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from google-auth-oauthlib->agent_data_manager==0.1.0) (2.0.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6261245Z Requirement already satisfied: oauthlib>=3.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib->agent_data_manager==0.1.0) (3.2.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6474745Z Requirement already satisfied: langchain-core<1.0.0,>=0.3.61 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-openai->agent_data_manager==0.1.0) (0.3.63)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6483016Z Requirement already satisfied: tiktoken<1,>=0.7 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-openai->agent_data_manager==0.1.0) (0.9.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6515702Z Requirement already satisfied: langsmith<0.4,>=0.1.126 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (0.3.43)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6522624Z Requirement already satisfied: tenacity!=8.4.0,<10.0.0,>=8.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (9.1.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6528900Z Requirement already satisfied: jsonpatch<2.0,>=1.33 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (1.33)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6534611Z Requirement already satisfied: PyYAML>=5.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (6.0.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6574484Z Requirement already satisfied: jsonpointer>=1.9 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from jsonpatch<2.0,>=1.33->langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (3.0.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6640172Z Requirement already satisfied: orjson<4.0.0,>=3.9.14 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langsmith<0.4,>=0.1.126->langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (3.10.18)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6663012Z Requirement already satisfied: requests-toolbelt<2.0.0,>=1.0.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langsmith<0.4,>=0.1.126->langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (1.0.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6669379Z Requirement already satisfied: zstandard<0.24.0,>=0.23.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from langsmith<0.4,>=0.1.126->langchain-core<1.0.0,>=0.3.61->langchain-openai->agent_data_manager==0.1.0) (0.23.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6724168Z Requirement already satisfied: distro<2,>=1.7.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from openai->agent_data_manager==0.1.0) (1.9.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6732225Z Requirement already satisfied: jiter<1,>=0.4.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from openai->agent_data_manager==0.1.0) (0.10.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6746242Z Requirement already satisfied: tqdm>4 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from openai->agent_data_manager==0.1.0) (4.67.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.6917239Z Requirement already satisfied: regex>=2022.1.18 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from tiktoken<1,>=0.7->langchain-openai->agent_data_manager==0.1.0) (2024.11.6)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.8375433Z Collecting bcrypt>=3.1.0 (from passlib[bcrypt]->agent_data_manager==0.1.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9018788Z   Downloading bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9194367Z Requirement already satisfied: ecdsa!=0.15 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from python-jose[cryptography]->agent_data_manager==0.1.0) (0.19.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9211496Z Requirement already satisfied: cryptography>=3.4.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from python-jose[cryptography]->agent_data_manager==0.1.0) (45.0.5)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9339196Z Requirement already satisfied: cffi>=1.14 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from cryptography>=3.4.0->python-jose[cryptography]->agent_data_manager==0.1.0) (1.17.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9367580Z Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from cffi>=1.14->cryptography>=3.4.0->python-jose[cryptography]->agent_data_manager==0.1.0) (2.22)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9470918Z Requirement already satisfied: decorator>=3.4.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from retry->agent_data_manager==0.1.0) (5.2.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9477586Z Requirement already satisfied: py<2.0.0,>=1.4.26 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from retry->agent_data_manager==0.1.0) (1.11.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9671027Z Requirement already satisfied: scipy>=1.6.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from scikit-learn->agent_data_manager==0.1.0) (1.15.3)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9677199Z Requirement already satisfied: joblib>=1.2.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from scikit-learn->agent_data_manager==0.1.0) (1.5.1)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9683329Z Requirement already satisfied: threadpoolctl>=3.1.0 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from scikit-learn->agent_data_manager==0.1.0) (3.6.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9852937Z Requirement already satisfied: limits>=2.3 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from slowapi->agent_data_manager==0.1.0) (5.4.0)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9935742Z Requirement already satisfied: deprecated>=1.2 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from limits>=2.3->slowapi->agent_data_manager==0.1.0) (1.2.18)
+test-count-verification	Install dependencies	2025-07-11T08:59:54.9983711Z Requirement already satisfied: wrapt<2,>=1.10 in /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages (from deprecated>=1.2->limits>=2.3->slowapi->agent_data_manager==0.1.0) (1.17.2)
+test-count-verification	Install dependencies	2025-07-11T08:59:55.0235992Z Downloading bcrypt-4.3.0-cp39-abi3-manylinux_2_34_x86_64.whl (284 kB)
+test-count-verification	Install dependencies	2025-07-11T08:59:55.0665701Z Building wheels for collected packages: agent_data_manager
+test-count-verification	Install dependencies	2025-07-11T08:59:55.0681514Z   Building editable for agent_data_manager (pyproject.toml): started
+test-count-verification	Install dependencies	2025-07-11T08:59:55.2986537Z   Building editable for agent_data_manager (pyproject.toml): finished with status 'done'
+test-count-verification	Install dependencies	2025-07-11T08:59:55.2993633Z   Created wheel for agent_data_manager: filename=agent_data_manager-0.1.0-0.editable-py3-none-any.whl size=2927 sha256=8feb3538821254487b4f310e98d7d36c2371b5a255c0b0e8b31c4c0605039bec
+test-count-verification	Install dependencies	2025-07-11T08:59:55.2996031Z   Stored in directory: /tmp/pip-ephem-wheel-cache-h9e4g3if/wheels/9b/2b/07/65a823d511d7ee06da6a0119e7150c71e779d0785de56ce41d
+test-count-verification	Install dependencies	2025-07-11T08:59:55.3019467Z Successfully built agent_data_manager
+test-count-verification	Install dependencies	2025-07-11T08:59:55.3678105Z Installing collected packages: bcrypt, agent_data_manager
+test-count-verification	Install dependencies	2025-07-11T08:59:55.4403692Z 
+test-count-verification	Install dependencies	2025-07-11T08:59:55.4613953Z Successfully installed agent_data_manager-0.1.0 bcrypt-4.3.0
+test-count-verification	Verify Test Count	﻿2025-07-11T08:59:55.5476647Z ##[group]Run echo "Verifying test count compliance..."
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5477288Z [36;1mecho "Verifying test count compliance..."[0m
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5477789Z [36;1mecho "Current directory: $(pwd)"[0m
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5478267Z [36;1mexport PYTHONPATH=$PWD:$PYTHONPATH[0m
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5478958Z [36;1mecho "Running test count verification..."[0m
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5479471Z [36;1mpython3 scripts/verify_test_count.py[0m
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5542033Z shell: /usr/bin/bash -e {0}
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5542266Z env:
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5542518Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5542927Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5543318Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5543679Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5544030Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5544382Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5544705Z ##[endgroup]
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5812942Z Verifying test count compliance...
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5818943Z Current directory: /home/runner/work/agent-data/agent-data
+test-count-verification	Verify Test Count	2025-07-11T08:59:55.5819530Z Running test count verification...
+test-count-verification	Verify Test Count	2025-07-11T09:00:03.9687133Z ❌ Unit test count verification failed: 583 (expected 856 ±25)
+test-count-verification	Verify Test Count	2025-07-11T09:00:03.9741332Z ##[error]Process completed with exit code 1.
+test-count-verification	Upload test count report	﻿2025-07-11T09:00:03.9808870Z ##[group]Run actions/upload-artifact@v4
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9809177Z with:
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9809369Z   name: test-count-report
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9809616Z   path: .cursor/logs/CLI150_*.log
+test-count-verification	Upload test count report	.cursor/logs/
+test-count-verification	Upload test count report	
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9809889Z   retention-days: 7
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9810087Z   if-no-files-found: warn
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9810310Z   compression-level: 6
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9810505Z   overwrite: false
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9810696Z   include-hidden-files: false
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9810907Z env:
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9811128Z   pythonLocation: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9811521Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib/pkgconfig
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9811893Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9812238Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9812572Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.18/x64
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9812905Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.18/x64/lib
+test-count-verification	Upload test count report	2025-07-11T09:00:03.9813217Z ##[endgroup]
+test-count-verification	Upload test count report	2025-07-11T09:00:04.1925799Z ##[warning]No files were found with the provided path: .cursor/logs/CLI150_*.log
+test-count-verification	Upload test count report	.cursor/logs/. No artifacts will be uploaded.
+test-count-verification	Post Run actions/checkout@v4	﻿2025-07-11T09:00:04.2054551Z Post job cleanup.
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.2990513Z [command]/usr/bin/git version
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3026050Z git version 2.49.0
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3070046Z Temporarily overriding HOME='/home/runner/work/_temp/fed2c750-b737-49fb-a5e1-090caf1e8526' before making global git config changes
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3071360Z Adding repository directory to the temporary git global config as a safe directory
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3083160Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3117393Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3149887Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3369523Z fatal: No url found for submodule path 'ADK/agent_data' in .gitmodules
+test-count-verification	Post Run actions/checkout@v4	2025-07-11T09:00:04.3399281Z ##[warning]The process '/usr/bin/git' failed with exit code 128
+test-count-verification	Complete job	﻿2025-07-11T09:00:04.3486285Z Cleaning up orphan processes
+quality-gates	Set up job	﻿2025-07-11T09:00:11.6791751Z Current runner version: '2.325.0'
+quality-gates	Set up job	2025-07-11T09:00:11.6820613Z ##[group]Operating System
+quality-gates	Set up job	2025-07-11T09:00:11.6821651Z Ubuntu
+quality-gates	Set up job	2025-07-11T09:00:11.6822115Z 24.04.2
+quality-gates	Set up job	2025-07-11T09:00:11.6822584Z LTS
+quality-gates	Set up job	2025-07-11T09:00:11.6823071Z ##[endgroup]
+quality-gates	Set up job	2025-07-11T09:00:11.6823609Z ##[group]Runner Image
+quality-gates	Set up job	2025-07-11T09:00:11.6824510Z Image: ubuntu-24.04
+quality-gates	Set up job	2025-07-11T09:00:11.6825075Z Version: 20250629.1.0
+quality-gates	Set up job	2025-07-11T09:00:11.6826120Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250629.1/images/ubuntu/Ubuntu2404-Readme.md
+quality-gates	Set up job	2025-07-11T09:00:11.6827452Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250629.1
+quality-gates	Set up job	2025-07-11T09:00:11.6828384Z ##[endgroup]
+quality-gates	Set up job	2025-07-11T09:00:11.6828888Z ##[group]Runner Image Provisioner
+quality-gates	Set up job	2025-07-11T09:00:11.6829497Z 2.0.449.1
+quality-gates	Set up job	2025-07-11T09:00:11.6830028Z ##[endgroup]
+quality-gates	Set up job	2025-07-11T09:00:11.6830961Z ##[group]GITHUB_TOKEN Permissions
+quality-gates	Set up job	2025-07-11T09:00:11.6833498Z Contents: read
+quality-gates	Set up job	2025-07-11T09:00:11.6834365Z Metadata: read
+quality-gates	Set up job	2025-07-11T09:00:11.6834959Z ##[endgroup]
+quality-gates	Set up job	2025-07-11T09:00:11.6837350Z Secret source: Actions
+quality-gates	Set up job	2025-07-11T09:00:11.6838096Z Prepare workflow directory
+quality-gates	Set up job	2025-07-11T09:00:11.7236230Z Prepare all required actions
+quality-gates	Set up job	2025-07-11T09:00:11.7374785Z Complete job name: quality-gates
+quality-gates	Check Test Count Verification	﻿2025-07-11T09:00:12.3320780Z ##[group]Run if [ "failure" != "success" ]; then
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3321840Z [36;1mif [ "failure" != "success" ]; then[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3322552Z [36;1m  echo "❌ Test count verification failed"[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3323223Z [36;1m  exit 1[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3323795Z [36;1melse[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3324645Z [36;1m  echo "✅ Test count verification passed"[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3325298Z [36;1mfi[0m
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3872630Z shell: /usr/bin/bash -e {0}
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.3873736Z ##[endgroup]
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.4189547Z ❌ Test count verification failed
+quality-gates	Check Test Count Verification	2025-07-11T09:00:12.4208190Z ##[error]Process completed with exit code 1.
+quality-gates	Complete job	﻿2025-07-11T09:00:12.4327326Z Cleaning up orphan processes

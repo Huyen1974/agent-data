@@ -83,6 +83,7 @@ def setup_test_vectors(client):  # Added client fixture dependency
 
 
 @patch("api_vector_search._generate_openai_embedding", new=mock_generate_openai_embedding)
+@pytest.mark.unit
 def test_query_vectors_by_score_threshold_passes(setup_test_vectors, client):
     query_text = "The study of stars and celestial bodies."
     score_threshold = 0.95
@@ -119,6 +120,7 @@ def test_query_vectors_by_score_threshold_passes(setup_test_vectors, client):
 
 
 @patch("api_vector_search._generate_openai_embedding", new=mock_generate_openai_embedding)
+@pytest.mark.unit
 def test_query_vectors_by_score_threshold_filters_all(setup_test_vectors, client):
     query_text = "Tell me about astronomy and space exploration."
     score_threshold = 0.99
@@ -139,6 +141,7 @@ def test_query_vectors_by_score_threshold_filters_all(setup_test_vectors, client
 
 
 @patch("api_vector_search._generate_openai_embedding", new=mock_generate_openai_embedding)
+@pytest.mark.unit
 def test_query_vectors_without_score_threshold(setup_test_vectors, client):
     query_text = "The study of stars and celestial bodies."
     test_module_tag = "test_score_threshold_module_data"

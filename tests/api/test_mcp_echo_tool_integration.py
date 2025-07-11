@@ -9,6 +9,7 @@ def mcp_mock():
     yield client
 
 
+@pytest.mark.unit
 def test_mcp_echo_tool_integration(mcp_mock):
     tool_config = {"name": "echo_tool", "type": "echo"}
     mcp_mock.register_tool("echo_tool", tool_config)

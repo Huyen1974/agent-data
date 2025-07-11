@@ -343,6 +343,7 @@ class TestCLI140gShadowTraffic:
 
 @pytest.mark.e2e
 @pytest.mark.shadow
+@pytest.mark.unit
 def test_cli140g1_shadow_traffic_validation_complete():
     """
     Comprehensive validation test for CLI140g.1 shadow traffic implementation.

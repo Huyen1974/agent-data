@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 
 # from app.services.qdrant_service import QdrantService
@@ -86,6 +87,7 @@ from fastapi.testclient import TestClient
 #     monkeypatch.undo()
 
 
+@pytest.mark.unit
 def test_search_with_tag_and_threshold(client_with_qdrant_override: TestClient):
     payload = {
         "query_text": "modern astronomy discoveries",

@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.unit
 def test_top_k_too_large(client):
 
     payload = {"query_text": "limit check", "top_k": 200, "score_threshold": 0.3}  # over maximum

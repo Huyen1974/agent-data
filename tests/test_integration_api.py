@@ -14,6 +14,7 @@ from unittest.mock import patch, MagicMock
 class TestIntegrationAPI:
     """Integration test for comprehensive API coverage validation."""
 
+    @pytest.mark.unit
     def test_comprehensive_api_coverage_integration(self):
         """
         Comprehensive integration test for API coverage validation.

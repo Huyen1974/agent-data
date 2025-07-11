@@ -25,6 +25,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_repository_access_issue_resolution(self):
         """
         Documents and validates the repository access issue resolution.
@@ -64,6 +65,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_local_ci_simulation_full_suite(self):
         """
         Simulates CI environment locally and runs full test suite with timing.
@@ -183,6 +185,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_enhanced_ci_results_parsing(self):
         """
         Tests enhanced parsing capabilities for CI results.
@@ -227,6 +230,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_ci_trigger_issue_documentation(self):
         """
         Documents the CI trigger issues and validates the resolution approach.
@@ -275,6 +279,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_full_suite_runtime_validation_final(self):
         """
         Final validation that combines all CLI140k.3 requirements.
@@ -330,6 +335,7 @@ class TestCLI140k3CIFinal:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k3
+    @pytest.mark.unit
     def test_cli140k3_completion_requirements(self):
         """
         Validates that all CLI140k.3 completion requirements are satisfied.

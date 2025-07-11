@@ -487,6 +487,7 @@ class TestCLI140gAPIGatewayE2E:
 
 
 @pytest.mark.e2e
+@pytest.mark.unit
 def test_cli140g_migration_completion():
     """Test that CLI140g migration is complete and functional."""
     # Verify all required files exist

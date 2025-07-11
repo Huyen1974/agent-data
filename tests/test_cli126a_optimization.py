@@ -8,6 +8,7 @@ class TestCLI126AOptimization:
 
     @pytest.mark.core
     @pytest.mark.xfail(reason="CLI140m.68: pytest-testmon plugin configuration issue")
+    @pytest.mark.unit
     def test_pytest_testmon_installed(self):
         """Test that pytest-testmon is properly installed and available."""
         result = subprocess.run([sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True)
@@ -16,6 +17,7 @@ class TestCLI126AOptimization:
 
     @pytest.mark.core
     @pytest.mark.xfail(reason="CLI140m.68: pytest-xdist plugin configuration issue")
+    @pytest.mark.unit
     def test_pytest_xdist_installed(self):
         """Test that pytest-xdist is properly installed and available."""
         result = subprocess.run([sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True)
@@ -23,6 +25,7 @@ class TestCLI126AOptimization:
         assert "-n" in result.stdout, "pytest-xdist should be available"
 
     @pytest.mark.xfail(reason="CLI140m.68: marker configuration issue")
+    @pytest.mark.unit
     def test_selective_test_execution_markers(self):
         """Test that test markers are properly configured for selective execution."""
         # Test that we can collect tests by markers
@@ -38,6 +41,7 @@ class TestCLI126AOptimization:
         assert len(lines) > 0, "Should collect some E2E tests"
 
     @pytest.mark.xfail(reason="CLI140m.68: E2E marker execution issue")
+    @pytest.mark.unit
     def test_cli126a_optimization_goal_achieved(self):
         """Test that CLI 126A optimization goals are achieved."""
         # Verify we can run E2E tests quickly

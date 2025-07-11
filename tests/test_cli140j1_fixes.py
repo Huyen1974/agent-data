@@ -32,6 +32,7 @@ class TestCLI140j1Fixes:
         self.billing_client = billing.CloudBillingClient()
         self.run_client = run_v2.ServicesClient()
         
+    @pytest.mark.unit
     def test_cost_optimization_sink_exists(self):
         """Verify that the cost optimization log sink was created successfully."""
         # Use the same approach as the working test
@@ -55,6 +56,7 @@ class TestCLI140j1Fixes:
         assert len(cost_sinks) > 0, \
             f"Cost optimization sink not found. Available sinks: {[sink.name for sink in sinks]}"
     
+    @pytest.mark.unit
     def test_billing_api_enabled(self):
         """Verify that the Billing Budget API is enabled and accessible."""
         budget_client = BudgetServiceClient()
@@ -84,6 +86,7 @@ class TestCLI140j1Fixes:
             print(f"Budget API accessible but encountered: {e}")
             assert True
     
+    @pytest.mark.unit
     def test_bigquery_dataset_exists(self):
         """Verify that the BigQuery dataset for cost logs exists."""
         try:
@@ -100,6 +103,7 @@ class TestCLI140j1Fixes:
         except Exception as e:
             pytest.fail(f"Error accessing cost logs dataset: {e}")
     
+    @pytest.mark.unit
     def test_log_sink_permissions(self):
         """Verify that the log sink has proper permissions to write to BigQuery."""
         # Use gcloud to check for the sink since Python API has issues
@@ -114,6 +118,7 @@ class TestCLI140j1Fixes:
         except subprocess.CalledProcessError:
             pytest.fail("Cost optimization sink not found via gcloud")
     
+    @pytest.mark.unit
     def test_cost_target_validation(self):
         """Validate that cost optimization targets are realistic and achievable."""
         # This test validates the cost targets without actually checking billing
@@ -130,6 +135,7 @@ class TestCLI140j1Fixes:
         # Log the targets for monitoring
         print(f"Cost targets validated: Dev=${dev_target}/day, Prod=${prod_target}/day")
     
+    @pytest.mark.unit
     def test_min_instances_configuration_persistence(self):
         """Verify that min-instances=0 configuration persists across service updates."""
         services = self.run_client.list_services(
@@ -151,6 +157,7 @@ class TestCLI140j1Fixes:
         
         print(f"Verified {len(min_instance_configs)} services have min_instances=0")
     
+    @pytest.mark.unit
     def test_logging_optimization_active(self):
         """Verify that logging optimization is active and working."""
         # Use the same approach as the working test
@@ -179,6 +186,7 @@ class TestCLI140j1Fixes:
         
         print(f"Logging optimization active: {len(cost_sinks)} cost sinks, {len(error_sinks)} error sinks")
     
+    @pytest.mark.unit
     def test_service_scaling_responsiveness(self):
         """Test that services can scale down quickly for cost optimization."""
         services = self.run_client.list_services(

@@ -25,6 +25,7 @@ from typing import Dict, Any
 class TestCLI140kRuntimeOptimization:
     """Test runtime optimization for CLI140k requirements."""
 
+    @pytest.mark.unit
     def test_active_test_suite_runtime_under_30s(self):
         """
         Test that active test suite (not slow and not deferred) runs under 30s.
@@ -57,6 +58,7 @@ class TestCLI140kRuntimeOptimization:
             "status": "PASS" if runtime < 30.0 else "FAIL"
         }
 
+    @pytest.mark.unit
     def test_test_markers_optimization(self):
         """
         Test that test markers are properly configured for selective execution.
@@ -93,6 +95,7 @@ class TestCLI140kRuntimeOptimization:
             "selective_execution": "ENABLED"
         }
 
+    @pytest.mark.unit
     def test_memory_usage_optimization(self):
         """
         Test that memory usage stays reasonable during test execution.
@@ -124,6 +127,7 @@ class TestCLI140kRuntimeOptimization:
             "status": "PASS" if memory_increase < 500 else "FAIL"
         }
 
+    @pytest.mark.unit
     def test_parallel_execution_efficiency(self):
         """
         Test that parallel execution with pytest-xdist improves performance.
@@ -161,6 +165,7 @@ class TestCLI140kRuntimeOptimization:
             "parallel_optimization": "ENABLED"
         }
 
+    @pytest.mark.unit
     def test_cli140k_completion_validation(self):
         """
         Final validation test for CLI140k completion.

@@ -329,6 +329,7 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
             # Should have some failures due to invalid documents
             assert failed_count > 0
 
+    @pytest.mark.unit
     def test_cli140m9_coverage_validation(self):
         """Validation test to confirm ≥80% coverage achievement."""
         

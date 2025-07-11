@@ -62,6 +62,7 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
     # The effect is through the monkeypatch.
 
 
+@pytest.mark.unit
 def test_search_in_alt_collection(configured_qdrant_mock_for_alt_collection, client_with_qdrant_override: TestClient):
     # client_with_qdrant_override is the TestClient.
     # Its underlying QdrantStore should now be using the multi-collection mock client

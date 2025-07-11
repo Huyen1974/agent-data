@@ -22,6 +22,7 @@ from pathlib import Path
 import pytest
 
 
+@pytest.mark.unit
 def test_meta_count():
     """Ensures the number of tests discovered by pytest matches the expected total."""
     # Total number of tests expected to be found by pytest

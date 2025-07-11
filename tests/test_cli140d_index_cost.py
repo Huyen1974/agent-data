@@ -1,3 +1,4 @@
+import pytest
 """
 CLI 140d Test: Firestore Index Deployment and Cost Monitoring Validation
 
@@ -18,6 +19,7 @@ from unittest.mock import patch, MagicMock
 class TestCLI140dIndexCost:
     """Test suite for CLI 140d: Firestore index deployment and cost monitoring validation."""
 
+    @pytest.mark.unit
     def test_firestore_index_deployment_and_cost_monitoring(self):
         """
         Validates Firestore index deployment and cost monitoring capabilities.

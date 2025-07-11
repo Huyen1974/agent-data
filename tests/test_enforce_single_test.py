@@ -12,6 +12,7 @@ from pathlib import Path
 
 
 @pytest.mark.meta
+@pytest.mark.unit
 def test_enforce_single_test_per_cli():
     """
     Enforce the "1 test per CLI" rule by comparing current test count
@@ -238,6 +239,7 @@ def test_enforce_single_test_per_cli():
 
 
 @pytest.mark.meta
+@pytest.mark.unit
 def test_cli_guide_documentation_exists():
     """
     Ensure that each CLI has proper documentation in .misc/CLI{N}_guide.txt

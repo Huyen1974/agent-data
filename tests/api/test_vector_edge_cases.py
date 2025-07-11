@@ -1,3 +1,4 @@
+import pytest
 import random
 import uuid
 import sys
@@ -33,6 +34,7 @@ def generate_unique_tag():
     return f"test-tag-edge-{uuid.uuid4()}"
 
 
+@pytest.mark.unit
 def test_get_vector_by_id_not_found():
     """
     Tests retrieving a non-existent vector by ID.
@@ -60,6 +62,7 @@ def test_get_vector_by_id_not_found():
     ), f"Error detail should indicate 'not found' or 'does not exist'. Got: {response_json['detail']}"
 
 
+@pytest.mark.unit
 def test_upsert_vector_invalid_input():
     """
     Tests upserting a vector with invalid input (e.g., wrong vector dimension).
@@ -104,6 +107,7 @@ def test_upsert_vector_invalid_input():
     # Assuming 'tag' is optional or not strictly validated at this level for this test.
 
 
+@pytest.mark.unit
 def test_query_vectors_by_ids_partial_invalid():
     """
     Tests querying by a list of IDs where some are valid and some are not.
@@ -172,6 +176,7 @@ def test_query_vectors_by_ids_partial_invalid():
     ), f"Returned point payload {returned_point['payload']} does not match valid_payload_metadata {valid_payload_metadata}"
 
 
+@pytest.mark.unit
 def test_delete_vector_not_found():
     """
     Tests attempting to delete a vector that doesn't exist.

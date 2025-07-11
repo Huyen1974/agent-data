@@ -20,6 +20,7 @@ class TestCLI140k2CIResults:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k2
+    @pytest.mark.unit
     def test_ci_runtime_results_validation(self):
         """
         Validates CI runtime results from actual GitHub Actions runs.
@@ -66,6 +67,7 @@ class TestCLI140k2CIResults:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k2
+    @pytest.mark.unit
     def test_ci_runtime_target_compliance(self):
         """
         Tests compliance with the 5-minute CI runtime target.
@@ -114,6 +116,7 @@ class TestCLI140k2CIResults:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k2
+    @pytest.mark.unit
     def test_ci_results_parsing_capability(self):
         """
         Tests the capability to parse CI results from various sources.
@@ -240,6 +243,7 @@ class TestCLI140k2CIResults:
 
     @pytest.mark.ci_runtime
     @pytest.mark.cli140k2
+    @pytest.mark.unit
     def test_cli140k2_completion_requirements(self):
         """
         Validates that all CLI140k.2 requirements are met.

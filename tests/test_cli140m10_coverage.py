@@ -237,6 +237,7 @@ class TestCLI140m10CoverageValidation:
 
 
 @pytest.mark.meta
+@pytest.mark.unit
 def test_cli140m10_meta_validation():
     """Meta-test for CLI140m.10 completion validation."""
     validator = TestCLI140m10CoverageValidation()

@@ -21,6 +21,7 @@ from pathlib import Path
 class TestCLI140l2NightlyFinal:
     """CLI140l.2 Nightly CI Final Validation Test Suite"""
 
+    @pytest.mark.unit
     def test_cli140l2_nightly_runtime_validation(self):
         """
         Validates that the nightly CI runtime is confirmed <300s in clean environment.
@@ -59,6 +60,7 @@ class TestCLI140l2NightlyFinal:
         print(f"  - Improvement: {improvement_percentage:.1f}%")
         print(f"  - Variance from estimate: {runtime_variance}s")
 
+    @pytest.mark.unit
     def test_cli140l2_pass_rate_validation(self):
         """
         Validates that the pass rate exceeds 90% target (~418/463 tests).
@@ -107,6 +109,7 @@ class TestCLI140l2NightlyFinal:
         print(f"    - Configuration: {config_failures}")
         print(f"    - Other: {other_failures}")
 
+    @pytest.mark.unit
     def test_cli140l2_functionality_validation(self):
         """
         Validates that all core functionalities pass (ptfast -m "e2e" -n 2).
@@ -161,6 +164,7 @@ class TestCLI140l2NightlyFinal:
         print(f"  - E2E categories: {len(e2e_categories)} covered")
         print(f"  - Fast test execution: Compatible")
 
+    @pytest.mark.unit
     def test_cli140l2_optimization_sustainability(self):
         """
         Validates that CLI140l.1 optimizations are sustainable and effective.
@@ -222,6 +226,7 @@ class TestCLI140l2NightlyFinal:
         print(f"  - Individual optimizations: {len(optimizations)} effective")
         print(f"  - Mock controls: {len(mock_controls)} working")
 
+    @pytest.mark.unit
     def test_cli140l2_completion_requirements(self):
         """
         Validates that all CLI140l.2 completion requirements are met.
@@ -274,6 +279,7 @@ class TestCLI140l2NightlyFinal:
         print(f"  - Objectives achieved: {len(objectives)}")
         print(f"  - Ready for cli140l2_all_green tag")
 
+    @pytest.mark.unit
     def test_cli140l2_nightly_ci_final_validation(self):
         """
         Final comprehensive validation of CLI140l.2 nightly CI completion.

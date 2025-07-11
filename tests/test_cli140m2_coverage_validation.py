@@ -19,6 +19,7 @@ sys.path.insert(0, agent_data_dir)
 class TestCLI140m2CoverageValidation:
     """Validation tests for CLI140m.2 coverage improvements"""
 
+    @pytest.mark.unit
     def test_api_gateway_coverage_improvement(self):
         """Test that API gateway coverage has improved with new tests"""
         # This test validates that our new API gateway tests improve coverage
@@ -65,6 +66,7 @@ class TestCLI140m2CoverageValidation:
         # Test passes if we reach here
         assert True
 
+    @pytest.mark.unit
     def test_combined_coverage_validation(self):
         """Test combined coverage with working tests"""
         # Run coverage on the working tests (CLI140m1 + CLI140m2 API gateway)
@@ -117,6 +119,7 @@ class TestCLI140m2CoverageValidation:
         # Test passes if we reach here
         assert True
 
+    @pytest.mark.unit
     def test_cli140m2_completion_summary(self):
         """Generate CLI140m.2 completion summary"""
         print("\n" + "="*60)

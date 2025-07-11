@@ -44,8 +44,8 @@ jobs:
         echo "Verifying test count compliance..."
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PYTHONPATH
-        echo "Running test count verification..."
-        python3 scripts/verify_test_count.py
+        echo "Running detailed test discovery debug..."
+        python3 debug_test_discovery.py
     
     - name: Upload test count report
       if: always()

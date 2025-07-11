@@ -352,6 +352,7 @@ class TestQdrantVectorizationToolCoverage:
             mock_update_status.assert_any_call("test_doc", "failed", None, "Failed to upsert vector: Upsert failed")
 
 
+@pytest.mark.unit
 def test_get_vectorization_tool_factory():
     """Test the factory function for getting vectorization tool instance."""
     # Test with custom embedding provider first

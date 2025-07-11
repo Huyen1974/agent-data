@@ -265,6 +265,7 @@ class TestCLI139APIErrorHandling:
             assert mock_firestore_instance.save_metadata.call_count >= 3
 
     @pytest.mark.xfail(reason="Error classes not implemented yet")
+    @pytest.mark.unit
     def test_api_error_classes_defined(self):
         """Test that custom error classes are properly defined."""
 
