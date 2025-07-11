@@ -42,8 +42,6 @@ jobs:
         echo "Verifying test count compliance..."
         echo "Current directory: $(pwd)"
         export PYTHONPATH=$PWD:$PYTHONPATH
-        echo "Running pytest to generate JSON report..."
-        pytest --json-report --json-report-file=.report.json --collect-only -q
         echo "Running test count verification..."
         python scripts/verify_test_count.py
     
