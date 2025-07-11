@@ -14,8 +14,9 @@ def run_pytest_dry_run():
     return result.stdout
 
 def parse_test_count(output):
+    # Match the summary line: "collected 932 items / 76 deselected / 856 selected"
     collected_match = re.search(r"collected (\d+) items", output)
-    deselected_match = re.search(r"deselected (\d+) items", output)
+    deselected_match = re.search(r"(\d+) deselected", output)
     
     collected = int(collected_match.group(1)) if collected_match else 0
     deselected = int(deselected_match.group(1)) if deselected_match else 0
@@ -24,13 +25,13 @@ def parse_test_count(output):
 output = run_pytest_dry_run()
 active_tests = parse_test_count(output)
 
-# Updated baseline for current test count
-target_count = 402
-expected_min = 380
-expected_max = 422
+# Updated baseline for current test count (856 tests)
+target_count = 856
+expected_min = 830
+expected_max = 880
 
 if active_tests < expected_min or active_tests > expected_max:
-    print(f"❌ Unit test count verification failed: {active_tests} (expected {target_count} ±20)")
+    print(f"❌ Unit test count verification failed: {active_tests} (expected {target_count} ±25)")
     sys.exit(1)
 else:
     print(f"✅ Unit test count verified: {active_tests} (within {expected_min}-{expected_max})")
