@@ -1,21 +1,16 @@
 import pytest
 import time
-from unittest.mock import AsyncMock, patch
+import logging
+import asyncio
+from unittest.mock import AsyncMock, patch, MagicMock, Mock
 
 """
-CLI140m.11 Coverage Enhancement Tests
-====================================
-
-Comprehensive test suite to achieve ≥80% coverage for:
-- api_mcp_gateway.py (current: 67%, target: ≥80%)
-- qdrant_vectorization_tool.py (current: 54%, target: ≥80%)  
-- document_ingestion_tool.py (current: 70%, target: ≥80%)
-
-Also validates ≥95% pass rate for ptfull test suite.
+CLI140m11 Coverage Enhancement Tests
+Comprehensive testing to achieve ≥80% coverage for API gateway and tools
 """
-
 
 # API Gateway imports
+from ADK.agent_data.api_mcp_gateway import (
     ThreadSafeLRUCache,
     initialize_caches,
     _get_cache_key,
@@ -25,11 +20,13 @@ Also validates ≥95% pass rate for ptfull test suite.
 )
 
 # Qdrant Vectorization Tool imports
+from ADK.agent_data.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     qdrant_rag_search,
 )
 
 # Document Ingestion Tool imports
+from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
 
 
 class TestCLI140m11APIMCPGatewayCoverage:

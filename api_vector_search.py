@@ -743,34 +743,28 @@ async def semantic_search_cosine_handler(
         query_vector = embedding_response["embedding"]
 
         # Perform search in Qdrant
-        search_results = qdrant_store.search_vector(
-            query_vector=query_vector,
-            top_k=request.top_k,
-            filter_tag=request.filter_tag,
-            score_threshold=request.score_threshold,
-            collection_name=request.collection_name,
+        search_results = await qdrant_store.semantic_search(
+            query_text=request.query_text,
+            limit=request.top_k,
+            tag=request.filter_tag,
+            score_threshold=request.score_threshold or 0.0,
         )
 
         # Format and return results
-        # Assuming search_results is a list of ScoredPoint or similar objects
-        # Need to adapt this based on the actual structure of search_results from QdrantStore
-
-        # Check if search_results is None or empty, which can happen if an error occurred in search_vector
-        # or if no results were found.
-        if search_results is None:
-            # This case might indicate an issue within search_vector if it's not supposed to return None
-            # For now, treat as no results found or an internal error not propagated as an exception.
+        # semantic_search returns a dict with 'results' key
+        if search_results is None or search_results.get('results') is None:
             logger.warning(f"Search for query '{request.query_text[:50]}...' returned None. Assuming no results.")
             results_to_return = []
             count = 0
         else:
+            results_list = search_results.get('results', [])
             results_to_return = [
                 SemanticSearchResultItem(
-                    id=point.id,
-                    score=point.score,  # Ensure score is directly accessible
-                    payload=point.payload if point.payload else {},
+                    id=result.get('id', ''),
+                    score=result.get('score', 0.0),
+                    payload=result.get('metadata', {}),
                 )
-                for point in search_results
+                for result in results_list
             ]
             count = len(results_to_return)
 

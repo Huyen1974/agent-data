@@ -1,23 +1,21 @@
 import pytest
 import time
-from unittest.mock import AsyncMock, patch
+import logging
+from unittest.mock import AsyncMock, patch, MagicMock
 
 """
-CLI140m.12 Coverage Enhancement Tests
-====================================
-
-Comprehensive tests to achieve ≥80% coverage for:
-- api_mcp_gateway.py (current: 71%, target: ≥80%)
-- qdrant_vectorization_tool.py (current: 55%, target: ≥80%)
-- document_ingestion_tool.py (current: 72%, target: ≥80%)
+CLI140m12 Coverage Enhancement Tests
+Enhanced coverage tests for qdrant_vectorization_tool.py to reach ≥80%
 """
-
 
 # Import modules under test
+from ADK.agent_data.api_mcp_gateway import (
     app, ThreadSafeLRUCache, get_user_id_for_rate_limiting, 
     initialize_caches, _cache_result, _get_cached_result,
     SaveDocumentRequest, QueryVectorsRequest, RAGSearchRequest
 )
+
+from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 
 class TestCLI140m12QdrantVectorizationCoverage:

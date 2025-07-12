@@ -9,7 +9,7 @@ from agent_data_manager.local_mcp_server import handle_qdrant_tool
 def test_mcp_qdrant_upsert_and_query():
     """Test MCP server integration with QdrantStore for upsert and query operations"""
     # Initialize QdrantStore and clean up any existing test data
-    qdrant_store = QdrantStore()
+    qdrant_store = QdrantStore(url="http://dummy:6333", api_key="dummy-key")
 
     # Clean up any existing test data
     loop = asyncio.new_event_loop()

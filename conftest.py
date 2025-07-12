@@ -75,11 +75,26 @@ def global_comprehensive_mocks(monkeypatch):
         monkeypatch.setattr("subprocess.run", smart_subprocess_mock)
         monkeypatch.setattr("subprocess.Popen", MagicMock())
         
-        # Mock Google Cloud services
-        monkeypatch.setattr("google.cloud.monitoring_v3.MetricServiceClient", MagicMock())
-        monkeypatch.setattr("google.cloud.logging.Client", MagicMock())
-        monkeypatch.setattr("google.cloud.storage.Client", MagicMock())
-        monkeypatch.setattr("google.cloud.firestore.Client", MagicMock())
+        # Mock Google Cloud services (handle missing modules gracefully)
+        try:
+            monkeypatch.setattr("google.cloud.monitoring_v3.MetricServiceClient", MagicMock())
+        except ImportError:
+            pass  # Module not installed
+        
+        try:
+            monkeypatch.setattr("google.cloud.logging.Client", MagicMock())
+        except ImportError:
+            pass  # Module not installed
+        
+        try:
+            monkeypatch.setattr("google.cloud.storage.Client", MagicMock())
+        except ImportError:
+            pass  # Module not installed
+        
+        try:
+            monkeypatch.setattr("google.cloud.firestore.Client", MagicMock())
+        except ImportError:
+            pass  # Module not installed
         
         # Mock Qdrant Client comprehensively
         mock_qdrant_client = MagicMock()

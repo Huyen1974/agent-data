@@ -180,7 +180,7 @@ def client_with_qdrant_override(
         if QdrantStore:
             # If QdrantStore is a singleton, get_instance() or QdrantStore() should provide the
             # correctly initialized (mocked) instance.
-            return QdrantStore()  # Relies on QdrantStore's constructor picking up env vars and patched client
+            return QdrantStore(url="http://dummy:6333", api_key="dummy-key")  # Provide required parameters
         return None  # Should not happen if QdrantStore is integral
 
     if QdrantStore:  # Only override if QdrantStore was successfully imported
@@ -354,7 +354,7 @@ def _reset_qdrant_state_before_each_test():
         if QdrantStore:
             # This will instantiate QdrantStore, which should use the globally patched FakeQdrantClient
             # because of the code run at import time in this conftest.py
-            return QdrantStore()
+            return QdrantStore(url="http://dummy:6333", api_key="dummy-key")
         return None
 
     if QdrantStore:

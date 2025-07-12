@@ -1,5 +1,9 @@
 import pytest
 import time
+import logging
+import io
+import cProfile
+import pstats
 from unittest.mock import AsyncMock, patch
 
 """
@@ -8,14 +12,16 @@ Tests for CSKH API and RAG query performance optimization
 Target: <0.5s (CSKH API), <0.7s (RAG, 8-50 docs)
 """
 
-
 # Test imports
+from ADK.agent_data.api_mcp_gateway import (
     app,
     ThreadSafeLRUCache,
     _get_cache_key,
     _get_cached_result,
     _cache_result
 )
+
+from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 logger = logging.getLogger(__name__)
 
