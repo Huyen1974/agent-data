@@ -58,8 +58,8 @@ def parse_test_count_from_text(output):
     return collected - deselected
 
 def main():
-    print("=== Test Count Verification for CLI 184.7 ===")
-    print("Target: 402 tests (stable across all environments)")
+    print("=== Test Count Verification for CLI 184.8 ===")
+    print("Target: 567 tests (after syntax error fixes and test discovery improvements)")
     
     # Set PYTHONPATH to ensure imports work
     current_dir = os.getcwd()
@@ -72,11 +72,11 @@ def main():
     # Run test collection
     active_tests, output = run_pytest_collect_with_json()
     
-    # Target configuration - NO environment-specific bypasses
-    target_count = 402
+    # Target configuration - Updated for CLI 184.8 improvements
+    target_count = 567  # Updated after fixing syntax errors and test discovery
     tolerance = 15  # Allow small variance for minor changes
-    expected_min = target_count - tolerance  # 387
-    expected_max = target_count + tolerance  # 417
+    expected_min = target_count - tolerance  # 552
+    expected_max = target_count + tolerance  # 582
     
     print(f"\nTest Count Analysis:")
     print(f"  Found: {active_tests} tests")
