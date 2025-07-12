@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 CLI140g.2 Multi-Function Routing Validation Test
 Tests the specialized Cloud Functions architecture (80%/15%/5%)

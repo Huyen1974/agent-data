@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 CLI140k.2 CI Results Validation Test
 

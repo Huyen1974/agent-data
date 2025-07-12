@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 CLI140h1 Build Validation Test
 Tests the optimized MCP Gateway Docker image build results.

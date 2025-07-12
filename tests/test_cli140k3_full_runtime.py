@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 CLI140k.3 Full Suite Runtime Validation Test
 

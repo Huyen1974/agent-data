@@ -1,4 +1,3 @@
-@pytest.mark.integration
 """
 CLI140m.7 Targeted Coverage Tests
 =================================

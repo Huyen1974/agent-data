@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 CLI140m13 Coverage Tests
 ========================

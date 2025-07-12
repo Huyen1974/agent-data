@@ -1,5 +1,6 @@
-@pytest.mark.slow
-@pytest.mark.integration
+import pytest
+import time
+from unittest.mock import AsyncMock, patch
 
 """
 CLI140e Latency Profiling and Optimization Tests

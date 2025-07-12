@@ -1,12 +1,14 @@
-@pytest.mark.slow
-
 #!/usr/bin/env python3
 """
 Performance tests for hybrid query functionality with caching.
 Tests latency expectations and cache effectiveness for RAG queries.
 """
 
-
+import pytest
+import asyncio
+import time
+from unittest.mock import AsyncMock, patch
+from typing import Dict, List, Any
 
 
 class TestHybridQueryPerformance:

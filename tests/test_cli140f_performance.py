@@ -1,5 +1,3 @@
-@pytest.mark.slow
-@pytest.mark.integration
 
 """
 CLI140f Performance Tests
@@ -7,13 +5,19 @@ Tests for document ingestion and Qdrant vectorization performance optimization.
 Target: <0.3s per call, <5s for 100 docs batch processing.
 """
 
+import pytest
+import time
+import logging
+from unittest.mock import AsyncMock, patch
 
 # Test imports
+from ADK.agent_data.tools.document_ingestion_tool import (
     DocumentIngestionTool,
     ingest_document,
     batch_ingest_documents,
     get_document_ingestion_tool
 )
+from ADK.agent_data.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     qdrant_vectorize_document,
     qdrant_batch_vectorize_documents

@@ -1,4 +1,3 @@
-@pytest.mark.integration
 """
 CLI140m.8 Enhanced Coverage Tests for ≥80% Coverage Achievement
 ===============================================================

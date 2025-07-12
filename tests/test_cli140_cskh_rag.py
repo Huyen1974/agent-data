@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 """
 Test suite for CLI140: CSKH Agent API and RAG performance optimization.
 

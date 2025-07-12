@@ -1,4 +1,4 @@
-@pytest.mark.integration
+
 # tests/test_cli140b_ci_alert.py
 # CLI 140b: Nightly CI Runtime and Alerting Policy Validation
 #

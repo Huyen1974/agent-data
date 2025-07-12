@@ -1,5 +1,6 @@
-@pytest.mark.slow
-@pytest.mark.integration
+import pytest
+import time
+from unittest.mock import AsyncMock, patch
 
 """
 Additional CLI140e Coverage Tests - More targeted tests to reach coverage goals

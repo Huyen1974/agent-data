@@ -1,14 +1,15 @@
-@pytest.mark.slow
-@pytest.mark.integration
-
 """
 CLI140m.1 Coverage Enhancement Tests
 Comprehensive tests to increase coverage for main modules to ≥80%
 Target modules: api_mcp_gateway.py, qdrant_vectorization_tool.py, document_ingestion_tool.py
 """
 
+import pytest
+from unittest.mock import Mock, MagicMock, patch
+from fastapi.testclient import TestClient
 
 # Import modules under test
+from ADK.agent_data.api_mcp_gateway import (
     ThreadSafeLRUCache, _get_cache_key, _get_cached_result, _cache_result,
     _initialize_caches, get_user_id_for_rate_limiting, app
 )
