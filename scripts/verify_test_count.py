@@ -19,7 +19,10 @@ def run_pytest_collect_with_json():
         "-m", "not slow and not integration and not e2e", 
         "--tb=no",
         "--json-report",
-        "--json-report-file=.report.json"
+        "--json-report-file=.report.json",
+        "-p", "no:randomly",  # Disable randomly plugin
+        "-p", "no:rerunfailures",  # Disable rerunfailures plugin
+        "--override-ini=addopts="  # Clear all addopts from pytest.ini
     ]
     
     result = subprocess.run(command, capture_output=True, text=True)
