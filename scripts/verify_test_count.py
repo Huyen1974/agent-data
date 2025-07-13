@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Test Count Verification Script for CLI 184.7
-Verifies that the test count is stable at 402 tests consistently across CI and local environments.
+Test Count Verification Script for CLI 185.2
+Verifies that the test count is stable at 856 tests consistently across CI and local environments.
 No environment-specific bypasses. Uses JSON report for accurate counting.
 """
 
@@ -58,8 +58,8 @@ def parse_test_count_from_text(output):
     return collected - deselected
 
 def main():
-    print("=== Test Count Verification for CLI 184.8 ===")
-    print("Target: 567 tests (after syntax error fixes and test discovery improvements)")
+    print("=== Test Count Verification for CLI 185.2 ===")
+    print("Target: 856 tests (final stable baseline after Docker test environment)")
     
     # Set PYTHONPATH to ensure imports work
     current_dir = os.getcwd()
@@ -72,11 +72,10 @@ def main():
     # Run test collection
     active_tests, output = run_pytest_collect_with_json()
     
-    # Target configuration - Updated for CLI 184.8 improvements
-    target_count = 567  # Updated after fixing syntax errors and test discovery
-    tolerance = 15  # Allow small variance for minor changes
-    expected_min = target_count - tolerance  # 552
-    expected_max = target_count + tolerance  # 582
+    # Target configuration - Updated for CLI 185.2 final stable baseline
+    target_count = 856  # Final stable test count determined by CI
+    expected_min = 835  # Allow 2-3% variance (856 - 21)
+    expected_max = 877  # Allow 2-3% variance (856 + 21)
     
     print(f"\nTest Count Analysis:")
     print(f"  Found: {active_tests} tests")
@@ -101,7 +100,7 @@ def main():
         sys.exit(1)
     else:
         print(f"\n✅ SUCCESS: Test count {active_tests} is within acceptable range")
-        print(f"Target {target_count} ± {tolerance} tests achieved in {env_label} environment")
+        print(f"Target {target_count} ± {expected_max - target_count} tests achieved in {env_label} environment")
         sys.exit(0)
 
 if __name__ == "__main__":
