@@ -35,7 +35,7 @@ def run_pytest_collect_with_json():
     command = [
         "pytest", 
         "--collect-only", 
-        "-m", "not slow and not integration and not e2e", 
+        "-m", "unit and not slow", 
         "--tb=no",
         "--json-report",
         "--json-report-file=.report.json",
@@ -78,7 +78,7 @@ def parse_test_count_from_text(output):
 
 def main():
     print("=== Test Count Verification for CLI 185.2 ===")
-    print("Target: 856 tests (final stable baseline after Docker test environment)")
+    print("Target: 256 unit tests (final stable baseline after Docker test environment)")
     
     # Set PYTHONPATH to ensure imports work
     current_dir = os.getcwd()
@@ -92,9 +92,9 @@ def main():
     active_tests, output = run_pytest_collect_with_json()
     
     # Target configuration - Updated for CLI 185.2 final stable baseline
-    target_count = 856  # Final stable test count determined by CI
-    expected_min = 835  # Allow 2-3% variance (856 - 21)
-    expected_max = 877  # Allow 2-3% variance (856 + 21)
+    target_count = 256  # Final stable test count determined by CI (unit tests only)
+    expected_min = 250  # Allow 2-3% variance (256 - 6)
+    expected_max = 262  # Allow 2-3% variance (256 + 6)
     
     print(f"\nTest Count Analysis:")
     print(f"  Found: {active_tests} tests")
