@@ -19,14 +19,17 @@ jobs:
       - name: Test Docker Environment
         run: |
           echo "Testing Docker environment..."
-          docker run --name test-env-check agent-data-test-local python --version
-          docker run --name test-pytest-check agent-data-test-local pytest --version
-          docker rm test-env-check test-pytest-check || true
+          docker run --rm agent-data-test-local python --version
+          docker run --rm agent-data-test-local pytest --version
+          docker run --rm agent-data-test-local ls -la
+          docker run --rm agent-data-test-local python -c "import sys; print(sys.path)"
       
       - name: Run Pytest and Extract Report
         run: |
-          docker run --name test-container agent-data-test-local pytest --json-report --json-report-file=.report.json -m "unit and not slow" || true
+          set -e
+          docker run --name test-container agent-data-test-local pytest --json-report --json-report-file=.report.json -m "unit and not slow" --tb=short -v || echo "Pytest failed but continuing..."
           docker cp test-container:/app/.report.json . || echo "Failed to copy report"
+          docker rm test-container || true
       
       - name: Verify Test Count From Report
         run: |

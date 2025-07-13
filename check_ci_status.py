@@ -6,7 +6,7 @@ import sys
 
 def get_latest_ci_run():
     """Get the latest CI workflow run for our commit."""
-    commit_sha = "5ef92726610bff8afbe3132c37c03858fef90a3b"  # Docker-based testing workflow SHA (fixed)
+    commit_sha = "f7ded234faf444117de06c39b8a1ecd99b942b0b"  # Docker-based testing workflow SHA (debug)
     
     # Use GitHub CLI to get workflow runs
     cmd = [
