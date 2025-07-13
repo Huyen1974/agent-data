@@ -18,7 +18,7 @@ jobs:
       
       - name: Run Pytest and Extract Report
         run: |
-          docker run --name test-container agent-data-test-local pytest --json-report --json-report-file=.report.json -m "unit and not slow" --qdrant-mock
+          docker run --name test-container agent-data-test-local pytest --json-report --json-report-file=.report.json -m "unit and not slow"
           docker cp test-container:/app/.report.json .
       
       - name: Verify Test Count From Report

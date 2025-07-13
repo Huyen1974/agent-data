@@ -6,7 +6,7 @@ import sys
 
 def get_latest_ci_run():
     """Get the latest CI workflow run for our commit."""
-    commit_sha = "ccee8b9cc88a648bdcb9999e17e1f8948aae8dc7"  # Updated SHA
+    commit_sha = "6f75d287dc8513cd5da093c7a09b956347817375"  # Docker-based testing workflow SHA
     
     # Use GitHub CLI to get workflow runs
     cmd = [
@@ -70,10 +70,11 @@ def main():
         
         # Watch the run
         while True:
-            status, conclusion = check_run_status(run_id)
-            if not status:
+            result = check_run_status(run_id)
+            if result is None or len(result) != 2:
                 print("❌ Error checking run status")
                 break
+            status, conclusion = result
                 
             print(f"Status: {status}, Conclusion: {conclusion}")
             
