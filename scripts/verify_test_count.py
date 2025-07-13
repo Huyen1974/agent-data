@@ -13,6 +13,25 @@ import re
 
 def run_pytest_collect_with_json():
     """Run pytest with JSON report to get accurate test collection count"""
+    # Check if we're in CI mode and report already exists
+    if os.path.exists('.report.json'):
+        print("Found existing .report.json file, using it for analysis")
+        try:
+            with open('.report.json', 'r') as f:
+                report = json.load(f)
+                
+            # Get collected and deselected counts from JSON report
+            collected = report.get('summary', {}).get('collected', 0)
+            deselected = report.get('summary', {}).get('deselected', 0)
+            actual_tests = collected - deselected
+            
+            print(f"JSON Report - Collected: {collected}, Deselected: {deselected}, Active: {actual_tests}")
+            return actual_tests, ""
+            
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Warning: Could not read existing JSON report ({e}), falling back to running pytest")
+    
+    # Run pytest if no existing report or if reading failed
     command = [
         "pytest", 
         "--collect-only", 
