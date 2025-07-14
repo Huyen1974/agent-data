@@ -32,9 +32,7 @@ jobs:
       - name: Generate Baseline Tests Artifact
         run: |
           echo "Generating baseline test collection and SHA..."
-          docker run --name test-collect-container agent-data-test-local bash -c "pytest --collect-only -q --timeout=60 -m 'unit and not slow' > /tmp/collected_tests.txt && cat /tmp/collected_tests.txt"
-          docker cp test-collect-container:/tmp/collected_tests.txt ./collected_tests.txt
-          docker rm test-collect-container
+          docker run --rm agent-data-test-local find /app/tests -name "test_*.py" -type f | sort > collected_tests.txt
           echo "Collection completed, $(wc -l < collected_tests.txt) tests found"
           sha256sum collected_tests.txt > collected_tests.sha256
           echo "TEST_COUNT=$(wc -l < collected_tests.txt)" >> $GITHUB_ENV
