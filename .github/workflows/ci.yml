@@ -32,7 +32,7 @@ jobs:
       - name: Generate Baseline Tests Artifact
         run: |
           echo "Generating baseline test collection and SHA..."
-          docker run --rm agent-data-test-local pytest --collect-only -q --timeout=60 --override-ini="addopts=-m 'unit and not slow'" > collected_tests.txt
+          docker run --rm agent-data-test-local pytest --collect-only -q --timeout=60 -m "unit and not slow" > collected_tests.txt
           sha256sum collected_tests.txt > collected_tests.sha256
           echo "TEST_COUNT=$(wc -l < collected_tests.txt)" >> $GITHUB_ENV
           echo "Generated $(wc -l < collected_tests.txt) test entries"
@@ -115,7 +115,7 @@ jobs:
       - name: Generate Current Test Collection
         run: |
           echo "Generating current test collection for comparison..."
-          docker run --rm agent-data-test-local pytest --collect-only -q --timeout=60 --override-ini="addopts=-m 'unit and not slow'" > current.txt
+          docker run --rm agent-data-test-local pytest --collect-only -q --timeout=60 -m "unit and not slow" > current.txt
           wc -l current.txt
       
       - name: Verify Against Baseline
