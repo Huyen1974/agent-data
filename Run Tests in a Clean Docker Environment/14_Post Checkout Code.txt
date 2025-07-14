@@ -1,0 +1,10 @@
+﻿2025-07-14T05:04:33.5002072Z Post job cleanup.
+2025-07-14T05:04:33.5944454Z [command]/usr/bin/git version
+2025-07-14T05:04:33.5983709Z git version 2.50.1
+2025-07-14T05:04:33.6027824Z Temporarily overriding HOME='/home/runner/work/_temp/429f7212-1eff-48fd-b367-b06857fc8d20' before making global git config changes
+2025-07-14T05:04:33.6029088Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-14T05:04:33.6034273Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-07-14T05:04:33.6070256Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-14T05:04:33.6103018Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-14T05:04:33.6319589Z fatal: No url found for submodule path 'ADK/agent_data' in .gitmodules
+2025-07-14T05:04:33.6351353Z ##[warning]The process '/usr/bin/git' failed with exit code 128
