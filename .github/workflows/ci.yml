@@ -32,7 +32,7 @@ jobs:
       - name: Generate Baseline Tests Artifact
         run: |
           echo "Generating baseline test collection and SHA..."
-          docker run --rm agent-data-test-local pytest --collect-only -q --override-ini="addopts=" > collected_tests.txt
+          docker run --rm agent-data-test-local pytest --collect-only -q -p no:randomly -p no:cacheprovider --override-ini="addopts=" > collected_tests.txt
           sha256sum collected_tests.txt > collected_tests.sha256
           echo "TEST_COUNT=$(wc -l < collected_tests.txt)" >> $GITHUB_ENV
           echo "Generated $(wc -l < collected_tests.txt) test entries"
