@@ -29,6 +29,23 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
+      - name: Generate Baseline Tests Artifact
+        run: |
+          echo "Generating baseline test collection and SHA..."
+          docker run --rm agent-data-test-local pytest --collect-only -q > collected_tests.txt
+          sha256sum collected_tests.txt > collected_tests.sha256
+          echo "TEST_COUNT=$(wc -l < collected_tests.txt)" >> $GITHUB_ENV
+          echo "Generated $(wc -l < collected_tests.txt) test entries"
+          echo "SHA256: $(cat collected_tests.sha256)"
+      
+      - name: Upload Test Collection Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: collected-tests
+          path: |
+            collected_tests.txt
+            collected_tests.sha256
+      
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.32.0
         with:
