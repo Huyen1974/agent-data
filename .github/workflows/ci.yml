@@ -94,7 +94,6 @@ jobs:
     name: Verify Test Collection Against Baseline
     runs-on: ubuntu-latest
     needs: test-in-docker
-    if: false  # Temporarily disabled until baseline is generated
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
