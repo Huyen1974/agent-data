@@ -18,14 +18,25 @@ jobs:
       
       - name: Build Test Image
         uses: docker/build-push-action@v5
+        id: build
         with:
           context: .
           file: Dockerfile.test
           tags: agent-data-test-local
           load: true
           platforms: linux/amd64,linux/arm64
+          provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.32.0
+        with:
+          image-ref: agent-data-test-local
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'
       
       - name: Test Docker Environment
         run: |
