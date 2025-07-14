@@ -1,5 +1,5 @@
-ARG PY_VER=3.10.14
-FROM python:${PY_VER}-slim-buster AS builder
+ARG PY_VER=3.10.18
+FROM python:${PY_VER}-slim-bullseye AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
 
-FROM python:${PY_VER}-slim-buster
+FROM python:${PY_VER}-slim-bullseye
 
 WORKDIR /app
 
