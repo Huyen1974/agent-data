@@ -1,4 +1,4 @@
-ARG PY_VER=3.10.14
+ARG PY_VER=3.10
 FROM python:${PY_VER}-slim-buster AS builder
 
 WORKDIR /app
