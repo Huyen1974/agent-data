@@ -18,13 +18,44 @@ jobs:
       
       - name: Build Test Image
         uses: docker/build-push-action@v5
+        id: build
         with:
           context: .
           file: Dockerfile.test
           tags: agent-data-test-local
           load: true
+          platforms: linux/amd64
+          provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      
+      - name: Generate Baseline Tests Artifact
+        run: |
+          echo "Generating baseline test collection and SHA..."
+          docker run --rm agent-data-test-local find /app/tests -name "test_*.py" -type f | sort > collected_tests.txt
+          echo "Found $(wc -l < collected_tests.txt) test files" >> collected_tests.txt
+          sha256sum collected_tests.txt > collected_tests.sha256
+          echo "TEST_COUNT=$(grep -c "test_.*\.py" collected_tests.txt || echo 0)" >> $GITHUB_ENV
+          echo "Generated $(grep -c "test_.*\.py" collected_tests.txt || echo 0) test file entries"
+          echo "SHA256: $(cat collected_tests.sha256)"
+      
+      - name: Upload Test Collection Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: collected-tests
+          path: |
+            collected_tests.txt
+            collected_tests.sha256
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.32.0
+        with:
+          image-ref: agent-data-test-local
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '0'
+          ignore-unfixed: 'true'
+          severity: 'HIGH,CRITICAL'
       
       - name: Test Docker Environment
         run: |

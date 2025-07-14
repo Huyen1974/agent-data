@@ -1,0 +1,69 @@
+﻿2025-07-14T05:04:26.4447937Z ##[group]Run actions/checkout@v4
+2025-07-14T05:04:26.4448845Z with:
+2025-07-14T05:04:26.4449298Z   repository: Huyen1974/agent-data
+2025-07-14T05:04:26.4449998Z   token: ***
+2025-07-14T05:04:26.4450412Z   ssh-strict: true
+2025-07-14T05:04:26.4450832Z   ssh-user: git
+2025-07-14T05:04:26.4451275Z   persist-credentials: true
+2025-07-14T05:04:26.4451748Z   clean: true
+2025-07-14T05:04:26.4452192Z   sparse-checkout-cone-mode: true
+2025-07-14T05:04:26.4452713Z   fetch-depth: 1
+2025-07-14T05:04:26.4453160Z   fetch-tags: false
+2025-07-14T05:04:26.4453590Z   show-progress: true
+2025-07-14T05:04:26.4454024Z   lfs: false
+2025-07-14T05:04:26.4454420Z   submodules: false
+2025-07-14T05:04:26.4455021Z   set-safe-directory: true
+2025-07-14T05:04:26.4456225Z ##[endgroup]
+2025-07-14T05:04:26.6324223Z Syncing repository: Huyen1974/agent-data
+2025-07-14T05:04:26.6326228Z ##[group]Getting Git version info
+2025-07-14T05:04:26.6326961Z Working directory is '/home/runner/work/agent-data/agent-data'
+2025-07-14T05:04:26.6327908Z [command]/usr/bin/git version
+2025-07-14T05:04:26.6383748Z git version 2.50.1
+2025-07-14T05:04:26.6412108Z ##[endgroup]
+2025-07-14T05:04:26.6432985Z Temporarily overriding HOME='/home/runner/work/_temp/adb34306-622e-4740-a38f-0149e67b6381' before making global git config changes
+2025-07-14T05:04:26.6434377Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-14T05:04:26.6438660Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+2025-07-14T05:04:26.6475093Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+2025-07-14T05:04:26.6479305Z ##[group]Initializing the repository
+2025-07-14T05:04:26.6483821Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+2025-07-14T05:04:26.6550297Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-07-14T05:04:26.6551417Z hint: is subject to change. To configure the initial branch name to use in all
+2025-07-14T05:04:26.6552608Z hint: of your new repositories, which will suppress this warning, call:
+2025-07-14T05:04:26.6553795Z hint:
+2025-07-14T05:04:26.6554611Z hint: 	git config --global init.defaultBranch <name>
+2025-07-14T05:04:26.6555741Z hint:
+2025-07-14T05:04:26.6556653Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-07-14T05:04:26.6557893Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-07-14T05:04:26.6558588Z hint:
+2025-07-14T05:04:26.6558957Z hint: 	git branch -m <name>
+2025-07-14T05:04:26.6559416Z hint:
+2025-07-14T05:04:26.6560019Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-07-14T05:04:26.6560976Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+2025-07-14T05:04:26.6567482Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+2025-07-14T05:04:26.6599085Z ##[endgroup]
+2025-07-14T05:04:26.6600202Z ##[group]Disabling automatic garbage collection
+2025-07-14T05:04:26.6602888Z [command]/usr/bin/git config --local gc.auto 0
+2025-07-14T05:04:26.6632542Z ##[endgroup]
+2025-07-14T05:04:26.6633350Z ##[group]Setting up auth
+2025-07-14T05:04:26.6640367Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-14T05:04:26.6670529Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-14T05:04:26.6964267Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-07-14T05:04:26.6996605Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-07-14T05:04:26.7220059Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-07-14T05:04:26.7263014Z ##[endgroup]
+2025-07-14T05:04:26.7271893Z ##[group]Fetching the repository
+2025-07-14T05:04:26.7274112Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +16aa4e94fd614538bd111c89a5babc25b767a033:refs/remotes/origin/main
+2025-07-14T05:04:27.6651938Z From https://github.com/Huyen1974/agent-data
+2025-07-14T05:04:27.6653970Z  * [new ref]         16aa4e94fd614538bd111c89a5babc25b767a033 -> origin/main
+2025-07-14T05:04:27.6678645Z ##[endgroup]
+2025-07-14T05:04:27.6680611Z ##[group]Determining the checkout info
+2025-07-14T05:04:27.6682793Z ##[endgroup]
+2025-07-14T05:04:27.6686850Z [command]/usr/bin/git sparse-checkout disable
+2025-07-14T05:04:27.6730921Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-07-14T05:04:27.6760383Z ##[group]Checking out the ref
+2025-07-14T05:04:27.6764029Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-07-14T05:04:27.8458257Z Switched to a new branch 'main'
+2025-07-14T05:04:27.8460118Z branch 'main' set up to track 'origin/main'.
+2025-07-14T05:04:27.8479740Z ##[endgroup]
+2025-07-14T05:04:27.8521111Z [command]/usr/bin/git log -1 --format=%H
+2025-07-14T05:04:27.8544082Z 16aa4e94fd614538bd111c89a5babc25b767a033

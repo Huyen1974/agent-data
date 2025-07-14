@@ -1,5 +1,5 @@
-ARG PY_VER=3.10.18
-FROM python:${PY_VER}-slim-bullseye AS builder
+ARG PY_VER=3.10
+FROM python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6 AS builder
 
 WORKDIR /app
 
@@ -9,12 +9,12 @@ RUN apt-get update && \
 
 COPY requirements.lock .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --timeout=600 --retries=3 -r requirements.lock
+    pip install --no-cache-dir --require-hashes --timeout=600 --retries=3 -r requirements.lock
 
 COPY . .
 RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
 
-FROM python:${PY_VER}-slim-bullseye
+FROM python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6
 
 WORKDIR /app
 
@@ -23,6 +23,9 @@ COPY --from=builder /app /app
 
 ENV PYTHONPATH=/app:/app/src:/app/ADK:/app/tests
 ENV PYTHONUNBUFFERED=1
+
+LABEL org.opencontainers.image.version="${PY_VER}" \
+      org.opencontainers.image.source="https://github.com/Huyen1974/agent-data"
 
 RUN groupadd -r tester && useradd -r -g tester tester
 USER tester
