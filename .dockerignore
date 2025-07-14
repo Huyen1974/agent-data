@@ -1,0 +1,14 @@
+.git
+tests/
+docs/
+*.md
+*.txt
+*.tar.gz
+__pycache__
+.pytest_cache
+__venv__/
+*.egg-info
+htmlcov/
+.coverage
+.DS_Store
+backup-* 

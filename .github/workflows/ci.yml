@@ -13,8 +13,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
       - name: Build Test Image
-        run: docker build -t agent-data-test-local -f Dockerfile.test .
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.test
+          tags: agent-data-test-local
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       
       - name: Test Docker Environment
         run: |

@@ -1,14 +1,32 @@
-# Stage 1: Builder - Install libraries
-FROM python:3.10-slim AS builder
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir pytest pytest-mock pytest-asyncio pytest-timeout pytest-cov
+ARG PY_VER=3.10.14
+FROM python:${PY_VER}-slim-buster AS builder
 
-# Stage 2: Runtime - Final environment to run tests
-FROM python:3.10-slim
 WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY requirements.lock .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir --timeout=600 --retries=3 -r requirements.lock
+
 COPY . .
-RUN pip install --no-cache-dir -e . 
+RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
+
+FROM python:${PY_VER}-slim-buster
+
+WORKDIR /app
+
+COPY --from=builder /usr/local /usr/local
+COPY --from=builder /app /app
+
+ENV PYTHONPATH=/app:/app/src:/app/ADK:/app/tests
+ENV PYTHONUNBUFFERED=1
+
+RUN groupadd -r tester && useradd -r -g tester tester
+USER tester
+
+HEALTHCHECK --interval=30s --retries=3 CMD python -c "import pytest, sys; sys.exit(0)"
+
+CMD ["pytest", "--tb=short", "-v"] 
