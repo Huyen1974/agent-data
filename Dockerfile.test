@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
+RUN pip install --no-cache-dir pytest-timeout pytest-randomly
 
 FROM python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6
 
