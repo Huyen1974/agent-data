@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 COPY requirements.lock .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --require-hashes --timeout=600 --retries=3 -r requirements.lock
+    pip install --no-cache-dir --timeout=600 --retries=3 -r requirements.lock
 
 COPY . .
 RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
