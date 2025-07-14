@@ -53,12 +53,11 @@ jobs:
           mkdir -p .github/badges
           jq -n --arg v "$COUNT" '{schemaVersion:1,label:"tests",message:$v,color:"blue"}' > .github/badges/tests.json
           
-      - name: Commit Badge if Changed
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .github/badges/tests.json
-          git diff --staged --quiet || git commit -m "docs: update test badge count to $(wc -l < collected_tests.txt | tr -d ' ')"
+      - name: Upload Badge Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-badge
+          path: .github/badges/tests.json
       
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.32.0
