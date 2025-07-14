@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
+RUN pip install --no-cache-dir pytest-timeout pytest-randomly
 
 FROM python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6
 
@@ -27,7 +28,9 @@ ENV PYTHONUNBUFFERED=1
 LABEL org.opencontainers.image.version="${PY_VER}" \
       org.opencontainers.image.source="https://github.com/Huyen1974/agent-data"
 
-RUN groupadd -r tester && useradd -r -g tester tester
+RUN groupadd -r tester && useradd -r -g tester tester && \
+    mkdir -p /app/.pytest_cache && \
+    chown -R tester:tester /app/.pytest_cache
 USER tester
 
 HEALTHCHECK --interval=30s --retries=3 CMD python -c "import pytest, sys; sys.exit(0)"

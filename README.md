@@ -1,7 +1,7 @@
 # Agent Data Repository
 
 ![CI Status](https://img.shields.io/github/actions/workflow/status/Huyen1974/mpc_back_end_for_agents/ci.yml?branch=main&label=CI&logo=github)
-![Tests](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Huyen1974/mpc_back_end_for_agents/main/.github/badges/tests.json)
+![Tests](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Huyen1974/agent-data/main/.github/badges/tests.json)
 ![Security](https://img.shields.io/badge/Security-Trivy%20Scanned-green?logo=security)
 
 *(Note: Dynamic update via CI TEST_COUNT; initial 503)*
