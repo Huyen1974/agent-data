@@ -50,7 +50,16 @@ jobs:
           file: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
-          fail_ci_if_error: false
+          fail_ci_if_error: true
+
+      - name: Coverage Badge
+        uses: tj-actions/coverage-badge-py@v2
+        with:
+          output: coverage.svg
+
+      - name: Verify Coverage > 80%
+        run: |
+          coverage report --fail-under=80
 
   lint:
     name: Code Quality
@@ -73,19 +82,15 @@ jobs:
 
       - name: Run Black
         run: black --check agent_data tests
-        continue-on-error: true
 
       - name: Run isort
         run: isort --check-only agent_data tests
-        continue-on-error: true
 
       - name: Run flake8
         run: flake8 agent_data tests
-        continue-on-error: true
 
       - name: Run mypy
         run: mypy agent_data
-        continue-on-error: true
 
   actionlint:
     name: GitHub Actions Lint

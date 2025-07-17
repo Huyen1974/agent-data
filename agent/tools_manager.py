@@ -19,7 +19,7 @@ class ToolsManager:
 
     def register_tool(
         self, name: str, tool_function: Any, pass_agent_context: bool = False
-    ):  # Added pass_agent_context
+    ) -> None:  # Added pass_agent_context
         logger.info(
             f"ToolsManager: Registering tool '{name}'. Pass context: {pass_agent_context}"
         )
