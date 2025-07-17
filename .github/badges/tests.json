@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
+  "color": "blue",
   "label": "Tests",
   "message": "503",
-  "color": "blue"
-} 
+  "schemaVersion": 1
+}

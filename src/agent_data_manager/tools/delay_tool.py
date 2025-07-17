@@ -23,11 +23,17 @@ async def delay_tool(delay_ms: int = 1000) -> dict:
         await asyncio.sleep(delay_sec)
         end_time = time.monotonic()
         actual_delay_ms = round((end_time - start_time) * 1000, 2)
-        msg = f"Delayed for approximately {actual_delay_ms} ms (requested {delay_ms} ms)"
+        msg = (
+            f"Delayed for approximately {actual_delay_ms} ms (requested {delay_ms} ms)"
+        )
         logger.info(msg)
         return {
             "status": "success",
-            "result": {"message": msg, "requested_delay_ms": delay_ms, "actual_delay_ms": actual_delay_ms},
+            "result": {
+                "message": msg,
+                "requested_delay_ms": delay_ms,
+                "actual_delay_ms": actual_delay_ms,
+            },
         }
     except Exception as e:
         logger.error(f"Error during delay: {e}", exc_info=True)

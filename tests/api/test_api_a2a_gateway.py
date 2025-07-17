@@ -3,14 +3,19 @@ Test suite for API A2A Gateway endpoints
 Tests /save, /query, /search endpoints for agent-to-agent communication
 """
 
-import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
 import os
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+from fastapi.testclient import TestClient
 
 # Import the FastAPI app
-from agent_data_manager.api_mcp_gateway import app, SaveDocumentRequest, QueryVectorsRequest, SearchDocumentsRequest
-from fastapi.testclient import TestClient
-from fastapi import Depends
+from agent_data_manager.api_mcp_gateway import (
+    QueryVectorsRequest,
+    SaveDocumentRequest,
+    SearchDocumentsRequest,
+    app,
+)
 
 
 class TestAPIAGateway:
@@ -27,16 +32,22 @@ class TestAPIAGateway:
     def client(self):
         """Create test client for FastAPI app"""
         # Mock the startup event dependencies and override authentication
-        with patch("agent_data_manager.api_mcp_gateway.settings.ENABLE_AUTHENTICATION", False):
+        with patch(
+            "agent_data_manager.api_mcp_gateway.settings.ENABLE_AUTHENTICATION", False
+        ):
             with patch("agent_data_manager.api_mcp_gateway.auth_manager", None):
                 with patch("agent_data_manager.api_mcp_gateway.user_manager", None):
                     # Override the get_current_user dependency to return a mock user
                     def mock_get_current_user():
-                        return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                        return {
+                            "user_id": "test_user_123",
+                            "email": "test@example.com",
+                            "scopes": ["read", "write"],
+                        }
 
-                    app.dependency_overrides[app.dependencies[0] if hasattr(app, "dependencies") else None] = (
-                        mock_get_current_user
-                    )
+                    app.dependency_overrides[
+                        app.dependencies[0] if hasattr(app, "dependencies") else None
+                    ] = mock_get_current_user
 
                     # Override the dependency directly
                     from agent_data_manager.api_mcp_gateway import get_current_user
@@ -56,9 +67,15 @@ class TestAPIAGateway:
         mock_auth_manager = MagicMock()
         mock_user_manager = MagicMock()
 
-        with patch("agent_data_manager.api_mcp_gateway.auth_manager", mock_auth_manager):
-            with patch("agent_data_manager.api_mcp_gateway.user_manager", mock_user_manager):
-                with patch("agent_data_manager.api_mcp_gateway.get_current_user") as mock_get_user:
+        with patch(
+            "agent_data_manager.api_mcp_gateway.auth_manager", mock_auth_manager
+        ):
+            with patch(
+                "agent_data_manager.api_mcp_gateway.user_manager", mock_user_manager
+            ):
+                with patch(
+                    "agent_data_manager.api_mcp_gateway.get_current_user"
+                ) as mock_get_user:
                     mock_get_user.return_value = {
                         "user_id": "test_user_123",
                         "email": "test@example.com",
@@ -88,7 +105,10 @@ class TestAPIAGateway:
                 {
                     "id": "doc_001",
                     "score": 0.95,
-                    "metadata": {"doc_id": "doc_001", "content_preview": "Test document..."},
+                    "metadata": {
+                        "doc_id": "doc_001",
+                        "content_preview": "Test document...",
+                    },
                     "vector": [0.1, 0.2, 0.3],  # Truncated for testing
                 }
             ],
@@ -96,7 +116,11 @@ class TestAPIAGateway:
         }
         mock.query_vectors_by_tag.return_value = {
             "results": [
-                {"id": "doc_002", "metadata": {"doc_id": "doc_002", "tag": "test_tag"}, "vector": [0.4, 0.5, 0.6]}
+                {
+                    "id": "doc_002",
+                    "metadata": {"doc_id": "doc_002", "tag": "test_tag"},
+                    "vector": [0.4, 0.5, 0.6],
+                }
             ]
         }
         return mock
@@ -107,7 +131,11 @@ class TestAPIAGateway:
         return {
             "doc_id": "api_test_doc_001",
             "content": "This is a test document for API A2A gateway validation.",
-            "metadata": {"source": "test_agent", "priority": "normal", "test_case": "api_a2a_validation"},
+            "metadata": {
+                "source": "test_agent",
+                "priority": "normal",
+                "test_case": "api_a2a_validation",
+            },
             "tag": "api_testing",
             "update_firestore": True,
         }
@@ -125,7 +153,12 @@ class TestAPIAGateway:
     @pytest.fixture
     def sample_search_request(self):
         """Sample document search request"""
-        return {"tag": "api_testing", "limit": 10, "offset": 0, "include_vectors": False}
+        return {
+            "tag": "api_testing",
+            "limit": 10,
+            "offset": 0,
+            "include_vectors": False,
+        }
 
     def test_root_endpoint(self, client):
         """Test root endpoint returns API information"""
@@ -163,7 +196,9 @@ class TestAPIAGateway:
 
     def test_save_document_success(self, client, sample_save_request):
         """Test successful document save via API A2A"""
-        with patch("agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
+        with patch(
+            "agent_data_manager.api_mcp_gateway.vectorization_tool"
+        ) as mock_tool:
             # Setup async mock
             mock_tool.vectorize_document = AsyncMock(
                 return_value={
@@ -192,14 +227,21 @@ class TestAPIAGateway:
 
     def test_save_document_invalid_request(self, client):
         """Test save document with invalid request data"""
-        with patch("agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
+        with patch(
+            "agent_data_manager.api_mcp_gateway.vectorization_tool"
+        ) as mock_tool:
             # Mock the tool to be available
             mock_tool.vectorize_document = AsyncMock()
 
-            invalid_request = {"doc_id": "", "content": "Test content"}  # Empty doc_id should fail validation
+            invalid_request = {
+                "doc_id": "",
+                "content": "Test content",
+            }  # Empty doc_id should fail validation
 
             response = client.post("/save", json=invalid_request)
-            assert response.status_code == 422  # Unprocessable Entity for validation errors
+            assert (
+                response.status_code == 422
+            )  # Unprocessable Entity for validation errors
 
     def test_query_vectors_success(self, client, sample_query_request):
         """Test successful semantic query via API A2A"""
@@ -211,7 +253,10 @@ class TestAPIAGateway:
                         {
                             "id": "doc_001",
                             "score": 0.95,
-                            "metadata": {"doc_id": "doc_001", "content_preview": "Test document..."},
+                            "metadata": {
+                                "doc_id": "doc_001",
+                                "content_preview": "Test document...",
+                            },
                         }
                     ]
                 }
@@ -248,7 +293,14 @@ class TestAPIAGateway:
         with patch("agent_data_manager.api_mcp_gateway.qdrant_store") as mock_store:
             # Setup async mock
             mock_store.query_vectors_by_tag = AsyncMock(
-                return_value={"results": [{"id": "doc_002", "metadata": {"doc_id": "doc_002", "tag": "api_testing"}}]}
+                return_value={
+                    "results": [
+                        {
+                            "id": "doc_002",
+                            "metadata": {"doc_id": "doc_002", "tag": "api_testing"},
+                        }
+                    ]
+                }
             )
 
             response = client.post("/search", json=sample_search_request)
@@ -268,12 +320,25 @@ class TestAPIAGateway:
 
     def test_search_documents_with_vectors(self, client):
         """Test search documents including vector embeddings"""
-        request_with_vectors = {"tag": "test_tag", "limit": 5, "offset": 0, "include_vectors": True}
+        request_with_vectors = {
+            "tag": "test_tag",
+            "limit": 5,
+            "offset": 0,
+            "include_vectors": True,
+        }
 
-        with patch("agent_data_manager.api_mcp_gateway.qdrant_store") as mock_qdrant_store:
+        with patch(
+            "agent_data_manager.api_mcp_gateway.qdrant_store"
+        ) as mock_qdrant_store:
             mock_qdrant_store.query_vectors_by_tag = AsyncMock(
                 return_value={
-                    "results": [{"id": "doc_001", "metadata": {"doc_id": "doc_001"}, "vector": [0.1, 0.2, 0.3]}]
+                    "results": [
+                        {
+                            "id": "doc_001",
+                            "metadata": {"doc_id": "doc_001"},
+                            "vector": [0.1, 0.2, 0.3],
+                        }
+                    ]
                 }
             )
 
@@ -288,7 +353,10 @@ class TestAPIAGateway:
         """Test Pydantic model validation for API requests"""
         # Test SaveDocumentRequest validation
         valid_save_request = SaveDocumentRequest(
-            doc_id="test_doc", content="Test content", metadata={"key": "value"}, tag="test"
+            doc_id="test_doc",
+            content="Test content",
+            metadata={"key": "value"},
+            tag="test",
         )
         assert valid_save_request.doc_id == "test_doc"
 
@@ -311,9 +379,12 @@ class TestAPIAGateway:
         test_tag = "integration_testing"
 
         # Mock the entire flow
-        with patch("agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_vectorization, patch(
-            "agent_data_manager.api_mcp_gateway.qdrant_store"
-        ) as mock_qdrant:
+        with (
+            patch(
+                "agent_data_manager.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("agent_data_manager.api_mcp_gateway.qdrant_store") as mock_qdrant,
+        ):
 
             # Setup async mocks
             mock_vectorization.vectorize_document = AsyncMock(
@@ -331,21 +402,38 @@ class TestAPIAGateway:
                         {
                             "id": test_doc_id,
                             "score": 0.95,
-                            "metadata": {"doc_id": test_doc_id, "content_preview": test_content[:50]},
+                            "metadata": {
+                                "doc_id": test_doc_id,
+                                "content_preview": test_content[:50],
+                            },
                         }
                     ]
                 }
             )
 
             mock_qdrant.query_vectors_by_tag = AsyncMock(
-                return_value={"results": [{"id": test_doc_id, "metadata": {"doc_id": test_doc_id, "tag": test_tag}}]}
+                return_value={
+                    "results": [
+                        {
+                            "id": test_doc_id,
+                            "metadata": {"doc_id": test_doc_id, "tag": test_tag},
+                        }
+                    ]
+                }
             )
 
             # Disable authentication for this test
-            with patch("agent_data_manager.api_mcp_gateway.settings.ENABLE_AUTHENTICATION", False):
+            with patch(
+                "agent_data_manager.api_mcp_gateway.settings.ENABLE_AUTHENTICATION",
+                False,
+            ):
                 # Override the get_current_user dependency
                 def mock_get_current_user():
-                    return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                    return {
+                        "user_id": "test_user_123",
+                        "email": "test@example.com",
+                        "scopes": ["read", "write"],
+                    }
 
                 from agent_data_manager.api_mcp_gateway import get_current_user
 
@@ -369,7 +457,11 @@ class TestAPIAGateway:
                     assert save_data["doc_id"] == test_doc_id
 
                     # Step 2: Query for similar documents
-                    query_request = {"query_text": test_content, "tag": test_tag, "limit": 5}
+                    query_request = {
+                        "query_text": test_content,
+                        "tag": test_tag,
+                        "limit": 5,
+                    }
                     query_response = client.post("/query", json=query_request)
                     assert query_response.status_code == 200
 

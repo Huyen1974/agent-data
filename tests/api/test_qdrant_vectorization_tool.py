@@ -1,7 +1,8 @@
 """Test QdrantVectorizationTool with Firestore sync functionality."""
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 
 class MockEmbeddingProvider:
@@ -17,7 +18,9 @@ class MockEmbeddingProvider:
         if self.should_fail:
             from agent_data_manager.embedding.embedding_provider import EmbeddingError
 
-            raise EmbeddingError("Mock embedding failure", status_code=500, provider="mock")
+            raise EmbeddingError(
+                "Mock embedding failure", status_code=500, provider="mock"
+            )
         return [0.1] * 1536
 
     def get_model_name(self) -> str:
@@ -42,7 +45,10 @@ def mock_tool_dependencies():
 
     # Mock QdrantStore
     mock_qdrant_store = AsyncMock()
-    mock_qdrant_store.upsert_vector.return_value = {"success": True, "vector_id": "test_vector_id"}
+    mock_qdrant_store.upsert_vector.return_value = {
+        "success": True,
+        "vector_id": "test_vector_id",
+    }
 
     # Mock FirestoreMetadataManager
     mock_firestore_manager = AsyncMock()
@@ -55,13 +61,22 @@ def mock_tool_dependencies():
     # Create mock embedding provider
     mock_embedding_provider = MockEmbeddingProvider()
 
-    with patch("agent_data_manager.tools.qdrant_vectorization_tool.settings", mock_settings), patch(
-        "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore", return_value=mock_qdrant_store
-    ), patch(
-        "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager",
-        return_value=mock_firestore_manager,
-    ), patch(
-        "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool", return_value=mock_auto_tagging_tool
+    with (
+        patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.settings", mock_settings
+        ),
+        patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore",
+            return_value=mock_qdrant_store,
+        ),
+        patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager",
+            return_value=mock_firestore_manager,
+        ),
+        patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool",
+            return_value=mock_auto_tagging_tool,
+        ),
     ):
 
         yield {
@@ -77,9 +92,13 @@ def mock_tool_dependencies():
 async def test_firestore_sync_pending_to_completed(mock_tool_dependencies):
     """Test that vectorStatus is updated from pending to completed in Firestore."""
     # Import after mocking
-    from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+    from agent_data_manager.tools.qdrant_vectorization_tool import (
+        QdrantVectorizationTool,
+    )
 
-    tool = QdrantVectorizationTool(embedding_provider=mock_tool_dependencies["embedding_provider"])
+    tool = QdrantVectorizationTool(
+        embedding_provider=mock_tool_dependencies["embedding_provider"]
+    )
 
     # Test document vectorization with Firestore sync
     result = await tool.vectorize_document(
@@ -107,7 +126,9 @@ async def test_firestore_sync_failure_status(mock_tool_dependencies):
     failing_provider = MockEmbeddingProvider(should_fail=True)
 
     # Import after mocking
-    from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+    from agent_data_manager.tools.qdrant_vectorization_tool import (
+        QdrantVectorizationTool,
+    )
 
     tool = QdrantVectorizationTool(embedding_provider=failing_provider)
 
@@ -132,18 +153,36 @@ async def test_firestore_sync_failure_status(mock_tool_dependencies):
 async def test_batch_vectorization_firestore_sync(mock_tool_dependencies):
     """Test batch vectorization with Firestore sync for multiple documents."""
     # Import after mocking
-    from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+    from agent_data_manager.tools.qdrant_vectorization_tool import (
+        QdrantVectorizationTool,
+    )
 
-    tool = QdrantVectorizationTool(embedding_provider=mock_tool_dependencies["embedding_provider"])
+    tool = QdrantVectorizationTool(
+        embedding_provider=mock_tool_dependencies["embedding_provider"]
+    )
 
     # Test batch vectorization
     documents = [
-        {"doc_id": "batch_doc_1", "content": "First batch document", "metadata": {"batch": 1}},
-        {"doc_id": "batch_doc_2", "content": "Second batch document", "metadata": {"batch": 1}},
-        {"doc_id": "batch_doc_3", "content": "Third batch document", "metadata": {"batch": 1}},
+        {
+            "doc_id": "batch_doc_1",
+            "content": "First batch document",
+            "metadata": {"batch": 1},
+        },
+        {
+            "doc_id": "batch_doc_2",
+            "content": "Second batch document",
+            "metadata": {"batch": 1},
+        },
+        {
+            "doc_id": "batch_doc_3",
+            "content": "Third batch document",
+            "metadata": {"batch": 1},
+        },
     ]
 
-    result = await tool.batch_vectorize_documents(documents=documents, tag="batch_test", update_firestore=True)
+    result = await tool.batch_vectorize_documents(
+        documents=documents, tag="batch_test", update_firestore=True
+    )
 
     # Verify batch operation succeeded
     assert result["status"] == "completed"
@@ -153,20 +192,28 @@ async def test_batch_vectorization_firestore_sync(mock_tool_dependencies):
 
     # Verify Firestore was called for each document
     firestore_manager = mock_tool_dependencies["firestore_manager"]
-    assert firestore_manager.save_metadata.call_count >= 3  # At least one call per document
+    assert (
+        firestore_manager.save_metadata.call_count >= 3
+    )  # At least one call per document
 
 
 @pytest.mark.asyncio
 async def test_vectorization_without_firestore_sync(mock_tool_dependencies):
     """Test vectorization with Firestore sync disabled."""
     # Import after mocking
-    from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+    from agent_data_manager.tools.qdrant_vectorization_tool import (
+        QdrantVectorizationTool,
+    )
 
-    tool = QdrantVectorizationTool(embedding_provider=mock_tool_dependencies["embedding_provider"])
+    tool = QdrantVectorizationTool(
+        embedding_provider=mock_tool_dependencies["embedding_provider"]
+    )
 
     # Test document vectorization without Firestore sync
     result = await tool.vectorize_document(
-        doc_id="test_doc_no_sync", content="Test document without Firestore sync", update_firestore=False
+        doc_id="test_doc_no_sync",
+        content="Test document without Firestore sync",
+        update_firestore=False,
     )
 
     # Verify vectorization succeeded

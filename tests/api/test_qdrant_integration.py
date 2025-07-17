@@ -1,7 +1,8 @@
 """Integration tests for QdrantStore tools with ToolsManager."""
 
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from agent_data_manager.agent.agent_data_agent import AgentDataAgent
 from agent_data_manager.tools.register_tools import register_tools
@@ -45,11 +46,15 @@ async def test_qdrant_tools_registration(agent_with_tools):
     registered_tools = list(agent_with_tools.tools_manager.tools.keys())
 
     # Check if any Qdrant tools are registered
-    qdrant_tools_found = [tool for tool in expected_qdrant_tools if tool in registered_tools]
+    qdrant_tools_found = [
+        tool for tool in expected_qdrant_tools if tool in registered_tools
+    ]
 
     # This test passes if tools are registered or gives info if they're not available
     if len(qdrant_tools_found) > 0:
-        print(f"Found {len(qdrant_tools_found)} Qdrant tools registered: {qdrant_tools_found}")
+        print(
+            f"Found {len(qdrant_tools_found)} Qdrant tools registered: {qdrant_tools_found}"
+        )
         assert len(qdrant_tools_found) > 0
     else:
         print(f"No Qdrant tools found in {len(registered_tools)} registered tools")
@@ -64,7 +69,10 @@ async def test_qdrant_upsert_vector_tool(agent_with_tools, mock_qdrant_store):
     if "qdrant_upsert_vector" not in agent_with_tools.tools_manager.tools:
         pytest.skip("qdrant_upsert_vector tool not available")
 
-    with patch("agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store", return_value=mock_qdrant_store):
+    with patch(
+        "agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store",
+        return_value=mock_qdrant_store,
+    ):
         # Test vector upsert
         test_vector = [0.1] * 1536
         test_metadata = {"content": "test content", "category": "test"}
@@ -87,11 +95,17 @@ async def test_qdrant_query_by_tag_tool(agent_with_tools, mock_qdrant_store):
     if "qdrant_query_by_tag" not in agent_with_tools.tools_manager.tools:
         pytest.skip("qdrant_query_by_tag tool not available")
 
-    with patch("agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store", return_value=mock_qdrant_store):
+    with patch(
+        "agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store",
+        return_value=mock_qdrant_store,
+    ):
         # First insert a vector
         test_vector = [0.2] * 1536
         await mock_qdrant_store.upsert_vector(
-            vector_id="test_vector_2", vector=test_vector, metadata={"content": "query test"}, tag="query_test_tag"
+            vector_id="test_vector_2",
+            vector=test_vector,
+            metadata={"content": "query test"},
+            tag="query_test_tag",
         )
 
         # Test query by tag
@@ -111,8 +125,13 @@ async def test_qdrant_health_check_tool(agent_with_tools, mock_qdrant_store):
     if "qdrant_health_check" not in agent_with_tools.tools_manager.tools:
         pytest.skip("qdrant_health_check tool not available")
 
-    with patch("agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store", return_value=mock_qdrant_store):
-        result = await agent_with_tools.tools_manager.execute_tool("qdrant_health_check")
+    with patch(
+        "agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store",
+        return_value=mock_qdrant_store,
+    ):
+        result = await agent_with_tools.tools_manager.execute_tool(
+            "qdrant_health_check"
+        )
 
         assert result["status"] == "success"
         assert result["healthy"] is True
@@ -125,7 +144,10 @@ async def test_qdrant_get_count_tool(agent_with_tools, mock_qdrant_store):
     if "qdrant_get_count" not in agent_with_tools.tools_manager.tools:
         pytest.skip("qdrant_get_count tool not available")
 
-    with patch("agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store", return_value=mock_qdrant_store):
+    with patch(
+        "agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store",
+        return_value=mock_qdrant_store,
+    ):
         # Insert some test vectors
         for i in range(3):
             await mock_qdrant_store.upsert_vector(
@@ -144,22 +166,31 @@ async def test_qdrant_delete_by_tag_tool(agent_with_tools, mock_qdrant_store):
     if "qdrant_delete_by_tag" not in agent_with_tools.tools_manager.tools:
         pytest.skip("qdrant_delete_by_tag tool not available")
 
-    with patch("agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store", return_value=mock_qdrant_store):
+    with patch(
+        "agent_data_manager.tools.qdrant_vector_tools.get_qdrant_store",
+        return_value=mock_qdrant_store,
+    ):
         # Insert test vectors
-        await mock_qdrant_store.upsert_vector(vector_id="delete_test_1", vector=[0.3] * 1536, tag="delete_test_tag")
+        await mock_qdrant_store.upsert_vector(
+            vector_id="delete_test_1", vector=[0.3] * 1536, tag="delete_test_tag"
+        )
 
         # Verify vector exists
         query_result = await mock_qdrant_store.query_vectors_by_tag("delete_test_tag")
         assert len(query_result) == 1
 
         # Delete by tag
-        result = await agent_with_tools.tools_manager.execute_tool("qdrant_delete_by_tag", tag="delete_test_tag")
+        result = await agent_with_tools.tools_manager.execute_tool(
+            "qdrant_delete_by_tag", tag="delete_test_tag"
+        )
 
         assert result["status"] == "success"
         assert result["tag"] == "delete_test_tag"
 
         # Verify vector is deleted
-        query_result_after = await mock_qdrant_store.query_vectors_by_tag("delete_test_tag")
+        query_result_after = await mock_qdrant_store.query_vectors_by_tag(
+            "delete_test_tag"
+        )
         assert len(query_result_after) == 0
 
 
@@ -172,10 +203,19 @@ async def test_semantic_search_qdrant_tool(agent_with_tools, mock_qdrant_store):
     # Mock OpenAI embedding generation
     mock_embedding = [0.1] * 1536
 
-    with patch("agent_data_manager.tools.qdrant_embedding_tools.get_openai_embedding") as mock_get_embedding, patch(
-        "agent_data_manager.tools.qdrant_embedding_tools.openai_client", return_value=True
-    ), patch("agent_data_manager.tools.qdrant_embedding_tools.OPENAI_AVAILABLE", True), patch(
-        "agent_data_manager.tools.qdrant_embedding_tools.get_qdrant_store", return_value=mock_qdrant_store
+    with (
+        patch(
+            "agent_data_manager.tools.qdrant_embedding_tools.get_openai_embedding"
+        ) as mock_get_embedding,
+        patch(
+            "agent_data_manager.tools.qdrant_embedding_tools.openai_client",
+            return_value=True,
+        ),
+        patch("agent_data_manager.tools.qdrant_embedding_tools.OPENAI_AVAILABLE", True),
+        patch(
+            "agent_data_manager.tools.qdrant_embedding_tools.get_qdrant_store",
+            return_value=mock_qdrant_store,
+        ),
     ):
 
         mock_get_embedding.return_value = {"embedding": mock_embedding}
@@ -198,7 +238,9 @@ async def test_semantic_search_qdrant_tool(agent_with_tools, mock_qdrant_store):
 
         assert result["status"] == "success"
         assert "similar_items" in result
-        assert len(result["similar_items"]) >= 0  # May be 0 if no matches above threshold
+        assert (
+            len(result["similar_items"]) >= 0
+        )  # May be 0 if no matches above threshold
 
 
 @pytest.mark.asyncio
@@ -223,8 +265,9 @@ async def test_qdrant_tool_error_handling(agent_with_tools):
 @pytest.mark.asyncio
 async def test_qdrant_config_validation():
     """Test Qdrant configuration validation (fast mock version)."""
-    from agent_data_manager.config.settings import Settings
     from unittest.mock import patch
+
+    from agent_data_manager.config.settings import Settings
 
     # Mock the class attributes to test validation logic
     with patch.object(Settings, "QDRANT_URL", "https://test.qdrant.io"):
@@ -248,17 +291,20 @@ async def test_qdrant_config_validation():
 async def test_qdrant_cluster_info():
     """Test that we can validate API key access by getting collections info."""
     try:
+        import httpx
         from qdrant_client import QdrantClient
         from qdrant_client.http.exceptions import ResponseHandlingException
+
         from agent_data_manager.config.settings import settings
-        import httpx
 
         # Only run if we have a valid Qdrant configuration
         if not settings.validate_qdrant_config():
             pytest.skip("Qdrant configuration not available")
 
         # Create client with real configuration and shorter timeout
-        client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=5.0)  # 5 second timeout
+        client = QdrantClient(
+            url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY, timeout=5.0
+        )  # 5 second timeout
 
         # Test collections list access (validates API key and connection)
         collections = client.get_collections()
@@ -273,7 +319,11 @@ async def test_qdrant_cluster_info():
 
     except ImportError:
         pytest.skip("qdrant-client not available")
-    except (ResponseHandlingException, httpx.ConnectTimeout, httpx.TimeoutException) as e:
+    except (
+        ResponseHandlingException,
+        httpx.ConnectTimeout,
+        httpx.TimeoutException,
+    ) as e:
         # Skip test if there are connection/timeout issues
         pytest.skip(f"Qdrant connection timeout or network issue: {e}")
     except Exception as e:

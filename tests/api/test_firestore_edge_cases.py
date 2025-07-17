@@ -3,10 +3,11 @@ Test suite for Firestore integration edge cases
 Tests connection failures, data validation, sync scenarios, and error handling
 """
 
-import pytest
 import asyncio
-from unittest.mock import patch, MagicMock
 from datetime import datetime
+from unittest.mock import MagicMock, patch
+
+import pytest
 
 from agent_data_manager.auth.user_manager import UserManager
 
@@ -16,7 +17,9 @@ class TestFirestoreConnectionEdgeCases:
 
     def test_firestore_connection_failure(self):
         """Test handling of Firestore connection failures"""
-        with patch("agent_data_manager.auth.user_manager.firestore.Client") as mock_client:
+        with patch(
+            "agent_data_manager.auth.user_manager.firestore.Client"
+        ) as mock_client:
             # Simulate connection failure
             mock_client.side_effect = Exception("Connection failed")
 
@@ -28,7 +31,9 @@ class TestFirestoreConnectionEdgeCases:
         user_manager = UserManager()
 
         # Mock timeout scenario
-        with patch.object(user_manager.firestore_client, "collection") as mock_collection:
+        with patch.object(
+            user_manager.firestore_client, "collection"
+        ) as mock_collection:
             mock_collection.side_effect = Exception("Timeout")
 
             # Should handle timeout gracefully
@@ -40,7 +45,9 @@ class TestFirestoreConnectionEdgeCases:
         user_manager = UserManager()
 
         # Mock permission denied
-        with patch.object(user_manager.firestore_client, "collection") as mock_collection:
+        with patch.object(
+            user_manager.firestore_client, "collection"
+        ) as mock_collection:
             mock_collection.side_effect = Exception("Permission denied")
 
             result = asyncio.run(user_manager.get_user_by_email("denied@test.com"))
@@ -128,7 +135,9 @@ class TestDataValidationEdgeCases:
             large_metadata[f"field_{i}"] = f"value_{i}" * 100
 
         # Add nested structures
-        large_metadata["nested"] = {"level1": {"level2": {"level3": {"data": ["item"] * 1000}}}}
+        large_metadata["nested"] = {
+            "level1": {"level2": {"level3": {"data": ["item"] * 1000}}}
+        }
 
         # Test that we can handle large objects
         import json
@@ -163,9 +172,14 @@ class TestConcurrentFirestoreOperations:
                 email = f"concurrent_{user_id}@test.com"
 
                 # Mock the Firestore operations
-                with patch.object(self.user_manager, "get_user_by_email", return_value=None), patch.object(
-                    self.user_manager.firestore_client, "collection"
-                ) as mock_collection:
+                with (
+                    patch.object(
+                        self.user_manager, "get_user_by_email", return_value=None
+                    ),
+                    patch.object(
+                        self.user_manager.firestore_client, "collection"
+                    ) as mock_collection,
+                ):
 
                     mock_doc_ref = MagicMock()
                     mock_collection.return_value.document.return_value = mock_doc_ref
@@ -183,7 +197,9 @@ class TestConcurrentFirestoreOperations:
 
         # Check results
         successful_creations = [r for r in results if r["success"]]
-        assert len(successful_creations) >= 8  # Allow for some failures due to concurrency
+        assert (
+            len(successful_creations) >= 8
+        )  # Allow for some failures due to concurrency
 
     def test_concurrent_authentication_attempts(self):
         """Test concurrent authentication attempts"""
@@ -200,12 +216,29 @@ class TestConcurrentFirestoreOperations:
         def authenticate_user_async(attempt_id):
             """Authenticate user asynchronously"""
             try:
-                with patch.object(self.user_manager, "get_user_by_email", return_value=mock_user), patch(
-                    "agent_data_manager.auth.user_manager.pwd_context.verify", return_value=True
-                ), patch.object(self.user_manager, "update_login_stats", return_value=None):
+                with (
+                    patch.object(
+                        self.user_manager, "get_user_by_email", return_value=mock_user
+                    ),
+                    patch(
+                        "agent_data_manager.auth.user_manager.pwd_context.verify",
+                        return_value=True,
+                    ),
+                    patch.object(
+                        self.user_manager, "update_login_stats", return_value=None
+                    ),
+                ):
 
-                    result = asyncio.run(self.user_manager.authenticate_user("concurrent@test.com", "password"))
-                    return {"success": True, "attempt": attempt_id, "user": result["email"]}
+                    result = asyncio.run(
+                        self.user_manager.authenticate_user(
+                            "concurrent@test.com", "password"
+                        )
+                    )
+                    return {
+                        "success": True,
+                        "attempt": attempt_id,
+                        "user": result["email"],
+                    }
 
             except Exception as e:
                 return {"success": False, "attempt": attempt_id, "error": str(e)}
@@ -238,9 +271,12 @@ class TestFirestoreDataConsistency:
         }
 
         # Mock successful creation
-        with patch.object(self.user_manager, "get_user_by_email", return_value=None), patch.object(
-            self.user_manager.firestore_client, "collection"
-        ) as mock_collection:
+        with (
+            patch.object(self.user_manager, "get_user_by_email", return_value=None),
+            patch.object(
+                self.user_manager.firestore_client, "collection"
+            ) as mock_collection,
+        ):
 
             mock_doc_ref = MagicMock()
             mock_collection.return_value.document.return_value = mock_doc_ref
@@ -269,14 +305,19 @@ class TestFirestoreDataConsistency:
         # Test that timestamps are consistent and logical
         start_time = datetime.utcnow()
 
-        with patch.object(self.user_manager, "get_user_by_email", return_value=None), patch.object(
-            self.user_manager.firestore_client, "collection"
-        ) as mock_collection:
+        with (
+            patch.object(self.user_manager, "get_user_by_email", return_value=None),
+            patch.object(
+                self.user_manager.firestore_client, "collection"
+            ) as mock_collection,
+        ):
 
             mock_doc_ref = MagicMock()
             mock_collection.return_value.document.return_value = mock_doc_ref
 
-            result = asyncio.run(self.user_manager.create_user("timestamp@test.com", "password"))
+            result = asyncio.run(
+                self.user_manager.create_user("timestamp@test.com", "password")
+            )
 
             end_time = datetime.utcnow()
 
@@ -285,7 +326,9 @@ class TestFirestoreDataConsistency:
             assert start_time <= created_at <= end_time
 
             # Check that created_at and updated_at are close (within 1 second)
-            time_diff = abs((result["created_at"] - result["updated_at"]).total_seconds())
+            time_diff = abs(
+                (result["created_at"] - result["updated_at"]).total_seconds()
+            )
             assert time_diff < 1.0  # Should be very close
 
     def test_scope_validation(self):
@@ -300,15 +343,20 @@ class TestFirestoreDataConsistency:
         ]
 
         for scopes in valid_scopes:
-            with patch.object(self.user_manager, "get_user_by_email", return_value=None), patch.object(
-                self.user_manager.firestore_client, "collection"
-            ) as mock_collection:
+            with (
+                patch.object(self.user_manager, "get_user_by_email", return_value=None),
+                patch.object(
+                    self.user_manager.firestore_client, "collection"
+                ) as mock_collection,
+            ):
 
                 mock_doc_ref = MagicMock()
                 mock_collection.return_value.document.return_value = mock_doc_ref
 
                 result = asyncio.run(
-                    self.user_manager.create_user(f"scope_test_{len(scopes)}@test.com", "password", scopes=scopes)
+                    self.user_manager.create_user(
+                        f"scope_test_{len(scopes)}@test.com", "password", scopes=scopes
+                    )
                 )
 
                 # Verify scopes are preserved

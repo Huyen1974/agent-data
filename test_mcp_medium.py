@@ -5,17 +5,19 @@ Tests subprocess environment inheritance and scaled functionality.
 CLI119D4 - Scale testing from 10 to 50 documents with I/O optimizations.
 """
 
-import os
-import sys
 import json
-import time
-import subprocess
 import logging
+import os
 import select
-from typing import List, Dict, Any
+import subprocess
+import sys
+import time
+from typing import Any
 
 # Configure logging to ERROR level to reduce I/O
-logging.basicConfig(level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Test configuration - optimized for MacBook M1 stability
@@ -37,7 +39,7 @@ WORKSPACE_PATH = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents
 MCP_SERVER_PATH = "ADK/agent_data/local_mcp_server.py"
 
 
-def generate_test_documents(num_docs: int) -> List[Dict[str, Any]]:
+def generate_test_documents(num_docs: int) -> list[dict[str, Any]]:
     """Generate test documents for processing."""
     documents = []
     for i in range(num_docs):
@@ -46,7 +48,11 @@ def generate_test_documents(num_docs: int) -> List[Dict[str, Any]]:
 
         doc = {
             "tool_name": "save_document",
-            "kwargs": {"doc_id": doc_id, "content": content, "save_dir": "saved_documents"},
+            "kwargs": {
+                "doc_id": doc_id,
+                "content": content,
+                "save_dir": "saved_documents",
+            },
         }
         documents.append(doc)
     return documents
@@ -89,7 +95,7 @@ def run_mcp_server_subprocess():
 
     # Only log errors to minimize I/O
     if logger.isEnabledFor(logging.ERROR):
-        logger.error(f"Starting MCP server with optimized configuration")
+        logger.error("Starting MCP server with optimized configuration")
 
     process = subprocess.Popen(
         cmd,
@@ -105,7 +111,9 @@ def run_mcp_server_subprocess():
     return process
 
 
-def send_document_to_server(process: subprocess.Popen, document: Dict[str, Any], timeout: int = 60) -> Dict[str, Any]:
+def send_document_to_server(
+    process: subprocess.Popen, document: dict[str, Any], timeout: int = 60
+) -> dict[str, Any]:
     """Send a document to the MCP server and get response with retry logic."""
     max_retries = TEST_CONFIG["max_retries"]
     retry_delay = TEST_CONFIG["retry_delay"]
@@ -123,7 +131,9 @@ def send_document_to_server(process: subprocess.Popen, document: Dict[str, Any],
                 if process.poll() is not None:
                     # Process has terminated
                     stderr_output = process.stderr.read()
-                    raise RuntimeError(f"MCP server terminated unexpectedly: {stderr_output}")
+                    raise RuntimeError(
+                        f"MCP server terminated unexpectedly: {stderr_output}"
+                    )
 
                 # Use select to check if stdout is ready for reading (Unix-like systems)
                 if hasattr(select, "select"):
@@ -168,7 +178,9 @@ def send_document_to_server(process: subprocess.Popen, document: Dict[str, Any],
 def run_test():
     """Run the medium test with 50 documents."""
     # Only essential logging
-    print(f"Starting CLI119D4 medium test with {TEST_CONFIG['num_documents']} documents")
+    print(
+        f"Starting CLI119D4 medium test with {TEST_CONFIG['num_documents']} documents"
+    )
 
     # Generate test documents
     documents = generate_test_documents(TEST_CONFIG["num_documents"])
@@ -237,35 +249,39 @@ def run_test():
         # Write detailed results to file
         os.makedirs(".misc", exist_ok=True)
         with open(".misc/CLI119D4_medium_test_results.txt", "w") as f:
-            f.write(f"CLI119D4 Medium Test Results - 50 Documents\n")
-            f.write(f"==========================================\n\n")
-            f.write(f"Test Configuration:\n")
+            f.write("CLI119D4 Medium Test Results - 50 Documents\n")
+            f.write("==========================================\n\n")
+            f.write("Test Configuration:\n")
             f.write(f"- Documents: {TEST_CONFIG['num_documents']}\n")
             f.write(f"- Timeout: {TEST_CONFIG['timeout']}s\n")
             f.write(f"- Success threshold: {TEST_CONFIG['success_threshold']:.2%}\n")
             f.write(f"- Doc delay: {TEST_CONFIG['doc_delay']}s\n")
             f.write(f"- Concurrency: {TEST_CONFIG['concurrency']}\n\n")
-            f.write(f"Results:\n")
+            f.write("Results:\n")
             f.write(f"- Total time: {total_time:.2f} seconds\n")
             f.write(f"- Documents processed: {total_docs}\n")
             f.write(f"- Successful: {successful_docs}\n")
             f.write(f"- Failed: {failed_docs}\n")
             f.write(f"- Success rate: {success_rate:.2%}\n")
-            f.write(f"- Test result: {'PASSED' if success_rate >= TEST_CONFIG['success_threshold'] else 'FAILED'}\n\n")
-            f.write(f"Environment:\n")
-            f.write(f"- Mock QdrantStore: Enabled\n")
+            f.write(
+                f"- Test result: {'PASSED' if success_rate >= TEST_CONFIG['success_threshold'] else 'FAILED'}\n\n"
+            )
+            f.write("Environment:\n")
+            f.write("- Mock QdrantStore: Enabled\n")
             f.write(f"- Virtual environment: {VENV_PYTHON}\n")
             f.write(f"- Workspace: {WORKSPACE_PATH}\n")
-            f.write(f"- Logging level: ERROR (optimized)\n\n")
-            f.write(f"Performance:\n")
+            f.write("- Logging level: ERROR (optimized)\n\n")
+            f.write("Performance:\n")
             f.write(f"- Average time per document: {total_time/total_docs:.2f}s\n")
             f.write(f"- Documents per minute: {total_docs/(total_time/60):.1f}\n\n")
-            f.write(f"Error Summary:\n")
+            f.write("Error Summary:\n")
             error_count = {}
             for i, result in enumerate(all_results):
                 if "error" in result:
                     error_type = (
-                        str(result["error"])[:50] + "..." if len(str(result["error"])) > 50 else str(result["error"])
+                        str(result["error"])[:50] + "..."
+                        if len(str(result["error"])) > 50
+                        else str(result["error"])
                     )
                     error_count[error_type] = error_count.get(error_type, 0) + 1
             for error, count in error_count.items():

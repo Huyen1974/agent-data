@@ -1,4 +1,3 @@
-
 """
 CLI140c Documentation Validation Test
 
@@ -9,9 +8,10 @@ This test validates CSKH API specifications in documentation files:
 Ensures consistency and completeness of CSKH API documentation.
 """
 
-import pytest
 import re
 from pathlib import Path
+
+import pytest
 
 
 class TestCLI140cDocumentation:
@@ -35,11 +35,21 @@ class TestCLI140cDocumentation:
         # Define file paths
         project_root = Path(__file__).parent.parent
         final_report_path = project_root / "Agent_Data_Final_Report.md"
-        cursor_integration_path = project_root / "src" / "agent_data_manager" / "docs" / "INTEGRATE_WITH_CURSOR.md"
+        cursor_integration_path = (
+            project_root
+            / "src"
+            / "agent_data_manager"
+            / "docs"
+            / "INTEGRATE_WITH_CURSOR.md"
+        )
 
         # Verify files exist
-        assert final_report_path.exists(), f"Agent_Data_Final_Report.md not found at {final_report_path}"
-        assert cursor_integration_path.exists(), f"INTEGRATE_WITH_CURSOR.md not found at {cursor_integration_path}"
+        assert (
+            final_report_path.exists()
+        ), f"Agent_Data_Final_Report.md not found at {final_report_path}"
+        assert (
+            cursor_integration_path.exists()
+        ), f"INTEGRATE_WITH_CURSOR.md not found at {cursor_integration_path}"
 
         # Read file contents
         final_report_content = final_report_path.read_text(encoding="utf-8")
@@ -72,35 +82,54 @@ class TestCLI140cDocumentation:
                 cursor_integration_missing.append(element)
 
         # Check for CSKH API section headers
-        cskh_sections = [r"CSKH.*Agent.*API", r"Customer.*Care.*Agent", r"CSKH.*Query", r"CSKH.*Integration"]
+        cskh_sections = [
+            r"CSKH.*Agent.*API",
+            r"Customer.*Care.*Agent",
+            r"CSKH.*Query",
+            r"CSKH.*Integration",
+        ]
 
         final_report_has_cskh_section = any(
-            re.search(pattern, final_report_content, re.IGNORECASE) for pattern in cskh_sections
+            re.search(pattern, final_report_content, re.IGNORECASE)
+            for pattern in cskh_sections
         )
 
         cursor_integration_has_cskh_section = any(
-            re.search(pattern, cursor_integration_content, re.IGNORECASE) for pattern in cskh_sections
+            re.search(pattern, cursor_integration_content, re.IGNORECASE)
+            for pattern in cskh_sections
         )
 
         # Validate JSON examples are present
         json_example_pattern = r'\{[^}]*"query_text"[^}]*\}'
-        final_report_has_json = bool(re.search(json_example_pattern, final_report_content, re.DOTALL))
-        cursor_integration_has_json = bool(re.search(json_example_pattern, cursor_integration_content, re.DOTALL))
+        final_report_has_json = bool(
+            re.search(json_example_pattern, final_report_content, re.DOTALL)
+        )
+        cursor_integration_has_json = bool(
+            re.search(json_example_pattern, cursor_integration_content, re.DOTALL)
+        )
 
         # Collect validation results
         validation_errors = []
 
         if final_report_missing:
-            validation_errors.append(f"Agent_Data_Final_Report.md missing: {', '.join(final_report_missing)}")
+            validation_errors.append(
+                f"Agent_Data_Final_Report.md missing: {', '.join(final_report_missing)}"
+            )
 
         if cursor_integration_missing:
-            validation_errors.append(f"INTEGRATE_WITH_CURSOR.md missing: {', '.join(cursor_integration_missing)}")
+            validation_errors.append(
+                f"INTEGRATE_WITH_CURSOR.md missing: {', '.join(cursor_integration_missing)}"
+            )
 
         if not final_report_has_cskh_section:
-            validation_errors.append("Agent_Data_Final_Report.md missing CSKH API section")
+            validation_errors.append(
+                "Agent_Data_Final_Report.md missing CSKH API section"
+            )
 
         if not cursor_integration_has_cskh_section:
-            validation_errors.append("INTEGRATE_WITH_CURSOR.md missing CSKH API section")
+            validation_errors.append(
+                "INTEGRATE_WITH_CURSOR.md missing CSKH API section"
+            )
 
         if not final_report_has_json:
             validation_errors.append("Agent_Data_Final_Report.md missing JSON examples")
@@ -109,14 +138,22 @@ class TestCLI140cDocumentation:
             validation_errors.append("INTEGRATE_WITH_CURSOR.md missing JSON examples")
 
         # Assert all validations pass
-        assert not validation_errors, "CSKH API documentation validation failed:\n" + "\n".join(validation_errors)
+        assert (
+            not validation_errors
+        ), "CSKH API documentation validation failed:\n" + "\n".join(validation_errors)
 
         # Success metrics for reporting
         total_elements = len(required_elements)
-        final_report_coverage = (total_elements - len(final_report_missing)) / total_elements * 100
-        cursor_integration_coverage = (total_elements - len(cursor_integration_missing)) / total_elements * 100
+        final_report_coverage = (
+            (total_elements - len(final_report_missing)) / total_elements * 100
+        )
+        cursor_integration_coverage = (
+            (total_elements - len(cursor_integration_missing)) / total_elements * 100
+        )
 
         print("✓ CSKH API documentation validation passed")
         print(f"✓ Agent_Data_Final_Report.md coverage: {final_report_coverage:.1f}%")
-        print(f"✓ INTEGRATE_WITH_CURSOR.md coverage: {cursor_integration_coverage:.1f}%")
+        print(
+            f"✓ INTEGRATE_WITH_CURSOR.md coverage: {cursor_integration_coverage:.1f}%"
+        )
         print("✓ Both files contain CSKH API sections and JSON examples")

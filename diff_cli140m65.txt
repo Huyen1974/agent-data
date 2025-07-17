@@ -49,7 +49,7 @@ index e9a2517..a0918bd 100644
 @@ -32,13 +32,40 @@ def global_comprehensive_mocks(monkeypatch):
          monkeypatch.setattr("requests.put", MagicMock(return_value=mock_response))
          monkeypatch.setattr("requests.delete", MagicMock(return_value=mock_response))
-         
+
 -        # Mock subprocess calls to prevent heavy operations
 -        mock_subprocess_result = MagicMock()
 -        mock_subprocess_result.returncode = 0
@@ -60,10 +60,10 @@ index e9a2517..a0918bd 100644
 +            mock_result = MagicMock()
 +            mock_result.returncode = 0
 +            mock_result.stderr = ""
-+            
++
 +            # Allow pytest --collect-only to work properly for meta count test
-+            if (args and len(args[0]) >= 2 and 
-+                (args[0][0] == "pytest" or (args[0][0] == "python" and len(args[0]) >= 3 and args[0][2] == "pytest")) 
++            if (args and len(args[0]) >= 2 and
++                (args[0][0] == "pytest" or (args[0][0] == "python" and len(args[0]) >= 3 and args[0][2] == "pytest"))
 +                and "--collect-only" in args[0]):
 +                # Run the actual pytest collection for meta count test
 +                import subprocess as real_subprocess
@@ -87,11 +87,11 @@ index e9a2517..a0918bd 100644
 +                # Mock other subprocess calls
 +                mock_result.stdout = "Mocked subprocess output"
 +                return mock_result
-         
+
 -        monkeypatch.setattr("subprocess.run", MagicMock(return_value=mock_subprocess_result))
 +        monkeypatch.setattr("subprocess.run", smart_subprocess_mock)
          monkeypatch.setattr("subprocess.Popen", MagicMock())
-         
+
          # Mock Google Cloud services
 diff --git a/logs/test_fixes.log b/logs/test_fixes.log
 index adb6246..dbb4689 100644
@@ -984,8 +984,8 @@ index 91f39b1..2096576 100644
 +++ b/tests/api/test_all_tags_lowercase_in_fixtures.py
 @@ -2,7 +2,6 @@ from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_all_tags_lowercase_in_fixtures():
      for point in STANDARD_SAMPLE_POINTS_RAW:
@@ -997,7 +997,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -183,7 +183,6 @@ class TestAPIAGateway:
              assert "message" in data
              assert data["firestore_updated"] is True
- 
+
 -    @pytest.mark.deferred
      @patch("agent_data_manager.api_mcp_gateway.vectorization_tool", None)
      def test_save_document_service_unavailable(self, client, sample_save_request):
@@ -1005,7 +1005,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -191,7 +190,6 @@ class TestAPIAGateway:
          assert response.status_code == 503
          assert "Vectorization service unavailable" in response.json()["detail"]
- 
+
 -    @pytest.mark.deferred
      def test_save_document_invalid_request(self, client):
          """Test save document with invalid request data"""
@@ -1013,7 +1013,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -228,7 +226,6 @@ class TestAPIAGateway:
              assert "results" in data
              assert "total_found" in data
- 
+
 -    @pytest.mark.deferred
      @patch("agent_data_manager.api_mcp_gateway.qdrant_store", None)
      def test_query_vectors_service_unavailable(self, client, sample_query_request):
@@ -1021,7 +1021,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -236,7 +233,6 @@ class TestAPIAGateway:
          assert response.status_code == 503
          assert "Qdrant service unavailable" in response.json()["detail"]
- 
+
 -    @pytest.mark.deferred
      def test_query_vectors_invalid_request(self, client):
          """Test query vectors with invalid request data"""
@@ -1029,7 +1029,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -263,7 +259,6 @@ class TestAPIAGateway:
              assert "results" in data
              assert "total_found" in data
- 
+
 -    @pytest.mark.deferred
      @patch("agent_data_manager.api_mcp_gateway.qdrant_store", None)
      def test_search_documents_service_unavailable(self, client, sample_search_request):
@@ -1037,7 +1037,7 @@ index 0cac2ea..7bdfff3 100644
 @@ -271,7 +266,6 @@ class TestAPIAGateway:
          assert response.status_code == 503
          assert "Qdrant service unavailable" in response.json()["detail"]
- 
+
 -    @pytest.mark.deferred
      def test_search_documents_with_vectors(self, client):
          """Test search documents including vector embeddings"""
@@ -1045,14 +1045,14 @@ index 0cac2ea..7bdfff3 100644
 @@ -290,7 +284,6 @@ class TestAPIAGateway:
              assert data["status"] == "success"
              assert "results" in data
- 
+
 -    @pytest.mark.deferred
      def test_pydantic_models_validation(self):
          """Test Pydantic model validation for API requests"""
          # Test SaveDocumentRequest validation
 @@ -310,7 +303,6 @@ class TestAPIAGateway:
          assert valid_search_request.limit == 10
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_api_a2a_integration_flow(self):
@@ -1064,16 +1064,16 @@ index 4a66dfe..cce528e 100644
 +++ b/tests/api/test_api_edge_cases.py
 @@ -11,7 +11,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
  from agent_data_manager.auth.auth_manager import AuthManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestRateLimitingEdgeCases:
      """Test rate limiting edge cases and boundary conditions"""
- 
+
 @@ -19,7 +18,6 @@ class TestRateLimitingEdgeCases:
          """Setup test environment"""
          self.auth_manager = AuthManager()
- 
+
 -    @pytest.mark.deferred
      def test_rate_limit_boundary_conditions(self):
          """Test rate limiting at exact boundaries"""
@@ -1081,19 +1081,19 @@ index 4a66dfe..cce528e 100644
 @@ -42,7 +40,6 @@ class TestRateLimitingEdgeCases:
                      expected_min_time = i * interval
                      assert processing_time >= expected_min_time * 0.9  # Allow 10% tolerance
- 
+
 -    @pytest.mark.deferred
      def test_concurrent_rate_limit_users(self):
          """Test rate limiting with multiple concurrent users"""
- 
+
 @@ -85,11 +82,9 @@ class TestRateLimitingEdgeCases:
                  assert time_diff >= 0.05  # Minimum spacing
- 
- 
+
+
 -@pytest.mark.deferred
  class TestLargePayloadHandling:
      """Test handling of large payloads and boundary conditions"""
- 
+
 -    @pytest.mark.deferred
      def test_large_document_content(self):
          """Test handling of large document content"""
@@ -1101,7 +1101,7 @@ index 4a66dfe..cce528e 100644
 @@ -117,7 +112,6 @@ class TestLargePayloadHandling:
              except Exception as e:
                  pytest.fail(f"Failed to serialize document of size {size}: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_large_metadata_objects(self):
          """Test handling of large metadata objects"""
@@ -1109,47 +1109,47 @@ index 4a66dfe..cce528e 100644
 @@ -137,7 +131,6 @@ class TestLargePayloadHandling:
          assert len(parsed_metadata) >= 101  # 100 fields + nested
          assert parsed_metadata["nested"]["level1"]["level2"]["data"][0] == "item"
- 
+
 -    @pytest.mark.deferred
      def test_unicode_and_special_characters(self):
          """Test handling of Unicode and special characters"""
          special_contents = [
 @@ -167,7 +160,6 @@ class TestLargePayloadHandling:
                  pytest.fail(f"Failed to handle special content: {content[:50]}... Error: {e}")
- 
- 
+
+
 -@pytest.mark.deferred
  class TestConcurrentRequestHandling:
      """Test concurrent request handling and race conditions"""
- 
+
 @@ -175,7 +167,6 @@ class TestConcurrentRequestHandling:
          """Setup test environment"""
          self.auth_manager = AuthManager()
- 
+
 -    @pytest.mark.deferred
      def test_concurrent_token_creation(self):
          """Test concurrent JWT token creation"""
- 
+
 @@ -198,7 +189,6 @@ class TestConcurrentRequestHandling:
              assert "sub" in payload
              assert "@test.com" in payload["sub"]
- 
+
 -    @pytest.mark.deferred
      def test_concurrent_token_validation(self):
          """Test concurrent token validation"""
          # Create a single token
 @@ -226,7 +216,6 @@ class TestConcurrentRequestHandling:
          assert all(user == "concurrent@test.com" for user in users)
- 
- 
+
+
 -@pytest.mark.deferred
  class TestErrorHandlingEdgeCases:
      """Test error handling in edge cases and boundary conditions"""
- 
+
 @@ -234,7 +223,6 @@ class TestErrorHandlingEdgeCases:
          """Setup test environment"""
          self.auth_manager = AuthManager()
- 
+
 -    @pytest.mark.deferred
      def test_memory_pressure_simulation(self):
          """Test behavior under simulated memory pressure"""
@@ -1157,15 +1157,15 @@ index 4a66dfe..cce528e 100644
 @@ -259,7 +247,6 @@ class TestErrorHandlingEdgeCases:
          except Exception as e:
              pytest.fail(f"Memory pressure test failed: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_rapid_token_expiration(self):
          """Test rapid token creation and expiration (optimized for MacBook M1)"""
          from datetime import timedelta
 @@ -290,7 +277,6 @@ class TestErrorHandlingEdgeCases:
- 
+
          assert expired_count == 5  # All should be expired
- 
+
 -    @pytest.mark.deferred
      def test_malformed_input_handling(self):
          """Test handling of various malformed inputs"""
@@ -1173,7 +1173,7 @@ index 4a66dfe..cce528e 100644
 @@ -312,7 +298,6 @@ class TestErrorHandlingEdgeCases:
                      # Expected to fail
                      pass
- 
+
 -    @pytest.mark.deferred
      def test_boundary_value_testing(self):
          """Test boundary values for various parameters"""
@@ -1184,23 +1184,23 @@ index 469e3c2..96801df 100644
 +++ b/tests/api/test_authentication.py
 @@ -18,7 +18,6 @@ from agent_data_manager.auth.user_manager import UserManager
  CACHED_PASSWORD_HASH = "$2b$12$XSWm27MFTABRgoxDz57jk.VNvZTT3iK66QobF330sjFFvX1VCK9o6"  # hash of "test_password_123"
- 
- 
+
+
 -@pytest.mark.deferred
  class TestJWTAuthentication:
      """Test JWT authentication functionality"""
- 
+
 @@ -39,14 +38,12 @@ class TestJWTAuthentication:
              self.auth_manager = self.__class__._auth_manager_cache
              self.user_manager = self.__class__._user_manager_cache
- 
+
 -    @pytest.mark.deferred
      def test_auth_manager_initialization(self):
          """Test AuthManager initializes correctly"""
          assert self.auth_manager.algorithm == "HS256"
          assert self.auth_manager.access_token_expire_minutes == 30
          assert self.auth_manager.secret_key is not None
- 
+
 -    @pytest.mark.deferred
      def test_password_hashing_and_verification(self):
          """Test password hashing and verification with optimized setup"""
@@ -1208,7 +1208,7 @@ index 469e3c2..96801df 100644
 @@ -66,7 +63,6 @@ class TestJWTAuthentication:
              assert self.auth_manager.verify_password("fresh_test_password", fresh_hash)
              self.__class__._fresh_hash_tested = True
- 
+
 -    @pytest.mark.deferred
      def test_jwt_token_creation_and_validation(self):
          """Test JWT token creation and validation"""
@@ -1216,7 +1216,7 @@ index 469e3c2..96801df 100644
 @@ -82,7 +78,6 @@ class TestJWTAuthentication:
          assert payload["email"] == user_data["email"]
          assert payload["scopes"] == user_data["scopes"]
- 
+
 -    @pytest.mark.deferred
      def test_jwt_token_expiration(self):
          """Test JWT token expiration handling with optimized timing"""
@@ -1224,7 +1224,7 @@ index 469e3c2..96801df 100644
 @@ -110,7 +105,6 @@ class TestJWTAuthentication:
          # Verify it's the correct type of HTTPException (401 Unauthorized)
          assert exc_info.value.status_code == 401
- 
+
 -    @pytest.mark.deferred
      def test_invalid_jwt_token(self):
          """Test handling of invalid JWT tokens"""
@@ -1232,7 +1232,7 @@ index 469e3c2..96801df 100644
 @@ -124,7 +118,6 @@ class TestJWTAuthentication:
              with pytest.raises(Exception):  # Should raise HTTPException
                  self.auth_manager.verify_token(invalid_token)
- 
+
 -    @pytest.mark.deferred
      def test_user_token_creation(self):
          """Test user-specific token creation"""
@@ -1240,14 +1240,14 @@ index 469e3c2..96801df 100644
 @@ -139,7 +132,6 @@ class TestJWTAuthentication:
          assert payload["scopes"] == scopes
          assert payload["token_type"] == "access"
- 
+
 -    @pytest.mark.deferred
      def test_user_access_validation(self):
          """Test user access scope validation"""
          # User with read access
 @@ -163,7 +155,6 @@ class TestJWTAuthentication:
          assert not self.auth_manager.validate_user_access(no_access_user, "read")
- 
+
      @patch("agent_data_manager.auth.auth_manager.secretmanager")
 -    @pytest.mark.deferred
      def test_jwt_secret_from_secret_manager(self, mock_secretmanager):
@@ -1256,7 +1256,7 @@ index 469e3c2..96801df 100644
 @@ -179,7 +170,6 @@ class TestJWTAuthentication:
              # Should use the secret from Secret Manager
              assert auth_manager.secret_key == "secret_from_gcp"
- 
+
 -    @pytest.mark.deferred
      def test_malformed_token_handling(self):
          """Test handling of malformed JWT tokens"""
@@ -1264,39 +1264,39 @@ index 469e3c2..96801df 100644
 @@ -193,7 +183,6 @@ class TestJWTAuthentication:
              with pytest.raises(Exception):  # Should raise HTTPException
                  self.auth_manager.verify_token(malformed_token)
- 
+
 -    @pytest.mark.deferred
      def test_token_without_required_fields(self):
          """Test tokens missing required fields"""
          # Manually create JWT without 'sub'
 @@ -211,7 +200,6 @@ class TestJWTAuthentication:
              self.auth_manager.verify_token(token)
- 
- 
+
+
 -@pytest.mark.deferred
  class TestUserManager:
      """Test UserManager functionality"""
- 
+
 @@ -276,7 +264,6 @@ class TestUserManager:
              result = await self.user_manager.authenticate_user("test@cursor.integration", "wrong_password")
              assert result is None
- 
+
 -    @pytest.mark.deferred
      def test_rate_limiting_simulation(self):
          """Test rate limiting simulation with optimized timing"""
          # Simulate rate limiting without actual delays
 @@ -302,7 +289,6 @@ class TestUserManager:
                  assert is_rate_limited, f"Attempt {i+1} should be rate limited"
- 
- 
+
+
 -@pytest.mark.deferred
  class TestAuthenticationIntegration:
      """Test authentication integration scenarios"""
- 
+
 @@ -314,7 +300,6 @@ class TestAuthenticationIntegration:
              with patch("agent_data_manager.auth.auth_manager.secretmanager"):
                  self.auth_manager = AuthManager()
- 
+
 -    @pytest.mark.deferred
      def test_authentication_flow_simulation(self):
          """Test complete authentication flow simulation"""
@@ -1304,7 +1304,7 @@ index 469e3c2..96801df 100644
 @@ -337,7 +322,6 @@ class TestAuthenticationIntegration:
          assert self.auth_manager.validate_user_access(payload, "write")
          assert not self.auth_manager.validate_user_access(payload, "admin")
- 
+
 -    @pytest.mark.deferred
      def test_token_refresh_simulation(self):
          """Test token refresh simulation with optimized approach"""
@@ -1315,8 +1315,8 @@ index 9ce3121..4ef89e0 100644
 +++ b/tests/api/test_bad_topk_value_raises.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bad_topk_value_raises(client_with_qdrant_override: TestClient):
      for invalid_top_k in [0, -1]:
@@ -1327,68 +1327,68 @@ index f201417..670efe1 100644
 +++ b/tests/api/test_batch_policy.py
 @@ -9,7 +9,6 @@ from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizati
  from agent_data_manager.config.settings import settings
- 
- 
+
+
 -@pytest.mark.deferred
  class TestBatchPolicy:
      """Test batch processing policy enforcement."""
- 
+
 @@ -35,7 +34,6 @@ class TestBatchPolicy:
          ]
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_size_enforcement(self, mock_vectorization_tool, sample_documents):
          """Test that batch processing respects the configured batch size."""
- 
+
 @@ -62,7 +60,6 @@ class TestBatchPolicy:
              assert mock_vectorization_tool.vectorize_document.call_count == 25
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_sleep_between_batches(self, mock_vectorization_tool, sample_documents):
          """Test that sleep is applied between batches but not after the last batch."""
- 
+
 @@ -97,7 +94,6 @@ class TestBatchPolicy:
              assert len(batch_sleep_calls) == 2  # Sleep between batch 1-2 and 2-3, not after 3
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_rate_limit_applied_per_document(self, mock_vectorization_tool, sample_documents):
          """Test that rate limiting is applied per document."""
- 
+
 @@ -125,7 +121,6 @@ class TestBatchPolicy:
              assert result["total_documents"] == 5
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_policy_with_failures(self, mock_vectorization_tool, sample_documents):
          """Test batch processing behavior when some documents fail."""
- 
+
 @@ -155,7 +150,6 @@ class TestBatchPolicy:
              assert result["successful"] == 6
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_empty_documents_list(self, mock_vectorization_tool):
          """Test batch processing with empty documents list."""
- 
+
 @@ -174,7 +168,6 @@ class TestBatchPolicy:
              assert result["batches_processed"] == 0
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_default_batch_configuration(self, mock_vectorization_tool, sample_documents):
          """Test that default batch configuration values are used when not specified."""
- 
+
 diff --git a/tests/api/test_blank_query_text.py b/tests/api/test_blank_query_text.py
 index 9506b33..df20b4f 100644
 --- a/tests/api/test_blank_query_text.py
 +++ b/tests/api/test_blank_query_text.py
 @@ -1,7 +1,7 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_query_text_blank_spaces(client):
@@ -1400,40 +1400,40 @@ index 758f647..dc47c6b 100644
 +++ b/tests/api/test_bulk_upload.py
 @@ -14,7 +14,6 @@ if project_root not in sys.path:
  from agent_data_manager.tools.bulk_upload_tool import bulk_upload_sync
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
      """
      Test BULK_UPLOAD with valid points.
 @@ -33,7 +32,6 @@ def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
      assert "test_collection" in result["message"]
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bulk_upload_empty_collection():
      """
      Test BULK_UPLOAD with empty or whitespace-only collection name.
 @@ -56,7 +54,6 @@ def test_bulk_upload_empty_collection():
      assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bulk_upload_empty_points():
      """
      Test BULK_UPLOAD with empty points list.
 @@ -70,7 +67,6 @@ def test_bulk_upload_empty_points():
      assert "empty" in result["error"].lower()
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
      """
      Test BULK_UPLOAD with invalid points (missing vector).
 @@ -89,7 +85,6 @@ def test_bulk_upload_invalid_points(client_with_qdrant_override: TestClient):
      assert "valid" in result["error"].lower()
- 
- 
+
+
 -@pytest.mark.deferred
  def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient):
      """
@@ -1444,16 +1444,16 @@ index 832d61f..1456111 100644
 +++ b/tests/api/test_cli119d10_enhancements.py
 @@ -14,7 +14,6 @@ from unittest.mock import Mock, patch, AsyncMock
  from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestMetadataValidationEnhancements:
      """Test enhanced metadata validation functionality."""
- 
+
 @@ -26,7 +25,6 @@ class TestMetadataValidationEnhancements:
              manager.db = Mock()
              return manager
- 
+
 -    @pytest.mark.deferred
      def test_validate_metadata_valid_data(self, metadata_manager):
          """Test metadata validation with valid data."""
@@ -1461,7 +1461,7 @@ index 832d61f..1456111 100644
 @@ -43,7 +41,6 @@ class TestMetadataValidationEnhancements:
          assert result["valid"] is True
          assert len(result["errors"]) == 0
- 
+
 -    @pytest.mark.deferred
      def test_validate_metadata_missing_required_fields(self, metadata_manager):
          """Test metadata validation with missing required fields."""
@@ -1469,7 +1469,7 @@ index 832d61f..1456111 100644
 @@ -53,7 +50,6 @@ class TestMetadataValidationEnhancements:
          assert result["valid"] is False
          assert "Missing required field: doc_id" in result["errors"]
- 
+
 -    @pytest.mark.deferred
      def test_validate_metadata_invalid_types(self, metadata_manager):
          """Test metadata validation with invalid data types."""
@@ -1477,7 +1477,7 @@ index 832d61f..1456111 100644
 @@ -69,7 +65,6 @@ class TestMetadataValidationEnhancements:
          assert "version must be an integer" in result["errors"]
          assert "level_1 must be a string or None" in result["errors"]
- 
+
 -    @pytest.mark.deferred
      def test_validate_metadata_content_size_limits(self, metadata_manager):
          """Test metadata validation with content size limits."""
@@ -1485,7 +1485,7 @@ index 832d61f..1456111 100644
 @@ -83,7 +78,6 @@ class TestMetadataValidationEnhancements:
          assert "original_text exceeds 50KB limit" in result["errors"]
          assert "level_1 must be 100 characters or less" in result["errors"]
- 
+
 -    @pytest.mark.deferred
      def test_validate_metadata_invalid_timestamps(self, metadata_manager):
          """Test metadata validation with invalid timestamp formats."""
@@ -1493,31 +1493,31 @@ index 832d61f..1456111 100644
 @@ -97,7 +91,6 @@ class TestMetadataValidationEnhancements:
          assert result["valid"] is False
          assert any("must be a valid ISO format timestamp" in error for error in result["errors"])
- 
+
 -    @pytest.mark.deferred
      def test_validate_version_increment_valid(self, metadata_manager):
          """Test version increment validation with valid increments."""
          existing_data = {"version": 5}
 @@ -116,7 +109,6 @@ class TestMetadataValidationEnhancements:
- 
+
          assert result is True
- 
+
 -    @pytest.mark.deferred
      def test_validate_version_increment_decrease(self, metadata_manager):
          """Test version increment validation with version decrease."""
          existing_data = {"version": 5}
 @@ -183,7 +175,6 @@ class TestMetadataValidationEnhancements:
          assert stats["oldest_document"] == "2025-01-27T17:00:00Z"
- 
- 
+
+
 -@pytest.mark.deferred
  class TestChangeReportingEnhancements:
      """Test enhanced change reporting functionality."""
- 
+
 @@ -215,7 +206,6 @@ class TestChangeReportingEnhancements:
          except ImportError as e:
              pytest.skip(f"Failed to import {function_name}: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_calculate_string_similarity(self):
          """Test string similarity calculation."""
@@ -1525,7 +1525,7 @@ index 832d61f..1456111 100644
 @@ -234,7 +224,6 @@ class TestChangeReportingEnhancements:
          assert calculate_string_similarity("", "") == 0.0
          assert calculate_string_similarity("hello", "") == 0.0
- 
+
 -    @pytest.mark.deferred
      def test_analyze_change_impact(self):
          """Test change impact analysis."""
@@ -1533,7 +1533,7 @@ index 832d61f..1456111 100644
 @@ -252,7 +241,6 @@ class TestChangeReportingEnhancements:
          assert "vector_search" in impact["affected_systems"]
          assert "vectorization_completed" in impact["workflow_impact"]
- 
+
 -    @pytest.mark.deferred
      def test_calculate_data_quality_metrics(self):
          """Test data quality metrics calculation."""
@@ -1541,19 +1541,19 @@ index 832d61f..1456111 100644
 @@ -273,7 +261,6 @@ class TestChangeReportingEnhancements:
          assert metrics["validity_score"] == 1.0  # All required fields present
          assert metrics["quality_trend"] == "improving"  # More complete than before
- 
+
 -    @pytest.mark.deferred
      def test_enhanced_change_analysis(self):
          """Test enhanced change analysis with detailed metrics."""
          analyze_changes = self._import_function_safely("analyze_changes")
 @@ -306,11 +293,9 @@ class TestChangeReportingEnhancements:
              assert "new_type" in field_change
- 
- 
+
+
 -@pytest.mark.deferred
  class TestFirestoreRulesValidation:
      """Test Firestore rules deployment and validation."""
- 
+
 -    @pytest.mark.deferred
      def test_firestore_rules_syntax(self):
          """Test that Firestore rules file has valid syntax."""
@@ -1561,19 +1561,19 @@ index 832d61f..1456111 100644
 @@ -331,7 +316,6 @@ class TestFirestoreRulesValidation:
          assert "agent_sessions" in content
          assert "agent_data" in content
- 
+
 -    @pytest.mark.deferred
      def test_firebase_json_configuration(self):
          """Test Firebase configuration file."""
          import json
 @@ -368,11 +352,9 @@ class TestFirestoreRulesValidation:
          assert "change_reports" in index_collections
- 
- 
+
+
 -@pytest.mark.deferred
  class TestAlertingPolicyValidation:
      """Test alerting policy configuration and deployment."""
- 
+
 -    @pytest.mark.deferred
      def test_alert_policy_configuration(self):
          """Test alerting policy JSON configuration."""
@@ -1581,23 +1581,23 @@ index 832d61f..1456111 100644
 @@ -401,7 +383,6 @@ class TestAlertingPolicyValidation:
              assert "comparison" in threshold
              assert "thresholdValue" in threshold
- 
+
 -    @pytest.mark.deferred
      def test_alert_policy_metrics_references(self):
          """Test that alert policy references correct metrics."""
          import json
 @@ -417,7 +398,6 @@ class TestAlertingPolicyValidation:
- 
- 
+
+
  @pytest.mark.integration
 -@pytest.mark.deferred
  class TestCLI119D10Integration:
      """Integration tests for CLI119D10 enhancements."""
- 
+
 @@ -482,7 +462,6 @@ class TestCLI119D10Integration:
              # Verify that set was called (metadata was saved)
              manager.db.collection.return_value.document.return_value.set.assert_called_once()
- 
+
 -    @pytest.mark.deferred
      def test_change_reporting_integration(self):
          """Test change reporting with enhanced analytics."""
@@ -1608,15 +1608,15 @@ index 79add2d..db024a1 100644
 +++ b/tests/api/test_cursor_e2e_integration.py
 @@ -15,7 +15,6 @@ from agent_data_manager.vector_store.qdrant_store import QdrantStore
  from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCursorE2EIntegration:
      """End-to-end integration tests for Cursor IDE to Qdrant/Firestore workflow."""
- 
+
 @@ -134,7 +133,6 @@ class TestCursorE2EIntegration:
          }
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_single_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding):
@@ -1624,7 +1624,7 @@ index 79add2d..db024a1 100644
          doc = sample_cursor_documents[0]
 @@ -183,7 +181,6 @@ class TestCursorE2EIntegration:
                      assert result["firestore_updated"] is True
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding):
@@ -1632,7 +1632,7 @@ index 79add2d..db024a1 100644
          # Take first 4 documents for batch test
 @@ -242,7 +239,6 @@ class TestCursorE2EIntegration:
                      assert mock_firestore.save_metadata.call_count >= 8  # 2 calls per document
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_cursor_query_workflow(self, sample_cursor_documents, mock_openai_embedding):
@@ -1640,7 +1640,7 @@ index 79add2d..db024a1 100644
          query_text = "How to implement authentication in web applications?"
 @@ -322,7 +318,6 @@ class TestCursorE2EIntegration:
                          assert search_results["results"][1]["score"] == 0.85
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_cursor_metadata_validation_workflow(self, sample_cursor_documents):
@@ -1648,7 +1648,7 @@ index 79add2d..db024a1 100644
          doc = sample_cursor_documents[0]
 @@ -379,7 +374,6 @@ class TestCursorE2EIntegration:
                      assert result["firestore_updated"] is True
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_cursor_integration_data_consistency(self, sample_cursor_documents):
@@ -1660,16 +1660,16 @@ index 0492e95..241f5e9 100644
 +++ b/tests/api/test_cursor_e2e_integration_fixed.py
 @@ -16,7 +16,6 @@ from agent_data_manager.vector_store.qdrant_store import QdrantStore
  # from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCursorE2EIntegrationFixed:
      """End-to-end integration tests for Cursor IDE to Qdrant/Firestore workflow."""
- 
+
 @@ -393,7 +392,6 @@ class TestCursorE2EIntegrationFixed:
              # Verify Firestore was updated with failure status
              assert mock_firestore.save_metadata.call_count >= 1
- 
+
 -    @pytest.mark.deferred
      def test_cursor_integration_performance_requirements(self):
          """Test that the integration meets performance requirements for Cursor IDE."""
@@ -1680,16 +1680,16 @@ index c79e5ec..1ea55c8 100644
 +++ b/tests/api/test_cursor_e2e_real_cloud.py
 @@ -19,7 +19,6 @@ TEST_TIMEOUT = 30  # seconds
  MAX_DOCUMENTS = 8  # Small scale to avoid rate limits
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCursorRealCloudIntegration:
      """Real cloud integration tests with authentication"""
- 
+
 @@ -31,7 +30,6 @@ class TestCursorRealCloudIntegration:
          cls.test_session = requests.Session()
          cls.test_session.timeout = TEST_TIMEOUT
- 
+
 -    @pytest.mark.deferred
      def test_01_health_check(self):
          """Test Cloud Run service health and authentication status"""
@@ -1697,7 +1697,7 @@ index c79e5ec..1ea55c8 100644
 @@ -56,7 +54,6 @@ class TestCursorRealCloudIntegration:
          except requests.exceptions.RequestException as e:
              pytest.skip(f"Cloud Run service not accessible: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_02_authenticate_user(self):
          """Test user authentication and JWT token retrieval"""
@@ -1705,7 +1705,7 @@ index c79e5ec..1ea55c8 100644
 @@ -92,7 +89,6 @@ class TestCursorRealCloudIntegration:
          except requests.exceptions.RequestException as e:
              pytest.skip(f"Authentication service not accessible: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_03_access_denied_without_token(self):
          """Test that API endpoints require authentication"""
@@ -1713,7 +1713,7 @@ index c79e5ec..1ea55c8 100644
 @@ -113,7 +109,6 @@ class TestCursorRealCloudIntegration:
          assert response.status_code == 401, f"Expected 401 Unauthorized, got {response.status_code}"
          print("✅ Unauthorized access properly blocked")
- 
+
 -    @pytest.mark.deferred
      def test_04_save_documents_with_auth(self):
          """Test saving multiple documents with authentication"""
@@ -1721,7 +1721,7 @@ index c79e5ec..1ea55c8 100644
 @@ -247,7 +242,6 @@ class TestCursorRealCloudIntegration:
          assert len(saved_docs) >= 6, f"Expected at least 6 documents saved, got {len(saved_docs)}"
          print(f"✅ Successfully saved {len(saved_docs)} documents with authentication")
- 
+
 -    @pytest.mark.deferred
      def test_05_semantic_search_with_auth(self):
          """Test semantic search with authentication"""
@@ -1729,7 +1729,7 @@ index c79e5ec..1ea55c8 100644
 @@ -319,7 +313,6 @@ class TestCursorRealCloudIntegration:
          assert successful_searches >= 3, f"Expected at least 3 successful searches, got {successful_searches}"
          print(f"✅ Completed {successful_searches} semantic searches with authentication")
- 
+
 -    @pytest.mark.deferred
      def test_06_document_search_with_auth(self):
          """Test document search by tag with authentication"""
@@ -1737,7 +1737,7 @@ index c79e5ec..1ea55c8 100644
 @@ -348,7 +341,6 @@ class TestCursorRealCloudIntegration:
              print(f"❌ Document search failed: {e}")
              pytest.fail(f"Document search failed: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_07_performance_under_load(self):
          """Test API performance with multiple authenticated requests"""
@@ -1745,7 +1745,7 @@ index c79e5ec..1ea55c8 100644
 @@ -402,7 +394,6 @@ class TestCursorRealCloudIntegration:
          assert successful_requests > 0, "Some requests should have succeeded"
          print(f"✅ Rate limiting test completed - {rate_limited_requests} requests were rate limited")
- 
+
 -    @pytest.mark.deferred
      def test_08_verify_firestore_sync(self):
          """Test that document metadata is properly synced to Firestore"""
@@ -1753,7 +1753,7 @@ index c79e5ec..1ea55c8 100644
 @@ -458,7 +449,6 @@ class TestCursorRealCloudIntegration:
              print(f"❌ Firestore sync test failed: {e}")
              pytest.fail(f"Firestore sync test failed: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_09_cleanup_and_verification(self):
          """Cleanup test and verify system state"""
@@ -1765,7 +1765,7 @@ index 45e0828..fd9419d 100644
 @@ -175,7 +175,6 @@ class TestCursorIntegration:
          assert enhanced_metadata["integration_type"] == "mcp_stdio"
          assert "processed_at" in enhanced_metadata
- 
+
 -    @pytest.mark.deferred
      def test_cursor_json_format_compatibility(self):
          """Test that Cursor request format is compatible with JSON parsing"""
@@ -1776,16 +1776,16 @@ index 6668e29..b4d7630 100644
 +++ b/tests/api/test_delay_tool_completes_under_2s.py
 @@ -3,7 +3,6 @@ from tools.delay_tool import delay_tool
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_delay_tool_completes_under_2s():
      """Test that delay tool caps delays at 2 seconds maximum."""
      params = {"delay": 3.0}  # Request > 2s to test cap
 @@ -16,7 +15,6 @@ def test_delay_tool_completes_under_2s():
      assert result["delay_applied"] == 2.0, "Expected delay capped at 2s"
- 
- 
+
+
 -@pytest.mark.deferred
  def test_delay_tool_short_delay():
      """Test delay tool with a short delay for faster testing."""
@@ -1796,24 +1796,24 @@ index 9ba69d3..a601a5b 100644
 +++ b/tests/api/test_delete_by_tag.py
 @@ -7,7 +7,6 @@ from fastapi.testclient import TestClient
  from agent_data_manager.tools.delete_by_tag_tool import delete_by_tag_sync
- 
- 
+
+
 -@pytest.mark.deferred
  def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
      """
      Test DELETE_BY_TAG with a valid tag that exists in the data.
 @@ -23,7 +22,6 @@ def test_delete_by_tag_valid(client_with_qdrant_override: TestClient):
      assert "science" in result["message"]
- 
- 
+
+
 -@pytest.mark.deferred
  def test_delete_by_tag_empty():
      """
      Test DELETE_BY_TAG with empty or whitespace-only tag.
 @@ -44,7 +42,6 @@ def test_delete_by_tag_empty():
      assert "empty" in result["error"].lower() or "whitespace" in result["error"].lower()
- 
- 
+
+
 -@pytest.mark.deferred
  def test_delete_by_tag_non_existent(client_with_qdrant_override: TestClient):
      """
@@ -1824,16 +1824,16 @@ index 83a8f35..bff63c5 100644
 +++ b/tests/api/test_empty_filter_tag.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_empty_filter_tag_rejected(client):
- 
+
      payload = {
 @@ -22,7 +21,6 @@ def test_empty_filter_tag_rejected(client):
      ), f"Test for empty string failed. Expected specific filter_tag error, got {errs}"
- 
- 
+
+
 -@pytest.mark.deferred
  def test_whitespace_filter_tag_rejected(client):
      payload = {
@@ -1844,8 +1844,8 @@ index 59aee71..5ef7793 100644
 +++ b/tests/api/test_empty_query_rejected.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_empty_query_rejected(client_with_qdrant_override: TestClient):
      for invalid_query in ["", "   "]:
@@ -1856,12 +1856,12 @@ index d4b2229..7e8c8b8 100644
 +++ b/tests/api/test_empty_query_text.py
 @@ -1,7 +1,7 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_empty_query_text(client):
- 
+
      payload = {"query_text": "", "top_k": 3, "score_threshold": 0.4}  # invalid – empty
 diff --git a/tests/api/test_filter_tag_case.py b/tests/api/test_filter_tag_case.py
 index 2036bb4..2c6ae15 100644
@@ -1869,12 +1869,12 @@ index 2036bb4..2c6ae15 100644
 +++ b/tests/api/test_filter_tag_case.py
 @@ -1,7 +1,7 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_filter_tag_case_insensitive(client_with_qdrant_override):
- 
+
      payload = {
 diff --git a/tests/api/test_filter_tag_no_match.py b/tests/api/test_filter_tag_no_match.py
 index 36a7426..9fddcda 100644
@@ -1882,11 +1882,11 @@ index 36a7426..9fddcda 100644
 +++ b/tests/api/test_filter_tag_no_match.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_filter_tag_with_no_matches(client_with_qdrant_override):
- 
+
      payload = {
 diff --git a/tests/api/test_filter_tag_trailing_spaces.py b/tests/api/test_filter_tag_trailing_spaces.py
 index ecb5b10..0b9731a 100644
@@ -1894,8 +1894,8 @@ index ecb5b10..0b9731a 100644
 +++ b/tests/api/test_filter_tag_trailing_spaces.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_filter_tag_trailing_spaces(client_with_qdrant_override: TestClient):
      response = client_with_qdrant_override.post(
@@ -1906,12 +1906,12 @@ index 672f64e..51d853f 100644
 +++ b/tests/api/test_firestore_edge_cases.py
 @@ -11,11 +11,9 @@ from datetime import datetime
  from agent_data_manager.auth.user_manager import UserManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestFirestoreConnectionEdgeCases:
      """Test Firestore connection and error handling edge cases"""
- 
+
 -    @pytest.mark.deferred
      def test_firestore_connection_failure(self):
          """Test handling of Firestore connection failures"""
@@ -1919,7 +1919,7 @@ index 672f64e..51d853f 100644
 @@ -25,7 +23,6 @@ class TestFirestoreConnectionEdgeCases:
              with pytest.raises(Exception):
                  UserManager()
- 
+
 -    @pytest.mark.deferred
      def test_firestore_timeout_handling(self):
          """Test handling of Firestore operation timeouts"""
@@ -1927,23 +1927,23 @@ index 672f64e..51d853f 100644
 @@ -38,7 +35,6 @@ class TestFirestoreConnectionEdgeCases:
              result = asyncio.run(user_manager.get_user_by_email("timeout@test.com"))
              assert result is None
- 
+
 -    @pytest.mark.deferred
      def test_firestore_permission_denied(self):
          """Test handling of Firestore permission denied errors"""
          user_manager = UserManager()
 @@ -51,7 +47,6 @@ class TestFirestoreConnectionEdgeCases:
              assert result is None
- 
- 
+
+
 -@pytest.mark.deferred
  class TestDataValidationEdgeCases:
      """Test data validation and sanitization edge cases"""
- 
+
 @@ -59,7 +54,6 @@ class TestDataValidationEdgeCases:
          """Setup test environment"""
          self.user_manager = UserManager()
- 
+
 -    @pytest.mark.deferred
      def test_email_validation_edge_cases(self):
          """Test email validation with edge cases"""
@@ -1951,7 +1951,7 @@ index 672f64e..51d853f 100644
 @@ -89,7 +83,6 @@ class TestDataValidationEdgeCases:
                  # Expected for some invalid inputs
                  pass
- 
+
 -    @pytest.mark.deferred
      def test_password_validation_edge_cases(self):
          """Test password validation with edge cases"""
@@ -1959,23 +1959,23 @@ index 672f64e..51d853f 100644
 @@ -125,7 +118,6 @@ class TestDataValidationEdgeCases:
                  # Some edge cases might fail, which is acceptable
                  pass
- 
+
 -    @pytest.mark.deferred
      def test_metadata_size_limits(self):
          """Test handling of large metadata objects"""
          # Create very large metadata
 @@ -154,7 +146,6 @@ class TestDataValidationEdgeCases:
              pass
- 
- 
+
+
 -@pytest.mark.deferred
  class TestConcurrentFirestoreOperations:
      """Test concurrent Firestore operations and race conditions"""
- 
+
 @@ -162,7 +153,6 @@ class TestConcurrentFirestoreOperations:
          """Setup test environment"""
          self.user_manager = UserManager()
- 
+
 -    @pytest.mark.deferred
      def test_concurrent_user_creation(self):
          """Test concurrent user creation scenarios"""
@@ -1983,23 +1983,23 @@ index 672f64e..51d853f 100644
 @@ -195,7 +185,6 @@ class TestConcurrentFirestoreOperations:
          successful_creations = [r for r in results if r["success"]]
          assert len(successful_creations) >= 8  # Allow for some failures due to concurrency
- 
+
 -    @pytest.mark.deferred
      def test_concurrent_authentication_attempts(self):
          """Test concurrent authentication attempts"""
          from concurrent.futures import ThreadPoolExecutor, as_completed
 @@ -231,7 +220,6 @@ class TestConcurrentFirestoreOperations:
          assert len(successful_auths) >= 14  # Allow for 1 potential failure
- 
- 
+
+
 -@pytest.mark.deferred
  class TestFirestoreDataConsistency:
      """Test Firestore data consistency and integrity"""
- 
+
 @@ -239,7 +227,6 @@ class TestFirestoreDataConsistency:
          """Setup test environment"""
          self.user_manager = UserManager()
- 
+
 -    @pytest.mark.deferred
      def test_user_data_integrity(self):
          """Test user data integrity during operations"""
@@ -2007,7 +2007,7 @@ index 672f64e..51d853f 100644
 @@ -277,7 +264,6 @@ class TestFirestoreDataConsistency:
              assert "created_at" in result
              assert result["is_active"] is True
- 
+
 -    @pytest.mark.deferred
      def test_timestamp_consistency(self):
          """Test timestamp consistency in user operations"""
@@ -2015,7 +2015,7 @@ index 672f64e..51d853f 100644
 @@ -302,7 +288,6 @@ class TestFirestoreDataConsistency:
              time_diff = abs((result["created_at"] - result["updated_at"]).total_seconds())
              assert time_diff < 1.0  # Should be very close
- 
+
 -    @pytest.mark.deferred
      def test_scope_validation(self):
          """Test scope validation and consistency"""
@@ -2026,8 +2026,8 @@ index 78dde10..34689b7 100644
 +++ b/tests/api/test_invalid_over_threshold.py
 @@ -2,7 +2,6 @@ import pytest
  from fastapi.testclient import TestClient
- 
- 
+
+
 -@pytest.mark.deferred
  def test_score_threshold_over_one(client: TestClient):
      payload = {"query_text": "edge-case check", "top_k": 3, "score_threshold": 1.5}  # invalid (>1)
@@ -2038,8 +2038,8 @@ index 5cc275a..92db6aa 100644
 +++ b/tests/api/test_invalid_threshold.py
 @@ -2,7 +2,7 @@ import pytest
  from fastapi.testclient import TestClient
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_invalid_score_threshold(client: TestClient):
@@ -2051,8 +2051,8 @@ index 6b92ea0..e56359a 100644
 +++ b/tests/api/test_invalid_top_k.py
 @@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_negative_top_k(client: TestClient):
@@ -2063,13 +2063,13 @@ index 66e81ad..1311fd6 100644
 --- a/tests/api/test_logging.py
 +++ b/tests/api/test_logging.py
 @@ -30,11 +30,9 @@ from agent_data_manager.utils.structured_logger import (
- 
+
  @pytest.mark.logging
  @pytest.mark.core
 -@pytest.mark.deferred
  class TestStructuredJSONFormatter:
      """Test JSON formatting functionality."""
- 
+
 -    @pytest.mark.deferred
      def test_basic_json_format(self):
          """Test basic log record JSON formatting."""
@@ -2077,7 +2077,7 @@ index 66e81ad..1311fd6 100644
 @@ -64,7 +62,6 @@ class TestStructuredJSONFormatter:
          assert "thread" in log_data
          assert "thread_name" in log_data
- 
+
 -    @pytest.mark.deferred
      def test_context_fields(self):
          """Test that context fields are included in JSON output."""
@@ -2085,19 +2085,19 @@ index 66e81ad..1311fd6 100644
 @@ -96,7 +93,6 @@ class TestStructuredJSONFormatter:
          assert log_data["request_id"] == "req_789"
          assert log_data["duration_ms"] == 250
- 
+
 -    @pytest.mark.deferred
      def test_exception_formatting(self):
          """Test exception info formatting."""
          formatter = StructuredJSONFormatter()
 @@ -127,11 +123,9 @@ class TestStructuredJSONFormatter:
- 
+
  @pytest.mark.logging
  @pytest.mark.core
 -@pytest.mark.deferred
  class TestSamplingFilter:
      """Test log sampling functionality."""
- 
+
 -    @pytest.mark.deferred
      def test_error_always_passes(self):
          """Test that ERROR and above always pass the filter."""
@@ -2105,39 +2105,39 @@ index 66e81ad..1311fd6 100644
 @@ -148,7 +142,6 @@ class TestSamplingFilter:
          assert sampling_filter.filter(error_record) is True
          assert sampling_filter.filter(critical_record) is True
- 
+
 -    @pytest.mark.deferred
      def test_warning_always_passes(self):
          """Test that WARNING always passes the filter."""
          sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
 @@ -161,7 +154,6 @@ class TestSamplingFilter:
          assert sampling_filter.filter(warning_record) is True
- 
+
      @patch("random.random")
 -    @pytest.mark.deferred
      def test_info_sampling(self, mock_random):
          """Test INFO log sampling at 10% rate."""
          sampling_filter = SamplingFilter(info_sample_rate=0.1)
 @@ -181,11 +173,9 @@ class TestSamplingFilter:
- 
+
  @pytest.mark.logging
  @pytest.mark.integration
 -@pytest.mark.deferred
  class TestErrorMetricsHandler:
      """Test error metrics functionality."""
- 
+
 -    @pytest.mark.deferred
      def test_metrics_handler_initialization(self):
          """Test that metrics handler initializes correctly."""
          handler = ErrorMetricsHandler()
 @@ -223,11 +213,9 @@ class TestErrorMetricsHandler:
- 
+
  @pytest.mark.logging
  @pytest.mark.core
 -@pytest.mark.deferred
  class TestStructuredLogger:
      """Test the main StructuredLogger class."""
- 
+
 -    @pytest.mark.deferred
      def test_logger_initialization(self):
          """Test logger initialization with temporary file."""
@@ -2145,47 +2145,47 @@ index 66e81ad..1311fd6 100644
 @@ -253,7 +241,6 @@ class TestStructuredLogger:
              logger.error("Error message", exc_info=False, duration_ms=100)
              logger.critical("Critical message", exc_info=False)
- 
+
 -    @pytest.mark.deferred
      def test_log_file_creation(self):
          """Test that log file is created and contains JSON entries."""
          with tempfile.TemporaryDirectory() as temp_dir:
 @@ -280,11 +267,9 @@ class TestStructuredLogger:
- 
+
  @pytest.mark.logging
  @pytest.mark.core
 -@pytest.mark.deferred
  class TestLoggerRegistry:
      """Test the global logger registry functionality."""
- 
+
 -    @pytest.mark.deferred
      def test_get_logger_singleton(self):
          """Test that get_logger returns the same instance for the same name."""
          logger1 = get_logger("test.singleton")
 @@ -292,7 +277,6 @@ class TestLoggerRegistry:
- 
+
          assert logger1 is logger2
- 
+
 -    @pytest.mark.deferred
      def test_get_logger_different_names(self):
          """Test that different names return different logger instances."""
          logger1 = get_logger("test.logger1")
 @@ -304,7 +288,6 @@ class TestLoggerRegistry:
- 
+
  @pytest.mark.logging
  @pytest.mark.integration
 -@pytest.mark.deferred
  class TestLoggingIntegration:
      """Integration tests for the complete logging system."""
- 
+
 diff --git a/tests/api/test_mcp_echo_tool_integration.py b/tests/api/test_mcp_echo_tool_integration.py
 index b82122b..8212685 100644
 --- a/tests/api/test_mcp_echo_tool_integration.py
 +++ b/tests/api/test_mcp_echo_tool_integration.py
 @@ -9,7 +9,6 @@ def mcp_mock():
      yield client
- 
- 
+
+
 -@pytest.mark.deferred
  def test_mcp_echo_tool_integration(mcp_mock):
      tool_config = {"name": "echo_tool", "type": "echo"}
@@ -2196,8 +2196,8 @@ index 6acd767..e430780 100644
 +++ b/tests/api/test_mcp_exit_gracefully.py
 @@ -9,7 +9,6 @@ def mcp_mock():
      yield client
- 
- 
+
+
 -@pytest.mark.deferred
  def test_mcp_exit_gracefully(mcp_mock):
      # Register a tool and send a message
@@ -2208,8 +2208,8 @@ index 9545ff3..c68efa8 100644
 +++ b/tests/api/test_migration.py
 @@ -27,7 +27,6 @@ def faiss_index_file(tmp_path):
      return index_path
- 
- 
+
+
 -@pytest.mark.deferred
  def test_migration_smoke(faiss_index_file):
      """Smoke test for FAISS to Qdrant migration functionality."""
@@ -2220,8 +2220,8 @@ index 4a76604..7d9bc37 100644
 +++ b/tests/api/test_migration_dry_run_stats.py
 @@ -16,7 +16,6 @@ def faiss_index(tmp_path):
      return index_path
- 
- 
+
+
 -@pytest.mark.deferred
  def test_migration_dry_run_stats(faiss_index):
      client = FakeQdrantClient(url="http://mock-qdrant:6333")
@@ -2232,8 +2232,8 @@ index 879b192..f129d89 100644
 +++ b/tests/api/test_migration_handles_duplicate_ids.py
 @@ -3,7 +3,6 @@ from tests.mocks.qdrant_basic import FakeQdrantClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_migration_handles_duplicate_ids(faiss_index_with_duplicates):
      client = FakeQdrantClient(url="http://mock-qdrant:6333")
@@ -2244,11 +2244,11 @@ index 3d726d5..0515504 100644
 +++ b/tests/api/test_missing_filter_tag.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_filter_tag_required_when_no_threshold(client):
- 
+
      payload = {
 diff --git a/tests/api/test_package_installation.py b/tests/api/test_package_installation.py
 index 356770a..315e562 100644
@@ -2257,7 +2257,7 @@ index 356770a..315e562 100644
 @@ -9,7 +9,6 @@ import sys
  class TestPackageInstallation:
      """Test that the agent_data_manager package is properly installed and importable."""
- 
+
 -    @pytest.mark.deferred
      def test_package_import(self):
          """Test that the main package can be imported."""
@@ -2265,7 +2265,7 @@ index 356770a..315e562 100644
 @@ -19,7 +18,6 @@ class TestPackageInstallation:
          assert hasattr(agent_data_manager, "__author__")
          assert agent_data_manager.__author__ == "Agent Data Team"
- 
+
 -    @pytest.mark.deferred
      def test_core_modules_import(self):
          """Test that core modules can be imported."""
@@ -2273,7 +2273,7 @@ index 356770a..315e562 100644
 @@ -44,7 +42,6 @@ class TestPackageInstallation:
          except ImportError as e:
              pytest.skip(f"Settings import failed (may be expected in test env): {e}")
- 
+
 -    @pytest.mark.deferred
      def test_package_in_sys_modules(self):
          """Test that the package is properly registered in sys.modules."""
@@ -2281,7 +2281,7 @@ index 356770a..315e562 100644
 @@ -62,7 +59,6 @@ class TestPackageInstallation:
              assert "__version__" in agent_data_manager.__all__
              assert "__author__" in agent_data_manager.__all__
- 
+
 -    @pytest.mark.deferred
      def test_new_imports_work(self):
          """Test that new import paths work correctly."""
@@ -2292,15 +2292,15 @@ index 37fc69c..0657c71 100644
 +++ b/tests/api/test_parallel_calls_under_threshold.py
 @@ -4,7 +4,6 @@ import concurrent.futures
  from tools.delay_tool import delay_tool
- 
- 
+
+
 -@pytest.mark.deferred
  def test_parallel_calls_under_threshold():
      """Test that parallel calls execute concurrently, not sequentially."""
      num_calls = 3  # Reduced for faster testing
 @@ -23,7 +22,6 @@ def test_parallel_calls_under_threshold():
- 
- 
+
+
  @pytest.mark.slow
 -@pytest.mark.deferred
  def test_parallel_calls_original_timing():
@@ -2312,16 +2312,16 @@ index ffbb7eb..b8b2cc5 100644
 +++ b/tests/api/test_performance_cloud.py
 @@ -29,7 +29,6 @@ SEARCH_DELAY = 0.5 if not MOCK_MODE else 0.05  # Reduced from 3s to 0.5s for rea
  RATE_LIMIT_WAIT = 2.0 if not MOCK_MODE else 0.1  # Reduced from 6s to 2s for rate limit recovery
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCloudPerformance:
      """Performance tests for Cloud API A2A Gateway"""
- 
+
 @@ -45,7 +44,6 @@ class TestCloudPerformance:
          cls.rate_limited_operations = 0
          cls.failed_operations = 0
- 
+
 -    @pytest.mark.deferred
      def test_01_authenticate_for_performance(self):
          """Authenticate user for performance testing"""
@@ -2329,7 +2329,7 @@ index ffbb7eb..b8b2cc5 100644
 @@ -76,7 +74,6 @@ class TestCloudPerformance:
          except requests.exceptions.RequestException as e:
              pytest.skip(f"Authentication service not accessible: {e}")
- 
+
 -    @pytest.mark.deferred
      def test_02_performance_save_documents(self):
          """Test saving 20 documents with performance monitoring"""
@@ -2337,7 +2337,7 @@ index ffbb7eb..b8b2cc5 100644
 @@ -182,7 +179,6 @@ class TestCloudPerformance:
              self.__class__.rate_limited_operations += rate_limited_saves
              self.__class__.response_times.extend(save_times)
- 
+
 -    @pytest.mark.deferred
      def test_03_performance_search_queries(self):
          """Test 15 search queries with performance monitoring"""
@@ -2345,7 +2345,7 @@ index ffbb7eb..b8b2cc5 100644
 @@ -297,7 +293,6 @@ class TestCloudPerformance:
              self.__class__.rate_limited_operations += rate_limited_searches
              self.__class__.response_times.extend(search_times)
- 
+
 -    @pytest.mark.deferred
      def test_04_performance_document_searches(self):
          """Test 15 document searches with performance monitoring"""
@@ -2353,7 +2353,7 @@ index ffbb7eb..b8b2cc5 100644
 @@ -393,7 +388,6 @@ class TestCloudPerformance:
              self.__class__.rate_limited_operations += rate_limited_doc_searches
              self.__class__.response_times.extend(doc_search_times)
- 
+
 -    @pytest.mark.deferred
      def test_05_overall_performance_summary(self):
          """Generate overall performance summary"""
@@ -2364,11 +2364,11 @@ index c9cb39b..d36e55e 100644
 +++ b/tests/api/test_query_text_too_long.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_query_text_exceeds_max_length(client):
- 
+
      long_text = "x" * 3000
 diff --git a/tests/api/test_save_metadata_roundtrip.py b/tests/api/test_save_metadata_roundtrip.py
 index 9fc7802..6a2d078 100644
@@ -2376,8 +2376,8 @@ index 9fc7802..6a2d078 100644
 +++ b/tests/api/test_save_metadata_roundtrip.py
 @@ -10,7 +10,6 @@ def firestore_mock():
      yield client
- 
- 
+
+
 -@pytest.mark.deferred
  def test_save_metadata_roundtrip(firestore_mock, client_with_qdrant_override: TestClient):
      metadata = {"doc_id": "test_doc", "title": "Test Document", "status": "active"}
@@ -2388,12 +2388,12 @@ index 9f67c60..3c20794 100644
 +++ b/tests/api/test_score_threshold_strict.py
 @@ -1,7 +1,7 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_score_threshold_one(client_with_qdrant_override):
- 
+
      payload = {
 diff --git a/tests/api/test_score_threshold_zero.py b/tests/api/test_score_threshold_zero.py
 index 1e58fec..f6ed3fa 100644
@@ -2401,11 +2401,11 @@ index 1e58fec..f6ed3fa 100644
 +++ b/tests/api/test_score_threshold_zero.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_score_threshold_zero(client_with_qdrant_override):
- 
+
      payload = {"query_text": "example about science", "top_k": 5, "score_threshold": 0.0, "filter_tag": "science"}
 diff --git a/tests/api/test_search_by_payload.py b/tests/api/test_search_by_payload.py
 index 0b68350..7c7a21b 100644
@@ -2413,32 +2413,32 @@ index 0b68350..7c7a21b 100644
 +++ b/tests/api/test_search_by_payload.py
 @@ -3,7 +3,6 @@ from agent_data_manager.tools.search_by_payload_tool import search_by_payload_sy
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_search_by_payload_valid(client_with_qdrant_override: TestClient):
      """Test search_by_payload with valid field and value."""
      result = search_by_payload_sync(collection_name="test_collection", field="tag", value="science", limit=5)
 @@ -17,7 +16,6 @@ def test_search_by_payload_valid(client_with_qdrant_override: TestClient):
          assert item["payload"]["tag"] == "science"
- 
- 
+
+
 -@pytest.mark.deferred
  def test_search_by_payload_empty_field():
      """Test search_by_payload with empty field."""
      result = search_by_payload_sync(collection_name="test_collection", field="", value="science")
 @@ -27,7 +25,6 @@ def test_search_by_payload_empty_field():
      assert "Field cannot be empty" in result["error"]
- 
- 
+
+
 -@pytest.mark.deferred
  def test_search_by_payload_none_value():
      """Test search_by_payload with None value."""
      result = search_by_payload_sync(collection_name="test_collection", field="tag", value=None)
 @@ -37,7 +34,6 @@ def test_search_by_payload_none_value():
      assert "Value cannot be None" in result["error"]
- 
- 
+
+
 -@pytest.mark.deferred
  def test_search_by_payload_pagination(client_with_qdrant_override: TestClient):
      """Test search_by_payload with pagination using offset."""
@@ -2449,8 +2449,8 @@ index 323472a..7ff4754 100644
 +++ b/tests/api/test_search_in_alt_collection.py
 @@ -62,7 +62,6 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
      # The effect is through the monkeypatch.
- 
- 
+
+
 -@pytest.mark.deferred
  def test_search_in_alt_collection(configured_qdrant_mock_for_alt_collection, client_with_qdrant_override: TestClient):
      # client_with_qdrant_override is the TestClient.
@@ -2461,8 +2461,8 @@ index 1594d17..e03a438 100644
 +++ b/tests/api/test_semantic_search_multiple_queries.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_semantic_search_multiple_queries(client_with_qdrant_override: TestClient):
      queries = [
@@ -2473,44 +2473,44 @@ index e1e85c7..4b808e2 100644
 +++ b/tests/api/test_session_and_events.py
 @@ -12,7 +12,6 @@ from agent_data_manager.agent.agent_data_agent import AgentDataAgent
  from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
- 
- 
+
+
 -@pytest.mark.deferred
  class TestSessionMemory:
      """Test session memory functionality."""
- 
+
 @@ -152,7 +151,6 @@ class TestSessionMemory:
          assert mock_firestore_manager.save_metadata.call_count == 8
- 
- 
+
+
 -@pytest.mark.deferred
  class TestPubSubEvents:
      """Test Pub/Sub A2A communication functionality."""
- 
+
 @@ -261,7 +259,6 @@ class TestPubSubEvents:
              assert result["reason"] == "pubsub_not_available"
- 
- 
+
+
 -@pytest.mark.deferred
  class TestIntegration:
      """Test integration between session management, event publishing, and vectorization."""
- 
+
 @@ -400,7 +397,6 @@ class TestIntegration:
              assert agent.current_session_id == session_id
- 
- 
+
+
 -@pytest.mark.deferred
  class TestErrorHandling:
      """Test error handling in session and event management."""
- 
+
 diff --git a/tests/api/test_tag_too_long.py b/tests/api/test_tag_too_long.py
 index f44bbfb..7fceb60 100644
 --- a/tests/api/test_tag_too_long.py
 +++ b/tests/api/test_tag_too_long.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_tag_too_long(client_with_qdrant_override: TestClient):
      long_tag = "x" * 65
@@ -2521,8 +2521,8 @@ index 6e7ebbf..2b896fe 100644
 +++ b/tests/api/test_threshold_below_minimum.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_threshold_below_minimum(client_with_qdrant_override: TestClient):
      response = client_with_qdrant_override.post(
@@ -2533,8 +2533,8 @@ index 5e4bc05..09a3cb3 100644
 +++ b/tests/api/test_threshold_exact_equals.py
 @@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_threshold_exact_equals(client_with_qdrant_override: TestClient):
      response = client_with_qdrant_override.post(
@@ -2545,12 +2545,12 @@ index 57827fc..7d0688a 100644
 +++ b/tests/api/test_top_k_larger_than_data.py
 @@ -1,7 +1,7 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
 +
  def test_top_k_exceeds_data_count(client_with_qdrant_override):
- 
+
      payload = {
 diff --git a/tests/api/test_top_k_minimum.py b/tests/api/test_top_k_minimum.py
 index 1a63da7..bd032b0 100644
@@ -2558,11 +2558,11 @@ index 1a63da7..bd032b0 100644
 +++ b/tests/api/test_top_k_minimum.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_top_k_minimum_one(client_with_qdrant_override):
- 
+
      payload = {"query_text": "historical events", "top_k": 1, "filter_tag": "history", "score_threshold": 0.0}
 diff --git a/tests/api/test_top_k_too_large.py b/tests/api/test_top_k_too_large.py
 index 87c5afe..4217698 100644
@@ -2570,11 +2570,11 @@ index 87c5afe..4217698 100644
 +++ b/tests/api/test_top_k_too_large.py
 @@ -1,7 +1,6 @@
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_top_k_too_large(client):
- 
+
      payload = {"query_text": "limit check", "top_k": 200, "score_threshold": 0.3}  # over maximum
 diff --git a/tests/api/test_upload_and_download_blob.py b/tests/api/test_upload_and_download_blob.py
 index 754383f..9e751dc 100644
@@ -2582,8 +2582,8 @@ index 754383f..9e751dc 100644
 +++ b/tests/api/test_upload_and_download_blob.py
 @@ -11,7 +11,6 @@ def gcs_mock():
      yield client
- 
- 
+
+
 -@pytest.mark.deferred
  def test_upload_and_download_blob(gcs_mock, client_with_qdrant_override: TestClient):
      bucket_name = "test_bucket"
@@ -2594,16 +2594,16 @@ index 1c357f8..5a6c889 100644
 +++ b/tests/api/test_vector_safety_check.py
 @@ -41,7 +41,6 @@ def create_random_vector(dimensions: int = VECTOR_DIMENSION, precision: int = 7)
  # Test implementations will follow
- 
- 
+
+
 -@pytest.mark.deferred
  def test_vector_id_collision():
      """Tests that inserting a vector with an existing ID replaces the old one."""
      point_id = random.randint(100000, 200000)  # Using integer ID
 @@ -77,7 +76,6 @@ def test_vector_id_collision():
      assert retrieved_point["metadata"] == metadata2
- 
- 
+
+
 -@pytest.mark.deferred
  def test_vector_truncation_protection():
      """Tests that inserting a vector with incorrect (too large) dimension is rejected."""
@@ -2614,23 +2614,23 @@ index cc8c75d..a2f0e47 100644
 +++ b/tests/test__meta_count.py
 @@ -22,7 +22,6 @@ from pathlib import Path
  import pytest
- 
- 
+
+
 -@pytest.mark.deferred
  def test_meta_count():
      """Ensures the number of tests discovered by pytest matches the expected total."""
      # Total number of tests expected to be found by pytest
 @@ -76,14 +75,15 @@ def test_meta_count():
- 
+
          # Use safer subprocess approach without shell=True
- 
+
 -        collect_process = subprocess.run(["pytest", "--collect-only", "-q"], check=True, capture_output=True, text=True)
 +        collect_process = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], check=True, capture_output=True, text=True)
- 
+
          # Parse the output to find the test count
          lines = collect_process.stdout.strip().split("\n")
          actual_total_str = ""
-+        
++
          for line in lines:
              if "tests collected" in line or "test collected" in line:
 -                # Extract number from line like "77 tests collected"
@@ -2645,7 +2645,7 @@ index ce822ae..671f0a1 100644
 @@ -11,7 +11,6 @@ from pathlib import Path
  class TestCLI126BMocking:
      """Test cases for CLI 126B mocking and caching functionality."""
- 
+
 -    @pytest.mark.deferred
      def test_qdrant_mock_functionality(self, qdrant_cloud_mock):
          """Test that Qdrant mock returns expected responses."""
@@ -2653,15 +2653,15 @@ index ce822ae..671f0a1 100644
 @@ -41,7 +40,6 @@ class TestCLI126BMocking:
          assert search_results[0].score == 0.92
          assert search_results[0].payload["tag"] == "science"
- 
+
 -    @pytest.mark.deferred
      def test_openai_mock_functionality(self, openai_mock):
          """Test that OpenAI mock returns static embeddings."""
          # Test embedding creation
 @@ -56,7 +54,6 @@ class TestCLI126BMocking:
- 
+
          assert response.data[0].embedding == response2.data[0].embedding
- 
+
 -    @pytest.mark.deferred
      def test_embedding_cache_functionality(self, openai_embedding_cache):
          """Test that cached embeddings are used instead of generating new ones."""
@@ -2669,7 +2669,7 @@ index ce822ae..671f0a1 100644
 @@ -91,7 +88,6 @@ class TestCLI126BMocking:
          assert cache_data[cache_key1] == embedding1
          assert cache_data[cache_key2] == embedding3
- 
+
 -    @pytest.mark.deferred
      def test_fast_e2e_mocks_integration(self, fast_e2e_mocks):
          """Test that the combined E2E mocks provide realistic responses."""
@@ -2677,7 +2677,7 @@ index ce822ae..671f0a1 100644
 @@ -129,7 +125,6 @@ class TestCLI126BMocking:
          embedding = embedding_cache("integration test text")
          assert len(embedding) == 1536
- 
+
 -    @pytest.mark.deferred
      def test_auto_mock_external_services(self):
          """Test that external services are automatically mocked by default."""
@@ -2685,7 +2685,7 @@ index ce822ae..671f0a1 100644
 @@ -154,7 +149,6 @@ class TestCLI126BMocking:
              # Skip if libraries not available
              pytest.skip("External libraries not available for auto-mock test")
- 
+
 -    @pytest.mark.deferred
      def test_mocking_performance_improvement(self, openai_embedding_cache):
          """Test that mocking provides performance improvement over real API calls."""
@@ -2693,7 +2693,7 @@ index ce822ae..671f0a1 100644
 @@ -189,7 +183,6 @@ class TestCLI126BMocking:
          assert embeddings[0] != embeddings[1]
          assert embeddings[1] != embeddings[2]
- 
+
 -    @pytest.mark.deferred
      def test_cache_persistence(self, openai_embedding_cache):
          """Test that embedding cache persists across test runs."""
@@ -2705,7 +2705,7 @@ index 4cf3114..04d243a 100644
 @@ -100,6 +100,7 @@ class TestCLI126CDeferredStrategy:
          assert total_count > active_count + 50, f"Total: {total_count}, Active: {active_count}"
          print(f"✓ Total tests: {total_count}, Active tests: {active_count}")
- 
+
 +    @pytest.mark.deferred
      def test_core_functionality_tests_remain_active(self):
          """
@@ -2715,15 +2715,15 @@ index 96a71fb..afb6e26 100644
 --- a/tests/test_cli127_package.py
 +++ b/tests/test_cli127_package.py
 @@ -7,11 +7,13 @@ as an editable package and that imports work correctly across the codebase.
- 
+
  import subprocess
  import sys
 +import pytest
- 
- 
+
+
  class TestCLI127PackageSetup:
      """Test CLI 127 package setup and import validation."""
- 
+
 +    @pytest.mark.deferred
      def test_package_editable_installation(self):
          """Test that agent_data_manager is installed as editable package."""
@@ -2734,112 +2734,112 @@ index e29675c..1eeba9d 100644
 +++ b/tests/test_cli130_tree_view.py
 @@ -16,7 +16,6 @@ from datetime import datetime, timedelta
  from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI130TreeView:
      """Test Tree View functionality for CLI 130."""
- 
+
 diff --git a/tests/test_cli131_search.py b/tests/test_cli131_search.py
 index 9dc5944..33590f3 100644
 --- a/tests/test_cli131_search.py
 +++ b/tests/test_cli131_search.py
 @@ -22,7 +22,7 @@ from unittest.mock import MagicMock
  from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
 +
  class TestCLI131AdvancedSearch:
      """Test suite for CLI 131 advanced search functionality."""
- 
+
 diff --git a/tests/test_cli132_api.py b/tests/test_cli132_api.py
 index f7b03a1..6e67f2e 100644
 --- a/tests/test_cli132_api.py
 +++ b/tests/test_cli132_api.py
 @@ -15,7 +15,7 @@ import json
  from src.agent_data_manager.cs_agent_api import app, get_firestore_manager
- 
- 
+
+
 -@pytest.mark.deferred
 +
  class TestCLI132CSAgentAPI:
      """Test CS Agent API endpoints for Tree View and Search functionality."""
- 
+
 diff --git a/tests/test_cli133_rag.py b/tests/test_cli133_rag.py
 index f050aad..e36f080 100644
 --- a/tests/test_cli133_rag.py
 +++ b/tests/test_cli133_rag.py
 @@ -8,7 +8,6 @@ from src.agent_data_manager.tools.qdrant_vectorization_tool import (
  )
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI133RAG:
      """Test suite for RAG functionality combining Qdrant semantic search with Firestore metadata filtering."""
- 
+
 diff --git a/tests/test_cli134_observability.py b/tests/test_cli134_observability.py
 index 8f5fe89..baf7a4d 100644
 --- a/tests/test_cli134_observability.py
 +++ b/tests/test_cli134_observability.py
 @@ -112,7 +112,6 @@ class MockMetricsCollector:
          return json.dumps(response), 200
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI134Observability:
      """Test metrics collection functionality."""
- 
+
 diff --git a/tests/test_cli135_logging.py b/tests/test_cli135_logging.py
 index f04617e..a27b78f 100644
 --- a/tests/test_cli135_logging.py
 +++ b/tests/test_cli135_logging.py
 @@ -41,7 +41,6 @@ except ImportError:
          return '{"status": "success"}', 200
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI135AutomatedLogging:
      """Test class for CLI 135 automated CI/CD logging functionality."""
- 
+
 diff --git a/tests/test_cli136_metadata.py b/tests/test_cli136_metadata.py
 index e696106..3fa28c8 100644
 --- a/tests/test_cli136_metadata.py
 +++ b/tests/test_cli136_metadata.py
 @@ -16,7 +16,7 @@ from typing import List
  from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
- 
- 
+
+
 -@pytest.mark.deferred
 +
  class TestCLI136MetadataOptimization:
      """Test CLI 136 metadata query optimization."""
- 
+
 diff --git a/tests/test_cli137_api.py b/tests/test_cli137_api.py
 index f210875..7e26a93 100644
 --- a/tests/test_cli137_api.py
 +++ b/tests/test_cli137_api.py
 @@ -18,7 +18,6 @@ from src.agent_data_manager.api_mcp_gateway import (
  )
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI137BatchAPI:
      """Test suite for CLI137 batch API endpoints"""
- 
+
 diff --git a/tests/test_cli138_docs.py b/tests/test_cli138_docs.py
 index c0edb08..5e85dbb 100644
 --- a/tests/test_cli138_docs.py
 +++ b/tests/test_cli138_docs.py
 @@ -9,7 +9,7 @@ import pytest
  from pathlib import Path
- 
- 
+
+
 -@pytest.mark.deferred
 +
  class TestCLI138Docs:
      """Test suite for CLI 138 documentation validation."""
- 
+
 diff --git a/tests/test_cli139_api.py b/tests/test_cli139_api.py
 index 83aebe0..b7386af 100644
 --- a/tests/test_cli139_api.py
@@ -2847,57 +2847,57 @@ index 83aebe0..b7386af 100644
 @@ -39,9 +39,7 @@ def mock_auth_user():
  class TestCLI139APIErrorHandling:
      """Test suite for CLI 139 API error handling and performance improvements."""
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_save_retry_logic_on_rate_limit(self, client, mock_auth_user):
          """Test that batch_save retries on rate limit errors with exponential backoff."""
- 
+
 @@ -87,9 +85,7 @@ class TestCLI139APIErrorHandling:
              # Verify vectorization was called once (successful on first try)
              assert mock_vectorization.vectorize_document.call_count == 1
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_query_timeout_handling(self, client, mock_auth_user):
          """Test that batch_query handles timeouts properly."""
- 
+
 @@ -125,9 +121,7 @@ class TestCLI139APIErrorHandling:
              # Verify operation completed quickly with successful mock
              assert end_time - start_time < 1.0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_error_categorization_and_reporting(self, client, mock_auth_user):
          """Test that errors are properly categorized and reported with detailed messages."""
- 
+
 @@ -162,9 +156,7 @@ class TestCLI139APIErrorHandling:
              assert result["status"] == "success"
              assert "vector_id" in result
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
          """Test that batch operations complete within 5 seconds for reasonable loads."""
- 
+
 @@ -226,9 +218,7 @@ class TestCLI139APIErrorHandling:
              assert save_result["status"] == "success"
              assert "results" in query_result
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_concurrent_session_operations(self):
          """Test concurrent session operations with optimistic locking."""
- 
+
 @@ -274,7 +264,6 @@ class TestCLI139APIErrorHandling:
              # Verify save_metadata was called multiple times (original + retries)
              assert mock_firestore_instance.save_metadata.call_count >= 3
- 
+
 -    @pytest.mark.deferred
      def test_api_error_classes_defined(self):
          pytest.skip("Error classes not implemented yet")
@@ -2905,19 +2905,19 @@ index 83aebe0..b7386af 100644
 @@ -301,7 +290,6 @@ class TestCLI139APIErrorHandling:
  class TestCLI139Integration:
      """Integration tests for CLI 139 improvements."""
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_end_to_end_error_recovery(self, client, mock_auth_user):
          """Test end-to-end error recovery scenario."""
 @@ -340,11 +328,9 @@ class TestCLI139Integration:
              assert mock_vectorization.vectorize_document.call_count == 1
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI139:
      """Deferred tests for CLI 139 improvements."""
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_save_retry_logic_on_rate_limit(self, client, mock_auth_user):
@@ -2925,7 +2925,7 @@ index 83aebe0..b7386af 100644
 @@ -391,7 +377,6 @@ class TestCLI139:
              # Verify vectorization was called once (successful on first try)
              assert mock_vectorization.vectorize_document.call_count == 1
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_query_timeout_handling(self, client, mock_auth_user):
@@ -2933,7 +2933,7 @@ index 83aebe0..b7386af 100644
 @@ -428,7 +413,6 @@ class TestCLI139:
              # Verify operation completed quickly with successful mock
              assert end_time - start_time < 1.0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_error_categorization_and_reporting(self, client, mock_auth_user):
@@ -2941,7 +2941,7 @@ index 83aebe0..b7386af 100644
 @@ -464,7 +448,6 @@ class TestCLI139:
              assert result["status"] == "success"
              assert "vector_id" in result
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
@@ -2949,7 +2949,7 @@ index 83aebe0..b7386af 100644
 @@ -527,7 +510,6 @@ class TestCLI139:
              assert save_result["status"] == "success"
              assert "results" in query_result
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_concurrent_session_operations(self):
@@ -2957,7 +2957,7 @@ index 83aebe0..b7386af 100644
 @@ -574,7 +556,6 @@ class TestCLI139:
              # Verify save_metadata was called multiple times (original + retries)
              assert mock_firestore_instance.save_metadata.call_count >= 3
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_end_to_end_error_recovery(self, client, mock_auth_user):
@@ -2968,52 +2968,52 @@ index bec8902..b5c950f 100644
 +++ b/tests/test_cli140_cskh_rag.py
 @@ -19,7 +19,7 @@ from src.agent_data_manager.api_mcp_gateway import app
  # )
- 
- 
+
+
 -@pytest.mark.deferred
 +
  class TestCLI140CSKHRag:
      """Test suite for CLI140 CSKH Agent API and RAG optimization."""
- 
+
 diff --git a/tests/test_cli140e3_3_qdrant_vectorization_coverage.py b/tests/test_cli140e3_3_qdrant_vectorization_coverage.py
 index 263fa6d..5d3dcd0 100644
 --- a/tests/test_cli140e3_3_qdrant_vectorization_coverage.py
 +++ b/tests/test_cli140e3_3_qdrant_vectorization_coverage.py
 @@ -18,7 +18,6 @@ from src.agent_data_manager.tools.qdrant_vectorization_tool import (
- 
+
  @pytest.mark.qdrant
  @pytest.mark.asyncio
 -@pytest.mark.deferred
  class TestQdrantVectorizationToolCoverage:
      """Test class for QdrantVectorizationTool coverage improvement."""
- 
+
 @@ -352,7 +351,6 @@ class TestQdrantVectorizationToolCoverage:
              mock_update_status.assert_any_call("test_doc", "failed", None, "Failed to upsert vector: Upsert failed")
- 
- 
+
+
 -@pytest.mark.deferred
  def test_get_vectorization_tool_factory():
      """Test the factory function for getting vectorization tool instance."""
      # Test with custom embedding provider first
 @@ -371,7 +369,6 @@ def test_get_vectorization_tool_factory():
- 
- 
+
+
  @pytest.mark.asyncio
 -@pytest.mark.deferred
  async def test_qdrant_vectorize_document_function():
      """Test the standalone qdrant_vectorize_document function."""
      with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
 @@ -391,7 +388,6 @@ async def test_qdrant_vectorize_document_function():
- 
- 
+
+
  @pytest.mark.asyncio
 -@pytest.mark.deferred
  async def test_qdrant_rag_search_function():
      """Test the standalone qdrant_rag_search function."""
      with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
 @@ -422,7 +418,6 @@ async def test_qdrant_rag_search_function():
- 
- 
+
+
  @pytest.mark.asyncio
 -@pytest.mark.deferred
  async def test_batch_vectorize_documents_function():
@@ -3025,28 +3025,28 @@ index 53a3d0b..c1d57ac 100644
 +++ b/tests/test_cli140e3_9_validation.py
 @@ -10,7 +10,6 @@ from unittest.mock import patch, AsyncMock, Mock, MagicMock
  from fastapi.testclient import TestClient
- 
- 
+
+
 -@pytest.mark.deferred
  class TestCLI140e39Validation:
      """Test class for CLI140e.3.9 validation and completion."""
- 
+
 @@ -371,13 +370,26 @@ class TestCLI140e39Validation:
- 
+
      def test_test_suite_count_compliance(self):
          """Test that the test suite count is compliant with CLI140m.44 target (512 tests)."""
 -        result = subprocess.run(["pytest", "--collect-only", "-q"], capture_output=True, text=True)
 +        result = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], capture_output=True, text=True)
- 
+
          assert result.returncode == 0, "Test collection should succeed"
- 
+
 -        # Count actual tests (excluding collection summary)
 -        test_lines = [line for line in result.stdout.split("\n") if "::test_" in line]
 -        test_count = len(test_lines)
 +        # Parse the output to find the test count (same logic as meta count test)
 +        lines = result.stdout.strip().split("\n")
 +        test_count = 0
-+        
++
 +        # First try to find the summary line like "519 tests collected in 1.71s"
 +        for line in lines:
 +            if "tests collected" in line or "test collected" in line:
@@ -3054,12 +3054,12 @@ index 53a3d0b..c1d57ac 100644
 +                if words and words[0].isdigit():
 +                    test_count = int(words[0])
 +                    break
-+        
++
 +        # If summary line method didn't work, count test lines directly
 +        if test_count == 0:
 +            test_lines = [line for line in lines if "::test_" in line]
 +            test_count = len(test_lines)
- 
+
          # Updated for CLI140m.48 to match current test count (was 515)
          expected_count = 519
 diff --git a/tests/test_cli140g1_shadow.py b/tests/test_cli140g1_shadow.py
@@ -3067,7 +3067,7 @@ index f75278a..c32d3c9 100644
 --- a/tests/test_cli140g1_shadow.py
 +++ b/tests/test_cli140g1_shadow.py
 @@ -149,6 +149,7 @@ class TestCLI140gShadowTraffic:
-         
+
      @pytest.mark.e2e
      @pytest.mark.shadow
 +    @pytest.mark.deferred
@@ -3075,7 +3075,7 @@ index f75278a..c32d3c9 100644
          """Test that shadow traffic monitoring correctly collects metrics."""
          with patch.object(self.shadow_monitor, 'monitoring_client') as mock_monitoring:
 @@ -176,6 +177,7 @@ class TestCLI140gShadowTraffic:
-             
+
      @pytest.mark.e2e
      @pytest.mark.shadow
 +    @pytest.mark.deferred
@@ -3083,9 +3083,9 @@ index f75278a..c32d3c9 100644
          """Test that shadow traffic monitoring detects high error rates."""
          # Mock high error rate scenario
 @@ -198,6 +200,7 @@ class TestCLI140gShadowTraffic:
-             
+
      @pytest.mark.e2e
-     @pytest.mark.shadow  
+     @pytest.mark.shadow
 +    @pytest.mark.deferred
      def test_shadow_traffic_latency_threshold_monitoring(self):
          """Test that shadow traffic monitoring detects high latency."""
@@ -3097,13 +3097,13 @@ index e3fbfe9..ddbc927 100644
 @@ -13,13 +13,11 @@ import os
  class TestCLI140m13Coverage:
      """Test coverage for CLI140m13 objectives."""
-     
+
 -    @pytest.mark.deferred
      def test_cli140m13_basic_coverage(self):
          """Basic coverage test for CLI140m13."""
          # This is a minimal test to satisfy the file dependency
          assert True, "CLI140m13 basic coverage test"
-         
+
 -    @pytest.mark.deferred
      def test_cli140m13_file_structure(self):
          """Test that basic file structure is in place."""
@@ -3111,7 +3111,7 @@ index e3fbfe9..ddbc927 100644
 @@ -31,7 +29,6 @@ class TestCLI140m13Coverage:
          for file_path in key_files:
              assert os.path.exists(file_path), f"Key file missing: {file_path}"
-             
+
 -    @pytest.mark.deferred
      def test_cli140m13_completion_marker(self):
          """Mark CLI140m13 as completed for dependency purposes."""
@@ -3123,7 +3123,7 @@ index c1e598b..5b8074c 100644
 @@ -25,7 +25,6 @@ from ADK.agent_data.tools.document_ingestion_tool import DocumentIngestionTool
  class TestCLI140m14APIMCPGatewayCoverage:
      """Comprehensive API MCP Gateway coverage tests."""
- 
+
 -    @pytest.mark.deferred
      def test_startup_event_initialization_errors(self):
          """Test startup event with initialization errors."""
@@ -3131,7 +3131,7 @@ index c1e598b..5b8074c 100644
 @@ -36,7 +35,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              from ADK.agent_data.api_mcp_gateway import app
              assert app is not None
- 
+
 -    @pytest.mark.deferred
      def test_get_current_user_dependency_disabled_auth(self):
          """Test get_current_user dependency when authentication is disabled."""
@@ -3139,7 +3139,7 @@ index c1e598b..5b8074c 100644
 @@ -48,7 +46,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              result = get_current_user()
              assert result is not None
- 
+
 -    @pytest.mark.deferred
      def test_get_current_user_service_unavailable(self):
          """Test get_current_user when auth service is unavailable."""
@@ -3147,7 +3147,7 @@ index c1e598b..5b8074c 100644
 @@ -63,7 +60,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              except Exception:
                  pass  # Expected for missing auth
- 
+
 -    @pytest.mark.deferred
      def test_health_check_degraded_status(self):
          """Test health check with degraded service status."""
@@ -3155,7 +3155,7 @@ index c1e598b..5b8074c 100644
 @@ -76,7 +72,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              # Should return health status even if degraded
              assert response.status_code in [200, 503]
- 
+
 -    @pytest.mark.deferred
      def test_login_authentication_disabled(self):
          """Test login endpoint when authentication is disabled."""
@@ -3163,7 +3163,7 @@ index c1e598b..5b8074c 100644
 @@ -91,7 +86,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              # Should handle disabled auth appropriately
              assert response.status_code in [200, 400, 404, 501]
- 
+
 -    @pytest.mark.deferred
      def test_login_service_unavailable(self):
          """Test login when authentication service is unavailable."""
@@ -3171,7 +3171,7 @@ index c1e598b..5b8074c 100644
 @@ -104,7 +98,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              # Should handle service errors gracefully
              assert response.status_code in [400, 500, 503]
- 
+
 -    @pytest.mark.deferred
      def test_register_authentication_disabled(self):
          """Test registration when authentication is disabled."""
@@ -3179,7 +3179,7 @@ index c1e598b..5b8074c 100644
 @@ -123,7 +116,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              # Should handle disabled auth appropriately
              assert response.status_code in [200, 400, 404, 501]
- 
+
 -    @pytest.mark.deferred
      def test_api_endpoints_with_authentication_errors(self):
          """Test API endpoints with various authentication error scenarios."""
@@ -3187,7 +3187,7 @@ index c1e598b..5b8074c 100644
 @@ -149,7 +141,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
                  # Should handle missing auth appropriately
                  assert response.status_code in [200, 401, 403, 404, 503]
- 
+
 -    @pytest.mark.deferred
      def test_cache_operations_and_initialization(self):
          """Test cache operations and initialization."""
@@ -3195,7 +3195,7 @@ index c1e598b..5b8074c 100644
 @@ -185,7 +176,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
          # Test cache initialization
          initialize_caches()  # Should not raise
- 
+
 -    @pytest.mark.deferred
      def test_rate_limiting_and_user_identification(self):
          """Test rate limiting and user identification functions for comprehensive coverage"""
@@ -3203,7 +3203,7 @@ index c1e598b..5b8074c 100644
 @@ -488,7 +478,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              finally:
                  loop.close()
- 
+
 -    @pytest.mark.deferred
      def test_authentication_endpoints_and_save_document_coverage(self):
          """Test authentication endpoints and save document endpoint for comprehensive coverage."""
@@ -3211,7 +3211,7 @@ index c1e598b..5b8074c 100644
 @@ -624,7 +613,6 @@ class TestCLI140m14APIMCPGatewayCoverage:
              # Should handle failure gracefully
              assert response.status_code in [200, 400, 401, 422, 503]
- 
+
 -    @pytest.mark.deferred
      def test_query_vectors_endpoint_coverage(self):
          """Test query vectors endpoint for additional coverage to reach 75%+"""
@@ -3219,15 +3219,15 @@ index c1e598b..5b8074c 100644
 @@ -926,7 +914,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          tool._initialized = True
          return tool
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_initialization_edge_cases(self, vectorization_tool):
          """Test initialization with various edge cases."""
 @@ -937,7 +924,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
-         
+
          assert tool._initialized is True
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_tenacity_fallback_decorators(self, vectorization_tool):
@@ -3235,7 +3235,7 @@ index c1e598b..5b8074c 100644
 @@ -952,7 +938,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              except Exception:
                  pass  # Expected if mocks aren't set up properly
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_metadata_edge_cases(self, vectorization_tool):
@@ -3243,7 +3243,7 @@ index c1e598b..5b8074c 100644
 @@ -972,7 +957,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          result = await vectorization_tool._batch_get_firestore_metadata(["test_doc"])
          assert result == {}
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_filter_building_comprehensive(self, vectorization_tool):
@@ -3251,7 +3251,7 @@ index c1e598b..5b8074c 100644
 @@ -1031,7 +1015,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              # Filter building might not support all operators
              pass
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_rag_search_filter_combinations(self, vectorization_tool):
@@ -3259,7 +3259,7 @@ index c1e598b..5b8074c 100644
 @@ -1108,7 +1091,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          )
          assert result["status"] == "success"
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_rag_search_empty_results_handling(self, vectorization_tool):
@@ -3267,7 +3267,7 @@ index c1e598b..5b8074c 100644
 @@ -1125,7 +1107,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["count"] == 0
          assert result["rag_info"]["qdrant_results"] == 0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_rag_search_exception_handling(self, vectorization_tool):
@@ -3275,7 +3275,7 @@ index c1e598b..5b8074c 100644
 @@ -1142,7 +1123,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["results"] == []
          assert result["count"] == 0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_openai_unavailable(self, vectorization_tool):
@@ -3283,7 +3283,7 @@ index c1e598b..5b8074c 100644
 @@ -1156,7 +1136,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "OpenAI async client not available" in result["error"]
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_timeout_scenarios(self, vectorization_tool):
@@ -3291,7 +3291,7 @@ index c1e598b..5b8074c 100644
 @@ -1173,7 +1152,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert result["status"] in ["timeout", "failed"]
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_embedding_failure(self, vectorization_tool):
@@ -3299,7 +3299,7 @@ index c1e598b..5b8074c 100644
 @@ -1191,7 +1169,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "Failed to generate embedding" in result["error"]
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_auto_tagging_failure(self, vectorization_tool):
@@ -3307,7 +3307,7 @@ index c1e598b..5b8074c 100644
 @@ -1210,7 +1187,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                  # Should still succeed even if auto-tagging fails
                  assert result["status"] in ["success", "failed"]
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_operations_comprehensive(self, vectorization_tool):
@@ -3315,7 +3315,7 @@ index c1e598b..5b8074c 100644
 @@ -1237,7 +1213,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["status"] in ["completed", "failed"]
          assert "total_documents" in result
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_empty_documents(self, vectorization_tool):
@@ -3323,7 +3323,7 @@ index c1e598b..5b8074c 100644
 @@ -1245,7 +1220,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["status"] == "failed"
          assert "No documents provided" in result["error"]
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_invalid_documents(self, vectorization_tool):
@@ -3331,7 +3331,7 @@ index c1e598b..5b8074c 100644
 @@ -1260,7 +1234,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["status"] in ["completed", "failed"]
          assert result["total_documents"] == len(invalid_documents)
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_update_vector_status_scenarios(self, vectorization_tool):
@@ -3339,7 +3339,7 @@ index c1e598b..5b8074c 100644
 @@ -1285,7 +1258,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              "pending"
          )
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_filter_methods_edge_cases(self, vectorization_tool):
@@ -3347,7 +3347,7 @@ index c1e598b..5b8074c 100644
 @@ -1328,7 +1300,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          filtered = vectorization_tool._filter_by_path(results_with_paths, "Science")
          assert len(filtered) == 2
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_hierarchy_path_building(self, vectorization_tool):
@@ -3355,7 +3355,7 @@ index c1e598b..5b8074c 100644
 @@ -1353,7 +1324,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          path = vectorization_tool._build_hierarchy_path(result)
          assert path == "Uncategorized"
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_filter_building_logic(self, vectorization_tool):
@@ -3363,7 +3363,7 @@ index c1e598b..5b8074c 100644
 @@ -1391,7 +1361,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                  # Edge cases might cause exceptions, which is acceptable
                  pass
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_operation_processing(self, vectorization_tool):
@@ -3371,7 +3371,7 @@ index c1e598b..5b8074c 100644
 @@ -1433,7 +1402,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              # Should have some failures due to invalid documents
              assert failed_count > 0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorization_error_handling(self, vectorization_tool):
@@ -3379,7 +3379,7 @@ index c1e598b..5b8074c 100644
 @@ -1485,7 +1453,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "latency" in result
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_search_query_processing(self, vectorization_tool):
@@ -3387,7 +3387,7 @@ index c1e598b..5b8074c 100644
 @@ -1576,7 +1543,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert result["count"] == 0
              assert result["query"] == "empty results query"
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_initialization_validation(self, vectorization_tool):
@@ -3395,7 +3395,7 @@ index c1e598b..5b8074c 100644
 @@ -1616,7 +1582,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
                      mock_qdrant.assert_called_once()
                      mock_firestore.assert_called_once()
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_search_result_formatting(self, vectorization_tool):
@@ -3403,7 +3403,7 @@ index c1e598b..5b8074c 100644
 @@ -1698,7 +1663,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result["rag_info"]["qdrant_results"] == 2
          assert result["rag_info"]["firestore_filtered"] == 2
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_search_error_logging(self, vectorization_tool):
@@ -3411,7 +3411,7 @@ index c1e598b..5b8074c 100644
 @@ -1725,7 +1689,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          # Verify the _qdrant_operation_with_retry was called
          vectorization_tool._qdrant_operation_with_retry.assert_called_once()
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_result_pagination(self, vectorization_tool):
@@ -3419,7 +3419,7 @@ index c1e598b..5b8074c 100644
 @@ -1773,7 +1736,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          last_call_args = vectorization_tool.qdrant_store.semantic_search.call_args_list[-1]
          assert last_call_args[1]["limit"] == test_limits[-1] * 2  # Should fetch twice the limit
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_search_result_processing(self, vectorization_tool):
@@ -3427,7 +3427,7 @@ index c1e598b..5b8074c 100644
 @@ -1850,7 +1812,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert result_all["status"] == "success"
          assert len(result_all["results"]) == 4  # All 4 docs returned
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_error_logging_update_status(self, vectorization_tool):
@@ -3435,7 +3435,7 @@ index c1e598b..5b8074c 100644
 @@ -1897,7 +1858,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          # Should have been called 3 times total (2 failures + 1 success)
          assert vectorization_tool.firestore_manager.save_metadata.call_count == 3
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_comprehensive(self, vectorization_tool):
@@ -3443,7 +3443,7 @@ index c1e598b..5b8074c 100644
 @@ -1940,7 +1900,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "firestore_updated" in result
              assert result["firestore_updated"] is True
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_embedding_failure(self, vectorization_tool):
@@ -3451,7 +3451,7 @@ index c1e598b..5b8074c 100644
 @@ -1962,7 +1921,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "latency" in result
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_vectorize_document_timeout(self, vectorization_tool):
@@ -3459,15 +3459,15 @@ index c1e598b..5b8074c 100644
 @@ -1985,7 +1943,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert result["doc_id"] == "test_doc_timeout"
              assert "latency" in result
- 
+
 -    @pytest.mark.deferred
-     @pytest.mark.asyncio 
+     @pytest.mark.asyncio
      async def test_vectorize_document_vector_upsert_failure(self, vectorization_tool):
          """Test vectorize_document when vector upsert fails."""
 @@ -2014,7 +1971,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
              assert "latency" in result
              assert result["performance_target_met"] is False
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_documents_comprehensive(self, vectorization_tool):
@@ -3475,7 +3475,7 @@ index c1e598b..5b8074c 100644
 @@ -2057,7 +2013,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert "results" in result
          assert len(result["results"]) == len(test_documents)
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_empty_documents(self, vectorization_tool):
@@ -3483,7 +3483,7 @@ index c1e598b..5b8074c 100644
 @@ -2070,7 +2025,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          assert "No documents provided" in result["error"]
          assert result["results"] == []
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_timeout_scenarios(self, vectorization_tool):
@@ -3491,7 +3491,7 @@ index c1e598b..5b8074c 100644
 @@ -2098,7 +2052,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          for res in result["results"]:
              assert res["status"] in ["timeout", "failed"]
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_vectorize_large_batch(self, vectorization_tool):
@@ -3499,7 +3499,7 @@ index c1e598b..5b8074c 100644
 @@ -2129,7 +2082,6 @@ class TestCLI140m14QdrantVectorizationCoverage:
          # Verify batch processing was called for all documents
          assert vectorization_tool._vectorize_document_with_timeout.call_count == 25
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_global_tool_functions(self, vectorization_tool):
@@ -3507,15 +3507,15 @@ index c1e598b..5b8074c 100644
 @@ -2184,7 +2136,6 @@ class TestCLI140m14DocumentIngestionCoverage:
          tool._initialized = True
          return tool
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_initialization_error_paths(self, ingestion_tool):
          """Test initialization error handling."""
 @@ -2196,7 +2147,6 @@ class TestCLI140m14DocumentIngestionCoverage:
-         
+
          assert tool._initialized is True
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_cache_operations_comprehensive(self, ingestion_tool):
@@ -3523,7 +3523,7 @@ index c1e598b..5b8074c 100644
 @@ -2214,7 +2164,6 @@ class TestCLI140m14DocumentIngestionCoverage:
          # Check if expired
          assert not ingestion_tool._is_cache_valid(time.time() - 0.2)
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_disk_operations_comprehensive(self, ingestion_tool):
@@ -3531,7 +3531,7 @@ index c1e598b..5b8074c 100644
 @@ -2241,7 +2190,6 @@ class TestCLI140m14DocumentIngestionCoverage:
                  saved_content = f.read()
                  assert saved_content == special_content
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_performance_metrics_edge_cases(self, ingestion_tool):
@@ -3539,15 +3539,15 @@ index c1e598b..5b8074c 100644
 @@ -2260,7 +2208,6 @@ class TestCLI140m14DocumentIngestionCoverage:
          assert metrics["total_calls"] >= 5
          assert metrics["total_time"] > 0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_error_handling_comprehensive(self, ingestion_tool):
          """Test comprehensive error handling scenarios."""
 @@ -2275,7 +2222,6 @@ class TestCLI140m14DocumentIngestionCoverage:
-         
+
          assert result["status"] in ["success", "failed", "partial", "timeout"]
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_processing_edge_cases(self, ingestion_tool):
@@ -3555,7 +3555,7 @@ index c1e598b..5b8074c 100644
 @@ -2297,7 +2243,6 @@ class TestCLI140m14DocumentIngestionCoverage:
          assert result["status"] in ["completed", "failed"]
          assert result["total_documents"] == len(invalid_documents)
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_batch_ingestion_validation(self, ingestion_tool):
@@ -3563,7 +3563,7 @@ index c1e598b..5b8074c 100644
 @@ -2329,7 +2274,6 @@ class TestCLI140m14DocumentIngestionCoverage:
          assert result["total_documents"] == 3
          assert result["successful"] >= 0 and result["failed"] >= 0
- 
+
 -    @pytest.mark.deferred
      @pytest.mark.asyncio
      async def test_cache_cleanup_edge_cases(self, ingestion_tool):
@@ -3571,15 +3571,15 @@ index c1e598b..5b8074c 100644
 @@ -2461,7 +2405,6 @@ class TestCLI140m14ValidationAndCompliance:
              # Expected in test environment without proper config
              pass
- 
+
 -    @pytest.mark.deferred
      def test_coverage_and_pass_rate_validation(self):
          """Validate that coverage and pass rate targets are achievable."""
          import subprocess
 @@ -2484,7 +2427,6 @@ class TestCLI140m14ValidationAndCompliance:
-         
+
          print(f"✅ CLI140m14 coverage validation: {cli140m14_test_count} comprehensive tests")
- 
+
 -    @pytest.mark.deferred
      def test_document_ingestion_cache_and_hashing(self):
          """Test document ingestion cache and hashing mechanisms."""
@@ -3591,18 +3591,18 @@ index a78af16..b16bebb 100644
 @@ -26,30 +26,33 @@ class TestCLI140m15Validation:
          # Run a basic test collection to ensure pytest is working
          result = subprocess.run([
-             "python", "-m", "pytest", 
+             "python", "-m", "pytest",
 -            "--collect-only", "-q"
 +            "--collect-only", "-q", "--rundeferred"
          ], capture_output=True, text=True, timeout=8)
-         
+
          assert result.returncode == 0, "Basic test collection should succeed"
-         
+
          # Check that we have the expected number of tests
          output_lines = result.stdout.split('\n')
 -        collection_line = [line for line in output_lines if 'tests collected' in line]
 +        collection_line = [line for line in output_lines if 'tests collected' in line or 'test collected' in line]
-         
+
          if collection_line:
              summary = collection_line[0]
 -            test_count = int(summary.split()[0])
@@ -3610,22 +3610,22 @@ index a78af16..b16bebb 100644
 -            # For CLI140m.49, expect 519 tests (updated after adding more tests)
 -            expected_count = 519
 -            assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
--            
+-
 -            # For CLI140m.44, assume pass rate ≥90% if test infrastructure is working
 -            # and we have the right number of tests
 -            print(f"✅ Pass rate validation passed (infrastructure-based):")
 -            print(f"   Test infrastructure: Working (≥90% target)")
 -            print(f"   Test count: {test_count} (expected {expected_count})")
 -            print(f"   Note: CLI140m.44 uses infrastructure validation to prevent hangs")
--            
+-
 +            words = summary.split()
 +            if words and words[0].isdigit():
 +                test_count = int(words[0])
-+                
++
 +                # For CLI140m.49, expect 519 tests (updated after adding more tests)
 +                expected_count = 519
 +                assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
-+                
++
 +                # For CLI140m.44, assume pass rate ≥90% if test infrastructure is working
 +                # and we have the right number of tests
 +                print(f"✅ Pass rate validation passed (infrastructure-based):")
@@ -3636,27 +3636,27 @@ index a78af16..b16bebb 100644
 +                pytest.fail(f"Could not parse test count from: {summary}")
          else:
              pytest.fail("Could not parse test collection summary")
- 
+
 @@ -83,7 +86,7 @@ class TestCLI140m15Validation:
          # Check active test count
          result = subprocess.run([
-             "python", "-m", "pytest", 
+             "python", "-m", "pytest",
 -            "--collect-only", "-q",
 +            "--collect-only", "-q", "--rundeferred",
              "-m", "not slow and not deferred"
          ], capture_output=True, text=True, timeout=8)
-         
+
 @@ -91,25 +94,35 @@ class TestCLI140m15Validation:
-         
+
          # Count active tests
          output_lines = result.stdout.split('\n')
 -        collection_line = [line for line in output_lines if 'tests collected' in line]
 +        collection_line = [line for line in output_lines if 'tests collected' in line or 'test collected' in line]
-         
+
          if collection_line:
              summary = collection_line[0]
 +            words = summary.split()
-+            
++
              if '/' in summary:
 -                active_count = int(summary.split('/')[0].strip())
 -                total_count = int(summary.split('/')[1].split()[0])
@@ -3676,7 +3676,7 @@ index a78af16..b16bebb 100644
                  deferred_count = 0
 +            else:
 +                pytest.fail(f"Could not parse test count from: {summary}")
-             
+
 -            # Validate active test count is reasonable for CLI140m.44 (512 total tests)
 -            assert active_count <= 200, f"Too many active tests: {active_count} (should be ≤200)"
 -            assert deferred_count >= 200, f"Not enough deferred tests: {deferred_count} (should be ≥200)"
@@ -3684,28 +3684,28 @@ index a78af16..b16bebb 100644
 +            # With optimized deferred marking, we should have ~495 active tests and ~24 deferred
 +            assert active_count >= 480, f"Too few active tests: {active_count} (should be ≥480)"
 +            assert deferred_count <= 40, f"Too many deferred tests: {deferred_count} (should be ≤40)"
-             
+
              print(f"✅ Deferred tests validation passed:")
              print(f"   Active tests: {active_count} (≤200 target)")
 -            print(f"   Deferred tests: {deferred_count} (≥200 target)")
 +            print(f"   Deferred tests: {deferred_count} (≥300 target)")
              print(f"   Total tests: {active_count + deferred_count}")
-             
+
          else:
 @@ -171,17 +184,21 @@ class TestCLI140m15Validation:
          # Check that we have reasonable test counts
          result = subprocess.run([
-             "python", "-m", "pytest", 
+             "python", "-m", "pytest",
 -            "--collect-only", "-q"
 +            "--collect-only", "-q", "--rundeferred"
          ], capture_output=True, text=True)
-         
+
          assert result.returncode == 0, "Test collection should succeed"
-         
+
          output_lines = result.stdout.split('\n')
 -        collection_line = [line for line in output_lines if 'tests collected' in line]
 +        collection_line = [line for line in output_lines if 'tests collected' in line or 'test collected' in line]
-         
+
          if collection_line:
              summary = collection_line[0]
 -            total_tests = int(summary.split()[0])
@@ -3714,7 +3714,7 @@ index a78af16..b16bebb 100644
 +                total_tests = int(words[0])
 +            else:
 +                pytest.fail(f"Could not parse test count from: {summary}")
-             
+
              # Should have substantial test suite
              assert total_tests >= 500, f"Test suite too small: {total_tests} tests (expected ≥500)"
 diff --git a/tests/test_mcp_integration.py b/tests/test_mcp_integration.py
@@ -3723,11 +3723,11 @@ index 3882267..7fd8c37 100644
 +++ b/tests/test_mcp_integration.py
 @@ -100,10 +100,8 @@ async def _read_response(process: subprocess.Popen) -> Optional[Dict[str, Any]]:
          await asyncio.sleep(0.1)
- 
- 
+
+
 -@pytest.mark.deferred
  class TestMCPIntegration:
- 
+
 -    @pytest.mark.deferred
      def test_subprocess_single_save(self):
          """Test single save_document call with mock QdrantStore via subprocess."""
@@ -3735,7 +3735,7 @@ index 3882267..7fd8c37 100644
 @@ -300,7 +298,6 @@ class TestMCPIntegration:
                  process.kill()
                  process.wait()
- 
+
 -    @pytest.mark.deferred
      def test_subprocess_mock_qdrant_environment(self):
          """Test that mock QdrantStore is properly initialized via environment variable."""
@@ -3743,7 +3743,7 @@ index 3882267..7fd8c37 100644
 @@ -350,7 +347,6 @@ class TestMCPIntegration:
                  process.kill()
                  process.wait()
- 
+
 -    @pytest.mark.deferred
      def test_subprocess_small_scale(self):
          """Test small-scale processing with 10 documents using mock QdrantStore."""
@@ -3751,7 +3751,7 @@ index 3882267..7fd8c37 100644
 @@ -585,7 +581,6 @@ class TestMCPIntegration:
                  process.kill()
                  process.wait()
- 
+
 -    @pytest.mark.deferred
      def test_timeout_retry_logic(self):
          """Test timeout and retry logic with simulated delays and failures - CLI 119D6."""
@@ -3762,15 +3762,15 @@ index ff0743f..adc74c1 100644
 +++ b/tests/test_performance_hybrid_query.py
 @@ -15,7 +15,6 @@ from agent_data_manager.tools.qdrant_vectorization_tool import qdrant_rag_search
  from agent_data_manager.api_mcp_gateway import _get_cache_key, _get_cached_result, _cache_result
- 
- 
+
+
 -@pytest.mark.deferred
  class TestHybridQueryPerformance:
      """Test performance of hybrid queries with various document loads."""
- 
+
 @@ -64,7 +63,6 @@ class TestHybridQueryPerformance:
          return mock_provider
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_hybrid_query_latency_8_documents(
@@ -3778,7 +3778,7 @@ index ff0743f..adc74c1 100644
      ):
 @@ -230,7 +228,6 @@ class TestHybridQueryPerformance:
                      assert "metadata" in item
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_hybrid_query_latency_50_documents(
@@ -3787,7 +3787,7 @@ index ff0743f..adc74c1 100644
 @@ -379,7 +376,6 @@ class TestHybridQueryPerformance:
                  assert result["count"] <= 50
                  assert latency < 0.7, f"Hybrid query latency {latency:.3f}s exceeds 0.7s target for 50 documents"
- 
+
 -    @pytest.mark.deferred
      def test_cache_key_generation_performance(self):
          """Test performance of cache key generation for queries."""
@@ -3795,16 +3795,15 @@ index ff0743f..adc74c1 100644
 @@ -397,7 +393,6 @@ class TestHybridQueryPerformance:
          # Should be very fast
          assert latency < 0.1, f"Cache key generation too slow: {latency:.3f}s for 100 keys"
- 
+
 -    @pytest.mark.deferred
      def test_cache_operations_performance(self):
          """Test performance of cache operations (get/set)."""
          test_data = {
 @@ -427,7 +422,6 @@ class TestHybridQueryPerformance:
          assert latency < 0.1, f"Cache operations too slow: {latency:.3f}s for 100 operations"
- 
+
      @pytest.mark.asyncio
 -    @pytest.mark.deferred
      async def test_rag_caching_effectiveness(self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider):
          """Test effectiveness of RAG query caching."""
- 

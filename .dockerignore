@@ -10,4 +10,4 @@ __venv__/
 htmlcov/
 .coverage
 .DS_Store
-backup-* 
+backup-*

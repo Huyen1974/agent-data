@@ -1,4 +1,4 @@
-[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit 
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
 FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
 Line 5074: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
 Line 5076: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling
@@ -16,26 +16,26 @@ Line 5078: FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_err
 +Line 5082: FAILED tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling
 +Line 5084: FAILED tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting
 +grep -n "FAILED" logs/test_errors.log | grep -v "Final Analysis" | wc -l
-[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery 
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery
 FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery
 Test 1: TestCLI139Integration::test_end_to_end_error_recovery, Status: FAILED, Runtime: 3.42s
-[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery 
+[gw0] [100%] FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery
 FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery
 Test 2: TestCLI139::test_end_to_end_error_recovery, Status: FAILED
 +- Test 1: TestCLI139Integration::test_end_to_end_error_recovery, Status: FAILED, Runtime: 3.42s
-+- Test 2: TestCLI139::test_end_to_end_error_recovery, Status: FAILED  
++- Test 2: TestCLI139::test_end_to_end_error_recovery, Status: FAILED
 [2025-06-18 08:39:20] Test test_coverage_target_validation: FAILED (5.87s runtime, batch size: 1) - Coverage 70.9% below target 80%
 [2025-06-18 08:39:41] Test test_cli140m15_completion_readiness: FAILED (3.44s runtime, batch size: 1) - Missing test file: tests/test_cli140m13_coverage.py
 [2025-06-18 08:46:28] Test test_coverage_target_validation: FAILED (5.16s runtime, batch size: 1) - Overall coverage 19.7% below target 70%
-[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_pass_rate_target_validation 
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_pass_rate_target_validation
 FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_pass_rate_target_validation
-[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation 
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
 FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
-[gw0] [100%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli 
+[gw0] [100%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli
 FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli - ...
 tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite FAILED [ 33%]
 FAILED tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite
-[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation 
+[gw0] [100%] FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
 FAILED tests/test_cli140m15_validation.py::TestCLI140m15Validation::test_coverage_target_validation
 Test 2: test_coverage_target_validation, Status: FAILED, Runtime: s
 tests/test_no_deferred.py::TestNoDeferredSentinel::test_no_deferred_tests_in_main_suite FAILED [ 33%]

@@ -12,7 +12,9 @@ def semantic_search_multiple_fields(tree, search_terms):
         for field, keyword in search_terms.items():
             field_value = meta.get(field)
             # Basic semantic check (keyword containment in string representation)
-            if not (keyword and field_value and keyword.lower() in str(field_value).lower()):
+            if not (
+                keyword and field_value and keyword.lower() in str(field_value).lower()
+            ):
                 match_all_fields = False
                 break
         if match_all_fields:

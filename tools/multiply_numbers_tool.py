@@ -29,9 +29,7 @@ def multiply_numbers(**kwargs) -> dict:
     num2 = kwargs[num2_key]
 
     if not isinstance(num1, (int, float)) or not isinstance(num2, (int, float)):
-        error_msg = (
-            f"Inputs must be numbers. Received {num1_key}={num1} ({type(num1)}), {num2_key}={num2} ({type(num2)})."
-        )
+        error_msg = f"Inputs must be numbers. Received {num1_key}={num1} ({type(num1)}), {num2_key}={num2} ({type(num2)})."
         logger.error(error_msg)
         return {"status": "failed", "error": error_msg}
 

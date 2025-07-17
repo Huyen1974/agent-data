@@ -11,38 +11,58 @@ class Settings:
 
     # Qdrant configuration
     QDRANT_URL: str = os.environ.get(
-        "QDRANT_URL", "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+        "QDRANT_URL",
+        "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io",
     )
     QDRANT_API_KEY: str = os.environ.get("QDRANT_API_KEY", "")
-    QDRANT_COLLECTION_NAME: str = os.environ.get("QDRANT_COLLECTION_NAME", "agent_data_vectors")
+    QDRANT_COLLECTION_NAME: str = os.environ.get(
+        "QDRANT_COLLECTION_NAME", "agent_data_vectors"
+    )
     QDRANT_REGION: str = "us-east4-0"  # Free tier region
 
     # Vector configuration
-    VECTOR_DIMENSION: int = int(os.environ.get("VECTOR_DIMENSION", "1536"))  # OpenAI default
+    VECTOR_DIMENSION: int = int(
+        os.environ.get("VECTOR_DIMENSION", "1536")
+    )  # OpenAI default
 
     # Qdrant batch processing configuration
     QDRANT_BATCH_SIZE: int = int(os.environ.get("QDRANT_BATCH_SIZE", "100"))
-    QDRANT_SLEEP: float = float(os.environ.get("QDRANT_SLEEP", "0.35"))  # Sleep between batches in seconds
+    QDRANT_SLEEP: float = float(
+        os.environ.get("QDRANT_SLEEP", "0.35")
+    )  # Sleep between batches in seconds
 
     # JWT Authentication configuration
     JWT_SECRET_KEY: str = os.environ.get("JWT_SECRET_KEY", "")
     JWT_ALGORITHM: str = os.environ.get("JWT_ALGORITHM", "HS256")
-    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.environ.get("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = int(
+        os.environ.get("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30")
+    )
 
     # Authentication configuration
-    ENABLE_AUTHENTICATION: bool = os.environ.get("ENABLE_AUTHENTICATION", "true").lower() == "true"
-    ALLOW_REGISTRATION: bool = os.environ.get("ALLOW_REGISTRATION", "false").lower() == "true"
+    ENABLE_AUTHENTICATION: bool = (
+        os.environ.get("ENABLE_AUTHENTICATION", "true").lower() == "true"
+    )
+    ALLOW_REGISTRATION: bool = (
+        os.environ.get("ALLOW_REGISTRATION", "false").lower() == "true"
+    )
 
     # Prometheus metrics configuration
     PUSHGATEWAY_URL: str = os.environ.get(
-        "PUSHGATEWAY_URL", "https://prometheus-pushgateway-812872501910.asia-southeast1.run.app"
+        "PUSHGATEWAY_URL",
+        "https://prometheus-pushgateway-812872501910.asia-southeast1.run.app",
     )
-    METRICS_PUSH_INTERVAL: int = int(os.environ.get("METRICS_PUSH_INTERVAL", "60"))  # seconds
+    METRICS_PUSH_INTERVAL: int = int(
+        os.environ.get("METRICS_PUSH_INTERVAL", "60")
+    )  # seconds
     ENABLE_METRICS: bool = os.environ.get("ENABLE_METRICS", "true").lower() == "true"
 
     # Firestore configuration
-    ENABLE_FIRESTORE_SYNC: bool = os.environ.get("ENABLE_FIRESTORE_SYNC", "false").lower() == "true"
-    FIRESTORE_PROJECT_ID: str = os.environ.get("FIRESTORE_PROJECT_ID", "github-chatgpt-ggcloud")
+    ENABLE_FIRESTORE_SYNC: bool = (
+        os.environ.get("ENABLE_FIRESTORE_SYNC", "false").lower() == "true"
+    )
+    FIRESTORE_PROJECT_ID: str = os.environ.get(
+        "FIRESTORE_PROJECT_ID", "github-chatgpt-ggcloud"
+    )
     FIRESTORE_DATABASE_ID: str = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
 
     # GCS configuration
@@ -50,15 +70,29 @@ class Settings:
 
     # Embedding configuration
     EMBEDDING_PROVIDER: str = os.environ.get("EMBEDDING_PROVIDER", "openai")
-    OPENAI_EMBEDDING_MODEL: str = os.environ.get("OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002")
+    OPENAI_EMBEDDING_MODEL: str = os.environ.get(
+        "OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002"
+    )
 
     # Cache configuration for performance optimization (CLI 140e)
-    RAG_CACHE_ENABLED: bool = os.environ.get("RAG_CACHE_ENABLED", "true").lower() == "true"
-    RAG_CACHE_TTL: int = int(os.environ.get("RAG_CACHE_TTL", "3600"))  # 1 hour in seconds
-    RAG_CACHE_MAX_SIZE: int = int(os.environ.get("RAG_CACHE_MAX_SIZE", "1000"))  # Max cache entries
-    EMBEDDING_CACHE_ENABLED: bool = os.environ.get("EMBEDDING_CACHE_ENABLED", "true").lower() == "true"
-    EMBEDDING_CACHE_TTL: int = int(os.environ.get("EMBEDDING_CACHE_TTL", "3600"))  # 1 hour in seconds
-    EMBEDDING_CACHE_MAX_SIZE: int = int(os.environ.get("EMBEDDING_CACHE_MAX_SIZE", "500"))  # Max cache entries
+    RAG_CACHE_ENABLED: bool = (
+        os.environ.get("RAG_CACHE_ENABLED", "true").lower() == "true"
+    )
+    RAG_CACHE_TTL: int = int(
+        os.environ.get("RAG_CACHE_TTL", "3600")
+    )  # 1 hour in seconds
+    RAG_CACHE_MAX_SIZE: int = int(
+        os.environ.get("RAG_CACHE_MAX_SIZE", "1000")
+    )  # Max cache entries
+    EMBEDDING_CACHE_ENABLED: bool = (
+        os.environ.get("EMBEDDING_CACHE_ENABLED", "true").lower() == "true"
+    )
+    EMBEDDING_CACHE_TTL: int = int(
+        os.environ.get("EMBEDDING_CACHE_TTL", "3600")
+    )  # 1 hour in seconds
+    EMBEDDING_CACHE_MAX_SIZE: int = int(
+        os.environ.get("EMBEDDING_CACHE_MAX_SIZE", "500")
+    )  # Max cache entries
 
     @classmethod
     def get_embedding_config(cls) -> dict:

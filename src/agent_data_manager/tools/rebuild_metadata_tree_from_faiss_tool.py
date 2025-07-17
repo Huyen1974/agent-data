@@ -1,14 +1,14 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def rebuild_metadata_tree_from_faiss(index_name: str) -> Dict[str, Any]:
+def rebuild_metadata_tree_from_faiss(index_name: str) -> dict[str, Any]:
     """
     Rebuilds (loads) the metadata tree structure from the specified FAISS index's companion file.
     This is functionally equivalent to loading the metadata.
@@ -46,20 +46,26 @@ def rebuild_metadata_tree_from_faiss(index_name: str) -> Dict[str, Any]:
             break  # Success
         except FileNotFoundError:
             # This case might happen if file deleted between os.path.exists and open
-            print(f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during rebuild.")
+            print(
+                f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during rebuild."
+            )
             return {}
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
                 # Raise error after retries fail
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     if loaded_data is None or "metadata" not in loaded_data:
-        print(f"Warning: Invalid or empty metadata file format for '{index_name}'. Returning empty tree.")
+        print(
+            f"Warning: Invalid or empty metadata file format for '{index_name}'. Returning empty tree."
+        )
         return {}
 
     print(f"Successfully rebuilt metadata tree from index '{index_name}'.")

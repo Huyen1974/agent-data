@@ -290,7 +290,7 @@ class TestSaveMetadataToFaiss:
         assert result.get("status") == "success"
 """
 
-with open(file_path, "r") as f:
+with open(file_path) as f:
     content = f.read()
 
 # Regex: xóa toàn bộ class TestSaveMetadataToFaiss cũ và thay thế bằng block mới

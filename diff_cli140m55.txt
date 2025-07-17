@@ -744,7 +744,7 @@ index aec65ed..ff9acde 100644
 +Created: June 19, 2025, 12:30 +07
 +Purpose: Log ALL tests (Pass, F, S, Skipped, Timeout) with M1 safety - FIXED DUPLICATION
  """
- 
+
  import subprocess
 @@ -20,8 +20,9 @@ class BatchTestRunner:
          self.batch_timeout = 24  # 3×8s
@@ -754,33 +754,33 @@ index aec65ed..ff9acde 100644
          self.log_file = "logs/test_fixes.log"
 -        self.csv_file = "test_summary_cli140m47.txt"
 +        self.csv_file = "test_summary_cli140m55.txt"  # Updated for CLI140m.55
-         
+
      def log_action(self, message):
          """Log action with timestamp"""
 @@ -33,31 +34,54 @@ class BatchTestRunner:
              f.write(f"{log_msg}\n")
-     
+
      def collect_tests(self):
 -        """Collect all tests using pytest --collect-only"""
 -        self.log_action("Collecting all tests with pytest --collect-only")
 +        """Collect all tests using pytest --collect-only with --qdrant-mock"""
 +        self.log_action("Collecting all tests with pytest --collect-only --qdrant-mock")
-         
+
          try:
              result = subprocess.run([
 -                'python', '-m', 'pytest', '--collect-only', '-q'
 +                'python', '-m', 'pytest', '--collect-only', '-q', '--qdrant-mock'
              ], capture_output=True, text=True, timeout=30)
-             
+
              if result.returncode != 0:
                  self.log_action(f"Test collection failed: {result.stderr}")
                  return []
-             
+
 -            # Parse test collection output
 +            # Parse test collection output more carefully
              tests = []
 +            unique_tests = set()  # Ensure uniqueness during collection
-+            
++
              for line in result.stdout.split('\n'):
 -                # Look for test method patterns
 -                if '::test_' in line and not line.startswith(' '):
@@ -792,7 +792,7 @@ index aec65ed..ff9acde 100644
 +                    # Skip empty lines and headers
 +                    if not line or line.startswith('=') or 'collected' in line.lower():
 +                        continue
-+                    
++
 +                    # Handle both formats:
 +                    # tests/file.py::test_method
 +                    # tests/file.py::TestClass::test_method
@@ -802,27 +802,27 @@ index aec65ed..ff9acde 100644
 -                        test_method = parts[1]
 -                        tests.append((test_file, test_method))
 +                        test_file = parts[0].strip()
-+                        
++
 +                        if len(parts) == 2:
 +                            # Format: file::test_method
 +                            test_method = parts[1].strip()
 +                        else:
 +                            # Format: file::TestClass::test_method
 +                            test_method = parts[-1].strip()  # Get the last part (actual test method)
-+                        
++
 +                        # Only include actual test methods
 +                        if test_method.startswith('test_'):
 +                            # Create unique test identifier
 +                            test_id = f"{test_file}::{test_method}"
-+                            
++
 +                            if test_id not in unique_tests:
 +                                unique_tests.add(test_id)
 +                                tests.append((test_file, test_method))
-             
+
 -            self.log_action(f"Collected {len(tests)} total tests")
 +            self.log_action(f"Collected {len(tests)} unique tests")
              return tests
-             
+
          except subprocess.TimeoutExpired:
 @@ -104,26 +128,32 @@ class BatchTestRunner:
          except subprocess.TimeoutExpired:
@@ -847,7 +847,7 @@ index aec65ed..ff9acde 100644
 +                    })
              self.log_action(f"Batch TIMEOUT after {self.batch_timeout}s")
              return False
-             
+
          except Exception as e:
              # Handle other errors - mark tests as ERROR
              for test_file, test_method in batch_tests:
@@ -870,7 +870,7 @@ index aec65ed..ff9acde 100644
 +                    })
              self.log_action(f"Batch ERROR: {e}")
              return False
-     
+
 @@ -141,48 +171,55 @@ class BatchTestRunner:
                  if ' PASSED ' in line:
                      test_info = self.extract_test_info(line)
@@ -895,7 +895,7 @@ index aec65ed..ff9acde 100644
 +                                'error_runtime_reason': f'{test_info.get("runtime", "N/A")}',
 +                                'log_line': line.strip()
 +                            })
-                 
+
                  # FAILED pattern
                  elif ' FAILED ' in line:
                      test_info = self.extract_test_info(line)
@@ -920,7 +920,7 @@ index aec65ed..ff9acde 100644
 +                                'error_runtime_reason': self.extract_failure_reason(lines, line),
 +                                'log_line': line.strip()
 +                            })
-                 
+
                  # SKIPPED pattern
                  elif ' SKIPPED ' in line:
                      test_info = self.extract_test_info(line)
@@ -945,7 +945,7 @@ index aec65ed..ff9acde 100644
 +                                'error_runtime_reason': self.extract_skip_reason(line),
 +                                'log_line': line.strip()
 +                            })
-         
+
          # Check for tests that took >8s (SLOW)
          avg_runtime = batch_runtime / len(batch_tests)
          if avg_runtime > 8:
@@ -955,7 +955,7 @@ index aec65ed..ff9acde 100644
                      # Update existing result to mark as SLOW
                      for result in self.results:
 @@ -193,7 +230,9 @@ class BatchTestRunner:
-         
+
          # Mark any unseen tests as missing/unknown
          for test_file, test_method in batch_tests:
 -            if test_method not in seen_tests:
@@ -966,11 +966,11 @@ index aec65ed..ff9acde 100644
                      'name': test_method,
                      'file': test_file,
 @@ -264,7 +303,7 @@ class BatchTestRunner:
-     
+
      def run_all_tests(self):
          """Main execution method"""
 -        self.log_action("Starting CLI140m.47c batch test execution")
 +        self.log_action("Starting CLI140m.55 batch test execution")
-         
+
          # Verify pytest-timeout is installed
          try:

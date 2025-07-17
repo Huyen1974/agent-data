@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,20 +24,20 @@ jobs:
         id: validate-secrets
         run: |
           echo "🔍 Validating GitHub secrets..."
-          
+
           # Check if required secrets exist
                   if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
           echo "❌ GCP_WORKLOAD_IDENTITY_PROVIDER secret is missing"
             echo "valid=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
             echo "❌ GCP_SERVICE_ACCOUNT secret is missing"
             echo "valid=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           # Determine project ID based on branch
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             PROJECT_SECRET="${{ secrets.PROJECT_ID }}"
@@ -46,20 +46,20 @@ jobs:
             PROJECT_SECRET="${{ secrets.PROJECT_ID_TEST }}"
             PROJECT_NAME="test"
           fi
-          
+
           if [ -z "$PROJECT_SECRET" ]; then
             echo "❌ PROJECT_ID secret is missing for $PROJECT_NAME environment"
             echo "valid=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           # Validate service account email format
           if [[ ! "${{ secrets.GCP_SERVICE_ACCOUNT }}" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.iam\.gserviceaccount\.com$ ]]; then
             echo "❌ GCP_SERVICE_ACCOUNT format is invalid"
             echo "valid=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           echo "✅ All secrets are valid for $PROJECT_NAME environment"
           echo "valid=true" >> $GITHUB_OUTPUT
           echo "project_id=$PROJECT_SECRET" >> $GITHUB_OUTPUT
@@ -108,16 +108,16 @@ jobs:
         if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           echo "🔨 Building and pushing dummy container..."
-          
+
           # Check if dummy container exists
           if [ ! -d "containers/dummy_container" ]; then
             echo "⚠️  No dummy_container directory found, skipping deployment"
             exit 0
           fi
-          
+
           # Build with retry logic
           IMAGE="asia-southeast1-docker.pkg.dev/${{ steps.validate-secrets.outputs.project_id }}/agent-data/dummy-container:${{ github.sha }}"
-          
+
           for attempt in 1 2 3; do
             echo "🔄 Build attempt $attempt..."
             if docker build -t "$IMAGE" containers/dummy_container; then
@@ -132,7 +132,7 @@ jobs:
               sleep 10
             fi
           done
-          
+
           # Push with retry logic
           for attempt in 1 2 3; do
             echo "🔄 Push attempt $attempt..."
@@ -153,9 +153,9 @@ jobs:
         if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           echo "🚀 Deploying to Cloud Run..."
-          
+
           IMAGE="asia-southeast1-docker.pkg.dev/${{ steps.validate-secrets.outputs.project_id }}/agent-data/dummy-container:${{ github.sha }}"
-          
+
           # Deploy with retry logic
           for attempt in 1 2 3; do
             echo "🔄 Deploy attempt $attempt..."
@@ -187,4 +187,4 @@ jobs:
         if: steps.validate-secrets.outputs.valid == 'true'
         run: |
           echo "🔍 Verifying deployment..."
-          gcloud run services describe dummy-container --region=asia-southeast1 --project=${{ steps.validate-secrets.outputs.project_id }} --format="value(status.url)" 
+          gcloud run services describe dummy-container --region=asia-southeast1 --project=${{ steps.validate-secrets.outputs.project_id }} --format="value(status.url)"

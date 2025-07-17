@@ -5,9 +5,10 @@ This module contains streamlined E2E tests that validate the core Agent Data pip
 functionality with minimal overhead and maximum speed.
 """
 
-import pytest
 import uuid
-from unittest.mock import AsyncMock, patch, Mock
+from unittest.mock import AsyncMock, Mock, patch
+
+import pytest
 
 
 @pytest.mark.e2e
@@ -28,25 +29,37 @@ class TestE2EPipeline:
     def mock_embedding_provider(self):
         """Mock embedding provider for fast tests."""
         mock_provider = AsyncMock()
-        mock_provider.embed_single.return_value = [0.1] * 1536  # Fast, pre-computed embedding
+        mock_provider.embed_single.return_value = [
+            0.1
+        ] * 1536  # Fast, pre-computed embedding
         mock_provider.get_model_name.return_value = "test-model"
         return mock_provider
 
     @pytest.mark.asyncio
     async def test_complete_e2e_pipeline(self, sample_doc, mock_embedding_provider):
         """Test complete E2E pipeline with minimal overhead."""
-        from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+        from agent_data_manager.tools.qdrant_vectorization_tool import (
+            QdrantVectorizationTool,
+        )
 
         # Prevent any real initialization by mocking at class level
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
-        ) as mock_firestore_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
-        ) as mock_auto_tag, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
-        ) as mock_event_mgr, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.settings"
-        ) as mock_settings:
+        with (
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+            ) as mock_qdrant_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
+            ) as mock_firestore_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+            ) as mock_auto_tag,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
+            ) as mock_event_mgr,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+        ):
 
             # Mock settings to prevent config loading
             mock_settings.get_qdrant_config.return_value = {
@@ -55,11 +68,16 @@ class TestE2EPipeline:
                 "collection_name": "test",
                 "vector_size": 1536,
             }
-            mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
+            mock_settings.get_firestore_config.return_value = {
+                "project_id": "test",
+                "metadata_collection": "test",
+            }
 
             # Setup ultra-fast mocks
             mock_qdrant = Mock()
-            mock_qdrant.upsert_vector = AsyncMock(return_value={"success": True, "vector_id": sample_doc["doc_id"]})
+            mock_qdrant.upsert_vector = AsyncMock(
+                return_value={"success": True, "vector_id": sample_doc["doc_id"]}
+            )
             mock_qdrant_class.return_value = mock_qdrant
 
             mock_firestore = Mock()
@@ -68,11 +86,15 @@ class TestE2EPipeline:
 
             # Mock auto-tagging to return immediately without API calls
             mock_auto_tagging_tool = Mock()
-            mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(return_value=sample_doc["metadata"])
+            mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(
+                return_value=sample_doc["metadata"]
+            )
             mock_auto_tag.return_value = mock_auto_tagging_tool
 
             mock_event_manager = Mock()
-            mock_event_manager.publish_save_document_event = AsyncMock(return_value={"status": "success"})
+            mock_event_manager.publish_save_document_event = AsyncMock(
+                return_value={"status": "success"}
+            )
             mock_event_mgr.return_value = mock_event_manager
 
             # Use the working pattern from cursor integration test
@@ -91,18 +113,26 @@ class TestE2EPipeline:
     @pytest.mark.asyncio
     async def test_e2e_error_handling(self, sample_doc):
         """Test E2E error handling."""
-        from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+        from agent_data_manager.tools.qdrant_vectorization_tool import (
+            QdrantVectorizationTool,
+        )
 
         # Mock failing embedding provider
         mock_provider = AsyncMock()
         mock_provider.embed_single.side_effect = Exception("API failure")
 
         # Prevent initialization overhead
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
-        ) as mock_firestore_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.settings"
-        ) as mock_settings:
+        with (
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+            ) as mock_qdrant_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
+            ) as mock_firestore_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+        ):
 
             # Mock settings to prevent config loading
             mock_settings.get_qdrant_config.return_value = {
@@ -111,7 +141,10 @@ class TestE2EPipeline:
                 "collection_name": "test",
                 "vector_size": 1536,
             }
-            mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
+            mock_settings.get_firestore_config.return_value = {
+                "project_id": "test",
+                "metadata_collection": "test",
+            }
 
             mock_qdrant = Mock()
             mock_qdrant_class.return_value = mock_qdrant
@@ -134,20 +167,31 @@ class TestE2EPipeline:
     async def test_e2e_performance(self, sample_doc, mock_embedding_provider):
         """Test E2E performance expectations with minimal setup."""
         import time
-        from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
+
+        from agent_data_manager.tools.qdrant_vectorization_tool import (
+            QdrantVectorizationTool,
+        )
 
         start_time = time.time()
 
         # Prevent any initialization overhead by mocking everything upfront
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
-        ) as mock_firestore_class, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
-        ) as mock_auto_tag, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
-        ) as mock_event_mgr, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.settings"
-        ) as mock_settings:
+        with (
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+            ) as mock_qdrant_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
+            ) as mock_firestore_class,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+            ) as mock_auto_tag,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
+            ) as mock_event_mgr,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+        ):
 
             # Mock settings to prevent config loading
             mock_settings.get_qdrant_config.return_value = {
@@ -156,11 +200,16 @@ class TestE2EPipeline:
                 "collection_name": "test",
                 "vector_size": 1536,
             }
-            mock_settings.get_firestore_config.return_value = {"project_id": "test", "metadata_collection": "test"}
+            mock_settings.get_firestore_config.return_value = {
+                "project_id": "test",
+                "metadata_collection": "test",
+            }
 
             # Ultra-fast mock setup
             mock_qdrant = Mock()
-            mock_qdrant.upsert_vector = AsyncMock(return_value={"success": True, "vector_id": sample_doc["doc_id"]})
+            mock_qdrant.upsert_vector = AsyncMock(
+                return_value={"success": True, "vector_id": sample_doc["doc_id"]}
+            )
             mock_qdrant_class.return_value = mock_qdrant
 
             mock_firestore = Mock()
@@ -168,11 +217,15 @@ class TestE2EPipeline:
 
             # Skip auto-tagging entirely
             mock_auto_tagging_tool = Mock()
-            mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(return_value=sample_doc["metadata"])
+            mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(
+                return_value=sample_doc["metadata"]
+            )
             mock_auto_tag.return_value = mock_auto_tagging_tool
 
             mock_event_manager = Mock()
-            mock_event_manager.publish_save_document_event = AsyncMock(return_value={"status": "success"})
+            mock_event_manager.publish_save_document_event = AsyncMock(
+                return_value={"status": "success"}
+            )
             mock_event_mgr.return_value = mock_event_manager
 
             tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)

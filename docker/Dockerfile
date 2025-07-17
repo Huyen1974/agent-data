@@ -1,6 +1,6 @@
 # Multi-stage Docker build for MCP Gateway - Optimized for size <500MB
 # Stage 1: Build stage with all dependencies
-FROM python:3.10.17-slim as builder
+FROM python:3.11-slim as builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -21,7 +21,7 @@ COPY ADK/agent_data/docker/requirements.runtime.txt /tmp/requirements.runtime.tx
 RUN pip install --no-cache-dir --timeout=600 -r /tmp/requirements.runtime.txt
 
 # Stage 2: Runtime stage (minimal)
-FROM python:3.10.17-slim as runtime
+FROM python:3.11-slim as runtime
 
 # Install only runtime system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -70,4 +70,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
 # Run the MCP Gateway
-CMD ["python", "-m", "ADK.agent_data.api_mcp_gateway"] 
+CMD ["python", "-m", "ADK.agent_data.api_mcp_gateway"]

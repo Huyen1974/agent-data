@@ -7,13 +7,14 @@ Enhanced for CLI140e.3.14 with outlier analysis and vector search results loggin
 """
 
 import asyncio
+import json
+import logging
 import sys
 import time
-import logging
-import aiohttp
-import json
-from typing import List, Dict, Any
+from typing import Any
 from unittest.mock import Mock
+
+import aiohttp
 
 # Add src to path for imports
 sys.path.insert(0, "src")
@@ -26,7 +27,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Cloud Function endpoint
-CLOUD_FUNCTION_URL = "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+CLOUD_FUNCTION_URL = (
+    "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+)
 
 
 def setup_mocked_environment():
@@ -48,7 +51,10 @@ def setup_mocked_environment():
                 Mock(
                     id=f"test-vector-{i}",
                     score=0.9 - i * 0.1,
-                    payload={"doc_id": f"latency_test_doc_{i:03d}", "tag": "latency_test"},
+                    payload={
+                        "doc_id": f"latency_test_doc_{i:03d}",
+                        "tag": "latency_test",
+                    },
                 )
                 for i in range(min(kwargs.get("limit", 10), 5))
             ]
@@ -76,8 +82,8 @@ def setup_mocked_environment():
         return mock_client
 
     # Apply patches
-    import qdrant_client
     import openai
+    import qdrant_client
 
     qdrant_client.QdrantClient = mock_qdrant_constructor
     openai.OpenAI = mock_openai_constructor
@@ -89,7 +95,7 @@ def setup_mocked_environment():
     registry.openai_client = mock_openai_constructor()
 
 
-async def create_test_documents(count: int = 50) -> List[Dict[str, str]]:
+async def create_test_documents(count: int = 50) -> list[dict[str, str]]:
     """Create test documents for latency testing."""
     documents = []
 
@@ -118,7 +124,9 @@ async def create_test_documents(count: int = 50) -> List[Dict[str, str]]:
     return documents
 
 
-async def vectorize_test_documents_mock(documents: List[Dict[str, str]]) -> Dict[str, Any]:
+async def vectorize_test_documents_mock(
+    documents: list[dict[str, str]],
+) -> dict[str, Any]:
     """Mock vectorization of test documents for RAG search testing."""
     results = {"successful": 0, "failed": 0, "errors": []}
 
@@ -173,7 +181,9 @@ async def authenticate_with_api() -> str:
                     logger.info("Authentication successful")
                     return token
                 elif response.status == 422:
-                    logger.warning(f"Authentication failed - 422 Unprocessable Entity: {response_text}")
+                    logger.warning(
+                        f"Authentication failed - 422 Unprocessable Entity: {response_text}"
+                    )
                     # Try to extract more details for 422 errors
                     try:
                         error_data = await response.json()
@@ -182,7 +192,9 @@ async def authenticate_with_api() -> str:
                         pass
                     return None
                 else:
-                    logger.warning(f"Authentication failed: {response.status} - {response_text}")
+                    logger.warning(
+                        f"Authentication failed: {response.status} - {response_text}"
+                    )
                     return None
 
     except Exception as e:
@@ -227,7 +239,9 @@ async def ensure_test_user_exists():
         return mock_user
 
 
-async def test_rag_query_latency_real(queries: List[str], target_latency: float = 0.7) -> Dict[str, Any]:
+async def test_rag_query_latency_real(
+    queries: list[str], target_latency: float = 0.7
+) -> dict[str, Any]:
     """Test RAG query latency for multiple queries using real /cskh_query endpoint with outlier analysis."""
     results = {
         "queries_tested": len(queries),
@@ -243,7 +257,9 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
         "vector_search_results": [],  # Doc IDs, scores, metadata
     }
 
-    logger.info("Testing RAG query latency for %d queries using /cskh_query...", len(queries))
+    logger.info(
+        "Testing RAG query latency for %d queries using /cskh_query...", len(queries)
+    )
 
     # Get authentication token
     auth_token = await authenticate_with_api()
@@ -252,7 +268,9 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
 
     total_time = 0.0
 
-    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30)) as session:
+    async with aiohttp.ClientSession(
+        timeout=aiohttp.ClientTimeout(total=30)
+    ) as session:
         for i, query in enumerate(queries):
             start_time = time.time()
 
@@ -292,7 +310,9 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
                                     "score": result.get("score", 0.0),
                                     "metadata": result.get("metadata", {}),
                                     "content_preview": (
-                                        result.get("content", "")[:100] + "..." if result.get("content") else ""
+                                        result.get("content", "")[:100] + "..."
+                                        if result.get("content")
+                                        else ""
                                     ),
                                 }
                             )
@@ -300,7 +320,9 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
                         results["vector_search_results"].append(
                             {
                                 "query_index": i,
-                                "query": query[:50] + "..." if len(query) > 50 else query,
+                                "query": (
+                                    query[:50] + "..." if len(query) > 50 else query
+                                ),
                                 "results": vector_results,
                             }
                         )
@@ -340,7 +362,9 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
                         results["outliers"].append(
                             {
                                 "query_index": i,
-                                "query": query[:50] + "..." if len(query) > 50 else query,
+                                "query": (
+                                    query[:50] + "..." if len(query) > 50 else query
+                                ),
                                 "latency_seconds": round(latency, 3),
                                 "status": query_result.get("status", "unknown"),
                             }
@@ -359,7 +383,7 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
                         query_result["status"],
                     )
 
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 logger.error("Query %d timed out", i + 1)
                 results["results"].append(
                     {
@@ -391,12 +415,16 @@ async def test_rag_query_latency_real(queries: List[str], target_latency: float 
         results["average_latency"] = round(total_time / results["queries_tested"], 3)
 
     # Success rate
-    results["success_rate"] = round((results["queries_under_target"] / results["queries_tested"]) * 100, 1)
+    results["success_rate"] = round(
+        (results["queries_under_target"] / results["queries_tested"]) * 100, 1
+    )
 
     return results
 
 
-async def test_rag_query_latency_mock(queries: List[str], target_latency: float = 0.7) -> Dict[str, Any]:
+async def test_rag_query_latency_mock(
+    queries: list[str], target_latency: float = 0.7
+) -> dict[str, Any]:
     """Test RAG query latency for multiple queries using mocked services (fallback)."""
     results = {
         "queries_tested": len(queries),
@@ -409,7 +437,9 @@ async def test_rag_query_latency_mock(queries: List[str], target_latency: float 
         "queries_over_target": 0,
     }
 
-    logger.info("Testing RAG query latency for %d queries (mocked fallback)...", len(queries))
+    logger.info(
+        "Testing RAG query latency for %d queries (mocked fallback)...", len(queries)
+    )
 
     total_time = 0.0
 
@@ -424,7 +454,10 @@ async def test_rag_query_latency_mock(queries: List[str], target_latency: float 
             search_result = {
                 "status": "success",
                 "total_found": 5,
-                "results": [{"doc_id": f"latency_test_doc_{j:03d}", "score": 0.9 - j * 0.1} for j in range(5)],
+                "results": [
+                    {"doc_id": f"latency_test_doc_{j:03d}", "score": 0.9 - j * 0.1}
+                    for j in range(5)
+                ],
             }
 
             end_time = time.time()
@@ -451,7 +484,12 @@ async def test_rag_query_latency_mock(queries: List[str], target_latency: float 
             else:
                 results["queries_over_target"] += 1
 
-            logger.info("Query %d: %.3fs (%s)", i + 1, latency, "✓" if latency < target_latency else "✗")
+            logger.info(
+                "Query %d: %.3fs (%s)",
+                i + 1,
+                latency,
+                "✓" if latency < target_latency else "✗",
+            )
 
         except Exception as e:
             logger.error("Query %d failed: %s", i + 1, str(e))
@@ -472,14 +510,18 @@ async def test_rag_query_latency_mock(queries: List[str], target_latency: float 
         results["average_latency"] = round(total_time / results["queries_tested"], 3)
 
     # Success rate
-    results["success_rate"] = round((results["queries_under_target"] / results["queries_tested"]) * 100, 1)
+    results["success_rate"] = round(
+        (results["queries_under_target"] / results["queries_tested"]) * 100, 1
+    )
 
     return results
 
 
 async def main():
     """Main latency test execution for CLI140e.3.14 with outlier analysis."""
-    print("🚀 Starting 50-document RAG latency test for CLI140e.3.14 (Real /cskh_query)")
+    print(
+        "🚀 Starting 50-document RAG latency test for CLI140e.3.14 (Real /cskh_query)"
+    )
     print("=" * 70)
 
     # Test configuration
@@ -506,17 +548,24 @@ async def main():
 
     try:
         # Step 1: Test with real /cskh_query endpoint
-        print(f"\n⚡ Testing RAG query latency with real /cskh_query (target: <{TARGET_LATENCY}s)...")
+        print(
+            f"\n⚡ Testing RAG query latency with real /cskh_query (target: <{TARGET_LATENCY}s)..."
+        )
         print("📡 Using endpoint: /cskh_query with JWT authentication")
 
         # Start with 10 documents to confirm stability
         print("\n🔍 Phase 1: Testing with 10 queries for stability...")
         phase1_queries = test_queries[:10]
-        latency_results = await test_rag_query_latency_real(phase1_queries, TARGET_LATENCY)
+        latency_results = await test_rag_query_latency_real(
+            phase1_queries, TARGET_LATENCY
+        )
 
         # Check if we should continue with full test
         if latency_results["queries_tested"] > 0:
-            success_rate = (latency_results["queries_under_target"] / latency_results["queries_tested"]) * 100
+            success_rate = (
+                latency_results["queries_under_target"]
+                / latency_results["queries_tested"]
+            ) * 100
             print(
                 f"✅ Phase 1 complete: {success_rate:.1f}% success rate, avg latency: {latency_results['average_latency']}s"
             )
@@ -524,27 +573,39 @@ async def main():
             if success_rate > 0 or latency_results.get("auth_token_used", False):
                 # Continue with full test
                 print(f"\n🚀 Phase 2: Testing with all {len(test_queries)} queries...")
-                latency_results = await test_rag_query_latency_real(test_queries, TARGET_LATENCY)
+                latency_results = await test_rag_query_latency_real(
+                    test_queries, TARGET_LATENCY
+                )
             else:
                 print("\n⚠️  Phase 1 failed, falling back to mocked test...")
                 setup_mocked_environment()
-                latency_results = await test_rag_query_latency_mock(test_queries, TARGET_LATENCY)
+                latency_results = await test_rag_query_latency_mock(
+                    test_queries, TARGET_LATENCY
+                )
         else:
             print("\n⚠️  Real endpoint failed, falling back to mocked test...")
             setup_mocked_environment()
-            latency_results = await test_rag_query_latency_mock(test_queries, TARGET_LATENCY)
+            latency_results = await test_rag_query_latency_mock(
+                test_queries, TARGET_LATENCY
+            )
 
         # Step 2: Display results
         print("\n📊 LATENCY TEST RESULTS - CLI140e.3.14")
         print("=" * 50)
         print("Endpoint used: /cskh_query")
-        print(f"Authentication: {'✅ JWT Token' if latency_results.get('auth_token_used') else '❌ No Auth'}")
+        print(
+            f"Authentication: {'✅ JWT Token' if latency_results.get('auth_token_used') else '❌ No Auth'}"
+        )
         print(f"Queries tested: {latency_results['queries_tested']}")
         print(f"Average latency: {latency_results['average_latency']}s")
         print(f"Min latency: {latency_results['min_latency']:.3f}s")
         print(f"Max latency: {latency_results['max_latency']:.3f}s")
-        print(f"Success rate: {latency_results['success_rate']}% (under {TARGET_LATENCY}s)")
-        print(f"Target achieved: {'✅ YES' if latency_results['average_latency'] < TARGET_LATENCY else '❌ NO'}")
+        print(
+            f"Success rate: {latency_results['success_rate']}% (under {TARGET_LATENCY}s)"
+        )
+        print(
+            f"Target achieved: {'✅ YES' if latency_results['average_latency'] < TARGET_LATENCY else '❌ NO'}"
+        )
 
         # Outlier analysis (>0.5s)
         outliers = latency_results.get("outliers", [])
@@ -552,7 +613,9 @@ async def main():
         if outliers:
             print("  📈 Outlier details:")
             for outlier in outliers[:5]:  # Show first 5 outliers
-                print(f"    - Query {outlier['query_index'] + 1}: {outlier['latency_seconds']}s - {outlier['query']}")
+                print(
+                    f"    - Query {outlier['query_index'] + 1}: {outlier['latency_seconds']}s - {outlier['query']}"
+                )
 
         # Vector search results summary
         vector_results = latency_results.get("vector_search_results", [])
@@ -572,7 +635,11 @@ async def main():
         print("\n📝 Query Results Summary:")
         for i, result in enumerate(latency_results["results"][:10]):
             status_icon = "✅" if result.get("under_target") else "❌"
-            latency_str = f"{result['latency_seconds']}s" if result["latency_seconds"] else "ERROR"
+            latency_str = (
+                f"{result['latency_seconds']}s"
+                if result["latency_seconds"]
+                else "ERROR"
+            )
             status_str = result.get("status", "unknown")
             print(
                 f"  {status_icon} Query {result['query_index'] + 1}: {latency_str} ({status_str}) - {result['query']}"
@@ -582,11 +649,17 @@ async def main():
             print("  ... (showing first 10 results)")
 
         # Outlier analysis
-        outliers = [r for r in latency_results["results"] if r.get("latency_seconds", 0) > TARGET_LATENCY * 2]
+        outliers = [
+            r
+            for r in latency_results["results"]
+            if r.get("latency_seconds", 0) > TARGET_LATENCY * 2
+        ]
         if outliers:
             print(f"\n⚠️  Outliers (>{TARGET_LATENCY * 2}s): {len(outliers)} queries")
             for outlier in outliers[:3]:
-                print(f"    - Query {outlier['query_index'] + 1}: {outlier['latency_seconds']}s")
+                print(
+                    f"    - Query {outlier['query_index'] + 1}: {outlier['latency_seconds']}s"
+                )
 
         # Save results to log file
         log_data = {
@@ -595,14 +668,20 @@ async def main():
             "endpoint": "/cskh_query",
             "target_latency": TARGET_LATENCY,
             "latency_results": latency_results,
-            "test_mode": ("real_workload" if latency_results.get("auth_token_used") else "mocked_fallback"),
+            "test_mode": (
+                "real_workload"
+                if latency_results.get("auth_token_used")
+                else "mocked_fallback"
+            ),
             "outlier_analysis": {
                 "threshold_seconds": 0.5,
                 "outliers_count": len(latency_results.get("outliers", [])),
                 "outliers_details": latency_results.get("outliers", []),
             },
             "vector_search_analysis": {
-                "results_captured": len(latency_results.get("vector_search_results", [])),
+                "results_captured": len(
+                    latency_results.get("vector_search_results", [])
+                ),
                 "sample_results": latency_results.get("vector_search_results", [])[:3],
             },
         }

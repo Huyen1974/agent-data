@@ -1,26 +1,22 @@
-
 """
 CLI140f Performance Tests
 Tests for document ingestion and Qdrant vectorization performance optimization.
 Target: <0.3s per call, <5s for 100 docs batch processing.
 """
 
-import pytest
-import time
 import logging
+import time
 from unittest.mock import AsyncMock, patch
+
+import pytest
 
 # Test imports
 from ADK.agent_data.tools.document_ingestion_tool import (
     DocumentIngestionTool,
-    ingest_document,
-    batch_ingest_documents,
-    get_document_ingestion_tool
+    get_document_ingestion_tool,
 )
 from ADK.agent_data.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
-    qdrant_vectorize_document,
-    qdrant_batch_vectorize_documents
 )
 
 logger = logging.getLogger(__name__)
@@ -37,7 +33,7 @@ class TestCLI140fPerformance:
         mock_manager.get_metadata.return_value = {
             "doc_id": "test_doc",
             "status": "ingested",
-            "version": 1
+            "version": 1,
         }
         return mock_manager
 
@@ -48,13 +44,13 @@ class TestCLI140fPerformance:
         mock_store.upsert_vector.return_value = {
             "success": True,
             "vector_id": "test_doc",
-            "status": "upserted"
+            "status": "upserted",
         }
         mock_store.semantic_search.return_value = {
             "results": [
                 {
                     "metadata": {"doc_id": "test_doc", "content": "Test content"},
-                    "score": 0.85
+                    "score": 0.85,
                 }
             ]
         }
@@ -63,11 +59,13 @@ class TestCLI140fPerformance:
     @pytest.fixture
     def mock_openai_embedding(self):
         """Mock OpenAI embedding generation."""
+
         def mock_embedding(*args, **kwargs):
             return {
                 "embedding": [0.1] * 1536,  # Standard OpenAI embedding dimension
-                "model": "text-embedding-ada-002"
+                "model": "text-embedding-ada-002",
             }
+
         return mock_embedding
 
     @pytest.mark.asyncio
@@ -79,45 +77,49 @@ class TestCLI140fPerformance:
         """
         # Initialize tool with mocks
         ingestion_tool = DocumentIngestionTool()
-        
+
         # Mock the initialization and firestore manager
-        with patch.object(ingestion_tool, '_ensure_initialized', AsyncMock()), \
-             patch.object(ingestion_tool, 'firestore_manager', mock_firestore_manager), \
-             patch('ADK.agent_data.tools.document_ingestion_tool.settings') as mock_settings:
-            
+        with (
+            patch.object(ingestion_tool, "_ensure_initialized", AsyncMock()),
+            patch.object(ingestion_tool, "firestore_manager", mock_firestore_manager),
+            patch(
+                "ADK.agent_data.tools.document_ingestion_tool.settings"
+            ) as mock_settings,
+        ):
+
             # Mock settings
             mock_settings.get_firestore_config.return_value = {
                 "project_id": "test_project",
-                "metadata_collection": "test_collection"
+                "metadata_collection": "test_collection",
             }
-            
+
             # Set initialized flag
             ingestion_tool._initialized = True
-            
+
             start_time = time.time()
-            
+
             result = await ingestion_tool.ingest_document(
                 doc_id="cli140f_test_doc_1",
-                content="This is a test document for CLI140f performance optimization. " * 50,
+                content="This is a test document for CLI140f performance optimization. "
+                * 50,
                 metadata={"test": True, "cli": "140f"},
-                save_to_disk=False  # Skip disk I/O for pure performance test
+                save_to_disk=False,  # Skip disk I/O for pure performance test
             )
-            
+
             end_time = time.time()
             latency = end_time - start_time
-            
+
             # Assertions
             assert result["status"] in ["success", "partial"]
             assert result["doc_id"] == "cli140f_test_doc_1"
-            assert latency < 0.3, f"Document ingestion latency {latency:.3f}s exceeds target 0.3s"
+            assert (
+                latency < 0.3
+            ), f"Document ingestion latency {latency:.3f}s exceeds target 0.3s"
             assert result["performance_target_met"] is True
-            
+
             logger.info(f"Document Ingestion Latency: {latency:.3f}s")
-            
-            return {
-                "latency": latency,
-                "result": result
-            }
+
+            return {"latency": latency, "result": result}
 
     @pytest.mark.asyncio
     @pytest.mark.performance
@@ -130,41 +132,47 @@ class TestCLI140fPerformance:
         """
         # Initialize tool with mocks
         vectorization_tool = QdrantVectorizationTool()
-        
-        with patch.object(vectorization_tool, 'qdrant_store', mock_qdrant_store), \
-             patch.object(vectorization_tool, 'firestore_manager', mock_firestore_manager), \
-             patch.object(vectorization_tool, '_ensure_initialized', AsyncMock()), \
-             patch('ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding', 
-                   AsyncMock(return_value=mock_openai_embedding())):
-            
+
+        with (
+            patch.object(vectorization_tool, "qdrant_store", mock_qdrant_store),
+            patch.object(
+                vectorization_tool, "firestore_manager", mock_firestore_manager
+            ),
+            patch.object(vectorization_tool, "_ensure_initialized", AsyncMock()),
+            patch(
+                "ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding",
+                AsyncMock(return_value=mock_openai_embedding()),
+            ),
+        ):
+
             # Set initialized flag
             vectorization_tool._initialized = True
-            
+
             start_time = time.time()
-            
+
             result = await vectorization_tool.vectorize_document(
                 doc_id="cli140f_vector_test_1",
-                content="This is a test document for CLI140f vectorization performance optimization. " * 50,
+                content="This is a test document for CLI140f vectorization performance optimization. "
+                * 50,
                 metadata={"test": True, "cli": "140f"},
-                enable_auto_tagging=False  # Disable for pure performance test
+                enable_auto_tagging=False,  # Disable for pure performance test
             )
-            
+
             end_time = time.time()
             latency = end_time - start_time
-            
+
             # Assertions
             assert result["status"] == "success"
             assert result["doc_id"] == "cli140f_vector_test_1"
-            assert latency < 0.3, f"Vectorization latency {latency:.3f}s exceeds target 0.3s"
+            assert (
+                latency < 0.3
+            ), f"Vectorization latency {latency:.3f}s exceeds target 0.3s"
             assert result["performance_target_met"] is True
             assert "embedding_dimension" in result
-            
+
             logger.info(f"Vectorization Latency: {latency:.3f}s")
-            
-            return {
-                "latency": latency,
-                "result": result
-            }
+
+            return {"latency": latency, "result": result}
 
     @pytest.mark.asyncio
     @pytest.mark.performance
@@ -178,77 +186,90 @@ class TestCLI140fPerformance:
         # Initialize tools
         ingestion_tool = DocumentIngestionTool()
         vectorization_tool = QdrantVectorizationTool()
-        
+
         # Create test documents (30 docs for reasonable test time)
         test_documents = [
             {
                 "doc_id": f"cli140f_batch_doc_{i}",
-                "content": f"This is test document {i} for CLI140f batch performance optimization. " * 20,
-                "metadata": {"test": True, "cli": "140f", "batch_index": i}
+                "content": f"This is test document {i} for CLI140f batch performance optimization. "
+                * 20,
+                "metadata": {"test": True, "cli": "140f", "batch_index": i},
             }
             for i in range(30)
         ]
-        
-        with patch.object(ingestion_tool, '_ensure_initialized', AsyncMock()), \
-             patch.object(ingestion_tool, 'firestore_manager', mock_firestore_manager), \
-             patch.object(vectorization_tool, 'qdrant_store', mock_qdrant_store), \
-             patch.object(vectorization_tool, 'firestore_manager', mock_firestore_manager), \
-             patch.object(vectorization_tool, '_ensure_initialized', AsyncMock()), \
-             patch('ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding', 
-                   AsyncMock(return_value=mock_openai_embedding())), \
-             patch('ADK.agent_data.tools.document_ingestion_tool.settings') as mock_settings:
-            
+
+        with (
+            patch.object(ingestion_tool, "_ensure_initialized", AsyncMock()),
+            patch.object(ingestion_tool, "firestore_manager", mock_firestore_manager),
+            patch.object(vectorization_tool, "qdrant_store", mock_qdrant_store),
+            patch.object(
+                vectorization_tool, "firestore_manager", mock_firestore_manager
+            ),
+            patch.object(vectorization_tool, "_ensure_initialized", AsyncMock()),
+            patch(
+                "ADK.agent_data.tools.qdrant_vectorization_tool.get_openai_embedding",
+                AsyncMock(return_value=mock_openai_embedding()),
+            ),
+            patch(
+                "ADK.agent_data.tools.document_ingestion_tool.settings"
+            ) as mock_settings,
+        ):
+
             # Mock settings
             mock_settings.get_firestore_config.return_value = {
                 "project_id": "test_project",
-                "metadata_collection": "test_collection"
+                "metadata_collection": "test_collection",
             }
-            
+
             # Set initialized flags
             ingestion_tool._initialized = True
             vectorization_tool._initialized = True
-            
+
             # Test batch ingestion
             start_time = time.time()
             ingestion_result = await ingestion_tool.batch_ingest_documents(
-                documents=test_documents,
-                save_to_disk=False
+                documents=test_documents, save_to_disk=False
             )
             ingestion_time = time.time() - start_time
-            
+
             # Test batch vectorization
             start_time = time.time()
             vectorization_result = await vectorization_tool.batch_vectorize_documents(
-                documents=test_documents,
-                update_firestore=True
+                documents=test_documents, update_firestore=True
             )
             vectorization_time = time.time() - start_time
-        
+
         # Assertions for ingestion
         assert ingestion_result["status"] == "completed"
         assert ingestion_result["successful"] > 0
-        assert ingestion_time < 1.5, f"Batch ingestion {ingestion_time:.3f}s exceeds scaled target 1.5s"
-        
+        assert (
+            ingestion_time < 1.5
+        ), f"Batch ingestion {ingestion_time:.3f}s exceeds scaled target 1.5s"
+
         # Assertions for vectorization
         assert vectorization_result["status"] == "completed"
         assert vectorization_result["successful"] > 0
-        assert vectorization_time < 1.5, f"Batch vectorization {vectorization_time:.3f}s exceeds scaled target 1.5s"
-        
+        assert (
+            vectorization_time < 1.5
+        ), f"Batch vectorization {vectorization_time:.3f}s exceeds scaled target 1.5s"
+
         # Performance metrics
         total_time = ingestion_time + vectorization_time
         avg_time_per_doc = total_time / len(test_documents)
-        
-        logger.info(f"Batch Performance - Ingestion: {ingestion_time:.3f}s, Vectorization: {vectorization_time:.3f}s")
+
+        logger.info(
+            f"Batch Performance - Ingestion: {ingestion_time:.3f}s, Vectorization: {vectorization_time:.3f}s"
+        )
         logger.info(f"Total: {total_time:.3f}s for {len(test_documents)} documents")
         logger.info(f"Average per document: {avg_time_per_doc:.3f}s")
-        
+
         return {
             "ingestion_time": ingestion_time,
             "vectorization_time": vectorization_time,
             "total_time": total_time,
             "avg_time_per_doc": avg_time_per_doc,
             "ingestion_result": ingestion_result,
-            "vectorization_result": vectorization_result
+            "vectorization_result": vectorization_result,
         }
 
     @pytest.mark.performance
@@ -256,11 +277,11 @@ class TestCLI140fPerformance:
     def test_document_ingestion_tool_performance_metrics(self):
         """Test performance metrics tracking in DocumentIngestionTool."""
         tool = get_document_ingestion_tool()
-        
+
         # Reset metrics
         tool.reset_performance_metrics()
         initial_metrics = tool.get_performance_metrics()
-        
+
         assert initial_metrics["total_calls"] == 0
         assert initial_metrics["total_time"] == 0.0
         assert initial_metrics["avg_latency"] == 0.0
@@ -278,7 +299,7 @@ class TestCLI140fPerformance:
             "single_document_vectorization": {"target": 0.3, "unit": "seconds"},
             "batch_100_documents": {"target": 5.0, "unit": "seconds"},
         }
-        
+
         optimizations_implemented = [
             "Parallel task execution in document ingestion",
             "Concurrent batch processing with optimized batch sizes (10 docs/batch)",
@@ -288,18 +309,18 @@ class TestCLI140fPerformance:
             "Reduced retry attempts (2 retries vs 3) with faster backoff",
             "Disabled auto-tagging in batch operations for speed",
             "Thread pool for disk I/O operations",
-            "Optimized error handling and logging"
+            "Optimized error handling and logging",
         ]
-        
+
         logger.info("CLI140f Performance Optimization Summary:")
         logger.info("Performance Targets:")
         for target, specs in performance_targets.items():
             logger.info(f"  - {target}: <{specs['target']} {specs['unit']}")
-        
+
         logger.info("Optimizations Implemented:")
         for optimization in optimizations_implemented:
             logger.info(f"  - {optimization}")
-        
+
         # This test always passes - it's for documentation
         assert len(performance_targets) == 3
-        assert len(optimizations_implemented) == 9 
+        assert len(optimizations_implemented) == 9

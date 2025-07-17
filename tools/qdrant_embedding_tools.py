@@ -1,12 +1,16 @@
 """Qdrant-based embedding tools for semantic search and analysis."""
 
-import logging
 import asyncio
-from typing import Dict, List, Optional, Any
+import logging
+from typing import Any
 
 from ..config.settings import settings
 from ..vector_store.qdrant_store import QdrantStore
-from .external_tool_registry import get_openai_embedding, openai_client, OPENAI_AVAILABLE
+from .external_tool_registry import (
+    OPENAI_AVAILABLE,
+    get_openai_embedding,
+    openai_client,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +27,11 @@ def get_qdrant_store() -> QdrantStore:
 
 
 async def qdrant_generate_and_store_embedding(
-    vector_id: str, text: str, metadata: Optional[Dict[str, Any]] = None, tag: Optional[str] = None
-) -> Dict[str, Any]:
+    vector_id: str,
+    text: str,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
+) -> dict[str, Any]:
     """
     Generate embedding for text and store in Qdrant.
 
@@ -38,16 +45,23 @@ async def qdrant_generate_and_store_embedding(
         Result dictionary with operation status
     """
     if not openai_client or not OPENAI_AVAILABLE:
-        return {"status": "failed", "error": "OpenAI client not available for embedding generation"}
+        return {
+            "status": "failed",
+            "error": "OpenAI client not available for embedding generation",
+        }
 
     try:
         # Generate embedding using OpenAI
         # Note: get_openai_embedding might not be async, so handle both cases
         try:
             if asyncio.iscoroutinefunction(get_openai_embedding):
-                embedding_result = await get_openai_embedding(agent_context=None, text_to_embed=text)
+                embedding_result = await get_openai_embedding(
+                    agent_context=None, text_to_embed=text
+                )
             else:
-                embedding_result = get_openai_embedding(agent_context=None, text_to_embed=text)
+                embedding_result = get_openai_embedding(
+                    agent_context=None, text_to_embed=text
+                )
         except TypeError:
             # Try without agent_context if the function doesn't accept it
             if asyncio.iscoroutinefunction(get_openai_embedding):
@@ -71,7 +85,9 @@ async def qdrant_generate_and_store_embedding(
 
         # Store in Qdrant
         store = get_qdrant_store()
-        result = await store.upsert_vector(vector_id=vector_id, vector=embedding, metadata=metadata, tag=tag)
+        result = await store.upsert_vector(
+            vector_id=vector_id, vector=embedding, metadata=metadata, tag=tag
+        )
 
         return {
             "status": "success" if result.get("success") else "failed",
@@ -87,8 +103,8 @@ async def qdrant_generate_and_store_embedding(
 
 
 async def qdrant_semantic_search(
-    query_text: str, tag: Optional[str] = None, limit: int = 10, threshold: float = 0.5
-) -> Dict[str, Any]:
+    query_text: str, tag: str | None = None, limit: int = 10, threshold: float = 0.5
+) -> dict[str, Any]:
     """
     Perform semantic search using Qdrant with OpenAI embeddings.
 
@@ -102,15 +118,22 @@ async def qdrant_semantic_search(
         Dictionary with search results
     """
     if not openai_client or not OPENAI_AVAILABLE:
-        return {"status": "failed", "error": "OpenAI client not available for embedding generation"}
+        return {
+            "status": "failed",
+            "error": "OpenAI client not available for embedding generation",
+        }
 
     try:
         # Generate query embedding
         try:
             if asyncio.iscoroutinefunction(get_openai_embedding):
-                embedding_result = await get_openai_embedding(agent_context=None, text_to_embed=query_text)
+                embedding_result = await get_openai_embedding(
+                    agent_context=None, text_to_embed=query_text
+                )
             else:
-                embedding_result = get_openai_embedding(agent_context=None, text_to_embed=query_text)
+                embedding_result = get_openai_embedding(
+                    agent_context=None, text_to_embed=query_text
+                )
         except TypeError:
             # Try without agent_context if the function doesn't accept it
             if asyncio.iscoroutinefunction(get_openai_embedding):
@@ -170,8 +193,10 @@ async def qdrant_semantic_search(
 
 
 async def qdrant_batch_generate_embeddings(
-    texts: List[str], tag: Optional[str] = None, metadata_list: Optional[List[Dict[str, Any]]] = None
-) -> Dict[str, Any]:
+    texts: list[str],
+    tag: str | None = None,
+    metadata_list: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     """
     Generate embeddings for multiple texts and store in Qdrant.
 
@@ -184,10 +209,16 @@ async def qdrant_batch_generate_embeddings(
         Result dictionary with batch operation status
     """
     if not openai_client or not OPENAI_AVAILABLE:
-        return {"status": "failed", "error": "OpenAI client not available for embedding generation"}
+        return {
+            "status": "failed",
+            "error": "OpenAI client not available for embedding generation",
+        }
 
     if metadata_list and len(metadata_list) != len(texts):
-        return {"status": "failed", "error": "metadata_list length must match texts length"}
+        return {
+            "status": "failed",
+            "error": "metadata_list length must match texts length",
+        }
 
     try:
         results = []
@@ -205,7 +236,9 @@ async def qdrant_batch_generate_embeddings(
                 vector_id=vector_id, text=text, metadata=metadata, tag=tag
             )
 
-            results.append({"index": i, "vector_id": vector_id, "text": text, "result": result})
+            results.append(
+                {"index": i, "vector_id": vector_id, "text": text, "result": result}
+            )
 
         successful = sum(1 for r in results if r["result"]["status"] == "success")
         failed = len(results) - successful
@@ -224,8 +257,8 @@ async def qdrant_batch_generate_embeddings(
 
 
 async def qdrant_similarity_search_by_id(
-    vector_id: str, limit: int = 10, threshold: float = 0.5, tag: Optional[str] = None
-) -> Dict[str, Any]:
+    vector_id: str, limit: int = 10, threshold: float = 0.5, tag: str | None = None
+) -> dict[str, Any]:
     """
     Find vectors similar to an existing vector by its ID.
 
@@ -249,16 +282,21 @@ async def qdrant_similarity_search_by_id(
 
     except Exception as e:
         logger.error(f"Failed to perform similarity search for vector {vector_id}: {e}")
-        return {"status": "failed", "error": str(e), "vector_id": vector_id, "results": []}
+        return {
+            "status": "failed",
+            "error": str(e),
+            "vector_id": vector_id,
+            "results": [],
+        }
 
 
 # Compatibility aliases for FAISS replacement
 async def semantic_search_qdrant(
     query_text: str,
-    index_name: Optional[str] = None,  # Ignored, using default collection
+    index_name: str | None = None,  # Ignored, using default collection
     threshold: float = 0.5,
     top_n: int = 10,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Compatibility wrapper for FAISS semantic_search_cosine replacement.
 
@@ -271,14 +309,21 @@ async def semantic_search_qdrant(
     Returns:
         Search results in FAISS-compatible format
     """
-    result = await qdrant_semantic_search(query_text=query_text, limit=top_n, threshold=threshold)
+    result = await qdrant_semantic_search(
+        query_text=query_text, limit=top_n, threshold=threshold
+    )
 
     if result["status"] == "success":
         # Convert to FAISS-compatible format
         similar_items = []
         for item in result["results"]:
             similar_items.append(
-                {"key": item["id"], "similarity": item["score"], "content": item["text"], "metadata": item["metadata"]}
+                {
+                    "key": item["id"],
+                    "similarity": item["score"],
+                    "content": item["text"],
+                    "metadata": item["metadata"],
+                }
             )
 
         return {"status": "success", "similar_items": similar_items}

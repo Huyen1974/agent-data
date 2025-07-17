@@ -1,7 +1,6 @@
 import pytest
 
 
-
 @pytest.mark.unit
 def test_query_text_blank_spaces(client):
     payload = {"query_text": "    ", "top_k": 3, "filter_tag": "science"}

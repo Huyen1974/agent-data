@@ -2,7 +2,7 @@ import re
 
 file_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py"
 
-with open(file_path, "r", encoding="utf-8") as f:
+with open(file_path, encoding="utf-8") as f:
     content = f.read()
 
 new_func = """
@@ -121,4 +121,6 @@ content, n = re.subn(pattern, new_func.strip(), content, flags=re.MULTILINE)
 with open(file_path, "w", encoding="utf-8") as f:
     f.write(content)
 
-print(f"Đã thay thế function test_save_malformed_embedding_result (số lần thay thế: {n})")
+print(
+    f"Đã thay thế function test_save_malformed_embedding_result (số lần thay thế: {n})"
+)

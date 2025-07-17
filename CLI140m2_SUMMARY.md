@@ -7,7 +7,7 @@ Increase coverage for main modules (api_mcp_gateway.py, qdrant_vectorization_too
 
 ### Coverage Results
 - **api_mcp_gateway.py**: 76.1% (296/389 lines) - **Need 15 more lines for 80%**
-- **qdrant_vectorization_tool.py**: 54.5% (180/330 lines) - **Need 84 more lines for 80%**  
+- **qdrant_vectorization_tool.py**: 54.5% (180/330 lines) - **Need 84 more lines for 80%**
 - **document_ingestion_tool.py**: 66.7% (132/198 lines) - **Need 26 more lines for 80%**
 - **Overall project coverage**: 24.3% (1352/5567 lines) - **✓ Exceeds 20% target**
 
@@ -34,7 +34,7 @@ Increase coverage for main modules (api_mcp_gateway.py, qdrant_vectorization_too
 - **Issue**: Relative import problems with tools modules
 - **Potential**: Designed to target specific missing coverage areas
 
-### 3. CLI140m2 Additional Tests (Import Issues)  
+### 3. CLI140m2 Additional Tests (Import Issues)
 **File**: `ADK/agent_data/tests/test_cli140m2_additional_coverage.py` (698 lines, 58 tests)
 - **Status**: Not executed due to import issues
 - **Potential**: Comprehensive coverage for remaining gaps
@@ -95,7 +95,7 @@ Increase coverage for main modules (api_mcp_gateway.py, qdrant_vectorization_too
 
 2. **Target api_mcp_gateway.py** (Closest to 80%):
    - Add tests for cache cleanup methods
-   - Test health check and root endpoints  
+   - Test health check and root endpoints
    - Test main function with mocked uvicorn
    - **Estimated effort**: 5-8 additional tests
 
@@ -117,7 +117,7 @@ Increase coverage for main modules (api_mcp_gateway.py, qdrant_vectorization_too
 
 ### Success Metrics
 - **Primary Goal**: api_mcp_gateway.py ≥ 80%
-- **Secondary Goal**: document_ingestion_tool.py ≥ 80%  
+- **Secondary Goal**: document_ingestion_tool.py ≥ 80%
 - **Stretch Goal**: qdrant_vectorization_tool.py ≥ 80%
 - **Maintain**: Overall coverage > 20%
 
@@ -141,4 +141,4 @@ Increase coverage for main modules (api_mcp_gateway.py, qdrant_vectorization_too
 5. Execute ptfast validation
 6. Commit with appropriate CLI140m.2 tag
 
-**Status**: Infrastructure complete, ready for targeted coverage improvements 
+**Status**: Infrastructure complete, ready for targeted coverage improvements

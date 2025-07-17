@@ -1,14 +1,14 @@
-
 """
 Test suite for CLI140: CSKH Agent API and RAG performance optimization.
 
 Tests the new /cskh_query endpoint with caching, metrics, and performance validation.
 """
 
-import pytest
 import asyncio
 import time
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 from fastapi.testclient import TestClient
 
 from src.agent_data_manager.api_mcp_gateway import app
@@ -18,7 +18,6 @@ from src.agent_data_manager.api_mcp_gateway import app
 #     rag_cache_hits_total,  # Unused import
 #     rag_cache_misses_total,  # Unused import
 # )
-
 
 
 class TestCLI140CSKHRag:
@@ -32,7 +31,10 @@ class TestCLI140CSKHRag:
     @pytest.fixture
     def mock_auth_disabled(self):
         """Mock authentication disabled for testing."""
-        with patch("src.agent_data_manager.config.settings.settings.ENABLE_AUTHENTICATION", False):
+        with patch(
+            "src.agent_data_manager.config.settings.settings.ENABLE_AUTHENTICATION",
+            False,
+        ):
             yield
 
     @pytest.fixture
@@ -65,7 +67,10 @@ class TestCLI140CSKHRag:
                         "doc_id": "cskh_doc_1",
                         "content": "CSKH knowledge base content for customer care",
                         "score": 0.9,
-                        "metadata": {"department": "customer_service", "topic": "billing_inquiry"},
+                        "metadata": {
+                            "department": "customer_service",
+                            "topic": "billing_inquiry",
+                        },
                     }
                 ],
                 "count": 1,
@@ -80,17 +85,23 @@ class TestCLI140CSKHRag:
         return mock_rag_search_func
 
     @pytest.mark.asyncio
-    async def test_cskh_query_endpoint_basic(self, client, mock_auth_disabled, mock_rag_search):
+    async def test_cskh_query_endpoint_basic(
+        self, client, mock_auth_disabled, mock_rag_search
+    ):
         """Test basic CSKH query endpoint functionality."""
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", mock_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                mock_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
@@ -125,17 +136,23 @@ class TestCLI140CSKHRag:
             assert data["cached"] is False
 
     @pytest.mark.asyncio
-    async def test_cskh_query_performance_under_1s(self, client, mock_auth_disabled, mock_rag_search):
+    async def test_cskh_query_performance_under_1s(
+        self, client, mock_auth_disabled, mock_rag_search
+    ):
         """Test that CSKH queries complete under 1 second for performance requirement."""
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", mock_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                mock_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
@@ -162,17 +179,23 @@ class TestCLI140CSKHRag:
             assert data["response_time_ms"] < 1000  # Less than 1000ms
 
     @pytest.mark.asyncio
-    async def test_cskh_query_caching(self, client, mock_auth_disabled, mock_rag_search):
+    async def test_cskh_query_caching(
+        self, client, mock_auth_disabled, mock_rag_search
+    ):
         """Test RAG caching functionality for performance optimization."""
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", mock_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                mock_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
@@ -214,22 +237,29 @@ class TestCLI140CSKHRag:
                 "results": [],
             }
 
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", failing_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                failing_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_auth.validate_user_access.return_value = True
             mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
 
-            payload = {"query_text": "Error test query", "customer_context": {"customer_id": "ERROR_TEST"}}
+            payload = {
+                "query_text": "Error test query",
+                "customer_context": {"customer_id": "ERROR_TEST"},
+            }
 
             response = client.post("/cskh_query", json=payload)
 
@@ -252,22 +282,29 @@ class TestCLI140CSKHRag:
             await asyncio.sleep(15)  # Longer than 10s timeout
             return {"status": "success", "results": []}
 
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", timeout_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                timeout_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_auth.validate_user_access.return_value = True
             mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
 
-            payload = {"query_text": "Timeout test query", "customer_context": {"customer_id": "TIMEOUT_TEST"}}
+            payload = {
+                "query_text": "Timeout test query",
+                "customer_context": {"customer_id": "TIMEOUT_TEST"},
+            }
 
             response = client.post("/cskh_query", json=payload)
 
@@ -281,9 +318,11 @@ class TestCLI140CSKHRag:
     @pytest.mark.unit
     def test_cskh_query_validation(self, client, mock_auth_disabled):
         """Test CSKH query input validation."""
-        with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+        with (
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
@@ -300,36 +339,51 @@ class TestCLI140CSKHRag:
             assert response.status_code == 422  # Validation error
 
             # Test invalid score_threshold
-            payload = {"query_text": "Validation test", "score_threshold": 1.5}  # Invalid: > 1.0
+            payload = {
+                "query_text": "Validation test",
+                "score_threshold": 1.5,
+            }  # Invalid: > 1.0
 
             response = client.post("/cskh_query", json=payload)
             assert response.status_code == 422
 
     @pytest.mark.asyncio
-    async def test_cskh_query_metrics_recording(self, client, mock_auth_disabled, mock_rag_search):
+    async def test_cskh_query_metrics_recording(
+        self, client, mock_auth_disabled, mock_rag_search
+    ):
         """Test that CSKH query metrics are properly recorded."""
-        with patch("src.agent_data_manager.api_mcp_gateway.qdrant_rag_search", mock_rag_search), patch(
-            "src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()
-        ), patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()), patch(
-            "src.agent_data_manager.api_mcp_gateway.settings"
-        ) as mock_settings, patch(
-            "src.agent_data_manager.api_mcp_gateway.auth_manager"
-        ) as mock_auth, patch(
-            "src.agent_data_manager.api_mcp_gateway.limiter"
-        ) as mock_limiter, patch(
-            "src.agent_data_manager.api_mcp_gateway.record_cskh_query"
-        ) as mock_record_cskh, patch(
-            "src.agent_data_manager.api_mcp_gateway.record_rag_search"
-        ) as mock_record_rag, patch(
-            "src.agent_data_manager.api_mcp_gateway.record_a2a_api_request"
-        ) as mock_record_api:
+        with (
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.qdrant_rag_search",
+                mock_rag_search,
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", AsyncMock()),
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", MagicMock()
+            ),
+            patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings,
+            patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth,
+            patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter,
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.record_cskh_query"
+            ) as mock_record_cskh,
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.record_rag_search"
+            ) as mock_record_rag,
+            patch(
+                "src.agent_data_manager.api_mcp_gateway.record_a2a_api_request"
+            ) as mock_record_api,
+        ):
 
             # Setup mocks
             mock_settings.ENABLE_AUTHENTICATION = False
             mock_auth.validate_user_access.return_value = True
             mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
 
-            payload = {"query_text": "Metrics test query", "customer_context": {"customer_id": "METRICS_TEST"}}
+            payload = {
+                "query_text": "Metrics test query",
+                "customer_context": {"customer_id": "METRICS_TEST"},
+            }
 
             response = client.post("/cskh_query", json=payload)
 
@@ -359,5 +413,3 @@ class TestCLI140CSKHRag:
         assert "api" in data["endpoints"]
         assert "cskh_query" in data["endpoints"]["api"]
         assert data["endpoints"]["api"]["cskh_query"] == "/cskh_query"
-
-

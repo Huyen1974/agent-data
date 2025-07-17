@@ -1,8 +1,8 @@
 """Test QdrantStore VectorStore interface implementation."""
 
-import pytest
 import numpy as np
-from qdrant_client.http.models import FilterSelector, Filter
+import pytest
+from qdrant_client.http.models import Filter, FilterSelector
 
 from tests.mocks.fake_qdrant_v2 import MockQdrantStore
 
@@ -37,7 +37,10 @@ async def test_points_selector_with_filter(qdrant_store_mock):
     # Add a test vector
     test_vector = [0.1] * 1536
     await qdrant_store_mock.upsert_vector(
-        vector_id="test_id", vector=test_vector, metadata={"category": "test"}, tag="test_tag"
+        vector_id="test_id",
+        vector=test_vector,
+        metadata={"category": "test"},
+        tag="test_tag",
     )
 
     # Delete by tag (should use FilterSelector internally)
@@ -65,7 +68,10 @@ async def test_vector_store_interface_methods(qdrant_store_mock):
     # Test upsert
     test_vector = np.array([0.1] * 1536)
     upsert_result = await qdrant_store_mock.upsert_vector(
-        vector_id="test_vector", vector=test_vector, metadata={"type": "test"}, tag="interface_test"
+        vector_id="test_vector",
+        vector=test_vector,
+        metadata={"type": "test"},
+        tag="interface_test",
     )
     assert upsert_result["success"] is True
 

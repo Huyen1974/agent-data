@@ -17,7 +17,7 @@ import random
 import sys
 import time
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any
 
 # Import prometheus_client for Cloud Monitoring integration
 try:
@@ -130,7 +130,9 @@ class ErrorMetricsHandler(logging.Handler):
         if not ErrorMetricsHandler._metrics_initialized and PROMETHEUS_AVAILABLE:
             try:
                 ErrorMetricsHandler._error_counter = Counter(
-                    "agent_data_errors_total", "Total number of errors in Agent Data system", ["module", "level"]
+                    "agent_data_errors_total",
+                    "Total number of errors in Agent Data system",
+                    ["module", "level"],
                 )
 
                 ErrorMetricsHandler._error_gauge = Gauge(
@@ -169,7 +171,9 @@ class ErrorMetricsHandler(logging.Handler):
 
             # Clean old entries
             cutoff = minute_key - 5  # Keep last 5 minutes
-            self.error_window = {k: v for k, v in self.error_window.items() if k >= cutoff}
+            self.error_window = {
+                k: v for k, v in self.error_window.items() if k >= cutoff
+            }
 
             # Calculate current rate
             current_rate = sum(self.error_window.values()) / len(self.error_window)
@@ -194,7 +198,8 @@ class StructuredLogger:
 
         # Prevent duplicate handlers if logger already configured
         if any(
-            isinstance(h, logging.FileHandler) and getattr(h, "baseFilename", "").endswith(log_file)
+            isinstance(h, logging.FileHandler)
+            and getattr(h, "baseFilename", "").endswith(log_file)
             for h in self.logger.handlers
         ):
             return
@@ -249,7 +254,9 @@ class StructuredLogger:
         """Log critical message with optional context and exception info."""
         self._log(logging.CRITICAL, message, context, exc_info=exc_info)
 
-    def _log(self, level: int, message: str, context: Dict[str, Any], exc_info: bool = False):
+    def _log(
+        self, level: int, message: str, context: dict[str, Any], exc_info: bool = False
+    ):
         """Internal logging method."""
         # Create log record with extra context
         extra = {"extra_fields": context} if context else {}
@@ -264,7 +271,7 @@ class StructuredLogger:
 
 
 # Global logger registry
-_loggers: Dict[str, StructuredLogger] = {}
+_loggers: dict[str, StructuredLogger] = {}
 
 
 def get_logger(name: str, log_file: str = "logs/agent_server.log") -> StructuredLogger:

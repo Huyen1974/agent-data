@@ -1,13 +1,13 @@
 """Session memory manager for Agent Data system using Firestore."""
 
-import uuid
 import asyncio
-from typing import Dict, Optional, Any
+import uuid
 from datetime import datetime, timedelta
+from typing import Any
 
 from ..config.settings import settings
-from ..vector_store.firestore_metadata_manager import FirestoreMetadataManager
 from ..utils.structured_logger import get_logger
+from ..vector_store.firestore_metadata_manager import FirestoreMetadataManager
 
 # Import Firestore for optimistic locking
 try:
@@ -32,7 +32,7 @@ class ConcurrentUpdateError(Exception):
 class SessionManager:
     """Manages session memory using Firestore agent_sessions collection with optimistic locking for concurrent operations."""
 
-    def __init__(self, project_id: Optional[str] = None):
+    def __init__(self, project_id: str | None = None):
         """Initialize the session manager.
 
         Args:
@@ -62,8 +62,10 @@ class SessionManager:
             raise
 
     async def create_session(
-        self, session_id: Optional[str] = None, initial_state: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self,
+        session_id: str | None = None,
+        initial_state: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """
         Create a new session with optional initial state.
 
@@ -95,7 +97,9 @@ class SessionManager:
             # Save to Firestore
             await self.firestore_manager.save_metadata(session_id, session_data)
 
-            logger.info("Created session", session_id=session_id, status="active", version=1)
+            logger.info(
+                "Created session", session_id=session_id, status="active", version=1
+            )
             return {
                 "status": "success",
                 "session_id": session_id,
@@ -107,7 +111,7 @@ class SessionManager:
             logger.error("Failed to create session", error=str(e), exc_info=True)
             return {"status": "failed", "error": str(e)}
 
-    async def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+    async def get_session(self, session_id: str) -> dict[str, Any] | None:
         """
         Retrieve session data by session ID.
 
@@ -133,8 +137,11 @@ class SessionManager:
             return None
 
     async def update_session_state_with_optimistic_locking(
-        self, session_id: str, state_update: Dict[str, Any], expected_version: Optional[int] = None
-    ) -> Dict[str, Any]:
+        self,
+        session_id: str,
+        state_update: dict[str, Any],
+        expected_version: int | None = None,
+    ) -> dict[str, Any]:
         """
         Update session state with optimistic locking to handle concurrent operations.
 
@@ -153,7 +160,10 @@ class SessionManager:
                 # Get existing session with current version
                 existing_session = await self.get_session(session_id)
                 if not existing_session:
-                    return {"status": "failed", "error": f"Session {session_id} not found"}
+                    return {
+                        "status": "failed",
+                        "error": f"Session {session_id} not found",
+                    }
 
                 current_version = existing_session.get("version", 1)
 
@@ -166,9 +176,15 @@ class SessionManager:
                 # Check for stale locks (older than 30 seconds)
                 lock_timestamp = existing_session.get("lock_timestamp")
                 if lock_timestamp:
-                    lock_time = datetime.fromisoformat(lock_timestamp.replace("Z", "+00:00"))
-                    if (datetime.utcnow() - lock_time.replace(tzinfo=None)).total_seconds() > 30:
-                        logger.warning(f"Detected stale lock for session {session_id}, proceeding with update")
+                    lock_time = datetime.fromisoformat(
+                        lock_timestamp.replace("Z", "+00:00")
+                    )
+                    if (
+                        datetime.utcnow() - lock_time.replace(tzinfo=None)
+                    ).total_seconds() > 30:
+                        logger.warning(
+                            f"Detected stale lock for session {session_id}, proceeding with update"
+                        )
 
                 # Merge state updates
                 current_state = existing_session.get("state", {}).copy()
@@ -199,18 +215,27 @@ class SessionManager:
                     # Wait with exponential backoff before retry
                     wait_time = 0.1 * (2**attempt)
                     await asyncio.sleep(wait_time)
-                    logger.warning(f"Concurrent update conflict for session {session_id}, retrying in {wait_time}s")
+                    logger.warning(
+                        f"Concurrent update conflict for session {session_id}, retrying in {wait_time}s"
+                    )
                     continue
                 else:
-                    logger.error(f"Failed to update session state after {self._max_retry_attempts} attempts: {e}")
-                    return {"status": "failed", "error": f"Concurrent update conflict: {str(e)}"}
+                    logger.error(
+                        f"Failed to update session state after {self._max_retry_attempts} attempts: {e}"
+                    )
+                    return {
+                        "status": "failed",
+                        "error": f"Concurrent update conflict: {str(e)}",
+                    }
             except Exception as e:
                 logger.error(f"Failed to update session state {session_id}: {e}")
                 return {"status": "failed", "error": str(e)}
 
         return {"status": "failed", "error": "Max retry attempts exceeded"}
 
-    async def update_session_state(self, session_id: str, state_update: Dict[str, Any]) -> Dict[str, Any]:
+    async def update_session_state(
+        self, session_id: str, state_update: dict[str, Any]
+    ) -> dict[str, Any]:
         """
         Update session state by merging with existing state (backward compatibility method).
 
@@ -221,9 +246,13 @@ class SessionManager:
         Returns:
             Update operation result
         """
-        return await self.update_session_state_with_optimistic_locking(session_id, state_update)
+        return await self.update_session_state_with_optimistic_locking(
+            session_id, state_update
+        )
 
-    async def acquire_session_lock(self, session_id: str, timeout_seconds: int = 30) -> Dict[str, Any]:
+    async def acquire_session_lock(
+        self, session_id: str, timeout_seconds: int = 30
+    ) -> dict[str, Any]:
         """
         Acquire a lock on a session for exclusive access.
 
@@ -244,8 +273,12 @@ class SessionManager:
             # Check if already locked
             lock_timestamp = existing_session.get("lock_timestamp")
             if lock_timestamp:
-                lock_time = datetime.fromisoformat(lock_timestamp.replace("Z", "+00:00"))
-                if (datetime.utcnow() - lock_time.replace(tzinfo=None)).total_seconds() < timeout_seconds:
+                lock_time = datetime.fromisoformat(
+                    lock_timestamp.replace("Z", "+00:00")
+                )
+                if (
+                    datetime.utcnow() - lock_time.replace(tzinfo=None)
+                ).total_seconds() < timeout_seconds:
                     return {"status": "failed", "error": "Session is already locked"}
 
             # Acquire lock
@@ -256,13 +289,17 @@ class SessionManager:
             await self.firestore_manager.save_metadata(session_id, updated_data)
 
             logger.debug(f"Acquired lock for session: {session_id}")
-            return {"status": "success", "session_id": session_id, "lock_acquired_at": updated_data["lock_timestamp"]}
+            return {
+                "status": "success",
+                "session_id": session_id,
+                "lock_acquired_at": updated_data["lock_timestamp"],
+            }
 
         except Exception as e:
             logger.error(f"Failed to acquire lock for session {session_id}: {e}")
             return {"status": "failed", "error": str(e)}
 
-    async def release_session_lock(self, session_id: str) -> Dict[str, Any]:
+    async def release_session_lock(self, session_id: str) -> dict[str, Any]:
         """
         Release a lock on a session.
 
@@ -287,13 +324,17 @@ class SessionManager:
             await self.firestore_manager.save_metadata(session_id, updated_data)
 
             logger.debug(f"Released lock for session: {session_id}")
-            return {"status": "success", "session_id": session_id, "lock_released_at": updated_data["updated_at"]}
+            return {
+                "status": "success",
+                "session_id": session_id,
+                "lock_released_at": updated_data["updated_at"],
+            }
 
         except Exception as e:
             logger.error(f"Failed to release lock for session {session_id}: {e}")
             return {"status": "failed", "error": str(e)}
 
-    async def delete_session(self, session_id: str) -> Dict[str, Any]:
+    async def delete_session(self, session_id: str) -> dict[str, Any]:
         """
         Delete a session from Firestore.
 
@@ -314,7 +355,7 @@ class SessionManager:
             logger.error(f"Failed to delete session {session_id}: {e}")
             return {"status": "failed", "error": str(e)}
 
-    async def list_sessions(self, limit: int = 50) -> Dict[str, Any]:
+    async def list_sessions(self, limit: int = 50) -> dict[str, Any]:
         """
         List all sessions with optional limit.
 
@@ -343,7 +384,7 @@ class SessionManager:
             logger.error(f"Failed to list sessions: {e}")
             return {"status": "failed", "error": str(e)}
 
-    async def clear_expired_sessions(self, max_age_hours: int = 24) -> Dict[str, Any]:
+    async def clear_expired_sessions(self, max_age_hours: int = 24) -> dict[str, Any]:
         """
         Clear sessions older than specified hours.
 
@@ -360,11 +401,15 @@ class SessionManager:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             cutoff_iso = cutoff_time.isoformat()
 
-            logger.info(f"Starting expired session cleanup (max_age: {max_age_hours}h, cutoff: {cutoff_iso})")
+            logger.info(
+                f"Starting expired session cleanup (max_age: {max_age_hours}h, cutoff: {cutoff_iso})"
+            )
 
             # Query for expired sessions using the new timestamp query method
-            expired_sessions = await self.firestore_manager.query_documents_by_timestamp(
-                field_name="updated_at", before_timestamp=cutoff_iso
+            expired_sessions = (
+                await self.firestore_manager.query_documents_by_timestamp(
+                    field_name="updated_at", before_timestamp=cutoff_iso
+                )
             )
 
             if not expired_sessions:
@@ -378,7 +423,11 @@ class SessionManager:
                 }
 
             # Extract document IDs for deletion
-            doc_ids_to_delete = [session.get("_doc_id") for session in expired_sessions if session.get("_doc_id")]
+            doc_ids_to_delete = [
+                session.get("_doc_id")
+                for session in expired_sessions
+                if session.get("_doc_id")
+            ]
 
             if not doc_ids_to_delete:
                 logger.warning("Found expired sessions but no valid document IDs")
@@ -391,12 +440,16 @@ class SessionManager:
                 }
 
             # Delete expired sessions
-            delete_result = await self.firestore_manager.delete_documents_by_ids(doc_ids_to_delete)
+            delete_result = await self.firestore_manager.delete_documents_by_ids(
+                doc_ids_to_delete
+            )
 
             deleted_count = delete_result.get("deleted_count", 0)
             error_count = delete_result.get("error_count", 0)
 
-            logger.info(f"Expired session cleanup completed. Deleted: {deleted_count}, Errors: {error_count}")
+            logger.info(
+                f"Expired session cleanup completed. Deleted: {deleted_count}, Errors: {error_count}"
+            )
 
             return {
                 "status": "success",
@@ -413,10 +466,10 @@ class SessionManager:
 
 
 # Global session manager instance
-_session_manager: Optional[SessionManager] = None
+_session_manager: SessionManager | None = None
 
 
-def get_session_manager(project_id: Optional[str] = None) -> SessionManager:
+def get_session_manager(project_id: str | None = None) -> SessionManager:
     """
     Get or create the global session manager instance.
 

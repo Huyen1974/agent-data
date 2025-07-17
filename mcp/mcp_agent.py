@@ -1,11 +1,8 @@
-import sys
-import os
-import json
 import logging
+import os
+import sys
 import time
-from typing import Optional, List, Dict, Any, Union
-import traceback  # Added for detailed error logging
-import argparse  # Added for pipe argument
+
 from .mcp_agent_core import MCPAgent
 
 # --- Path Setup ---
@@ -17,7 +14,9 @@ if project_root not in sys.path:
 
 # --- Logging Setup (Direct to stderr) ---
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-logging.basicConfig(level=logging.INFO, format=LOG_FORMAT, stream=sys.stderr)  # Configure root logger to use stderr
+logging.basicConfig(
+    level=logging.INFO, format=LOG_FORMAT, stream=sys.stderr
+)  # Configure root logger to use stderr
 logger = logging.getLogger("MCPAgentScript")
 
 
@@ -45,11 +44,15 @@ def process_request(agent: MCPAgent, request_data: dict) -> dict:
     tool_name = request_data.get("tool_name")
     input_data = request_data.get("input_data", {})
     # Use provided id or generate one based on time
-    request_id = request_data.get("id", f"req-{int(time.time()*1000)}")  # Added ms precision
+    request_id = request_data.get(
+        "id", f"req-{int(time.time()*1000)}"
+    )  # Added ms precision
 
     # Create a logger adapter for this request if needed, or just log directly
     local_logger = logging.LoggerAdapter(logger, {"request_id": request_id})
-    local_logger.info(f"Processing request: tool='{tool_name}', input_data={input_data}")
+    local_logger.info(
+        f"Processing request: tool='{tool_name}', input_data={input_data}"
+    )
 
     if not tool_name:
         local_logger.error(f"Missing 'tool_name' in payload: {request_data}")
@@ -61,19 +64,30 @@ def process_request(agent: MCPAgent, request_data: dict) -> dict:
     try:
         # Pass request_id to the agent's run method
         # Ensure the agent.run method is synchronous or handled appropriately if it starts async tasks internally
-        result = agent.run({"tool_name": tool_name, "input_data": input_data}, request_id=request_id)
+        result = agent.run(
+            {"tool_name": tool_name, "input_data": input_data}, request_id=request_id
+        )
         local_logger.info(
             f"Successfully executed tool '{tool_name}'. Result keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}"
         )
         # Ensure the result includes the request_id in its metadata if agent.run doesn't add it
-        if isinstance(result, dict) and "meta" in result and "request_id" not in result["meta"]:
+        if (
+            isinstance(result, dict)
+            and "meta" in result
+            and "request_id" not in result["meta"]
+        ):
             result["meta"]["request_id"] = request_id
         elif isinstance(result, dict) and "meta" not in result:
-            result["meta"] = {"status": "success", "request_id": request_id}  # Add basic meta if missing
+            result["meta"] = {
+                "status": "success",
+                "request_id": request_id,
+            }  # Add basic meta if missing
         return result
     except Exception as e:
         # Log the full traceback for exceptions during tool execution
-        local_logger.error(f"Error executing tool '{tool_name}': {str(e)}", exc_info=True)
+        local_logger.error(
+            f"Error executing tool '{tool_name}': {str(e)}", exc_info=True
+        )
         # Return a structured error response
         return {
             "error": f"Error executing tool '{tool_name}': {str(e)}",

@@ -2,19 +2,22 @@
 Test MCP subprocess integration with mock QdrantStore.
 """
 
-import os
-import json
-import time
-import subprocess
-import pytest
 import asyncio
-from typing import Optional, Dict, Any
+import json
+import os
+import subprocess
+import time
+from typing import Any
+
+import pytest
 
 
 class RetryConfig:
     """Configuration for retry logic with exponential backoff."""
 
-    def __init__(self, max_retries: int = 3, base_delay: float = 1.0, max_delay: float = 8.0):
+    def __init__(
+        self, max_retries: int = 3, base_delay: float = 1.0, max_delay: float = 8.0
+    ):
         self.max_retries = max_retries
         self.base_delay = base_delay
         self.max_delay = max_delay
@@ -27,10 +30,10 @@ class RetryConfig:
 
 async def send_request_with_retry(
     process: subprocess.Popen,
-    request: Dict[str, Any],
+    request: dict[str, Any],
     timeout: float = 45.0,
-    retry_config: Optional[RetryConfig] = None,
-) -> Optional[Dict[str, Any]]:
+    retry_config: RetryConfig | None = None,
+) -> dict[str, Any] | None:
     """
     Send request to MCP server with timeout and retry logic.
 
@@ -68,7 +71,7 @@ async def send_request_with_retry(
             else:
                 last_error = "No valid response received"
 
-        except asyncio.TimeoutError:
+        except TimeoutError:
             last_error = f"Timeout after {timeout}s on attempt {attempt + 1}"
         except Exception as e:
             last_error = f"Unexpected error on attempt {attempt + 1}: {str(e)}"
@@ -76,14 +79,18 @@ async def send_request_with_retry(
         # If this wasn't the last attempt, wait before retrying
         if attempt < retry_config.max_retries:
             delay = retry_config.get_delay(attempt)
-            print(f"Attempt {attempt + 1} failed: {last_error}. Retrying in {delay}s...")
+            print(
+                f"Attempt {attempt + 1} failed: {last_error}. Retrying in {delay}s..."
+            )
             await asyncio.sleep(delay)
 
-    print(f"All {retry_config.max_retries + 1} attempts failed. Last error: {last_error}")
+    print(
+        f"All {retry_config.max_retries + 1} attempts failed. Last error: {last_error}"
+    )
     return None
 
 
-async def _read_response(process: subprocess.Popen) -> Optional[Dict[str, Any]]:
+async def _read_response(process: subprocess.Popen) -> dict[str, Any] | None:
     """Read response from MCP server subprocess."""
     while True:
         if process.poll() is not None:
@@ -102,13 +109,17 @@ async def _read_response(process: subprocess.Popen) -> Optional[Dict[str, Any]]:
 
 class TestMCPIntegration:
 
-    @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.xfail(
+        reason="CLI140m.68: MCP subprocess test requires environment setup"
+    )
     @pytest.mark.unit
     def test_subprocess_single_save(self):
         """Test single save_document call with mock QdrantStore via subprocess."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment
@@ -121,7 +132,12 @@ class TestMCPIntegration:
             from dotenv import load_dotenv
 
             load_dotenv()
-            for key in ["QDRANT_URL", "QDRANT_API_KEY", "OPENAI_API_KEY", "GOOGLE_CLOUD_PROJECT"]:
+            for key in [
+                "QDRANT_URL",
+                "QDRANT_API_KEY",
+                "OPENAI_API_KEY",
+                "GOOGLE_CLOUD_PROJECT",
+            ]:
                 if key in os.environ:
                     env[key] = os.environ[key]
         except ImportError:
@@ -182,12 +198,16 @@ class TestMCPIntegration:
 
             # Verify response
             assert response is not None, "No response received from MCP server"
-            assert "result" in response, f"Expected 'result' in response, got: {response}"
+            assert (
+                "result" in response
+            ), f"Expected 'result' in response, got: {response}"
             assert "error" not in response, f"Unexpected error in response: {response}"
 
             # Verify the result contains success message
             result = response["result"]
-            assert "saved successfully" in result, f"Expected success message in result: {result}"
+            assert (
+                "saved successfully" in result
+            ), f"Expected success message in result: {result}"
             assert "test_subprocess_1" in result, f"Expected doc_id in result: {result}"
 
         finally:
@@ -199,13 +219,17 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.xfail(
+        reason="CLI140m.68: MCP subprocess test requires environment setup"
+    )
     @pytest.mark.unit
     def test_subprocess_medium_scale(self):
         """Test medium-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment
@@ -261,7 +285,9 @@ class TestMCPIntegration:
                     if process.poll() is not None:
                         # Process has terminated
                         stderr_output = process.stderr.read()
-                        pytest.fail(f"MCP server terminated unexpectedly at document {i+1}: {stderr_output}")
+                        pytest.fail(
+                            f"MCP server terminated unexpectedly at document {i+1}: {stderr_output}"
+                        )
 
                     # Try to read a line
                     try:
@@ -301,13 +327,17 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.xfail(
+        reason="CLI140m.68: MCP subprocess test requires environment setup"
+    )
     @pytest.mark.unit
     def test_subprocess_mock_qdrant_environment(self):
         """Test that mock QdrantStore is properly initialized via environment variable."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment with mock enabled
@@ -352,13 +382,17 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.xfail(
+        reason="CLI140m.68: MCP subprocess test requires environment setup"
+    )
     @pytest.mark.unit
     def test_subprocess_small_scale(self):
         """Test small-scale processing with 10 documents using mock QdrantStore."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment
@@ -414,7 +448,9 @@ class TestMCPIntegration:
                     if process.poll() is not None:
                         # Process has terminated
                         stderr_output = process.stderr.read()
-                        pytest.fail(f"MCP server terminated unexpectedly at document {i+1}: {stderr_output}")
+                        pytest.fail(
+                            f"MCP server terminated unexpectedly at document {i+1}: {stderr_output}"
+                        )
 
                     # Try to read a line
                     try:
@@ -454,13 +490,18 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.skipif(not os.getenv("QDRANT_API_KEY"), reason="QDRANT_API_KEY not set, skipping real API tests")
+    @pytest.mark.skipif(
+        not os.getenv("QDRANT_API_KEY"),
+        reason="QDRANT_API_KEY not set, skipping real API tests",
+    )
     @pytest.mark.unit
     def test_subprocess_real_api_calls(self):
         """Test Agent functionalities with real Qdrant API calls - CLI 119D6 Enhanced."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment for REAL API calls
@@ -560,7 +601,9 @@ class TestMCPIntegration:
                 ), f"Real API success rate {success_rate:.2%} is below 75% threshold. Successful: {successful_docs}, Failed: {failed_docs}"
 
                 # Additional validation: ensure we actually tested with real API
-                assert total_docs == num_docs, f"Expected {num_docs} documents, processed {total_docs}"
+                assert (
+                    total_docs == num_docs
+                ), f"Expected {num_docs} documents, processed {total_docs}"
 
                 print(
                     f"✅ CLI 119D6 Enhanced Real API Test PASSED: {success_rate:.1%} success rate ({successful_docs}/{total_docs})"
@@ -578,7 +621,9 @@ class TestMCPIntegration:
             else:
                 # Python 3.6 compatibility
                 loop = asyncio.get_event_loop()
-                successful_docs, failed_docs, success_rate = loop.run_until_complete(run_test())
+                successful_docs, failed_docs, success_rate = loop.run_until_complete(
+                    run_test()
+                )
 
         finally:
             # Clean up subprocess
@@ -589,13 +634,17 @@ class TestMCPIntegration:
                 process.kill()
                 process.wait()
 
-    @pytest.mark.xfail(reason="CLI140m.68: MCP subprocess test requires environment setup")
+    @pytest.mark.xfail(
+        reason="CLI140m.68: MCP subprocess test requires environment setup"
+    )
     @pytest.mark.unit
     def test_timeout_retry_logic(self):
         """Test timeout and retry logic with simulated delays and failures - CLI 119D6."""
         # Virtual environment path
         venv_python = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/bin/python"
-        workspace_path = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        workspace_path = (
+            "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents"
+        )
         mcp_server_path = "ADK/agent_data/local_mcp_server.py"
 
         # Set up environment with mock QdrantStore for controlled testing
@@ -635,7 +684,10 @@ class TestMCPIntegration:
 
                 retry_config = RetryConfig(max_retries=2, base_delay=0.5, max_delay=2.0)
                 response = await send_request_with_retry(
-                    process=process, request=test_doc, timeout=10.0, retry_config=retry_config
+                    process=process,
+                    request=test_doc,
+                    timeout=10.0,
+                    retry_config=retry_config,
                 )
 
                 normal_success = response is not None and "result" in response
@@ -653,7 +705,9 @@ class TestMCPIntegration:
                 }
 
                 # Use very short timeout to test retry logic
-                retry_config_short = RetryConfig(max_retries=3, base_delay=0.2, max_delay=1.0)
+                retry_config_short = RetryConfig(
+                    max_retries=3, base_delay=0.2, max_delay=1.0
+                )
                 response_timeout = await send_request_with_retry(
                     process=process,
                     request=test_doc_timeout,
@@ -661,18 +715,27 @@ class TestMCPIntegration:
                     retry_config=retry_config_short,  # Short timeout
                 )
 
-                timeout_success = response_timeout is not None and "result" in response_timeout
-                print(f"Short timeout with retry: {'✅ PASS' if timeout_success else '❌ FAIL'}")
+                timeout_success = (
+                    response_timeout is not None and "result" in response_timeout
+                )
+                print(
+                    f"Short timeout with retry: {'✅ PASS' if timeout_success else '❌ FAIL'}"
+                )
 
                 # Test 3: Echo test (should always succeed)
                 print("Test 3: Echo test")
-                echo_request = {"tool_name": "echo", "kwargs": {"text_to_echo": "timeout_retry_test"}}
+                echo_request = {
+                    "tool_name": "echo",
+                    "kwargs": {"text_to_echo": "timeout_retry_test"},
+                }
 
                 echo_response = await send_request_with_retry(
                     process=process,
                     request=echo_request,
                     timeout=5.0,
-                    retry_config=RetryConfig(max_retries=1, base_delay=0.1, max_delay=0.5),
+                    retry_config=RetryConfig(
+                        max_retries=1, base_delay=0.1, max_delay=0.5
+                    ),
                 )
 
                 echo_success = echo_response is not None and "result" in echo_response
@@ -683,7 +746,9 @@ class TestMCPIntegration:
                 total_tests = 3
                 success_rate = tests_passed / total_tests
 
-                print(f"Timeout/Retry Logic Test Results: {tests_passed}/{total_tests} passed ({success_rate:.1%})")
+                print(
+                    f"Timeout/Retry Logic Test Results: {tests_passed}/{total_tests} passed ({success_rate:.1%})"
+                )
 
                 # Verify success rate is above 75%
                 assert (
@@ -698,12 +763,18 @@ class TestMCPIntegration:
         try:
             # Run the async test
             if hasattr(asyncio, "run"):
-                tests_passed, total_tests, success_rate = asyncio.run(run_timeout_retry_test())
+                tests_passed, total_tests, success_rate = asyncio.run(
+                    run_timeout_retry_test()
+                )
             else:
                 loop = asyncio.get_event_loop()
-                tests_passed, total_tests, success_rate = loop.run_until_complete(run_timeout_retry_test())
+                tests_passed, total_tests, success_rate = loop.run_until_complete(
+                    run_timeout_retry_test()
+                )
 
-            print(f"✅ CLI 119D6 Timeout/Retry Logic Test PASSED: {success_rate:.1%} success rate")
+            print(
+                f"✅ CLI 119D6 Timeout/Retry Logic Test PASSED: {success_rate:.1%} success rate"
+            )
 
         finally:
             # Clean up subprocess

@@ -1,7 +1,8 @@
 """Base VectorStore interface for Agent Data vector operations."""
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Any, Union
+from typing import Any
+
 import numpy as np
 
 
@@ -12,10 +13,10 @@ class VectorStore(ABC):
     async def upsert_vector(
         self,
         vector_id: str,
-        vector: Union[List[float], np.ndarray],
-        metadata: Optional[Dict[str, Any]] = None,
-        tag: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        vector: list[float] | np.ndarray,
+        metadata: dict[str, Any] | None = None,
+        tag: str | None = None,
+    ) -> dict[str, Any]:
         """
         Upsert (insert or update) a vector with metadata.
 
@@ -34,10 +35,10 @@ class VectorStore(ABC):
     async def query_vectors_by_tag(
         self,
         tag: str,
-        query_vector: Optional[Union[List[float], np.ndarray]] = None,
+        query_vector: list[float] | np.ndarray | None = None,
         limit: int = 10,
         threshold: float = 0.0,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Query vectors by tag with optional similarity search.
 
@@ -53,7 +54,7 @@ class VectorStore(ABC):
         pass
 
     @abstractmethod
-    async def delete_vectors_by_tag(self, tag: str) -> Dict[str, Any]:
+    async def delete_vectors_by_tag(self, tag: str) -> dict[str, Any]:
         """
         Delete all vectors with a specific tag.
 

@@ -1,13 +1,13 @@
-
 #!/usr/bin/env python3
 """
 Test class for CLI140e.3.9 validation
 Validates RAG latency, Cloud Profiler execution, authentication fixes, and coverage improvements
 """
 
-import pytest
 import subprocess
-from unittest.mock import patch, AsyncMock, Mock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
+
+import pytest
 from fastapi.testclient import TestClient
 
 
@@ -26,7 +26,11 @@ class TestCLI140e39Validation:
 
             # Override the get_current_user dependency
             def mock_get_current_user():
-                return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                return {
+                    "user_id": "test_user_123",
+                    "email": "test@example.com",
+                    "scopes": ["read", "write"],
+                }
 
             app.dependency_overrides[get_current_user] = mock_get_current_user
 
@@ -65,13 +69,20 @@ class TestCLI140e39Validation:
 
             # Override the get_current_user dependency
             def mock_get_current_user():
-                return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                return {
+                    "user_id": "test_user_123",
+                    "email": "test@example.com",
+                    "scopes": ["read", "write"],
+                }
 
             app.dependency_overrides[get_current_user] = mock_get_current_user
 
             # Mock services to be unavailable
-            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", None), patch(
-                "src.agent_data_manager.api_mcp_gateway.qdrant_store", None
+            with (
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.vectorization_tool", None
+                ),
+                patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", None),
             ):
 
                 try:
@@ -107,14 +118,18 @@ class TestCLI140e39Validation:
             mock_settings.ALLOW_REGISTRATION = False
 
             # Mock auth services as unavailable
-            with patch("src.agent_data_manager.api_mcp_gateway.user_manager", None), patch(
-                "src.agent_data_manager.api_mcp_gateway.auth_manager", None
+            with (
+                patch("src.agent_data_manager.api_mcp_gateway.user_manager", None),
+                patch("src.agent_data_manager.api_mcp_gateway.auth_manager", None),
             ):
 
                 client = TestClient(app)
 
                 # Test login with services unavailable
-                response = client.post("/auth/login", data={"username": "test@example.com", "password": "test123"})
+                response = client.post(
+                    "/auth/login",
+                    data={"username": "test@example.com", "password": "test123"},
+                )
                 assert response.status_code == 503  # Service unavailable
 
                 print("✅ Authentication paths tested successfully")
@@ -130,7 +145,11 @@ class TestCLI140e39Validation:
 
             # Override the get_current_user dependency
             def mock_get_current_user():
-                return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                return {
+                    "user_id": "test_user_123",
+                    "email": "test@example.com",
+                    "scopes": ["read", "write"],
+                }
 
             app.dependency_overrides[get_current_user] = mock_get_current_user
 
@@ -139,22 +158,40 @@ class TestCLI140e39Validation:
             mock_qdrant_store.semantic_search = AsyncMock(
                 return_value={
                     "results": [
-                        {"doc_id": "test_doc_1", "score": 0.9, "content": "Test content 1"},
-                        {"doc_id": "test_doc_2", "score": 0.8, "content": "Test content 2"},
+                        {
+                            "doc_id": "test_doc_1",
+                            "score": 0.9,
+                            "content": "Test content 1",
+                        },
+                        {
+                            "doc_id": "test_doc_2",
+                            "score": 0.8,
+                            "content": "Test content 2",
+                        },
                     ]
                 }
             )
             # Fix the async mock for search_documents
             mock_qdrant_store.search_documents = AsyncMock(
-                return_value={"results": [{"doc_id": "test_doc_1", "metadata": {"tag": "test"}}], "total_found": 1}
+                return_value={
+                    "results": [{"doc_id": "test_doc_1", "metadata": {"tag": "test"}}],
+                    "total_found": 1,
+                }
             )
 
             mock_vectorization_tool = MagicMock()
             mock_vectorization_tool.vectorize_document = AsyncMock(
-                return_value={"status": "success", "vector_id": "test_vector_123", "embedding_dimension": 1536}
+                return_value={
+                    "status": "success",
+                    "vector_id": "test_vector_123",
+                    "embedding_dimension": 1536,
+                }
             )
             mock_vectorization_tool.vectorize_documents = AsyncMock(
-                return_value={"status": "success", "results": [{"status": "success", "doc_id": "test_doc_1"}]}
+                return_value={
+                    "status": "success",
+                    "results": [{"status": "success", "doc_id": "test_doc_1"}],
+                }
             )
             mock_vectorization_tool.save_document = AsyncMock(
                 return_value={"status": "success", "doc_id": "test_doc_comprehensive"}
@@ -162,14 +199,30 @@ class TestCLI140e39Validation:
             mock_vectorization_tool.rag_search = AsyncMock(
                 return_value={
                     "status": "success",
-                    "results": [{"doc_id": "test_doc_1", "score": 0.9, "content": "Test content"}],
+                    "results": [
+                        {
+                            "doc_id": "test_doc_1",
+                            "score": 0.9,
+                            "content": "Test content",
+                        }
+                    ],
                 }
             )
 
-            with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", mock_qdrant_store), patch(
-                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", mock_vectorization_tool
-            ), patch("src.agent_data_manager.api_mcp_gateway._get_cached_result", return_value=None), patch(
-                "src.agent_data_manager.api_mcp_gateway._cache_result"
+            with (
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.qdrant_store",
+                    mock_qdrant_store,
+                ),
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.vectorization_tool",
+                    mock_vectorization_tool,
+                ),
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway._get_cached_result",
+                    return_value=None,
+                ),
+                patch("src.agent_data_manager.api_mcp_gateway._cache_result"),
             ):
 
                 try:
@@ -201,7 +254,12 @@ class TestCLI140e39Validation:
                     assert data["status"] == "success"
 
                     # Test search endpoint with success
-                    search_request = {"tag": "test_tag", "limit": 10, "offset": 0, "include_vectors": False}
+                    search_request = {
+                        "tag": "test_tag",
+                        "limit": 10,
+                        "offset": 0,
+                        "include_vectors": False,
+                    }
                     response = client.post("/search", json=search_request)
                     assert response.status_code == 200
                     data = response.json()
@@ -224,11 +282,17 @@ class TestCLI140e39Validation:
                     assert response.status_code in [200, 404]  # May not exist
 
                     # Test CSKH query endpoint
-                    cskh_request = {"query": "CSKH test query", "limit": 5, "score_threshold": 0.5}
+                    cskh_request = {
+                        "query": "CSKH test query",
+                        "limit": 5,
+                        "score_threshold": 0.5,
+                    }
                     response = client.post("/cskh_query", json=cskh_request)
                     assert response.status_code in [200, 401, 422]
 
-                    print("✅ Comprehensive API gateway functionality tested successfully")
+                    print(
+                        "✅ Comprehensive API gateway functionality tested successfully"
+                    )
 
                 finally:
                     app.dependency_overrides.clear()
@@ -244,7 +308,11 @@ class TestCLI140e39Validation:
 
             # Override the get_current_user dependency
             def mock_get_current_user():
-                return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                return {
+                    "user_id": "test_user_123",
+                    "email": "test@example.com",
+                    "scopes": ["read", "write"],
+                }
 
             app.dependency_overrides[get_current_user] = mock_get_current_user
 
@@ -256,16 +324,33 @@ class TestCLI140e39Validation:
             mock_vectorization_tool.vectorize_documents = AsyncMock(
                 return_value={
                     "status": "failed",
-                    "results": [{"status": "failed", "doc_id": "test_doc_1", "error": "Test error"}],
+                    "results": [
+                        {
+                            "status": "failed",
+                            "doc_id": "test_doc_1",
+                            "error": "Test error",
+                        }
+                    ],
                 }
             )
 
             mock_qdrant_store = MagicMock()
-            mock_qdrant_store.semantic_search = AsyncMock(side_effect=Exception("Test exception"))
-            mock_qdrant_store.search_documents = AsyncMock(side_effect=Exception("Test exception"))
+            mock_qdrant_store.semantic_search = AsyncMock(
+                side_effect=Exception("Test exception")
+            )
+            mock_qdrant_store.search_documents = AsyncMock(
+                side_effect=Exception("Test exception")
+            )
 
-            with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", mock_qdrant_store), patch(
-                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", mock_vectorization_tool
+            with (
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.qdrant_store",
+                    mock_qdrant_store,
+                ),
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.vectorization_tool",
+                    mock_vectorization_tool,
+                ),
             ):
 
                 try:
@@ -278,21 +363,27 @@ class TestCLI140e39Validation:
                         "metadata": {"test": "error"},
                     }
                     response = client.post("/save", json=save_request)
-                    assert response.status_code == 200  # Should return 200 but with failed status
+                    assert (
+                        response.status_code == 200
+                    )  # Should return 200 but with failed status
                     data = response.json()
                     assert data["status"] == "failed"
 
                     # Test query endpoint with exception
                     query_request = {"query_text": "test query error", "limit": 5}
                     response = client.post("/query", json=query_request)
-                    assert response.status_code == 200  # Should return 200 but with error status
+                    assert (
+                        response.status_code == 200
+                    )  # Should return 200 but with error status
                     data = response.json()
                     assert data["status"] == "error"
 
                     # Test search endpoint with exception
                     search_request = {"tag": "test_tag", "limit": 10, "offset": 0}
                     response = client.post("/search", json=search_request)
-                    assert response.status_code == 200  # Should return 200 but with error status
+                    assert (
+                        response.status_code == 200
+                    )  # Should return 200 but with error status
                     data = response.json()
                     assert data["status"] == "error"
 
@@ -309,7 +400,9 @@ class TestCLI140e39Validation:
                     response = client.post("/batch_save", json=batch_save_request)
                     assert response.status_code == 200
                     data = response.json()
-                    assert data["status"] == "completed"  # Batch operations complete even with failures
+                    assert (
+                        data["status"] == "completed"
+                    )  # Batch operations complete even with failures
 
                     print("✅ Edge cases and error scenarios tested successfully")
 
@@ -320,8 +413,10 @@ class TestCLI140e39Validation:
     def test_rag_latency_validation_with_auth_fix(self):
         """Test that RAG latency validation works with fixed authentication."""
         # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
-        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
-        
+        pytest.skip(
+            "Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63"
+        )
+
         # # Run the latency test script and check results
         # try:
         #     result = subprocess.run(
@@ -347,8 +442,10 @@ class TestCLI140e39Validation:
     def test_cloud_profiler_validation_with_auth_fix(self):
         """Test that Cloud Profiler validation works with fixed authentication."""
         # Skip heavy subprocess test for timeout optimization (CLI140m.63 fix)
-        pytest.skip("Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63")
-        
+        pytest.skip(
+            "Skipping heavy subprocess test for M1 timeout optimization - CLI140m.63"
+        )
+
         # # Run the profiler test script and check results
         # try:
         #     result = subprocess.run(
@@ -374,14 +471,18 @@ class TestCLI140e39Validation:
     @pytest.mark.unit
     def test_test_suite_count_compliance(self):
         """Test that the test suite count is compliant with CLI140m.44 target (512 tests)."""
-        result = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], capture_output=True, text=True)
+        result = subprocess.run(
+            ["pytest", "--collect-only", "-q", "--rundeferred"],
+            capture_output=True,
+            text=True,
+        )
 
         assert result.returncode == 0, "Test collection should succeed"
 
         # Parse the output to find the test count (same logic as meta count test)
         lines = result.stdout.strip().split("\n")
         test_count = 0
-        
+
         # First try to find the summary line like "519 tests collected in 1.71s"
         for line in lines:
             if "tests collected" in line or "test collected" in line:
@@ -389,7 +490,7 @@ class TestCLI140e39Validation:
                 if words and words[0].isdigit():
                     test_count = int(words[0])
                     break
-        
+
         # If summary line method didn't work, count test lines directly
         if test_count == 0:
             test_lines = [line for line in lines if "::test_" in line]
@@ -397,7 +498,9 @@ class TestCLI140e39Validation:
 
         # Updated for CLI140m.48 to match current test count (was 515)
         expected_count = 519
-        assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
+        assert (
+            test_count == expected_count
+        ), f"Expected {expected_count} tests, found {test_count}"
 
         print(f"✅ Test suite count compliance: {test_count} tests")
 
@@ -434,7 +537,11 @@ class TestCLI140e39Validation:
 
             mock_user_manager = MagicMock()
             mock_user_manager.authenticate_user = AsyncMock(
-                return_value={"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+                return_value={
+                    "user_id": "test_user_123",
+                    "email": "test@example.com",
+                    "scopes": ["read", "write"],
+                }
             )
             mock_user_manager.create_user = AsyncMock(
                 return_value={"user_id": "new_user_123", "email": "newuser@example.com"}
@@ -444,14 +551,24 @@ class TestCLI140e39Validation:
             mock_auth_manager.create_user_token = Mock(return_value="test_jwt_token")
             mock_auth_manager.access_token_expire_minutes = 30
 
-            with patch("src.agent_data_manager.api_mcp_gateway.user_manager", mock_user_manager), patch(
-                "src.agent_data_manager.api_mcp_gateway.auth_manager", mock_auth_manager
+            with (
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.user_manager",
+                    mock_user_manager,
+                ),
+                patch(
+                    "src.agent_data_manager.api_mcp_gateway.auth_manager",
+                    mock_auth_manager,
+                ),
             ):
 
                 client = TestClient(app)
 
                 # Test login endpoint
-                response = client.post("/auth/login", data={"username": "test@example.com", "password": "test123"})
+                response = client.post(
+                    "/auth/login",
+                    data={"username": "test@example.com", "password": "test123"},
+                )
                 assert response.status_code == 200
                 data = response.json()
                 assert "access_token" in data
@@ -460,7 +577,11 @@ class TestCLI140e39Validation:
                 # Test registration endpoint
                 response = client.post(
                     "/auth/register",
-                    json={"email": "newuser@example.com", "password": "newpass123", "full_name": "New User"},
+                    json={
+                        "email": "newuser@example.com",
+                        "password": "newpass123",
+                        "full_name": "New User",
+                    },
                 )
                 assert response.status_code in [200, 201]
 

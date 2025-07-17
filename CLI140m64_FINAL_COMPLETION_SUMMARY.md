@@ -53,7 +53,7 @@
 
 #### Tests Successfully Unmarked:
 - `tests/api/test_api_a2a_gateway.py`: 8 tests
-- `tests/api/test_bulk_upload.py`: 5 tests  
+- `tests/api/test_bulk_upload.py`: 5 tests
 - `tests/api/test_search_by_payload.py`: 4 tests
 - `tests/api/test_*.py`: 7 additional single-test files
 - Core test files: `test_cli140_cskh_rag.py`, `test_cli131_search.py`, etc.: 5 tests
@@ -67,7 +67,7 @@ tests/test__meta_count.py::test_meta_count PASSED
 
 # API tests (all passing)
 tests/api/test_api_a2a_gateway.py (13 tests) - ALL PASSED
-tests/api/test_bulk_upload.py (6 tests) - ALL PASSED  
+tests/api/test_bulk_upload.py (6 tests) - ALL PASSED
 tests/api/test_search_by_payload.py (4 tests) - ALL PASSED
 
 # Validation tests
@@ -167,4 +167,4 @@ CLI140m.64 has successfully achieved 5 out of 6 primary objectives:
 
 The comprehensive mocking infrastructure is now in place and working correctly. All core functionality tests are passing, and the system is ready for CLI140m.65 to complete the final objective of reducing skipped tests to the target of ~6.
 
-**Status**: CLI140m.64 SUCCESSFULLY COMPLETED - Ready for CLI140m.65 final validation 
+**Status**: CLI140m.64 SUCCESSFULLY COMPLETED - Ready for CLI140m.65 final validation

@@ -6,12 +6,15 @@ Test cases for CLI119D10 enhancements:
 - Alerting policy deployment verification
 """
 
-import pytest
 from datetime import datetime
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import AsyncMock, Mock, patch
+
+import pytest
 
 # Import the enhanced modules
-from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+from agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestMetadataValidationEnhancements:
@@ -20,8 +23,12 @@ class TestMetadataValidationEnhancements:
     @pytest.fixture
     def metadata_manager(self):
         """Create a mock FirestoreMetadataManager for testing."""
-        with patch("agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"):
-            manager = FirestoreMetadataManager(project_id="test-project", collection_name="test-collection")
+        with patch(
+            "agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"
+        ):
+            manager = FirestoreMetadataManager(
+                project_id="test-project", collection_name="test-collection"
+            )
             manager.db = Mock()
             return manager
 
@@ -43,7 +50,10 @@ class TestMetadataValidationEnhancements:
 
     def test_validate_metadata_missing_required_fields(self, metadata_manager):
         """Test metadata validation with missing required fields."""
-        invalid_metadata = {"vectorStatus": "completed", "lastUpdated": "2025-01-27T19:00:00Z"}
+        invalid_metadata = {
+            "vectorStatus": "completed",
+            "lastUpdated": "2025-01-27T19:00:00Z",
+        }
 
         result = metadata_manager._validate_metadata(invalid_metadata)
 
@@ -70,7 +80,11 @@ class TestMetadataValidationEnhancements:
         large_text = "x" * 60000  # Exceeds 50KB limit
         long_level = "x" * 150  # Exceeds 100 character limit
 
-        invalid_metadata = {"doc_id": "test_doc", "original_text": large_text, "level_1": long_level}
+        invalid_metadata = {
+            "doc_id": "test_doc",
+            "original_text": large_text,
+            "level_1": long_level,
+        }
 
         result = metadata_manager._validate_metadata(invalid_metadata)
 
@@ -89,14 +103,19 @@ class TestMetadataValidationEnhancements:
         result = metadata_manager._validate_metadata(invalid_metadata)
 
         assert result["valid"] is False
-        assert any("must be a valid ISO format timestamp" in error for error in result["errors"])
+        assert any(
+            "must be a valid ISO format timestamp" in error
+            for error in result["errors"]
+        )
 
     def test_validate_version_increment_valid(self, metadata_manager):
         """Test version increment validation with valid increments."""
         existing_data = {"version": 5}
         new_metadata = {"version": 6}
 
-        result = metadata_manager._validate_version_increment(existing_data, new_metadata)
+        result = metadata_manager._validate_version_increment(
+            existing_data, new_metadata
+        )
 
         assert result is True
 
@@ -105,7 +124,9 @@ class TestMetadataValidationEnhancements:
         existing_data = {"version": 5}
         new_metadata = {"doc_id": "test"}  # No version specified
 
-        result = metadata_manager._validate_version_increment(existing_data, new_metadata)
+        result = metadata_manager._validate_version_increment(
+            existing_data, new_metadata
+        )
 
         assert result is True
 
@@ -114,7 +135,9 @@ class TestMetadataValidationEnhancements:
         existing_data = {"version": 5}
         new_metadata = {"version": 3}  # Decrease
 
-        result = metadata_manager._validate_version_increment(existing_data, new_metadata)
+        result = metadata_manager._validate_version_increment(
+            existing_data, new_metadata
+        )
 
         assert result is False
 
@@ -123,7 +146,9 @@ class TestMetadataValidationEnhancements:
         existing_data = {"version": 5}
         new_metadata = {"version": 8}  # Skip versions 6 and 7
 
-        result = metadata_manager._validate_version_increment(existing_data, new_metadata)
+        result = metadata_manager._validate_version_increment(
+            existing_data, new_metadata
+        )
 
         assert result is False
 
@@ -183,10 +208,10 @@ class TestChangeReportingEnhancements:
         try:
             # Import from our standalone module
             from tests.api.change_report_functions import (
-                calculate_string_similarity,
                 analyze_change_impact,
-                calculate_data_quality_metrics,
                 analyze_changes,
+                calculate_data_quality_metrics,
+                calculate_string_similarity,
                 generate_change_report,
             )
 
@@ -201,14 +226,18 @@ class TestChangeReportingEnhancements:
             if function_name in function_map:
                 return function_map[function_name]
             else:
-                pytest.skip(f"Function {function_name} not found in change_report_functions")
+                pytest.skip(
+                    f"Function {function_name} not found in change_report_functions"
+                )
 
         except ImportError as e:
             pytest.skip(f"Failed to import {function_name}: {e}")
 
     def test_calculate_string_similarity(self):
         """Test string similarity calculation."""
-        calculate_string_similarity = self._import_function_safely("calculate_string_similarity")
+        calculate_string_similarity = self._import_function_safely(
+            "calculate_string_similarity"
+        )
 
         # Identical strings
         assert calculate_string_similarity("hello", "hello") == 1.0
@@ -232,7 +261,9 @@ class TestChangeReportingEnhancements:
         new_data = {"vectorStatus": "completed", "level_1": "document"}
         changes = {
             "modified_fields": [{"field": "vectorStatus"}],
-            "significant_changes": [{"field": "vectorStatus", "importance": "critical"}],
+            "significant_changes": [
+                {"field": "vectorStatus", "importance": "critical"}
+            ],
         }
 
         impact = analyze_change_impact(old_data, new_data, changes)
@@ -243,7 +274,9 @@ class TestChangeReportingEnhancements:
 
     def test_calculate_data_quality_metrics(self):
         """Test data quality metrics calculation."""
-        calculate_data_quality_metrics = self._import_function_safely("calculate_data_quality_metrics")
+        calculate_data_quality_metrics = self._import_function_safely(
+            "calculate_data_quality_metrics"
+        )
 
         old_data = {"doc_id": "test", "vectorStatus": None, "level_1": "document"}
         new_data = {
@@ -256,8 +289,12 @@ class TestChangeReportingEnhancements:
 
         metrics = calculate_data_quality_metrics(old_data, new_data)
 
-        assert metrics["completeness_score"] == 5 / 9  # 5 out of 9 possible fields filled
-        assert metrics["consistency_score"] == 2 / 3  # 2 out of 3 hierarchy levels filled
+        assert (
+            metrics["completeness_score"] == 5 / 9
+        )  # 5 out of 9 possible fields filled
+        assert (
+            metrics["consistency_score"] == 2 / 3
+        )  # 2 out of 3 hierarchy levels filled
         assert metrics["validity_score"] == 1.0  # All required fields present
         assert metrics["quality_trend"] == "improving"  # More complete than before
 
@@ -303,7 +340,7 @@ class TestFirestoreRulesValidation:
         rules_file = "firestore.rules"
         assert os.path.exists(rules_file), "Firestore rules file should exist"
 
-        with open(rules_file, "r") as f:
+        with open(rules_file) as f:
             content = f.read()
 
         # Basic syntax checks
@@ -324,7 +361,7 @@ class TestFirestoreRulesValidation:
         firebase_file = "firebase.json"
         assert os.path.exists(firebase_file), "Firebase configuration file should exist"
 
-        with open(firebase_file, "r") as f:
+        with open(firebase_file) as f:
             config = json.load(f)
 
         assert "firestore" in config
@@ -339,7 +376,7 @@ class TestFirestoreRulesValidation:
         indexes_file = "firestore.indexes.json"
         assert os.path.exists(indexes_file), "Firestore indexes file should exist"
 
-        with open(indexes_file, "r") as f:
+        with open(indexes_file) as f:
             config = json.load(f)
 
         assert "indexes" in config
@@ -363,7 +400,7 @@ class TestAlertingPolicyValidation:
         policy_file = "alert_policy_latency.json"
         assert os.path.exists(policy_file), "Alert policy file should exist"
 
-        with open(policy_file, "r") as f:
+        with open(policy_file) as f:
             policy = json.load(f)
 
         # Check required fields
@@ -387,14 +424,19 @@ class TestAlertingPolicyValidation:
         """Test that alert policy references correct metrics."""
         import json
 
-        with open("alert_policy_latency.json", "r") as f:
+        with open("alert_policy_latency.json") as f:
             policy = json.load(f)
 
         # Check that policy references Qdrant metrics
-        filters = [condition["conditionThreshold"]["filter"] for condition in policy["conditions"]]
+        filters = [
+            condition["conditionThreshold"]["filter"]
+            for condition in policy["conditions"]
+        ]
 
         # Should reference custom Qdrant metrics
-        assert any("custom.googleapis.com/qdrant" in filter_str for filter_str in filters)
+        assert any(
+            "custom.googleapis.com/qdrant" in filter_str for filter_str in filters
+        )
 
 
 @pytest.mark.integration
@@ -406,10 +448,10 @@ class TestCLI119D10Integration:
         try:
             # Import from our standalone module
             from tests.api.change_report_functions import (
-                calculate_string_similarity,
                 analyze_change_impact,
-                calculate_data_quality_metrics,
                 analyze_changes,
+                calculate_data_quality_metrics,
+                calculate_string_similarity,
                 generate_change_report,
             )
 
@@ -424,7 +466,9 @@ class TestCLI119D10Integration:
             if function_name in function_map:
                 return function_map[function_name]
             else:
-                pytest.skip(f"Function {function_name} not found in change_report_functions")
+                pytest.skip(
+                    f"Function {function_name} not found in change_report_functions"
+                )
 
         except ImportError as e:
             pytest.skip(f"Failed to import {function_name}: {e}")
@@ -435,7 +479,9 @@ class TestCLI119D10Integration:
         # This would test the actual integration with Firestore
         # For now, we'll test the validation logic
 
-        with patch("agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"):
+        with patch(
+            "agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"
+        ):
             manager = FirestoreMetadataManager(project_id="test-project")
             manager.db = Mock()
 
@@ -451,9 +497,14 @@ class TestCLI119D10Integration:
             # Mock existing document
             mock_doc = Mock()
             mock_doc.exists = True
-            mock_doc.to_dict.return_value = {"version": 1, "lastUpdated": "2025-01-27T18:00:00Z"}
+            mock_doc.to_dict.return_value = {
+                "version": 1,
+                "lastUpdated": "2025-01-27T18:00:00Z",
+            }
 
-            manager.db.collection.return_value.document.return_value.get = AsyncMock(return_value=mock_doc)
+            manager.db.collection.return_value.document.return_value.get = AsyncMock(
+                return_value=mock_doc
+            )
             manager.db.collection.return_value.document.return_value.set = AsyncMock()
 
             # This should not raise an exception
@@ -472,7 +523,10 @@ class TestCLI119D10Integration:
             "collection": "document_metadata",
             "document_id": "test_doc_123",
             "timestamp": datetime.utcnow().isoformat(),
-            "old_value": {"vectorStatus": {"stringValue": "pending"}, "version": {"integerValue": "1"}},
+            "old_value": {
+                "vectorStatus": {"stringValue": "pending"},
+                "version": {"integerValue": "1"},
+            },
             "new_value": {
                 "vectorStatus": {"stringValue": "completed"},
                 "version": {"integerValue": "2"},

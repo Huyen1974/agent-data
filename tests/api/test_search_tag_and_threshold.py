@@ -95,7 +95,9 @@ def test_search_with_tag_and_threshold(client_with_qdrant_override: TestClient):
         "filter_tag": "science",
         "score_threshold": 0.8,
     }
-    response = client_with_qdrant_override.post("/semantic_search_cosine/", json=payload)
+    response = client_with_qdrant_override.post(
+        "/semantic_search_cosine/", json=payload
+    )
     assert response.status_code == 200, response.text
     response_data = response.json()
 

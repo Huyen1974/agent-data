@@ -1,14 +1,18 @@
 import argparse
 import logging
+
 import faiss
-from agent_data.vector_store.qdrant_store import QdrantStore
 from qdrant_client.http.models import PointStruct
+
+from agent_data.vector_store.qdrant_store import QdrantStore
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def migrate_faiss_to_qdrant(faiss_index_path: str, collection_name: str, batch_size: int = 100):
+def migrate_faiss_to_qdrant(
+    faiss_index_path: str, collection_name: str, batch_size: int = 100
+):
     """
     Migrate vectors from FAISS index to Qdrant collection.
 
@@ -26,7 +30,9 @@ def migrate_faiss_to_qdrant(faiss_index_path: str, collection_name: str, batch_s
         dimension = index.d
         num_vectors = index.ntotal
 
-        logger.info(f"Loaded FAISS index with {num_vectors} vectors of dimension {dimension}")
+        logger.info(
+            f"Loaded FAISS index with {num_vectors} vectors of dimension {dimension}"
+        )
 
         if num_vectors == 0:
             logger.warning("FAISS index is empty, nothing to migrate")
@@ -58,17 +64,29 @@ def migrate_faiss_to_qdrant(faiss_index_path: str, collection_name: str, batch_s
 
                 # Create point with auto-generated ID and basic payload
                 point_id = vector_idx + 1  # Start IDs from 1
-                payload = {"source": "FAISS_migration", "original_index": vector_idx, "tag": "migrated"}
+                payload = {
+                    "source": "FAISS_migration",
+                    "original_index": vector_idx,
+                    "tag": "migrated",
+                }
 
-                batch_points.append(PointStruct(id=point_id, vector=vector.tolist(), payload=payload))
+                batch_points.append(
+                    PointStruct(id=point_id, vector=vector.tolist(), payload=payload)
+                )
 
             # Upsert batch to Qdrant
-            qdrant_store.client.upsert(collection_name=collection_name, points=batch_points)
+            qdrant_store.client.upsert(
+                collection_name=collection_name, points=batch_points
+            )
 
             migrated_count += len(batch_points)
-            logger.info(f"Migrated batch {i} to {batch_end} of {num_vectors} ({migrated_count} total)")
+            logger.info(
+                f"Migrated batch {i} to {batch_end} of {num_vectors} ({migrated_count} total)"
+            )
 
-        logger.info(f"Successfully migrated {migrated_count} vectors to Qdrant collection '{collection_name}'")
+        logger.info(
+            f"Successfully migrated {migrated_count} vectors to Qdrant collection '{collection_name}'"
+        )
         return {"status": "success", "migrated_count": migrated_count}
 
     except Exception as e:
@@ -77,12 +95,20 @@ def migrate_faiss_to_qdrant(faiss_index_path: str, collection_name: str, batch_s
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Migrate FAISS index to Qdrant collection.")
+    parser = argparse.ArgumentParser(
+        description="Migrate FAISS index to Qdrant collection."
+    )
     parser.add_argument("--faiss-index", required=True, help="Path to FAISS index file")
-    parser.add_argument("--collection-name", required=True, help="Qdrant collection name")
-    parser.add_argument("--batch-size", type=int, default=100, help="Batch size for migration")
+    parser.add_argument(
+        "--collection-name", required=True, help="Qdrant collection name"
+    )
+    parser.add_argument(
+        "--batch-size", type=int, default=100, help="Batch size for migration"
+    )
 
     args = parser.parse_args()
 
-    result = migrate_faiss_to_qdrant(args.faiss_index, args.collection_name, args.batch_size)
+    result = migrate_faiss_to_qdrant(
+        args.faiss_index, args.collection_name, args.batch_size
+    )
     print(result)

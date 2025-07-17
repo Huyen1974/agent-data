@@ -6,14 +6,14 @@ Tests the FastAPI endpoints for Tree View and Search functionality:
 - /search endpoint for advanced search (path, tags, metadata)
 """
 
+import json
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, patch
-import json
 
 # Import the FastAPI app
 from src.agent_data_manager.cs_agent_api import app, get_firestore_manager
-
 
 
 class TestCLI132CSAgentAPI:
@@ -30,7 +30,9 @@ class TestCLI132CSAgentAPI:
         mock_manager = AsyncMock()
 
         # Mock document path responses
-        mock_manager.get_document_path.return_value = "research_paper/machine_learning/doc_001"
+        mock_manager.get_document_path.return_value = (
+            "research_paper/machine_learning/doc_001"
+        )
 
         # Mock share document responses
         mock_manager.share_document.return_value = {
@@ -105,8 +107,14 @@ class TestCLI132CSAgentAPI:
     @pytest.mark.unit
     def test_tree_view_endpoint_success(self, client, mock_firestore_manager):
         """Test /tree-view endpoint returns correct path and share data."""
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
-            response = client.get("/tree-view/doc_001?shared_by=test@example.com&expires_days=7")
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
+            response = client.get(
+                "/tree-view/doc_001?shared_by=test@example.com&expires_days=7"
+            )
 
             assert response.status_code == 200
             data = response.json()
@@ -124,7 +132,9 @@ class TestCLI132CSAgentAPI:
             mock_firestore_manager.share_document.assert_called_once_with(
                 "doc_001", shared_by="test@example.com", expires_days=7
             )
-            mock_firestore_manager.get_metadata_with_version.assert_called_once_with("doc_001")
+            mock_firestore_manager.get_metadata_with_version.assert_called_once_with(
+                "doc_001"
+            )
 
     @pytest.mark.unit
     def test_tree_view_endpoint_not_found(self, client, mock_firestore_manager):
@@ -134,7 +144,11 @@ class TestCLI132CSAgentAPI:
         mock_firestore_manager.share_document.return_value = None
         mock_firestore_manager.get_metadata_with_version.return_value = None
 
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/tree-view/nonexistent_doc")
 
             assert response.status_code == 404
@@ -143,7 +157,11 @@ class TestCLI132CSAgentAPI:
     @pytest.mark.unit
     def test_search_endpoint_by_path(self, client, mock_firestore_manager):
         """Test /search endpoint with path parameter."""
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/search?path=research_paper")
 
             assert response.status_code == 200
@@ -161,12 +179,18 @@ class TestCLI132CSAgentAPI:
             assert data["results"][1]["title"] == "AI Research Paper"
 
             # Verify mock call
-            mock_firestore_manager.search_by_path.assert_called_once_with("research_paper")
+            mock_firestore_manager.search_by_path.assert_called_once_with(
+                "research_paper"
+            )
 
     @pytest.mark.unit
     def test_search_endpoint_by_tags(self, client, mock_firestore_manager):
         """Test /search endpoint with tags parameter."""
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/search?tags=python,tutorial")
 
             assert response.status_code == 200
@@ -184,14 +208,20 @@ class TestCLI132CSAgentAPI:
             assert data["results"][1]["title"] == "Python Guide"
 
             # Verify mock call
-            mock_firestore_manager.search_by_tags.assert_called_once_with(["python", "tutorial"])
+            mock_firestore_manager.search_by_tags.assert_called_once_with(
+                ["python", "tutorial"]
+            )
 
     @pytest.mark.unit
     def test_search_endpoint_by_metadata(self, client, mock_firestore_manager):
         """Test /search endpoint with metadata parameter."""
         metadata_json = json.dumps({"author": "John Doe", "year": 2024})
 
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get(f"/search?metadata={metadata_json}")
 
             assert response.status_code == 200
@@ -209,19 +239,27 @@ class TestCLI132CSAgentAPI:
             assert data["results"][1]["title"] == "John's 2024 Report"
 
             # Verify mock call
-            mock_firestore_manager.search_by_metadata.assert_called_once_with({"author": "John Doe", "year": 2024})
+            mock_firestore_manager.search_by_metadata.assert_called_once_with(
+                {"author": "John Doe", "year": 2024}
+            )
 
     @pytest.mark.unit
     def test_search_endpoint_combined_parameters(self, client, mock_firestore_manager):
         """Test /search endpoint with multiple parameters (deduplication)."""
         # Set up overlapping results to test deduplication
-        mock_firestore_manager.search_by_path.return_value = [{"_doc_id": "doc_001", "title": "Shared Document"}]
+        mock_firestore_manager.search_by_path.return_value = [
+            {"_doc_id": "doc_001", "title": "Shared Document"}
+        ]
         mock_firestore_manager.search_by_tags.return_value = [
             {"_doc_id": "doc_001", "title": "Shared Document"},  # Duplicate
             {"_doc_id": "doc_002", "title": "Unique Document"},
         ]
 
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/search?path=research&tags=python")
 
             assert response.status_code == 200
@@ -237,9 +275,15 @@ class TestCLI132CSAgentAPI:
             assert len(set(doc_ids)) == 2  # No duplicates
 
     @pytest.mark.unit
-    def test_search_endpoint_invalid_metadata_json(self, client, mock_firestore_manager):
+    def test_search_endpoint_invalid_metadata_json(
+        self, client, mock_firestore_manager
+    ):
         """Test /search endpoint with invalid JSON metadata."""
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/search?metadata=invalid-json")
 
             assert response.status_code == 400
@@ -248,7 +292,11 @@ class TestCLI132CSAgentAPI:
     @pytest.mark.unit
     def test_search_endpoint_no_parameters(self, client, mock_firestore_manager):
         """Test /search endpoint with no parameters returns empty results."""
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/search")
 
             assert response.status_code == 200
@@ -272,9 +320,15 @@ class TestCLI132CSAgentAPI:
     def test_api_error_handling(self, client, mock_firestore_manager):
         """Test API error handling for internal server errors."""
         # Mock an exception in the firestore manager
-        mock_firestore_manager.get_document_path.side_effect = Exception("Database error")
+        mock_firestore_manager.get_document_path.side_effect = Exception(
+            "Database error"
+        )
 
-        with patch.object(app, "dependency_overrides", {get_firestore_manager: lambda: mock_firestore_manager}):
+        with patch.object(
+            app,
+            "dependency_overrides",
+            {get_firestore_manager: lambda: mock_firestore_manager},
+        ):
             response = client.get("/tree-view/doc_001")
 
             assert response.status_code == 500

@@ -1,14 +1,17 @@
-import logging
-from typing import Dict, Any, List
 import asyncio
+import logging
+from typing import Any
+
+from qdrant_client.http.models import PointStruct
 
 from agent_data.vector_store.qdrant_store import QdrantStore
-from qdrant_client.http.models import PointStruct
 
 logger = logging.getLogger(__name__)
 
 
-async def bulk_upload(collection_name: str, points: List[Dict[str, Any]]) -> Dict[str, Any]:
+async def bulk_upload(
+    collection_name: str, points: list[dict[str, Any]]
+) -> dict[str, Any]:
     """
     Upload multiple vectors to a Qdrant collection efficiently.
 
@@ -22,10 +25,18 @@ async def bulk_upload(collection_name: str, points: List[Dict[str, Any]]) -> Dic
         A dictionary with status and count of uploaded vectors.
     """
     if not collection_name or not collection_name.strip():
-        return {"status": "failed", "error": "Collection name cannot be empty or whitespace only.", "uploaded_count": 0}
+        return {
+            "status": "failed",
+            "error": "Collection name cannot be empty or whitespace only.",
+            "uploaded_count": 0,
+        }
 
     if not points or not isinstance(points, list):
-        return {"status": "failed", "error": "Points must be a non-empty list.", "uploaded_count": 0}
+        return {
+            "status": "failed",
+            "error": "Points must be a non-empty list.",
+            "uploaded_count": 0,
+        }
 
     try:
         # Get the QdrantStore instance
@@ -47,25 +58,40 @@ async def bulk_upload(collection_name: str, points: List[Dict[str, Any]]) -> Dic
             vector = point["vector"]
             payload = point.get("payload", {})
 
-            formatted_points.append(PointStruct(id=point_id, vector=vector, payload=payload))
+            formatted_points.append(
+                PointStruct(id=point_id, vector=vector, payload=payload)
+            )
 
         if not formatted_points:
-            return {"status": "failed", "error": "No valid points found to upload.", "uploaded_count": 0}
+            return {
+                "status": "failed",
+                "error": "No valid points found to upload.",
+                "uploaded_count": 0,
+            }
 
         # Use the client's upsert method for batch uploading
-        result = qdrant_store.client.upsert(collection_name=collection_name.strip(), points=formatted_points)
+        result = qdrant_store.client.upsert(
+            collection_name=collection_name.strip(), points=formatted_points
+        )
 
-        logger.info(f"Successfully uploaded {len(formatted_points)} points to collection '{collection_name}'")
+        logger.info(
+            f"Successfully uploaded {len(formatted_points)} points to collection '{collection_name}'"
+        )
 
         return {
             "status": "success",
             "uploaded_count": len(formatted_points),
             "message": f"Uploaded {len(formatted_points)} points to collection '{collection_name}'",
-            "operation_id": result.operation_id if hasattr(result, "operation_id") else None,
+            "operation_id": (
+                result.operation_id if hasattr(result, "operation_id") else None
+            ),
         }
 
     except Exception as e:
-        logger.error(f"Error bulk uploading to collection '{collection_name}': {e}", exc_info=True)
+        logger.error(
+            f"Error bulk uploading to collection '{collection_name}': {e}",
+            exc_info=True,
+        )
         return {
             "status": "failed",
             "error": f"Failed to bulk upload to collection '{collection_name}': {str(e)}",
@@ -74,7 +100,9 @@ async def bulk_upload(collection_name: str, points: List[Dict[str, Any]]) -> Dic
 
 
 # Synchronous wrapper for compatibility with the tool registration system
-def bulk_upload_sync(collection_name: str, points: List[Dict[str, Any]]) -> Dict[str, Any]:
+def bulk_upload_sync(
+    collection_name: str, points: list[dict[str, Any]]
+) -> dict[str, Any]:
     """
     Synchronous wrapper for bulk_upload function.
 
@@ -94,12 +122,16 @@ def bulk_upload_sync(collection_name: str, points: List[Dict[str, Any]]) -> Dict
             import concurrent.futures
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                future = executor.submit(asyncio.run, bulk_upload(collection_name, points))
+                future = executor.submit(
+                    asyncio.run, bulk_upload(collection_name, points)
+                )
                 return future.result()
         else:
             return loop.run_until_complete(bulk_upload(collection_name, points))
     except Exception as e:
-        logger.error(f"Error in synchronous wrapper for bulk_upload: {e}", exc_info=True)
+        logger.error(
+            f"Error in synchronous wrapper for bulk_upload: {e}", exc_info=True
+        )
         return {
             "status": "failed",
             "error": f"Failed to bulk upload to collection '{collection_name}': {str(e)}",
@@ -112,8 +144,16 @@ if __name__ == "__main__":
     # Test the bulk_upload function
     test_collection = "test_collection"
     test_points = [
-        {"id": 1, "vector": [0.1] * 1536, "payload": {"tag": "test1", "content": "First test point"}},
-        {"id": 2, "vector": [0.2] * 1536, "payload": {"tag": "test2", "content": "Second test point"}},
+        {
+            "id": 1,
+            "vector": [0.1] * 1536,
+            "payload": {"tag": "test1", "content": "First test point"},
+        },
+        {
+            "id": 2,
+            "vector": [0.2] * 1536,
+            "payload": {"tag": "test2", "content": "Second test point"},
+        },
     ]
 
     print(f"Testing bulk_upload with collection: {test_collection}")

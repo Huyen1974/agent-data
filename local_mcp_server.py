@@ -1,8 +1,9 @@
-import sys
+import asyncio
 import json
 import logging
-import asyncio
 import os
+import sys
+
 from ADK.agent_data.agent.agent_data_agent import AgentDataAgent
 from ADK.agent_data.tools.register_tools import register_tools
 
@@ -34,12 +35,18 @@ try:
     from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 except ImportError:
     QdrantVectorizationTool = None
-    logging.warning("QdrantVectorizationTool not found. Cursor integration will be unavailable.")
+    logging.warning(
+        "QdrantVectorizationTool not found. Cursor integration will be unavailable."
+    )
 
 # Configure logging - allow INFO level for mock messages
-log_level = logging.INFO  # Always use INFO level to capture mock initialization messages
+log_level = (
+    logging.INFO
+)  # Always use INFO level to capture mock initialization messages
 logging.basicConfig(
-    level=log_level, format="%(asctime)s - %(levelname)s - %(message)s", stream=sys.stderr
+    level=log_level,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    stream=sys.stderr,
 )  # Log to stderr
 
 # Global asyncio loop and vectorization tool
@@ -116,26 +123,41 @@ def main():
 
             if not tool_name:
                 logging.error("Missing 'tool_name' in input JSON.")
-                error_response = json.dumps({"error": "Missing 'tool_name' in input JSON."})
+                error_response = json.dumps(
+                    {"error": "Missing 'tool_name' in input JSON."}
+                )
                 print(error_response, flush=True)
                 continue
 
             # Handle Cursor IDE document storage integration
-            if vectorization_tool and tool_name in ["cursor_save_document", "save_document_to_qdrant"]:
+            if vectorization_tool and tool_name in [
+                "cursor_save_document",
+                "save_document_to_qdrant",
+            ]:
                 try:
                     result = main_loop.run_until_complete(
-                        handle_cursor_document_storage(vectorization_tool, tool_name, input_data)
+                        handle_cursor_document_storage(
+                            vectorization_tool, tool_name, input_data
+                        )
                     )
                     result_json = json.dumps(
-                        {"result": result, "meta": {"status": "success", "tool": "cursor_integration"}}
+                        {
+                            "result": result,
+                            "meta": {"status": "success", "tool": "cursor_integration"},
+                        }
                     )
                     print(result_json, flush=True)
-                    logging.info(f"Sent Cursor integration result to stdout: {result_json}")
+                    logging.info(
+                        f"Sent Cursor integration result to stdout: {result_json}"
+                    )
                     continue
                 except Exception as e:
                     logging.exception(f"Error during Cursor integration '{tool_name}':")
                     error_response = json.dumps(
-                        {"error": str(e), "meta": {"status": "error", "tool": "cursor_integration"}}
+                        {
+                            "error": str(e),
+                            "meta": {"status": "error", "tool": "cursor_integration"},
+                        }
                     )
                     print(error_response, flush=True)
                     continue
@@ -144,25 +166,35 @@ def main():
             if qdrant_store and tool_name in ["upsert_vector", "query_vectors_by_tag"]:
                 try:
                     result = handle_qdrant_tool(qdrant_store, tool_name, input_data)
-                    result_json = json.dumps({"result": result, "meta": {"status": "success"}})
+                    result_json = json.dumps(
+                        {"result": result, "meta": {"status": "success"}}
+                    )
                     print(result_json, flush=True)
                     logging.info(f"Sent QdrantStore result to stdout: {result_json}")
                     continue
                 except Exception as e:
-                    logging.exception(f"Error during QdrantStore operation '{tool_name}':")
-                    error_response = json.dumps({"error": str(e), "meta": {"status": "error"}})
+                    logging.exception(
+                        f"Error during QdrantStore operation '{tool_name}':"
+                    )
+                    error_response = json.dumps(
+                        {"error": str(e), "meta": {"status": "error"}}
+                    )
                     print(error_response, flush=True)
                     continue
 
             if tool_name not in agent.tools_manager.tools:
-                logging.error(f"Tool '{tool_name}' not found. Available tools: {registered_tools}")
+                logging.error(
+                    f"Tool '{tool_name}' not found. Available tools: {registered_tools}"
+                )
                 error_response = json.dumps({"error": f"Tool '{tool_name}' not found."})
                 print(error_response, flush=True)
                 continue
 
             # Based on main.py, agent.run takes the whole JSON dict.
             try:
-                logging.info(f"Calling agent.run with data for tool '{tool_name}': {input_data}")
+                logging.info(
+                    f"Calling agent.run with data for tool '{tool_name}': {input_data}"
+                )
                 # Use the global main loop to run the async agent.run method
                 result = main_loop.run_until_complete(agent.run(input_data))
                 logging.info(f"Agent execution finished. Result: {result}")
@@ -173,8 +205,12 @@ def main():
                 logging.info(f"Sent result to stdout: {result_json}")
 
             except Exception as e:
-                logging.exception("Error during agent execution:")  # Log full traceback to stderr
-                error_response = json.dumps({"error": f"Agent execution failed for tool '{tool_name}': {e}"})
+                logging.exception(
+                    "Error during agent execution:"
+                )  # Log full traceback to stderr
+                error_response = json.dumps(
+                    {"error": f"Agent execution failed for tool '{tool_name}': {e}"}
+                )
                 print(error_response, flush=True)  # Output JSON error to stdout
 
     finally:
@@ -207,20 +243,27 @@ async def handle_cursor_document_storage(vectorization_tool, tool_name, input_da
     metadata = kwargs.get("metadata", {})
 
     if not doc_id or not content:
-        raise ValueError("cursor_save_document requires 'doc_id' and 'content' in kwargs")
+        raise ValueError(
+            "cursor_save_document requires 'doc_id' and 'content' in kwargs"
+        )
 
     # Enhance metadata with Cursor integration info
     enhanced_metadata = {
         "source": "cursor_ide",
         "save_directory": save_dir,
         "integration_type": "mcp_stdio",
-        "processed_at": input_data.get("timestamp") or f"{asyncio.get_event_loop().time()}",
+        "processed_at": input_data.get("timestamp")
+        or f"{asyncio.get_event_loop().time()}",
         **metadata,
     }
 
     # Use vectorization tool to save document to Qdrant and Firestore
     result = await vectorization_tool.vectorize_document(
-        doc_id=doc_id, content=content, metadata=enhanced_metadata, tag=f"cursor_{save_dir}", update_firestore=True
+        doc_id=doc_id,
+        content=content,
+        metadata=enhanced_metadata,
+        tag=f"cursor_{save_dir}",
+        update_firestore=True,
     )
 
     # Add Cursor-specific information to result
@@ -252,16 +295,22 @@ def handle_qdrant_tool(qdrant_store, tool_name, input_data):
             raise ValueError("upsert_vector requires 'point_id' and 'vector' in data")
 
         # Use the global main loop if available, otherwise create a temporary one
-        if hasattr(qdrant_store, "upsert_vector") and asyncio.iscoroutinefunction(qdrant_store.upsert_vector):
+        if hasattr(qdrant_store, "upsert_vector") and asyncio.iscoroutinefunction(
+            qdrant_store.upsert_vector
+        ):
             # For real QdrantStore with async methods
             if main_loop and not main_loop.is_closed():
-                result = main_loop.run_until_complete(qdrant_store.upsert_vector(point_id, vector, metadata))
+                result = main_loop.run_until_complete(
+                    qdrant_store.upsert_vector(point_id, vector, metadata)
+                )
             else:
                 # Create temporary loop for testing
                 temp_loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(temp_loop)
                 try:
-                    result = temp_loop.run_until_complete(qdrant_store.upsert_vector(point_id, vector, metadata))
+                    result = temp_loop.run_until_complete(
+                        qdrant_store.upsert_vector(point_id, vector, metadata)
+                    )
                 finally:
                     temp_loop.close()
             return {"success": result, "point_id": point_id}

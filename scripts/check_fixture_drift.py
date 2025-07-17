@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import inspect
-import sys
 import logging
 import os
+import sys
 
 # Add project root to Python path to enable imports from tests module
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,7 +57,9 @@ def get_method_signatures(client_class):
             try:
                 signatures[name] = inspect.signature(method)
             except ValueError:  # Handle cases like built-in methods without signatures
-                logging.warning(f"Could not get signature for {client_class.__name__}.{name}")
+                logging.warning(
+                    f"Could not get signature for {client_class.__name__}.{name}"
+                )
     return signatures
 
 
@@ -70,7 +72,9 @@ def compare_signatures(real_signatures, mock_signatures, client_name):
     missing_methods = 0
     for method_name, real_sig in real_signatures.items():
         if method_name not in mock_signatures:
-            logging.error(f"  Method {method_name} found in real {client_name} but not in mock.")
+            logging.error(
+                f"  Method {method_name} found in real {client_name} but not in mock."
+            )
             drift_detected = True
             missing_methods += 1
         elif real_sig != mock_signatures[method_name]:
@@ -80,13 +84,17 @@ def compare_signatures(real_signatures, mock_signatures, client_name):
 
             # Allow *args, **kwargs signatures for placeholder methods
             if "*args, **kwargs" in mock_sig_str:
-                logging.info(f"  Signature mismatch for {method_name} in {client_name} (placeholder method - OK)")
+                logging.info(
+                    f"  Signature mismatch for {method_name} in {client_name} (placeholder method - OK)"
+                )
                 continue
 
             # Allow ForwardRef differences (these are just string representation differences)
             real_sig_str = str(real_sig)
             if "ForwardRef" in mock_sig_str and "ForwardRef" not in real_sig_str:
-                logging.info(f"  Signature mismatch for {method_name} in {client_name} (ForwardRef difference - OK)")
+                logging.info(
+                    f"  Signature mismatch for {method_name} in {client_name} (ForwardRef difference - OK)"
+                )
                 continue
 
             # Only report as error for critical methods that are likely to be used
@@ -107,21 +115,29 @@ def compare_signatures(real_signatures, mock_signatures, client_name):
             }
 
             if method_name in critical_methods:
-                logging.error(f"  CRITICAL signature mismatch for {method_name} in {client_name}:")
+                logging.error(
+                    f"  CRITICAL signature mismatch for {method_name} in {client_name}:"
+                )
                 logging.error(f"    Real: {real_sig}")
                 logging.error(f"    Mock: {mock_signatures[method_name]}")
                 drift_detected = True
             else:
-                logging.info(f"  Non-critical signature mismatch for {method_name} in {client_name} (ignored)")
+                logging.info(
+                    f"  Non-critical signature mismatch for {method_name} in {client_name} (ignored)"
+                )
 
     # Check for methods in mock client not in real (optional, but good practice)
     for method_name in mock_signatures:
         if method_name not in real_signatures:
-            logging.warning(f"  Method {method_name} found in mock {client_name} but not in real.")
+            logging.warning(
+                f"  Method {method_name} found in mock {client_name} but not in real."
+            )
             # Not usually considered drift that breaks tests, but good to know.
 
     if missing_methods > 0:
-        logging.info(f"  Summary: {missing_methods} missing methods in mock {client_name}")
+        logging.info(
+            f"  Summary: {missing_methods} missing methods in mock {client_name}"
+        )
 
     return drift_detected
 
@@ -144,14 +160,20 @@ def main(fail_on_drift=False):
             overall_drift_detected = True
     except ImportError as e:
         if "qdrant_client" in str(e).lower():
-            logging.warning("Real QdrantClient (qdrant_client) not installed. Skipping Qdrant drift check.")
+            logging.warning(
+                "Real QdrantClient (qdrant_client) not installed. Skipping Qdrant drift check."
+            )
         elif "FakeQdrantClient" in str(e):
             logging.warning(
                 "Mock QdrantClient (tests.mocks.qdrant_basic.FakeQdrantClient) not found. Ensure PYTHONPATH is set correctly or the script is run from project root. Skipping Qdrant drift check."
             )
             # Fallback to placeholder if mock is not found to allow script to run for other checks
             mock_qdrant_sig = get_method_signatures(FakeQdrantClientPlaceholder)
-            if compare_signatures(real_qdrant_sig, mock_qdrant_sig, "QdrantClient (mock not found, using placeholder)"):
+            if compare_signatures(
+                real_qdrant_sig,
+                mock_qdrant_sig,
+                "QdrantClient (mock not found, using placeholder)",
+            ):
                 overall_drift_detected = True
         else:
             logging.error(f"ImportError during QdrantClient setup: {e}")
@@ -166,10 +188,14 @@ def main(fail_on_drift=False):
         real_firestore_sig = get_method_signatures(ActualFirestoreClient)
         # Assuming FakeFirestoreClient is available (e.g., from tests.mocks.firestore_fake)
         # Replace with your actual import path for FakeFirestoreClient
-        from tests.mocks.firestore_fake import FakeFirestoreClient as MockFirestoreClient
+        from tests.mocks.firestore_fake import (
+            FakeFirestoreClient as MockFirestoreClient,
+        )
 
         mock_firestore_sig = get_method_signatures(MockFirestoreClient)
-        if compare_signatures(real_firestore_sig, mock_firestore_sig, "FirestoreClient"):
+        if compare_signatures(
+            real_firestore_sig, mock_firestore_sig, "FirestoreClient"
+        ):
             overall_drift_detected = True
     except ImportError as e:
         if "google.cloud.firestore" in str(e).lower():
@@ -183,7 +209,9 @@ def main(fail_on_drift=False):
             # Fallback to placeholder
             mock_firestore_sig = get_method_signatures(FakeFirestoreClientPlaceholder)
             if compare_signatures(
-                real_firestore_sig, mock_firestore_sig, "FirestoreClient (mock not found, using placeholder)"
+                real_firestore_sig,
+                mock_firestore_sig,
+                "FirestoreClient (mock not found, using placeholder)",
             ):
                 overall_drift_detected = True
         else:

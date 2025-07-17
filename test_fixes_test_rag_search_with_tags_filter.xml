@@ -9,14 +9,14 @@ mock_qdrant_store = &lt;AsyncMock id='5079004256'&gt;, mock_firestore_manager = 
         rag_tool.qdrant_store = mock_qdrant_store
         rag_tool.firestore_manager = mock_firestore_manager
         rag_tool._initialized = True
-    
+
         # Perform RAG search with tags filter
         result = await rag_tool.rag_search(
             query_text="machine learning",
             tags=["python"],
             limit=5,
         )
-    
+
         # Verify results - should return doc_001 and doc_002 (both have python tag)
         assert result["status"] == "success"
 &gt;       assert result["count"] == 2

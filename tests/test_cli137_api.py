@@ -3,18 +3,19 @@ Test CLI137: A2A API Batch Endpoints Expansion
 Tests for /batch_save and /batch_query endpoints with 10 query scenarios
 """
 
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 from datetime import datetime
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 # Import the API models and functions
 from src.agent_data_manager.api_mcp_gateway import (
-    BatchSaveRequest,
     BatchQueryRequest,
-    SaveDocumentRequest,
+    BatchSaveRequest,
     QueryVectorsRequest,
-    batch_save_documents,
+    SaveDocumentRequest,
     batch_query_vectors,
+    batch_save_documents,
 )
 
 
@@ -24,13 +25,17 @@ class TestCLI137BatchAPI:
     @pytest.fixture
     def mock_current_user(self):
         """Mock authenticated user"""
-        return {"user_id": "test_user_cli137", "email": "test@cli137.com", "scopes": ["read", "write"]}
+        return {
+            "user_id": "test_user_cli137",
+            "email": "test@cli137.com",
+            "scopes": ["read", "write"],
+        }
 
     @pytest.fixture
     def mock_request(self):
         """Mock FastAPI request object with proper type"""
-        from starlette.requests import Request
         from starlette.datastructures import Headers
+        from starlette.requests import Request
 
         # Create a proper mock that passes isinstance check
         request = MagicMock(spec=Request)
@@ -57,30 +62,53 @@ class TestCLI137BatchAPI:
         """Sample queries for batch query testing"""
         return [
             QueryVectorsRequest(
-                query_text=f"test query {i} for CLI137", tag="cli137_batch_test", limit=5, score_threshold=0.7
+                query_text=f"test query {i} for CLI137",
+                tag="cli137_batch_test",
+                limit=5,
+                score_threshold=0.7,
             )
             for i in range(1, 4)  # 3 queries
         ]
 
     @pytest.mark.asyncio
-    async def test_batch_save_success(self, mock_current_user, mock_request, sample_documents):
+    async def test_batch_save_success(
+        self, mock_current_user, mock_request, sample_documents
+    ):
         """Test successful batch save operation"""
         # Mock the vectorization tool
-        mock_vectorization_result = {"status": "success", "vector_id": "test_vector_id", "embedding_dimension": 1536}
+        mock_vectorization_result = {
+            "status": "success",
+            "vector_id": "test_vector_id",
+            "embedding_dimension": 1536,
+        }
 
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", MagicMock()):
-            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
-                with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
-                    with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
-                        with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool"
+            ) as mock_tool:
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.settings"
+                ) as mock_settings:
+                    with patch(
+                        "src.agent_data_manager.api_mcp_gateway.auth_manager"
+                    ) as mock_auth:
+                        with patch(
+                            "src.agent_data_manager.api_mcp_gateway.limiter"
+                        ) as mock_limiter:
                             # Setup mocks
-                            mock_tool.vectorize_document = AsyncMock(return_value=mock_vectorization_result)
+                            mock_tool.vectorize_document = AsyncMock(
+                                return_value=mock_vectorization_result
+                            )
                             mock_settings.ENABLE_AUTHENTICATION = False
                             mock_auth.validate_user_access.return_value = True
-                            mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+                            mock_limiter.limit.return_value = (
+                                lambda func: func
+                            )  # Disable rate limiting
 
                             # Create batch request
-                            batch_request = BatchSaveRequest(documents=sample_documents, batch_id="cli137_test_batch")
+                            batch_request = BatchSaveRequest(
+                                documents=sample_documents, batch_id="cli137_test_batch"
+                            )
 
                             # Execute batch save
                             response = await batch_save_documents(
@@ -97,10 +125,15 @@ class TestCLI137BatchAPI:
                             assert response.successful_saves == 3
                             assert response.failed_saves == 0
                             assert len(response.results) == 3
-                            assert all(result.status == "success" for result in response.results)
+                            assert all(
+                                result.status == "success"
+                                for result in response.results
+                            )
 
     @pytest.mark.asyncio
-    async def test_batch_query_success(self, mock_current_user, mock_request, sample_queries):
+    async def test_batch_query_success(
+        self, mock_current_user, mock_request, sample_queries
+    ):
         """Test successful batch query operation"""
         # Mock search results
         mock_search_results = {
@@ -111,21 +144,35 @@ class TestCLI137BatchAPI:
         }
 
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store") as mock_store:
-            with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
-                with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
-                    with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.settings"
+            ) as mock_settings:
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.auth_manager"
+                ) as mock_auth:
+                    with patch(
+                        "src.agent_data_manager.api_mcp_gateway.limiter"
+                    ) as mock_limiter:
                         # Setup mocks
-                        mock_store.semantic_search = AsyncMock(return_value=mock_search_results)
+                        mock_store.semantic_search = AsyncMock(
+                            return_value=mock_search_results
+                        )
                         mock_settings.ENABLE_AUTHENTICATION = False
                         mock_auth.validate_user_access.return_value = True
-                        mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+                        mock_limiter.limit.return_value = (
+                            lambda func: func
+                        )  # Disable rate limiting
 
                         # Create batch request
-                        batch_request = BatchQueryRequest(queries=sample_queries, batch_id="cli137_query_batch")
+                        batch_request = BatchQueryRequest(
+                            queries=sample_queries, batch_id="cli137_query_batch"
+                        )
 
                         # Execute batch query
                         response = await batch_query_vectors(
-                            request=mock_request, batch_data=batch_request, current_user=mock_current_user
+                            request=mock_request,
+                            batch_data=batch_request,
+                            current_user=mock_current_user,
                         )
 
                         # Assertions
@@ -135,28 +182,48 @@ class TestCLI137BatchAPI:
                         assert response.successful_queries == 3
                         assert response.failed_queries == 0
                         assert len(response.results) == 3
-                        assert all(result.status == "success" for result in response.results)
+                        assert all(
+                            result.status == "success" for result in response.results
+                        )
 
     @pytest.mark.asyncio
-    async def test_batch_save_partial_failure(self, mock_current_user, mock_request, sample_documents):
+    async def test_batch_save_partial_failure(
+        self, mock_current_user, mock_request, sample_documents
+    ):
         """Test batch save with some failures"""
 
         def mock_vectorize_side_effect(*args, **kwargs):
             doc_id = kwargs.get("doc_id", "")
             if "doc_2" in doc_id:
                 return {"status": "failed", "error": "Simulated failure"}
-            return {"status": "success", "vector_id": "test_vector_id", "embedding_dimension": 1536}
+            return {
+                "status": "success",
+                "vector_id": "test_vector_id",
+                "embedding_dimension": 1536,
+            }
 
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", MagicMock()):
-            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
-                with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
-                    with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
-                        with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool"
+            ) as mock_tool:
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.settings"
+                ) as mock_settings:
+                    with patch(
+                        "src.agent_data_manager.api_mcp_gateway.auth_manager"
+                    ) as mock_auth:
+                        with patch(
+                            "src.agent_data_manager.api_mcp_gateway.limiter"
+                        ) as mock_limiter:
                             # Setup mocks
-                            mock_tool.vectorize_document = AsyncMock(side_effect=mock_vectorize_side_effect)
+                            mock_tool.vectorize_document = AsyncMock(
+                                side_effect=mock_vectorize_side_effect
+                            )
                             mock_settings.ENABLE_AUTHENTICATION = False
                             mock_auth.validate_user_access.return_value = True
-                            mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+                            mock_limiter.limit.return_value = (
+                                lambda func: func
+                            )  # Disable rate limiting
 
                             # Create batch request
                             batch_request = BatchSaveRequest(documents=sample_documents)
@@ -176,22 +243,54 @@ class TestCLI137BatchAPI:
                             # the document may also fail in subsequent steps (e.g., firestore update)
                             # causing multiple failures. This is expected behavior for error handling.
                             assert response.successful_saves == 2
-                            assert response.failed_saves == 2  # Updated from 1 to 2 to match actual behavior
+                            assert (
+                                response.failed_saves == 2
+                            )  # Updated from 1 to 2 to match actual behavior
 
     @pytest.mark.asyncio
     async def test_batch_query_scenarios(self, mock_current_user, mock_request):
         """Test 10 different query scenarios as required by CLI137"""
         query_scenarios = [
-            {"query": "machine learning algorithms", "tag": "ml", "limit": 10, "threshold": 0.8},
-            {"query": "data science techniques", "tag": "ds", "limit": 5, "threshold": 0.7},
-            {"query": "artificial intelligence", "tag": None, "limit": 15, "threshold": 0.75},
+            {
+                "query": "machine learning algorithms",
+                "tag": "ml",
+                "limit": 10,
+                "threshold": 0.8,
+            },
+            {
+                "query": "data science techniques",
+                "tag": "ds",
+                "limit": 5,
+                "threshold": 0.7,
+            },
+            {
+                "query": "artificial intelligence",
+                "tag": None,
+                "limit": 15,
+                "threshold": 0.75,
+            },
             {"query": "neural networks", "tag": "ai", "limit": 8, "threshold": 0.85},
             {"query": "deep learning", "tag": "ml", "limit": 12, "threshold": 0.6},
-            {"query": "natural language processing", "tag": "nlp", "limit": 6, "threshold": 0.9},
+            {
+                "query": "natural language processing",
+                "tag": "nlp",
+                "limit": 6,
+                "threshold": 0.9,
+            },
             {"query": "computer vision", "tag": "cv", "limit": 20, "threshold": 0.65},
-            {"query": "reinforcement learning", "tag": "rl", "limit": 4, "threshold": 0.8},
+            {
+                "query": "reinforcement learning",
+                "tag": "rl",
+                "limit": 4,
+                "threshold": 0.8,
+            },
             {"query": "supervised learning", "tag": "ml", "limit": 7, "threshold": 0.7},
-            {"query": "unsupervised learning", "tag": "ml", "limit": 9, "threshold": 0.75},
+            {
+                "query": "unsupervised learning",
+                "tag": "ml",
+                "limit": 9,
+                "threshold": 0.75,
+            },
         ]
 
         # Create query requests
@@ -211,27 +310,45 @@ class TestCLI137BatchAPI:
             result_count = len(query_text) % 5 + 1  # Vary results based on query
             return {
                 "results": [
-                    {"doc_id": f"result_{i}", "score": 0.8, "content": f"Content for {query_text[:20]}..."}
+                    {
+                        "doc_id": f"result_{i}",
+                        "score": 0.8,
+                        "content": f"Content for {query_text[:20]}...",
+                    }
                     for i in range(result_count)
                 ]
             }
 
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store") as mock_store:
-            with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
-                with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
-                    with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.settings"
+            ) as mock_settings:
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.auth_manager"
+                ) as mock_auth:
+                    with patch(
+                        "src.agent_data_manager.api_mcp_gateway.limiter"
+                    ) as mock_limiter:
                         # Setup mocks
-                        mock_store.semantic_search = AsyncMock(side_effect=mock_search_side_effect)
+                        mock_store.semantic_search = AsyncMock(
+                            side_effect=mock_search_side_effect
+                        )
                         mock_settings.ENABLE_AUTHENTICATION = False
                         mock_auth.validate_user_access.return_value = True
-                        mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+                        mock_limiter.limit.return_value = (
+                            lambda func: func
+                        )  # Disable rate limiting
 
                         # Create batch request
-                        batch_request = BatchQueryRequest(queries=queries, batch_id="cli137_10_scenarios")
+                        batch_request = BatchQueryRequest(
+                            queries=queries, batch_id="cli137_10_scenarios"
+                        )
 
                         # Execute batch query
                         response = await batch_query_vectors(
-                            request=mock_request, batch_data=batch_request, current_user=mock_current_user
+                            request=mock_request,
+                            batch_data=batch_request,
+                            current_user=mock_current_user,
                         )
 
                         # Assertions
@@ -262,10 +379,18 @@ class TestCLI137BatchAPI:
         ]
 
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", MagicMock()):
-            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
-                with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
-                    with patch("src.agent_data_manager.api_mcp_gateway.auth_manager") as mock_auth:
-                        with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool"
+            ) as mock_tool:
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.settings"
+                ) as mock_settings:
+                    with patch(
+                        "src.agent_data_manager.api_mcp_gateway.auth_manager"
+                    ) as mock_auth:
+                        with patch(
+                            "src.agent_data_manager.api_mcp_gateway.limiter"
+                        ) as mock_limiter:
                             # Setup mocks
                             mock_tool.vectorize_document = AsyncMock(
                                 return_value={
@@ -276,7 +401,9 @@ class TestCLI137BatchAPI:
                             )
                             mock_settings.ENABLE_AUTHENTICATION = False
                             mock_auth.validate_user_access.return_value = True
-                            mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+                            mock_limiter.limit.return_value = (
+                                lambda func: func
+                            )  # Disable rate limiting
 
                             # Create batch request
                             batch_request = BatchSaveRequest(documents=documents)
@@ -293,7 +420,9 @@ class TestCLI137BatchAPI:
 
                             # Performance assertions
                             execution_time = (end_time - start_time).total_seconds()
-                            assert execution_time < 10.0  # Should complete within 10 seconds
+                            assert (
+                                execution_time < 10.0
+                            )  # Should complete within 10 seconds
                             assert response.status == "completed"
                             assert response.successful_saves == 10
 
@@ -302,25 +431,36 @@ class TestCLI137BatchAPI:
         """Test batch request validation limits"""
         # Test document limit validation - using min_length/max_length instead of min_items/max_items
         too_many_docs = [
-            SaveDocumentRequest(doc_id=f"doc_{i}", content=f"content {i}") for i in range(51)  # Exceeds max of 50
+            SaveDocumentRequest(doc_id=f"doc_{i}", content=f"content {i}")
+            for i in range(51)  # Exceeds max of 50
         ]
 
         with pytest.raises(ValueError):
             BatchSaveRequest(documents=too_many_docs)
 
         # Test query limit validation
-        too_many_queries = [QueryVectorsRequest(query_text=f"query {i}") for i in range(21)]  # Exceeds max of 20
+        too_many_queries = [
+            QueryVectorsRequest(query_text=f"query {i}") for i in range(21)
+        ]  # Exceeds max of 20
 
         with pytest.raises(ValueError):
             BatchQueryRequest(queries=too_many_queries)
 
     @pytest.mark.asyncio
-    async def test_batch_operations_error_handling(self, mock_current_user, mock_request, sample_documents):
+    async def test_batch_operations_error_handling(
+        self, mock_current_user, mock_request, sample_documents
+    ):
         """Test error handling in batch operations"""
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", None):
-            with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool", None):
-                with patch("src.agent_data_manager.api_mcp_gateway.limiter") as mock_limiter:
-                    mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
+            with patch(
+                "src.agent_data_manager.api_mcp_gateway.vectorization_tool", None
+            ):
+                with patch(
+                    "src.agent_data_manager.api_mcp_gateway.limiter"
+                ) as mock_limiter:
+                    mock_limiter.limit.return_value = (
+                        lambda func: func
+                    )  # Disable rate limiting
 
                     # Create batch request
                     batch_request = BatchSaveRequest(documents=sample_documents)

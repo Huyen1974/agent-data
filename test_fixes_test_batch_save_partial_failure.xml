@@ -6,13 +6,13 @@ sample_documents = [SaveDocumentRequest(doc_id='cli137_doc_1', content='Test doc
     @pytest.mark.asyncio
     async def test_batch_save_partial_failure(self, mock_current_user, mock_request, sample_documents):
         """Test batch save with some failures"""
-    
+
         def mock_vectorize_side_effect(*args, **kwargs):
             doc_id = kwargs.get("doc_id", "")
             if "doc_2" in doc_id:
                 return {"status": "failed", "error": "Simulated failure"}
             return {"status": "success", "vector_id": "test_vector_id", "embedding_dimension": 1536}
-    
+
         with patch("src.agent_data_manager.api_mcp_gateway.qdrant_store", MagicMock()):
             with patch("src.agent_data_manager.api_mcp_gateway.vectorization_tool") as mock_tool:
                 with patch("src.agent_data_manager.api_mcp_gateway.settings") as mock_settings:
@@ -23,10 +23,10 @@ sample_documents = [SaveDocumentRequest(doc_id='cli137_doc_1', content='Test doc
                             mock_settings.ENABLE_AUTHENTICATION = False
                             mock_auth.validate_user_access.return_value = True
                             mock_limiter.limit.return_value = lambda func: func  # Disable rate limiting
-    
+
                             # Create batch request
                             batch_request = BatchSaveRequest(documents=sample_documents)
-    
+
                             # Execute batch save
                             response = await batch_save_documents(
                                 request=mock_request,
@@ -34,7 +34,7 @@ sample_documents = [SaveDocumentRequest(doc_id='cli137_doc_1', content='Test doc
                                 background_tasks=MagicMock(),
                                 current_user=mock_current_user,
                             )
-    
+
                             # Assertions
                             assert response.status == "completed"
                             assert response.total_documents == 3

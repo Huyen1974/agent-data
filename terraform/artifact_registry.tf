@@ -1,7 +1,14 @@
-resource "google_artifact_registry_repository" "agent_data_test_images" {
-  project       = "github-chatgpt-ggcloud"
-  location      = "asia-southeast1"
-  repository_id = "agent-data-test-images" # Clear name for Test environment
-  description   = "Repository for Agent Data TEST Docker images"
+# Artifact Registry for Docker images
+resource "google_artifact_registry_repository" "agent_data_docker_repo" {
+  project       = var.project_id
+  location      = var.region
+  repository_id = "agent-data-${var.environment}"
+  description   = "Agent Data ${title(var.environment)} Docker Repository"
   format        = "DOCKER"
-} 
+
+  labels = {
+    environment = var.environment
+    project     = "agent-data-langroid"
+    managed_by  = "terraform"
+  }
+}

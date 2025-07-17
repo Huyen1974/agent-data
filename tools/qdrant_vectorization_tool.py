@@ -2,12 +2,17 @@
 
 import asyncio
 import logging
-from typing import Dict, List, Optional, Any
-from datetime import datetime
 import time
+from datetime import datetime
+from typing import Any
 
 try:
-    from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+    from tenacity import (
+        retry,
+        retry_if_exception_type,
+        stop_after_attempt,
+        wait_exponential,
+    )
 
     TENACITY_AVAILABLE = True
 except ImportError:
@@ -31,10 +36,16 @@ except ImportError:
 
 
 from ADK.agent_data.config.settings import settings
-from ADK.agent_data.vector_store.qdrant_store import QdrantStore
-from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager
-from ADK.agent_data.tools.external_tool_registry import get_openai_embedding, openai_async_client, OPENAI_AVAILABLE
 from ADK.agent_data.tools.auto_tagging_tool import get_auto_tagging_tool
+from ADK.agent_data.tools.external_tool_registry import (
+    OPENAI_AVAILABLE,
+    get_openai_embedding,
+    openai_async_client,
+)
+from ADK.agent_data.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
+from ADK.agent_data.vector_store.qdrant_store import QdrantStore
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +58,10 @@ class QdrantVectorizationTool:
         self.qdrant_store = None
         self.firestore_manager = None
         self._initialized = False
-        self._rate_limiter = {"last_call": 0, "min_interval": 0.3}  # 300ms between calls for free tier
+        self._rate_limiter = {
+            "last_call": 0,
+            "min_interval": 0.3,
+        }  # 300ms between calls for free tier
 
     async def _ensure_initialized(self):
         """Ensure QdrantStore and FirestoreMetadataManager are initialized."""
@@ -68,7 +82,9 @@ class QdrantVectorizationTool:
             firestore_config = settings.get_firestore_config()
             self.firestore_manager = FirestoreMetadataManager(
                 project_id=firestore_config.get("project_id"),
-                collection_name=firestore_config.get("metadata_collection", "document_metadata"),
+                collection_name=firestore_config.get(
+                    "metadata_collection", "document_metadata"
+                ),
             )
 
             self._initialized = True
@@ -106,9 +122,13 @@ class QdrantVectorizationTool:
         except Exception as e:
             error_msg = str(e).lower()
             if "rate limit" in error_msg or "too many requests" in error_msg:
-                logger.warning(f"Qdrant rate limit hit, retrying with exponential backoff: {e}")
+                logger.warning(
+                    f"Qdrant rate limit hit, retrying with exponential backoff: {e}"
+                )
                 # Increase rate limit interval temporarily
-                self._rate_limiter["min_interval"] = min(self._rate_limiter["min_interval"] * 1.5, 2.0)
+                self._rate_limiter["min_interval"] = min(
+                    self._rate_limiter["min_interval"] * 1.5, 2.0
+                )
                 await asyncio.sleep(self._rate_limiter["min_interval"])
                 raise ConnectionError(f"Qdrant rate limit: {e}")
             elif "connection" in error_msg or "timeout" in error_msg:
@@ -118,7 +138,9 @@ class QdrantVectorizationTool:
                 # Don't retry for other errors
                 raise
 
-    async def _batch_get_firestore_metadata(self, doc_ids: List[str]) -> Dict[str, Dict[str, Any]]:
+    async def _batch_get_firestore_metadata(
+        self, doc_ids: list[str]
+    ) -> dict[str, dict[str, Any]]:
         """
         Batch retrieve metadata from Firestore with concurrent processing and RU optimization.
         CLI 140e + CLI 140e.1 optimization for reduced latency and RU costs.
@@ -128,26 +150,40 @@ class QdrantVectorizationTool:
 
         try:
             # CLI140e.1 RU Optimization: Try batch existence check first
-            if hasattr(self.firestore_manager, '_batch_check_documents_exist'):
-                existence_map = await self.firestore_manager._batch_check_documents_exist(doc_ids)
-                existing_doc_ids = [doc_id for doc_id, exists in existence_map.items() if exists]
-                logger.info(f"Batch existence check: {len(existing_doc_ids)}/{len(doc_ids)} documents exist")
+            if hasattr(self.firestore_manager, "_batch_check_documents_exist"):
+                existence_map = (
+                    await self.firestore_manager._batch_check_documents_exist(doc_ids)
+                )
+                existing_doc_ids = [
+                    doc_id for doc_id, exists in existence_map.items() if exists
+                ]
+                logger.info(
+                    f"Batch existence check: {len(existing_doc_ids)}/{len(doc_ids)} documents exist"
+                )
             else:
                 existing_doc_ids = doc_ids  # Fallback to all doc_ids
-                
+
         except Exception as e:
-            logger.warning(f"Batch existence check failed, falling back to individual queries: {e}")
+            logger.warning(
+                f"Batch existence check failed, falling back to individual queries: {e}"
+            )
             existing_doc_ids = doc_ids
 
         # Use semaphore to control concurrency (8 concurrent queries for CLI140e optimization)
         semaphore = asyncio.Semaphore(8)
 
-        async def get_single_metadata(doc_id: str) -> tuple[str, Optional[Dict[str, Any]]]:
+        async def get_single_metadata(
+            doc_id: str,
+        ) -> tuple[str, dict[str, Any] | None]:
             async with semaphore:
                 try:
                     # CLI140e.1 RU Optimization: Use optimized metadata retrieval
-                    if hasattr(self.firestore_manager, 'get_metadata_with_version'):
-                        metadata = await self.firestore_manager.get_metadata_with_version(doc_id)
+                    if hasattr(self.firestore_manager, "get_metadata_with_version"):
+                        metadata = (
+                            await self.firestore_manager.get_metadata_with_version(
+                                doc_id
+                            )
+                        )
                     else:
                         # Fallback to standard method
                         metadata = await self.firestore_manager.get_metadata(doc_id)
@@ -158,19 +194,25 @@ class QdrantVectorizationTool:
 
         # Execute all metadata retrievals concurrently (only for existing documents)
         tasks = [get_single_metadata(doc_id) for doc_id in existing_doc_ids]
-        
+
         # CLI140e Optimization: Use timeout for batch operations
         try:
             results = await asyncio.wait_for(
                 asyncio.gather(*tasks, return_exceptions=True),
-                timeout=0.3  # 300ms timeout for batch Firestore operations
+                timeout=0.3,  # 300ms timeout for batch Firestore operations
             )
-        except asyncio.TimeoutError:
-            logger.warning(f"Batch Firestore query timed out for {len(existing_doc_ids)} documents")
+        except TimeoutError:
+            logger.warning(
+                f"Batch Firestore query timed out for {len(existing_doc_ids)} documents"
+            )
             # Fallback to individual queries with reduced concurrency
-            logger.warning(f"Batch Firestore query failed, falling back to individual queries: {e}")
+            logger.warning(
+                f"Batch Firestore query failed, falling back to individual queries: {e}"
+            )
             semaphore = asyncio.Semaphore(3)  # Reduced concurrency for fallback
-            results = await asyncio.gather(*tasks[:10], return_exceptions=True)  # Limit to 10 for fallback
+            results = await asyncio.gather(
+                *tasks[:10], return_exceptions=True
+            )  # Limit to 10 for fallback
 
         # Process results
         metadata_dict = {}
@@ -183,10 +225,14 @@ class QdrantVectorizationTool:
             if metadata:
                 metadata_dict[doc_id] = metadata
 
-        logger.debug(f"Retrieved metadata for {len(metadata_dict)}/{len(doc_ids)} documents")
+        logger.debug(
+            f"Retrieved metadata for {len(metadata_dict)}/{len(doc_ids)} documents"
+        )
         return metadata_dict
 
-    def _filter_by_metadata(self, results: List[Dict[str, Any]], filters: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _filter_by_metadata(
+        self, results: list[dict[str, Any]], filters: dict[str, Any]
+    ) -> list[dict[str, Any]]:
         """Filter results by metadata criteria."""
         if not filters:
             return results
@@ -203,7 +249,9 @@ class QdrantVectorizationTool:
 
         return filtered
 
-    def _filter_by_tags(self, results: List[Dict[str, Any]], tags: List[str]) -> List[Dict[str, Any]]:
+    def _filter_by_tags(
+        self, results: list[dict[str, Any]], tags: list[str]
+    ) -> list[dict[str, Any]]:
         """Filter results by auto-tags."""
         if not tags:
             return results
@@ -216,7 +264,9 @@ class QdrantVectorizationTool:
 
         return filtered
 
-    def _filter_by_path(self, results: List[Dict[str, Any]], path_query: str) -> List[Dict[str, Any]]:
+    def _filter_by_path(
+        self, results: list[dict[str, Any]], path_query: str
+    ) -> list[dict[str, Any]]:
         """Filter results by hierarchy path."""
         if not path_query:
             return results
@@ -229,7 +279,7 @@ class QdrantVectorizationTool:
 
         return filtered
 
-    def _build_hierarchy_path(self, result: Dict[str, Any]) -> str:
+    def _build_hierarchy_path(self, result: dict[str, Any]) -> str:
         """Build hierarchy path from metadata."""
         level_1 = result.get("level_1_category", "")
         level_2 = result.get("level_2_category", "")
@@ -244,13 +294,13 @@ class QdrantVectorizationTool:
     async def rag_search(
         self,
         query_text: str,
-        metadata_filters: Optional[Dict[str, Any]] = None,
-        tags: Optional[List[str]] = None,
-        path_query: Optional[str] = None,
+        metadata_filters: dict[str, Any] | None = None,
+        tags: list[str] | None = None,
+        path_query: str | None = None,
         limit: int = 10,
         score_threshold: float = 0.5,
-        qdrant_tag: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        qdrant_tag: str | None = None,
+    ) -> dict[str, Any]:
         """
         Perform hybrid RAG search combining Qdrant semantic search with Firestore metadata filtering.
         CLI 140e implementation with batch processing optimization.
@@ -307,7 +357,9 @@ class QdrantVectorizationTool:
             # Step 3: Apply filters
             filtered_results = firestore_results
             if metadata_filters:
-                filtered_results = self._filter_by_metadata(filtered_results, metadata_filters)
+                filtered_results = self._filter_by_metadata(
+                    filtered_results, metadata_filters
+                )
             if tags:
                 filtered_results = self._filter_by_tags(filtered_results, tags)
             if path_query:
@@ -323,7 +375,9 @@ class QdrantVectorizationTool:
                 enriched_result = {
                     "doc_id": result["_doc_id"],
                     "qdrant_score": result["_qdrant_score"],
-                    "metadata": {k: v for k, v in result.items() if not k.startswith("_")},
+                    "metadata": {
+                        k: v for k, v in result.items() if not k.startswith("_")
+                    },
                     "content_preview": result.get("content_preview", ""),
                     "auto_tags": result.get("auto_tags", []),
                     "hierarchy_path": self._build_hierarchy_path(result),
@@ -361,11 +415,11 @@ class QdrantVectorizationTool:
         self,
         doc_id: str,
         content: str,
-        metadata: Optional[Dict[str, Any]] = None,
-        tag: Optional[str] = None,
+        metadata: dict[str, Any] | None = None,
+        tag: str | None = None,
         update_firestore: bool = True,
         enable_auto_tagging: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Vectorize a document and store in Qdrant with optional Firestore sync and auto-tagging.
         CLI140f Performance Optimization: Target <0.3s per call.
@@ -390,55 +444,61 @@ class QdrantVectorizationTool:
                 "error": "OpenAI async client not available for embedding generation",
                 "doc_id": doc_id,
                 "latency": time.time() - start_time,
-                "performance_target_met": False
+                "performance_target_met": False,
             }
 
         try:
             # CLI140f: Parallel execution of tasks to reduce latency
             tasks = []
-            
+
             # Task 1: Set vectorStatus to pending in Firestore if enabled
             if update_firestore:
                 tasks.append(self._update_vector_status(doc_id, "pending", metadata))
 
             # Task 2: Generate embedding (main bottleneck)
-            embedding_task = get_openai_embedding(agent_context=None, text_to_embed=content)
+            embedding_task = get_openai_embedding(
+                agent_context=None, text_to_embed=content
+            )
             tasks.append(embedding_task)
 
             # CLI140f: Execute initial tasks concurrently with timeout
             try:
                 results = await asyncio.wait_for(
                     asyncio.gather(*tasks, return_exceptions=True),
-                    timeout=0.2  # 200ms timeout for initial operations
+                    timeout=0.2,  # 200ms timeout for initial operations
                 )
-                
+
                 # Extract embedding result
                 embedding_result = results[-1]  # Last task is always embedding
                 if isinstance(embedding_result, Exception):
                     raise embedding_result
-                    
-            except asyncio.TimeoutError:
+
+            except TimeoutError:
                 error_msg = "Embedding generation timeout"
                 if update_firestore:
-                    await self._update_vector_status(doc_id, "failed", metadata, error_msg)
+                    await self._update_vector_status(
+                        doc_id, "failed", metadata, error_msg
+                    )
                 return {
-                    "status": "timeout", 
-                    "error": error_msg, 
+                    "status": "timeout",
+                    "error": error_msg,
                     "doc_id": doc_id,
                     "latency": time.time() - start_time,
-                    "performance_target_met": False
+                    "performance_target_met": False,
                 }
 
             if not embedding_result or "embedding" not in embedding_result:
                 error_msg = "Failed to generate embedding"
                 if update_firestore:
-                    await self._update_vector_status(doc_id, "failed", metadata, error_msg)
+                    await self._update_vector_status(
+                        doc_id, "failed", metadata, error_msg
+                    )
                 return {
-                    "status": "failed", 
-                    "error": error_msg, 
+                    "status": "failed",
+                    "error": error_msg,
                     "doc_id": doc_id,
                     "latency": time.time() - start_time,
-                    "performance_target_met": False
+                    "performance_target_met": False,
                 }
 
             embedding = embedding_result["embedding"]
@@ -448,7 +508,9 @@ class QdrantVectorizationTool:
             qdrant_metadata.update(
                 {
                     "doc_id": doc_id,
-                    "content_preview": content[:200] + "..." if len(content) > 200 else content,
+                    "content_preview": (
+                        content[:200] + "..." if len(content) > 200 else content
+                    ),
                     "vectorized_at": datetime.utcnow().isoformat(),
                     "embedding_model": "text-embedding-ada-002",
                     "content_length": len(content),
@@ -457,7 +519,7 @@ class QdrantVectorizationTool:
 
             # CLI140f: Parallel execution of auto-tagging and vector upsert
             final_tasks = []
-            
+
             # Task 1: Generate auto-tags if enabled (optional, non-blocking)
             if enable_auto_tagging:
                 try:
@@ -467,16 +529,20 @@ class QdrantVectorizationTool:
                     )
                     final_tasks.append(auto_tag_task)
                 except Exception as e:
-                    logger.warning(f"Failed to initialize auto-tagging for doc_id {doc_id}: {e}")
-                    final_tasks.append(asyncio.create_task(asyncio.sleep(0)))  # Dummy task
+                    logger.warning(
+                        f"Failed to initialize auto-tagging for doc_id {doc_id}: {e}"
+                    )
+                    final_tasks.append(
+                        asyncio.create_task(asyncio.sleep(0))
+                    )  # Dummy task
 
             # Task 2: Upsert vector to Qdrant (critical path)
             vector_task = self._qdrant_operation_with_retry(
                 self.qdrant_store.upsert_vector,
-                vector_id=doc_id, 
-                vector=embedding, 
-                metadata=qdrant_metadata, 
-                tag=tag
+                vector_id=doc_id,
+                vector=embedding,
+                metadata=qdrant_metadata,
+                tag=tag,
             )
             final_tasks.append(vector_task)
 
@@ -484,47 +550,55 @@ class QdrantVectorizationTool:
             try:
                 final_results = await asyncio.wait_for(
                     asyncio.gather(*final_tasks, return_exceptions=True),
-                    timeout=0.15  # 150ms timeout for final operations
+                    timeout=0.15,  # 150ms timeout for final operations
                 )
-                
+
                 # Process results
                 if enable_auto_tagging and len(final_results) > 1:
                     auto_tag_result = final_results[0]
                     if not isinstance(auto_tag_result, Exception):
                         qdrant_metadata = auto_tag_result
-                        logger.debug(f"Enhanced metadata with auto-tags for doc_id: {doc_id}")
-                
+                        logger.debug(
+                            f"Enhanced metadata with auto-tags for doc_id: {doc_id}"
+                        )
+
                 vector_result = final_results[-1]  # Last task is always vector upsert
                 if isinstance(vector_result, Exception):
                     raise vector_result
-                    
-            except asyncio.TimeoutError:
+
+            except TimeoutError:
                 # CLI140f: Continue with basic metadata if auto-tagging times out
-                logger.warning(f"Auto-tagging timeout for doc_id {doc_id}, proceeding with basic metadata")
+                logger.warning(
+                    f"Auto-tagging timeout for doc_id {doc_id}, proceeding with basic metadata"
+                )
                 vector_result = await self._qdrant_operation_with_retry(
                     self.qdrant_store.upsert_vector,
-                    vector_id=doc_id, 
-                    vector=embedding, 
-                    metadata=qdrant_metadata, 
-                    tag=tag
+                    vector_id=doc_id,
+                    vector=embedding,
+                    metadata=qdrant_metadata,
+                    tag=tag,
                 )
 
             if not vector_result.get("success"):
                 error_msg = f"Failed to upsert vector: {vector_result.get('error', 'Unknown error')}"
                 if update_firestore:
-                    await self._update_vector_status(doc_id, "failed", metadata, error_msg)
+                    await self._update_vector_status(
+                        doc_id, "failed", metadata, error_msg
+                    )
                 return {
-                    "status": "failed", 
-                    "error": error_msg, 
+                    "status": "failed",
+                    "error": error_msg,
                     "doc_id": doc_id,
                     "latency": time.time() - start_time,
-                    "performance_target_met": False
+                    "performance_target_met": False,
                 }
 
             # CLI140f: Update vectorStatus to completed in Firestore (non-blocking)
             if update_firestore:
                 # Fire and forget for performance
-                asyncio.create_task(self._update_vector_status(doc_id, "completed", metadata))
+                asyncio.create_task(
+                    self._update_vector_status(doc_id, "completed", metadata)
+                )
 
             latency = time.time() - start_time
             performance_target_met = latency < 0.3
@@ -537,7 +611,7 @@ class QdrantVectorizationTool:
                 "metadata_keys": list(qdrant_metadata.keys()),
                 "firestore_updated": update_firestore,
                 "latency": latency,
-                "performance_target_met": performance_target_met
+                "performance_target_met": performance_target_met,
             }
 
         except Exception as e:
@@ -545,17 +619,23 @@ class QdrantVectorizationTool:
             logger.error(f"Failed to vectorize document {doc_id}: {e}")
             if update_firestore:
                 # Fire and forget for performance
-                asyncio.create_task(self._update_vector_status(doc_id, "failed", metadata, str(e)))
+                asyncio.create_task(
+                    self._update_vector_status(doc_id, "failed", metadata, str(e))
+                )
             return {
-                "status": "failed", 
-                "error": str(e), 
+                "status": "failed",
+                "error": str(e),
                 "doc_id": doc_id,
                 "latency": latency,
-                "performance_target_met": False
+                "performance_target_met": False,
             }
 
     async def _update_vector_status(
-        self, doc_id: str, status: str, metadata: Optional[Dict[str, Any]] = None, error_message: Optional[str] = None
+        self,
+        doc_id: str,
+        status: str,
+        metadata: dict[str, Any] | None = None,
+        error_message: str | None = None,
     ):
         """
         Update vectorStatus in Firestore.
@@ -583,12 +663,17 @@ class QdrantVectorizationTool:
             logger.debug(f"Updated vectorStatus to '{status}' for doc_id: {doc_id}")
 
         except Exception as e:
-            logger.error(f"Failed to update vectorStatus in Firestore for {doc_id}: {e}")
+            logger.error(
+                f"Failed to update vectorStatus in Firestore for {doc_id}: {e}"
+            )
             # Don't raise here to avoid breaking the main vectorization flow
 
     async def batch_vectorize_documents(
-        self, documents: List[Dict[str, Any]], tag: Optional[str] = None, update_firestore: bool = True
-    ) -> Dict[str, Any]:
+        self,
+        documents: list[dict[str, Any]],
+        tag: str | None = None,
+        update_firestore: bool = True,
+    ) -> dict[str, Any]:
         """
         Vectorize multiple documents in batch with CLI140f performance optimization.
         Target: <5s for 100 documents, <0.3s per document.
@@ -608,16 +693,18 @@ class QdrantVectorizationTool:
             return {"status": "failed", "error": "No documents provided", "results": []}
 
         # CLI140f: Optimized batch processing with concurrent execution
-        batch_size = min(10, len(documents))  # Process in batches of 10 for optimal performance
+        batch_size = min(
+            10, len(documents)
+        )  # Process in batches of 10 for optimal performance
         results = []
         successful = 0
         failed = 0
 
         # CLI140f: Process documents in concurrent batches
         for i in range(0, len(documents), batch_size):
-            batch = documents[i:i + batch_size]
+            batch = documents[i : i + batch_size]
             batch_start = time.time()
-            
+
             # Create tasks for concurrent processing
             tasks = []
             for doc in batch:
@@ -626,7 +713,11 @@ class QdrantVectorizationTool:
                 metadata = doc.get("metadata", {})
 
                 if not doc_id or not content:
-                    result = {"status": "failed", "error": "Missing doc_id or content", "doc_id": doc_id or "unknown"}
+                    result = {
+                        "status": "failed",
+                        "error": "Missing doc_id or content",
+                        "doc_id": doc_id or "unknown",
+                    }
                     results.append(result)
                     failed += 1
                     continue
@@ -634,12 +725,12 @@ class QdrantVectorizationTool:
                 # CLI140f: Create vectorization task with timeout
                 task = asyncio.create_task(
                     self._vectorize_document_with_timeout(
-                        doc_id=doc_id, 
-                        content=content, 
-                        metadata=metadata, 
-                        tag=tag, 
+                        doc_id=doc_id,
+                        content=content,
+                        metadata=metadata,
+                        tag=tag,
                         update_firestore=update_firestore,
-                        timeout=0.5  # 500ms timeout per document
+                        timeout=0.5,  # 500ms timeout per document
                     )
                 )
                 tasks.append(task)
@@ -648,17 +739,19 @@ class QdrantVectorizationTool:
             try:
                 batch_results = await asyncio.wait_for(
                     asyncio.gather(*tasks, return_exceptions=True),
-                    timeout=2.0  # 2s timeout per batch
+                    timeout=2.0,  # 2s timeout per batch
                 )
-                
+
                 # Process batch results
                 for result in batch_results:
                     if isinstance(result, Exception):
-                        results.append({
-                            "status": "failed",
-                            "error": str(result),
-                            "doc_id": "unknown"
-                        })
+                        results.append(
+                            {
+                                "status": "failed",
+                                "error": str(result),
+                                "doc_id": "unknown",
+                            }
+                        )
                         failed += 1
                     else:
                         results.append(result)
@@ -666,19 +759,23 @@ class QdrantVectorizationTool:
                             successful += 1
                         else:
                             failed += 1
-                            
-            except asyncio.TimeoutError:
+
+            except TimeoutError:
                 logger.warning(f"Batch timeout for documents {i}-{i+batch_size}")
                 for j in range(len(tasks)):
-                    results.append({
-                        "status": "timeout",
-                        "doc_id": batch[j].get("doc_id", "unknown"),
-                        "error": "Batch timeout"
-                    })
+                    results.append(
+                        {
+                            "status": "timeout",
+                            "doc_id": batch[j].get("doc_id", "unknown"),
+                            "error": "Batch timeout",
+                        }
+                    )
                     failed += 1
-            
+
             batch_latency = time.time() - batch_start
-            logger.debug(f"Processed vectorization batch {i//batch_size + 1} in {batch_latency:.3f}s")
+            logger.debug(
+                f"Processed vectorization batch {i//batch_size + 1} in {batch_latency:.3f}s"
+            )
 
         total_latency = time.time() - start_time
         performance_target_met = total_latency < 5.0 and len(documents) <= 100
@@ -698,11 +795,11 @@ class QdrantVectorizationTool:
         self,
         doc_id: str,
         content: str,
-        metadata: Optional[Dict[str, Any]] = None,
-        tag: Optional[str] = None,
+        metadata: dict[str, Any] | None = None,
+        tag: str | None = None,
         update_firestore: bool = True,
-        timeout: float = 0.5
-    ) -> Dict[str, Any]:
+        timeout: float = 0.5,
+    ) -> dict[str, Any]:
         """
         Vectorize document with timeout for CLI140f performance optimization.
         """
@@ -714,16 +811,16 @@ class QdrantVectorizationTool:
                     metadata=metadata,
                     tag=tag,
                     update_firestore=update_firestore,
-                    enable_auto_tagging=False  # CLI140f: Disable auto-tagging for batch performance
+                    enable_auto_tagging=False,  # CLI140f: Disable auto-tagging for batch performance
                 ),
-                timeout=timeout
+                timeout=timeout,
             )
-        except asyncio.TimeoutError:
+        except TimeoutError:
             logger.warning(f"Vectorization timeout for document {doc_id}")
             return {
                 "status": "timeout",
                 "doc_id": doc_id,
-                "error": f"Vectorization timeout after {timeout}s"
+                "error": f"Vectorization timeout after {timeout}s",
             }
 
 
@@ -743,10 +840,10 @@ def get_vectorization_tool() -> QdrantVectorizationTool:
 async def qdrant_vectorize_document(
     doc_id: str,
     content: str,
-    metadata: Optional[Dict[str, Any]] = None,
-    tag: Optional[str] = None,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
     update_firestore: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Vectorize a document and store in Qdrant with Firestore sync.
 
@@ -761,12 +858,16 @@ async def qdrant_vectorize_document(
         Result dictionary with operation status
     """
     tool = get_vectorization_tool()
-    return await tool.vectorize_document(doc_id, content, metadata, tag, update_firestore)
+    return await tool.vectorize_document(
+        doc_id, content, metadata, tag, update_firestore
+    )
 
 
 async def qdrant_batch_vectorize_documents(
-    documents: List[Dict[str, Any]], tag: Optional[str] = None, update_firestore: bool = True
-) -> Dict[str, Any]:
+    documents: list[dict[str, Any]],
+    tag: str | None = None,
+    update_firestore: bool = True,
+) -> dict[str, Any]:
     """
     Batch vectorize multiple documents using the global vectorization tool.
 
@@ -784,13 +885,13 @@ async def qdrant_batch_vectorize_documents(
 
 async def qdrant_rag_search(
     query_text: str,
-    metadata_filters: Optional[Dict[str, Any]] = None,
-    tags: Optional[List[str]] = None,
-    path_query: Optional[str] = None,
+    metadata_filters: dict[str, Any] | None = None,
+    tags: list[str] | None = None,
+    path_query: str | None = None,
     limit: int = 10,
     score_threshold: float = 0.5,
-    qdrant_tag: Optional[str] = None,
-) -> Dict[str, Any]:
+    qdrant_tag: str | None = None,
+) -> dict[str, Any]:
     """
     Perform hybrid RAG search using the global vectorization tool.
     CLI 140e implementation with batch processing optimization.

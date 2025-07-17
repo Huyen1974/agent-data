@@ -1,13 +1,13 @@
-import logging
-from typing import Dict, Any
 import asyncio
+import logging
+from typing import Any
 
 from agent_data.vector_store.qdrant_store import QdrantStore
 
 logger = logging.getLogger(__name__)
 
 
-async def delete_by_tag(tag: str) -> Dict[str, Any]:
+async def delete_by_tag(tag: str) -> dict[str, Any]:
     """
     Delete vectors from the Qdrant collection by a specific tag.
 
@@ -18,7 +18,11 @@ async def delete_by_tag(tag: str) -> Dict[str, Any]:
         A dictionary with status and count of deleted vectors.
     """
     if not tag or not tag.strip():
-        return {"status": "failed", "error": "Tag cannot be empty or whitespace only.", "deleted_count": 0}
+        return {
+            "status": "failed",
+            "error": "Tag cannot be empty or whitespace only.",
+            "deleted_count": 0,
+        }
 
     try:
         # Get the QdrantStore instance
@@ -37,11 +41,15 @@ async def delete_by_tag(tag: str) -> Dict[str, Any]:
 
     except Exception as e:
         logger.error(f"Error deleting vectors by tag '{tag}': {e}", exc_info=True)
-        return {"status": "failed", "error": f"Failed to delete vectors by tag '{tag}': {str(e)}", "deleted_count": 0}
+        return {
+            "status": "failed",
+            "error": f"Failed to delete vectors by tag '{tag}': {str(e)}",
+            "deleted_count": 0,
+        }
 
 
 # Synchronous wrapper for compatibility with the tool registration system
-def delete_by_tag_sync(tag: str) -> Dict[str, Any]:
+def delete_by_tag_sync(tag: str) -> dict[str, Any]:
     """
     Synchronous wrapper for delete_by_tag function.
 
@@ -65,8 +73,14 @@ def delete_by_tag_sync(tag: str) -> Dict[str, Any]:
         else:
             return loop.run_until_complete(delete_by_tag(tag))
     except Exception as e:
-        logger.error(f"Error in synchronous wrapper for delete_by_tag: {e}", exc_info=True)
-        return {"status": "failed", "error": f"Failed to delete vectors by tag '{tag}': {str(e)}", "deleted_count": 0}
+        logger.error(
+            f"Error in synchronous wrapper for delete_by_tag: {e}", exc_info=True
+        )
+        return {
+            "status": "failed",
+            "error": f"Failed to delete vectors by tag '{tag}': {str(e)}",
+            "deleted_count": 0,
+        }
 
 
 # Example usage (for testing purposes)

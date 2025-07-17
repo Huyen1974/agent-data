@@ -1,6 +1,8 @@
 import time
-from tools.delay_tool import delay_tool
+
 import pytest
+
+from tools.delay_tool import delay_tool
 
 
 @pytest.mark.unit

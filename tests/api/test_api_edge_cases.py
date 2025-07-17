@@ -3,10 +3,11 @@ Test suite for API edge cases and error handling scenarios
 Tests rate limiting, large payloads, concurrent requests, and boundary conditions
 """
 
-import pytest
-import time
 import json
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+import pytest
 
 from agent_data_manager.auth.auth_manager import AuthManager
 
@@ -21,7 +22,13 @@ class TestRateLimitingEdgeCases:
     def test_rate_limit_boundary_conditions(self):
         """Test rate limiting at exact boundaries"""
         # Simulate requests at rate limit boundaries (optimized for MacBook M1)
-        request_intervals = [0.01, 0.05, 0.1, 0.2, 0.5]  # Different intervals in seconds
+        request_intervals = [
+            0.01,
+            0.05,
+            0.1,
+            0.2,
+            0.5,
+        ]  # Different intervals in seconds
 
         for interval in request_intervals:
             start_time = time.time()
@@ -38,7 +45,9 @@ class TestRateLimitingEdgeCases:
                 # Check if interval is respected
                 if i > 0:
                     expected_min_time = i * interval
-                    assert processing_time >= expected_min_time * 0.9  # Allow 10% tolerance
+                    assert (
+                        processing_time >= expected_min_time * 0.9
+                    )  # Allow 10% tolerance
 
     def test_concurrent_rate_limit_users(self):
         """Test rate limiting with multiple concurrent users"""
@@ -48,12 +57,19 @@ class TestRateLimitingEdgeCases:
             results = []
             for i in range(num_requests):
                 # Create token for user
-                token = self.auth_manager.create_user_token(f"user_{user_id}@test.com", f"user_{user_id}@test.com")
+                token = self.auth_manager.create_user_token(
+                    f"user_{user_id}@test.com", f"user_{user_id}@test.com"
+                )
 
                 # Simulate request
                 request_time = time.time()
                 results.append(
-                    {"user_id": user_id, "request_num": i, "timestamp": request_time, "token_valid": len(token) > 50}
+                    {
+                        "user_id": user_id,
+                        "request_num": i,
+                        "timestamp": request_time,
+                        "token_valid": len(token) > 50,
+                    }
                 )
 
                 # Small delay between requests
@@ -63,7 +79,10 @@ class TestRateLimitingEdgeCases:
 
         # Test with multiple users concurrently
         with ThreadPoolExecutor(max_workers=3) as executor:
-            futures = [executor.submit(simulate_user_requests, user_id, 2) for user_id in range(3)]
+            futures = [
+                executor.submit(simulate_user_requests, user_id, 2)
+                for user_id in range(3)
+            ]
 
             all_results = []
             for future in as_completed(futures):
@@ -78,7 +97,9 @@ class TestRateLimitingEdgeCases:
             assert len(user_requests) == 2
 
             if len(user_requests) > 1:
-                time_diff = user_requests[1]["timestamp"] - user_requests[0]["timestamp"]
+                time_diff = (
+                    user_requests[1]["timestamp"] - user_requests[0]["timestamp"]
+                )
                 assert time_diff >= 0.05  # Minimum spacing
 
 
@@ -157,7 +178,9 @@ class TestLargePayloadHandling:
                 parsed_data = json.loads(json_str)
                 assert parsed_data["content"] == content
             except Exception as e:
-                pytest.fail(f"Failed to handle special content: {content[:50]}... Error: {e}")
+                pytest.fail(
+                    f"Failed to handle special content: {content[:50]}... Error: {e}"
+                )
 
 
 class TestConcurrentRequestHandling:
@@ -172,7 +195,9 @@ class TestConcurrentRequestHandling:
 
         def create_token_for_user(user_id):
             """Create token for a specific user"""
-            return self.auth_manager.create_user_token(f"user_{user_id}@test.com", f"user_{user_id}@test.com")
+            return self.auth_manager.create_user_token(
+                f"user_{user_id}@test.com", f"user_{user_id}@test.com"
+            )
 
         # Create tokens concurrently
         with ThreadPoolExecutor(max_workers=5) as executor:
@@ -192,7 +217,9 @@ class TestConcurrentRequestHandling:
     def test_concurrent_token_validation(self):
         """Test concurrent token validation"""
         # Create a single token
-        token = self.auth_manager.create_user_token("concurrent@test.com", "concurrent@test.com")
+        token = self.auth_manager.create_user_token(
+            "concurrent@test.com", "concurrent@test.com"
+        )
 
         def validate_token():
             """Validate the token"""
@@ -230,7 +257,9 @@ class TestErrorHandlingEdgeCases:
 
         try:
             for i in range(100):  # Create 100 tokens
-                token = self.auth_manager.create_user_token(f"memory_test_{i}@test.com", f"memory_test_{i}@test.com")
+                token = self.auth_manager.create_user_token(
+                    f"memory_test_{i}@test.com", f"memory_test_{i}@test.com"
+                )
                 tokens.append(token)
 
                 # Validate every 10th token to ensure they're still working
@@ -256,7 +285,8 @@ class TestErrorHandlingEdgeCases:
 
         for i in range(5):
             token = self.auth_manager.create_access_token(
-                {"sub": f"rapid_{i}@test.com", "email": f"rapid_{i}@test.com"}, expires_delta=timedelta(seconds=1)
+                {"sub": f"rapid_{i}@test.com", "email": f"rapid_{i}@test.com"},
+                expires_delta=timedelta(seconds=1),
             )
             short_lived_tokens.append(token)
 
@@ -293,7 +323,9 @@ class TestErrorHandlingEdgeCases:
                 try:
                     # This should fail gracefully
                     self.auth_manager.verify_token(malformed_input)
-                    pytest.fail(f"Should have failed for input: {repr(malformed_input)}")
+                    pytest.fail(
+                        f"Should have failed for input: {repr(malformed_input)}"
+                    )
                 except Exception:
                     # Expected to fail
                     pass
@@ -311,7 +343,9 @@ class TestErrorHandlingEdgeCases:
 
         for expiry_time in boundary_times:
             user_data = {"sub": "boundary@test.com", "email": "boundary@test.com"}
-            token = self.auth_manager.create_access_token(user_data, expires_delta=expiry_time)
+            token = self.auth_manager.create_access_token(
+                user_data, expires_delta=expiry_time
+            )
 
             # Should be valid immediately
             payload = self.auth_manager.verify_token(token)

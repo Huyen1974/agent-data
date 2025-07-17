@@ -50,7 +50,7 @@ async def test_save_firestore_client_init_fails(self,
 
 pattern = r"@patch\(f\"{SAVE_TOOL_MODULE_PATH}\.OPENAI_AVAILABLE\", True\)[\s\S]+?async def test_save_firestore_client_init_fails\(self,[\s\S]+?\"\"\"Test failure during Firestore client initialization.\"\"\"[\s\S]+?mocker\.patch\(UPLOAD_WITH_RETRY_PATH\)\.assert_not_called\(\)"
 
-with open(file_path, "r", encoding="utf-8") as f:
+with open(file_path, encoding="utf-8") as f:
     content = f.read()
 
 content, n = re.subn(pattern, new_func.strip(), content, flags=re.MULTILINE)
@@ -58,4 +58,6 @@ content, n = re.subn(pattern, new_func.strip(), content, flags=re.MULTILINE)
 with open(file_path, "w", encoding="utf-8") as f:
     f.write(content)
 
-print(f"Đã thay thế function test_save_firestore_client_init_fails (số lần thay thế: {n})")
+print(
+    f"Đã thay thế function test_save_firestore_client_init_fails (số lần thay thế: {n})"
+)

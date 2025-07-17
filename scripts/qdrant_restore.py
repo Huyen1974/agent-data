@@ -11,13 +11,15 @@ import logging
 import os
 import tempfile
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Any
 
 from google.cloud import storage
 from qdrant_client import QdrantClient
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -31,7 +33,7 @@ def get_qdrant_client() -> QdrantClient:
     return QdrantClient(url=qdrant_url, timeout=60)
 
 
-def find_latest_snapshot(bucket_name: str = "qdrant-snapshots") -> Optional[str]:
+def find_latest_snapshot(bucket_name: str = "qdrant-snapshots") -> str | None:
     """Find the latest snapshot in GCS bucket."""
     logger.info(f"Searching for latest snapshot in bucket: {bucket_name}")
 
@@ -60,7 +62,9 @@ def find_latest_snapshot(bucket_name: str = "qdrant-snapshots") -> Optional[str]
         raise
 
 
-def download_snapshot_from_gcs(blob_name: str, bucket_name: str = "qdrant-snapshots") -> str:
+def download_snapshot_from_gcs(
+    blob_name: str, bucket_name: str = "qdrant-snapshots"
+) -> str:
     """Download snapshot from GCS to local temporary file."""
     logger.info(f"Downloading snapshot: {blob_name}")
 
@@ -84,7 +88,9 @@ def download_snapshot_from_gcs(blob_name: str, bucket_name: str = "qdrant-snapsh
             logger.info(f"Downloaded size: {file_size} bytes")
             return snapshot_path
         else:
-            raise FileNotFoundError(f"Downloaded snapshot file not found or empty: {snapshot_path}")
+            raise FileNotFoundError(
+                f"Downloaded snapshot file not found or empty: {snapshot_path}"
+            )
 
     except Exception as e:
         logger.error(f"Failed to download snapshot from GCS: {str(e)}")
@@ -100,7 +106,9 @@ def restore_snapshot_to_qdrant(snapshot_path: str, collection_name: str) -> bool
 
         # Check if collection already exists
         if client.collection_exists(collection_name):
-            logger.info(f"Collection '{collection_name}' already exists, deleting it first")
+            logger.info(
+                f"Collection '{collection_name}' already exists, deleting it first"
+            )
             client.delete_collection(collection_name)
 
         # Restore snapshot
@@ -109,7 +117,9 @@ def restore_snapshot_to_qdrant(snapshot_path: str, collection_name: str) -> bool
         # Verify restoration
         if client.collection_exists(collection_name):
             collection_info = client.get_collection(collection_name)
-            logger.info(f"Snapshot restored successfully to collection '{collection_name}'")
+            logger.info(
+                f"Snapshot restored successfully to collection '{collection_name}'"
+            )
             logger.info(f"Collection info: {collection_info}")
             return True
         else:
@@ -138,7 +148,7 @@ def cleanup_local_file(file_path: str):
         logger.warning(f"Failed to clean up local file {file_path}: {str(e)}")
 
 
-def download_and_restore_snapshot() -> Dict[str, Any]:
+def download_and_restore_snapshot() -> dict[str, Any]:
     """
     Main function to download and restore the latest snapshot from GCS.
 
@@ -164,7 +174,9 @@ def download_and_restore_snapshot() -> Dict[str, Any]:
 
         result["collection_name"] = collection_name
 
-        logger.info(f"Starting snapshot restore process for collection: {collection_name}")
+        logger.info(
+            f"Starting snapshot restore process for collection: {collection_name}"
+        )
         logger.info(f"Using GCS bucket: {bucket_name}")
 
         # Find latest snapshot
@@ -185,7 +197,9 @@ def download_and_restore_snapshot() -> Dict[str, Any]:
 
         if restore_success:
             result["status"] = "success"
-            logger.info(f"Snapshot restore completed successfully: {latest_snapshot_blob}")
+            logger.info(
+                f"Snapshot restore completed successfully: {latest_snapshot_blob}"
+            )
         else:
             result["status"] = "failed"
             result["error"] = "Restoration verification failed"

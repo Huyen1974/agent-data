@@ -9,11 +9,14 @@ This test validates Tree View functionality with 8 documents to ensure correct
 path retrieval and sharing link generation with metadata storage in project_tree collection.
 """
 
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 from datetime import datetime, timedelta
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+import pytest
+
+from src.agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestCLI130TreeView:
@@ -37,8 +40,12 @@ class TestCLI130TreeView:
     @pytest.fixture
     def metadata_manager(self, mock_firestore_client):
         """Create FirestoreMetadataManager with mocked client."""
-        with patch("src.agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"):
-            manager = FirestoreMetadataManager(project_id="test-project", collection_name="test_collection")
+        with patch(
+            "src.agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"
+        ):
+            manager = FirestoreMetadataManager(
+                project_id="test-project", collection_name="test_collection"
+            )
             manager.db = mock_firestore_client
             return manager
 
@@ -84,17 +91,23 @@ class TestCLI130TreeView:
         mock_doc = MagicMock()
         mock_doc.exists = True
         mock_doc.to_dict.return_value = sample_documents["doc_001"]
-        mock_firestore_client.collection.return_value.document.return_value.get.return_value = mock_doc
+        mock_firestore_client.collection.return_value.document.return_value.get.return_value = (
+            mock_doc
+        )
 
         path = await metadata_manager.get_document_path("doc_001")
-        expected_path = "research_paper/machine_learning/deep_learning/2024/python/general/doc_001"
+        expected_path = (
+            "research_paper/machine_learning/deep_learning/2024/python/general/doc_001"
+        )
         assert path == expected_path, f"Expected path {expected_path}, got {path}"
 
         # Test 2: Copy Path functionality - Partial hierarchy document
         mock_doc.to_dict.return_value = sample_documents["doc_002"]
         path = await metadata_manager.get_document_path("doc_002")
         expected_path = "documentation/api_guide/authentication/doc_002"
-        assert path == expected_path, f"Expected partial path {expected_path}, got {path}"
+        assert (
+            path == expected_path
+        ), f"Expected partial path {expected_path}, got {path}"
 
         # Test 3: Copy Path functionality - Non-existent document
         mock_doc.exists = False
@@ -111,7 +124,9 @@ class TestCLI130TreeView:
         def mock_collection_side_effect(collection_name):
             if collection_name == "project_tree":
                 mock_project_tree_collection = MagicMock()
-                mock_project_tree_collection.document.return_value = mock_project_tree_ref
+                mock_project_tree_collection.document.return_value = (
+                    mock_project_tree_ref
+                )
                 return mock_project_tree_collection
             else:
                 return mock_firestore_client.collection.return_value
@@ -122,18 +137,25 @@ class TestCLI130TreeView:
             mock_uuid_obj = MagicMock()
             mock_uuid_obj.__str__ = MagicMock(return_value="test-share-id-123")
             mock_uuid.return_value = mock_uuid_obj
-            with patch("src.agent_data_manager.vector_store.firestore_metadata_manager.datetime") as mock_datetime:
+            with patch(
+                "src.agent_data_manager.vector_store.firestore_metadata_manager.datetime"
+            ) as mock_datetime:
                 # Mock datetime for consistent testing
                 mock_now = datetime(2024, 1, 15, 15, 30, 0)
                 mock_datetime.utcnow.return_value = mock_now
                 mock_datetime.timedelta = timedelta
 
-                share_result = await metadata_manager.share_document("doc_002", shared_by="test@example.com")
+                share_result = await metadata_manager.share_document(
+                    "doc_002", shared_by="test@example.com"
+                )
 
                 # Validate share result structure
                 assert share_result is not None, "Share result should not be None"
                 assert share_result["share_id"] == "test-share-id-123"
-                assert share_result["share_url"] == "https://agent-data/share/test-share-id-123"
+                assert (
+                    share_result["share_url"]
+                    == "https://agent-data/share/test-share-id-123"
+                )
                 assert share_result["doc_id"] == "doc_002"
                 assert share_result["shared_by"] == "test@example.com"
                 assert "created_at" in share_result
@@ -159,22 +181,38 @@ class TestCLI130TreeView:
         Test that Tree View methods are properly implemented in FirestoreMetadataManager.
         """
         # Verify methods exist
-        assert hasattr(FirestoreMetadataManager, "get_document_path"), "get_document_path method missing"
-        assert hasattr(FirestoreMetadataManager, "share_document"), "share_document method missing"
+        assert hasattr(
+            FirestoreMetadataManager, "get_document_path"
+        ), "get_document_path method missing"
+        assert hasattr(
+            FirestoreMetadataManager, "share_document"
+        ), "share_document method missing"
 
         # Verify method signatures
         import inspect
 
         # Check get_document_path signature
         path_sig = inspect.signature(FirestoreMetadataManager.get_document_path)
-        assert "point_id" in path_sig.parameters, "get_document_path missing point_id parameter"
+        assert (
+            "point_id" in path_sig.parameters
+        ), "get_document_path missing point_id parameter"
 
         # Check share_document signature
         share_sig = inspect.signature(FirestoreMetadataManager.share_document)
-        assert "point_id" in share_sig.parameters, "share_document missing point_id parameter"
-        assert "shared_by" in share_sig.parameters, "share_document missing shared_by parameter"
-        assert "expires_days" in share_sig.parameters, "share_document missing expires_days parameter"
+        assert (
+            "point_id" in share_sig.parameters
+        ), "share_document missing point_id parameter"
+        assert (
+            "shared_by" in share_sig.parameters
+        ), "share_document missing shared_by parameter"
+        assert (
+            "expires_days" in share_sig.parameters
+        ), "share_document missing expires_days parameter"
 
         # Verify default values
-        assert share_sig.parameters["shared_by"].default is None, "shared_by should default to None"
-        assert share_sig.parameters["expires_days"].default == 7, "expires_days should default to 7"
+        assert (
+            share_sig.parameters["shared_by"].default is None
+        ), "shared_by should default to None"
+        assert (
+            share_sig.parameters["expires_days"].default == 7
+        ), "expires_days should default to 7"

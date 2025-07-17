@@ -1,4 +1,5 @@
-from typing import Dict, List, Any
+from typing import Any
+
 import faiss
 import numpy as np
 from qdrant_client import QdrantClient
@@ -9,9 +10,9 @@ def migrate_faiss_to_qdrant(
     faiss_index_path: str,
     qdrant_client: QdrantClient,
     collection_name: str,
-    payloads: List[Dict[str, Any]] = None,
+    payloads: list[dict[str, Any]] = None,
     dry_run: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     stats = {"vectors_processed": 0, "errors": 0, "skipped": 0}
     index = faiss.read_index(faiss_index_path)
 
@@ -30,11 +31,16 @@ def migrate_faiss_to_qdrant(
     if len(payloads) != index.ntotal:
         stats["errors"] += 1
         # It is better to provide a more descriptive error message
-        stats["error_message"] = "Payloads length does not match the number of vectors in the FAISS index."
+        stats["error_message"] = (
+            "Payloads length does not match the number of vectors in the FAISS index."
+        )
         return stats
 
     points = [
-        PointStruct(id=payloads[i]["id"], vector=vectors[i].tolist(), payload=payloads[i]) for i in range(index.ntotal)
+        PointStruct(
+            id=payloads[i]["id"], vector=vectors[i].tolist(), payload=payloads[i]
+        )
+        for i in range(index.ntotal)
     ]
     stats["vectors_processed"] = len(points)
 

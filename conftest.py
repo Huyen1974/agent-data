@@ -1,21 +1,25 @@
-import pytest
+import json
 import os
 import shutil
 import tempfile
-import json
-from pathlib import Path
 from datetime import datetime  # For CLI 95A
-from unittest.mock import Mock, patch, MagicMock, AsyncMock
+from pathlib import Path
+from unittest.mock import MagicMock, Mock
+
+import pytest
 
 # Import fixtures from mocks
 try:
-    from tests.mocks.faiss_duplicate_id_fixture import faiss_index_with_duplicates  # noqa: F401
+    from tests.mocks.faiss_duplicate_id_fixture import (
+        faiss_index_with_duplicates,
+    )  # noqa: F401
 except ImportError:
     # Create a mock fixture if the import fails
     @pytest.fixture
     def faiss_index_with_duplicates():
         """Mock faiss index fixture for testing"""
         return None
+
 
 # CLI140m.63: Global comprehensive mocking fixture
 @pytest.fixture(autouse=True, scope="function")
@@ -25,45 +29,65 @@ def global_comprehensive_mocks(monkeypatch):
     Applied automatically to all tests to ensure M1 MacBook safety.
     """
     # Check if we should apply mocks based on environment
-    if os.getenv("DISABLE_REAL_SERVICES", "1") == "1" or os.getenv("QDRANT_MOCK", "0") == "1":
-        
+    if (
+        os.getenv("DISABLE_REAL_SERVICES", "1") == "1"
+        or os.getenv("QDRANT_MOCK", "0") == "1"
+    ):
+
         # Mock requests.post and requests.get to prevent network calls
         mock_response = MagicMock()
         mock_response.status_code = 200
         mock_response.json.return_value = {"status": "success", "mocked": True}
         mock_response.text = "Mocked response"
         mock_response.headers = {}
-        
+
         monkeypatch.setattr("requests.post", MagicMock(return_value=mock_response))
         monkeypatch.setattr("requests.get", MagicMock(return_value=mock_response))
         monkeypatch.setattr("requests.put", MagicMock(return_value=mock_response))
         monkeypatch.setattr("requests.delete", MagicMock(return_value=mock_response))
-        
+
         # Mock subprocess calls to prevent heavy operations, but allow pytest collection
         def smart_subprocess_mock(*args, **kwargs):
             mock_result = MagicMock()
             mock_result.returncode = 0
             mock_result.stderr = ""
-            
+
             # Allow pytest --collect-only to work properly for meta count test
-            if (args and len(args[0]) >= 2 and 
-                (args[0][0] == "pytest" or (args[0][0] == "python" and len(args[0]) >= 3 and args[0][2] == "pytest")) 
-                and "--collect-only" in args[0]):
+            if (
+                args
+                and len(args[0]) >= 2
+                and (
+                    args[0][0] == "pytest"
+                    or (
+                        args[0][0] == "python"
+                        and len(args[0]) >= 3
+                        and args[0][2] == "pytest"
+                    )
+                )
+                and "--collect-only" in args[0]
+            ):
                 # Run the actual pytest collection for meta count test
                 import subprocess as real_subprocess
+
                 try:
                     return real_subprocess.run(*args, **kwargs)
                 except Exception:
                     # Fallback to mock if real collection fails
                     # Check if this is a marker-filtered collection
-                    if "-m" in args[0] and "not slow and not deferred" in " ".join(args[0]):
+                    if "-m" in args[0] and "not slow and not deferred" in " ".join(
+                        args[0]
+                    ):
                         # Simulate filtered collection result
-                        mock_result.stdout = "145/519 tests collected (374 deselected) in 1.00s"
+                        mock_result.stdout = (
+                            "145/519 tests collected (374 deselected) in 1.00s"
+                        )
                     else:
                         # Provide realistic test list for regular collection
                         test_list = []
                         for i in range(519):
-                            test_list.append(f"tests/test_mock_{i:03d}.py::test_mock_function_{i:03d}")
+                            test_list.append(
+                                f"tests/test_mock_{i:03d}.py::test_mock_function_{i:03d}"
+                            )
                         test_list.append("519 tests collected in 1.00s")
                         mock_result.stdout = "\n".join(test_list)
                     return mock_result
@@ -71,72 +95,88 @@ def global_comprehensive_mocks(monkeypatch):
                 # Mock other subprocess calls
                 mock_result.stdout = "Mocked subprocess output"
                 return mock_result
-        
+
         monkeypatch.setattr("subprocess.run", smart_subprocess_mock)
         monkeypatch.setattr("subprocess.Popen", MagicMock())
-        
+
         # Mock Google Cloud services (handle missing modules gracefully)
         try:
-            monkeypatch.setattr("google.cloud.monitoring_v3.MetricServiceClient", MagicMock())
+            monkeypatch.setattr(
+                "google.cloud.monitoring_v3.MetricServiceClient", MagicMock()
+            )
         except ImportError:
             pass  # Module not installed
-        
+
         try:
             monkeypatch.setattr("google.cloud.logging.Client", MagicMock())
         except ImportError:
             pass  # Module not installed
-        
+
         try:
             monkeypatch.setattr("google.cloud.storage.Client", MagicMock())
         except ImportError:
             pass  # Module not installed
-        
+
         try:
             monkeypatch.setattr("google.cloud.firestore.Client", MagicMock())
         except ImportError:
             pass  # Module not installed
-        
+
         # Mock Qdrant Client comprehensively
         mock_qdrant_client = MagicMock()
         mock_qdrant_client.get_collections.return_value = MagicMock(collections=[])
-        mock_qdrant_client.create_collection.return_value = MagicMock(status="completed")
+        mock_qdrant_client.create_collection.return_value = MagicMock(
+            status="completed"
+        )
         mock_qdrant_client.upsert.return_value = MagicMock(status="completed")
         mock_qdrant_client.search.return_value = []
         mock_qdrant_client.count.return_value = MagicMock(count=0)
         mock_qdrant_client.delete.return_value = MagicMock(status="completed")
-        
-        monkeypatch.setattr("qdrant_client.QdrantClient", MagicMock(return_value=mock_qdrant_client))
-        
+
+        monkeypatch.setattr(
+            "qdrant_client.QdrantClient", MagicMock(return_value=mock_qdrant_client)
+        )
+
         # Mock OpenAI Client
         mock_openai_client = MagicMock()
         mock_embedding_response = MagicMock()
         mock_embedding_response.data = [MagicMock(embedding=[0.1] * 1536)]
         mock_openai_client.embeddings.create.return_value = mock_embedding_response
-        
+
         monkeypatch.setattr("openai.OpenAI", MagicMock(return_value=mock_openai_client))
-        
+
         # Mock ShadowTrafficMonitor to prevent timeout
         mock_shadow_monitor = MagicMock()
-        mock_shadow_monitor.get_shadow_metrics.return_value = {'requests': 0, 'errors': 0, 'latencies': []}
+        mock_shadow_monitor.get_shadow_metrics.return_value = {
+            "requests": 0,
+            "errors": 0,
+            "latencies": [],
+        }
         mock_shadow_monitor.analyze_performance.return_value = None
         mock_shadow_monitor.generate_final_report.return_value = {
-            'assessment': 'PASS', 
-            'duration_hours': 24.0, 
-            'traffic_distribution': {'shadow_percentage': 1.0}, 
-            'shadow_traffic': {'error_rate_percent': 2.0, 'latency_p95_ms': 300}
+            "assessment": "PASS",
+            "duration_hours": 24.0,
+            "traffic_distribution": {"shadow_percentage": 1.0},
+            "shadow_traffic": {"error_rate_percent": 2.0, "latency_p95_ms": 300},
         }
-        
+
         # Mock at multiple possible import paths
         try:
-            monkeypatch.setattr("shadow_traffic_monitor.ShadowTrafficMonitor", MagicMock(return_value=mock_shadow_monitor))
+            monkeypatch.setattr(
+                "shadow_traffic_monitor.ShadowTrafficMonitor",
+                MagicMock(return_value=mock_shadow_monitor),
+            )
         except (ImportError, AttributeError):
             pass
-        
+
         try:
-            monkeypatch.setattr("tests.test_cli140g1_shadow.ShadowTrafficMonitor", MagicMock(return_value=mock_shadow_monitor))
+            monkeypatch.setattr(
+                "tests.test_cli140g1_shadow.ShadowTrafficMonitor",
+                MagicMock(return_value=mock_shadow_monitor),
+            )
         except (ImportError, AttributeError):
             pass
-        
+
         # Set environment variables for consistent mocking
         monkeypatch.setenv("QDRANT_URL", "http://mock-qdrant:6333")
         monkeypatch.setenv("QDRANT_API_KEY", "mock-key")
@@ -144,6 +184,7 @@ def global_comprehensive_mocks(monkeypatch):
         monkeypatch.setenv("OPENAI_API_KEY", "mock-openai-key")
         monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "mock-project")
         monkeypatch.setenv("FIRESTORE_EMULATOR_HOST", "localhost:8080")
+
 
 # For CLI 98B: Correctly order test_file_not_found_graceful
 # For CLI 97B: Correctly order test_delete_nonexistent_vector
@@ -163,9 +204,9 @@ def load_embedding_cache():
     cache_path = Path(EMBEDDING_CACHE_FILE)
     if cache_path.exists():
         try:
-            with open(cache_path, "r") as f:
+            with open(cache_path) as f:
                 EMBEDDING_CACHE = json.load(f)
-        except (json.JSONDecodeError, IOError):
+        except (OSError, json.JSONDecodeError):
             EMBEDDING_CACHE = {}
     else:
         EMBEDDING_CACHE = {}
@@ -178,7 +219,7 @@ def save_embedding_cache():
     try:
         with open(cache_path, "w") as f:
             json.dump(EMBEDDING_CACHE, f)
-    except IOError:
+    except OSError:
         pass  # Fail silently if we can't save cache
 
 
@@ -223,7 +264,13 @@ def qdrant_mock():
     # Mock vector operations
     mock_client.upsert = Mock(return_value=Mock(status="completed"))
     mock_client.search = Mock(
-        return_value=[Mock(id="test-vector-id", score=0.95, payload={"doc_id": "test-doc", "tag": "test"})]
+        return_value=[
+            Mock(
+                id="test-vector-id",
+                score=0.95,
+                payload={"doc_id": "test-doc", "tag": "test"},
+            )
+        ]
     )
     mock_client.retrieve = Mock(
         return_value=[
@@ -314,7 +361,8 @@ def mock_external_services_auto(monkeypatch):
 
     # Apply patches only if not in slow test mode
     if not (
-        hasattr(pytest, "current_item") and getattr(pytest.current_item, "get_closest_marker", lambda x: None)("slow")
+        hasattr(pytest, "current_item")
+        and getattr(pytest.current_item, "get_closest_marker", lambda x: None)("slow")
     ):
 
         # Patch at multiple possible import locations
@@ -372,7 +420,9 @@ def pytest_collection_modifyitems(config, items):
         # This is a basic approach. If multiple orderings conflict or overlap,
         # a more sophisticated strategy would be needed.
         # For now, assume independent orderings or merge them carefully.
-        return tests_to_order + other_tests  # Simplified: this might not be general enough
+        return (
+            tests_to_order + other_tests
+        )  # Simplified: this might not be general enough
 
     # Apply ordering. This current reorder_tests is too simple as it rebuilds the list each time.
     # A better way would be to extract all items to be ordered, sort them, and insert them back,
@@ -448,7 +498,9 @@ def manage_test_environment_lifespan():
 
     # Ensure QDRANT_API_KEY is set if using Qdrant Cloud, otherwise Sentence Transformers might fail
     # This can be set in .env or environment variables
-    if not os.getenv("QDRANT_API_KEY") and "qdrant.cloud" in os.getenv("QDRANT_HOST", ""):
+    if not os.getenv("QDRANT_API_KEY") and "qdrant.cloud" in os.getenv(
+        "QDRANT_HOST", ""
+    ):
         # print("Warning: QDRANT_API_KEY is not set while QDRANT_HOST seems to be a cloud instance.")
         # This might be an issue for tests requiring authenticated Qdrant access.
         pass  # Just a warning, tests might fail if auth is needed and not provided
@@ -460,7 +512,11 @@ def manage_test_environment_lifespan():
     # print("--- Global Test Environment Teardown (manage_test_environment_lifespan) ---")
 
     # Cleanup pytest_count.txt and other temporary files if they exist
-    files_to_cleanup = ["pytest_count.txt", "pytest_meta_count_48_cli99b.txt", "test_output.txt"]
+    files_to_cleanup = [
+        "pytest_count.txt",
+        "pytest_meta_count_48_cli99b.txt",
+        "test_output.txt",
+    ]
     for f_name in files_to_cleanup:
         if os.path.exists(f_name):
             try:
@@ -495,8 +551,12 @@ def load_env_vars(manage_test_environment_lifespan):  # Depends on the lifespan 
 
 # Add custom command-line options
 def pytest_addoption(parser):
-    parser.addoption("--runslow", action="store_true", default=False, help="run slow tests")
-    parser.addoption("--rundeferred", action="store_true", default=False, help="run deferred tests")
+    parser.addoption(
+        "--runslow", action="store_true", default=False, help="run slow tests"
+    )
+    parser.addoption(
+        "--rundeferred", action="store_true", default=False, help="run deferred tests"
+    )
     parser.addoption(
         "--count-tests-to",
         action="store",
@@ -532,8 +592,10 @@ def pytest_runtest_setup(item):
     if "deferred" in item.keywords and not item.config.getoption("--rundeferred"):
         pytest.skip("need --rundeferred option to run")
     # CLI140m.69: Skip real API tests when using --qdrant-mock
-    if (item.config.getoption("--qdrant-mock") and 
-        "test_subprocess_real_api_calls" in item.nodeid):
+    if (
+        item.config.getoption("--qdrant-mock")
+        and "test_subprocess_real_api_calls" in item.nodeid
+    ):
         pytest.skip("Skipping real API test in mock mode - CLI140m.69")
 
 

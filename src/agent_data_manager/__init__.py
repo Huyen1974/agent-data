@@ -18,10 +18,10 @@ __author__ = "Agent Data Team"
 # Import main components for easy access
 try:
     from .agent.agent_data_agent import AgentDataAgent
-    from .vector_store.qdrant_store import QdrantStore
-    from .vector_store.firestore_metadata_manager import FirestoreMetadataManager
     from .auth.auth_manager import AuthManager
     from .config.settings import settings
+    from .vector_store.firestore_metadata_manager import FirestoreMetadataManager
+    from .vector_store.qdrant_store import QdrantStore
 
     __all__ = [
         "AgentDataAgent",

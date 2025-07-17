@@ -1,27 +1,33 @@
-import sys
 import os
+import sys
+
 import pytest
 from fastapi.testclient import TestClient
-from qdrant_client.http.models import PointStruct, Distance, VectorParams
+from qdrant_client.http.models import Distance, PointStruct, VectorParams
+
 try:
     import api_vector_search  # Main application
     from api_vector_search import app, get_qdrant_store  # App and dependency getter
 except ImportError:
     # Create mock app and function for testing
     from unittest.mock import Mock
+
     app = Mock()
     get_qdrant_store = Mock()
-from typing import List, Generator
+from collections.abc import Generator
 
 # Import the mocks from the dedicated file
 try:
     from tests.mocks.qdrant_basic import (
         FakeQdrantClient,
+    )
+    from tests.mocks.qdrant_basic import (
         mock_embedding_function_for_conftest as mock_embedding_function,
     )
 except ImportError:
     # Create mock classes for testing
     from unittest.mock import Mock
+
     FakeQdrantClient = Mock
     mock_embedding_function = Mock()
 
@@ -30,7 +36,9 @@ except ImportError:
 try:
     from agent_data.vector_store.qdrant_store import QdrantStore
 except ImportError:
-    QdrantStore = None  # Fallback if not found, tests might fail if QdrantStore is essential
+    QdrantStore = (
+        None  # Fallback if not found, tests might fail if QdrantStore is essential
+    )
 
 # Standard sample points for seeding the mock Qdrant
 # These should align with what tests expect, using 1536-dim vectors.
@@ -43,9 +51,21 @@ STANDARD_SAMPLE_POINTS_RAW = [
         {"original_text": "modern astronomy discoveries", "tag": "science"},
     ),  # Tag will be lowercased
     (9002, [0.8, 0.1, 0.1], {"original_text": "new chicken recipe", "tag": "cooking"}),
-    (9003, [0.2, 0.8, 0.1], {"original_text": "ancient rome history", "tag": "history"}),
-    (1001, [0.1, 0.2, 0.7], {"original_text": "Deep space exploration", "tag": "science"}),
-    (1002, [0.1, 0.2, 0.6], {"original_text": "Hubble telescope images", "tag": "science"}),
+    (
+        9003,
+        [0.2, 0.8, 0.1],
+        {"original_text": "ancient rome history", "tag": "history"},
+    ),
+    (
+        1001,
+        [0.1, 0.2, 0.7],
+        {"original_text": "Deep space exploration", "tag": "science"},
+    ),
+    (
+        1002,
+        [0.1, 0.2, 0.6],
+        {"original_text": "Hubble telescope images", "tag": "science"},
+    ),
     (1003, [0.1, 0.2, 0.5], {"original_text": "Black hole theories", "tag": "science"}),
     (1004, [0.5, 0.5, 0.5], {"original_text": "Unrelated topic", "tag": "other"}),
     (2001, [0.01, 0.005, 0.0], {"original_text": "Item 1 Page", "tag": "pages"}),
@@ -57,7 +77,7 @@ STANDARD_SAMPLE_POINTS_RAW = [
 ]
 
 
-def get_standard_points_for_mock() -> List[PointStruct]:
+def get_standard_points_for_mock() -> list[PointStruct]:
     points = []
     for p_id, short_vector, p_payload in STANDARD_SAMPLE_POINTS_RAW:
         full_vector = [0.0] * 1536  # Pad to 1536 dimensions
@@ -89,13 +109,17 @@ def client_with_qdrant_override(
     # 1. Set environment variables for test scope
     monkeypatch.setenv("QDRANT_URL", "http://mock-qdrant:6333")
     monkeypatch.setenv("QDRANT_API_KEY", "mock-key")
-    monkeypatch.setenv("QDRANT_COLLECTION_NAME", "test_collection")  # Standardized collection name for tests
+    monkeypatch.setenv(
+        "QDRANT_COLLECTION_NAME", "test_collection"
+    )  # Standardized collection name for tests
     monkeypatch.setenv("ENABLE_FIRESTORE_SYNC", "false")  # Disable Firestore for tests
 
     # 2. Clear FakeQdrantClient data & Instantiate
     # Assuming FakeQdrantClient from tests.mocks.qdrant_basic has a class method 'clear_all_data'
     # and its constructor is compatible with QdrantClient(url=..., api_key=...)
-    if hasattr(FakeQdrantClient, "clear_all_data") and callable(FakeQdrantClient.clear_all_data):
+    if hasattr(FakeQdrantClient, "clear_all_data") and callable(
+        FakeQdrantClient.clear_all_data
+    ):
         FakeQdrantClient.clear_all_data()
 
     # This instance will be used by the QdrantStore
@@ -108,7 +132,9 @@ def client_with_qdrant_override(
     # Critical Assumption: FakeQdrantClient in qdrant_basic.py will be refactored to have a
     # constructor like: __init__(self, url, api_key=None, **kwargs)
     # and synchronous methods.
-    fake_qdrant_client_instance = FakeQdrantClient(url=mock_qdrant_url, api_key=mock_qdrant_api_key)
+    fake_qdrant_client_instance = FakeQdrantClient(
+        url=mock_qdrant_url, api_key=mock_qdrant_api_key
+    )
 
     # 3. Patch the QdrantClient where QdrantStore imports it from
     def mock_qdrant_client_constructor(*args, **kwargs):
@@ -131,7 +157,9 @@ def client_with_qdrant_override(
         # This is less ideal as it might not be where QdrantStore gets it from.
         # print(f"Warning: Could not patch QdrantClient at '{qdrant_client_path}'. Error: {e}. Trying 'qdrant_client.QdrantClient'.")
         try:
-            monkeypatch.setattr("qdrant_client.QdrantClient", mock_qdrant_client_constructor)
+            monkeypatch.setattr(
+                "qdrant_client.QdrantClient", mock_qdrant_client_constructor
+            )
         except (ImportError, AttributeError) as e_fallback:
             raise RuntimeError(
                 f"Failed to patch QdrantClient at both '{qdrant_client_path}' and 'qdrant_client.QdrantClient'. "
@@ -157,7 +185,9 @@ def client_with_qdrant_override(
 
     # Ensure collection exists. FakeQdrantClient methods (create_collection, upsert_points)
     # are assumed to be synchronous after refactor of qdrant_basic.py.
-    if not fake_qdrant_client_instance.collection_exists(collection_name=collection_name):
+    if not fake_qdrant_client_instance.collection_exists(
+        collection_name=collection_name
+    ):
         fake_qdrant_client_instance.create_collection(
             collection_name=collection_name,
             vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
@@ -167,11 +197,15 @@ def client_with_qdrant_override(
     if sample_points:
         # Assuming FakeQdrantClient has a synchronous 'upsert_points' or 'upsert' method.
         # The one in qdrant_basic.py is 'upsert_points' (needs to be sync).
-        fake_qdrant_client_instance.upsert_points(collection_name=collection_name, points=sample_points)
+        fake_qdrant_client_instance.upsert_points(
+            collection_name=collection_name, points=sample_points
+        )
 
     # 6. Patch _generate_openai_embedding for the application
     # mock_embedding_function from qdrant_basic.py is async, matching api_vector_search._generate_openai_embedding
-    monkeypatch.setattr("api_vector_search._generate_openai_embedding", mock_embedding_function)
+    monkeypatch.setattr(
+        "api_vector_search._generate_openai_embedding", mock_embedding_function
+    )
 
     # 7. Override FastAPI dependency for get_qdrant_store
     def override_get_qdrant_store():
@@ -180,7 +214,9 @@ def client_with_qdrant_override(
         if QdrantStore:
             # If QdrantStore is a singleton, get_instance() or QdrantStore() should provide the
             # correctly initialized (mocked) instance.
-            return QdrantStore(url="http://dummy:6333", api_key="dummy-key")  # Provide required parameters
+            return QdrantStore(
+                url="http://dummy:6333", api_key="dummy-key"
+            )  # Provide required parameters
         return None  # Should not happen if QdrantStore is integral
 
     if QdrantStore:  # Only override if QdrantStore was successfully imported
@@ -277,10 +313,15 @@ def _manage_env_and_qdrant_patch():
             agent_data.vector_store.qdrant_store.QdrantClient = _ORIGINAL_QDRANT_CLIENT
         except (ImportError, AttributeError) as e:
             # If it failed to import/patch initially, or if module was manipulated unexpectedly
-            print(f"Warning: Could not restore original QdrantClient. Error: {e}", file=sys.stderr)
+            print(
+                f"Warning: Could not restore original QdrantClient. Error: {e}",
+                file=sys.stderr,
+            )
 
     # Clean up shared data of FakeQdrantClient at the very end of session
-    if hasattr(FakeQdrantClient, "clear_all_data") and callable(FakeQdrantClient.clear_all_data):
+    if hasattr(FakeQdrantClient, "clear_all_data") and callable(
+        FakeQdrantClient.clear_all_data
+    ):
         FakeQdrantClient.clear_all_data()
 
 
@@ -358,7 +399,9 @@ def _reset_qdrant_state_before_each_test():
         return None
 
     if QdrantStore:
-        fastapi_app.dependency_overrides[get_qdrant_store] = override_get_qdrant_store_for_client_fixture
+        fastapi_app.dependency_overrides[get_qdrant_store] = (
+            override_get_qdrant_store_for_client_fixture
+        )
 
     # Yield the TestClient
     with TestClient(fastapi_app) as test_client:
@@ -378,8 +421,9 @@ def client():
     Ensures the app is imported *after* QdrantClient is patched.
     """
     # Import the app here to ensure it's loaded after patches
-    from api_vector_search import app as fastapi_app
     from fastapi.testclient import TestClient
+
+    from api_vector_search import app as fastapi_app
 
     # If QdrantStore is initialized upon app creation (e.g. via dependency),
     # it should now pick up the FakeQdrantClient due to the global patch.
@@ -430,7 +474,9 @@ def qdrant_cloud_mock():
     mock_client.get_collection = Mock(return_value=collection_info)
 
     # Mock vector operations
-    mock_client.upsert = Mock(return_value=Mock(status="completed", operation_id=123456))
+    mock_client.upsert = Mock(
+        return_value=Mock(status="completed", operation_id=123456)
+    )
 
     # Mock search with realistic scores
     mock_client.search = Mock(
@@ -475,9 +521,9 @@ def openai_embedding_cache():
     # Load existing cache
     if cache_file.exists():
         try:
-            with open(cache_file, "r") as f:
+            with open(cache_file) as f:
                 cache = json.load(f)
-        except (json.JSONDecodeError, IOError):
+        except (OSError, json.JSONDecodeError):
             cache = {}
 
     def get_embedding(text: str, model: str = "text-embedding-ada-002") -> list:
@@ -502,7 +548,7 @@ def openai_embedding_cache():
             try:
                 with open(cache_file, "w") as f:
                     json.dump(cache, f)
-            except IOError:
+            except OSError:
                 pass
 
         return cache[cache_key]

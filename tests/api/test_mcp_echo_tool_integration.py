@@ -1,4 +1,5 @@
 import pytest
+
 from tests.mocks.mcp_mock_client import FakeMCPClient
 
 
@@ -21,4 +22,6 @@ def test_mcp_echo_tool_integration(mcp_mock):
     assert response is not None, "Expected to receive a response"
     assert response["echo"] == message, "Echoed message does not match sent message"
     assert response["status"] == "success", "Expected success status"
-    assert mcp_mock._registered_tools["echo_tool"] == tool_config, "Tool registration failed"
+    assert (
+        mcp_mock._registered_tools["echo_tool"] == tool_config
+    ), "Tool registration failed"

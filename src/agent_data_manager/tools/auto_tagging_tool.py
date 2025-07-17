@@ -1,13 +1,13 @@
 """Auto-tagging tool with OpenAI integration and Firestore caching for Agent Data system."""
 
-import logging
 import hashlib
-from typing import Dict, List, Optional, Any
+import logging
 from datetime import datetime, timedelta
+from typing import Any
 
 from ..config.settings import settings
 from ..vector_store.firestore_metadata_manager import FirestoreMetadataManager
-from .external_tool_registry import openai_client, OPENAI_AVAILABLE
+from .external_tool_registry import OPENAI_AVAILABLE, openai_client
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ class AutoTaggingTool:
         """
         return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
-    async def _get_cached_tags(self, content_hash: str) -> Optional[Dict[str, Any]]:
+    async def _get_cached_tags(self, content_hash: str) -> dict[str, Any] | None:
         """
         Retrieve cached tags from Firestore.
 
@@ -67,7 +67,9 @@ class AutoTaggingTool:
             if not self.firestore_manager or not self.firestore_manager.db:
                 return None
 
-            doc_ref = self.firestore_manager.db.collection(self.cache_collection).document(content_hash)
+            doc_ref = self.firestore_manager.db.collection(
+                self.cache_collection
+            ).document(content_hash)
             doc = await doc_ref.get()
 
             if not doc.exists:
@@ -88,7 +90,9 @@ class AutoTaggingTool:
             logger.error(f"Failed to get cached tags: {e}")
             return None
 
-    async def _cache_tags(self, content_hash: str, tags: List[str], metadata: Dict[str, Any]) -> None:
+    async def _cache_tags(
+        self, content_hash: str, tags: list[str], metadata: dict[str, Any]
+    ) -> None:
         """
         Cache generated tags in Firestore.
 
@@ -108,7 +112,9 @@ class AutoTaggingTool:
                 "content_hash": content_hash,
             }
 
-            doc_ref = self.firestore_manager.db.collection(self.cache_collection).document(content_hash)
+            doc_ref = self.firestore_manager.db.collection(
+                self.cache_collection
+            ).document(content_hash)
             await doc_ref.set(cache_data)
 
             logger.debug(f"Cached tags for content hash: {content_hash}")
@@ -119,10 +125,10 @@ class AutoTaggingTool:
     async def generate_tags(
         self,
         content: str,
-        existing_metadata: Optional[Dict[str, Any]] = None,
+        existing_metadata: dict[str, Any] | None = None,
         max_tags: int = 5,
         use_cache: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Generate intelligent tags for document content using OpenAI API.
 
@@ -138,7 +144,11 @@ class AutoTaggingTool:
         await self._ensure_initialized()
 
         if not OPENAI_AVAILABLE or not openai_client:
-            return {"status": "failed", "error": "OpenAI client not available for tag generation", "tags": []}
+            return {
+                "status": "failed",
+                "error": "OpenAI client not available for tag generation",
+                "tags": [],
+            }
 
         try:
             content_hash = self._generate_content_hash(content)
@@ -213,7 +223,9 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
                 "generated_at": datetime.utcnow().isoformat(),
                 "content_length": len(content),
                 "prompt_tokens": response.usage.prompt_tokens if response.usage else 0,
-                "completion_tokens": response.usage.completion_tokens if response.usage else 0,
+                "completion_tokens": (
+                    response.usage.completion_tokens if response.usage else 0
+                ),
                 "total_tokens": response.usage.total_tokens if response.usage else 0,
             }
 
@@ -234,8 +246,12 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
             return {"status": "failed", "error": str(e), "tags": []}
 
     async def enhance_metadata_with_tags(
-        self, doc_id: str, content: str, existing_metadata: Dict[str, Any], max_tags: int = 5
-    ) -> Dict[str, Any]:
+        self,
+        doc_id: str,
+        content: str,
+        existing_metadata: dict[str, Any],
+        max_tags: int = 5,
+    ) -> dict[str, Any]:
         """
         Enhance existing metadata with auto-generated tags.
 
@@ -253,7 +269,9 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
             tag_result = await self.generate_tags(content, existing_metadata, max_tags)
 
             if tag_result["status"] != "success":
-                logger.warning(f"Failed to generate tags for doc_id {doc_id}: {tag_result.get('error')}")
+                logger.warning(
+                    f"Failed to generate tags for doc_id {doc_id}: {tag_result.get('error')}"
+                )
                 return existing_metadata
 
             # Enhance metadata
@@ -282,17 +300,25 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
 
             # Update hierarchy levels based on tags
             if not enhanced_metadata.get("level_2") and auto_tags:
-                enhanced_metadata["level_2"] = auto_tags[0]  # Use first auto-tag as level_2
+                enhanced_metadata["level_2"] = auto_tags[
+                    0
+                ]  # Use first auto-tag as level_2
 
-            logger.info(f"Enhanced metadata for doc_id {doc_id} with {len(auto_tags)} auto-generated tags")
+            logger.info(
+                f"Enhanced metadata for doc_id {doc_id} with {len(auto_tags)} auto-generated tags"
+            )
 
             return enhanced_metadata
 
         except Exception as e:
-            logger.error(f"Failed to enhance metadata with tags for doc_id {doc_id}: {e}")
+            logger.error(
+                f"Failed to enhance metadata with tags for doc_id {doc_id}: {e}"
+            )
             return existing_metadata
 
-    async def batch_generate_tags(self, documents: List[Dict[str, Any]], max_tags: int = 5) -> Dict[str, Any]:
+    async def batch_generate_tags(
+        self, documents: list[dict[str, Any]], max_tags: int = 5
+    ) -> dict[str, Any]:
         """
         Generate tags for multiple documents in batch.
 
@@ -345,7 +371,12 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
 
             except Exception as e:
                 logger.error(f"Failed to generate tags for doc_id {doc_id}: {e}")
-                result = {"doc_id": doc_id, "status": "failed", "error": str(e), "tags": []}
+                result = {
+                    "doc_id": doc_id,
+                    "status": "failed",
+                    "error": str(e),
+                    "tags": [],
+                }
                 results.append(result)
                 failed += 1
 
@@ -357,7 +388,9 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
             "results": results,
         }
 
-    async def clear_cache(self, older_than_hours: Optional[int] = None) -> Dict[str, Any]:
+    async def clear_cache(
+        self, older_than_hours: int | None = None
+    ) -> dict[str, Any]:
         """
         Clear cached tags from Firestore.
 
@@ -382,11 +415,17 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
                     await doc.reference.delete()
                     deleted_count += 1
 
-                return {"status": "success", "deleted_count": deleted_count, "message": "All cache entries deleted"}
+                return {
+                    "status": "success",
+                    "deleted_count": deleted_count,
+                    "message": "All cache entries deleted",
+                }
             else:
                 # Delete only old cache entries
                 cutoff_time = datetime.utcnow() - timedelta(hours=older_than_hours)
-                docs = collection_ref.where("cached_at", "<", cutoff_time.isoformat()).stream()
+                docs = collection_ref.where(
+                    "cached_at", "<", cutoff_time.isoformat()
+                ).stream()
                 deleted_count = 0
 
                 async for doc in docs:
@@ -418,8 +457,11 @@ def get_auto_tagging_tool() -> AutoTaggingTool:
 
 # Convenience functions for external use
 async def auto_generate_tags(
-    content: str, existing_metadata: Optional[Dict[str, Any]] = None, max_tags: int = 5, use_cache: bool = True
-) -> Dict[str, Any]:
+    content: str,
+    existing_metadata: dict[str, Any] | None = None,
+    max_tags: int = 5,
+    use_cache: bool = True,
+) -> dict[str, Any]:
     """
     Generate intelligent tags for document content.
 
@@ -437,8 +479,8 @@ async def auto_generate_tags(
 
 
 async def enhance_document_metadata(
-    doc_id: str, content: str, existing_metadata: Dict[str, Any], max_tags: int = 5
-) -> Dict[str, Any]:
+    doc_id: str, content: str, existing_metadata: dict[str, Any], max_tags: int = 5
+) -> dict[str, Any]:
     """
     Enhance document metadata with auto-generated tags.
 
@@ -452,4 +494,6 @@ async def enhance_document_metadata(
         Enhanced metadata with auto-generated tags
     """
     tool = get_auto_tagging_tool()
-    return await tool.enhance_metadata_with_tags(doc_id, content, existing_metadata, max_tags)
+    return await tool.enhance_metadata_with_tags(
+        doc_id, content, existing_metadata, max_tags
+    )

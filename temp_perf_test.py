@@ -1,7 +1,7 @@
 import json
-import time
 import subprocess
 import sys
+import time
 
 requests_list = [
     {"tool_name": "echo", "args": ["Hello"], "id": "echo-1"},
@@ -34,7 +34,9 @@ try:
                 "-d",
                 json.dumps(req),
             ]
-            result = subprocess.run(cmd, capture_output=True, text=True, check=False)  # Use check=False
+            result = subprocess.run(
+                cmd, capture_output=True, text=True, check=False
+            )  # Use check=False
             end = time.time()
             latency = (end - start) * 1000
             latencies.append(latency)
@@ -55,7 +57,9 @@ try:
             tool_name = req["tool_name"]
             log_line = f"[{timestamp}] [{tool_name}] [{latency:.2f}ms] [{status}]\n"  # Escaped newline for log
             log_file.write(log_line)
-            print(f"Request: {req}, Response: {response_body}")  # Print raw response body
+            print(
+                f"Request: {req}, Response: {response_body}"
+            )  # Print raw response body
 
     if latencies:
         avg_latency = sum(latencies) / len(latencies)

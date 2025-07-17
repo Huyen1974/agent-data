@@ -1,13 +1,18 @@
-import pickle
+import logging
 import os
+import pickle
+from typing import Any
 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from typing import Dict, Any
-import logging
 
 # Import the necessary functions/variables from the external registry
-from .external_tool_registry import get_openai_embedding, openai_client, FAISS_AVAILABLE, TOP_N_DEFAULT
+from .external_tool_registry import (
+    FAISS_AVAILABLE,
+    TOP_N_DEFAULT,
+    get_openai_embedding,
+    openai_client,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +24,7 @@ RETRY_DELAY = 1  # seconds
 
 def semantic_search_cosine(
     index_name: str, query_text: str, threshold: float = 0.8, top_n: int = TOP_N_DEFAULT
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Performs semantic similarity search using cosine similarity against a text query.
     (Core logic only - assumes client and FAISS availability checked by registry)
@@ -31,13 +36,19 @@ def semantic_search_cosine(
     if not FAISS_AVAILABLE:
         return {"status": "failed", "error": "FAISS library not available."}
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for '{index_name}'.",
+        }
 
     # Generate query embedding (uses retry via get_openai_embedding)
     try:
         query_embedding_list = get_openai_embedding(query_text)
         if query_embedding_list is None:
-            return {"status": "failed", "error": f"Could not generate query embedding after retries."}
+            return {
+                "status": "failed",
+                "error": "Could not generate query embedding after retries.",
+            }
         query_embedding = np.array(query_embedding_list).reshape(1, -1)
         query_dim = query_embedding.shape[1]
     except Exception as e:
@@ -53,7 +64,10 @@ def semantic_search_cosine(
         return {"status": "failed", "error": f"Metadata load error: {e}"}
 
     if not isinstance(loaded_data, dict) or "metadata" not in loaded_data:
-        return {"status": "failed", "error": f"Invalid metadata format in '{meta_path}'."}
+        return {
+            "status": "failed",
+            "error": f"Invalid metadata format in '{meta_path}'.",
+        }
 
     metadata_dict = loaded_data["metadata"]
 
@@ -74,7 +88,9 @@ def semantic_search_cosine(
                             f"Key '{key}' embedding dimension mismatch ({emb.shape} vs {query_dim}). Skipping."
                         )
             except Exception as e:
-                logger.warning(f"Error processing embedding for key '{key}': {e}. Skipping.")
+                logger.warning(
+                    f"Error processing embedding for key '{key}': {e}. Skipping."
+                )
 
     if not keys_to_compare:
         logger.info(f"No valid embeddings found for comparison in '{index_name}'.")
@@ -86,7 +102,10 @@ def semantic_search_cosine(
         if embeddings_array.ndim == 1:
             embeddings_array = embeddings_array.reshape(1, -1)
         if embeddings_array.shape[1] != query_dim:
-            return {"status": "failed", "error": "Internal dimension mismatch error before similarity calc."}
+            return {
+                "status": "failed",
+                "error": "Internal dimension mismatch error before similarity calc.",
+            }
         similarity_scores = cosine_similarity(query_embedding, embeddings_array)[0]
     except Exception as e:
         logger.error(f"Cosine similarity calculation error: {e}")
@@ -98,10 +117,14 @@ def semantic_search_cosine(
         for i, score in enumerate(similarity_scores)
         if score >= threshold
     ]
-    sorted_similar = sorted(similar_items, key=lambda x: x["cosine_similarity"], reverse=True)
+    sorted_similar = sorted(
+        similar_items, key=lambda x: x["cosine_similarity"], reverse=True
+    )
     top_similar = sorted_similar[:top_n]
 
-    logger.info(f"Found {len(top_similar)} similar items (cosine >= {threshold}) for query '{query_text}'.")
+    logger.info(
+        f"Found {len(top_similar)} similar items (cosine >= {threshold}) for query '{query_text}'."
+    )
     return {"status": "success", "query": query_text, "similar_items": top_similar}
 
 

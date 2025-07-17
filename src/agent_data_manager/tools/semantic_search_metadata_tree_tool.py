@@ -1,7 +1,7 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, List
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -23,7 +23,7 @@ def _search_dict_values(data: Any, query: str) -> bool:
     return False
 
 
-def semantic_search_metadata_tree(index_name: str, query: str) -> List[Dict[str, Any]]:
+def semantic_search_metadata_tree(index_name: str, query: str) -> list[dict[str, Any]]:
     """
     Simulates semantic search by performing keyword search within the metadata values
     loaded from the specified FAISS index's companion file.
@@ -43,7 +43,9 @@ def semantic_search_metadata_tree(index_name: str, query: str) -> List[Dict[str,
     results = []
 
     if not os.path.exists(meta_path):
-        print(f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot perform search.")
+        print(
+            f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot perform search."
+        )
         return []  # Return empty list as per requirement
 
     loaded_data = None
@@ -53,15 +55,19 @@ def semantic_search_metadata_tree(index_name: str, query: str) -> List[Dict[str,
                 loaded_data = pickle.load(f)
             break  # Success
         except FileNotFoundError:
-            print(f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during search.")
+            print(
+                f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during search."
+            )
             return []  # File gone, return empty
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
                 # Raise error after retries fail for loading issues other than FileNotFoundError
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -76,7 +82,9 @@ def semantic_search_metadata_tree(index_name: str, query: str) -> List[Dict[str,
             results.append({key: value})
 
     if not results:
-        print(f"Query '{query}' did not match any metadata values in index '{index_name}'.")
+        print(
+            f"Query '{query}' did not match any metadata values in index '{index_name}'."
+        )
 
     return results
 

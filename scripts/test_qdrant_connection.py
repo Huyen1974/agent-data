@@ -10,14 +10,13 @@ This script diagnoses connection issues with Qdrant Cloud by testing:
 Created for CLI 114B3 to diagnose hanging issues during migration.
 """
 
+import asyncio
+import logging
 import os
 import sys
 import time
-import asyncio
-import logging
-from datetime import datetime
-from typing import Optional
 import uuid
+from datetime import datetime
 
 # Add the project root to Python path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -28,7 +27,9 @@ from agent_data.vector_store.qdrant_store import QdrantStore  # noqa: E402
 def setup_logging() -> logging.Logger:
     """Set up logging for the connection test."""
     # Create logs directory if it doesn't exist
-    logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
+    logs_dir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs"
+    )
     os.makedirs(logs_dir, exist_ok=True)
 
     log_file = os.path.join(logs_dir, "qdrant_connection_test.log")
@@ -48,7 +49,13 @@ def setup_logging() -> logging.Logger:
     return logger
 
 
-def log_operation(logger: logging.Logger, action: str, status: str, duration_ms: int, details: str = ""):
+def log_operation(
+    logger: logging.Logger,
+    action: str,
+    status: str,
+    duration_ms: int,
+    details: str = "",
+):
     """Log operation in the required format: [timestamp] [Action] [Status] [Duration_ms]"""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
     log_msg = f"[{timestamp}] [{action}] [{status}] [{duration_ms}ms]"
@@ -61,11 +68,15 @@ async def test_with_timeout(coro, timeout_seconds: int, operation_name: str):
     """Execute a coroutine with timeout."""
     try:
         return await asyncio.wait_for(coro, timeout=timeout_seconds)
-    except asyncio.TimeoutError:
-        raise TimeoutError(f"{operation_name} timed out after {timeout_seconds} seconds")
+    except TimeoutError:
+        raise TimeoutError(
+            f"{operation_name} timed out after {timeout_seconds} seconds"
+        )
 
 
-async def retry_operation(operation, max_retries: int, operation_name: str, logger: logging.Logger):
+async def retry_operation(
+    operation, max_retries: int, operation_name: str, logger: logging.Logger
+):
     """Retry an operation with exponential backoff."""
     for attempt in range(max_retries):
         try:
@@ -87,16 +98,24 @@ async def retry_operation(operation, max_retries: int, operation_name: str, logg
                 )
                 await asyncio.sleep(wait_time)
             else:
-                log_operation(logger, operation_name, "FAILED", duration_ms, f"Final attempt failed: {str(e)}")
+                log_operation(
+                    logger,
+                    operation_name,
+                    "FAILED",
+                    duration_ms,
+                    f"Final attempt failed: {str(e)}",
+                )
                 raise
 
 
-async def test_qdrant_initialization(logger: logging.Logger) -> Optional[QdrantStore]:
+async def test_qdrant_initialization(logger: logging.Logger) -> QdrantStore | None:
     """Test QdrantStore initialization."""
     logger.info("Testing QdrantStore initialization...")
 
     # Set required environment variables
-    qdrant_url = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    qdrant_url = (
+        "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    )
     api_key = os.getenv("QDRANT_API_KEY")
 
     if not api_key:
@@ -133,7 +152,13 @@ async def test_health_check(store: QdrantStore, logger: logging.Logger) -> bool:
 
     # Check if health_check method exists
     if not hasattr(store, "health_check"):
-        log_operation(logger, "HEALTH_CHECK", "FAILED", 0, "health_check method not found in QdrantStore")
+        log_operation(
+            logger,
+            "HEALTH_CHECK",
+            "FAILED",
+            0,
+            "health_check method not found in QdrantStore",
+        )
         return False
 
     async def health_check():
@@ -158,7 +183,9 @@ async def test_health_check(store: QdrantStore, logger: logging.Logger) -> bool:
         return False
 
 
-async def test_collection_operations(store: QdrantStore, logger: logging.Logger) -> bool:
+async def test_collection_operations(
+    store: QdrantStore, logger: logging.Logger
+) -> bool:
     """Test collection creation and basic operations."""
     logger.info("Testing collection operations...")
 
@@ -181,7 +208,8 @@ async def test_collection_operations(store: QdrantStore, logger: logging.Logger)
             logger.info("Collection '%s' already exists", store.collection_name)
         else:
             logger.info(
-                "Collection '%s' does not exist, it should be created during initialization", store.collection_name
+                "Collection '%s' does not exist, it should be created during initialization",
+                store.collection_name,
             )
 
         return True
@@ -197,7 +225,11 @@ async def test_vector_operations(store: QdrantStore, logger: logging.Logger) -> 
     # Generate test vector
     test_vector = [0.1] * 1536  # 1536-dimensional vector with all 0.1 values
     test_id = str(uuid.uuid4())
-    test_metadata = {"tag": "test_connection", "test_type": "connection_test", "timestamp": datetime.now().isoformat()}
+    test_metadata = {
+        "tag": "test_connection",
+        "test_type": "connection_test",
+        "timestamp": datetime.now().isoformat(),
+    }
 
     # Test vector upload
     async def upload_vector():
@@ -239,7 +271,10 @@ async def test_vector_operations(store: QdrantStore, logger: logging.Logger) -> 
         logger.info("Successfully retrieved test vector: %s", retrieved["id"])
 
         # Verify vector data
-        if retrieved["vector"] == test_vector and retrieved["payload"]["tag"] == "test_connection":
+        if (
+            retrieved["vector"] == test_vector
+            and retrieved["payload"]["tag"] == "test_connection"
+        ):
             logger.info("Vector data verification successful")
         else:
             logger.warning("Vector data verification failed - data mismatch")
@@ -283,7 +318,9 @@ async def main():
         # Test 1: QdrantStore initialization
         store = await test_qdrant_initialization(logger)
         if not store:
-            logger.error("❌ QdrantStore initialization failed - cannot proceed with further tests")
+            logger.error(
+                "❌ QdrantStore initialization failed - cannot proceed with further tests"
+            )
             return False
 
         logger.info("✅ QdrantStore initialization successful")

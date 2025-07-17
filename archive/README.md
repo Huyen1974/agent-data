@@ -7,7 +7,7 @@ This directory contains FAISS-related tools that have been archived as part of C
 The following tools have been moved to this archive directory:
 
 - `save_metadata_to_faiss_tool.py` - Tool for saving metadata to FAISS indices
-- `load_metadata_from_faiss_tool.py` - Tool for loading metadata from FAISS indices  
+- `load_metadata_from_faiss_tool.py` - Tool for loading metadata from FAISS indices
 - `query_metadata_faiss_tool.py` - Tool for querying FAISS indices
 - `advanced_query_faiss_tool.py` - Advanced FAISS query functionality
 - `rebuild_metadata_tree_from_faiss_tool.py` - Tool for rebuilding metadata trees from FAISS
@@ -42,4 +42,4 @@ This archiving was performed as part of CLI140m objectives:
 - Archive unused FAISS tools to focus testing efforts
 
 Date: 2025-01-14
-CLI: CLI140m 
+CLI: CLI140m

@@ -1,12 +1,12 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 
 # Assuming helper from semantic_filter_metadata_tool is available or redefined here
 # Let's redefine it for clarity and self-containment
-def _check_values_contain_keywords(data: Any, keywords: List[str]) -> bool:
+def _check_values_contain_keywords(data: Any, keywords: list[str]) -> bool:
     """Recursively check if any string value contains any of the keywords (case-insensitive)."""
     if not keywords:  # Optimization: If no keywords, no need to search
         return True  # Or False depending on desired logic? Let's say True (no keyword restriction)
@@ -32,8 +32,10 @@ RETRY_DELAY = 1  # seconds
 
 
 def advanced_semantic_search(
-    index_name: str, structured_criteria: Optional[Dict[str, Any]] = None, semantic_keywords: Optional[List[str]] = None
-) -> Dict[str, Any]:
+    index_name: str,
+    structured_criteria: dict[str, Any] | None = None,
+    semantic_keywords: list[str] | None = None,
+) -> dict[str, Any]:
     """
     Performs an advanced search combining structured field criteria and semantic keyword matching.
     Loads metadata, filters by structured criteria first, then by semantic keywords.
@@ -54,10 +56,16 @@ def advanced_semantic_search(
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not structured_criteria and not semantic_keywords:
-        return {"status": "failed", "error": "At least one search criteria (structured or semantic) must be provided."}
+        return {
+            "status": "failed",
+            "error": "At least one search criteria (structured or semantic) must be provided.",
+        }
 
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for index '{index_name}'. Cannot search."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for index '{index_name}'. Cannot search.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -72,11 +80,13 @@ def advanced_semantic_search(
                 "error": f"Metadata file disappeared for index '{index_name}' during search attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -93,7 +103,10 @@ def advanced_semantic_search(
                 continue
             match = True
             for crit_key, crit_value in structured_criteria.items():
-                if crit_key not in item_metadata or item_metadata[crit_key] != crit_value:
+                if (
+                    crit_key not in item_metadata
+                    or item_metadata[crit_key] != crit_value
+                ):
                     match = False
                     break
             if match:
@@ -103,7 +116,9 @@ def advanced_semantic_search(
         intermediate_results = list(metadata_dict.items())
 
     if not intermediate_results:
-        print("No items matched structured criteria (or no structured criteria provided).")
+        print(
+            "No items matched structured criteria (or no structured criteria provided)."
+        )
         return {"status": "success", "matching_items": []}
 
     # --- Stage 2: Semantic Keyword Filter ---
@@ -130,13 +145,23 @@ if __name__ == "__main__":
     # Assumes index_trends exists
     print("Searching index_trends: structured={'year': 2023}, semantic=['alpha']")
     try:
-        print(advanced_semantic_search("index_trends", structured_criteria={"year": 2023}, semantic_keywords=["alpha"]))
+        print(
+            advanced_semantic_search(
+                "index_trends",
+                structured_criteria={"year": 2023},
+                semantic_keywords=["alpha"],
+            )
+        )
     except Exception as e:
         print(f"Error: {e}")
 
     print("\nSearching index_trends: structured={'type': 'report'}")
     try:
-        print(advanced_semantic_search("index_trends", structured_criteria={"type": "report"}))
+        print(
+            advanced_semantic_search(
+                "index_trends", structured_criteria={"type": "report"}
+            )
+        )
     except Exception as e:
         print(f"Error: {e}")
 
@@ -146,9 +171,17 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error: {e}")
 
-    print("\nSearching index_trends: structured={'year': 2024}, semantic=['alpha'] (no match expected)")
+    print(
+        "\nSearching index_trends: structured={'year': 2024}, semantic=['alpha'] (no match expected)"
+    )
     try:
-        print(advanced_semantic_search("index_trends", structured_criteria={"year": 2024}, semantic_keywords=["alpha"]))
+        print(
+            advanced_semantic_search(
+                "index_trends",
+                structured_criteria={"year": 2024},
+                semantic_keywords=["alpha"],
+            )
+        )
     except Exception as e:
         print(f"Error: {e}")
 

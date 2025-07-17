@@ -7,11 +7,15 @@ import sys
 from pathlib import Path
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
-def save_document_simple(doc_id: str, content: str, save_dir: str = "saved_documents") -> dict:
+def save_document_simple(
+    doc_id: str, content: str, save_dir: str = "saved_documents"
+) -> dict:
     """Simple document save function for testing."""
     try:
         # Create directory if it doesn't exist
@@ -22,7 +26,12 @@ def save_document_simple(doc_id: str, content: str, save_dir: str = "saved_docum
         doc_path = save_path / f"{doc_id}.txt"
         doc_path.write_text(content, encoding="utf-8")
 
-        return {"status": "success", "doc_id": doc_id, "path": str(doc_path), "content_length": len(content)}
+        return {
+            "status": "success",
+            "doc_id": doc_id,
+            "path": str(doc_path),
+            "content_length": len(content),
+        }
     except Exception as e:
         return {"status": "failed", "error": str(e), "doc_id": doc_id}
 
@@ -41,7 +50,12 @@ def semantic_search_simple(query: str, limit: int = 5) -> dict:
                 }
             )
 
-        return {"status": "success", "query": query, "results": results, "total_found": len(results)}
+        return {
+            "status": "success",
+            "query": query,
+            "results": results,
+            "total_found": len(results),
+        }
     except Exception as e:
         return {"status": "failed", "error": str(e), "query": query, "results": []}
 
@@ -75,7 +89,9 @@ def main():
                     save_dir=kwargs.get("save_dir", "saved_documents"),
                 )
             elif tool_name == "semantic_search":
-                result = semantic_search_simple(query=kwargs.get("query", ""), limit=kwargs.get("limit", 5))
+                result = semantic_search_simple(
+                    query=kwargs.get("query", ""), limit=kwargs.get("limit", 5)
+                )
             else:
                 result = {"error": f"Unknown tool: {tool_name}"}
 

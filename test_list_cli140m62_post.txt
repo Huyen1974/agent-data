@@ -525,32 +525,32 @@ setup/venv/lib/python3.10/site-packages/faiss/loader.py:49
 
 src/agent_data_manager/api_mcp_gateway.py:372
 src/agent_data_manager/api_mcp_gateway.py:372
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/src/agent_data_manager/api_mcp_gateway.py:372: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/src/agent_data_manager/api_mcp_gateway.py:372: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     @app.on_event("startup")
 
 setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495
 setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495
 setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     return self.router.on_event(event_type)
 
 ADK/agent_data/api_mcp_gateway.py:357
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:357: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:357: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     @app.on_event("startup")
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

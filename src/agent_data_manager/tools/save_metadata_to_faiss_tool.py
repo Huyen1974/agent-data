@@ -1,19 +1,27 @@
-import faiss
-import numpy as np
-import pickle
-import os
-import time
 import logging  # Added logging
-from typing import Dict, Any, Optional, List, Tuple
-from google.cloud import storage
+import os
+import pickle
+import time
+from typing import Any
 
+import faiss
 import google.api_core.exceptions  # Keep for RetryError, and now for ResumableUploadError
-from google.cloud import exceptions as google_cloud_exceptions  # Import google.cloud.exceptions
-from google.cloud import firestore  # Add Firestore import
-from google.api_core.exceptions import NotFound, GoogleAPICallError
+import numpy as np
+from google.api_core.exceptions import GoogleAPICallError, NotFound
+from google.cloud import (
+    exceptions as google_cloud_exceptions,
+)  # Import google.cloud.exceptions
+from google.cloud import (
+    firestore,  # Add Firestore import
+    storage,
+)
 
 # Import for embedding generation
-from agent_data_manager.tools.external_tool_registry import get_openai_embedding, OPENAI_AVAILABLE, openai_client
+from agent_data_manager.tools.external_tool_registry import (
+    OPENAI_AVAILABLE,
+    get_openai_embedding,
+    openai_client,
+)
 
 # Import openai for exception handling
 try:
@@ -42,15 +50,23 @@ class InvalidVectorDataError(ValueError):
 
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Get GCS_BUCKET_NAME and FIRESTORE_PROJECT_ID from environment variables
-GCS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
-FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")  # Default if not set
+GCS_BUCKET_NAME = os.environ.get(
+    "GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test"
+)
+FIRESTORE_PROJECT_ID = os.environ.get(
+    "FIRESTORE_PROJECT_ID", "chatgpt-db-project"
+)  # Default if not set
 
 if not GCS_BUCKET_NAME:
-    logger.error("GCS_BUCKET_NAME environment variable not set. Upload to GCS will fail.")
+    logger.error(
+        "GCS_BUCKET_NAME environment variable not set. Upload to GCS will fail."
+    )
     # Optionally, raise an error or provide a default fallback if appropriate for your application
     # raise ValueError("GCS_BUCKET_NAME environment variable is required.")
 
@@ -60,10 +76,10 @@ if not GCS_BUCKET_NAME:
 
 
 async def _generate_embeddings_batch(
-    texts_to_embed_with_ids: List[Tuple[str, str]],
-    agent_context: Optional[AgentDataAgent],
+    texts_to_embed_with_ids: list[tuple[str, str]],
+    agent_context: AgentDataAgent | None,
     batch_size: int = 32,  # Default batch size
-) -> Dict[str, Dict[str, Any]]:
+) -> dict[str, dict[str, Any]]:
     """
     Generates embeddings for a list of (doc_id, text_content) tuples in batches.
 
@@ -77,7 +93,7 @@ async def _generate_embeddings_batch(
         If an embedding fails for a document, its ID might be missing from the map
         or associated with an error indicator if get_openai_embedding returns one.
     """
-    embedding_results_map: Dict[str, Dict[str, Any]] = {}
+    embedding_results_map: dict[str, dict[str, Any]] = {}
 
     for i in range(0, len(texts_to_embed_with_ids), batch_size):
         batch_items = texts_to_embed_with_ids[i : i + batch_size]
@@ -87,24 +103,49 @@ async def _generate_embeddings_batch(
             try:
                 logger.debug(f"Requesting embedding for doc_id: {doc_id}")
                 # Assuming get_openai_embedding is async and handles its own retries/errors appropriately
-                embedding_response = await get_openai_embedding(agent_context=agent_context, text_to_embed=text_content)
-                embedding_value = embedding_response.get("embedding")  # Extract embedding value
+                embedding_response = await get_openai_embedding(
+                    agent_context=agent_context, text_to_embed=text_content
+                )
+                embedding_value = embedding_response.get(
+                    "embedding"
+                )  # Extract embedding value
                 # Check if embedding_value is a non-empty numpy array
-                if embedding_response and isinstance(embedding_value, np.ndarray) and embedding_value.size > 0:
+                if (
+                    embedding_response
+                    and isinstance(embedding_value, np.ndarray)
+                    and embedding_value.size > 0
+                ):
                     embedding_results_map[doc_id] = embedding_response
-                    logger.debug(f"Successfully received embedding for doc_id: {doc_id}")
+                    logger.debug(
+                        f"Successfully received embedding for doc_id: {doc_id}"
+                    )
                 else:
                     logger.error(
                         f"Failed to generate or received invalid embedding for doc_id: {doc_id}. Response: {embedding_response}"
                     )
                     # Optionally, store an error marker: embedding_results_map[doc_id] = {"error": "failed_to_generate"}
-            except EmbeddingGenerationError as e:  # Catch specific error from get_openai_embedding
-                logger.error(f"EmbeddingGenerationError for doc_id {doc_id}: {e}", exc_info=True)
-                embedding_results_map[doc_id] = {"error": str(e), "status": "error", "error_type": type(e).__name__}
+            except (
+                EmbeddingGenerationError
+            ) as e:  # Catch specific error from get_openai_embedding
+                logger.error(
+                    f"EmbeddingGenerationError for doc_id {doc_id}: {e}", exc_info=True
+                )
+                embedding_results_map[doc_id] = {
+                    "error": str(e),
+                    "status": "error",
+                    "error_type": type(e).__name__,
+                }
             except Exception as e:
-                logger.error(f"Unexpected error generating embedding for doc_id {doc_id}: {e}", exc_info=True)
+                logger.error(
+                    f"Unexpected error generating embedding for doc_id {doc_id}: {e}",
+                    exc_info=True,
+                )
                 # Store a generic error marker in the map for this doc_id
-                embedding_results_map[doc_id] = {"error": str(e), "status": "error", "error_type": type(e).__name__}
+                embedding_results_map[doc_id] = {
+                    "error": str(e),
+                    "status": "error",
+                    "error_type": type(e).__name__,
+                }
                 # Depending on policy, might re-raise if it's critical for the whole batch
 
     return embedding_results_map
@@ -113,10 +154,10 @@ async def _generate_embeddings_batch(
 async def save_metadata_to_faiss(
     index_name: str,
     metadata_dict: dict,
-    vector_data: Optional[List[List[float]]] = None,
-    text_field_to_embed: Optional[str] = None,
-    dimension: Optional[int] = None,  # Added dimension parameter as Optional
-    config: Optional[Dict[str, Any]] = None,  # Added config for Firestore update control
+    vector_data: list[list[float]] | None = None,
+    text_field_to_embed: str | None = None,
+    dimension: int | None = None,  # Added dimension parameter as Optional
+    config: dict[str, Any] | None = None,  # Added config for Firestore update control
 ) -> dict:
     """
     Saves metadata along with FAISS index. Stores metadata in a separate .meta file.
@@ -160,7 +201,8 @@ async def save_metadata_to_faiss(
     if update_firestore_registry:
         try:
             db = firestore.Client(
-                project=FIRESTORE_PROJECT_ID, database=os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
+                project=FIRESTORE_PROJECT_ID,
+                database=os.environ.get("FIRESTORE_DATABASE_ID", "test-default"),
             )
         except Exception as e:
             logger.error(f"Failed to initialize Firestore client: {e}", exc_info=True)
@@ -183,32 +225,48 @@ async def save_metadata_to_faiss(
 
     try:
         if not GCS_BUCKET_NAME:
-            raise ValueError("GCS_BUCKET_NAME is not configured. Cannot proceed with GCS operations.")
+            raise ValueError(
+                "GCS_BUCKET_NAME is not configured. Cannot proceed with GCS operations."
+            )
 
         if vector_data is not None:
             # Validate and use provided vector_data
-            if not isinstance(vector_data, (list, np.ndarray)):  # Allow numpy array as input
-                raise InvalidVectorDataError("vector_data must be a list of lists or a 2D numpy array.")
+            if not isinstance(
+                vector_data, (list, np.ndarray)
+            ):  # Allow numpy array as input
+                raise InvalidVectorDataError(
+                    "vector_data must be a list of lists or a 2D numpy array."
+                )
             # if not vector_data: # Empty list <-- Moved and refined
             #      raise InvalidVectorDataError("vector_data is empty.")
 
             if isinstance(vector_data, np.ndarray):
                 if vector_data.ndim != 2:  # Check dimension first for numpy arrays
-                    raise InvalidVectorDataError("Numpy array for vector_data must be 2D.")
+                    raise InvalidVectorDataError(
+                        "Numpy array for vector_data must be 2D."
+                    )
                 if vector_data.size == 0:  # Then check if it's empty
                     raise InvalidVectorDataError("vector_data (numpy array) is empty.")
-                all_vectors = vector_data.astype(np.float32).tolist()  # Convert to list of lists of Python floats first
+                all_vectors = vector_data.astype(
+                    np.float32
+                ).tolist()  # Convert to list of lists of Python floats first
             else:  # It's a list
                 if not vector_data:  # Check if list is empty
                     raise InvalidVectorDataError("vector_data (list) is empty.")
                 all_vectors = []
                 for i, v_list in enumerate(vector_data):
-                    if not isinstance(v_list, list) or not all(isinstance(x, (float, int)) for x in v_list):
-                        raise InvalidVectorDataError(f"Vector at index {i} is not a list of numbers.")
+                    if not isinstance(v_list, list) or not all(
+                        isinstance(x, (float, int)) for x in v_list
+                    ):
+                        raise InvalidVectorDataError(
+                            f"Vector at index {i} is not a list of numbers."
+                        )
                     all_vectors.append(np.array(v_list, dtype=np.float32))
 
             if not all_vectors:  # After potential conversion, if it results in empty
-                raise InvalidVectorDataError("Provided vector_data resulted in no valid vectors.")
+                raise InvalidVectorDataError(
+                    "Provided vector_data resulted in no valid vectors."
+                )
 
             # Determine dimension from the first valid vector if not provided
             current_dim = len(all_vectors[0])
@@ -221,7 +279,9 @@ async def save_metadata_to_faiss(
 
             for v in all_vectors:
                 if len(v) != dimension:
-                    raise InvalidVectorDataError(f"Inconsistent vector dimensions. Expected {dimension}, got {len(v)}.")
+                    raise InvalidVectorDataError(
+                        f"Inconsistent vector dimensions. Expected {dimension}, got {len(v)}."
+                    )
 
             # Doc IDs for provided vectors must match metadata_dict keys
             if len(all_vectors) != len(metadata_dict):
@@ -231,13 +291,19 @@ async def save_metadata_to_faiss(
 
             doc_ids_for_pickle = list(metadata_dict.keys())
             processed_metadata_for_pickle = metadata_dict
-            all_vectors = np.array(all_vectors, dtype=np.float32)  # Final conversion to numpy array for Faiss
+            all_vectors = np.array(
+                all_vectors, dtype=np.float32
+            )  # Final conversion to numpy array for Faiss
 
         else:  # Generate embeddings
             if not text_field_to_embed:
-                raise ValueError("text_field_to_embed must be provided when vector_data is not given.")
+                raise ValueError(
+                    "text_field_to_embed must be provided when vector_data is not given."
+                )
             if not OPENAI_AVAILABLE or not openai_client:
-                raise RuntimeError("OpenAI client/library not available/initialized. Cannot generate embeddings.")
+                raise RuntimeError(
+                    "OpenAI client/library not available/initialized. Cannot generate embeddings."
+                )
 
             texts_to_embed_with_ids = []
             temp_failed_doc_ids = []
@@ -247,13 +313,19 @@ async def save_metadata_to_faiss(
                     and isinstance(doc_data.get(text_field_to_embed), str)
                     and doc_data.get(text_field_to_embed).strip()
                 ):
-                    texts_to_embed_with_ids.append((doc_id, doc_data[text_field_to_embed]))
+                    texts_to_embed_with_ids.append(
+                        (doc_id, doc_data[text_field_to_embed])
+                    )
                 else:
                     temp_failed_doc_ids.append(doc_id)
-                    embedding_generation_errors[doc_id] = "Missing or invalid text field"
+                    embedding_generation_errors[doc_id] = (
+                        "Missing or invalid text field"
+                    )
 
             if not texts_to_embed_with_ids:
-                raise ValueError("No valid texts found for embedding after filtering metadata_dict.")
+                raise ValueError(
+                    "No valid texts found for embedding after filtering metadata_dict."
+                )
 
             embedding_results_map = await _generate_embeddings_batch(
                 texts_to_embed_with_ids, None
@@ -263,11 +335,20 @@ async def save_metadata_to_faiss(
             successful_doc_ids = []
             processed_metadata_for_embedding = {}
 
-            for doc_id, text_content in texts_to_embed_with_ids:  # Iterate in the order texts were collected
+            for (
+                doc_id,
+                text_content,
+            ) in texts_to_embed_with_ids:  # Iterate in the order texts were collected
                 result = embedding_results_map.get(doc_id)
-                if result and result.get("status") == "success" and isinstance(result.get("embedding"), np.ndarray):
+                if (
+                    result
+                    and result.get("status") == "success"
+                    and isinstance(result.get("embedding"), np.ndarray)
+                ):
                     emb = result["embedding"].astype(np.float32)
-                    if dimension is None:  # Set dimension from first successful embedding
+                    if (
+                        dimension is None
+                    ):  # Set dimension from first successful embedding
                         dimension = emb.shape[0]
                     elif emb.shape[0] != dimension:
                         embedding_generation_errors[doc_id] = (
@@ -300,12 +381,16 @@ async def save_metadata_to_faiss(
             # failed_doc_ids.extend(temp_failed_doc_ids) # This was done in the original structure implicitly
 
         # At this point, all_vectors (np.array) and doc_ids_for_pickle are set
-        if all_vectors.size == 0:  # Should be caught by earlier checks, but as a safeguard
+        if (
+            all_vectors.size == 0
+        ):  # Should be caught by earlier checks, but as a safeguard
             raise ValueError("No vectors available to create FAISS index.")
 
         final_vector_count = all_vectors.shape[0]
         final_dimension = (
-            all_vectors.shape[1] if all_vectors.ndim == 2 and all_vectors.shape[0] > 0 else (dimension or 0)
+            all_vectors.shape[1]
+            if all_vectors.ndim == 2 and all_vectors.shape[0] > 0
+            else (dimension or 0)
         )
 
         # Create FAISS index
@@ -318,10 +403,15 @@ async def save_metadata_to_faiss(
 
         # Save metadata map (doc_ids and original metadata for embedded items)
         with open(meta_path, "wb") as f:
-            pickle.dump({"ids": doc_ids_for_pickle, "metadata": processed_metadata_for_pickle}, f)
+            pickle.dump(
+                {"ids": doc_ids_for_pickle, "metadata": processed_metadata_for_pickle},
+                f,
+            )
 
         # --- GCS Upload Section ---
-        storage_client = storage.Client(project=FIRESTORE_PROJECT_ID)  # Use consistent project ID
+        storage_client = storage.Client(
+            project=FIRESTORE_PROJECT_ID
+        )  # Use consistent project ID
         bucket = storage_client.bucket(GCS_BUCKET_NAME)
 
         index_blob_name = f"{index_name}.faiss"
@@ -331,11 +421,15 @@ async def save_metadata_to_faiss(
         meta_blob = bucket.blob(meta_blob_name)
 
         try:
-            logger.info(f"Uploading FAISS index to gs://{GCS_BUCKET_NAME}/{index_blob_name}")
+            logger.info(
+                f"Uploading FAISS index to gs://{GCS_BUCKET_NAME}/{index_blob_name}"
+            )
             upload_with_retry(index_blob, index_path)
             gcs_faiss_path_for_result = f"gs://{GCS_BUCKET_NAME}/{index_blob_name}"
 
-            logger.info(f"Uploading metadata map to gs://{GCS_BUCKET_NAME}/{meta_blob_name}")
+            logger.info(
+                f"Uploading metadata map to gs://{GCS_BUCKET_NAME}/{meta_blob_name}"
+            )
             upload_with_retry(meta_blob, meta_path)
             gcs_meta_path_for_result = f"gs://{GCS_BUCKET_NAME}/{meta_blob_name}"
 
@@ -347,7 +441,9 @@ async def save_metadata_to_faiss(
             google.api_core.exceptions.GoogleAPICallError,
             ConnectionError,
         ) as e:
-            logger.error(f"GCS upload failed for index '{index_name}': {e}", exc_info=True)
+            logger.error(
+                f"GCS upload failed for index '{index_name}': {e}", exc_info=True
+            )
             gcs_upload_status_for_result = "failed"
             gcs_upload_successful = False  # Explicitly set to false
             # Do NOT proceed to Firestore update if GCS fails. Return error from here.
@@ -371,19 +467,29 @@ async def save_metadata_to_faiss(
 
         # --- Firestore Update Section (conditional on GCS success and config) ---
         if gcs_upload_successful and update_firestore_registry:
-            if not db:  # Should have been initialized if update_firestore_registry is True
-                logger.error("Firestore client (db) is not initialized. Skipping Firestore update.")
+            if (
+                not db
+            ):  # Should have been initialized if update_firestore_registry is True
+                logger.error(
+                    "Firestore client (db) is not initialized. Skipping Firestore update."
+                )
             else:
                 try:
                     # Construct the document ID for Firestore
-                    firestore_db_id = os.environ.get("FIRESTORE_DATABASE_ID", "(default)")
+                    firestore_db_id = os.environ.get(
+                        "FIRESTORE_DATABASE_ID", "(default)"
+                    )
                     # Only append if it's not the actual default database ID string
                     doc_id_for_firestore = (
-                        f"{index_name}_{firestore_db_id}" if firestore_db_id != "(default)" else index_name
+                        f"{index_name}_{firestore_db_id}"
+                        if firestore_db_id != "(default)"
+                        else index_name
                     )
 
                     doc_ref = db.collection(
-                        os.environ.get("FAISS_INDEXES_COLLECTION", "faiss_indexes_registry")
+                        os.environ.get(
+                            "FAISS_INDEXES_COLLECTION", "faiss_indexes_registry"
+                        )
                     ).document(doc_id_for_firestore)
                     doc_ref.set(
                         {
@@ -399,7 +505,9 @@ async def save_metadata_to_faiss(
                                 "GCSPathMeta": gcs_meta_path_for_result,
                                 "VectorCount": final_vector_count,
                                 "IndexDimension": final_dimension,
-                                "IndexType": str(type(index).__name__),  # e.g., "IndexFlatL2"
+                                "IndexType": str(
+                                    type(index).__name__
+                                ),  # e.g., "IndexFlatL2"
                             },
                             # Storing a snapshot of the keys from the processed metadata
                             "metadata_snapshot": {
@@ -408,9 +516,14 @@ async def save_metadata_to_faiss(
                             },
                         }
                     )
-                    logger.info(f"Successfully updated Firestore registry for index '{index_name}'.")
+                    logger.info(
+                        f"Successfully updated Firestore registry for index '{index_name}'."
+                    )
                 except Exception as e:
-                    logger.error(f"Firestore update failed for index '{index_name}': {e}", exc_info=True)
+                    logger.error(
+                        f"Firestore update failed for index '{index_name}': {e}",
+                        exc_info=True,
+                    )
                     # If GCS was successful but Firestore fails, it's a partial success/error state.
                     # The main status might still be 'success' regarding Faiss/GCS, but with a Firestore error note.
                     # For now, let's keep gcs_upload_status as "success" but flag Firestore issue.
@@ -433,7 +546,9 @@ async def save_metadata_to_faiss(
                         },
                     }
         elif not update_firestore_registry:
-            logger.info(f"Skipping Firestore registry update for '{index_name}' as per configuration.")
+            logger.info(
+                f"Skipping Firestore registry update for '{index_name}' as per configuration."
+            )
 
         # If all successful (including conditional Firestore update)
         duration = time.time() - start_time
@@ -470,18 +585,28 @@ async def save_metadata_to_faiss(
         )
         duration = time.time() - start_time
         # Construct error metadata, including embedding generation errors if any
-        error_meta = {"error_type": type(e).__name__, "index_name": index_name, "duration_seconds": round(duration, 4)}
-        if embedding_generation_errors:  # Add embedding_generation_errors to the meta if they exist
+        error_meta = {
+            "error_type": type(e).__name__,
+            "index_name": index_name,
+            "duration_seconds": round(duration, 4),
+        }
+        if (
+            embedding_generation_errors
+        ):  # Add embedding_generation_errors to the meta if they exist
             error_meta["embedding_generation_errors"] = embedding_generation_errors
         # Include counts based on what was processed before error
         error_meta.setdefault("original_docs_count", len(metadata_dict))
-        error_meta.setdefault("embedded_docs_count", len(doc_ids_for_pickle) if doc_ids_for_pickle else 0)
+        error_meta.setdefault(
+            "embedded_docs_count", len(doc_ids_for_pickle) if doc_ids_for_pickle else 0
+        )
 
         # Collect all doc_ids that were meant to be processed but aren't in doc_ids_for_pickle
         # This gives a more comprehensive list of failed_doc_ids
         all_intended_doc_ids = set(metadata_dict.keys())
         successfully_processed_doc_ids = set(doc_ids_for_pickle)
-        calculated_failed_doc_ids = list(all_intended_doc_ids - successfully_processed_doc_ids)
+        calculated_failed_doc_ids = list(
+            all_intended_doc_ids - successfully_processed_doc_ids
+        )
         error_meta.setdefault("failed_doc_ids", calculated_failed_doc_ids)
 
         return {
@@ -491,13 +616,20 @@ async def save_metadata_to_faiss(
             "meta": error_meta,
         }
     except Exception as e:  # Catch any other unexpected general errors
-        logger.error(f"Unexpected general error during FAISS processing for index '{index_name}': {e}", exc_info=True)
+        logger.error(
+            f"Unexpected general error during FAISS processing for index '{index_name}': {e}",
+            exc_info=True,
+        )
         duration = time.time() - start_time
         return {
             "status": "error",
             "error": f"Unexpected general error: {str(e)}",
             "message": str(e),
-            "meta": {"error_type": type(e).__name__, "index_name": index_name, "duration_seconds": round(duration, 2)},
+            "meta": {
+                "error_type": type(e).__name__,
+                "index_name": index_name,
+                "duration_seconds": round(duration, 2),
+            },
         }
     finally:
         # Ensure cleanup of local files
@@ -506,13 +638,17 @@ async def save_metadata_to_faiss(
                 os.remove(index_path)
                 logger.info(f"Cleanup: Removed temporary local file: {index_path}")
             except OSError as e_remove:
-                logger.error(f"Error removing temporary file {index_path} in finally block: {e_remove}")
+                logger.error(
+                    f"Error removing temporary file {index_path} in finally block: {e_remove}"
+                )
         if os.path.exists(meta_path):
             try:
                 os.remove(meta_path)
                 logger.info(f"Cleanup: Removed temporary local file: {meta_path}")
             except OSError as e_remove:
-                logger.error(f"Error removing temporary file {meta_path} in finally block: {e_remove}")
+                logger.error(
+                    f"Error removing temporary file {meta_path} in finally block: {e_remove}"
+                )
 
 
 # Example Usage (for testing purposes)
@@ -546,7 +682,9 @@ if __name__ == "__main__":
     # logger.info("Cleaned up local test files.")
 
 # --- Constants ---
-GCS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
+GCS_BUCKET_NAME = os.environ.get(
+    "GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test"
+)
 FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
 FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
 INDEX_FOLDER = os.environ.get("INDEX_FOLDER", "/tmp/faiss_indices")
@@ -554,21 +692,29 @@ INDEX_FOLDER = os.environ.get("INDEX_FOLDER", "/tmp/faiss_indices")
 
 # --- Helper: GCS Download/Upload ---
 def _download_gcs_file(
-    storage_client: storage.Client, bucket_name: str, source_blob_name: str, destination_file_name: str
+    storage_client: storage.Client,
+    bucket_name: str,
+    source_blob_name: str,
+    destination_file_name: str,
 ):
     # ... (implementation)
     pass  # Placeholder
 
 
-def _upload_to_gcs(storage_client: storage.Client, bucket_name: str, source_file_name: str, destination_blob_name: str):
+def _upload_to_gcs(
+    storage_client: storage.Client,
+    bucket_name: str,
+    source_file_name: str,
+    destination_blob_name: str,
+):
     # ... (implementation)
     pass  # Placeholder
 
 
 # --- Main Tool Logic ---
 def save_metadata_to_faiss_internal(
-    index_name: str, doc_id: str, metadata: Dict[str, Any], vectors: List[List[float]]
-) -> Dict[str, Any]:
+    index_name: str, doc_id: str, metadata: dict[str, Any], vectors: list[list[float]]
+) -> dict[str, Any]:
     """
     Saves document metadata to Firestore and updates/creates a FAISS index,
     storing the index and metadata mapping in GCS. Includes rollback on GCS failure.
@@ -586,7 +732,9 @@ def save_metadata_to_faiss_internal(
         local_meta_file = os.path.join(INDEX_FOLDER, f"{index_name}_meta.pkl")
 
         # Initialize clients
-        db = firestore.Client(project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID)
+        db = firestore.Client(
+            project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID
+        )
         storage_client = storage.Client()
 
         index = None
@@ -597,28 +745,44 @@ def save_metadata_to_faiss_internal(
         try:
             index_doc = index_doc_ref.get()
             if index_doc.exists:
-                logger.info(f"Index '{index_name}' exists in Firestore. Downloading from GCS...")
+                logger.info(
+                    f"Index '{index_name}' exists in Firestore. Downloading from GCS..."
+                )
                 gcs_index_path = f"faiss_indices/{index_name}.faiss"
                 gcs_meta_path = f"faiss_indices/{index_name}_meta.pkl"
-                _download_gcs_file(storage_client, GCS_BUCKET_NAME, gcs_index_path, local_index_file)
-                _download_gcs_file(storage_client, GCS_BUCKET_NAME, gcs_meta_path, local_meta_file)
+                _download_gcs_file(
+                    storage_client, GCS_BUCKET_NAME, gcs_index_path, local_index_file
+                )
+                _download_gcs_file(
+                    storage_client, GCS_BUCKET_NAME, gcs_meta_path, local_meta_file
+                )
                 index = faiss.read_index(local_index_file)
                 with open(local_meta_file, "rb") as f:
                     metadata_map = pickle.load(f)
-                logger.info(f"Downloaded and loaded existing index with {index.ntotal} vectors.")
+                logger.info(
+                    f"Downloaded and loaded existing index with {index.ntotal} vectors."
+                )
             else:
-                logger.info(f"Index '{index_name}' not found in Firestore. Creating new index.")
+                logger.info(
+                    f"Index '{index_name}' not found in Firestore. Creating new index."
+                )
         except NotFound:
-            logger.info(f"Index document '{index_name}' not found in Firestore. Creating new index.")
+            logger.info(
+                f"Index document '{index_name}' not found in Firestore. Creating new index."
+            )
         except Exception as e:
-            logger.warning(f"Error downloading/loading existing index '{index_name}': {e}. Proceeding with new index.")
+            logger.warning(
+                f"Error downloading/loading existing index '{index_name}': {e}. Proceeding with new index."
+            )
 
         # 2. Create Firestore document for the new metadata *first*
         firestore_doc_ref = db.collection(index_name).document(doc_id)
         try:
             # Check if doc exists? Overwrite for simplicity now.
             firestore_doc_ref.set(metadata)
-            logger.info(f"Successfully saved metadata for doc '{doc_id}' in index '{index_name}' to Firestore.")
+            logger.info(
+                f"Successfully saved metadata for doc '{doc_id}' in index '{index_name}' to Firestore."
+            )
         except GoogleAPICallError as e:
             message = f"Failed to save metadata to Firestore for doc '{doc_id}': {e}"
             logger.error(message)
@@ -626,7 +790,9 @@ def save_metadata_to_faiss_internal(
 
         # 3. Prepare vectors and update/create FAISS index
         if not vectors:
-            logger.warning(f"No vectors provided for doc '{doc_id}'. Skipping FAISS update.")
+            logger.warning(
+                f"No vectors provided for doc '{doc_id}'. Skipping FAISS update."
+            )
         else:
             np_vectors = np.array(vectors, dtype="float32")
             if np_vectors.ndim != 2:
@@ -635,23 +801,31 @@ def save_metadata_to_faiss_internal(
             num_new_vectors = np_vectors.shape[0]
 
             if index is None:
-                logger.info(f"Creating new FAISS index (IndexFlatL2) with dimension {dimension}.")
+                logger.info(
+                    f"Creating new FAISS index (IndexFlatL2) with dimension {dimension}."
+                )
                 index = faiss.IndexFlatL2(dimension)
                 # Add a dummy vector if index is empty before adding real vectors?
                 # index.add(np.zeros((1, dimension), dtype='float32'))
 
             if index.d != dimension:
-                raise ValueError(f"Vector dimension mismatch: Index has {index.d}, new vectors have {dimension}.")
+                raise ValueError(
+                    f"Vector dimension mismatch: Index has {index.d}, new vectors have {dimension}."
+                )
 
             start_id = index.ntotal
             index.add(np_vectors)
-            logger.info(f"Added {num_new_vectors} vectors to FAISS index. Total vectors: {index.ntotal}.")
+            logger.info(
+                f"Added {num_new_vectors} vectors to FAISS index. Total vectors: {index.ntotal}."
+            )
 
             # Update metadata map (maps internal FAISS index ID to doc_id and original metadata key)
             for i in range(num_new_vectors):
                 # Store the primary key (doc_id) associated with this vector index
                 metadata_map[start_id + i] = doc_id
-            logger.info(f"Updated local metadata map for {num_new_vectors} new vectors.")
+            logger.info(
+                f"Updated local metadata map for {num_new_vectors} new vectors."
+            )
 
             # Save updated index and metadata map locally
             faiss.write_index(index, local_index_file)
@@ -663,10 +837,18 @@ def save_metadata_to_faiss_internal(
             gcs_index_path = f"faiss_indices/{index_name}.faiss"
             gcs_meta_path = f"faiss_indices/{index_name}_meta.pkl"
             try:
-                _upload_to_gcs(storage_client, GCS_BUCKET_NAME, local_index_file, gcs_index_path)
-                logger.info(f"Successfully uploaded index file to gs://{GCS_BUCKET_NAME}/{gcs_index_path}")
-                _upload_to_gcs(storage_client, GCS_BUCKET_NAME, local_meta_file, gcs_meta_path)
-                logger.info(f"Successfully uploaded metadata map to gs://{GCS_BUCKET_NAME}/{gcs_meta_path}")
+                _upload_to_gcs(
+                    storage_client, GCS_BUCKET_NAME, local_index_file, gcs_index_path
+                )
+                logger.info(
+                    f"Successfully uploaded index file to gs://{GCS_BUCKET_NAME}/{gcs_index_path}"
+                )
+                _upload_to_gcs(
+                    storage_client, GCS_BUCKET_NAME, local_meta_file, gcs_meta_path
+                )
+                logger.info(
+                    f"Successfully uploaded metadata map to gs://{GCS_BUCKET_NAME}/{gcs_meta_path}"
+                )
 
                 # 5. Update Firestore index document (only after successful GCS upload)
                 index_doc_ref.set(
@@ -686,9 +868,7 @@ def save_metadata_to_faiss_internal(
             except Exception as gcs_error:
                 # --- ROLLBACK LOGIC ---
                 status = "failed_gcs_upload"
-                message = (
-                    f"GCS upload failed for index '{index_name}': {gcs_error}. Rolling back Firestore metadata save."
-                )
+                message = f"GCS upload failed for index '{index_name}': {gcs_error}. Rolling back Firestore metadata save."
                 logger.error(message, exc_info=True)
                 if firestore_doc_ref:
                     try:
@@ -696,19 +876,25 @@ def save_metadata_to_faiss_internal(
                             f"Attempting to delete Firestore document {firestore_doc_ref.path} due to GCS upload failure."
                         )
                         firestore_doc_ref.delete()
-                        logger.info(f"Successfully deleted Firestore document {firestore_doc_ref.path}.")
+                        logger.info(
+                            f"Successfully deleted Firestore document {firestore_doc_ref.path}."
+                        )
                         message += " Firestore metadata successfully rolled back."
                     except Exception as delete_error:
                         rollback_fail_msg = f"CRITICAL: Failed to delete Firestore document {firestore_doc_ref.path} during rollback: {delete_error}"
                         logger.critical(rollback_fail_msg)
-                        message += f" {rollback_fail_msg}"  # Append rollback failure info
+                        message += (
+                            f" {rollback_fail_msg}"  # Append rollback failure info
+                        )
                 # Re-raise the original GCS error after attempting rollback
                 raise gcs_error
 
     except Exception as e:
         # Catch other errors (vector validation, local save, etc.)
         status = "failed"
-        if not message:  # Use specific message if already set (like Firestore save fail)
+        if (
+            not message
+        ):  # Use specific message if already set (like Firestore save fail)
             message = f"Error processing save_metadata_to_faiss for '{doc_id}' in '{index_name}': {e}"
         logger.error(message, exc_info=True)
         # Should we attempt rollback here too? Depends on where the error occurred.
@@ -729,7 +915,10 @@ def save_metadata_to_faiss_internal(
                 pass
 
     duration_ms = (time.monotonic() - start_time) * 1000
-    return {"result": message, "meta": {"status": status, "duration_ms": round(duration_ms, 2)}}
+    return {
+        "result": message,
+        "meta": {"status": status, "duration_ms": round(duration_ms, 2)},
+    }
 
 
 # Ensure no test code or extraneous decorators/functions below this line in the module file.

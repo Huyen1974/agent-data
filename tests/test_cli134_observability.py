@@ -3,11 +3,12 @@ CLI 134 Observability Test Suite
 Tests metrics collection, dashboard creation, and alerting for Agent Data system.
 """
 
-import pytest
-from unittest.mock import Mock
-from datetime import datetime, timezone
 import json
-from typing import Dict, Any
+from datetime import UTC, datetime
+from typing import Any
+from unittest.mock import Mock
+
+import pytest
 
 # Test configuration
 TEST_DOCUMENTS = [
@@ -66,7 +67,7 @@ class MockMetricsCollector:
     """Mock metrics collector for testing observability functionality."""
 
     @staticmethod
-    def collect_qdrant_metrics(api_key: str) -> Dict[str, Any]:
+    def collect_qdrant_metrics(api_key: str) -> dict[str, Any]:
         """Mock Qdrant metrics collection."""
         return {
             "qdrant_requests_total": 1,
@@ -78,11 +79,11 @@ class MockMetricsCollector:
             "collection_status": 1,
             "qdrant_request_duration_seconds": 0.5,
             "embedding_generation_duration_seconds": 0.35,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         }
 
     @staticmethod
-    def collect_firestore_metrics() -> Dict[str, Any]:
+    def collect_firestore_metrics() -> dict[str, Any]:
         """Mock Firestore metrics collection."""
         return {
             "documents_processed_total": 8,
@@ -102,7 +103,11 @@ class MockMetricsCollector:
             "status": "success",
             "timestamp": metrics.get("timestamp"),
             "metrics_collected": len(
-                [k for k, v in metrics.items() if k not in ["timestamp", "error"] and isinstance(v, (int, float))]
+                [
+                    k
+                    for k, v in metrics.items()
+                    if k not in ["timestamp", "error"] and isinstance(v, (int, float))
+                ]
             ),
             "pushgateway_success": True,
             "cloud_monitoring_success": True,
@@ -161,7 +166,9 @@ class TestCLI134Observability:
         mock_request = Mock()
 
         # Test the export function
-        response, status_code = MockMetricsCollector.export_metrics_integration(mock_request)
+        response, status_code = MockMetricsCollector.export_metrics_integration(
+            mock_request
+        )
         response_data = json.loads(response)
 
         # Validate response
@@ -182,7 +189,7 @@ class TestCLI134Observability:
     async def test_alert_policy_validation(self):
         """Test alert policy configuration validation."""
         # Read and validate alert policy
-        with open("alert_policy_qdrant_latency.json", "r") as f:
+        with open("alert_policy_qdrant_latency.json") as f:
             alert_policy = json.load(f)
 
         # Validate alert policy structure
@@ -201,15 +208,19 @@ class TestCLI134Observability:
         assert latency_condition["conditionThreshold"]["comparison"] == "COMPARISON_GT"
 
         # Check connection condition
-        connection_condition = next(c for c in conditions if "Connection" in c["displayName"])
+        connection_condition = next(
+            c for c in conditions if "Connection" in c["displayName"]
+        )
         assert connection_condition["conditionThreshold"]["thresholdValue"] == 1.0
-        assert connection_condition["conditionThreshold"]["comparison"] == "COMPARISON_LT"
+        assert (
+            connection_condition["conditionThreshold"]["comparison"] == "COMPARISON_LT"
+        )
 
     @pytest.mark.asyncio
     async def test_dashboard_configuration(self):
         """Test dashboard configuration validation."""
         # Read and validate dashboard configuration
-        with open("dashboard.json", "r") as f:
+        with open("dashboard.json") as f:
             dashboard = json.load(f)
 
         # Validate dashboard structure
@@ -233,7 +244,9 @@ class TestCLI134Observability:
         ]
 
         for expected_widget in expected_widgets:
-            assert expected_widget in widget_titles, f"Missing widget: {expected_widget}"
+            assert (
+                expected_widget in widget_titles
+            ), f"Missing widget: {expected_widget}"
 
     @pytest.mark.asyncio
     async def test_observability_error_handling(self):
@@ -245,7 +258,7 @@ class TestCLI134Observability:
             "qdrant_api_errors_total": 1,
             "qdrant_request_duration_seconds": 10.0,  # Timeout duration
             "embedding_generation_duration_seconds": 0.0,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "error": "Connection timeout",
         }
 
@@ -266,7 +279,9 @@ class TestCLI134Observability:
 
         # Test export integration
         mock_request = Mock()
-        response, status_code = MockMetricsCollector.export_metrics_integration(mock_request)
+        response, status_code = MockMetricsCollector.export_metrics_integration(
+            mock_request
+        )
 
         end_time = datetime.now()
         execution_time = (end_time - start_time).total_seconds()

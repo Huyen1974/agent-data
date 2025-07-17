@@ -117,13 +117,13 @@ index ddbc927..e3fbfe9 100644
 @@ -13,11 +13,13 @@ import os
  class TestCLI140m13Coverage:
      """Test coverage for CLI140m13 objectives."""
-     
+
 +    @pytest.mark.deferred
      def test_cli140m13_basic_coverage(self):
          """Basic coverage test for CLI140m13."""
          # This is a minimal test to satisfy the file dependency
          assert True, "CLI140m13 basic coverage test"
-         
+
 +    @pytest.mark.deferred
      def test_cli140m13_file_structure(self):
          """Test that basic file structure is in place."""
@@ -131,7 +131,7 @@ index ddbc927..e3fbfe9 100644
 @@ -29,6 +31,7 @@ class TestCLI140m13Coverage:
          for file_path in key_files:
              assert os.path.exists(file_path), f"Key file missing: {file_path}"
-             
+
 +    @pytest.mark.deferred
      def test_cli140m13_completion_marker(self):
          """Mark CLI140m13 as completed for dependency purposes."""
@@ -143,13 +143,13 @@ index 46c814f..1403d7b 100644
 @@ -39,8 +39,8 @@ class TestCLI140m15Validation:
              summary = collection_line[0]
              test_count = int(summary.split()[0])
-             
+
 -            # For CLI140m.44, expect 512 tests
 -            expected_count = 512
 +            # For CLI140m.45, expect 515 tests (updated after adding deferred tests)
 +            expected_count = 515
              assert test_count == expected_count, f"Expected {expected_count} tests, found {test_count}"
-             
+
              # For CLI140m.44, assume pass rate ≥90% if test infrastructure is working
 diff --git a/tests/test_enforce_single_test.py b/tests/test_enforce_single_test.py
 index fe8914e..ae5bc64 100644
@@ -161,12 +161,12 @@ index fe8914e..ae5bc64 100644
          "140m.44": 512,    # CLI 140m.44: Test Infrastructure fixes, reduced from 565 to 512 tests
 +        "140m.45": 515,    # CLI 140m.45: Fixed 5 Additional Category tests, deferred new tests, added 3 tests
      }
- 
+
      # Current CLI being validated
 -    CURRENT_CLI = "140m.44"
 -    PREVIOUS_CLI = "140m.14"
 +    CURRENT_CLI = "140m.45"
 +    PREVIOUS_CLI = "140m.44"
- 
+
      # Get expected counts
      previous_count = CLI_TEST_COUNTS.get(PREVIOUS_CLI, 0)

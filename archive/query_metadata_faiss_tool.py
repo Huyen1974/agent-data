@@ -1,16 +1,19 @@
-import pickle
-import os
-from typing import Dict, Any, List
+import json
 import logging
-import numpy as np
-import faiss
+import os
+import pickle
 import time
-from google.cloud import storage
+from typing import Any
+
+import faiss
+import numpy as np
 from google.cloud import (
     exceptions as google_cloud_exceptions,
 )  # Import google.cloud.exceptions
-from google.cloud import firestore  # Added for Firestore check
-import json
+from google.cloud import (
+    firestore,  # Added for Firestore check
+    storage,
+)
 
 from ADK.agent_data.agent.agent_data_agent import (
     AgentDataAgent,
@@ -108,13 +111,17 @@ class IndexNotRegisteredError(Exception):
 
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Assuming load_metadata_from_faiss is NOT used here anymore, as query needs direct access
 # from .load_metadata_from_faiss_tool import load_metadata_from_faiss
 
-GCS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
+GCS_BUCKET_NAME = os.environ.get(
+    "GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test"
+)
 FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
 FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
 
@@ -122,7 +129,9 @@ FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
 # MOVED _create_local_temp_path to module level
 def _create_local_temp_path(index_name: str, suffix: str) -> str:
     # Sanitize index_name to prevent directory traversal or invalid characters for a filename
-    safe_index_name = "".join(c if c.isalnum() or c in ("_", "-") else "_" for c in index_name)
+    safe_index_name = "".join(
+        c if c.isalnum() or c in ("_", "-") else "_" for c in index_name
+    )
     filename = f"{safe_index_name}_{int(time.time() * 1000)}{suffix}"
     return os.path.join("/tmp", filename)
 
@@ -140,7 +149,9 @@ def _parse_gcs_path(gcs_path: str) -> tuple[str, str]:
         raise ValueError("Invalid GCS path format. Must include bucket and blob name.")
     bucket_name, blob_name = stripped_path.split("/", 1)
     if not bucket_name or not blob_name:  # Ensure neither part is empty after split
-        raise ValueError("Invalid GCS path format. Bucket and blob name cannot be empty.")
+        raise ValueError(
+            "Invalid GCS path format. Bucket and blob name cannot be empty."
+        )
     return bucket_name, blob_name
 
 
@@ -152,18 +163,24 @@ def _download_gcs_file(
     destination_file_name: str,
 ):
     """Downloads a file from GCS."""
-    logger.info(f"Attempting to download gs://{bucket_name}/{source_blob_name} to {destination_file_name}")
+    logger.info(
+        f"Attempting to download gs://{bucket_name}/{source_blob_name} to {destination_file_name}"
+    )
     # Ensure destination directory exists
     os.makedirs(os.path.dirname(destination_file_name), exist_ok=True)
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
     try:
         blob.download_to_filename(destination_file_name)
-        logger.info(f"Successfully downloaded gs://{bucket_name}/{source_blob_name} to {destination_file_name}")
+        logger.info(
+            f"Successfully downloaded gs://{bucket_name}/{source_blob_name} to {destination_file_name}"
+        )
     except google_cloud_exceptions.NotFound:
         logger.error(f"GCS file not found: gs://{bucket_name}/{source_blob_name}")
         # Ensure the custom error message from spec is used if this bubbles up, or handle specifically
-        raise FileNotFoundError(f"GCS file not found: gs://{bucket_name}/{source_blob_name}")
+        raise FileNotFoundError(
+            f"GCS file not found: gs://{bucket_name}/{source_blob_name}"
+        )
     except Exception as e:
         logger.error(
             f"Failed to download gs://{bucket_name}/{source_blob_name}: {e}",
@@ -172,7 +189,9 @@ def _download_gcs_file(
         raise  # Re-raise the exception after logging
 
 
-def query_metadata_faiss_internal(index_name: str, query_vector: List[float], top_k: int) -> Dict[str, Any]:
+def query_metadata_faiss_internal(
+    index_name: str, query_vector: list[float], top_k: int
+) -> dict[str, Any]:
     """
     Internal function to load index/metadata and perform FAISS query.
     Downloads files from GCS based on paths from Firestore.
@@ -190,25 +209,37 @@ def query_metadata_faiss_internal(index_name: str, query_vector: List[float], to
         gcs_faiss_path_from_firestore = None
         gcs_meta_path_from_firestore = None
 
-        fs_client = firestore.Client(project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID)
+        fs_client = firestore.Client(
+            project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID
+        )
         doc_ref = fs_client.collection("faiss_indexes_registry").document(index_name)
         doc = doc_ref.get()
 
         if not doc.exists:
-            raise IndexNotRegisteredError(f"Index '{index_name}' not found in Firestore registry.")
+            raise IndexNotRegisteredError(
+                f"Index '{index_name}' not found in Firestore registry."
+            )
 
         doc_data = doc.to_dict()
         gcs_faiss_path_from_firestore = doc_data.get("gcs_faiss_path")
         gcs_meta_path_from_firestore = doc_data.get("gcs_meta_path")
 
         if not gcs_faiss_path_from_firestore:
-            raise MissingGCSMetaPathError(f"GCS FAISS path not found in Firestore for index '{index_name}'")
+            raise MissingGCSMetaPathError(
+                f"GCS FAISS path not found in Firestore for index '{index_name}'"
+            )
         if not gcs_meta_path_from_firestore:
-            raise MissingGCSMetaPathError(f"GCS metadata path not found in Firestore for index '{index_name}'")
+            raise MissingGCSMetaPathError(
+                f"GCS metadata path not found in Firestore for index '{index_name}'"
+            )
 
         try:
-            index_file_bucket_name, index_file_blob_name = _parse_gcs_path(gcs_faiss_path_from_firestore)
-            meta_file_bucket_name, meta_file_blob_name = _parse_gcs_path(gcs_meta_path_from_firestore)
+            index_file_bucket_name, index_file_blob_name = _parse_gcs_path(
+                gcs_faiss_path_from_firestore
+            )
+            meta_file_bucket_name, meta_file_blob_name = _parse_gcs_path(
+                gcs_meta_path_from_firestore
+            )
         except ValueError:
             raise GCSPathParseError("Invalid GCS path format")
 
@@ -252,7 +283,9 @@ def query_metadata_faiss_internal(index_name: str, query_vector: List[float], to
         try:
             faiss_index = faiss.read_index(local_index_path)
         except Exception as e:
-            raise FaissReadError(f"Failed to read FAISS index from {local_index_path}: {e}")
+            raise FaissReadError(
+                f"Failed to read FAISS index from {local_index_path}: {e}"
+            )
 
         if (
             not hasattr(faiss_index, "d")
@@ -272,11 +305,21 @@ def query_metadata_faiss_internal(index_name: str, query_vector: List[float], to
         stored_ids = meta_content.get("ids", None)
         metadata = meta_content.get("metadata", None)
         if stored_ids is None or metadata is None:
-            raise FaissReadError("Meta file missing required 'ids' or 'metadata' fields.")
-        if not metadata or not isinstance(metadata, dict) or not all(isinstance(k, str) for k in metadata.keys()):
-            raise FaissSearchError("Failed to retrieve metadata for found indices (check mapping).")
+            raise FaissReadError(
+                "Meta file missing required 'ids' or 'metadata' fields."
+            )
+        if (
+            not metadata
+            or not isinstance(metadata, dict)
+            or not all(isinstance(k, str) for k in metadata.keys())
+        ):
+            raise FaissSearchError(
+                "Failed to retrieve metadata for found indices (check mapping)."
+            )
 
-        if not isinstance(query_vector, list) or not all(isinstance(x, (int, float)) for x in query_vector):
+        if not isinstance(query_vector, list) or not all(
+            isinstance(x, (int, float)) for x in query_vector
+        ):
             raise FaissSearchError("query_vector must be a list of numbers.")
 
         query_numpy_for_dim_check = np.array(query_vector, dtype="float32")
@@ -306,10 +349,14 @@ def query_metadata_faiss_internal(index_name: str, query_vector: List[float], to
             if idx == -1:
                 break
             if idx >= len(stored_ids):
-                raise FaissSearchError("Failed to retrieve metadata for found indices (check mapping).")
+                raise FaissSearchError(
+                    "Failed to retrieve metadata for found indices (check mapping)."
+                )
             doc_id = stored_ids[idx]
             if doc_id not in metadata:
-                raise FaissSearchError("Failed to retrieve metadata for found indices (check mapping).")
+                raise FaissSearchError(
+                    "Failed to retrieve metadata for found indices (check mapping)."
+                )
             # Flatten result: id, all metadata fields, score
             flat_result = {"id": doc_id, "score": float(distances[0][i])}
             if isinstance(metadata[doc_id], dict):
@@ -363,7 +410,7 @@ def query_metadata_faiss_internal(index_name: str, query_vector: List[float], to
 
 async def query_metadata_faiss(
     agent_context: AgentDataAgent, index_name: str, key: str, top_k: int = 1
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Query metadata from FAISS index using a text key.
     """
@@ -390,7 +437,9 @@ async def query_metadata_faiss(
             }
 
         # Check Firestore for index readiness
-        fs_client = firestore.Client(project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID)
+        fs_client = firestore.Client(
+            project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID
+        )
         doc_ref = fs_client.collection("faiss_indexes_registry").document(index_name)
         doc = doc_ref.get()
 
@@ -463,7 +512,9 @@ async def query_metadata_faiss(
                 if isinstance(embedding_info, dict)
                 else "Invalid embedding response format"
             )
-            logger.error(f"Failed to generate embedding for query key: {key}. Response: {error_msg}")
+            logger.error(
+                f"Failed to generate embedding for query key: {key}. Response: {error_msg}"
+            )
             return {
                 "meta": {
                     "status": "error",
@@ -473,9 +524,13 @@ async def query_metadata_faiss(
                 "error": error_msg,
             }
 
-        query_vector = embedding_info["embedding"].tolist()  # Convert numpy array to list
+        query_vector = embedding_info[
+            "embedding"
+        ].tolist()  # Convert numpy array to list
         # Ensure it's a flat list of numbers before proceeding
-        if not isinstance(query_vector, list) or not all(isinstance(x, (int, float)) for x in query_vector):
+        if not isinstance(query_vector, list) or not all(
+            isinstance(x, (int, float)) for x in query_vector
+        ):
             # This check might be redundant now but kept for safety
             return {
                 "meta": {
@@ -578,11 +633,15 @@ if __name__ == "__main__":
     print(json.dumps(test_result, indent=2))
 
     print("\nTesting with a key unlikely to be found:")
-    test_result_notfound = query_metadata_faiss(dummy_index_name, "nonexistent_key", top_k=1)
+    test_result_notfound = query_metadata_faiss(
+        dummy_index_name, "nonexistent_key", top_k=1
+    )
     print("\nNot Found Test Result:")
     print(json.dumps(test_result_notfound, indent=2))
 
     print("\nTesting with a non-existent index name:")
-    test_result_noindex = query_metadata_faiss("non_existent_index_123", "any_key", top_k=1)
+    test_result_noindex = query_metadata_faiss(
+        "non_existent_index_123", "any_key", top_k=1
+    )
     print("\nNon-existent Index Test Result:")
     print(json.dumps(test_result_noindex, indent=2))

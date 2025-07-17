@@ -1,5 +1,6 @@
-import pytest
 import os
+
+import pytest
 from dotenv import load_dotenv
 
 
@@ -15,9 +16,13 @@ def test_env_config_valid():
     elif os.path.exists(env_example_path):
         env_path_to_load = env_example_path
 
-    assert env_path_to_load is not None, "Expected .env.sample or .env.example to exist in the project root"
+    assert (
+        env_path_to_load is not None
+    ), "Expected .env.sample or .env.example to exist in the project root"
 
     load_dotenv(env_path_to_load)
     required_keys = ["QDRANT_URL", "QDRANT_API_KEY"]
     for key in required_keys:
-        assert os.getenv(key) is not None, f"Expected {key} in {os.path.basename(env_path_to_load)}"
+        assert (
+            os.getenv(key) is not None
+        ), f"Expected {key} in {os.path.basename(env_path_to_load)}"

@@ -23,8 +23,7 @@ DEFERRED MARKS PRESERVED FOR:
 - Real cloud integration tests (9 tests)
 - Real API tests (OpenAI, Qdrant) (1 test)
 - Slow performance tests (10 tests)
-- Heavy subprocess tests (3 tests)  
+- Heavy subprocess tests (3 tests)
 - Intentional test skips (1 test)
 
 NEXT: CLI140m.66 - Final batch test verification
-

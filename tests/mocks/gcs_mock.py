@@ -1,4 +1,3 @@
-from typing import Dict, Optional
 from io import BytesIO
 
 
@@ -20,14 +19,14 @@ class FakeGCSBlob:
 class FakeGCSBucket:
     def __init__(self, name: str):
         self.name = name
-        self._blobs: Dict[str, FakeGCSBlob] = {}
+        self._blobs: dict[str, FakeGCSBlob] = {}
 
     def blob(self, blob_name: str) -> FakeGCSBlob:
         if blob_name not in self._blobs:
             self._blobs[blob_name] = FakeGCSBlob(blob_name)
         return self._blobs[blob_name]
 
-    def get_blob(self, blob_name: str) -> Optional[FakeGCSBlob]:
+    def get_blob(self, blob_name: str) -> FakeGCSBlob | None:
         return self._blobs.get(blob_name)
 
     def delete_blob(self, blob_name: str):
@@ -36,7 +35,7 @@ class FakeGCSBucket:
 
 class FakeGCSClient:
     def __init__(self):
-        self._buckets: Dict[str, FakeGCSBucket] = {}
+        self._buckets: dict[str, FakeGCSBucket] = {}
 
     def bucket(self, bucket_name: str) -> FakeGCSBucket:
         if bucket_name not in self._buckets:

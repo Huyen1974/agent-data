@@ -2,17 +2,17 @@
 Cloud Functions entry point for Agent Data API MCP Gateway
 """
 
-import sys
 import os
+import sys
 
 # Add the src directory to Python path for proper imports
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "src")
 sys.path.insert(0, src_path)
 
-import functions_framework
 import json
-from typing import Optional
+
+import functions_framework
 
 # Import the FastAPI app
 try:
@@ -74,15 +74,25 @@ def main(request):
 
             # Make request to FastAPI app
             if method == "get":
-                response = client.get(path, params=query_params, headers=request_headers)
+                response = client.get(
+                    path, params=query_params, headers=request_headers
+                )
             elif method == "post":
-                response = client.post(path, json=json_data, params=query_params, headers=request_headers)
+                response = client.post(
+                    path, json=json_data, params=query_params, headers=request_headers
+                )
             elif method == "put":
-                response = client.put(path, json=json_data, params=query_params, headers=request_headers)
+                response = client.put(
+                    path, json=json_data, params=query_params, headers=request_headers
+                )
             elif method == "delete":
-                response = client.delete(path, params=query_params, headers=request_headers)
+                response = client.delete(
+                    path, params=query_params, headers=request_headers
+                )
             else:
-                response = client.get(path, params=query_params, headers=request_headers)
+                response = client.get(
+                    path, params=query_params, headers=request_headers
+                )
 
             # Return FastAPI response
             response_headers = dict(headers)  # Start with CORS headers
@@ -126,7 +136,11 @@ def main(request):
                 "query": query,
                 "limit": limit,
                 "results": [
-                    {"id": "mock_fallback_1", "content": f"Fallback mock response for query: {query}", "score": 0.95}
+                    {
+                        "id": "mock_fallback_1",
+                        "content": f"Fallback mock response for query: {query}",
+                        "score": 0.95,
+                    }
                 ],
                 "message": "Fallback mock response from API MCP Gateway v2",
                 "fastapi_available": FASTAPI_AVAILABLE,
@@ -135,7 +149,11 @@ def main(request):
             return (json.dumps(response_data), 200, headers)
 
         except Exception as e:
-            error_response = {"error": str(e), "status": "error", "fastapi_available": FASTAPI_AVAILABLE}
+            error_response = {
+                "error": str(e),
+                "status": "error",
+                "fastapi_available": FASTAPI_AVAILABLE,
+            }
             return (json.dumps(error_response), 500, headers)
 
     # Default response

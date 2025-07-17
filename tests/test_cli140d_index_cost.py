@@ -1,5 +1,5 @@
-
 import pytest
+
 """
 CLI 140d Test: Firestore Index Deployment and Cost Monitoring Validation
 
@@ -11,10 +11,10 @@ This test validates that:
 Following the "1 test per CLI" rule for CLI 140d.
 """
 
-import subprocess
 import json
 import os
-from unittest.mock import patch, MagicMock
+import subprocess
+from unittest.mock import MagicMock, patch
 
 
 class TestCLI140dIndexCost:
@@ -34,13 +34,17 @@ class TestCLI140dIndexCost:
         """
         # Test 1: Validate firestore.indexes.json structure
         indexes_file = "firestore.indexes.json"
-        assert os.path.exists(indexes_file), f"Firestore indexes file {indexes_file} not found"
+        assert os.path.exists(
+            indexes_file
+        ), f"Firestore indexes file {indexes_file} not found"
 
-        with open(indexes_file, "r") as f:
+        with open(indexes_file) as f:
             indexes_config = json.load(f)
 
         # Validate indexes structure
-        assert "indexes" in indexes_config, "Indexes configuration missing 'indexes' key"
+        assert (
+            "indexes" in indexes_config
+        ), "Indexes configuration missing 'indexes' key"
         assert (
             len(indexes_config["indexes"]) >= 18
         ), f"Expected at least 18 indexes, found {len(indexes_config['indexes'])}"
@@ -51,7 +55,10 @@ class TestCLI140dIndexCost:
             ("documents", ["department", "tags", "score"]),
             ("documents", ["topic", "priority", "lastUpdated"]),
             ("documents", ["tags", "department", "score"]),
-            ("documents", ["customer_context.account_type", "department", "lastUpdated"]),
+            (
+                "documents",
+                ["customer_context.account_type", "department", "lastUpdated"],
+            ),
             ("documents", ["metadata.issue_category", "topic", "score"]),
         ]
 
@@ -60,11 +67,15 @@ class TestCLI140dIndexCost:
             if index.get("collectionGroup") == "documents":
                 fields = [field.get("fieldPath") for field in index.get("fields", [])]
                 for collection, expected_fields in rag_indexes:
-                    if collection == "documents" and all(field in fields for field in expected_fields):
+                    if collection == "documents" and all(
+                        field in fields for field in expected_fields
+                    ):
                         found_rag_indexes += 1
                         break
 
-        assert found_rag_indexes >= 3, f"Expected at least 3 RAG-optimized indexes, found {found_rag_indexes}"
+        assert (
+            found_rag_indexes >= 3
+        ), f"Expected at least 3 RAG-optimized indexes, found {found_rag_indexes}"
 
         # Test 2: Mock Firestore index deployment validation
         with patch("subprocess.run") as mock_subprocess:
@@ -102,12 +113,16 @@ CICAgLiIkYMJ  CREATING
 
         # Test 3: Validate firebase.json configuration
         firebase_config_file = "firebase.json"
-        assert os.path.exists(firebase_config_file), f"Firebase config file {firebase_config_file} not found"
+        assert os.path.exists(
+            firebase_config_file
+        ), f"Firebase config file {firebase_config_file} not found"
 
-        with open(firebase_config_file, "r") as f:
+        with open(firebase_config_file) as f:
             firebase_config = json.load(f)
 
-        assert "firestore" in firebase_config, "Firebase config missing 'firestore' section"
+        assert (
+            "firestore" in firebase_config
+        ), "Firebase config missing 'firestore' section"
         firestore_config = firebase_config["firestore"]
         assert (
             firestore_config.get("database") == "test-default"
@@ -131,32 +146,53 @@ projectId: chatgpt-db-project
 
             # Simulate checking billing configuration
             result = subprocess.run(
-                ["gcloud", "billing", "projects", "describe", "chatgpt-db-project"], capture_output=True, text=True
+                ["gcloud", "billing", "projects", "describe", "chatgpt-db-project"],
+                capture_output=True,
+                text=True,
             )
 
             assert result.returncode == 0, "Failed to query billing information"
-            assert "billingEnabled: true" in result.stdout, "Billing not enabled for project"
-            assert "chatgpt-db-project" in result.stdout, "Project not found in billing info"
+            assert (
+                "billingEnabled: true" in result.stdout
+            ), "Billing not enabled for project"
+            assert (
+                "chatgpt-db-project" in result.stdout
+            ), "Project not found in billing info"
 
         # Test 5: Validate alerting policy files exist and are properly structured
-        alerting_policies = ["alert_policy_cskh_latency.json", "alert_policy_error_rate.json"]
+        alerting_policies = [
+            "alert_policy_cskh_latency.json",
+            "alert_policy_error_rate.json",
+        ]
 
         for policy_file in alerting_policies:
-            assert os.path.exists(policy_file), f"Alerting policy file {policy_file} not found"
+            assert os.path.exists(
+                policy_file
+            ), f"Alerting policy file {policy_file} not found"
 
-            with open(policy_file, "r") as f:
+            with open(policy_file) as f:
                 policy_config = json.load(f)
 
-            assert "displayName" in policy_config, f"Policy {policy_file} missing displayName"
-            assert "conditions" in policy_config, f"Policy {policy_file} missing conditions"
-            assert len(policy_config["conditions"]) > 0, f"Policy {policy_file} has no conditions"
+            assert (
+                "displayName" in policy_config
+            ), f"Policy {policy_file} missing displayName"
+            assert (
+                "conditions" in policy_config
+            ), f"Policy {policy_file} missing conditions"
+            assert (
+                len(policy_config["conditions"]) > 0
+            ), f"Policy {policy_file} has no conditions"
 
             # Validate threshold values
             for condition in policy_config["conditions"]:
                 if "conditionThreshold" in condition:
                     threshold = condition["conditionThreshold"]
-                    assert "thresholdValue" in threshold, f"Condition missing thresholdValue in {policy_file}"
-                    assert threshold["thresholdValue"] > 0, f"Invalid threshold value in {policy_file}"
+                    assert (
+                        "thresholdValue" in threshold
+                    ), f"Condition missing thresholdValue in {policy_file}"
+                    assert (
+                        threshold["thresholdValue"] > 0
+                    ), f"Invalid threshold value in {policy_file}"
 
         # Test 6: Validate test count compliance (366 tests expected)
         with patch("subprocess.run") as mock_subprocess:
@@ -167,13 +203,19 @@ projectId: chatgpt-db-project
             mock_subprocess.return_value = mock_result
 
             # This test itself should be the 366th test
-            result = subprocess.run(["python", "-m", "pytest", "--collect-only", "-q"], capture_output=True, text=True)
+            result = subprocess.run(
+                ["python", "-m", "pytest", "--collect-only", "-q"],
+                capture_output=True,
+                text=True,
+            )
 
             # Note: This is a mock validation - actual count will be verified by meta test
             assert result.returncode == 0, "Failed to collect tests"
 
         print("✅ CLI 140d validation completed successfully:")
-        print(f"  - Firestore indexes: {len(indexes_config['indexes'])} indexes configured")
+        print(
+            f"  - Firestore indexes: {len(indexes_config['indexes'])} indexes configured"
+        )
         print(f"  - RAG-optimized indexes: {found_rag_indexes} found")
         print("  - Firebase configuration: test-default database configured")
         print("  - Billing monitoring: enabled and accessible")

@@ -12,41 +12,50 @@ Usage:
     python scripts/migrate_faiss_to_qdrant.py [--dry-run] [--verbose] [--limit N]
 """
 
-import os
-import sys
-import time
-import hashlib
-import pickle
-import logging
 import argparse
-import tempfile
 import asyncio
+import hashlib
+import logging
+import os
+import pickle
+import sys
+import tempfile
+import time
 import uuid
 from pathlib import Path
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Any
 
-import numpy as np
 import faiss
-from google.cloud import storage, firestore
+import numpy as np
 from google.cloud import exceptions as google_cloud_exceptions
+from google.cloud import firestore, storage
 
 # Add the project root to the path to import QdrantStore
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from agent_data.vector_store.qdrant_store import QdrantStore  # noqa: E402
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Configuration
-FAISS_GCS_BUCKET = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
+FAISS_GCS_BUCKET = os.environ.get(
+    "GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test"
+)
 QDRANT_GCS_BUCKET = os.environ.get("QDRANT_GCS_BUCKET", "qdrant-snapshots")
 FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
 FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
-FAISS_INDEXES_COLLECTION = os.environ.get("FAISS_INDEXES_COLLECTION", "faiss_indexes_registry")
+FAISS_INDEXES_COLLECTION = os.environ.get(
+    "FAISS_INDEXES_COLLECTION", "faiss_indexes_registry"
+)
 
 # Qdrant Configuration
-QDRANT_URL = os.environ.get("QDRANT_URL", "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io")
+QDRANT_URL = os.environ.get(
+    "QDRANT_URL",
+    "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io",
+)
 QDRANT_COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION_NAME", "migrated_vectors")
 
 # Migration Configuration
@@ -56,11 +65,15 @@ QDRANT_COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION_NAME", "migrated_vect
 # - Batch size 100: Optimal balance between throughput and memory
 # - Batch delay 3s: Prevents rate limiting on free tier
 BATCH_SIZE = 100  # Vectors per batch (20 batches of 100 for 2000 vectors)
-BATCH_DELAY = 3.0  # Seconds between batches (increased from 2.0 for rate-limit mitigation)
+BATCH_DELAY = (
+    3.0  # Seconds between batches (increased from 2.0 for rate-limit mitigation)
+)
 TIMEOUT_SECONDS = 30  # Timeout for individual operations
 MAX_RETRIES = 3  # Maximum retry attempts
 RETRY_DELAY_BASE = 2  # Base delay for exponential backoff
-MAX_CONCURRENT_UPLOADS = 2  # Maximum concurrent vector uploads (CLI114B7: optimized for Qdrant free tier)
+MAX_CONCURRENT_UPLOADS = (
+    2  # Maximum concurrent vector uploads (CLI114B7: optimized for Qdrant free tier)
+)
 
 # Ensure logs directory exists
 LOGS_DIR = Path("logs")
@@ -104,7 +117,9 @@ def setup_migration_logger() -> logging.Logger:
 
     # File handler for migration log
     file_handler = logging.FileHandler(MIGRATION_LOG_FILE, mode="a")
-    file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    file_formatter = logging.Formatter(
+        "%(asctime)s [%(levelname)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    )
     file_handler.setFormatter(file_formatter)
     migration_logger.addHandler(file_handler)
 
@@ -127,14 +142,18 @@ def setup_performance_logger() -> logging.Logger:
 
     # File handler for performance log
     file_handler = logging.FileHandler(PERF_SLOW_LOG_FILE, mode="a")
-    file_formatter = logging.Formatter("%(asctime)s [%(message)s]", datefmt="%Y-%m-%d %H:%M:%S")
+    file_formatter = logging.Formatter(
+        "%(asctime)s [%(message)s]", datefmt="%Y-%m-%d %H:%M:%S"
+    )
     file_handler.setFormatter(file_formatter)
     perf_logger.addHandler(file_handler)
 
     return perf_logger
 
 
-async def retry_with_backoff(func, *args, max_retries=MAX_RETRIES, base_delay=RETRY_DELAY_BASE, **kwargs):
+async def retry_with_backoff(
+    func, *args, max_retries=MAX_RETRIES, base_delay=RETRY_DELAY_BASE, **kwargs
+):
     """Execute function with exponential backoff retry logic"""
     for attempt in range(max_retries + 1):
         try:
@@ -147,15 +166,17 @@ async def retry_with_backoff(func, *args, max_retries=MAX_RETRIES, base_delay=RE
                 raise e
 
             delay = base_delay * (2**attempt)
-            logger.warning(f"Attempt {attempt + 1} failed: {e}. Retrying in {delay}s...")
+            logger.warning(
+                f"Attempt {attempt + 1} failed: {e}. Retrying in {delay}s..."
+            )
             await asyncio.sleep(delay)
 
 
 async def upload_vector_with_timeout(
     qdrant_store: QdrantStore,
     point_id: str,
-    vector: List[float],
-    metadata: Dict[str, Any],
+    vector: list[float],
+    metadata: dict[str, Any],
     migration_logger: logging.Logger,
     perf_logger: logging.Logger,
     semaphore: asyncio.Semaphore,
@@ -167,7 +188,10 @@ async def upload_vector_with_timeout(
         try:
             # Use asyncio.wait_for to implement timeout
             await asyncio.wait_for(
-                retry_with_backoff(qdrant_store.upsert_vector, point_id, vector, metadata), timeout=TIMEOUT_SECONDS
+                retry_with_backoff(
+                    qdrant_store.upsert_vector, point_id, vector, metadata
+                ),
+                timeout=TIMEOUT_SECONDS,
             )
 
             latency_ms = int((time.time() - start_time) * 1000)
@@ -179,7 +203,7 @@ async def upload_vector_with_timeout(
 
             return True
 
-        except asyncio.TimeoutError:
+        except TimeoutError:
             latency_ms = int((time.time() - start_time) * 1000)
             migration_logger.error(f"[{point_id}] [TIMEOUT]")
             perf_logger.info(f"[UPLOAD] [{latency_ms}] [TIMEOUT]")
@@ -194,10 +218,15 @@ async def upload_vector_with_timeout(
 
 
 def download_gcs_file(
-    storage_client: storage.Client, bucket_name: str, source_blob_name: str, destination_file_name: str
+    storage_client: storage.Client,
+    bucket_name: str,
+    source_blob_name: str,
+    destination_file_name: str,
 ) -> None:
     """Download a file from GCS to local filesystem"""
-    logger.info(f"Downloading gs://{bucket_name}/{source_blob_name} to {destination_file_name}")
+    logger.info(
+        f"Downloading gs://{bucket_name}/{source_blob_name} to {destination_file_name}"
+    )
 
     # Ensure destination directory exists
     os.makedirs(os.path.dirname(destination_file_name), exist_ok=True)
@@ -209,17 +238,23 @@ def download_gcs_file(
         blob.download_to_filename(destination_file_name)
         logger.info(f"Successfully downloaded {source_blob_name}")
     except google_cloud_exceptions.NotFound:
-        raise FAISSIndexNotFoundError(f"GCS file not found: gs://{bucket_name}/{source_blob_name}")
+        raise FAISSIndexNotFoundError(
+            f"GCS file not found: gs://{bucket_name}/{source_blob_name}"
+        )
     except Exception as e:
         raise MigrationError(f"Failed to download {source_blob_name}: {e}")
 
 
-def get_faiss_indexes_from_firestore() -> List[Dict[str, Any]]:
+def get_faiss_indexes_from_firestore() -> list[dict[str, Any]]:
     """Get list of FAISS indexes from Firestore registry"""
-    logger.info(f"Querying Firestore for FAISS indexes in collection: {FAISS_INDEXES_COLLECTION}")
+    logger.info(
+        f"Querying Firestore for FAISS indexes in collection: {FAISS_INDEXES_COLLECTION}"
+    )
 
     try:
-        db = firestore.Client(project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID)
+        db = firestore.Client(
+            project=FIRESTORE_PROJECT_ID, database=FIRESTORE_DATABASE_ID
+        )
         collection_ref = db.collection(FAISS_INDEXES_COLLECTION)
         docs = collection_ref.stream()
 
@@ -230,10 +265,16 @@ def get_faiss_indexes_from_firestore() -> List[Dict[str, Any]]:
                 indexes.append(
                     {
                         "index_name": doc_data.get("index_name", doc.id),
-                        "gcs_faiss_path": doc_data.get("labels", {}).get("GCSPathIndex"),
+                        "gcs_faiss_path": doc_data.get("labels", {}).get(
+                            "GCSPathIndex"
+                        ),
                         "gcs_meta_path": doc_data.get("labels", {}).get("GCSPathMeta"),
-                        "vector_count": doc_data.get("labels", {}).get("VectorCount", 0),
-                        "dimension": doc_data.get("labels", {}).get("IndexDimension", 0),
+                        "vector_count": doc_data.get("labels", {}).get(
+                            "VectorCount", 0
+                        ),
+                        "dimension": doc_data.get("labels", {}).get(
+                            "IndexDimension", 0
+                        ),
                         "doc_id": doc.id,
                     }
                 )
@@ -245,7 +286,7 @@ def get_faiss_indexes_from_firestore() -> List[Dict[str, Any]]:
         raise MigrationError(f"Failed to query Firestore: {e}")
 
 
-def parse_gcs_path(gcs_path: str) -> Tuple[str, str]:
+def parse_gcs_path(gcs_path: str) -> tuple[str, str]:
     """Parse GCS path into bucket and blob name"""
     if not gcs_path or not gcs_path.startswith("gs://"):
         raise ValueError(f"Invalid GCS path format: {gcs_path}")
@@ -258,8 +299,11 @@ def parse_gcs_path(gcs_path: str) -> Tuple[str, str]:
 
 
 def load_faiss_index_and_metadata(
-    storage_client: storage.Client, gcs_faiss_path: str, gcs_meta_path: str, temp_dir: str
-) -> Tuple[faiss.Index, Dict[str, Any], np.ndarray]:
+    storage_client: storage.Client,
+    gcs_faiss_path: str,
+    gcs_meta_path: str,
+    temp_dir: str,
+) -> tuple[faiss.Index, dict[str, Any], np.ndarray]:
     """Load FAISS index and metadata from GCS"""
 
     # Parse GCS paths
@@ -302,7 +346,7 @@ def load_faiss_index_and_metadata(
                 os.remove(temp_file)
 
 
-def calculate_vectors_checksum(all_vectors: List[np.ndarray]) -> str:
+def calculate_vectors_checksum(all_vectors: list[np.ndarray]) -> str:
     """Calculate SHA-256 checksum of all vectors combined"""
     logger.info("Calculating SHA-256 checksum of all vectors")
 
@@ -322,7 +366,7 @@ def calculate_vectors_checksum(all_vectors: List[np.ndarray]) -> str:
         raise ChecksumCalculationError(f"Failed to calculate checksum: {e}")
 
 
-def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
+def perform_migration_dryrun(verbose: bool = False) -> dict[str, Any]:
     """Perform dry-run migration analysis"""
     migration_logger = setup_migration_logger()
     start_time = time.time()
@@ -357,12 +401,17 @@ def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
         with tempfile.TemporaryDirectory() as temp_dir:
             for i, index_info in enumerate(indexes, 1):
                 index_name = index_info["index_name"]
-                migration_logger.info(f"Processing index {i}/{total_indexes}: {index_name}")
+                migration_logger.info(
+                    f"Processing index {i}/{total_indexes}: {index_name}"
+                )
 
                 try:
                     # Load index and extract vectors
                     index, metadata, vectors = load_faiss_index_and_metadata(
-                        storage_client, index_info["gcs_faiss_path"], index_info["gcs_meta_path"], temp_dir
+                        storage_client,
+                        index_info["gcs_faiss_path"],
+                        index_info["gcs_meta_path"],
+                        temp_dir,
                     )
 
                     # Collect statistics
@@ -376,18 +425,25 @@ def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
                             "name": index_name,
                             "vector_count": index_vector_count,
                             "dimension": index_dimension,
-                            "metadata_keys": len(metadata.get("ids", [])) if isinstance(metadata, dict) else 0,
+                            "metadata_keys": (
+                                len(metadata.get("ids", []))
+                                if isinstance(metadata, dict)
+                                else 0
+                            ),
                         }
                     )
 
                     migration_logger.info(
-                        f"Index {index_name}: {index_vector_count} vectors, " f"dimension {index_dimension}"
+                        f"Index {index_name}: {index_vector_count} vectors, "
+                        f"dimension {index_dimension}"
                     )
 
                     if verbose:
                         migration_logger.info(f"Metadata structure: {type(metadata)}")
                         if isinstance(metadata, dict):
-                            migration_logger.info(f"Metadata keys: {list(metadata.keys())}")
+                            migration_logger.info(
+                                f"Metadata keys: {list(metadata.keys())}"
+                            )
 
                 except Exception as e:
                     migration_logger.error(f"Failed to process index {index_name}: {e}")
@@ -402,7 +458,9 @@ def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
         migration_logger.info("=" * 60)
         migration_logger.info("MIGRATION DRY-RUN SUMMARY")
         migration_logger.info("=" * 60)
-        migration_logger.info(f"Total indexes processed: {len(index_details)}/{total_indexes}")
+        migration_logger.info(
+            f"Total indexes processed: {len(index_details)}/{total_indexes}"
+        )
         migration_logger.info(f"Total vectors: {total_vectors}")
         migration_logger.info(f"Data integrity checksum: {checksum}")
         migration_logger.info(f"Duration: {duration:.2f} seconds")
@@ -417,7 +475,9 @@ def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
 
         # Log in required format for verification
         status = "success" if len(index_details) == total_indexes else "partial_success"
-        migration_logger.info(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] [{total_vectors}] [{checksum}] [{status}]")
+        migration_logger.info(
+            f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] [{total_vectors}] [{checksum}] [{status}]"
+        )
 
         return {
             "status": status,
@@ -443,8 +503,10 @@ def perform_migration_dryrun(verbose: bool = False) -> Dict[str, Any]:
 
 
 async def perform_actual_migration(
-    limit: Optional[int] = None, verbose: bool = False, concurrency_level: int = MAX_CONCURRENT_UPLOADS
-) -> Dict[str, Any]:
+    limit: int | None = None,
+    verbose: bool = False,
+    concurrency_level: int = MAX_CONCURRENT_UPLOADS,
+) -> dict[str, Any]:
     """Perform actual migration of vectors from FAISS to Qdrant"""
     migration_logger = setup_migration_logger()
     perf_logger = setup_performance_logger()
@@ -510,19 +572,26 @@ async def perform_actual_migration(
                     break
 
                 index_name = index_info["index_name"]
-                migration_logger.info(f"Processing index {i}/{len(indexes)}: {index_name}")
+                migration_logger.info(
+                    f"Processing index {i}/{len(indexes)}: {index_name}"
+                )
 
                 try:
                     # Load index and extract vectors
                     index, metadata, vectors = load_faiss_index_and_metadata(
-                        storage_client, index_info["gcs_faiss_path"], index_info["gcs_meta_path"], temp_dir
+                        storage_client,
+                        index_info["gcs_faiss_path"],
+                        index_info["gcs_meta_path"],
+                        temp_dir,
                     )
 
                     # Limit vectors if specified
                     vectors_to_process = min(len(vectors), int(vectors_remaining))
                     vectors = vectors[:vectors_to_process]
 
-                    migration_logger.info(f"Migrating {vectors_to_process} vectors from {index_name}")
+                    migration_logger.info(
+                        f"Migrating {vectors_to_process} vectors from {index_name}"
+                    )
 
                     # Process vectors in batches
                     for batch_start in range(0, len(vectors), BATCH_SIZE):
@@ -550,7 +619,9 @@ async def perform_actual_migration(
                             # Add original metadata if available
                             if isinstance(metadata, dict) and "ids" in metadata:
                                 if vector_idx < len(metadata["ids"]):
-                                    vector_metadata["original_id"] = str(metadata["ids"][vector_idx])
+                                    vector_metadata["original_id"] = str(
+                                        metadata["ids"][vector_idx]
+                                    )
 
                             task = upload_vector_with_timeout(
                                 qdrant_store,
@@ -564,10 +635,14 @@ async def perform_actual_migration(
                             batch_tasks.append(task)
 
                         # Execute batch upload
-                        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+                        batch_results = await asyncio.gather(
+                            *batch_tasks, return_exceptions=True
+                        )
 
                         # Count results
-                        batch_success = sum(1 for result in batch_results if result is True)
+                        batch_success = sum(
+                            1 for result in batch_results if result is True
+                        )
                         batch_failed = len(batch_results) - batch_success
 
                         total_vectors_uploaded += batch_success
@@ -575,7 +650,9 @@ async def perform_actual_migration(
                         total_vectors_processed += len(batch_results)
                         vectors_remaining -= len(batch_results)
 
-                        migration_logger.info(f"Batch completed: {batch_success} success, {batch_failed} failed")
+                        migration_logger.info(
+                            f"Batch completed: {batch_success} success, {batch_failed} failed"
+                        )
 
                         # Sleep between batches
                         if batch_end < len(vectors):
@@ -591,7 +668,9 @@ async def perform_actual_migration(
         migration_logger.info("MIGRATION SUMMARY")
         migration_logger.info("=" * 60)
         migration_logger.info(f"Total vectors processed: {total_vectors_processed}")
-        migration_logger.info(f"Vectors uploaded successfully: {total_vectors_uploaded}")
+        migration_logger.info(
+            f"Vectors uploaded successfully: {total_vectors_uploaded}"
+        )
         migration_logger.info(f"Vectors failed: {total_vectors_failed}")
         migration_logger.info(
             f"Success rate: {(total_vectors_uploaded/total_vectors_processed*100):.1f}%"
@@ -624,10 +703,20 @@ def main():
     """Main entry point"""
     parser = argparse.ArgumentParser(description="FAISS to Qdrant Migration")
     parser.add_argument(
-        "--dry-run", action="store_true", default=False, help="Perform dry-run analysis only (default: False)"
+        "--dry-run",
+        action="store_true",
+        default=False,
+        help="Perform dry-run analysis only (default: False)",
     )
-    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
-    parser.add_argument("--limit", type=int, default=2000, help="Limit number of vectors to migrate (default: 2000)")
+    parser.add_argument(
+        "--verbose", "-v", action="store_true", help="Enable verbose logging"
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=2000,
+        help="Limit number of vectors to migrate (default: 2000)",
+    )
     parser.add_argument(
         "--concurrency",
         type=int,
@@ -666,7 +755,11 @@ def main():
         # Run actual migration
         try:
             result = asyncio.run(
-                perform_actual_migration(limit=args.limit, verbose=args.verbose, concurrency_level=args.concurrency)
+                perform_actual_migration(
+                    limit=args.limit,
+                    verbose=args.verbose,
+                    concurrency_level=args.concurrency,
+                )
             )
             print("\nMigration completed!")
             print(f"Status: {result['status']}")
@@ -675,9 +768,13 @@ def main():
                 print(f"Vectors uploaded: {result['uploaded_vectors']}")
                 print(f"Vectors failed: {result['failed_vectors']}")
                 if result["total_vectors"] > 0:
-                    success_rate = (result["uploaded_vectors"] / result["total_vectors"]) * 100
+                    success_rate = (
+                        result["uploaded_vectors"] / result["total_vectors"]
+                    ) * 100
                     print(f"Success rate: {success_rate:.1f}%")
-                    avg_time_per_vector = result["duration_seconds"] / result["total_vectors"]
+                    avg_time_per_vector = (
+                        result["duration_seconds"] / result["total_vectors"]
+                    )
                     print(f"Average time per vector: {avg_time_per_vector:.2f}s")
             else:
                 print(f"Error: {result.get('error', 'Unknown error')}")

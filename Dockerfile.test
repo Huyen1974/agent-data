@@ -35,4 +35,4 @@ USER tester
 
 HEALTHCHECK --interval=30s --retries=3 CMD python -c "import pytest, sys; sys.exit(0)"
 
-CMD ["pytest", "--tb=short", "-v"] 
+CMD ["pytest", "--tb=short", "-v"]

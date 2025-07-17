@@ -6,13 +6,13 @@ Handles JWT token generation, validation, and OAuth2 integration
 import logging
 import os
 from datetime import datetime, timedelta
-from typing import Optional, Dict, Any
+from typing import Any
 
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from google.cloud import secretmanager
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from fastapi import HTTPException, status, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from google.cloud import secretmanager
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,9 @@ class AuthManager:
         try:
             client = secretmanager.SecretManagerServiceClient()
             project_id = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
-            secret_name = f"projects/{project_id}/secrets/jwt-secret-key/versions/latest"
+            secret_name = (
+                f"projects/{project_id}/secrets/jwt-secret-key/versions/latest"
+            )
 
             response = client.access_secret_version(name=secret_name)
             return response.payload.data.decode("UTF-8")
@@ -66,28 +68,35 @@ class AuthManager:
         """Hash a password"""
         return pwd_context.hash(password)
 
-    def create_access_token(self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(
+        self, data: dict[str, Any], expires_delta: timedelta | None = None
+    ) -> str:
         """Create a JWT access token"""
         to_encode = data.copy()
 
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
-            expire = datetime.utcnow() + timedelta(minutes=self.access_token_expire_minutes)
+            expire = datetime.utcnow() + timedelta(
+                minutes=self.access_token_expire_minutes
+            )
 
         to_encode.update({"exp": expire, "iat": datetime.utcnow()})
 
         try:
-            encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
+            encoded_jwt = jwt.encode(
+                to_encode, self.secret_key, algorithm=self.algorithm
+            )
             logger.info(f"Created JWT token for user: {data.get('sub', 'unknown')}")
             return encoded_jwt
         except Exception as e:
             logger.error(f"Failed to create JWT token: {e}")
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Could not create access token"
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Could not create access token",
             )
 
-    def verify_token(self, token: str) -> Dict[str, Any]:
+    def verify_token(self, token: str) -> dict[str, Any]:
         """Verify and decode a JWT token"""
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -119,7 +128,9 @@ class AuthManager:
             logger.error(f"Unexpected error during token validation: {e}")
             raise credentials_exception
 
-    async def get_current_user(self, token: str = Depends(oauth2_scheme)) -> Dict[str, Any]:
+    async def get_current_user(
+        self, token: str = Depends(oauth2_scheme)
+    ) -> dict[str, Any]:
         """Get current user from JWT token (FastAPI dependency)"""
         payload = self.verify_token(token)
         return {
@@ -135,16 +146,25 @@ class AuthManager:
         if scopes is None:
             scopes = ["read", "write"]
 
-        token_data = {"sub": user_id, "email": email, "scopes": scopes, "token_type": "access"}
+        token_data = {
+            "sub": user_id,
+            "email": email,
+            "scopes": scopes,
+            "token_type": "access",
+        }
 
         return self.create_access_token(token_data)
 
-    def validate_user_access(self, user: Dict[str, Any], required_scope: str = "read") -> bool:
+    def validate_user_access(
+        self, user: dict[str, Any], required_scope: str = "read"
+    ) -> bool:
         """Validate if user has required access scope"""
         user_scopes = user.get("scopes", [])
 
         if required_scope in user_scopes or "admin" in user_scopes:
             return True
 
-        logger.warning(f"User {user.get('user_id')} lacks required scope: {required_scope}")
+        logger.warning(
+            f"User {user.get('user_id')} lacks required scope: {required_scope}"
+        )
         return False

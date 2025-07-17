@@ -90,7 +90,7 @@ while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
         echo -e "${GREEN}✅ Qdrant is ready!${NC}"
         break
     fi
-    
+
     ATTEMPTS=$((ATTEMPTS + 1))
     echo -n "."
     sleep 0.5
@@ -147,4 +147,4 @@ echo "============================================"
 
 # Tag as latest successful build
 docker tag "${FULL_IMAGE_NAME}" "${IMAGE_NAME}:cli140i-optimized"
-echo -e "${GREEN}✅ Tagged as ${IMAGE_NAME}:cli140i-optimized${NC}" 
+echo -e "${GREEN}✅ Tagged as ${IMAGE_NAME}:cli140i-optimized${NC}"

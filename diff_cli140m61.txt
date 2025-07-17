@@ -704,7 +704,7 @@ index ff9acde..6d6b556 100644
 +Created: June 20, 2025, 10:00 +07
 +Purpose: Log ALL tests (Pass, F, S, Skipped, Timeout) with M1 safety - OPTIMIZED REGEX PARSING
  """
- 
+
  import subprocess
 @@ -21,8 +21,9 @@ class BatchTestRunner:
          self.sleep_between_batches = 0.5
@@ -714,21 +714,21 @@ index ff9acde..6d6b556 100644
          self.log_file = "logs/test_fixes.log"
 -        self.csv_file = "test_summary_cli140m55.txt"  # Updated for CLI140m.55
 +        self.csv_file = "test_summary_cli140m61.txt"  # Updated for CLI140m.61
-         
+
      def log_action(self, message):
          """Log action with timestamp"""
 @@ -46,42 +47,38 @@ class BatchTestRunner:
                  self.log_action(f"Test collection failed: {result.stderr}")
                  return []
-             
+
 -            # Parse test collection output more carefully
 +            # Parse test collection output with optimized regex
              tests = []
              unique_tests = set()  # Ensure uniqueness during collection
-             
+
 +            # Optimized regex to match only test methods in .py files, skip class names
 +            test_pattern = re.compile(r'([^:\s]+\.py)::(?:[^\s:]+::)?(test_[^\s:]+)')
-+            
++
              for line in result.stdout.split('\n'):
                  line = line.strip()
 -                # Look for test patterns - can be file::test_method or file::TestClass::test_method
@@ -736,24 +736,24 @@ index ff9acde..6d6b556 100644
 -                    # Skip empty lines and headers
 -                    if not line or line.startswith('=') or 'collected' in line.lower():
 -                        continue
-+                
++
 +                # Skip empty lines, headers, and summary lines
 +                if not line or line.startswith('=') or 'collected' in line.lower() or line.startswith('<'):
 +                    continue
-+                
++
 +                # Use optimized regex pattern
 +                match = test_pattern.search(line)
 +                if match:
 +                    test_file = match.group(1).strip()
 +                    test_method = match.group(2).strip()
-                     
+
 -                    # Handle both formats:
 -                    # tests/file.py::test_method
 -                    # tests/file.py::TestClass::test_method
 -                    parts = line.split('::')
 -                    if len(parts) >= 2:
 -                        test_file = parts[0].strip()
--                        
+-
 -                        if len(parts) == 2:
 -                            # Format: file::test_method
 -                            test_method = parts[1].strip()
@@ -764,12 +764,12 @@ index ff9acde..6d6b556 100644
 +                    if test_method.startswith('test_'):
 +                        # Create unique test identifier
 +                        test_id = f"{test_file}::{test_method}"
-                         
+
 -                        # Only include actual test methods
 -                        if test_method.startswith('test_'):
 -                            # Create unique test identifier
 -                            test_id = f"{test_file}::{test_method}"
--                            
+-
 -                            if test_id not in unique_tests:
 -                                unique_tests.add(test_id)
 -                                tests.append((test_file, test_method))
@@ -778,11 +778,11 @@ index ff9acde..6d6b556 100644
 +                            tests.append((test_file, test_method))
 +                            # Initialize status tracking
 +                            self.test_status_dict[test_id] = 'PENDING'
-             
+
 -            self.log_action(f"Collected {len(tests)} unique tests")
 +            self.log_action(f"Collected {len(tests)} unique tests with optimized regex")
              return tests
-             
+
          except subprocess.TimeoutExpired:
 @@ -131,6 +128,7 @@ class BatchTestRunner:
                  test_id = f"{test_file}::{test_method}"
@@ -802,15 +802,15 @@ index ff9acde..6d6b556 100644
                          'file': test_file,
 @@ -158,14 +157,14 @@ class BatchTestRunner:
              return False
-     
+
      def parse_pytest_output(self, output, batch_tests, batch_runtime):
 -        """Parse pytest output to extract individual test results"""
 +        """Parse pytest output to extract individual test results with optimized regex"""
          lines = output.split('\n')
-         
+
          # Track which tests we've seen results for
          seen_tests = set()
-         
+
          for line in lines:
 -            # Look for test result patterns
 +            # Look for test result patterns with optimized regex
@@ -846,7 +846,7 @@ index ff9acde..6d6b556 100644
                                  result['status'] = 'SLOW'
                                  result['error_runtime_reason'] = f'>{avg_runtime:.2f}s (>8s threshold)'
 +                                self.test_status_dict[test_id] = 'SLOW'
-         
+
 -        # Mark any unseen tests as missing/unknown
 +        # OPTIMIZED: Only mark tests as UNKNOWN if they're truly missing from output
 +        # Use test_status_dict to track which tests were actually expected
@@ -872,7 +872,7 @@ index ff9acde..6d6b556 100644
 +                        'error_runtime_reason': 'No result found in output',
 +                        'log_line': f'UNKNOWN: {test_method} in {test_file}'
 +                    })
-     
+
      def extract_test_info(self, line):
 -        """Extract test file and method from pytest output line"""
 -        # Pattern: tests/test_file.py::test_method PASSED/FAILED/SKIPPED
@@ -886,18 +886,18 @@ index ff9acde..6d6b556 100644
              return {
                  'file': match.group(1),
 @@ -303,7 +312,7 @@ class BatchTestRunner:
-     
+
      def run_all_tests(self):
          """Main execution method"""
 -        self.log_action("Starting CLI140m.55 batch test execution")
 +        self.log_action("Starting CLI140m.61 batch test execution with optimized regex parsing")
-         
+
          # Verify pytest-timeout is installed
          try:
 @@ -331,8 +340,13 @@ class BatchTestRunner:
-         
+
          self.log_action(f"Created {len(batches)} batches of ≤{self.batch_size} tests")
-         
+
 -        # Run each batch
 +        # Run each batch (with optional max_batches limit)
          successful_batches = 0
@@ -905,36 +905,36 @@ index ff9acde..6d6b556 100644
 +        if max_batches_to_run:
 +            batches = batches[:max_batches_to_run]
 +            self.log_action(f"Limited to {max_batches_to_run} batches for testing")
-+        
++
          for i, batch in enumerate(batches, 1):
              self.log_action(f"Running batch {i}/{len(batches)}")
-             
+
 @@ -350,8 +364,25 @@ class BatchTestRunner:
          return True
- 
+
  def main():
 -    """Main entry point"""
 +    """Main entry point with CLI argument support"""
 +    import argparse
-+    
++
 +    parser = argparse.ArgumentParser(description='CLI140m.61 Batch Test Runner with Optimized Regex Parsing')
 +    parser.add_argument('--batch-size', type=int, default=3, help='Number of tests per batch (default: 3)')
 +    parser.add_argument('--max-batches', type=int, default=None, help='Maximum number of batches to run')
 +    parser.add_argument('--timeout', type=int, default=8, help='Timeout per test in seconds (default: 8)')
-+    
++
 +    args = parser.parse_args()
-+    
++
      runner = BatchTestRunner()
 +    runner.batch_size = args.batch_size
 +    runner.timeout_per_test = args.timeout
 +    runner.batch_timeout = args.batch_size * args.timeout
-+    
++
 +    # If max_batches is specified, modify the run_all_tests method
 +    if args.max_batches:
 +        runner.max_batches = args.max_batches
-+    
++
      success = runner.run_all_tests()
-     
+
      if success:
 diff --git a/test_summary_cli140m55.txt b/test_summary_cli140m55.txt
 index b4efa2d..bea4c64 100644

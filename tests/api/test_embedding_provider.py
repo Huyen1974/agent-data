@@ -1,8 +1,8 @@
 """Test embedding provider abstraction in Agent Data system."""
 
-import pytest
 from unittest.mock import AsyncMock, Mock, patch
-from typing import List
+
+import pytest
 
 from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
@@ -15,12 +15,12 @@ class MockEmbeddingProvider:
         self.model_name = model_name
         self.call_count = 0
 
-    async def embed(self, texts: List[str]) -> List[List[float]]:
+    async def embed(self, texts: list[str]) -> list[list[float]]:
         """Generate mock embeddings for a list of texts."""
         self.call_count += len(texts)
         return [[0.1] * self.dimension for _ in texts]
 
-    async def embed_single(self, text: str) -> List[float]:
+    async def embed_single(self, text: str) -> list[float]:
         """Generate mock embedding for a single text."""
         self.call_count += 1
         return [0.1] * self.dimension
@@ -59,12 +59,18 @@ class TestEmbeddingProviderInterface:
         assert provider.get_model_name() == "test-mock"
 
     @patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore")
-    @patch("agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager")
-    async def test_vectorization_tool_uses_custom_embedding_provider(self, mock_firestore, mock_qdrant):
+    @patch(
+        "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
+    )
+    async def test_vectorization_tool_uses_custom_embedding_provider(
+        self, mock_firestore, mock_qdrant
+    ):
         """Test that QdrantVectorizationTool uses the provided embedding provider."""
         # Setup mocks
         mock_qdrant_instance = Mock()
-        mock_qdrant_instance.upsert_vector = AsyncMock(return_value={"success": True, "vector_id": "test_doc"})
+        mock_qdrant_instance.upsert_vector = AsyncMock(
+            return_value={"success": True, "vector_id": "test_doc"}
+        )
         mock_qdrant.return_value = mock_qdrant_instance
 
         mock_firestore_instance = Mock()
@@ -72,11 +78,15 @@ class TestEmbeddingProviderInterface:
         mock_firestore.return_value = mock_firestore_instance
 
         # Create tool with custom embedding provider
-        embedding_provider = MockEmbeddingProvider(dimension=768, model_name="custom-test-model")
+        embedding_provider = MockEmbeddingProvider(
+            dimension=768, model_name="custom-test-model"
+        )
         tool = QdrantVectorizationTool(embedding_provider=embedding_provider)
 
         # Mock settings
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.settings") as mock_settings:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.settings"
+        ) as mock_settings:
             mock_settings.get_qdrant_config.return_value = {
                 "url": "test_url",
                 "api_key": "test_key",

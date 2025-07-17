@@ -1,0 +1,219 @@
+auth-test	Set up job	﻿2025-07-14T08:38:08.4947550Z Current runner version: '2.326.0'
+auth-test	Set up job	2025-07-14T08:38:08.4974962Z ##[group]Operating System
+auth-test	Set up job	2025-07-14T08:38:08.4975844Z Ubuntu
+auth-test	Set up job	2025-07-14T08:38:08.4976355Z 24.04.2
+auth-test	Set up job	2025-07-14T08:38:08.4976830Z LTS
+auth-test	Set up job	2025-07-14T08:38:08.4977388Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:08.4977904Z ##[group]Runner Image
+auth-test	Set up job	2025-07-14T08:38:08.4978467Z Image: ubuntu-24.04
+auth-test	Set up job	2025-07-14T08:38:08.4979010Z Version: 20250710.1.0
+auth-test	Set up job	2025-07-14T08:38:08.4980026Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250710.1/images/ubuntu/Ubuntu2404-Readme.md
+auth-test	Set up job	2025-07-14T08:38:08.4981380Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250710.1
+auth-test	Set up job	2025-07-14T08:38:08.4982723Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:08.4983253Z ##[group]Runner Image Provisioner
+auth-test	Set up job	2025-07-14T08:38:08.4983822Z 2.0.449.1
+auth-test	Set up job	2025-07-14T08:38:08.4984332Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:08.4985320Z ##[group]GITHUB_TOKEN Permissions
+auth-test	Set up job	2025-07-14T08:38:08.4987166Z Contents: read
+auth-test	Set up job	2025-07-14T08:38:08.4987766Z Metadata: read
+auth-test	Set up job	2025-07-14T08:38:08.4988215Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:08.4990516Z Secret source: Actions
+auth-test	Set up job	2025-07-14T08:38:08.4991288Z Prepare workflow directory
+auth-test	Set up job	2025-07-14T08:38:08.5308886Z Prepare all required actions
+auth-test	Set up job	2025-07-14T08:38:08.5346705Z Getting action download info
+auth-test	Set up job	2025-07-14T08:38:08.8666822Z ##[group]Download immutable action package 'actions/checkout@v4'
+auth-test	Set up job	2025-07-14T08:38:08.8667892Z Version: 4.2.2
+auth-test	Set up job	2025-07-14T08:38:08.8669055Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+auth-test	Set up job	2025-07-14T08:38:08.8670341Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+auth-test	Set up job	2025-07-14T08:38:08.8671032Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:08.9738414Z ##[group]Download immutable action package 'google-github-actions/auth@v2'
+auth-test	Set up job	2025-07-14T08:38:08.9739956Z Version: 2.1.10
+auth-test	Set up job	2025-07-14T08:38:08.9741217Z Digest: sha256:b93ace6ed195e6261bd53d67ebdb3482b6d8175506667fb99ef8b161f9ebcf10
+auth-test	Set up job	2025-07-14T08:38:08.9743089Z Source commit SHA: ba79af03959ebeac9769e648f473a284504d9193
+auth-test	Set up job	2025-07-14T08:38:08.9744385Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:09.1015085Z ##[group]Download immutable action package 'google-github-actions/setup-gcloud@v2'
+auth-test	Set up job	2025-07-14T08:38:09.1016074Z Version: 2.1.4
+auth-test	Set up job	2025-07-14T08:38:09.1016836Z Digest: sha256:212b6c2d21b05c51134986e891b36db26ed3162d1f230f0846cd924f96728f2d
+auth-test	Set up job	2025-07-14T08:38:09.1017783Z Source commit SHA: 77e7a554d41e2ee56fc945c52dfd3f33d12def9a
+auth-test	Set up job	2025-07-14T08:38:09.1018512Z ##[endgroup]
+auth-test	Set up job	2025-07-14T08:38:09.3424360Z Complete job name: auth-test
+auth-test	Checkout code	﻿2025-07-14T08:38:09.4102743Z ##[group]Run actions/checkout@v4
+auth-test	Checkout code	2025-07-14T08:38:09.4103638Z with:
+auth-test	Checkout code	2025-07-14T08:38:09.4104045Z   repository: Huyen1974/agent-data
+auth-test	Checkout code	2025-07-14T08:38:09.4104798Z   token: ***
+auth-test	Checkout code	2025-07-14T08:38:09.4105180Z   ssh-strict: true
+auth-test	Checkout code	2025-07-14T08:38:09.4105558Z   ssh-user: git
+auth-test	Checkout code	2025-07-14T08:38:09.4105956Z   persist-credentials: true
+auth-test	Checkout code	2025-07-14T08:38:09.4106401Z   clean: true
+auth-test	Checkout code	2025-07-14T08:38:09.4106792Z   sparse-checkout-cone-mode: true
+auth-test	Checkout code	2025-07-14T08:38:09.4107272Z   fetch-depth: 1
+auth-test	Checkout code	2025-07-14T08:38:09.4107657Z   fetch-tags: false
+auth-test	Checkout code	2025-07-14T08:38:09.4108046Z   show-progress: true
+auth-test	Checkout code	2025-07-14T08:38:09.4108471Z   lfs: false
+auth-test	Checkout code	2025-07-14T08:38:09.4108835Z   submodules: false
+auth-test	Checkout code	2025-07-14T08:38:09.4109236Z   set-safe-directory: true
+auth-test	Checkout code	2025-07-14T08:38:09.4109872Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:09.6245146Z Syncing repository: Huyen1974/agent-data
+auth-test	Checkout code	2025-07-14T08:38:09.6246868Z ##[group]Getting Git version info
+auth-test	Checkout code	2025-07-14T08:38:09.6247591Z Working directory is '/home/runner/work/agent-data/agent-data'
+auth-test	Checkout code	2025-07-14T08:38:09.6248956Z [command]/usr/bin/git version
+auth-test	Checkout code	2025-07-14T08:38:09.6307249Z git version 2.50.1
+auth-test	Checkout code	2025-07-14T08:38:09.6336985Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:09.6353037Z Temporarily overriding HOME='/home/runner/work/_temp/a31cbb7f-e9ff-40b4-ac47-8ab6f41606f3' before making global git config changes
+auth-test	Checkout code	2025-07-14T08:38:09.6355420Z Adding repository directory to the temporary git global config as a safe directory
+auth-test	Checkout code	2025-07-14T08:38:09.6359984Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+auth-test	Checkout code	2025-07-14T08:38:09.6399745Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+auth-test	Checkout code	2025-07-14T08:38:09.6404111Z ##[group]Initializing the repository
+auth-test	Checkout code	2025-07-14T08:38:09.6409361Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+auth-test	Checkout code	2025-07-14T08:38:09.6497797Z hint: Using 'master' as the name for the initial branch. This default branch name
+auth-test	Checkout code	2025-07-14T08:38:09.6499176Z hint: is subject to change. To configure the initial branch name to use in all
+auth-test	Checkout code	2025-07-14T08:38:09.6500531Z hint: of your new repositories, which will suppress this warning, call:
+auth-test	Checkout code	2025-07-14T08:38:09.6501437Z hint:
+auth-test	Checkout code	2025-07-14T08:38:09.6502306Z hint: 	git config --global init.defaultBranch <name>
+auth-test	Checkout code	2025-07-14T08:38:09.6503350Z hint:
+auth-test	Checkout code	2025-07-14T08:38:09.6504361Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+auth-test	Checkout code	2025-07-14T08:38:09.6505958Z hint: 'development'. The just-created branch can be renamed via this command:
+auth-test	Checkout code	2025-07-14T08:38:09.6507262Z hint:
+auth-test	Checkout code	2025-07-14T08:38:09.6507995Z hint: 	git branch -m <name>
+auth-test	Checkout code	2025-07-14T08:38:09.6508771Z hint:
+auth-test	Checkout code	2025-07-14T08:38:09.6509768Z hint: Disable this message with "git config set advice.defaultBranchName false"
+auth-test	Checkout code	2025-07-14T08:38:09.6511402Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+auth-test	Checkout code	2025-07-14T08:38:09.6515115Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+auth-test	Checkout code	2025-07-14T08:38:09.6547953Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:09.6549141Z ##[group]Disabling automatic garbage collection
+auth-test	Checkout code	2025-07-14T08:38:09.6553384Z [command]/usr/bin/git config --local gc.auto 0
+auth-test	Checkout code	2025-07-14T08:38:09.6582957Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:09.6584159Z ##[group]Setting up auth
+auth-test	Checkout code	2025-07-14T08:38:09.6590833Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+auth-test	Checkout code	2025-07-14T08:38:09.6623647Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+auth-test	Checkout code	2025-07-14T08:38:09.6950688Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+auth-test	Checkout code	2025-07-14T08:38:09.6984036Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+auth-test	Checkout code	2025-07-14T08:38:09.7228727Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+auth-test	Checkout code	2025-07-14T08:38:09.7270361Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:09.7272165Z ##[group]Fetching the repository
+auth-test	Checkout code	2025-07-14T08:38:09.7279704Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c1e9cac63abee8dab4992d7c142007c3a1e58924:refs/remotes/pull/26/merge
+auth-test	Checkout code	2025-07-14T08:38:10.5120858Z From https://github.com/Huyen1974/agent-data
+auth-test	Checkout code	2025-07-14T08:38:10.5123177Z  * [new ref]         c1e9cac63abee8dab4992d7c142007c3a1e58924 -> pull/26/merge
+auth-test	Checkout code	2025-07-14T08:38:10.5148612Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:10.5150505Z ##[group]Determining the checkout info
+auth-test	Checkout code	2025-07-14T08:38:10.5152828Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:10.5157582Z [command]/usr/bin/git sparse-checkout disable
+auth-test	Checkout code	2025-07-14T08:38:10.5200517Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+auth-test	Checkout code	2025-07-14T08:38:10.5230020Z ##[group]Checking out the ref
+auth-test	Checkout code	2025-07-14T08:38:10.5233578Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/26/merge
+auth-test	Checkout code	2025-07-14T08:38:10.6928671Z Note: switching to 'refs/remotes/pull/26/merge'.
+auth-test	Checkout code	2025-07-14T08:38:10.6929984Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6930757Z You are in 'detached HEAD' state. You can look around, make experimental
+auth-test	Checkout code	2025-07-14T08:38:10.6932992Z changes and commit them, and you can discard any commits you make in this
+auth-test	Checkout code	2025-07-14T08:38:10.6935007Z state without impacting any branches by switching back to a branch.
+auth-test	Checkout code	2025-07-14T08:38:10.6936115Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6936749Z If you want to create a new branch to retain commits you create, you may
+auth-test	Checkout code	2025-07-14T08:38:10.6938157Z do so (now or later) by using -c with the switch command. Example:
+auth-test	Checkout code	2025-07-14T08:38:10.6939251Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6939599Z   git switch -c <new-branch-name>
+auth-test	Checkout code	2025-07-14T08:38:10.6940176Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6940496Z Or undo this operation with:
+auth-test	Checkout code	2025-07-14T08:38:10.6941015Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6941400Z   git switch -
+auth-test	Checkout code	2025-07-14T08:38:10.6942263Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6943407Z Turn off this advice by setting config variable advice.detachedHead to false
+auth-test	Checkout code	2025-07-14T08:38:10.6945200Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6947095Z HEAD is now at c1e9cac Merge 9727c300511a1ebdf982fba7c0f00c6be33896e8 into 053bd3b5b78e2a8a93a970301e6d12e009caeecd
+auth-test	Checkout code	2025-07-14T08:38:10.6953463Z ##[endgroup]
+auth-test	Checkout code	2025-07-14T08:38:10.6988782Z [command]/usr/bin/git log -1 --format=%H
+auth-test	Checkout code	2025-07-14T08:38:10.7011204Z c1e9cac63abee8dab4992d7c142007c3a1e58924
+auth-test	Authenticate to Google Cloud	﻿2025-07-14T08:38:10.7356956Z ##[group]Run google-github-actions/auth@v2
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7358148Z with:
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7360641Z   workload_identity_provider: ***
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7362501Z   service_account: ***
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7363423Z   create_credentials_file: true
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7364483Z   export_environment_variables: true
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7365546Z   universe: googleapis.com
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7366488Z   cleanup_credentials: true
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7367419Z   access_token_lifetime: 3600s
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7368782Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7370255Z   id_token_include_email: false
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.7371163Z ##[endgroup]
+auth-test	Authenticate to Google Cloud	2025-07-14T08:38:10.9166002Z Created credentials file at "/home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json"
+auth-test	Set up Cloud SDK	﻿2025-07-14T08:38:11.0016201Z ##[group]Run google-github-actions/setup-gcloud@v2
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0016827Z with:
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0017232Z   version: latest
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0017659Z   skip_install: false
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0018072Z env:
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0018758Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0019763Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0020679Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0021375Z   CLOUDSDK_CORE_PROJECT: github-chatgpt-ggcloud
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0022040Z   CLOUDSDK_PROJECT: github-chatgpt-ggcloud
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0022519Z   GCLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0022985Z   GCP_PROJECT: github-chatgpt-ggcloud
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0023458Z   GOOGLE_CLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Set up Cloud SDK	2025-07-14T08:38:11.0023905Z ##[endgroup]
+auth-test	Set up Cloud SDK	2025-07-14T08:38:12.2059477Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1788e89e-a8ed-4ded-b480-c27fcdc28519 -f /home/runner/work/_temp/6121801c-4c3f-4953-b892-56f6ea7e5a26
+auth-test	Set up Cloud SDK	2025-07-14T08:38:29.8121687Z Successfully authenticated
+auth-test	Test authentication	﻿2025-07-14T08:38:29.8285441Z ##[group]Run echo "Testing GCP authentication..."
+auth-test	Test authentication	2025-07-14T08:38:29.8285925Z [36;1mecho "Testing GCP authentication..."[0m
+auth-test	Test authentication	2025-07-14T08:38:29.8286239Z [36;1mgcloud auth list[0m
+auth-test	Test authentication	2025-07-14T08:38:29.8286488Z [36;1mgcloud config list project[0m
+auth-test	Test authentication	2025-07-14T08:38:29.8286815Z [36;1mecho "Authentication test completed successfully!"[0m
+auth-test	Test authentication	2025-07-14T08:38:29.8321397Z shell: /usr/bin/bash -e {0}
+auth-test	Test authentication	2025-07-14T08:38:29.8321654Z env:
+auth-test	Test authentication	2025-07-14T08:38:29.8322294Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Test authentication	2025-07-14T08:38:29.8323007Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Test authentication	2025-07-14T08:38:29.8323634Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Test authentication	2025-07-14T08:38:29.8324087Z   CLOUDSDK_CORE_PROJECT: github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8324392Z   CLOUDSDK_PROJECT: github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8324678Z   GCLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8325007Z   GCP_PROJECT: github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8325522Z   GOOGLE_CLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8325863Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+auth-test	Test authentication	2025-07-14T08:38:29.8326201Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.1.4
+auth-test	Test authentication	2025-07-14T08:38:29.8326469Z ##[endgroup]
+auth-test	Test authentication	2025-07-14T08:38:29.8395009Z Testing GCP authentication...
+auth-test	Test authentication	2025-07-14T08:38:30.2966636Z                          Credentialed Accounts
+auth-test	Test authentication	2025-07-14T08:38:30.2967220Z ACTIVE  ACCOUNT
+auth-test	Test authentication	2025-07-14T08:38:30.2968025Z *       ***
+auth-test	Test authentication	2025-07-14T08:38:30.2968331Z 
+auth-test	Test authentication	2025-07-14T08:38:30.2968508Z To set the active account, run:
+auth-test	Test authentication	2025-07-14T08:38:30.2968969Z     $ gcloud config set account `ACCOUNT`
+auth-test	Test authentication	2025-07-14T08:38:30.2969327Z 
+auth-test	Test authentication	2025-07-14T08:38:30.8040017Z [core]
+auth-test	Test authentication	2025-07-14T08:38:30.8040581Z project = github-chatgpt-ggcloud
+auth-test	Test authentication	2025-07-14T08:38:30.8042005Z 
+auth-test	Test authentication	2025-07-14T08:38:30.8042237Z Your active configuration is: [default]
+auth-test	Test authentication	2025-07-14T08:38:30.8648387Z Authentication test completed successfully!
+auth-test	Verify project access	﻿2025-07-14T08:38:30.8682632Z ##[group]Run echo "Verifying project access..."
+auth-test	Verify project access	2025-07-14T08:38:30.8683050Z [36;1mecho "Verifying project access..."[0m
+auth-test	Verify project access	2025-07-14T08:38:30.8683346Z [36;1mgcloud projects list --limit=5[0m
+auth-test	Verify project access	2025-07-14T08:38:30.8683637Z [36;1mecho "Project verification completed!"[0m
+auth-test	Verify project access	2025-07-14T08:38:30.8712472Z shell: /usr/bin/bash -e {0}
+auth-test	Verify project access	2025-07-14T08:38:30.8712713Z env:
+auth-test	Verify project access	2025-07-14T08:38:30.8713151Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Verify project access	2025-07-14T08:38:30.8713869Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Verify project access	2025-07-14T08:38:30.8714500Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json
+auth-test	Verify project access	2025-07-14T08:38:30.8714955Z   CLOUDSDK_CORE_PROJECT: github-chatgpt-ggcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8715249Z   CLOUDSDK_PROJECT: github-chatgpt-ggcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8715520Z   GCLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8715788Z   GCP_PROJECT: github-chatgpt-ggcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8716102Z   GOOGLE_CLOUD_PROJECT: github-chatgpt-ggcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8716436Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+auth-test	Verify project access	2025-07-14T08:38:30.8716775Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.1.4
+auth-test	Verify project access	2025-07-14T08:38:30.8717029Z ##[endgroup]
+auth-test	Verify project access	2025-07-14T08:38:30.8765675Z Verifying project access...
+auth-test	Verify project access	2025-07-14T08:38:31.7518751Z PROJECT_ID              NAME                PROJECT_NUMBER
+auth-test	Verify project access	2025-07-14T08:38:31.7519489Z chatgpt-db-project      chatgpt-db-project  1042559846495
+auth-test	Verify project access	2025-07-14T08:38:31.7520180Z github-chatgpt-ggcloud  Github-chatgpt      812872501910
+auth-test	Verify project access	2025-07-14T08:38:31.8187196Z Project verification completed!
+auth-test	Post Authenticate to Google Cloud	﻿2025-07-14T08:38:31.8285003Z Post job cleanup.
+auth-test	Post Authenticate to Google Cloud	2025-07-14T08:38:31.9106842Z Removed exported credentials at "/home/runner/work/agent-data/agent-data/gha-creds-3d0eeca00df94324.json".
+auth-test	Post Checkout code	﻿2025-07-14T08:38:31.9222813Z Post job cleanup.
+auth-test	Post Checkout code	2025-07-14T08:38:32.0160767Z [command]/usr/bin/git version
+auth-test	Post Checkout code	2025-07-14T08:38:32.0212139Z git version 2.50.1
+auth-test	Post Checkout code	2025-07-14T08:38:32.0260265Z Temporarily overriding HOME='/home/runner/work/_temp/cb963b53-8bea-491a-bbce-a520fad72624' before making global git config changes
+auth-test	Post Checkout code	2025-07-14T08:38:32.0261586Z Adding repository directory to the temporary git global config as a safe directory
+auth-test	Post Checkout code	2025-07-14T08:38:32.0267345Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+auth-test	Post Checkout code	2025-07-14T08:38:32.0306574Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+auth-test	Post Checkout code	2025-07-14T08:38:32.0343156Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+auth-test	Post Checkout code	2025-07-14T08:38:32.0585307Z fatal: No url found for submodule path 'ADK/agent_data' in .gitmodules
+auth-test	Post Checkout code	2025-07-14T08:38:32.0636862Z ##[warning]The process '/usr/bin/git' failed with exit code 128
+auth-test	Complete job	﻿2025-07-14T08:38:32.0721548Z Cleaning up orphan processes

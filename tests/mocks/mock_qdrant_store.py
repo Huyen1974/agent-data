@@ -4,8 +4,8 @@ Provides dummy responses for vector operations.
 CLI119D4 - Optimized for memory usage with 50+ documents.
 """
 
-from typing import List, Dict, Any, Optional
 import logging
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -20,24 +20,29 @@ class MockQdrantStore:
         self.vector_count = 0
         logger.info(f"MockQdrantStore initialized for collection: {collection_name}")
 
-    def upsert_vector(self, id: str, vector: List[float], payload: Dict[str, Any] = None) -> Dict[str, Any]:
+    def upsert_vector(
+        self, id: str, vector: list[float], payload: dict[str, Any] = None
+    ) -> dict[str, Any]:
         """Mock upsert_vector operation - optimized for memory."""
         # Only store id and vector length, skip full vector to save memory
-        self.storage[id] = {"vector_size": len(vector) if vector else 0, "payload": payload or {}}
+        self.storage[id] = {
+            "vector_size": len(vector) if vector else 0,
+            "payload": payload or {},
+        }
         self.vector_count += 1
         # Minimal logging for performance
         if logger.isEnabledFor(logging.DEBUG):
             logger.debug(f"Mock upserted vector with id: {id}")
         return {"success": True, "id": id}
 
-    def query_vectors_by_tag(self, tag: str, limit: int = 10) -> List[Dict[str, Any]]:
+    def query_vectors_by_tag(self, tag: str, limit: int = 10) -> list[dict[str, Any]]:
         """Mock query_vectors_by_tag operation."""
         if logger.isEnabledFor(logging.DEBUG):
             logger.debug(f"Mock querying vectors by tag: {tag}, limit: {limit}")
         # Return empty list for mock
         return []
 
-    def delete_vector(self, id: str) -> Dict[str, Any]:
+    def delete_vector(self, id: str) -> dict[str, Any]:
         """Mock delete_vector operation."""
         if id in self.storage:
             del self.storage[id]
@@ -56,20 +61,28 @@ class MockQdrantStore:
             logger.debug(f"Mock collection exists check for: {self.collection_name}")
         return True
 
-    def create_collection(self, vector_size: int = 1536) -> Dict[str, Any]:
+    def create_collection(self, vector_size: int = 1536) -> dict[str, Any]:
         """Mock create_collection operation."""
         if logger.isEnabledFor(logging.DEBUG):
-            logger.debug(f"Mock created collection: {self.collection_name} with vector_size: {vector_size}")
+            logger.debug(
+                f"Mock created collection: {self.collection_name} with vector_size: {vector_size}"
+            )
         return {"success": True, "collection": self.collection_name}
 
-    def get_collection_info(self) -> Dict[str, Any]:
+    def get_collection_info(self) -> dict[str, Any]:
         """Mock get_collection_info operation."""
-        return {"collection": self.collection_name, "vectors_count": self.vector_count, "status": "green"}
+        return {
+            "collection": self.collection_name,
+            "vectors_count": self.vector_count,
+            "status": "green",
+        }
 
     def close(self):
         """Mock close operation."""
         if logger.isEnabledFor(logging.DEBUG):
-            logger.debug(f"Mock closed connection for collection: {self.collection_name}")
+            logger.debug(
+                f"Mock closed connection for collection: {self.collection_name}"
+            )
 
     def __len__(self):
         """Return number of stored vectors."""

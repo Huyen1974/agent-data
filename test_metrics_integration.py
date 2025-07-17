@@ -115,7 +115,9 @@ if __name__ == "__main__":
 
     if not os.environ.get("PUSHGATEWAY_URL"):
         # Use the deployed Pushgateway URL
-        os.environ["PUSHGATEWAY_URL"] = "https://prometheus-pushgateway-812872501910.asia-southeast1.run.app"
+        os.environ["PUSHGATEWAY_URL"] = (
+            "https://prometheus-pushgateway-812872501910.asia-southeast1.run.app"
+        )
 
     # Run the test
     asyncio.run(test_metrics_integration())

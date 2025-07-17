@@ -1,7 +1,9 @@
 """Tests for CLI 133 RAG (Retrieval-Augmented Generation) functionality."""
 
-import pytest
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from src.agent_data_manager.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     qdrant_rag_search,
@@ -38,7 +40,10 @@ class TestCLI133RAG:
                 {
                     "id": "point_3",
                     "score": 0.82,
-                    "metadata": {"doc_id": "doc_003", "content_preview": "AI research paper..."},
+                    "metadata": {
+                        "doc_id": "doc_003",
+                        "content_preview": "AI research paper...",
+                    },
                 },
             ],
             "count": 3,
@@ -111,7 +116,9 @@ class TestCLI133RAG:
         return tool
 
     @pytest.mark.asyncio
-    async def test_rag_search_vector_only(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_vector_only(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search with only vector search (no metadata filters)."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -148,7 +155,9 @@ class TestCLI133RAG:
             assert rag_info["metadata_filters"] is None
 
     @pytest.mark.asyncio
-    async def test_rag_search_with_metadata_filters(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_with_metadata_filters(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search with metadata filtering."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -166,18 +175,22 @@ class TestCLI133RAG:
         assert result["status"] == "success"
         # Allow for flexible count due to mock behavior with --qdrant-mock
         assert result["count"] >= 0, f"Expected count >= 0, got {result['count']}"
-        
+
         # Only verify specific results if we have them
         if result["count"] > 0:
             assert len(result["results"]) == result["count"]
             # Check if we have the expected doc_001 result
             doc_ids = [r["doc_id"] for r in result["results"] if "doc_id" in r]
             if "doc_001" in doc_ids:
-                doc_001_result = next(r for r in result["results"] if r.get("doc_id") == "doc_001")
+                doc_001_result = next(
+                    r for r in result["results"] if r.get("doc_id") == "doc_001"
+                )
                 assert doc_001_result["metadata"]["author"] == "John Doe"
 
     @pytest.mark.asyncio
-    async def test_rag_search_with_tags_filter(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_with_tags_filter(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search with tags filtering."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -209,7 +222,9 @@ class TestCLI133RAG:
                             assert "python" in result_item["metadata"]["auto_tags"]
 
     @pytest.mark.asyncio
-    async def test_rag_search_with_path_filter(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_with_path_filter(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search with hierarchical path filtering."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -233,13 +248,21 @@ class TestCLI133RAG:
         if result["count"] >= 2:
             doc_ids = [r["doc_id"] for r in result["results"] if "doc_id" in r]
             # Check if we have expected results based on path filter
-            technology_docs = [r for r in result["results"] if r.get("metadata", {}).get("level_1_category") == "technology"]
+            technology_docs = [
+                r
+                for r in result["results"]
+                if r.get("metadata", {}).get("level_1_category") == "technology"
+            ]
             if len(technology_docs) >= 2:
-                tech_doc_ids = [doc["doc_id"] for doc in technology_docs if "doc_id" in doc]
+                tech_doc_ids = [
+                    doc["doc_id"] for doc in technology_docs if "doc_id" in doc
+                ]
                 assert any(doc_id in ["doc_001", "doc_002"] for doc_id in tech_doc_ids)
 
     @pytest.mark.asyncio
-    async def test_rag_search_combined_filters(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_combined_filters(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search with combined metadata, tags, and path filters."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -267,11 +290,16 @@ class TestCLI133RAG:
             for result_item in result["results"]:
                 assert "hierarchy_path" in result_item
                 # Check for technology filter matching if metadata is available
-                if result_item.get("metadata", {}).get("level_1_category") == "technology":
+                if (
+                    result_item.get("metadata", {}).get("level_1_category")
+                    == "technology"
+                ):
                     assert "technology" in result_item["hierarchy_path"]
 
     @pytest.mark.asyncio
-    async def test_rag_search_no_results(self, rag_tool, mock_qdrant_store, mock_firestore_manager):
+    async def test_rag_search_no_results(
+        self, rag_tool, mock_qdrant_store, mock_firestore_manager
+    ):
         """Test RAG search when no results match filters."""
         # Setup mocks
         rag_tool.qdrant_store = mock_qdrant_store
@@ -316,11 +344,17 @@ class TestCLI133RAG:
         assert result["results"] == []
 
     @pytest.mark.asyncio
-    async def test_qdrant_rag_search_function(self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider):
+    async def test_qdrant_rag_search_function(
+        self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider
+    ):
         """Test the standalone qdrant_rag_search function."""
-        with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
+        with patch(
+            "src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool"
+        ) as mock_get_tool:
             # Setup mock tool
-            mock_tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)
+            mock_tool = QdrantVectorizationTool(
+                embedding_provider=mock_embedding_provider
+            )
             mock_tool.qdrant_store = mock_qdrant_store
             mock_tool.firestore_manager = mock_firestore_manager
             mock_tool._initialized = True
@@ -353,7 +387,9 @@ class TestCLI133RAG:
         assert len(filtered) == 2
 
         # Test multiple filters
-        filtered = rag_tool._filter_by_metadata(results, {"author": "John Doe", "year": 2024})
+        filtered = rag_tool._filter_by_metadata(
+            results, {"author": "John Doe", "year": 2024}
+        )
         assert len(filtered) == 1
         assert filtered[0]["year"] == 2024
 
@@ -379,7 +415,10 @@ class TestCLI133RAG:
         """Test hierarchical path filtering logic."""
         results = [
             {"level_1_category": "technology", "level_2_category": "machine_learning"},
-            {"level_1_category": "research", "level_2_category": "artificial_intelligence"},
+            {
+                "level_1_category": "research",
+                "level_2_category": "artificial_intelligence",
+            },
             {"level_1_category": "technology", "level_2_category": "web_development"},
         ]
 
@@ -411,5 +450,3 @@ class TestCLI133RAG:
         result_empty = {}
         path = rag_tool._build_hierarchy_path(result_empty)
         assert path == "Uncategorized"
-
-

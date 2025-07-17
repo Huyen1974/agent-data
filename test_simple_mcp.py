@@ -4,10 +4,10 @@ Simple test script to verify MCP server communication.
 CLI119D4 - Debug subprocess communication.
 """
 
-import os
-import sys
 import json
+import os
 import subprocess
+import sys
 import time
 
 # Virtual environment path
@@ -49,7 +49,11 @@ def test_simple_communication():
         # Send a simple test document
         test_doc = {
             "tool_name": "save_document",
-            "kwargs": {"doc_id": "simple_test", "content": "Simple test content", "save_dir": "saved_documents"},
+            "kwargs": {
+                "doc_id": "simple_test",
+                "content": "Simple test content",
+                "save_dir": "saved_documents",
+            },
         }
 
         print(f"Sending test document: {test_doc}")

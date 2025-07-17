@@ -1,6 +1,6 @@
-import json
-import matplotlib.pyplot as plt
 import os
+
+import matplotlib.pyplot as plt
 import numpy as np
 
 # Provided JSON data
@@ -32,7 +32,15 @@ explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Failed')
 colors = ["#4CAF50", "#F44336"]  # Green for success, Red for fail
 
 fig1, ax1 = plt.subplots(figsize=(8, 6))
-ax1.pie(sizes, explode=explode, labels=labels, autopct="%1.1f%%", shadow=True, startangle=90, colors=colors)
+ax1.pie(
+    sizes,
+    explode=explode,
+    labels=labels,
+    autopct="%1.1f%%",
+    shadow=True,
+    startangle=90,
+    colors=colors,
+)
 ax1.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.title("Tỷ lệ Thực thi Thành công vs Thất bại")
 pie_chart_path = os.path.join(output_dir, "success_fail_pie.png")
@@ -44,20 +52,28 @@ plt.close(fig1)  # Close the figure to free memory
 tool_names = list(data["tool_summary"].keys())
 avg_durations = [details["avg_duration"] for details in data["tool_summary"].values()]
 
-fig2, ax2 = plt.subplots(figsize=(12, 7))  # Adjusted figure size for better label display
+fig2, ax2 = plt.subplots(
+    figsize=(12, 7)
+)  # Adjusted figure size for better label display
 bars = ax2.bar(tool_names, avg_durations, color="#2196F3")  # Blue color
 
 # Add labels and title
 ax2.set_ylabel("Thời gian Trung bình (ms)")
 ax2.set_title("Thời gian Xử lý Trung bình theo Tool")
 ax2.set_xticks(np.arange(len(tool_names)))  # Ensure ticks are set correctly
-ax2.set_xticklabels(tool_names, rotation=45, ha="right")  # Rotate labels for readability
+ax2.set_xticklabels(
+    tool_names, rotation=45, ha="right"
+)  # Rotate labels for readability
 
 # Add duration values on top of bars
 for bar in bars:
     yval = bar.get_height()
     plt.text(
-        bar.get_x() + bar.get_width() / 2.0, yval, f"{yval:.2f}", va="bottom", ha="center"
+        bar.get_x() + bar.get_width() / 2.0,
+        yval,
+        f"{yval:.2f}",
+        va="bottom",
+        ha="center",
     )  # Use f-string formatting
 
 plt.tight_layout()  # Adjust layout to prevent labels overlapping

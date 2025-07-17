@@ -10,6 +10,7 @@ This script verifies:
 
 import subprocess
 import sys
+
 from qdrant_client import QdrantClient
 from qdrant_client.http.exceptions import ResponseHandlingException
 
@@ -43,7 +44,9 @@ def get_api_key_from_secret_manager():
 
 def verify_qdrant_connectivity(api_key):
     """Verify connectivity to Qdrant cluster."""
-    cluster_endpoint = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    cluster_endpoint = (
+        "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    )
     cluster_id = "ba0aa7ef-be87-47b4-96de-7d36ca4527a8"
 
     try:
@@ -55,7 +58,7 @@ def verify_qdrant_connectivity(api_key):
         # Test basic connectivity by getting collections info (simpler than cluster info)
         print("📦 Testing collections access...")
         collections = client.get_collections()
-        print(f"✅ Collections retrieved successfully")
+        print("✅ Collections retrieved successfully")
 
         print(f"📊 Total collections: {len(collections.collections)}")
         for collection in collections.collections:

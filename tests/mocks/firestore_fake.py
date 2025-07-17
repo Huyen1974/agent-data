@@ -1,13 +1,13 @@
-from typing import Dict, Any, Optional
 from collections import defaultdict
+from typing import Any
 
 
 class FakeFirestoreDocument:
-    def __init__(self, data: Dict[str, Any], id: str):
+    def __init__(self, data: dict[str, Any], id: str):
         self._data = data
         self.id = id
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return self._data
 
 
@@ -27,16 +27,16 @@ class FakeFirestoreCollection:
             return FakeFirestoreDocument({}, doc_id)
         return FakeFirestoreDocument(self._documents.get(doc_id, {}), doc_id)
 
-    def set(self, doc_id: str, data: Dict[str, Any]):
+    def set(self, doc_id: str, data: dict[str, Any]):
         self._documents[doc_id] = data
         return FakeFirestoreDocument(data, doc_id)
 
-    def get(self, doc_id: str) -> Optional[FakeFirestoreDocument]:
+    def get(self, doc_id: str) -> FakeFirestoreDocument | None:
         if doc_id in self._documents:
             return FakeFirestoreDocument(self._documents[doc_id], doc_id)
         return None
 
-    def update(self, doc_id: str, data: Dict[str, Any]):
+    def update(self, doc_id: str, data: dict[str, Any]):
         if doc_id in self._documents:
             self._documents[doc_id].update(data)
         else:
@@ -57,7 +57,9 @@ class FakeFirestoreClient:
         collection_name = "/".join(collection_path)
         # Ensure the collection name is set when it's first accessed or created.
         if collection_name not in self._collections:
-            self._collections[collection_name] = FakeFirestoreCollection(collection_name)
+            self._collections[collection_name] = FakeFirestoreCollection(
+                collection_name
+            )
         # Or, if it was created by defaultdict with an empty name, set it.
         elif not self._collections[collection_name].name:
             self._collections[collection_name].name = collection_name

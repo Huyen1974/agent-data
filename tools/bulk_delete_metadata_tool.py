@@ -1,16 +1,19 @@
-import pickle
 import os
+import pickle
 import time
-import numpy as np
+from typing import Any
+
 import faiss  # Needed to rebuild the FAISS index
-from typing import Dict, Any
+import numpy as np
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> Dict[str, Any]:
+def bulk_delete_metadata(
+    index_name: str, filter_condition: dict[str, Any]
+) -> dict[str, Any]:
     """
     Deletes multiple metadata nodes that match a simple filter condition (field == value).
     This operation rebuilds the underlying FAISS index and metadata file.
@@ -30,12 +33,18 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
     index_path = os.path.join(FAISS_DIR, f"{index_name}.faiss")
 
     if not filter_condition or len(filter_condition) != 1:
-        return {"status": "failed", "error": "Filter condition must contain exactly one key-value pair."}
+        return {
+            "status": "failed",
+            "error": "Filter condition must contain exactly one key-value pair.",
+        }
 
     filter_field, filter_value = list(filter_condition.items())[0]
 
     if not os.path.exists(meta_path) or not os.path.exists(index_path):
-        return {"status": "failed", "error": f"FAISS index or metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"FAISS index or metadata file not found for '{index_name}'.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -50,16 +59,20 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
                 "error": f"Metadata file disappeared for index '{index_name}' during delete attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     if loaded_data is None or "metadata" not in loaded_data:
-        raise ValueError(f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key.")
+        raise ValueError(
+            f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key."
+        )
 
     original_metadata_dict = loaded_data["metadata"]
     metadata_to_keep = {}
@@ -67,7 +80,10 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
 
     # --- Filter Data ---
     for key, item_metadata in original_metadata_dict.items():
-        if isinstance(item_metadata, dict) and item_metadata.get(filter_field) == filter_value:
+        if (
+            isinstance(item_metadata, dict)
+            and item_metadata.get(filter_field) == filter_value
+        ):
             # This item matches the filter, so we delete it (i.e., don't add to metadata_to_keep)
             deleted_keys.append(key)
         else:
@@ -80,7 +96,11 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
         print(
             f"No nodes matched the filter condition '{filter_condition}' in index '{index_name}'. No deletions performed."
         )
-        return {"status": "success", "deleted_count": 0, "message": "No matching nodes found."}
+        return {
+            "status": "success",
+            "deleted_count": 0,
+            "message": "No matching nodes found.",
+        }
 
     # --- Rebuild FAISS Index and Metadata ---
     # Similar logic to save_metadata_to_faiss_tool, but with filtered data
@@ -92,9 +112,16 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
             print(
                 f"Successfully deleted all {deleted_count} matching nodes. Index '{index_name}' is now empty and files removed."
             )
-            return {"status": "success", "deleted_count": deleted_count, "remaining_count": 0}
+            return {
+                "status": "success",
+                "deleted_count": deleted_count,
+                "remaining_count": 0,
+            }
         except OSError as e:
-            return {"status": "failed", "error": f"Failed to remove empty index files for '{index_name}': {e}"}
+            return {
+                "status": "failed",
+                "error": f"Failed to remove empty index files for '{index_name}': {e}",
+            }
 
     dimension = 1  # Dummy dimension from save tool
     keys = list(metadata_to_keep.keys())
@@ -104,7 +131,11 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
     ids_to_add = np.array(list(id_to_key.keys()), dtype="int64")
     dummy_vectors = np.zeros((num_items, dimension), dtype="float32")
 
-    new_data_to_save = {"metadata": metadata_to_keep, "id_to_key": id_to_key, "key_to_id": key_to_id}
+    new_data_to_save = {
+        "metadata": metadata_to_keep,
+        "id_to_key": id_to_key,
+        "key_to_id": key_to_id,
+    }
 
     # --- Save Rebuilt Index/Metadata with Retry ---
     for attempt in range(MAX_RETRIES):
@@ -136,11 +167,14 @@ def bulk_delete_metadata(index_name: str, filter_condition: Dict[str, Any]) -> D
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to save rebuilt index/metadata for '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
-    return {"status": "failed", "error": "Unknown error after bulk delete and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after bulk delete and save attempts.",
+    }
 
 
 # Example usage (for testing purposes)

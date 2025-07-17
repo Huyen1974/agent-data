@@ -11,10 +11,11 @@ import sys
 import time
 import uuid
 from datetime import datetime
-from typing import List
 
 # Set environment variables directly
-os.environ["QDRANT_URL"] = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+os.environ["QDRANT_URL"] = (
+    "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+)
 os.environ["QDRANT_API_KEY"] = (
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.3exdWpAbjXl_o11YZHT3Cnlxklkpv5x4InI244BUYV0"
 )
@@ -31,7 +32,9 @@ from agent_data_manager.config.settings import settings  # noqa: E402
 from agent_data_manager.vector_store.qdrant_store import QdrantStore  # noqa: E402
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Performance logging setup
@@ -76,7 +79,7 @@ class LatencyMeasurer:
             print(f"⏱️  {self.operation_name}: {latency_ms}ms ({status})")
 
 
-def create_mock_embedding(text: str) -> List[float]:
+def create_mock_embedding(text: str) -> list[float]:
     """Create a deterministic mock embedding based on text hash."""
     import hashlib
 
@@ -169,15 +172,21 @@ async def test_save_document_workflow():
                 )
 
                 if result.get("success"):
-                    print(f"✅ Document {doc['name']} saved successfully (ID: {point_id[:8]}...)")
+                    print(
+                        f"✅ Document {doc['name']} saved successfully (ID: {point_id[:8]}...)"
+                    )
                     successful_uploads += 1
                 else:
-                    print(f"❌ Failed to save document {doc['name']}: {result.get('error')}")
+                    print(
+                        f"❌ Failed to save document {doc['name']}: {result.get('error')}"
+                    )
 
             except Exception as e:
                 print(f"❌ Exception saving document {doc['name']}: {e}")
 
-    print(f"\n📊 Save Document Results: {successful_uploads}/{len(test_documents)} successful")
+    print(
+        f"\n📊 Save Document Results: {successful_uploads}/{len(test_documents)} successful"
+    )
     return successful_uploads > 0
 
 
@@ -229,7 +238,9 @@ async def test_semantic_search_workflow():
                 for i, res in enumerate(results[:3], 1):
                     score = res.get("score", 0)
                     doc_name = res.get("metadata", {}).get("document_name", "Unknown")
-                    text_preview = res.get("metadata", {}).get("original_text", "")[:100]
+                    text_preview = res.get("metadata", {}).get("original_text", "")[
+                        :100
+                    ]
                     if len(text_preview) > 100:
                         text_preview += "..."
                     print(f"   {i}. Score: {score:.3f} - {doc_name}: {text_preview}")
@@ -239,7 +250,9 @@ async def test_semantic_search_workflow():
             except Exception as e:
                 print(f"❌ Exception during search: {e}")
 
-    print(f"\n📊 Semantic Search Results: {successful_searches}/{len(search_queries)} successful")
+    print(
+        f"\n📊 Semantic Search Results: {successful_searches}/{len(search_queries)} successful"
+    )
     return successful_searches > 0
 
 
@@ -288,9 +301,14 @@ async def test_end_to_end_performance():
     print("\n2️⃣ Searching for saved document...")
     with LatencyMeasurer("E2E_SEARCH"):
         try:
-            query_embedding = create_mock_embedding("performance test document vector store")
+            query_embedding = create_mock_embedding(
+                "performance test document vector store"
+            )
             search_results = await store.query_vectors_by_tag(
-                tag=test_doc["tag"], query_vector=query_embedding, limit=5, threshold=0.1
+                tag=test_doc["tag"],
+                query_vector=query_embedding,
+                limit=5,
+                threshold=0.1,
             )
 
             # Verify we found our document
@@ -309,10 +327,14 @@ async def test_end_to_end_performance():
     print(f"   Results returned: {len(search_results)}")
 
     # Log total E2E performance
-    perf_logger.info(f"E2E_TOTAL {total_time_ms} {'SUCCESS' if found_our_doc else 'PARTIAL'}")
+    perf_logger.info(
+        f"E2E_TOTAL {total_time_ms} {'SUCCESS' if found_our_doc else 'PARTIAL'}"
+    )
 
     if total_time_ms > 5000:
-        slow_logger.info(f"E2E_TOTAL {total_time_ms} {'SUCCESS' if found_our_doc else 'PARTIAL'}")
+        slow_logger.info(
+            f"E2E_TOTAL {total_time_ms} {'SUCCESS' if found_our_doc else 'PARTIAL'}"
+        )
 
     return found_our_doc
 
@@ -341,7 +363,9 @@ async def main():
     # Verify environment
     print("\n🔧 Verifying environment...")
     if not settings.validate_qdrant_config():
-        print("❌ Qdrant configuration invalid. Check QDRANT_URL and QDRANT_API_KEY environment variables.")
+        print(
+            "❌ Qdrant configuration invalid. Check QDRANT_URL and QDRANT_API_KEY environment variables."
+        )
         return False
 
     print(f"✅ Qdrant URL: {settings.QDRANT_URL}")
@@ -391,7 +415,9 @@ async def main():
     print(f"\nOverall: {passed_tests}/{total_tests} tests passed")
 
     if passed_tests == total_tests:
-        print("🎉 All tests passed! QdrantStore end-to-end workflow is working correctly.")
+        print(
+            "🎉 All tests passed! QdrantStore end-to-end workflow is working correctly."
+        )
         return True
     else:
         print("⚠️  Some tests failed. Check logs for details.")

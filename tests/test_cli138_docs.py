@@ -5,9 +5,9 @@ This module contains tests to validate the completeness and accuracy of project 
 ensuring that all required sections exist and contain appropriate content.
 """
 
-import pytest
 from pathlib import Path
 
+import pytest
 
 
 class TestCLI138Docs:
@@ -21,7 +21,7 @@ class TestCLI138Docs:
         assert report_path.is_file(), "Agent_Data_Final_Report.md is not a file"
 
         # Test that file is readable and not empty
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         assert len(content) > 1000, "Agent_Data_Final_Report.md appears to be too short"
@@ -32,7 +32,7 @@ class TestCLI138Docs:
         """Test that Agent_Data_Final_Report.md contains all required sections."""
         report_path = Path("Agent_Data_Final_Report.md")
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         required_sections = [
@@ -61,7 +61,7 @@ class TestCLI138Docs:
         """Test that Agent_Data_Final_Report.md contains key technical details."""
         report_path = Path("Agent_Data_Final_Report.md")
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         # Test for key technical information
@@ -88,7 +88,7 @@ class TestCLI138Docs:
         cursor_doc_path = Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md")
         assert cursor_doc_path.exists(), "INTEGRATE_WITH_CURSOR.md file does not exist"
 
-        with open(cursor_doc_path, "r", encoding="utf-8") as f:
+        with open(cursor_doc_path, encoding="utf-8") as f:
             content = f.read()
 
         # Test for CLI 138 updates
@@ -110,7 +110,7 @@ class TestCLI138Docs:
         """Test that API examples in documentation contain valid JSON."""
         report_path = Path("Agent_Data_Final_Report.md")
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         # Check for JSON code blocks
@@ -133,7 +133,7 @@ class TestCLI138Docs:
         """Test that documentation includes current performance metrics."""
         report_path = Path("Agent_Data_Final_Report.md")
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         performance_metrics = [
@@ -153,7 +153,7 @@ class TestCLI138Docs:
         """Test that documentation includes comprehensive deployment instructions."""
         report_path = Path("Agent_Data_Final_Report.md")
 
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         deployment_elements = [
@@ -180,7 +180,7 @@ class TestCLI138Docs:
 
         # Run basic validation
         report_path = Path("Agent_Data_Final_Report.md")
-        with open(report_path, "r", encoding="utf-8") as f:
+        with open(report_path, encoding="utf-8") as f:
             content = f.read()
 
         # Check for key sections
@@ -191,7 +191,9 @@ class TestCLI138Docs:
         execution_time = end_time - start_time
 
         # Should complete in under 1 second
-        assert execution_time < 1.0, f"Documentation validation took too long: {execution_time:.2f}s"
+        assert (
+            execution_time < 1.0
+        ), f"Documentation validation took too long: {execution_time:.2f}s"
 
     @pytest.mark.unit
     def test_documentation_file_sizes_reasonable(self):
@@ -204,19 +206,26 @@ class TestCLI138Docs:
         cursor_doc_size = cursor_doc_path.stat().st_size
 
         # Agent_Data_Final_Report.md should be substantial but not excessive
-        assert 10000 < report_size < 500000, f"Agent_Data_Final_Report.md size unexpected: {report_size} bytes"
+        assert (
+            10000 < report_size < 500000
+        ), f"Agent_Data_Final_Report.md size unexpected: {report_size} bytes"
 
         # INTEGRATE_WITH_CURSOR.md should be comprehensive
-        assert 5000 < cursor_doc_size < 1000000, f"INTEGRATE_WITH_CURSOR.md size unexpected: {cursor_doc_size} bytes"
+        assert (
+            5000 < cursor_doc_size < 1000000
+        ), f"INTEGRATE_WITH_CURSOR.md size unexpected: {cursor_doc_size} bytes"
 
     @pytest.mark.unit
     def test_documentation_encoding_utf8(self):
         """Test that documentation files use UTF-8 encoding."""
-        docs_to_check = [Path("Agent_Data_Final_Report.md"), Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md")]
+        docs_to_check = [
+            Path("Agent_Data_Final_Report.md"),
+            Path("ADK/agent_data/docs/INTEGRATE_WITH_CURSOR.md"),
+        ]
 
         for doc_path in docs_to_check:
             try:
-                with open(doc_path, "r", encoding="utf-8") as f:
+                with open(doc_path, encoding="utf-8") as f:
                     content = f.read()
                 # If we can read it as UTF-8, the test passes
                 assert len(content) > 0, f"{doc_path} appears to be empty"

@@ -1,15 +1,11 @@
-import sys
-import os
-import json
-import logging
-import traceback
-import time
 import asyncio
-from typing import Optional, List, Dict, Any, Union, Tuple, cast
+import logging
+import sys
+import time
+from typing import Any
 
 # Imports adjusted for Docker structure (/app is root)
 from agent_data_manager.agent.agent_data_agent import AgentDataAgent
-from agent_data_manager.agent.tools_manager import ToolsManager
 from agent_data_manager.tools.register_tools import register_tools
 
 # --- Configuration ---
@@ -22,7 +18,9 @@ logger = logging.getLogger("MCPAgentCore")
 # Default handler if no other is configured
 if not logger.handlers:
     handler = logging.StreamHandler(sys.stderr)
-    formatter = logging.Formatter("%(asctime)s [%(request_id)s] %(levelname)-8s - %(message)s")
+    formatter = logging.Formatter(
+        "%(asctime)s [%(request_id)s] %(levelname)-8s - %(message)s"
+    )
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
@@ -65,7 +63,9 @@ class MCPAgent:
         self.core_agent = AgentDataAgent()
         register_tools(self.core_agent)
         registered_tool_names = list(self.core_agent.tools_manager.tools.keys())
-        logger_adapter.info(f"MCPAgent Core initialized. Available tools: {registered_tool_names}")
+        logger_adapter.info(
+            f"MCPAgent Core initialized. Available tools: {registered_tool_names}"
+        )
         self.request_counter = 0
 
     def _get_next_request_id(self, provided_id=None) -> str:
@@ -77,8 +77,13 @@ class MCPAgent:
         return f"mcp-core-{int(time.time()*1000)}-{self.request_counter}"
 
     def _create_response(
-        self, request_id: str, status: str, result: Any = None, error: Optional[str] = None, meta: Optional[Dict] = None
-    ) -> Dict[str, Any]:
+        self,
+        request_id: str,
+        status: str,
+        result: Any = None,
+        error: str | None = None,
+        meta: dict | None = None,
+    ) -> dict[str, Any]:
         """Helper to create a standardized JSON response dictionary."""
         base_meta = meta if meta is not None else {}
         # Ensure standard fields are in meta
@@ -90,7 +95,7 @@ class MCPAgent:
         response = {k: v for k, v in response.items() if k == "meta" or v is not None}
         return response
 
-    def _execute_tool_sync(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _execute_tool_sync(self, request_data: dict[str, Any]) -> dict[str, Any]:
         """Synchronously executes a single tool request with error handling."""
         start_time = time.monotonic()
         request_id_in = request_data.get("id")
@@ -108,7 +113,9 @@ class MCPAgent:
         input_payload_from_request = request_data.get("input_data", {})
 
         # Log the extracted input_payload and its type
-        local_logger.info(f"[_execute_tool_sync] Extracted input_payload_from_request: {input_payload_from_request}")
+        local_logger.info(
+            f"[_execute_tool_sync] Extracted input_payload_from_request: {input_payload_from_request}"
+        )
         local_logger.info(
             f"[_execute_tool_sync] Type of input_payload_from_request: {type(input_payload_from_request)}"
         )
@@ -124,8 +131,8 @@ class MCPAgent:
                 raise ValueError("Missing 'tool_name' in request.")
 
             # These will be the arguments passed to the tool
-            final_args: List[Any] = []
-            final_kwargs: Dict[str, Any] = {}  # Initialize as empty dict
+            final_args: list[Any] = []
+            final_kwargs: dict[str, Any] = {}  # Initialize as empty dict
 
             # Check if input_payload_from_request is a dictionary
             if isinstance(input_payload_from_request, dict):
@@ -138,10 +145,14 @@ class MCPAgent:
                 # final_kwargs is already {} as initialized above
 
             # --- Tool Execution ---
-            local_logger.info(f"Executing tool '{tool_name}' with args: {final_args}, kwargs: {final_kwargs}")
+            local_logger.info(
+                f"Executing tool '{tool_name}' with args: {final_args}, kwargs: {final_kwargs}"
+            )
 
             # Add final check log here
-            local_logger.info(f"Final check before calling execute_tool - Args: {final_args}, Kwargs: {final_kwargs}")
+            local_logger.info(
+                f"Final check before calling execute_tool - Args: {final_args}, Kwargs: {final_kwargs}"
+            )
             # Log before asyncio.run
             local_logger.info(f"Attempting asyncio.run for tool: {tool_name}")
             # Updated to use asyncio.run and argument unpacking
@@ -153,7 +164,9 @@ class MCPAgent:
                 )
             )
             # Log after asyncio.run and the type of its result
-            local_logger.info(f"Completed asyncio.run for tool: {tool_name}. Result type: {type(tool_result_data)}")
+            local_logger.info(
+                f"Completed asyncio.run for tool: {tool_name}. Result type: {type(tool_result_data)}"
+            )
             response_status = "success"
             # Assuming execute_tool returns the direct result needed
             response_result = tool_result_data
@@ -161,7 +174,9 @@ class MCPAgent:
 
         except (KeyError, ValueError, TypeError) as validation_error:
             response_error = f"Input validation error: {validation_error}"
-            local_logger.error(f"{response_error} - Request Data: {request_data}", exc_info=True)
+            local_logger.error(
+                f"{response_error} - Request Data: {request_data}", exc_info=True
+            )
         except Exception as exec_error:
             response_error = f"Tool '{tool_name}' execution error: {exec_error}"
             local_logger.error(f"Error during '{tool_name}' execution.", exc_info=True)
@@ -170,20 +185,29 @@ class MCPAgent:
             duration_ms = (time.monotonic() - start_time) * 1000
             final_meta = {"duration_ms": round(duration_ms, 2)}
             # Log final outcome (optional, depends on desired log verbosity)
-            final_logger_extra = {"request_id": request_id, "duration_ms": round(duration_ms, 2)}
+            final_logger_extra = {
+                "request_id": request_id,
+                "duration_ms": round(duration_ms, 2),
+            }
             final_logger = RequestLogAdapter(logger, final_logger_extra)
             if response_status == "success":
                 final_logger.info(f"Tool '{tool_name}' completed.")
             else:
-                final_logger.error(f"Tool '{tool_name}' failed. Error: {response_error}")
+                final_logger.error(
+                    f"Tool '{tool_name}' failed. Error: {response_error}"
+                )
 
         # Construct final response
         response_data = self._create_response(
-            request_id=request_id, status=response_status, result=response_result, error=response_error, meta=final_meta
+            request_id=request_id,
+            status=response_status,
+            result=response_result,
+            error=response_error,
+            meta=final_meta,
         )
         return response_data
 
-    def run(self, request_data: Dict, request_id: Optional[str] = None) -> Dict:
+    def run(self, request_data: dict, request_id: str | None = None) -> dict:
         """Processes a single tool request synchronously."""
         exec_request_id = self._get_next_request_id(request_id)
         request_data["id"] = exec_request_id  # Ensure ID is set in the input data

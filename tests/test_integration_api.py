@@ -3,11 +3,8 @@ Integration API Test for CLI 140e.2
 Comprehensive API coverage integration test to validate end-to-end functionality.
 """
 
+
 import pytest
-import json
-import subprocess
-import re
-from unittest.mock import patch, MagicMock
 
 
 @pytest.mark.integration
@@ -23,8 +20,8 @@ class TestIntegrationAPI:
 
         # 1. Test API module importability
         try:
-            import sys
             import os
+            import sys
 
             # Add src to path for testing
             src_path = os.path.join(os.path.dirname(__file__), "..", "src")
@@ -62,7 +59,9 @@ class TestIntegrationAPI:
         for key, value in cache_config.items():
             assert value is not None, f"Cache config {key} should not be None"
             if isinstance(value, bool):
-                assert isinstance(value, bool), f"Boolean config {key} should be boolean"
+                assert isinstance(
+                    value, bool
+                ), f"Boolean config {key} should be boolean"
             elif isinstance(value, int):
                 assert value > 0, f"Numeric config {key} should be positive"
 
@@ -78,11 +77,19 @@ class TestIntegrationAPI:
             assert len(str(value)) > 0, f"Qdrant config {key} should not be empty"
 
         # Validate endpoint format
-        assert qdrant_config["endpoint"].startswith("https://"), "Qdrant endpoint should use HTTPS"
-        assert "qdrant.io" in qdrant_config["endpoint"], "Qdrant endpoint should be valid"
+        assert qdrant_config["endpoint"].startswith(
+            "https://"
+        ), "Qdrant endpoint should use HTTPS"
+        assert (
+            "qdrant.io" in qdrant_config["endpoint"]
+        ), "Qdrant endpoint should be valid"
 
         # 5. Test performance monitoring integration
-        performance_metrics = {"target_latency_ms": 500, "max_concurrent_requests": 100, "cache_hit_rate_target": 0.8}
+        performance_metrics = {
+            "target_latency_ms": 500,
+            "max_concurrent_requests": 100,
+            "cache_hit_rate_target": 0.8,
+        }
 
         for metric, value in performance_metrics.items():
             assert value > 0, f"Performance metric {metric} should be positive"
@@ -96,11 +103,17 @@ class TestIntegrationAPI:
         ]
 
         for scenario in error_scenarios:
-            assert isinstance(scenario, str), f"Error scenario {scenario} should be string"
+            assert isinstance(
+                scenario, str
+            ), f"Error scenario {scenario} should be string"
             assert len(scenario) > 0, f"Error scenario {scenario} should not be empty"
 
         # 7. Test logging integration readiness
-        log_config = {"log_level": "INFO", "log_format": "json", "enable_profiler": True}
+        log_config = {
+            "log_level": "INFO",
+            "log_format": "json",
+            "enable_profiler": True,
+        }
 
         for key, value in log_config.items():
             assert value is not None, f"Log config {key} should not be None"
@@ -114,7 +127,9 @@ class TestIntegrationAPI:
         }
 
         for check, status in deployment_readiness.items():
-            assert isinstance(status, bool), f"Deployment check {check} should be boolean"
+            assert isinstance(
+                status, bool
+            ), f"Deployment check {check} should be boolean"
 
         # 9. Test coverage target validation
         coverage_targets = {

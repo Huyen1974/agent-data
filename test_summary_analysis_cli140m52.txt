@@ -27,7 +27,7 @@ All 6 timeout tests are in tests/api/test_authentication.py:
    - Multiple test methods in this class are slow
 
 2. TestUserManager (1 test timing out)
-   - File: tests/api/test_authentication.py  
+   - File: tests/api/test_authentication.py
    - Cause: Batch timeout >24s
    - User management operations taking too long
 
@@ -72,4 +72,4 @@ SUMMARY:
 🎯 M1 SAFE: All operations under safe limits
 🎯 READY: Test suite in excellent condition
 
-Status: EXCELLENT - Only 6 minor timeout tests remain to be optimized 
+Status: EXCELLENT - Only 6 minor timeout tests remain to be optimized

@@ -139,4 +139,3 @@
 /app/tests/test_performance_hybrid_query.py
 /app/tests/test_qdrant_hybrid_optimization.py
 /app/tests/test_timeout_fake.py
-Found 141 test files

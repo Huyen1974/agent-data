@@ -5,10 +5,11 @@ Tests the complete workflow from Cursor IDE prompts to Qdrant/Firestore storage
 
 # import asyncio
 # import json
-import pytest
 import time
 from datetime import datetime
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 from agent_data_manager.vector_store.qdrant_store import QdrantStore
@@ -86,25 +87,36 @@ class TestCursorE2EIntegrationFixed:
         }
 
     @pytest.mark.asyncio
-    async def test_single_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding_response):
+    async def test_single_document_e2e_workflow(
+        self, sample_cursor_documents, mock_openai_embedding_response
+    ):
         """Test end-to-end workflow for a single document from Cursor IDE."""
         doc = sample_cursor_documents[0]
 
         # Create a mock embedding provider that returns the expected response
         mock_embedding_provider = AsyncMock()
-        mock_embedding_provider.embed_single.return_value = mock_openai_embedding_response["embedding"]
+        mock_embedding_provider.embed_single.return_value = (
+            mock_openai_embedding_response["embedding"]
+        )
         mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
 
         # Mock the external dependencies properly
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+        ) as mock_qdrant_class:
             with patch(
                 "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
             ) as mock_firestore_class:
-                with patch("agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool") as mock_auto_tag:
+                with patch(
+                    "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+                ) as mock_auto_tag:
 
                     # Setup QdrantStore mock
                     mock_qdrant = AsyncMock()
-                    mock_qdrant.upsert_vector.return_value = {"success": True, "vector_id": doc["doc_id"]}
+                    mock_qdrant.upsert_vector.return_value = {
+                        "success": True,
+                        "vector_id": doc["doc_id"],
+                    }
                     mock_qdrant_class.return_value = mock_qdrant
 
                     # Setup FirestoreMetadataManager mock
@@ -114,11 +126,15 @@ class TestCursorE2EIntegrationFixed:
 
                     # Setup auto-tagging mock
                     mock_auto_tagging_tool = AsyncMock()
-                    mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = doc["metadata"]
+                    mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = (
+                        doc["metadata"]
+                    )
                     mock_auto_tag.return_value = mock_auto_tagging_tool
 
                     # Initialize vectorization tool with mock embedding provider
-                    tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)
+                    tool = QdrantVectorizationTool(
+                        embedding_provider=mock_embedding_provider
+                    )
 
                     # Process the document
                     result = await tool.vectorize_document(
@@ -145,24 +161,34 @@ class TestCursorE2EIntegrationFixed:
                     assert mock_firestore.save_metadata.call_count >= 2
 
     @pytest.mark.asyncio
-    async def test_batch_document_e2e_workflow(self, sample_cursor_documents, mock_openai_embedding_response):
+    async def test_batch_document_e2e_workflow(
+        self, sample_cursor_documents, mock_openai_embedding_response
+    ):
         """Test end-to-end workflow for batch processing of Cursor IDE documents."""
         batch_docs = sample_cursor_documents
 
         # Create a mock embedding provider that returns the expected response
         mock_embedding_provider = AsyncMock()
-        mock_embedding_provider.embed_single.return_value = mock_openai_embedding_response["embedding"]
+        mock_embedding_provider.embed_single.return_value = (
+            mock_openai_embedding_response["embedding"]
+        )
         mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+        ) as mock_qdrant_class:
             with patch(
                 "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
             ) as mock_firestore_class:
-                with patch("agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool") as mock_auto_tag:
+                with patch(
+                    "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+                ) as mock_auto_tag:
 
                     # Setup mocks
                     mock_qdrant = AsyncMock()
-                    mock_qdrant.upsert_vector = AsyncMock(return_value={"success": True, "vector_id": "test_id"})
+                    mock_qdrant.upsert_vector = AsyncMock(
+                        return_value={"success": True, "vector_id": "test_id"}
+                    )
                     mock_qdrant_class.return_value = mock_qdrant
 
                     mock_firestore = AsyncMock()
@@ -171,15 +197,21 @@ class TestCursorE2EIntegrationFixed:
 
                     # Setup auto-tagging mock
                     mock_auto_tagging_tool = AsyncMock()
-                    mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(return_value={})
+                    mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(
+                        return_value={}
+                    )
                     mock_auto_tag.return_value = mock_auto_tagging_tool
 
                     # Initialize vectorization tool with mock embedding provider
-                    tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)
+                    tool = QdrantVectorizationTool(
+                        embedding_provider=mock_embedding_provider
+                    )
 
                     # Process batch of documents
                     result = await tool.batch_vectorize_documents(
-                        documents=batch_docs, tag="cursor_integration_test", update_firestore=True
+                        documents=batch_docs,
+                        tag="cursor_integration_test",
+                        update_firestore=True,
                     )
 
                     # Verify batch result
@@ -199,21 +231,29 @@ class TestCursorE2EIntegrationFixed:
                     assert mock_qdrant.upsert_vector.call_count == 4
 
                     # Verify Firestore was updated for each document (pending + completed for each)
-                    assert mock_firestore.save_metadata.call_count >= 8  # 2 calls per document
+                    assert (
+                        mock_firestore.save_metadata.call_count >= 8
+                    )  # 2 calls per document
 
     @pytest.mark.asyncio
-    async def test_cursor_query_workflow(self, sample_cursor_documents, mock_openai_embedding_response):
+    async def test_cursor_query_workflow(
+        self, sample_cursor_documents, mock_openai_embedding_response
+    ):
         """Test semantic search workflow that would be triggered from Cursor IDE."""
         query_text = "How to implement authentication in web applications?"
 
         with patch(
-            "agent_data_manager.tools.external_tool_registry.get_openai_embedding", new_callable=AsyncMock
+            "agent_data_manager.tools.external_tool_registry.get_openai_embedding",
+            new_callable=AsyncMock,
         ) as mock_get_embedding:
             with patch(
-                "agent_data_manager.vector_store.qdrant_store.QdrantStore._ensure_collection", new_callable=AsyncMock
+                "agent_data_manager.vector_store.qdrant_store.QdrantStore._ensure_collection",
+                new_callable=AsyncMock,
             ) as mock_ensure_collection:
                 with patch("asyncio.to_thread") as mock_to_thread:
-                    with patch("agent_data_manager.vector_store.qdrant_store.QdrantClient") as mock_qdrant_client_class:
+                    with patch(
+                        "agent_data_manager.vector_store.qdrant_store.QdrantClient"
+                    ) as mock_qdrant_client_class:
                         # Mock _ensure_collection to do nothing
                         mock_ensure_collection.return_value = None
 
@@ -226,7 +266,10 @@ class TestCursorE2EIntegrationFixed:
                                 score=0.95,
                                 payload={
                                     "doc_id": sample_cursor_documents[0]["doc_id"],
-                                    "content_preview": sample_cursor_documents[0]["content"][:100] + "...",
+                                    "content_preview": sample_cursor_documents[0][
+                                        "content"
+                                    ][:100]
+                                    + "...",
                                     "source": "cursor_ide",
                                     "query_type": "how_to",
                                 },
@@ -236,7 +279,10 @@ class TestCursorE2EIntegrationFixed:
                                 score=0.85,
                                 payload={
                                     "doc_id": sample_cursor_documents[3]["doc_id"],
-                                    "content_preview": sample_cursor_documents[3]["content"][:100] + "...",
+                                    "content_preview": sample_cursor_documents[3][
+                                        "content"
+                                    ][:100]
+                                    + "...",
                                     "source": "cursor_ide",
                                     "query_type": "error_handling",
                                 },
@@ -272,7 +318,10 @@ class TestCursorE2EIntegrationFixed:
 
                         # Perform semantic search
                         search_results = await qdrant_store.semantic_search(
-                            query_text=query_text, limit=5, tag="cursor_integration_test", score_threshold=0.7
+                            query_text=query_text,
+                            limit=5,
+                            tag="cursor_integration_test",
+                            score_threshold=0.7,
                         )
 
                         # Verify search results
@@ -287,7 +336,9 @@ class TestCursorE2EIntegrationFixed:
                         assert first_result["metadata"]["query_type"] == "how_to"
 
     @pytest.mark.asyncio
-    async def test_cursor_metadata_validation_workflow(self, sample_cursor_documents, mock_openai_embedding_response):
+    async def test_cursor_metadata_validation_workflow(
+        self, sample_cursor_documents, mock_openai_embedding_response
+    ):
         """Test metadata validation and enhancement during Cursor IDE workflow."""
         doc = sample_cursor_documents[0]
 
@@ -302,18 +353,26 @@ class TestCursorE2EIntegrationFixed:
 
         # Create a mock embedding provider that returns the expected response
         mock_embedding_provider = AsyncMock()
-        mock_embedding_provider.embed_single.return_value = mock_openai_embedding_response["embedding"]
+        mock_embedding_provider.embed_single.return_value = (
+            mock_openai_embedding_response["embedding"]
+        )
         mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+        ) as mock_qdrant_class:
             with patch(
                 "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
             ) as mock_firestore_class:
-                with patch("agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool") as mock_auto_tag:
+                with patch(
+                    "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+                ) as mock_auto_tag:
 
                     # Setup mocks
                     mock_qdrant = AsyncMock()
-                    mock_qdrant.upsert_vector = AsyncMock(return_value={"success": True, "vector_id": doc["doc_id"]})
+                    mock_qdrant.upsert_vector = AsyncMock(
+                        return_value={"success": True, "vector_id": doc["doc_id"]}
+                    )
                     mock_qdrant_class.return_value = mock_qdrant
 
                     mock_firestore = AsyncMock()
@@ -322,11 +381,15 @@ class TestCursorE2EIntegrationFixed:
 
                     # Setup auto-tagging mock
                     mock_auto_tagging_tool = AsyncMock()
-                    mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(return_value=enhanced_metadata)
+                    mock_auto_tagging_tool.enhance_metadata_with_tags = AsyncMock(
+                        return_value=enhanced_metadata
+                    )
                     mock_auto_tag.return_value = mock_auto_tagging_tool
 
                     # Initialize vectorization tool with mock embedding provider
-                    tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)
+                    tool = QdrantVectorizationTool(
+                        embedding_provider=mock_embedding_provider
+                    )
 
                     # Process document with enhanced metadata
                     result = await tool.vectorize_document(
@@ -361,7 +424,9 @@ class TestCursorE2EIntegrationFixed:
 
         # Create a mock embedding provider that fails
         mock_embedding_provider = AsyncMock()
-        mock_embedding_provider.embed_single.side_effect = Exception("Embedding generation failed")
+        mock_embedding_provider.embed_single.side_effect = Exception(
+            "Embedding generation failed"
+        )
         mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
 
         with patch(
@@ -424,24 +489,35 @@ class TestCursorE2EIntegrationFixed:
         assert all(v > 0 for v in performance_requirements.values())
 
     @pytest.mark.asyncio
-    async def test_cursor_integration_data_consistency(self, sample_cursor_documents, mock_openai_embedding_response):
+    async def test_cursor_integration_data_consistency(
+        self, sample_cursor_documents, mock_openai_embedding_response
+    ):
         """Test data consistency between Qdrant and Firestore in Cursor workflow."""
         doc = sample_cursor_documents[0]
 
         # Create a mock embedding provider that returns the expected response
         mock_embedding_provider = AsyncMock()
-        mock_embedding_provider.embed_single.return_value = mock_openai_embedding_response["embedding"]
+        mock_embedding_provider.embed_single.return_value = (
+            mock_openai_embedding_response["embedding"]
+        )
         mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore") as mock_qdrant_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+        ) as mock_qdrant_class:
             with patch(
                 "agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
             ) as mock_firestore_class:
-                with patch("agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool") as mock_auto_tag:
+                with patch(
+                    "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+                ) as mock_auto_tag:
 
                     # Setup mocks to track calls
                     mock_qdrant = AsyncMock()
-                    mock_qdrant.upsert_vector.return_value = {"success": True, "vector_id": doc["doc_id"]}
+                    mock_qdrant.upsert_vector.return_value = {
+                        "success": True,
+                        "vector_id": doc["doc_id"],
+                    }
                     mock_qdrant_class.return_value = mock_qdrant
 
                     mock_firestore = AsyncMock()
@@ -450,11 +526,15 @@ class TestCursorE2EIntegrationFixed:
 
                     # Setup auto-tagging mock
                     mock_auto_tagging_tool = AsyncMock()
-                    mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = doc["metadata"]
+                    mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = (
+                        doc["metadata"]
+                    )
                     mock_auto_tag.return_value = mock_auto_tagging_tool
 
                     # Initialize vectorization tool with mock embedding provider
-                    tool = QdrantVectorizationTool(embedding_provider=mock_embedding_provider)
+                    tool = QdrantVectorizationTool(
+                        embedding_provider=mock_embedding_provider
+                    )
 
                     # Process document
                     result = await tool.vectorize_document(
@@ -481,4 +561,6 @@ class TestCursorE2EIntegrationFixed:
 
                     # Verify the doc_id is consistent across all calls
                     for call in mock_firestore.save_metadata.call_args_list:
-                        assert call[0][0] == doc["doc_id"]  # First argument should be doc_id
+                        assert (
+                            call[0][0] == doc["doc_id"]
+                        )  # First argument should be doc_id

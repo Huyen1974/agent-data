@@ -1,5 +1,5 @@
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 
 @pytest.mark.unit
@@ -15,5 +15,9 @@ def test_threshold_exact_equals(client_with_qdrant_override: TestClient):
     )
     assert response.status_code == 200
     results = response.json().get("results", [])
-    assert len(results) == 1, f"Expected 1 result for exact threshold 1.0, got {len(results)}"
-    assert results[0]["id"] == 9001, "Expected ID 9001 for 'modern astronomy discoveries'"
+    assert (
+        len(results) == 1
+    ), f"Expected 1 result for exact threshold 1.0, got {len(results)}"
+    assert (
+        results[0]["id"] == 9001
+    ), "Expected ID 9001 for 'modern astronomy discoveries'"

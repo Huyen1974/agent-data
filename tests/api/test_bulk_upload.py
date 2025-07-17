@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Test suite for the BULK_UPLOAD endpoint functionality."""
-import sys
 import os
-from fastapi.testclient import TestClient
+import sys
+
 import pytest
+from fastapi.testclient import TestClient
 
 # Adjust sys.path to include the project root
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,8 +22,14 @@ def test_bulk_upload_valid(client_with_qdrant_override: TestClient):
     Should successfully upload vectors to the collection.
     """
     points = [
-        {"vector": [0.1] * 1536, "payload": {"tag": "test1", "content": "First test point"}},
-        {"vector": [0.2] * 1536, "payload": {"tag": "test2", "content": "Second test point"}},
+        {
+            "vector": [0.1] * 1536,
+            "payload": {"tag": "test1", "content": "First test point"},
+        },
+        {
+            "vector": [0.2] * 1536,
+            "payload": {"tag": "test2", "content": "Second test point"},
+        },
     ]
 
     result = bulk_upload_sync("test_collection", points)
@@ -96,9 +103,15 @@ def test_bulk_upload_mixed_valid_invalid(client_with_qdrant_override: TestClient
     Should upload only the valid points.
     """
     points = [
-        {"vector": [0.1] * 1536, "payload": {"tag": "valid1", "content": "Valid point"}},
+        {
+            "vector": [0.1] * 1536,
+            "payload": {"tag": "valid1", "content": "Valid point"},
+        },
         {"payload": {"tag": "invalid"}},  # Missing vector
-        {"vector": [0.2] * 1536, "payload": {"tag": "valid2", "content": "Another valid point"}},
+        {
+            "vector": [0.2] * 1536,
+            "payload": {"tag": "valid2", "content": "Another valid point"},
+        },
     ]
 
     result = bulk_upload_sync("test_collection", points)
@@ -114,7 +127,11 @@ def test_bulk_upload_with_custom_ids(client_with_qdrant_override: TestClient):
     Should successfully upload vectors with the specified IDs.
     """
     points = [
-        {"id": 12345, "vector": [0.1] * 1536, "payload": {"tag": "custom_id_test", "content": "Point with custom ID"}}
+        {
+            "id": 12345,
+            "vector": [0.1] * 1536,
+            "payload": {"tag": "custom_id_test", "content": "Point with custom ID"},
+        }
     ]
 
     result = bulk_upload_sync("test_collection", points)

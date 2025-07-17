@@ -11,19 +11,19 @@ Created for CLI 124 to validate logging implementation.
 """
 
 import json
+import logging
 import os
 import tempfile
-import logging
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 # Import structured logging components
 from agent_data_manager.utils.structured_logger import (
-    StructuredLogger,
-    StructuredJSONFormatter,
-    SamplingFilter,
     ErrorMetricsHandler,
+    SamplingFilter,
+    StructuredJSONFormatter,
+    StructuredLogger,
     get_logger,
 )
 
@@ -131,11 +131,23 @@ class TestSamplingFilter:
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
 
         error_record = logging.LogRecord(
-            name="test", level=logging.ERROR, pathname="test.py", lineno=1, msg="Error", args=(), exc_info=None
+            name="test",
+            level=logging.ERROR,
+            pathname="test.py",
+            lineno=1,
+            msg="Error",
+            args=(),
+            exc_info=None,
         )
 
         critical_record = logging.LogRecord(
-            name="test", level=logging.CRITICAL, pathname="test.py", lineno=1, msg="Critical", args=(), exc_info=None
+            name="test",
+            level=logging.CRITICAL,
+            pathname="test.py",
+            lineno=1,
+            msg="Critical",
+            args=(),
+            exc_info=None,
         )
 
         # Should always pass
@@ -147,7 +159,13 @@ class TestSamplingFilter:
         sampling_filter = SamplingFilter(info_sample_rate=0.0)  # 0% sampling
 
         warning_record = logging.LogRecord(
-            name="test", level=logging.WARNING, pathname="test.py", lineno=1, msg="Warning", args=(), exc_info=None
+            name="test",
+            level=logging.WARNING,
+            pathname="test.py",
+            lineno=1,
+            msg="Warning",
+            args=(),
+            exc_info=None,
         )
 
         # Should always pass
@@ -159,7 +177,13 @@ class TestSamplingFilter:
         sampling_filter = SamplingFilter(info_sample_rate=0.1)
 
         info_record = logging.LogRecord(
-            name="test", level=logging.INFO, pathname="test.py", lineno=1, msg="Info", args=(), exc_info=None
+            name="test",
+            level=logging.INFO,
+            pathname="test.py",
+            lineno=1,
+            msg="Info",
+            args=(),
+            exc_info=None,
         )
 
         # Test pass case (random < 0.1)
@@ -207,7 +231,9 @@ class TestErrorMetricsHandler:
         handler.emit(error_record)
 
         # Verify metrics were called
-        handler.error_counter.labels.assert_called_with(module="test.module", level="ERROR")
+        handler.error_counter.labels.assert_called_with(
+            module="test.module", level="ERROR"
+        )
         handler.error_counter.labels().inc.assert_called_once()
 
 
@@ -255,7 +281,7 @@ class TestStructuredLogger:
             assert os.path.exists(log_file)
 
             # Read and verify content
-            with open(log_file, "r") as f:
+            with open(log_file) as f:
                 content = f.read().strip()
 
             # Should contain JSON
@@ -308,7 +334,11 @@ class TestLoggingIntegration:
                 {"session_id": "sess_002", "operation": "vector_search"},
                 {"doc_id": "doc_123", "operation": "metadata_update"},
                 {"request_id": "req_456", "operation": "embedding_generate"},
-                {"session_id": "sess_003", "doc_id": "doc_789", "operation": "sync_firestore"},
+                {
+                    "session_id": "sess_003",
+                    "doc_id": "doc_789",
+                    "operation": "sync_firestore",
+                },
                 {"duration_ms": 150, "operation": "query_qdrant"},
                 {"session_id": "sess_004", "operation": "session_cleanup"},
             ]
@@ -330,7 +360,7 @@ class TestLoggingIntegration:
             assert os.path.exists(log_file)
 
             # Read log entries
-            with open(log_file, "r") as f:
+            with open(log_file) as f:
                 log_lines = [line.strip() for line in f.readlines() if line.strip()]
 
             # Parse JSON entries
@@ -356,7 +386,9 @@ class TestLoggingIntegration:
                 assert "message" in entry
 
             # Verify context fields are preserved
-            error_with_session = next((entry for entry in error_logs if "session_id" in entry), None)
+            error_with_session = next(
+                (entry for entry in error_logs if "session_id" in entry), None
+            )
             assert error_with_session is not None
             assert error_with_session["session_id"] == "sess_error_1"
 

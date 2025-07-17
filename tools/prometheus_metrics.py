@@ -1,12 +1,13 @@
 """Prometheus metrics collection and Pushgateway integration for QdrantStore."""
 
-import os
 import logging
+import os
 import threading
 import time
+from typing import Any
+
 import requests
-from typing import Optional, Dict, Any
-from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry
+from prometheus_client import CollectorRegistry, Counter, Gauge, Histogram
 from prometheus_client.exposition import generate_latest
 
 logger = logging.getLogger(__name__)
@@ -16,40 +17,62 @@ qdrant_registry = CollectorRegistry()
 
 # QdrantStore metrics
 qdrant_requests_total = Counter(
-    "qdrant_requests_total", "Total number of requests to Qdrant", ["operation", "status"], registry=qdrant_registry
+    "qdrant_requests_total",
+    "Total number of requests to Qdrant",
+    ["operation", "status"],
+    registry=qdrant_registry,
 )
 
 qdrant_request_duration_seconds = Histogram(
-    "qdrant_request_duration_seconds", "Request duration to Qdrant in seconds", ["operation"], registry=qdrant_registry
+    "qdrant_request_duration_seconds",
+    "Request duration to Qdrant in seconds",
+    ["operation"],
+    registry=qdrant_registry,
 )
 
 qdrant_vector_count = Gauge(
-    "qdrant_vector_count", "Current number of vectors in Qdrant collection", ["collection"], registry=qdrant_registry
+    "qdrant_vector_count",
+    "Current number of vectors in Qdrant collection",
+    ["collection"],
+    registry=qdrant_registry,
 )
 
 qdrant_api_errors_total = Counter(
-    "qdrant_api_errors_total", "Total number of API errors with Qdrant", ["error_type"], registry=qdrant_registry
+    "qdrant_api_errors_total",
+    "Total number of API errors with Qdrant",
+    ["error_type"],
+    registry=qdrant_registry,
 )
 
 qdrant_connection_status = Gauge(
-    "qdrant_connection_status", "Qdrant connection status (1=connected, 0=disconnected)", registry=qdrant_registry
+    "qdrant_connection_status",
+    "Qdrant connection status (1=connected, 0=disconnected)",
+    registry=qdrant_registry,
 )
 
 # Business metrics
 documents_processed_total = Counter(
-    "documents_processed_total", "Total number of documents processed", registry=qdrant_registry
+    "documents_processed_total",
+    "Total number of documents processed",
+    registry=qdrant_registry,
 )
 
 semantic_searches_total = Counter(
-    "semantic_searches_total", "Total number of semantic searches performed", registry=qdrant_registry
+    "semantic_searches_total",
+    "Total number of semantic searches performed",
+    registry=qdrant_registry,
 )
 
 embedding_generation_duration_seconds = Histogram(
-    "embedding_generation_duration_seconds", "Duration of embedding generation in seconds", registry=qdrant_registry
+    "embedding_generation_duration_seconds",
+    "Duration of embedding generation in seconds",
+    registry=qdrant_registry,
 )
 
 
-def push_to_pushgateway(gateway_url: str, job: str, registry: CollectorRegistry, timeout: int = 10):
+def push_to_pushgateway(
+    gateway_url: str, job: str, registry: CollectorRegistry, timeout: int = 10
+):
     """
     Push metrics to Prometheus Pushgateway using HTTP POST.
 
@@ -74,7 +97,7 @@ def push_to_pushgateway(gateway_url: str, job: str, registry: CollectorRegistry,
 class MetricsPusher:
     """Handles pushing metrics to Prometheus Pushgateway."""
 
-    def __init__(self, pushgateway_url: Optional[str] = None, push_interval: int = 60):
+    def __init__(self, pushgateway_url: str | None = None, push_interval: int = 60):
         """
         Initialize the metrics pusher.
 
@@ -85,7 +108,7 @@ class MetricsPusher:
         self.pushgateway_url = pushgateway_url or os.environ.get("PUSHGATEWAY_URL")
         self.push_interval = push_interval
         self._stop_event = threading.Event()
-        self._push_thread: Optional[threading.Thread] = None
+        self._push_thread: threading.Thread | None = None
         self._running = False
 
         if self.pushgateway_url:
@@ -96,7 +119,9 @@ class MetricsPusher:
     def start(self):
         """Start the background thread for pushing metrics."""
         if not self.pushgateway_url:
-            logger.warning("Cannot start metrics pusher: PUSHGATEWAY_URL not configured")
+            logger.warning(
+                "Cannot start metrics pusher: PUSHGATEWAY_URL not configured"
+            )
             return
 
         if self._running:
@@ -139,7 +164,10 @@ class MetricsPusher:
 
         try:
             push_to_pushgateway(
-                gateway_url=self.pushgateway_url, job="qdrant-store", registry=qdrant_registry, timeout=10
+                gateway_url=self.pushgateway_url,
+                job="qdrant-store",
+                registry=qdrant_registry,
+                timeout=10,
             )
             logger.debug("Successfully pushed metrics to Pushgateway")
         except Exception as e:
@@ -147,10 +175,12 @@ class MetricsPusher:
 
 
 # Global metrics pusher instance
-_metrics_pusher: Optional[MetricsPusher] = None
+_metrics_pusher: MetricsPusher | None = None
 
 
-def initialize_metrics_pusher(pushgateway_url: Optional[str] = None, push_interval: int = 60):
+def initialize_metrics_pusher(
+    pushgateway_url: str | None = None, push_interval: int = 60
+):
     """
     Initialize and start the global metrics pusher.
 
@@ -277,7 +307,7 @@ class MetricsTimer:
                 record_qdrant_error(error_type)
 
 
-def get_metrics_summary() -> Dict[str, Any]:
+def get_metrics_summary() -> dict[str, Any]:
     """
     Get a summary of current metrics.
 
@@ -286,9 +316,13 @@ def get_metrics_summary() -> Dict[str, Any]:
     """
     try:
         summary = {
-            "pushgateway_url": _metrics_pusher.pushgateway_url if _metrics_pusher else None,
+            "pushgateway_url": (
+                _metrics_pusher.pushgateway_url if _metrics_pusher else None
+            ),
             "pusher_running": _metrics_pusher._running if _metrics_pusher else False,
-            "registry_collectors": len(list(qdrant_registry._collector_to_names.keys())),
+            "registry_collectors": len(
+                list(qdrant_registry._collector_to_names.keys())
+            ),
         }
         return summary
     except Exception as e:

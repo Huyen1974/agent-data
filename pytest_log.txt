@@ -45,11 +45,11 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_top_k_exceeds_data_count>
     <Module test_cli130_tree_view.py>
       CLI 130 Tree View Functionality Tests
-      
+
       Tests for Tree View backend features:
       - Copy Path: get_document_path method
       - Share Content: share_document method
-      
+
       This test validates Tree View functionality with 8 documents to ensure correct
       path retrieval and sharing link generation with metadata storage in project_tree collection.
       <Class TestCLI130TreeView>
@@ -115,7 +115,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
     <Module test_cli140j2_cost_verification.py>
       <Class TestCLI140j2CostVerification>
         CLI140j.2: Comprehensive cost verification via Billing API.
-        
+
         Verifies:
         1. Serverless costs <$10/day (dev), <$3/day (production) via Billing API
         2. Min-instances=0 configuration active
@@ -271,7 +271,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           Test qdrant_upsert_vector tool through ToolsManager.
     <Module test_cli132_api.py>
       CLI 132 Test: CS Agent API Layer
-      
+
       Tests the FastAPI endpoints for Tree View and Search functionality:
       - /tree-view/{doc_id} endpoint for copy path and share content
       - /search endpoint for advanced search (path, tags, metadata)
@@ -348,34 +348,34 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_mcp_echo_tool_integration>
     <Module test_cli126c_deferred.py>
       CLI 126C Test: Validate deferred test strategy
-      
+
       This test validates that the deferred test marking strategy is working correctly
       and that we've achieved the target of ~100-120 active tests for development.
       <Class TestCLI126CDeferredStrategy>
         Test the deferred test strategy implementation for CLI 126C.
         <Function test_edge_case_tests_are_deferred>
           Test that edge case and validation tests are properly deferred.
-          
+
           This ensures non-critical tests are moved to CLI 141-146 timeframe.
         <Function test_deferred_tests_included_in_full_runs>
           Test that deferred tests are included when running the full suite.
-          
+
           This ensures ptfull command includes all tests for comprehensive validation.
         <Function test_core_functionality_tests_remain_active>
           Test that core functionality tests are not deferred.
-          
+
           This ensures essential tests (E2E, core API, workflow) remain active for development.
         <Function test_deferred_tests_excluded_from_fast_runs>
           Test that deferred tests are properly excluded from fast test runs.
-          
+
           This ensures ptfast command (development workflow) skips non-critical tests.
         <Function test_cli126c_strategy_documentation_ready>
           Test that CLI 126C has successfully prepared the deferred test strategy.
-          
+
           This validates the completion criteria for CLI 126C.
         <Function test_active_test_count_in_target_range>
           Test that active tests (not slow, not deferred) are in the target range of 100-120.
-          
+
           This ensures we've successfully reduced the test suite for efficient development
           on MacBook M1 while maintaining core functionality coverage.
     <Package api>
@@ -423,21 +423,21 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           Test and document the dependency reduction achieved.
     <Module test_cli135_logging.py>
       Test suite for CLI 135 - Automated CI/CD Logging Implementation.
-      
+
       This module tests the automated task report update functionality with CI/CD integration.
       Follows the "1 test per CLI" rule with comprehensive validation.
       <Class TestCLI135AutomatedLogging>
         Test class for CLI 135 automated CI/CD logging functionality.
         <Function test_automated_logging_functionality>
           Comprehensive test for CLI 135 automated logging functionality.
-          
+
           Tests:
           1. GitHub CI runs fetching
           2. Nightly CI statistics analysis
           3. CI runs table formatting
           4. Task report content generation with CI data
           5. End-to-end handler functionality
-          
+
           This single test validates all CLI 135 functionality to maintain
           the "1 test per CLI" rule while ensuring comprehensive coverage.
     <Package api>
@@ -491,7 +491,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_negative_top_k>
     <Module test_cli126d_ci_setup.py>
       Test CLI 126D: CI/CD Setup and Git Hooks Validation
-      
+
       This module contains tests to validate the nightly CI setup and Git hooks
       implemented in CLI 126D for automated testing and regression detection.
       <Class TestCLI126DCISetup>
@@ -511,12 +511,12 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
     <Module test_cli140g3_validation.py>
       CLI140g.3 Validation Tests
       =========================
-      
+
       This module provides comprehensive validation tests for CLI140g.3 objectives:
       1. Test count adjustment to 463 (adding 7 tests)
       2. Architecture distribution validation (70%/20%/<10%)
       3. API Gateway performance validation (<0.5s latency)
-      
+
       Test Coverage:
       - E2E architectural validation
       - API Gateway latency monitoring
@@ -525,7 +525,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
       - Cloud Functions optimization verification
       - Workflow orchestration validation
       - Cloud Run compatibility testing
-      
+
       Created: CLI140g.3 implementation
       Author: Cursor AI Assistant
       <Class TestCLI140g3Validation>
@@ -556,7 +556,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_filter_tag_trailing_spaces>
     <Module test_cli139_api.py>
       Test CLI 139: API Error Handling and Performance Improvements
-      
+
       Tests for enhanced error handling in A2A API endpoints (/batch_save, /batch_query)
       with retry logic, timeout handling, and detailed error reporting.
       <Class TestCLI139Integration>
@@ -726,7 +726,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         Test Firestore security rules validation for CLI 129.
         <Function test_comprehensive_firestore_security_rules_validation>
           Comprehensive test validating all Firestore security rule scenarios for CLI 129.
-          
+
           This single test covers:
           1. Rules file structure validation
           2. Collection-specific rules (document_metadata, agent_sessions)
@@ -768,14 +768,14 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_score_threshold_one>
       <Module test_logging.py>
         Tests for structured logging functionality.
-        
+
         Tests the structured_logger module to verify:
         1. JSON formatting of log entries
         2. INFO log sampling (10% rate)
         3. ERROR log metrics export
         4. Log file output and stderr handling
         5. Context field integration
-        
+
         Created for CLI 124 to validate logging implementation.
         <Class TestStructuredLogger>
           Test the main StructuredLogger class.
@@ -809,7 +809,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           Integration tests for the complete logging system.
           <Function test_ten_log_entries_cli124_requirement>
             Test generating 10 log entries as required by CLI 124.
-            
+
             This test generates exactly 10 log entries (7 INFO, 3 ERROR) to verify
             JSON formatting, sampling, and file output as specified in CLI 124.
         <Class TestStructuredJSONFormatter>
@@ -835,7 +835,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           Verify services scale to zero when idle.
     <Module test_cli128_metadata.py>
       Test case for CLI 128 metadata management enhancements.
-      
+
       This test validates the enhanced metadata management logic including:
       - Versioning (increment version on updates)
       - Hierarchy (level_1_category through level_6_category)
@@ -844,7 +844,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         Test CLI 128 metadata management enhancements.
         <Coroutine test_comprehensive_metadata_management_logic>
           Comprehensive test for CLI 128 metadata management enhancements.
-          
+
           Tests versioning, hierarchy (level_1_category through level_6_category),
           and auto-tagging integration in a single comprehensive test.
     <Package api>
@@ -858,7 +858,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
             Test that QdrantVectorizationTool uses the provided embedding provider.
     <Module test_cli136_metadata.py>
       Test case for CLI 136 metadata query optimization.
-      
+
       This test validates the optimized metadata query functionality including:
       - Indexed queries for level_1_category through level_6_category
       - Version-based queries with performance optimization
@@ -885,7 +885,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
     <Module test_cli140j3_cost_final.py>
       <Class TestCLI140j3CostFinalConfirmation>
         CLI140j.3: Final confirmation of serverless cost optimization.
-        
+
         Provides comprehensive final validation that:
         1. Costs are confirmed <$10/day (dev), <$3/day (production) via Billing API
         2. All cost optimization configurations are active and persistent
@@ -893,7 +893,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         4. All functionalities remain intact with cost targets met
         <Function test_cli140j3_final_cost_confirmation>
           FINAL CONFIRMATION: Comprehensive validation of all cost optimization targets.
-          
+
           This is the definitive test that confirms CLI140j objectives are fully met:
           - Billing API access and cost data retrieval
           - Cost targets achievable with current configuration
@@ -901,7 +901,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           - Infrastructure production-ready with monitoring
     <Module test_enforce_single_test.py>
       Sentinel test to enforce "1 test per CLI" rule.
-      
+
       This test ensures that each CLI adds exactly one new test to maintain
       controlled test suite growth and prevent test bloat.
       Updated for CLI 140e.3.2 - strict enforcement of 1 test per CLI rule.
@@ -1021,25 +1021,25 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_filter_tag_with_no_matches>
     <Module test_cli131_search.py>
       CLI 131 Test Suite - Advanced Search Functionality for Tree View
-      
+
       This module tests the advanced search functionality implemented in CLI 131:
       - Search by path (hierarchical path segments)
       - Search by tags (auto_tags field)
       - Search by metadata (flexible field filtering)
-      
+
       Test Strategy:
       - Use mocked Firestore for fast execution (<1 second)
       - Test all search methods with various scenarios
       - Validate search accuracy and error handling
       - Ensure integration with existing Tree View functionality
-      
+
       Author: CLI 131 Implementation
       Date: 2024-01-15
       <Class TestCLI131AdvancedSearch>
         Test suite for CLI 131 advanced search functionality.
         <Coroutine test_comprehensive_advanced_search_functionality>
           Comprehensive test for all advanced search functionality in CLI 131.
-          
+
           Tests:
           1. Search by Path - hierarchical path matching
           2. Search by Tags - tag-based filtering
@@ -1053,7 +1053,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
     <Package e2e>
       <Module test_e2e_pipeline.py>
         End-to-End Pipeline Tests (Optimized for <0.5s runtime)
-        
+
         This module contains streamlined E2E tests that validate the core Agent Data pipeline
         functionality with minimal overhead and maximum speed.
         <Class TestE2EPipeline>
@@ -1089,7 +1089,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         <Function test_mcp_exit_gracefully>
     <Module test_cli127_package.py>
       CLI 127 Package Setup Validation Tests
-      
+
       This module validates that the agent_data_manager package is properly set up
       as an editable package and that imports work correctly across the codebase.
       <Class TestCLI127PackageSetup>
@@ -1209,22 +1209,22 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
         Sentinel test class to validate deferred test exclusion.
         <Function test_deferred_marker_functionality>
           Test that deferred marker properly excludes tests when used.
-          
+
           This validates that the pytest marker system is working correctly
           and deferred tests can be run separately when needed.
         <Function test_no_deferred_tests_in_main_suite>
           Sentinel test: Ensure no deferred tests are running in main test suite.
-          
+
           This test validates that when running the main test suite (without explicit
           deferred marker), no tests marked with @pytest.mark.deferred are executed.
-          
+
           Expected behavior:
           - Main test suite should only run active tests (not slow, not deferred)
           - Deferred tests should only run when explicitly requested with -m "deferred"
           - This ensures fast development cycles and proper test categorization
         <Function test_fast_test_execution_target>
           Validate that active test suite can execute within time targets.
-          
+
           This test ensures that the main development test suite (active tests)
           can complete within reasonable time limits for fast development cycles.
     <Package api>
@@ -1337,7 +1337,7 @@ collecting ... collected 448 items / 40 errors / 2 deselected / 446 selected
           Test error handling in batch operations
     <Module test_cli138_docs.py>
       CLI 138 Documentation Validation Tests
-      
+
       This module contains tests to validate the completeness and accuracy of project documentation,
       ensuring that all required sections exist and contain appropriate content.
       <Class TestCLI138Docs>

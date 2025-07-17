@@ -15,22 +15,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          
+
       - name: 'Configure Docker for Artifact Registry'
         run: |
           gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
-          
+
       - name: 'Build and Push Container'
         run: |
           docker build -t asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/agent-data/dummy-container:${{ github.sha }} ./dummy_container
           docker push asia-southeast1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/agent-data/dummy-container:${{ github.sha }}
-          
+
       - name: 'Deploy to Cloud Run'
         run: |
           gcloud run deploy dummy-container \
@@ -44,4 +44,4 @@ jobs:
             --max-instances=3 \
             --timeout=60 \
             --port=8080 \
-            --project=${{ secrets.PROJECT_ID }} 
+            --project=${{ secrets.PROJECT_ID }}

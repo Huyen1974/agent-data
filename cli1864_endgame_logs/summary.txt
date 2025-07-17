@@ -1,0 +1,7 @@
+CLI 186.4 EndGame Logs
+Date: 2025-07-14T10:02:30Z
+Baseline Count: 141 test files
+SHA256: 3b7a0125f99a0cea7697a20e25a84dbc28363e88eef46f2cdf94a02c5f7e4192  collected_tests.txt
+Tag: v186.1-complete on a9fbd241aada036908dc2eed9e74bcaa5ed9033c
+PR: https://github.com/Huyen1974/agent-data/pull/28
+TODO: https://github.com/Huyen1974/agent-data/issues/29

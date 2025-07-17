@@ -1,8 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
-from tests.mocks.qdrant_multi_collection import FakeQdrantClient
-from qdrant_client.http.models import PointStruct, VectorParams, Distance
+from qdrant_client.http.models import Distance, PointStruct, VectorParams
+
 from agent_data.vector_store.qdrant_store import QdrantStore
+from tests.mocks.qdrant_multi_collection import FakeQdrantClient
 
 
 @pytest.fixture
@@ -11,23 +12,32 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
     # However, we will re-patch the QdrantClient specifically for this test's needs.
 
     # 1. Instantiate the multi-collection mock with dummy URL/key
-    multi_collection_client = FakeQdrantClient(url="http://dummy-multi-collection-url:6333", api_key="dummy-multi-key")
+    multi_collection_client = FakeQdrantClient(
+        url="http://dummy-multi-collection-url:6333", api_key="dummy-multi-key"
+    )
 
     # 2. Clear any pre-existing data from this instance
     multi_collection_client.clear_all_data()
 
     # 3. Create and populate "alt_collection"
     multi_collection_client.create_collection(
-        "alt_collection", vectors_config=VectorParams(size=1536, distance=Distance.COSINE)
+        "alt_collection",
+        vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
     )
     query_text = "alternate query"
     base_val = len(query_text) + ord(query_text[0])
     embedding_val = (base_val % 100) / 100.0
     mock_vector = [embedding_val] * 10 + [0.0] * (1536 - 10)
     points_to_upsert_alt = [
-        PointStruct(id=2001, vector=mock_vector, payload={"original_text": "alternate query", "tag": "science"})
+        PointStruct(
+            id=2001,
+            vector=mock_vector,
+            payload={"original_text": "alternate query", "tag": "science"},
+        )
     ]
-    multi_collection_client.upsert_points(collection_name="alt_collection", points=points_to_upsert_alt)
+    multi_collection_client.upsert_points(
+        collection_name="alt_collection", points=points_to_upsert_alt
+    )
 
     # 4. Ensure the default "test_collection" (used by client_with_qdrant_override's seeding) also exists in this client
     # and seed it with standard data, as QdrantStore might expect it or other API calls in the test.
@@ -35,7 +45,8 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
     default_test_collection_name = "test_collection"
     if not multi_collection_client.collection_exists(default_test_collection_name):
         multi_collection_client.create_collection(
-            default_test_collection_name, vectors_config=VectorParams(size=1536, distance=Distance.COSINE)
+            default_test_collection_name,
+            vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
         )
     # Re-seed standard points if necessary, client_with_qdrant_override might have done this already
     # but to the basic FakeQdrantClient. We need them in *our* multi_collection_client for other tests if they run
@@ -48,12 +59,17 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
         return multi_collection_client
 
     # This is the crucial part: patch where QdrantStore gets its QdrantClient
-    monkeypatch.setattr("agent_data.vector_store.qdrant_store.QdrantClient", mock_qdrant_client_constructor)
+    monkeypatch.setattr(
+        "agent_data.vector_store.qdrant_store.QdrantClient",
+        mock_qdrant_client_constructor,
+    )
 
     # 6. Reset QdrantStore singleton so it re-initializes with the newly patched client
     if hasattr(QdrantStore, "_instance"):
         QdrantStore._instance = None
-    if hasattr(QdrantStore, "_initialized"):  # Ensure re-initialization logic in QdrantStore is triggered
+    if hasattr(
+        QdrantStore, "_initialized"
+    ):  # Ensure re-initialization logic in QdrantStore is triggered
         QdrantStore._initialized = False
 
     # The QdrantStore instance obtained via app.dependency_overrides[get_qdrant_store]()
@@ -63,7 +79,9 @@ def configured_qdrant_mock_for_alt_collection(monkeypatch, client_with_qdrant_ov
 
 
 @pytest.mark.unit
-def test_search_in_alt_collection(configured_qdrant_mock_for_alt_collection, client_with_qdrant_override: TestClient):
+def test_search_in_alt_collection(
+    configured_qdrant_mock_for_alt_collection, client_with_qdrant_override: TestClient
+):
     # client_with_qdrant_override is the TestClient.
     # Its underlying QdrantStore should now be using the multi-collection mock client
     # configured by configured_qdrant_mock_for_alt_collection.

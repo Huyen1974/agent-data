@@ -7,15 +7,20 @@ This script measures baseline latency from development location (Vietnam) to Qdr
 2. Simple search operation latency
 """
 
+import datetime
 import subprocess
 import time
-import datetime
-from typing import Optional
-from qdrant_client import QdrantClient
+
 import ping3
+from qdrant_client import QdrantClient
 
 
-def log_result(action: str, latency_ms: float, status: str, log_file: str = "logs/latency_probe.log"):
+def log_result(
+    action: str,
+    latency_ms: float,
+    status: str,
+    log_file: str = "logs/latency_probe.log",
+):
     """Log latency measurement result with timestamp."""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"[{timestamp}] [{action}] [{latency_ms:.2f}ms] [{status}]\n"
@@ -28,7 +33,7 @@ def log_result(action: str, latency_ms: float, status: str, log_file: str = "log
         print(f"❌ Failed to write to log: {e}")
 
 
-def get_api_key_from_secret_manager() -> Optional[str]:
+def get_api_key_from_secret_manager() -> str | None:
     """Retrieve Qdrant API key from Google Cloud Secret Manager."""
     try:
         result = subprocess.run(
@@ -55,7 +60,7 @@ def get_api_key_from_secret_manager() -> Optional[str]:
         return None
 
 
-def measure_ping_latency(hostname: str) -> Optional[float]:
+def measure_ping_latency(hostname: str) -> float | None:
     """Measure ping latency to hostname."""
     print(f"🏓 Measuring ping latency to {hostname}...")
 
@@ -77,7 +82,10 @@ def measure_ping_latency(hostname: str) -> Optional[float]:
         try:
             print("🔄 Trying system ping as fallback...")
             result = subprocess.run(
-                ["ping", "-c", "1", "-W", "10000", hostname], capture_output=True, text=True, check=True
+                ["ping", "-c", "1", "-W", "10000", hostname],
+                capture_output=True,
+                text=True,
+                check=True,
             )
 
             # Parse ping output for latency
@@ -97,7 +105,7 @@ def measure_ping_latency(hostname: str) -> Optional[float]:
             return None
 
 
-def measure_search_latency(client: QdrantClient) -> Optional[float]:
+def measure_search_latency(client: QdrantClient) -> float | None:
     """Measure simple search operation latency."""
     print("🔍 Measuring simple search latency...")
 
@@ -139,8 +147,13 @@ def measure_search_latency(client: QdrantClient) -> Optional[float]:
             latency_ms = (end_time - start_time) * 1000
 
             # Even if search fails, we got a response, so we can measure latency
-            if "vector dimension" in str(search_e).lower() or "collection" in str(search_e).lower():
-                print(f"⚠️  Search failed (expected - dimension/collection mismatch): {latency_ms:.2f}ms")
+            if (
+                "vector dimension" in str(search_e).lower()
+                or "collection" in str(search_e).lower()
+            ):
+                print(
+                    f"⚠️  Search failed (expected - dimension/collection mismatch): {latency_ms:.2f}ms"
+                )
                 print(f"   Error: {search_e}")
                 return latency_ms
             else:
@@ -152,9 +165,11 @@ def measure_search_latency(client: QdrantClient) -> Optional[float]:
         return None
 
 
-def create_qdrant_client(api_key: str) -> Optional[QdrantClient]:
+def create_qdrant_client(api_key: str) -> QdrantClient | None:
     """Create and test Qdrant client connection."""
-    cluster_endpoint = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    cluster_endpoint = (
+        "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    )
 
     try:
         print("🔗 Creating Qdrant client...")
@@ -177,7 +192,9 @@ def main():
     print("=" * 60)
 
     # Extract hostname from endpoint for ping
-    endpoint_hostname = "ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    endpoint_hostname = (
+        "ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+    )
 
     print("🌍 Measuring latency from Vietnam to Qdrant Cloud (us-east4-0)")
     print(f"🎯 Target: {endpoint_hostname}")

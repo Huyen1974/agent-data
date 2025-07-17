@@ -1,6 +1,6 @@
-import os
 import logging
-from typing import Dict, Any, Union, List
+import os
+from typing import Any
 
 # Attempt to import AsyncClient, fall back for environments where it might not be immediately available
 # or to allow type hinting without a hard dependency for non-Firestore use cases.
@@ -15,10 +15,14 @@ try:
         # This path might indicate an older library version or an issue.
         # For type hinting or conditional logic, this might be okay.
         # For actual async operations, firestore.AsyncClient is needed.
-        logging.warning("firestore.AsyncClient not found, Firestore async operations might be affected.")
+        logging.warning(
+            "firestore.AsyncClient not found, Firestore async operations might be affected."
+        )
         FirestoreAsyncClient = None
 except ImportError:
-    logging.warning("google-cloud-firestore library not found. FirestoreMetadataManager will not function.")
+    logging.warning(
+        "google-cloud-firestore library not found. FirestoreMetadataManager will not function."
+    )
     firestore = None
     FirestoreAsyncClient = None
 
@@ -28,16 +32,22 @@ logger = logging.getLogger(__name__)
 class FirestoreMetadataManager:
     def __init__(self, project_id: str = None, collection_name: str = None):
         if not FirestoreAsyncClient:
-            raise ImportError("Firestore AsyncClient is not available. Cannot initialize FirestoreMetadataManager.")
+            raise ImportError(
+                "Firestore AsyncClient is not available. Cannot initialize FirestoreMetadataManager."
+            )
 
         self.project_id = project_id or os.getenv("FIRESTORE_PROJECT_ID")
         if not self.project_id:
             # Fallback to a default project ID if you have one, or raise an error.
             # For this example, let's assume it might be implicitly handled by gcloud environment.
-            logger.info("FIRESTORE_PROJECT_ID not explicitly set, relying on gcloud environment.")
+            logger.info(
+                "FIRESTORE_PROJECT_ID not explicitly set, relying on gcloud environment."
+            )
 
         # Default collection name if not provided or found in env
-        self.collection_name = collection_name or os.getenv("QDRANT_METADATA_COLLECTION", "qdrant_vector_metadata")
+        self.collection_name = collection_name or os.getenv(
+            "QDRANT_METADATA_COLLECTION", "qdrant_vector_metadata"
+        )
 
         try:
             self.db = FirestoreAsyncClient(project=self.project_id)
@@ -46,14 +56,17 @@ class FirestoreMetadataManager:
             )
         except Exception as e:
             logger.error(
-                f"Failed to initialize Firestore AsyncClient for project '{self.project_id}': {e}", exc_info=True
+                f"Failed to initialize Firestore AsyncClient for project '{self.project_id}': {e}",
+                exc_info=True,
             )
             # Depending on the application's needs, you might re-raise or handle this.
             # For now, if the client fails to initialize, subsequent operations will fail.
             self.db = None  # Ensure db is None if initialization fails
             raise ConnectionError(f"Could not connect to Firestore: {e}")
 
-    async def save_metadata(self, point_id: Union[str, int], metadata: Dict[str, Any]) -> None:
+    async def save_metadata(
+        self, point_id: str | int, metadata: dict[str, Any]
+    ) -> None:
         """
         Saves or updates metadata for a given point_id in Firestore.
         """
@@ -72,11 +85,14 @@ class FirestoreMetadataManager:
                 f"Successfully saved metadata for point_id '{doc_id}' in Firestore collection '{self.collection_name}'."
             )
         except Exception as e:
-            logger.error(f"Failed to save metadata for point_id '{doc_id}' to Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to save metadata for point_id '{doc_id}' to Firestore: {e}",
+                exc_info=True,
+            )
             # Optionally re-raise or handle as per application error strategy
             raise
 
-    async def delete_metadata(self, point_id: Union[str, int]) -> None:
+    async def delete_metadata(self, point_id: str | int) -> None:
         """
         Deletes metadata for a given point_id from Firestore.
         """
@@ -94,16 +110,23 @@ class FirestoreMetadataManager:
         except Exception as e:
             # Firestore's delete is generally idempotent; if doc doesn't exist, it won't error.
             # However, other errors (permissions, network) can occur.
-            logger.error(f"Failed to delete metadata for point_id '{doc_id}' from Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to delete metadata for point_id '{doc_id}' from Firestore: {e}",
+                exc_info=True,
+            )
             # Optionally re-raise or handle
             raise
 
-    async def batch_save_metadata(self, metadata_batch: Dict[Union[str, int], Dict[str, Any]]) -> None:
+    async def batch_save_metadata(
+        self, metadata_batch: dict[str | int, dict[str, Any]]
+    ) -> None:
         """
         Saves or updates a batch of metadata in Firestore using a batch writer.
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot batch save metadata.")
+            logger.error(
+                "Firestore client not initialized. Cannot batch save metadata."
+            )
             return
         if not metadata_batch:
             logger.info("No metadata provided for batch save.")
@@ -121,15 +144,19 @@ class FirestoreMetadataManager:
                 f"Successfully batch saved metadata for {len(metadata_batch)} items in Firestore collection '{self.collection_name}'."
             )
         except Exception as e:
-            logger.error(f"Failed to batch save metadata to Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to batch save metadata to Firestore: {e}", exc_info=True
+            )
             raise
 
-    async def batch_delete_metadata(self, point_ids: List[Union[str, int]]) -> None:
+    async def batch_delete_metadata(self, point_ids: list[str | int]) -> None:
         """
         Deletes a batch of metadata from Firestore using a batch writer.
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot batch delete metadata.")
+            logger.error(
+                "Firestore client not initialized. Cannot batch delete metadata."
+            )
             return
         if not point_ids:
             logger.info("No point_ids provided for batch delete.")
@@ -147,5 +174,7 @@ class FirestoreMetadataManager:
                 f"Successfully batch deleted metadata for {len(point_ids)} items from Firestore collection '{self.collection_name}'."
             )
         except Exception as e:
-            logger.error(f"Failed to batch delete metadata from Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to batch delete metadata from Firestore: {e}", exc_info=True
+            )
             raise

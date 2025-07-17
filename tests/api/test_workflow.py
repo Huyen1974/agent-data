@@ -3,10 +3,11 @@ Test cases for Cloud Workflows orchestration.
 Tests the ingestion workflow functionality with mocked components.
 """
 
-import pytest
 import json
-from unittest.mock import Mock, patch
 from datetime import datetime
+from unittest.mock import Mock, patch
+
+import pytest
 
 
 @pytest.mark.workflow
@@ -20,16 +21,20 @@ class TestWorkflowOrchestration:
 
         workflow_path = "workflows/ingestion_workflow.yaml"
 
-        assert os.path.exists(workflow_path), f"Workflow file {workflow_path} should exist"
+        assert os.path.exists(
+            workflow_path
+        ), f"Workflow file {workflow_path} should exist"
 
         # Validate YAML structure
         import yaml
 
-        with open(workflow_path, "r") as f:
+        with open(workflow_path) as f:
             workflow_content = yaml.safe_load(f)
 
         assert "main" in workflow_content, "Workflow should have main function"
-        assert "params" in workflow_content["main"], "Main function should accept params"
+        assert (
+            "params" in workflow_content["main"]
+        ), "Main function should accept params"
         assert "steps" in workflow_content["main"], "Main function should have steps"
 
         # Validate key steps exist
@@ -40,8 +45,12 @@ class TestWorkflowOrchestration:
                 step_names.extend(step.keys())
 
         assert "init_workflow" in step_names, "Should have init_workflow step"
-        assert "vectorize_document_step" in step_names, "Should have vectorize_document_step"
-        assert "auto_tag_document_step" in step_names, "Should have auto_tag_document_step"
+        assert (
+            "vectorize_document_step" in step_names
+        ), "Should have vectorize_document_step"
+        assert (
+            "auto_tag_document_step" in step_names
+        ), "Should have auto_tag_document_step"
         assert "return_result" in step_names, "Should have return_result step"
 
     @patch("subprocess.run")
@@ -128,7 +137,11 @@ class TestWorkflowOrchestration:
             {
                 "doc_id": f"workflow_test_doc_{i}",
                 "content": f"Test document {i} for workflow batch testing",
-                "metadata": {"test_batch": "cli125_workflow_test", "doc_index": i, "test_type": "workflow_validation"},
+                "metadata": {
+                    "test_batch": "cli125_workflow_test",
+                    "doc_index": i,
+                    "test_type": "workflow_validation",
+                },
             }
             for i in range(1, 9)  # 8 documents
         ]
@@ -222,7 +235,9 @@ class TestWorkflowOrchestration:
         )
 
         assert "workflow_source" in enhanced_metadata, "Should add workflow_source"
-        assert enhanced_metadata["workflow_source"] == "cloud_workflows", "Should set correct workflow source"
+        assert (
+            enhanced_metadata["workflow_source"] == "cloud_workflows"
+        ), "Should set correct workflow source"
         assert "processed_at" in enhanced_metadata, "Should add processing timestamp"
 
     def test_workflow_cli125_requirement(self):
@@ -232,10 +247,14 @@ class TestWorkflowOrchestration:
         # 1. Workflow YAML exists and is properly structured
         import os
 
-        assert os.path.exists("workflows/ingestion_workflow.yaml"), "Workflow YAML should exist"
+        assert os.path.exists(
+            "workflows/ingestion_workflow.yaml"
+        ), "Workflow YAML should exist"
 
         # 2. Test script exists for testing 8 documents
-        assert os.path.exists("scripts/test_ingestion_workflow.py"), "Test script should exist"
+        assert os.path.exists(
+            "scripts/test_ingestion_workflow.py"
+        ), "Test script should exist"
 
         # 3. Workflow supports required input parameters
         required_inputs = ["doc_id", "content", "metadata"]
@@ -246,7 +265,9 @@ class TestWorkflowOrchestration:
         }
 
         for param in required_inputs:
-            assert param in test_input, f"Required input parameter {param} should be supported"
+            assert (
+                param in test_input
+            ), f"Required input parameter {param} should be supported"
 
         # 4. Workflow implements save → vectorize → tag orchestration
         # (This is validated through the YAML structure test above)
@@ -277,8 +298,12 @@ class TestWorkflowIntegration:
             "location": location,
         }
 
-        assert deployment_status["state"] == "ACTIVE", "Workflow should be in ACTIVE state"
-        assert location in deployment_status["name"], "Should be deployed in correct region"
+        assert (
+            deployment_status["state"] == "ACTIVE"
+        ), "Workflow should be in ACTIVE state"
+        assert (
+            location in deployment_status["name"]
+        ), "Should be deployed in correct region"
 
     def test_workflow_performance_expectations(self):
         """Test workflow performance expectations (simulated calculations)."""
@@ -294,7 +319,9 @@ class TestWorkflowIntegration:
 
         # Test batch processing time for 8 documents
         expected_max_batch_time = 8 * expected_max_time_per_doc
-        simulated_batch_time = 8 * simulated_execution_time + 7 * 3  # 8 docs + 7 delays of 3s each
+        simulated_batch_time = (
+            8 * simulated_execution_time + 7 * 3
+        )  # 8 docs + 7 delays of 3s each
 
         assert (
             simulated_batch_time < expected_max_batch_time
@@ -357,15 +384,23 @@ class TestWorkflowIntegration:
         # Validate orchestration steps
         workflow_result = result["workflow_result"]
         assert workflow_result["status"] == "completed", "Workflow should be completed"
-        assert "vectorize_result" in workflow_result, "Should include vectorize step result"
-        assert "auto_tag_result" in workflow_result, "Should include auto_tag step result"
+        assert (
+            "vectorize_result" in workflow_result
+        ), "Should include vectorize step result"
+        assert (
+            "auto_tag_result" in workflow_result
+        ), "Should include auto_tag step result"
 
         # Validate vectorize step
         vectorize_result = workflow_result["vectorize_result"]
         assert vectorize_result["status"] == "success", "Vectorize step should succeed"
-        assert vectorize_result["doc_id"] == "cli125_test_doc", "Vectorize should process correct document"
+        assert (
+            vectorize_result["doc_id"] == "cli125_test_doc"
+        ), "Vectorize should process correct document"
         assert "metadata" in vectorize_result, "Vectorize should return metadata"
-        assert "api_response" in vectorize_result, "Vectorize should return API response"
+        assert (
+            "api_response" in vectorize_result
+        ), "Vectorize should return API response"
 
         # Validate auto_tag step
         auto_tag_result = workflow_result["auto_tag_result"]
@@ -377,11 +412,17 @@ class TestWorkflowIntegration:
 
         # Validate metadata enhancement through the pipeline
         final_metadata = auto_tag_result["metadata"]
-        assert "auto_tags" in final_metadata, "Final metadata should include auto-generated tags"
-        assert final_metadata["source"] == "cli125_test", "Should preserve original metadata"
+        assert (
+            "auto_tags" in final_metadata
+        ), "Final metadata should include auto-generated tags"
+        assert (
+            final_metadata["source"] == "cli125_test"
+        ), "Should preserve original metadata"
 
         # Validate workflow meets CLI 125 requirements
-        assert "workflow_id" in workflow_result, "Should have workflow ID for traceability"
+        assert (
+            "workflow_id" in workflow_result
+        ), "Should have workflow ID for traceability"
         assert "timestamp" in workflow_result, "Should have completion timestamp"
 
         # Call was made to gcloud workflows run

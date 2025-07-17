@@ -3,12 +3,13 @@ Test suite for session memory and Pub/Sub A2A communication functionality.
 Tests session CRUD operations, event publishing, and integration with vectorization.
 """
 
-import pytest
-from unittest.mock import patch, MagicMock, AsyncMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from agent_data_manager.session.session_manager import SessionManager
-from agent_data_manager.event.event_manager import EventManager
+import pytest
+
 from agent_data_manager.agent.agent_data_agent import AgentDataAgent
+from agent_data_manager.event.event_manager import EventManager
+from agent_data_manager.session.session_manager import SessionManager
 from agent_data_manager.tools.qdrant_vectorization_tool import QdrantVectorizationTool
 
 
@@ -18,7 +19,9 @@ class TestSessionMemory:
     @pytest.fixture
     def mock_firestore_manager(self):
         """Mock FirestoreMetadataManager for session tests."""
-        with patch("agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock:
+        with patch(
+            "agent_data_manager.session.session_manager.FirestoreMetadataManager"
+        ) as mock:
             mock_instance = AsyncMock()
             mock.return_value = mock_instance
             yield mock_instance
@@ -48,7 +51,9 @@ class TestSessionMemory:
         # Mock successful save
         mock_firestore_manager.save_metadata.return_value = None
 
-        result = await session_manager.create_session(session_id=custom_id, initial_state=initial_state)
+        result = await session_manager.create_session(
+            session_id=custom_id, initial_state=initial_state
+        )
 
         assert result["status"] == "success"
         assert result["session_id"] == custom_id
@@ -157,14 +162,17 @@ class TestPubSubEvents:
     @pytest.fixture
     def mock_pubsub_publisher(self):
         """Mock Google Cloud Pub/Sub publisher."""
-        with patch("agent_data_manager.event.event_manager.pubsub_v1") as mock_pubsub, patch(
-            "agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True
+        with (
+            patch("agent_data_manager.event.event_manager.pubsub_v1") as mock_pubsub,
+            patch("agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True),
         ):
             mock_publisher = MagicMock()
             mock_future = MagicMock()
             mock_future.result.return_value = "test-message-id-123"
             mock_publisher.publish.return_value = mock_future
-            mock_publisher.topic_path.return_value = "projects/test-project/topics/agent-data-events"
+            mock_publisher.topic_path.return_value = (
+                "projects/test-project/topics/agent-data-events"
+            )
             mock_pubsub.PublisherClient.return_value = mock_publisher
             yield mock_publisher
 
@@ -253,7 +261,9 @@ class TestPubSubEvents:
         with patch("agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", False):
             event_manager = EventManager(project_id="test-project")
 
-            result = await event_manager.publish_save_document_event(doc_id="test-doc", metadata={"test": True})
+            result = await event_manager.publish_save_document_event(
+                doc_id="test-doc", metadata={"test": True}
+            )
 
             assert result["status"] == "skipped"
             assert result["reason"] == "pubsub_not_available"
@@ -265,15 +275,22 @@ class TestIntegration:
     @pytest.fixture
     def mock_dependencies(self):
         """Mock all external dependencies for integration tests."""
-        with patch("agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock_firestore, patch(
-            "agent_data_manager.event.event_manager.pubsub_v1"
-        ) as mock_pubsub, patch("agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True), patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
-        ) as mock_qdrant, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_default_embedding_provider"
-        ) as mock_embedding, patch(
-            "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
-        ) as mock_auto_tag:
+        with (
+            patch(
+                "agent_data_manager.session.session_manager.FirestoreMetadataManager"
+            ) as mock_firestore,
+            patch("agent_data_manager.event.event_manager.pubsub_v1") as mock_pubsub,
+            patch("agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True),
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
+            ) as mock_qdrant,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_default_embedding_provider"
+            ) as mock_embedding,
+            patch(
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+            ) as mock_auto_tag,
+        ):
 
             # Setup Firestore mock
             mock_firestore_instance = AsyncMock()
@@ -284,23 +301,32 @@ class TestIntegration:
             mock_future = MagicMock()
             mock_future.result.return_value = "msg-id-123"
             mock_publisher.publish.return_value = mock_future
-            mock_publisher.topic_path.return_value = "projects/test/topics/agent-data-events"
+            mock_publisher.topic_path.return_value = (
+                "projects/test/topics/agent-data-events"
+            )
             mock_pubsub.PublisherClient.return_value = mock_publisher
 
             # Setup Qdrant mock
             mock_qdrant_instance = AsyncMock()
-            mock_qdrant_instance.upsert_vector.return_value = {"success": True, "vector_id": "vec-123"}
+            mock_qdrant_instance.upsert_vector.return_value = {
+                "success": True,
+                "vector_id": "vec-123",
+            }
             mock_qdrant.return_value = mock_qdrant_instance
 
             # Setup embedding provider mock
             mock_embedding_provider = AsyncMock()
             mock_embedding_provider.embed_single.return_value = [0.1] * 1536
-            mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
+            mock_embedding_provider.get_model_name.return_value = (
+                "text-embedding-ada-002"
+            )
             mock_embedding.return_value = mock_embedding_provider
 
             # Setup auto-tagging tool mock
             mock_auto_tagging_tool = AsyncMock()
-            mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = {"auto_tagged": True}
+            mock_auto_tagging_tool.enhance_metadata_with_tags.return_value = {
+                "auto_tagged": True
+            }
             mock_auto_tag.return_value = mock_auto_tagging_tool
 
             yield {
@@ -341,7 +367,9 @@ class TestIntegration:
         assert agent.current_session_id is None
 
     @pytest.mark.asyncio
-    @pytest.mark.xfail(reason="CLI140m.69: Complex async integration test with timeout issues")
+    @pytest.mark.xfail(
+        reason="CLI140m.69: Complex async integration test with timeout issues"
+    )
     async def test_vectorization_with_events(self, mock_dependencies):
         """Test that vectorization publishes events correctly."""
         vectorization_tool = QdrantVectorizationTool()
@@ -377,7 +405,9 @@ class TestIntegration:
         agent = AgentDataAgent()
 
         # Create a session
-        session_result = await agent.create_session(initial_state={"context": "vectorization_test"})
+        session_result = await agent.create_session(
+            initial_state={"context": "vectorization_test"}
+        )
         session_id = session_result["session_id"]
 
         # Mock input data with session ID
@@ -404,7 +434,9 @@ class TestErrorHandling:
     @pytest.mark.asyncio
     async def test_session_manager_firestore_error(self):
         """Test session manager handles Firestore errors gracefully."""
-        with patch("agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock_firestore:
+        with patch(
+            "agent_data_manager.session.session_manager.FirestoreMetadataManager"
+        ) as mock_firestore:
             mock_firestore.side_effect = Exception("Firestore connection failed")
 
             session_manager = SessionManager()
@@ -415,8 +447,9 @@ class TestErrorHandling:
     @pytest.mark.asyncio
     async def test_event_manager_pubsub_error(self):
         """Test event manager handles Pub/Sub errors gracefully."""
-        with patch("agent_data_manager.event.event_manager.pubsub_v1") as mock_pubsub, patch(
-            "agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True
+        with (
+            patch("agent_data_manager.event.event_manager.pubsub_v1") as mock_pubsub,
+            patch("agent_data_manager.event.event_manager.PUBSUB_AVAILABLE", True),
         ):
             mock_publisher = MagicMock()
             mock_publisher.publish.side_effect = Exception("Pub/Sub publish failed")
@@ -432,7 +465,9 @@ class TestErrorHandling:
     @pytest.mark.asyncio
     async def test_session_not_found_error(self):
         """Test handling of session not found scenarios."""
-        with patch("agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock_firestore:
+        with patch(
+            "agent_data_manager.session.session_manager.FirestoreMetadataManager"
+        ) as mock_firestore:
             mock_firestore_instance = AsyncMock()
             mock_firestore_instance.get_metadata.return_value = None
             mock_firestore.return_value = mock_firestore_instance
@@ -440,6 +475,8 @@ class TestErrorHandling:
             session_manager = SessionManager()
 
             # Test updating non-existent session
-            result = await session_manager.update_session_state("non-existent", {"test": True})
+            result = await session_manager.update_session_state(
+                "non-existent", {"test": True}
+            )
             assert result["status"] == "failed"
             assert "not found" in result["error"]

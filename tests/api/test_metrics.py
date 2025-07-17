@@ -1,4 +1,5 @@
 import pytest
+
 # tests/api/test_metrics.py
 # This file is part of the MPC Back End for Agents project.
 #
@@ -12,7 +13,6 @@ import pytest
 # USAGE:
 # - This test is run automatically as part of the pytest suite.
 # - Tests the /metrics endpoint exposed by the Prometheus middleware.
-
 from fastapi.testclient import TestClient
 
 

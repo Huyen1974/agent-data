@@ -1,7 +1,7 @@
 # G01 GitHub Repository Setup Plan
 
-**Date:** June 22, 2025, 17:00 +07  
-**Repository:** `Huyen1974/agent-data`  
+**Date:** June 22, 2025, 17:00 +07
+**Repository:** `Huyen1974/agent-data`
 **Objective:** Create dedicated GitHub repository for Agent Data project with CI/CD setup
 
 ## Execution Summary

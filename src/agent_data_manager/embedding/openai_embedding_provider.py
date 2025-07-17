@@ -1,11 +1,14 @@
 """OpenAI embedding provider implementation."""
 
 import logging
-from typing import List, Optional
 import os
 
+from ..tools.external_tool_registry import (
+    OPENAI_AVAILABLE,
+    get_openai_embedding,
+    openai_async_client,
+)
 from .embedding_provider import EmbeddingError
-from ..tools.external_tool_registry import get_openai_embedding, OPENAI_AVAILABLE, openai_async_client
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +23,7 @@ class OpenAIEmbeddingProvider:
     def __init__(
         self,
         model_name: str = "text-embedding-ada-002",
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         encoding_format: str = "float",
     ):
         """Initialize the OpenAI embedding provider.
@@ -37,7 +40,9 @@ class OpenAIEmbeddingProvider:
         # Validate OpenAI availability
         if not OPENAI_AVAILABLE:
             raise EmbeddingError(
-                "OpenAI library not available. Install with: pip install openai", status_code=500, provider="openai"
+                "OpenAI library not available. Install with: pip install openai",
+                status_code=500,
+                provider="openai",
             )
 
         if not openai_async_client:
@@ -47,7 +52,7 @@ class OpenAIEmbeddingProvider:
                 provider="openai",
             )
 
-    async def embed(self, texts: List[str]) -> List[List[float]]:
+    async def embed(self, texts: list[str]) -> list[list[float]]:
         """Generate embeddings for a list of texts.
 
         Args:
@@ -81,7 +86,11 @@ class OpenAIEmbeddingProvider:
                     )
 
                 if "embedding" not in result:
-                    raise EmbeddingError("No embedding in OpenAI response", status_code=500, provider="openai")
+                    raise EmbeddingError(
+                        "No embedding in OpenAI response",
+                        status_code=500,
+                        provider="openai",
+                    )
 
                 embeddings.append(result["embedding"])
 
@@ -92,9 +101,11 @@ class OpenAIEmbeddingProvider:
             raise
         except Exception as e:
             logger.error(f"Unexpected error in OpenAI embedding generation: {e}")
-            raise EmbeddingError(f"Unexpected error: {str(e)}", status_code=500, provider="openai")
+            raise EmbeddingError(
+                f"Unexpected error: {str(e)}", status_code=500, provider="openai"
+            )
 
-    async def embed_single(self, text: str) -> List[float]:
+    async def embed_single(self, text: str) -> list[float]:
         """Generate embedding for a single text.
 
         Args:
@@ -138,4 +149,6 @@ def get_default_embedding_provider() -> OpenAIEmbeddingProvider:
     Returns:
         Configured OpenAIEmbeddingProvider instance
     """
-    return OpenAIEmbeddingProvider(model_name=os.environ.get("OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002"))
+    return OpenAIEmbeddingProvider(
+        model_name=os.environ.get("OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002")
+    )

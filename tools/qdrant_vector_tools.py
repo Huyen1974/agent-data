@@ -1,7 +1,8 @@
 """QdrantStore tools for Agent Data system integration."""
 
 import logging
-from typing import Dict, List, Optional, Any, Union
+from typing import Any
+
 import numpy as np
 
 from ..config.settings import settings
@@ -29,10 +30,10 @@ def get_qdrant_store() -> QdrantStore:
 
 async def qdrant_upsert_vector(
     vector_id: str,
-    vector: Union[List[float], str],
-    metadata: Optional[Dict[str, Any]] = None,
-    tag: Optional[str] = None,
-) -> Dict[str, Any]:
+    vector: list[float] | str,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
+) -> dict[str, Any]:
     """
     Upsert a vector to Qdrant store.
 
@@ -52,12 +53,21 @@ async def qdrant_upsert_vector(
 
         # Validate vector
         if not isinstance(vector, (list, np.ndarray)):
-            return {"status": "failed", "error": f"Vector must be a list or numpy array, got {type(vector)}"}
+            return {
+                "status": "failed",
+                "error": f"Vector must be a list or numpy array, got {type(vector)}",
+            }
 
         store = get_qdrant_store()
-        result = await store.upsert_vector(vector_id=vector_id, vector=vector, metadata=metadata, tag=tag)
+        result = await store.upsert_vector(
+            vector_id=vector_id, vector=vector, metadata=metadata, tag=tag
+        )
 
-        return {"status": "success" if result.get("success") else "failed", "vector_id": vector_id, "result": result}
+        return {
+            "status": "success" if result.get("success") else "failed",
+            "vector_id": vector_id,
+            "result": result,
+        }
 
     except Exception as e:
         logger.error(f"Failed to upsert vector {vector_id}: {e}")
@@ -65,8 +75,11 @@ async def qdrant_upsert_vector(
 
 
 async def qdrant_query_by_tag(
-    tag: str, query_vector: Optional[Union[List[float], str]] = None, limit: int = 10, threshold: float = 0.0
-) -> Dict[str, Any]:
+    tag: str,
+    query_vector: list[float] | str | None = None,
+    limit: int = 10,
+    threshold: float = 0.0,
+) -> dict[str, Any]:
     """
     Query vectors by tag with optional similarity search.
 
@@ -85,16 +98,23 @@ async def qdrant_query_by_tag(
             query_vector = [float(x.strip()) for x in query_vector.split(",")]
 
         store = get_qdrant_store()
-        results = await store.query_vectors_by_tag(tag=tag, query_vector=query_vector, limit=limit, threshold=threshold)
+        results = await store.query_vectors_by_tag(
+            tag=tag, query_vector=query_vector, limit=limit, threshold=threshold
+        )
 
-        return {"status": "success", "tag": tag, "results": results, "count": len(results)}
+        return {
+            "status": "success",
+            "tag": tag,
+            "results": results,
+            "count": len(results),
+        }
 
     except Exception as e:
         logger.error(f"Failed to query vectors by tag {tag}: {e}")
         return {"status": "failed", "error": str(e), "tag": tag, "results": []}
 
 
-async def qdrant_delete_by_tag(tag: str) -> Dict[str, Any]:
+async def qdrant_delete_by_tag(tag: str) -> dict[str, Any]:
     """
     Delete all vectors with a specific tag.
 
@@ -108,14 +128,18 @@ async def qdrant_delete_by_tag(tag: str) -> Dict[str, Any]:
         store = get_qdrant_store()
         result = await store.delete_vectors_by_tag(tag)
 
-        return {"status": "success" if result.get("success") else "failed", "tag": tag, "result": result}
+        return {
+            "status": "success" if result.get("success") else "failed",
+            "tag": tag,
+            "result": result,
+        }
 
     except Exception as e:
         logger.error(f"Failed to delete vectors by tag {tag}: {e}")
         return {"status": "failed", "error": str(e), "tag": tag}
 
 
-async def qdrant_get_count() -> Dict[str, Any]:
+async def qdrant_get_count() -> dict[str, Any]:
     """
     Get total number of vectors in the store.
 
@@ -133,7 +157,7 @@ async def qdrant_get_count() -> Dict[str, Any]:
         return {"status": "failed", "error": str(e), "count": 0}
 
 
-async def qdrant_health_check() -> Dict[str, Any]:
+async def qdrant_health_check() -> dict[str, Any]:
     """
     Check if Qdrant store is healthy and accessible.
 
@@ -147,7 +171,11 @@ async def qdrant_health_check() -> Dict[str, Any]:
         return {
             "status": "success",
             "healthy": healthy,
-            "message": "Qdrant store is accessible" if healthy else "Qdrant store is not accessible",
+            "message": (
+                "Qdrant store is accessible"
+                if healthy
+                else "Qdrant store is not accessible"
+            ),
         }
 
     except Exception as e:
@@ -158,16 +186,19 @@ async def qdrant_health_check() -> Dict[str, Any]:
 # Tool function aliases for backward compatibility
 async def save_vector_to_qdrant(
     vector_id: str,
-    vector: Union[List[float], str],
-    metadata: Optional[Dict[str, Any]] = None,
-    tag: Optional[str] = None,
-) -> Dict[str, Any]:
+    vector: list[float] | str,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
+) -> dict[str, Any]:
     """Alias for qdrant_upsert_vector for backward compatibility."""
     return await qdrant_upsert_vector(vector_id, vector, metadata, tag)
 
 
 async def search_vectors_qdrant(
-    tag: str, query_vector: Optional[Union[List[float], str]] = None, limit: int = 10, threshold: float = 0.0
-) -> Dict[str, Any]:
+    tag: str,
+    query_vector: list[float] | str | None = None,
+    limit: int = 10,
+    threshold: float = 0.0,
+) -> dict[str, Any]:
     """Alias for qdrant_query_by_tag for backward compatibility."""
     return await qdrant_query_by_tag(tag, query_vector, limit, threshold)

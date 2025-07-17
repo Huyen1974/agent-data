@@ -1,15 +1,14 @@
 """Cloud Function for exporting Qdrant metrics to Cloud Monitoring."""
 
-import os
 import json
 import logging
-import requests
-from typing import Dict, Any
-from google.cloud import monitoring_v3
-from google.cloud import secretmanager
-from google.cloud import firestore
-from datetime import datetime, timezone
+import os
+from datetime import UTC, datetime
+from typing import Any
+
 import functions_framework
+import requests
+from google.cloud import firestore, monitoring_v3, secretmanager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +20,9 @@ SECRET_NAME = "qdrant-api-key-sg"
 REGION = "asia-southeast1"
 
 # Qdrant configuration
-QDRANT_URL = "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+QDRANT_URL = (
+    "https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io"
+)
 COLLECTION_NAME = "agent_data_vectors"
 
 # Metrics configuration
@@ -44,11 +45,13 @@ def get_qdrant_api_key() -> str:
         raise
 
 
-def collect_firestore_metrics() -> Dict[str, Any]:
+def collect_firestore_metrics() -> dict[str, Any]:
     """Collect additional metrics from Firestore."""
     try:
         # Count documents processed in the last hour
-        one_hour_ago = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+        one_hour_ago = datetime.now(UTC).replace(
+            minute=0, second=0, microsecond=0
+        )
 
         # Query documents collection for recent activity
         docs_ref = firestore_client.collection("documents")
@@ -87,13 +90,13 @@ def collect_firestore_metrics() -> Dict[str, Any]:
         }
 
 
-def collect_qdrant_metrics(api_key: str) -> Dict[str, Any]:
+def collect_qdrant_metrics(api_key: str) -> dict[str, Any]:
     """Collect metrics from Qdrant cluster."""
     headers = {"api-key": api_key}
     metrics = {}
 
     try:
-        start_time = datetime.now(timezone.utc)
+        start_time = datetime.now(UTC)
 
         # Get cluster info (for connection validation)
         cluster_url = f"{QDRANT_URL}/cluster"
@@ -107,7 +110,7 @@ def collect_qdrant_metrics(api_key: str) -> Dict[str, Any]:
         collection_info = response.json()
 
         # Calculate request latency
-        end_time = datetime.now(timezone.utc)
+        end_time = datetime.now(UTC)
         request_duration = (end_time - start_time).total_seconds()
 
         # Extract metrics
@@ -121,8 +124,9 @@ def collect_qdrant_metrics(api_key: str) -> Dict[str, Any]:
             "qdrant_connection_status": 1,  # Connected
             "collection_status": 1 if result.get("status") == "green" else 0,
             "qdrant_request_duration_seconds": request_duration,
-            "embedding_generation_duration_seconds": request_duration * 0.7,  # Estimated embedding time
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "embedding_generation_duration_seconds": request_duration
+            * 0.7,  # Estimated embedding time
+            "timestamp": datetime.now(UTC).isoformat(),
         }
 
         logger.info(f"Collected Qdrant metrics: {metrics}")
@@ -137,12 +141,12 @@ def collect_qdrant_metrics(api_key: str) -> Dict[str, Any]:
             "qdrant_api_errors_total": 1,
             "qdrant_request_duration_seconds": 10.0,  # Timeout duration
             "embedding_generation_duration_seconds": 0.0,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "error": str(e),
         }
 
 
-def push_metrics_to_pushgateway(metrics: Dict[str, Any]) -> bool:
+def push_metrics_to_pushgateway(metrics: dict[str, Any]) -> bool:
     """Push metrics to Prometheus Pushgateway."""
     try:
         # Convert metrics to Prometheus format
@@ -156,9 +160,13 @@ def push_metrics_to_pushgateway(metrics: Dict[str, Any]) -> bool:
                 prometheus_metrics.append(f"{metric_name} {value}")
 
         # Add timestamp
-        prometheus_metrics.append("# HELP qdrant_metrics_timestamp Unix timestamp of metrics collection")
+        prometheus_metrics.append(
+            "# HELP qdrant_metrics_timestamp Unix timestamp of metrics collection"
+        )
         prometheus_metrics.append("# TYPE qdrant_metrics_timestamp gauge")
-        prometheus_metrics.append(f"qdrant_metrics_timestamp {datetime.now(timezone.utc).timestamp()}")
+        prometheus_metrics.append(
+            f"qdrant_metrics_timestamp {datetime.now(UTC).timestamp()}"
+        )
 
         metrics_data = "\n".join(prometheus_metrics) + "\n"
 
@@ -177,17 +185,19 @@ def push_metrics_to_pushgateway(metrics: Dict[str, Any]) -> bool:
         return False
 
 
-def send_to_cloud_monitoring(metrics: Dict[str, Any]) -> bool:
+def send_to_cloud_monitoring(metrics: dict[str, Any]) -> bool:
     """Send metrics directly to Cloud Monitoring."""
     try:
         client = monitoring_v3.MetricServiceClient()
         project_name = f"projects/{PROJECT_ID}"
 
         series = []
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
 
         for metric_name, value in metrics.items():
-            if metric_name in ["timestamp", "error"] or not isinstance(value, (int, float)):
+            if metric_name in ["timestamp", "error"] or not isinstance(
+                value, (int, float)
+            ):
                 continue
 
             # Create time series
@@ -202,10 +212,15 @@ def send_to_cloud_monitoring(metrics: Dict[str, Any]) -> bool:
                                 "source": "qdrant-metrics-exporter",
                             },
                         },
-                        "resource": {"type": "global", "labels": {"project_id": PROJECT_ID}},
+                        "resource": {
+                            "type": "global",
+                            "labels": {"project_id": PROJECT_ID},
+                        },
                         "points": [
                             {
-                                "interval": {"end_time": {"seconds": int(now.timestamp())}},
+                                "interval": {
+                                    "end_time": {"seconds": int(now.timestamp())}
+                                },
                                 "value": {"double_value": float(value)},
                             }
                         ],
@@ -253,7 +268,11 @@ def export_qdrant_metrics(request):
             "status": "success",
             "timestamp": metrics.get("timestamp"),
             "metrics_collected": len(
-                [k for k, v in metrics.items() if k not in ["timestamp", "error"] and isinstance(v, (int, float))]
+                [
+                    k
+                    for k, v in metrics.items()
+                    if k not in ["timestamp", "error"] and isinstance(v, (int, float))
+                ]
             ),
             "pushgateway_success": pushgateway_success,
             "cloud_monitoring_success": monitoring_success,
@@ -274,7 +293,11 @@ def export_qdrant_metrics(request):
 
     except Exception as e:
         logger.error(f"Metrics export failed: {e}")
-        error_response = {"status": "error", "error": str(e), "timestamp": datetime.now(timezone.utc).isoformat()}
+        error_response = {
+            "status": "error",
+            "error": str(e),
+            "timestamp": datetime.now(UTC).isoformat(),
+        }
         return json.dumps(error_response), 500
 
 

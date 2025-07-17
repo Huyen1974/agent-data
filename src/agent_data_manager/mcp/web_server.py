@@ -1,17 +1,20 @@
 import logging
 import os
-import json
-import time
 import sys
-from flask import Flask, request, jsonify
+import time
+
+from flask import Flask, jsonify, request
 
 # Removed storage import as it seems unused
 # from google.cloud import storage
 
 # Import tool registration and dependency flags
 try:
+    from agent_data_manager.tools.external_tool_registry import (
+        FAISS_AVAILABLE,
+        OPENAI_AVAILABLE,
+    )
     from agent_data_manager.tools.register_tools import get_all_tool_functions
-    from agent_data_manager.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
 
     REGISTRY_IMPORTED = True
 except ImportError as e1:
@@ -23,8 +26,11 @@ except ImportError as e1:
         if project_root not in sys.path:
             sys.path.insert(0, project_root)
         print(f"Added {project_root} to sys.path")
+        from agent_data_manager.tools.external_tool_registry import (
+            FAISS_AVAILABLE,
+            OPENAI_AVAILABLE,
+        )
         from agent_data_manager.tools.register_tools import get_all_tool_functions
-        from agent_data_manager.tools.external_tool_registry import FAISS_AVAILABLE, OPENAI_AVAILABLE
 
         REGISTRY_IMPORTED = True
         print("Successfully imported registry after path adjustment.")
@@ -36,11 +42,13 @@ except ImportError as e1:
         print("CRITICAL: Using dummy get_all_tool_functions and flags!")
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # -->> ADDED STARTUP LOGGING <<--
-logger.info(f"--- Web Server Starting ---")
+logger.info("--- Web Server Starting ---")
 logger.info(f"Python Version: {sys.version}")
 logger.info(f"Flask App Name: {app.name}")
 if REGISTRY_IMPORTED:
@@ -48,7 +56,9 @@ if REGISTRY_IMPORTED:
         f"Initial Dependency Check (web_server): FAISS_AVAILABLE={FAISS_AVAILABLE}, OPENAI_AVAILABLE={OPENAI_AVAILABLE}"
     )
 else:
-    logger.error("Initial Dependency Check (web_server): Failed to import registry module.")
+    logger.error(
+        "Initial Dependency Check (web_server): Failed to import registry module."
+    )
 # -->> END STARTUP LOGGING <<--
 
 # Load tools at startup - REMOVED
@@ -66,7 +76,12 @@ def execute_tool():
     if not data:
         logger.error(f"Request {request_id}: Received empty or invalid JSON data.")
         return (
-            jsonify({"error": "Invalid or empty JSON request", "meta": {"status": "error", "request_id": request_id}}),
+            jsonify(
+                {
+                    "error": "Invalid or empty JSON request",
+                    "meta": {"status": "error", "request_id": request_id},
+                }
+            ),
             400,
         )
 
@@ -74,7 +89,9 @@ def execute_tool():
     args = data.get("args", [])  # Default to empty list if 'args' is missing
 
     if not tool_name:
-        logger.error(f"Request {request_id}: Missing 'tool_name' key in request payload.")
+        logger.error(
+            f"Request {request_id}: Missing 'tool_name' key in request payload."
+        )
         return (
             jsonify(
                 {
@@ -87,22 +104,41 @@ def execute_tool():
 
     if not isinstance(args, list):
         logger.error(f"Request {request_id}: 'args' must be a list, got {type(args)}.")
-        return jsonify({"error": "'args' must be a list", "meta": {"status": "error", "request_id": request_id}}), 400
+        return (
+            jsonify(
+                {
+                    "error": "'args' must be a list",
+                    "meta": {"status": "error", "request_id": request_id},
+                }
+            ),
+            400,
+        )
 
     # --- Get tools lazily ---
     try:
         all_tools = get_all_tool_functions()
-        logger.info(f"Request {request_id}: Lazy tool discovery successful. Found tools: {list(all_tools.keys())}")
+        logger.info(
+            f"Request {request_id}: Lazy tool discovery successful. Found tools: {list(all_tools.keys())}"
+        )
     except Exception as e:
-        logger.error(f"Request {request_id}: Failed to get tools via get_all_tool_functions: {e}", exc_info=True)
+        logger.error(
+            f"Request {request_id}: Failed to get tools via get_all_tool_functions: {e}",
+            exc_info=True,
+        )
         # Fallback to empty if discovery fails catastrophically
         all_tools = {}
 
     tool_function = all_tools.get(tool_name)
 
     if not tool_function:
-        available_tools_msg = list(all_tools.keys()) if all_tools else "Discovery failed or no tools available"
-        logger.error(f"Request {request_id}: Unknown tool: {tool_name}. Available: {available_tools_msg}")
+        available_tools_msg = (
+            list(all_tools.keys())
+            if all_tools
+            else "Discovery failed or no tools available"
+        )
+        logger.error(
+            f"Request {request_id}: Unknown tool: {tool_name}. Available: {available_tools_msg}"
+        )
         return (
             jsonify(
                 {
@@ -114,7 +150,9 @@ def execute_tool():
         )
 
     try:
-        logger.info(f"Request {request_id}: Executing tool: {tool_name} with args: {args}")
+        logger.info(
+            f"Request {request_id}: Executing tool: {tool_name} with args: {args}"
+        )
         result = tool_function(*args)  # Unpack args for the function call
         logger.info(f"Request {request_id}: Tool {tool_name} executed successfully.")
         # Attempt to return JSON directly, handle potential serialization errors
@@ -149,7 +187,8 @@ def execute_tool():
 
     except Exception as e:
         logger.error(
-            f"Request {request_id}: Error executing tool {tool_name}: {str(e)}", exc_info=True
+            f"Request {request_id}: Error executing tool {tool_name}: {str(e)}",
+            exc_info=True,
         )  # Log stack trace
         return (
             jsonify(
@@ -167,7 +206,9 @@ def execute_tool():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # Use os.environ.get for Cloud Run compatibility
+    port = int(
+        os.environ.get("PORT", 8080)
+    )  # Use os.environ.get for Cloud Run compatibility
     logger.info(f"Starting Flask server on host 0.0.0.0 port {port}")
     # Use '0.0.0.0' to be accessible externally, required by Cloud Run
     # Turn off debug mode for production/Cloud Run

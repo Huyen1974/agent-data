@@ -1,8 +1,9 @@
-import pickle
 import os
+import pickle
 import time
+from typing import Any
+
 import numpy as np
-from typing import Dict, Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -10,7 +11,9 @@ RETRY_DELAY = 1  # seconds
 EMBEDDING_DIM = 8  # Example dimension, should match generate_embedding_tool
 
 
-def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[str, Any]:
+def batch_generate_embeddings(
+    index_name: str, overwrite: bool = False
+) -> dict[str, Any]:
     """
     Generates mock embeddings for all nodes in the index that don't already have one,
     or overwrites existing embeddings if specified.
@@ -30,7 +33,10 @@ def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[
     index_path = os.path.join(FAISS_DIR, f"{index_name}.faiss")
 
     if not os.path.exists(meta_path) or not os.path.exists(index_path):
-        return {"status": "failed", "error": f"FAISS index or metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"FAISS index or metadata file not found for '{index_name}'.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -45,11 +51,13 @@ def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[
                 "error": f"Metadata file disappeared for index '{index_name}' during batch embedding.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -84,7 +92,11 @@ def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[
         print(
             f"No embeddings needed generation (or overwrite=False) for index '{index_name}'. Processed {processed_count} nodes."
         )
-        return {"status": "success", "processed_nodes": processed_count, "embeddings_generated": 0}
+        return {
+            "status": "success",
+            "processed_nodes": processed_count,
+            "embeddings_generated": 0,
+        }
 
     loaded_data["metadata"] = metadata_dict
 
@@ -97,7 +109,11 @@ def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[
             print(
                 f"Successfully batch generated/updated {generated_count} embeddings for index '{index_name}'. Processed {processed_count} nodes."
             )
-            return {"status": "success", "processed_nodes": processed_count, "embeddings_generated": generated_count}
+            return {
+                "status": "success",
+                "processed_nodes": processed_count,
+                "embeddings_generated": generated_count,
+            }
 
         except Exception as e:
             print(
@@ -106,11 +122,14 @@ def batch_generate_embeddings(index_name: str, overwrite: bool = False) -> Dict[
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to save metadata after batch generating embeddings for '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
-    return {"status": "failed", "error": "Unknown error after batch generating embeddings and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after batch generating embeddings and save attempts.",
+    }
 
 
 # Example usage (for testing purposes)

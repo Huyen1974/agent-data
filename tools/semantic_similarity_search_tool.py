@@ -1,7 +1,7 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -10,7 +10,9 @@ SIMILARITY_THRESHOLD = 0.2  # Arbitrary threshold for mock similarity (on first 
 TOP_N = 5  # Max number of similar items to return
 
 
-def semantic_similarity_search(index_name: str, target_key: str, top_n: int = TOP_N) -> Dict[str, Any]:
+def semantic_similarity_search(
+    index_name: str, target_key: str, top_n: int = TOP_N
+) -> dict[str, Any]:
     """
     Simulates semantic similarity search based on mock embeddings.
     Finds items whose first embedding element is close to the target key's first element.
@@ -49,11 +51,13 @@ def semantic_similarity_search(index_name: str, target_key: str, top_n: int = TO
                 "error": f"Metadata file disappeared for index '{index_name}' during similarity search.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -63,7 +67,10 @@ def semantic_similarity_search(index_name: str, target_key: str, top_n: int = TO
     metadata_dict = loaded_data["metadata"]
 
     if target_key not in metadata_dict:
-        return {"status": "failed", "error": f"Target key '{target_key}' not found in index '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"Target key '{target_key}' not found in index '{index_name}'.",
+        }
 
     target_metadata = metadata_dict[target_key]
     if (
@@ -72,9 +79,14 @@ def semantic_similarity_search(index_name: str, target_key: str, top_n: int = TO
         or not isinstance(target_metadata["embedding"], list)
         or not target_metadata["embedding"]
     ):
-        return {"status": "failed", "error": f"Target key '{target_key}' does not have a valid embedding."}
+        return {
+            "status": "failed",
+            "error": f"Target key '{target_key}' does not have a valid embedding.",
+        }
 
-    target_emb_val = target_metadata["embedding"][0]  # Use first element for mock similarity
+    target_emb_val = target_metadata["embedding"][
+        0
+    ]  # Use first element for mock similarity
     similar_items = []
 
     for key, item_metadata in metadata_dict.items():
@@ -94,15 +106,23 @@ def semantic_similarity_search(index_name: str, target_key: str, top_n: int = TO
                 if diff <= SIMILARITY_THRESHOLD:
                     # Score inversely proportional to difference (closer is better)
                     mock_score = 1.0 - (diff / SIMILARITY_THRESHOLD)
-                    similar_items.append({"key": key, "mock_similarity_score": round(mock_score, 4)})
+                    similar_items.append(
+                        {"key": key, "mock_similarity_score": round(mock_score, 4)}
+                    )
             except (IndexError, TypeError) as e:
-                print(f"Warning: Error processing embedding for key '{key}': {e}. Skipping.")
+                print(
+                    f"Warning: Error processing embedding for key '{key}': {e}. Skipping."
+                )
 
     # Sort by score descending and take top N
-    sorted_similar = sorted(similar_items, key=lambda x: x["mock_similarity_score"], reverse=True)
+    sorted_similar = sorted(
+        similar_items, key=lambda x: x["mock_similarity_score"], reverse=True
+    )
     top_similar = sorted_similar[:top_n]
 
-    print(f"Found {len(top_similar)} similar items (mock) for key '{target_key}' in index '{index_name}'.")
+    print(
+        f"Found {len(top_similar)} similar items (mock) for key '{target_key}' in index '{index_name}'."
+    )
     return {"status": "success", "target_key": target_key, "similar_items": top_similar}
 
 
@@ -113,7 +133,9 @@ if __name__ == "__main__":
     from generate_embedding_tool import generate_embedding
 
     try:
-        print(generate_embedding("index_semantic_test", "doc_sem2"))  # Ensure doc_sem2 also has an embedding
+        print(
+            generate_embedding("index_semantic_test", "doc_sem2")
+        )  # Ensure doc_sem2 also has an embedding
     except Exception as e:
         print(f"Error generating embedding for doc_sem2: {e}")
 

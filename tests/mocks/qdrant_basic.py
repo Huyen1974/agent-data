@@ -1,7 +1,12 @@
 import logging
 import random
 import uuid
-from typing import Any, Dict, List, Optional, Union, Callable, Awaitable, Sequence, Mapping, Tuple, Annotated
+from collections.abc import Awaitable, Callable, Mapping, Sequence
+from typing import (
+    Annotated,
+    Any,
+    Union,
+)
 
 import numpy as np
 
@@ -14,47 +19,47 @@ except ImportError:
 
 
 from qdrant_client.http.models import (
-    PointStruct,
-    UpdateResult,
-    Filter,
-    Distance,
-    ScoredPoint,
-    Record,
-    PointsSelector,
-    VectorParams,
+    Batch,
+    BinaryQuantization,
+    BoolIndexParams,
+    CollectionDescription,
     CollectionInfo,
     CollectionsResponse,
-    CollectionDescription,
     CountResult,
-    PayloadSelectorInclude,
-    PayloadSelectorExclude,
-    ReadConsistencyType,
-    WriteOrdering,
-    HnswConfigDiff,
-    OptimizersConfigDiff,
-    WalConfigDiff,
-    ScalarQuantization,
-    ProductQuantization,
-    BinaryQuantization,
-    InitFrom,
-    PayloadSchemaType,
-    KeywordIndexParams,
-    IntegerIndexParams,
+    DatetimeIndexParams,
+    Distance,
+    Filter,
+    FilterSelector,
     FloatIndexParams,
     GeoIndexParams,
-    TextIndexParams,
-    BoolIndexParams,
-    DatetimeIndexParams,
-    UuidIndexParams,
-    SearchParams,
-    NamedVector,
+    HnswConfigDiff,
+    InitFrom,
+    IntegerIndexParams,
+    KeywordIndexParams,
     NamedSparseVector,
+    NamedVector,
+    OptimizersConfigDiff,
     OrderBy,
-    Batch,
-    FilterSelector,
+    PayloadSchemaType,
+    PayloadSelectorExclude,
+    PayloadSelectorInclude,
     PointIdsList,
-    SparseVectorParams,
+    PointsSelector,
+    PointStruct,
+    ProductQuantization,
+    ReadConsistencyType,
+    Record,
+    ScalarQuantization,
+    ScoredPoint,
+    SearchParams,
     ShardingMethod,
+    SparseVectorParams,
+    TextIndexParams,
+    UpdateResult,
+    UuidIndexParams,
+    VectorParams,
+    WalConfigDiff,
+    WriteOrdering,
 )
 
 # Try to import StrictModeConfig, fallback to None if not available
@@ -78,10 +83,10 @@ logger = logging.getLogger(__name__)
 VECTOR_DIMENSION = 1536
 
 # Type alias for the (async) EmbeddingFunction
-EmbeddingFunctionAsync = Callable[[List[str]], Awaitable[Dict[str, Any]]]
+EmbeddingFunctionAsync = Callable[[list[str]], Awaitable[dict[str, Any]]]
 
 
-def _ensure_flat_float_list(vec: Any) -> List[float]:
+def _ensure_flat_float_list(vec: Any) -> list[float]:
     """Ensures the input is a flat list of floats."""
     if isinstance(vec, np.ndarray):
         vec = vec.tolist()  # Convert numpy array to list
@@ -105,7 +110,9 @@ def _ensure_flat_float_list(vec: Any) -> List[float]:
                 try:
                     flat_list.append(float(sub_item))
                 except (ValueError, TypeError) as e:
-                    raise ValueError(f"Cannot convert sub-item '{sub_item}' to float: {e}")
+                    raise ValueError(
+                        f"Cannot convert sub-item '{sub_item}' to float: {e}"
+                    )
         else:
             try:
                 flat_list.append(float(item))
@@ -114,7 +121,7 @@ def _ensure_flat_float_list(vec: Any) -> List[float]:
     return flat_list
 
 
-def _pad_vector(vector: Any, target_dimension: int = VECTOR_DIMENSION) -> List[float]:
+def _pad_vector(vector: Any, target_dimension: int = VECTOR_DIMENSION) -> list[float]:
     """Pads or truncates a vector to the target dimension. Ensures input is processed as a flat list of floats."""
     try:
         flat_vector = _ensure_flat_float_list(vector)
@@ -138,10 +145,18 @@ def _pad_vector(vector: Any, target_dimension: int = VECTOR_DIMENSION) -> List[f
 # These are used by mock_embedding_function_for_conftest
 PREDEFINED_VECTORS_FOR_EMBEDDING = {
     # Vector for point 9001 in conftest.py is [0.1, 0.2, 0.8, 0.0, ..., 0.0]
-    "modern astronomy discoveries": _pad_vector([0.1, 0.2, 0.8]),  # This will pad with 0.0s
-    "history of ancient egypt": _pad_vector([0.3, 0.2, 0.1] + [0.02] * (VECTOR_DIMENSION - 3)),
-    "delicious pasta recipes": _pad_vector([0.1, 0.5, 0.2] + [0.03] * (VECTOR_DIMENSION - 3)),
-    "future of ai in politics": _pad_vector([0.6, 0.1, 0.3] + [0.04] * (VECTOR_DIMENSION - 3)),
+    "modern astronomy discoveries": _pad_vector(
+        [0.1, 0.2, 0.8]
+    ),  # This will pad with 0.0s
+    "history of ancient egypt": _pad_vector(
+        [0.3, 0.2, 0.1] + [0.02] * (VECTOR_DIMENSION - 3)
+    ),
+    "delicious pasta recipes": _pad_vector(
+        [0.1, 0.5, 0.2] + [0.03] * (VECTOR_DIMENSION - 3)
+    ),
+    "future of ai in politics": _pad_vector(
+        [0.6, 0.1, 0.3] + [0.04] * (VECTOR_DIMENSION - 3)
+    ),
     # Add other specific texts if tests rely on them
     "This is a test document for ensuring non-ASCII characters are handled: 東京 and emojis 😊": _pad_vector(
         [0.1] * 10
@@ -152,26 +167,34 @@ PREDEFINED_VECTORS_FOR_EMBEDDING = {
     "Another test document": _pad_vector([0.5] * 10),
     " சென்னை ": _pad_vector([0.6] * 10),
     "你好世界": _pad_vector([0.7] * 10),
-    "deep space exploration": _pad_vector([0.1, 0.2, 0.7] + [0.0] * (VECTOR_DIMENSION - 3)),  # Added for CLI82B
+    "deep space exploration": _pad_vector(
+        [0.1, 0.2, 0.7] + [0.0] * (VECTOR_DIMENSION - 3)
+    ),  # Added for CLI82B
     "Sample text for point 9001": _pad_vector(
         [0.1, 0.2, 0.8] + [0.0] * (VECTOR_DIMENSION - 3)
     ),  # Match conftest seeding
-    "Sample text for point 1001": _pad_vector([0.1, 0.2, 0.7] + [0.0] * (VECTOR_DIMENSION - 3)),
-    "Sample text for point 1002": _pad_vector([0.1, 0.2, 0.6] + [0.0] * (VECTOR_DIMENSION - 3)),
-    "Sample text for point 1003": _pad_vector([0.1, 0.2, 0.5] + [0.0] * (VECTOR_DIMENSION - 3)),
+    "Sample text for point 1001": _pad_vector(
+        [0.1, 0.2, 0.7] + [0.0] * (VECTOR_DIMENSION - 3)
+    ),
+    "Sample text for point 1002": _pad_vector(
+        [0.1, 0.2, 0.6] + [0.0] * (VECTOR_DIMENSION - 3)
+    ),
+    "Sample text for point 1003": _pad_vector(
+        [0.1, 0.2, 0.5] + [0.0] * (VECTOR_DIMENSION - 3)
+    ),
 }
 
 
 async def mock_embedding_function_for_conftest(
-    texts: Union[str, List[str]], model: str = "text-embedding-ada-002"
-) -> Dict[str, Any]:
+    texts: str | list[str], model: str = "text-embedding-ada-002"
+) -> dict[str, Any]:
     """
     Mock async embedding function that returns predefined 1536-dimension vectors for specific inputs,
     otherwise generates simple deterministic vectors padded to 1536 dimensions.
     Output matches the structure of OpenAI's embedding response.
     This version is for use in conftest.py.
     """
-    input_texts: List[str]
+    input_texts: list[str]
     if isinstance(texts, str):
         input_texts = [texts]
     else:
@@ -196,15 +219,22 @@ async def mock_embedding_function_for_conftest(
     return {
         "embedding": embeddings,  # List of vectors
         "model": model,
-        "usage": {"prompt_tokens": sum(len(t) for t in texts), "total_tokens": sum(len(t) for t in texts)},
+        "usage": {
+            "prompt_tokens": sum(len(t) for t in texts),
+            "total_tokens": sum(len(t) for t in texts),
+        },
     }
 
 
 class FakeQdrantClient:
-    _collections: Dict[str, Dict[str, Any]] = {}  # Class variable to store all collections and their data
+    _collections: dict[str, dict[str, Any]] = (
+        {}
+    )  # Class variable to store all collections and their data
     # Structure: {"collection_name": {"points": {id: {"vector": [], "payload": {}}}, "config": {}, "indexed_fields": set()}}
 
-    def __init__(self, url: str, api_key: Optional[str] = None, timeout: int = 10, **kwargs):
+    def __init__(
+        self, url: str, api_key: str | None = None, timeout: int = 10, **kwargs
+    ):
         """
         Constructor to mimic the real QdrantClient, compatible with conftest.py.
         url, api_key, timeout are part of the signature but largely unused by the mock itself,
@@ -223,7 +253,7 @@ class FakeQdrantClient:
         cls._collections.clear()
         # print("FakeQdrantClient.clear_all_data: All data cleared.")
 
-    def close(self, grpc_grace: Optional[float] = None, **kwargs: Any) -> None:
+    def close(self, grpc_grace: float | None = None, **kwargs: Any) -> None:
         """No-op, mimics real client."""
         # print("FakeQdrantClient: close() called.")
         pass
@@ -237,22 +267,30 @@ class FakeQdrantClient:
     def create_collection(
         self,
         collection_name: str,
-        vectors_config: Union[VectorParams, Mapping[str, VectorParams], None] = None,
-        sparse_vectors_config: Optional[Mapping[str, SparseVectorParams]] = None,
-        shard_number: Optional[int] = None,
-        sharding_method: Optional[ShardingMethod] = None,
-        replication_factor: Optional[int] = None,
-        write_consistency_factor: Optional[int] = None,
-        on_disk_payload: Optional[bool] = None,
-        hnsw_config: Union[HnswConfigDiff, "collections_pb2.HnswConfigDiff", None] = None,
-        optimizers_config: Union[OptimizersConfigDiff, "collections_pb2.OptimizersConfigDiff", None] = None,
+        vectors_config: VectorParams | Mapping[str, VectorParams] | None = None,
+        sparse_vectors_config: Mapping[str, SparseVectorParams] | None = None,
+        shard_number: int | None = None,
+        sharding_method: ShardingMethod | None = None,
+        replication_factor: int | None = None,
+        write_consistency_factor: int | None = None,
+        on_disk_payload: bool | None = None,
+        hnsw_config: Union[
+            HnswConfigDiff, "collections_pb2.HnswConfigDiff", None
+        ] = None,
+        optimizers_config: Union[
+            OptimizersConfigDiff, "collections_pb2.OptimizersConfigDiff", None
+        ] = None,
         wal_config: Union[WalConfigDiff, "collections_pb2.WalConfigDiff", None] = None,
         quantization_config: Union[
-            ScalarQuantization, ProductQuantization, BinaryQuantization, "collections_pb2.QuantizationConfig", None
+            ScalarQuantization,
+            ProductQuantization,
+            BinaryQuantization,
+            "collections_pb2.QuantizationConfig",
+            None,
         ] = None,
-        init_from: Union[InitFrom, str, None] = None,
-        timeout: Optional[int] = None,
-        strict_mode_config: Optional[Any] = None,
+        init_from: InitFrom | str | None = None,
+        timeout: int | None = None,
+        strict_mode_config: Any | None = None,
         **kwargs: Any,
     ) -> bool:
         """Creates a new collection."""
@@ -271,13 +309,17 @@ class FakeQdrantClient:
 
         self._collections[collection_name] = {
             "points": {},
-            "config": {"params": {"vectors": {"size": vector_size, "distance": distance}}},
+            "config": {
+                "params": {"vectors": {"size": vector_size, "distance": distance}}
+            },
             "indexed_fields": set(),
         }
         # print(f"FakeQdrantClient.create_collection: Collection '{collection_name}' created with vector_size={vector_size}, distance={distance}.")
         return True
 
-    def delete_collection(self, collection_name: str, timeout: Optional[int] = None, **kwargs: Any) -> bool:
+    def delete_collection(
+        self, collection_name: str, timeout: int | None = None, **kwargs: Any
+    ) -> bool:
         """Deletes a collection."""
         if collection_name in self._collections:
             del self._collections[collection_name]
@@ -289,7 +331,9 @@ class FakeQdrantClient:
     def get_collection(self, collection_name: str, **kwargs: Any) -> CollectionInfo:
         """Gets information about a collection."""
         if collection_name not in self._collections:
-            raise ValueError(f"Collection {collection_name} not found")  # Mimic Qdrant error
+            raise ValueError(
+                f"Collection {collection_name} not found"
+            )  # Mimic Qdrant error
 
         config = self._collections[collection_name].get("config", {})
         params = config.get("params", {})
@@ -321,37 +365,47 @@ class FakeQdrantClient:
     def upsert(
         self,
         collection_name: str,
-        points: Union[Batch, "Sequence[Union[PointStruct, points_pb2.PointStruct]]"],
+        points: Union[Batch, "Sequence[PointStruct | points_pb2.PointStruct]"],
         wait: bool = True,
-        ordering: Optional[WriteOrdering] = None,
+        ordering: WriteOrdering | None = None,
         shard_key_selector: Union[
             "Annotated[int, Strict(strict=True)]",
             "Annotated[str, Strict(strict=True)]",
-            "List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]",
+            "list[Annotated[int, Strict(strict=True)] | Annotated[str, Strict(strict=True)]]",
             None,
         ] = None,
         **kwargs: Any,
     ) -> UpdateResult:
         # Inline upsert logic (simplified version)
         if not self.collection_exists(collection_name):
-            self.create_collection(collection_name, VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE))
+            self.create_collection(
+                collection_name,
+                VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE),
+            )
 
         collection_data = self._collections[collection_name]
         target_dimension = (
-            collection_data.get("config", {}).get("params", {}).get("vectors", {}).get("size", VECTOR_DIMENSION)
+            collection_data.get("config", {})
+            .get("params", {})
+            .get("vectors", {})
+            .get("size", VECTOR_DIMENSION)
         )
 
         updated_ids = []
         for point in points:
             if not isinstance(point.id, (int, str, uuid.UUID)):
-                raise TypeError(f"Point ID must be int, str, or UUID, got {type(point.id)}")
+                raise TypeError(
+                    f"Point ID must be int, str, or UUID, got {type(point.id)}"
+                )
 
             padded_vector = None
             if point.vector is not None:
                 if isinstance(point.vector, dict):
                     padded_vector = {}
                     for name, vec_data in point.vector.items():
-                        padded_vector[name] = _pad_vector(list(vec_data), target_dimension)
+                        padded_vector[name] = _pad_vector(
+                            list(vec_data), target_dimension
+                        )
                 else:
                     padded_vector = _pad_vector(list(point.vector), target_dimension)
 
@@ -361,45 +415,62 @@ class FakeQdrantClient:
                     if key == "tag" and isinstance(value, str):
                         processed_payload[key] = value.lower()
                     elif key == "tags" and isinstance(value, list):
-                        processed_payload[key] = sorted([str(t).lower() for t in value if isinstance(t, str)])
+                        processed_payload[key] = sorted(
+                            [str(t).lower() for t in value if isinstance(t, str)]
+                        )
                     else:
                         processed_payload[key] = value
 
-            collection_data["points"][point.id] = {"vector": padded_vector, "payload": processed_payload}
+            collection_data["points"][point.id] = {
+                "vector": padded_vector,
+                "payload": processed_payload,
+            }
             updated_ids.append(point.id)
 
         return UpdateResult(operation_id=random.randint(1, 1000), status="completed")
 
-    def list_collections(self, timeout: Optional[int] = None) -> CollectionsResponse:
+    def list_collections(self, timeout: int | None = None) -> CollectionsResponse:
         """Lists all collections."""
-        collection_descriptions = [CollectionDescription(name=name) for name in self._collections.keys()]
+        collection_descriptions = [
+            CollectionDescription(name=name) for name in self._collections.keys()
+        ]
         return CollectionsResponse(collections=collection_descriptions)
 
     def upsert_points(
-        self, collection_name: str, points: List[PointStruct], wait: bool = True, **kwargs
+        self,
+        collection_name: str,
+        points: list[PointStruct],
+        wait: bool = True,
+        **kwargs,
     ) -> UpdateResult:
         """Alias for upsert method to maintain compatibility with tests"""
-        return self.upsert(collection_name=collection_name, points=points, wait=wait, **kwargs)
+        return self.upsert(
+            collection_name=collection_name, points=points, wait=wait, **kwargs
+        )
 
     def retrieve(
         self,
         collection_name: str,
         ids: Sequence[Union[int, str, "points_pb2.PointId"]],
         with_payload: Union[
-            bool, Sequence[str], PayloadSelectorInclude, PayloadSelectorExclude, "points_pb2.WithPayloadSelector"
+            bool,
+            Sequence[str],
+            PayloadSelectorInclude,
+            PayloadSelectorExclude,
+            "points_pb2.WithPayloadSelector",
         ] = True,
-        with_vectors: Union[bool, Sequence[str]] = False,
-        consistency: Union[int, ReadConsistencyType, None] = None,
-        shard_key_selector: Union[int, str, List[Union[int, str]], None] = None,
-        timeout: Optional[int] = None,
+        with_vectors: bool | Sequence[str] = False,
+        consistency: int | ReadConsistencyType | None = None,
+        shard_key_selector: int | str | list[int | str] | None = None,
+        timeout: int | None = None,
         **kwargs: Any,
-    ) -> List[Record]:
+    ) -> list[Record]:
         """Retrieves points by their IDs."""
         if not self.collection_exists(collection_name):
             # print(f"FakeQdrantClient.retrieve: Collection '{collection_name}' not found.")
             return []
 
-        retrieved_records: List[Record] = []
+        retrieved_records: list[Record] = []
         collection_points = self._collections[collection_name]["points"]
 
         for point_id in ids:
@@ -407,7 +478,11 @@ class FakeQdrantClient:
             point_data = None
             if point_id in collection_points:
                 point_data = collection_points[point_id]
-            elif isinstance(point_id, str) and point_id.isdigit() and int(point_id) in collection_points:
+            elif (
+                isinstance(point_id, str)
+                and point_id.isdigit()
+                and int(point_id) in collection_points
+            ):
                 point_data = collection_points[int(point_id)]
             elif isinstance(point_id, int) and str(point_id) in collection_points:
                 point_data = collection_points[str(point_id)]
@@ -435,23 +510,29 @@ class FakeQdrantClient:
         query_filter: Union[Filter, "points_pb2.Filter", None] = None,
         search_params: Union[SearchParams, "points_pb2.SearchParams", None] = None,
         limit: int = 10,
-        offset: Optional[int] = None,
+        offset: int | None = None,
         with_payload: Union[
-            bool, Sequence[str], PayloadSelectorInclude, PayloadSelectorExclude, "points_pb2.WithPayloadSelector"
+            bool,
+            Sequence[str],
+            PayloadSelectorInclude,
+            PayloadSelectorExclude,
+            "points_pb2.WithPayloadSelector",
         ] = True,
-        with_vectors: Union[bool, Sequence[str]] = False,
-        score_threshold: Optional[float] = None,
+        with_vectors: bool | Sequence[str] = False,
+        score_threshold: float | None = None,
         append_payload: bool = True,
-        consistency: Union["Annotated[int, Strict(strict=True)]", ReadConsistencyType, None] = None,
+        consistency: Union[
+            "Annotated[int, Strict(strict=True)]", ReadConsistencyType, None
+        ] = None,
         shard_key_selector: Union[
             "Annotated[int, Strict(strict=True)]",
             "Annotated[str, Strict(strict=True)]",
-            "List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]",
+            "list[Annotated[int, Strict(strict=True)] | Annotated[str, Strict(strict=True)]]",
             None,
         ] = None,
-        timeout: Optional[int] = None,
+        timeout: int | None = None,
         **kwargs: Any,
-    ) -> List[ScoredPoint]:
+    ) -> list[ScoredPoint]:
         """Searches for points in a collection. Renamed from search_points."""
         # print(f"FakeQdrantClient.search: In '{collection_name}', limit {limit}, threshold {score_threshold}, filter: {query_filter is not None}")
         if not self.collection_exists(collection_name):
@@ -462,7 +543,11 @@ class FakeQdrantClient:
         collection_points_data = collection_store["points"]
         collection_config = collection_store["config"]
 
-        target_dimension = collection_config.get("params", {}).get("vectors", {}).get("size", VECTOR_DIMENSION)
+        target_dimension = (
+            collection_config.get("params", {})
+            .get("vectors", {})
+            .get("size", VECTOR_DIMENSION)
+        )
 
         # Ensure query_vector is a flat list of floats before padding and converting to numpy
         # This is where the error occurred: np.array(_pad_vector(query_vector, target_dimension))
@@ -476,7 +561,7 @@ class FakeQdrantClient:
             # or it's being wrapped in an extra list layer somewhere before this point.
             raise  # Re-raise to make test fail clearly with this error.
 
-        results_with_scores: List[ScoredPoint] = []
+        results_with_scores: list[ScoredPoint] = []
         for point_id, data in collection_points_data.items():
             if data.get("vector") is None and padded_query_vector_np is not None:
                 continue
@@ -490,7 +575,9 @@ class FakeQdrantClient:
                             # FieldCondition with MatchValue
                             field_key = condition.key
                             match_value = (
-                                condition.match.value if hasattr(condition.match, "value") else condition.match
+                                condition.match.value
+                                if hasattr(condition.match, "value")
+                                else condition.match
                             )
                             payload_value = data.get("payload", {}).get(field_key)
 
@@ -500,7 +587,9 @@ class FakeQdrantClient:
                                 and isinstance(payload_value, str)
                                 and isinstance(match_value, str)
                             ):
-                                matches_filter = payload_value.lower() == match_value.lower()
+                                matches_filter = (
+                                    payload_value.lower() == match_value.lower()
+                                )
                             else:
                                 matches_filter = payload_value == match_value
 
@@ -521,12 +610,20 @@ class FakeQdrantClient:
                 score = 0.0
             else:
                 point_vector_np = np.array(_pad_vector(point_vector_list))
-                distance_type = collection_config.get("params", {}).get("vectors", {}).get("distance", Distance.COSINE)
+                distance_type = (
+                    collection_config.get("params", {})
+                    .get("vectors", {})
+                    .get("distance", Distance.COSINE)
+                )
 
                 if distance_type == Distance.COSINE:
-                    if np.linalg.norm(point_vector_np) > 1e-9 and np.linalg.norm(padded_query_vector_np) > 1e-9:
+                    if (
+                        np.linalg.norm(point_vector_np) > 1e-9
+                        and np.linalg.norm(padded_query_vector_np) > 1e-9
+                    ):
                         similarity = np.dot(point_vector_np, padded_query_vector_np) / (
-                            np.linalg.norm(point_vector_np) * np.linalg.norm(padded_query_vector_np)
+                            np.linalg.norm(point_vector_np)
+                            * np.linalg.norm(padded_query_vector_np)
                         )
                         score = float(similarity)
                     else:
@@ -552,7 +649,9 @@ class FakeQdrantClient:
                 )
             )
 
-        results_with_scores.sort(key=lambda p: p.score, reverse=True)  # Higher score is better
+        results_with_scores.sort(
+            key=lambda p: p.score, reverse=True
+        )  # Higher score is better
         final_results = results_with_scores[:limit]
         # print(f"FakeQdrantClient.search: Found {len(final_results)} results. IDs: {[r.id for r in final_results]}")
         return final_results
@@ -565,14 +664,18 @@ class FakeQdrantClient:
         order_by: Union[str, OrderBy, "points_pb2.OrderBy", None] = None,
         offset: Union[int, str, "points_pb2.PointId", None] = None,
         with_payload: Union[
-            bool, Sequence[str], PayloadSelectorInclude, PayloadSelectorExclude, "points_pb2.WithPayloadSelector"
+            bool,
+            Sequence[str],
+            PayloadSelectorInclude,
+            PayloadSelectorExclude,
+            "points_pb2.WithPayloadSelector",
         ] = True,
-        with_vectors: Union[bool, Sequence[str]] = False,
-        consistency: Union[int, ReadConsistencyType, None] = None,
-        shard_key_selector: Union[int, str, List[Union[int, str]], None] = None,
-        timeout: Optional[int] = None,
+        with_vectors: bool | Sequence[str] = False,
+        consistency: int | ReadConsistencyType | None = None,
+        shard_key_selector: int | str | list[int | str] | None = None,
+        timeout: int | None = None,
         **kwargs: Any,
-    ) -> Tuple[List[Record], Union[int, str, "points_pb2.PointId", None]]:
+    ) -> tuple[list[Record], Union[int, str, "points_pb2.PointId", None]]:
         """Scrolls through points in a collection, with basic filtering and offset handling."""
         # print(f"FakeQdrantClient.scroll called for '{collection_name}'. Filter: {scroll_filter}, Limit: {limit}, Offset: {offset}")
         if collection_name not in self._collections:
@@ -580,7 +683,9 @@ class FakeQdrantClient:
             return [], None
 
         collection_data = self._collections[collection_name]
-        all_points_in_collection = list(collection_data["points"].items())  # List of (id, data) tuples
+        all_points_in_collection = list(
+            collection_data["points"].items()
+        )  # List of (id, data) tuples
 
         # Apply filter if provided
         if scroll_filter:
@@ -593,7 +698,9 @@ class FakeQdrantClient:
                             # FieldCondition with MatchValue
                             field_key = condition.key
                             match_value = (
-                                condition.match.value if hasattr(condition.match, "value") else condition.match
+                                condition.match.value
+                                if hasattr(condition.match, "value")
+                                else condition.match
                             )
                             payload_value = pdata.get("payload", {}).get(field_key)
                             if payload_value != match_value:
@@ -640,9 +747,11 @@ class FakeQdrantClient:
             # Record expects id: PointId which is Union[str, int, uuid.UUID]
             result_records.append(Record(id=point_id, payload=payload, vector=vector))
 
-        next_page_offset_val: Optional[Union[int, str, uuid.UUID]] = None
+        next_page_offset_val: int | str | uuid.UUID | None = None
         if end_index < len(filtered_points_with_ids):
-            next_page_offset_val = filtered_points_with_ids[end_index][0]  # ID of the next point to start from
+            next_page_offset_val = filtered_points_with_ids[end_index][
+                0
+            ]  # ID of the next point to start from
 
         # print(f"FakeQdrantClient.scroll: Returning {len(result_records)} records. Next offset: {next_page_offset_val}")
         return result_records, next_page_offset_val
@@ -651,7 +760,7 @@ class FakeQdrantClient:
         self,
         collection_name: str,
         points_selector: Union[
-            "list[Union[int, str, points_pb2.PointId]]",
+            "list[int | str | points_pb2.PointId]",
             Filter,
             "points_pb2.Filter",
             PointIdsList,
@@ -659,11 +768,11 @@ class FakeQdrantClient:
             "points_pb2.PointsSelector",
         ],
         wait: bool = True,
-        ordering: Optional[WriteOrdering] = None,
+        ordering: WriteOrdering | None = None,
         shard_key_selector: Union[
             "Annotated[int, Strict(strict=True)]",
             "Annotated[str, Strict(strict=True)]",
-            "List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]",
+            "list[Annotated[int, Strict(strict=True)] | Annotated[str, Strict(strict=True)]]",
             None,
         ] = None,
         **kwargs: Any,
@@ -685,13 +794,20 @@ class FakeQdrantClient:
             if points_selector.filter:  # Filter in PointsSelector
                 for point_id, data in list(collection_points.items()):
                     matches_filter = True
-                    if hasattr(points_selector.filter, "must") and points_selector.filter.must:
+                    if (
+                        hasattr(points_selector.filter, "must")
+                        and points_selector.filter.must
+                    ):
                         for condition in points_selector.filter.must:
-                            if hasattr(condition, "key") and hasattr(condition, "match"):
+                            if hasattr(condition, "key") and hasattr(
+                                condition, "match"
+                            ):
                                 # FieldCondition with MatchValue
                                 field_key = condition.key
                                 match_value = (
-                                    condition.match.value if hasattr(condition.match, "value") else condition.match
+                                    condition.match.value
+                                    if hasattr(condition.match, "value")
+                                    else condition.match
                                 )
                                 payload_value = data.get("payload", {}).get(field_key)
                                 if payload_value != match_value:
@@ -713,7 +829,9 @@ class FakeQdrantClient:
                             # FieldCondition with MatchValue
                             field_key = condition.key
                             match_value = (
-                                condition.match.value if hasattr(condition.match, "value") else condition.match
+                                condition.match.value
+                                if hasattr(condition.match, "value")
+                                else condition.match
                             )
                             payload_value = data.get("payload", {}).get(field_key)
                             if payload_value != match_value:
@@ -726,7 +844,9 @@ class FakeQdrantClient:
                                 break
                 if matches_filter:
                     ids_to_delete.add(point_id)
-        elif isinstance(points_selector, dict):  # Raw filter dictionary (for purge_all_vectors)
+        elif isinstance(
+            points_selector, dict
+        ):  # Raw filter dictionary (for purge_all_vectors)
             # Handle raw filter dict like {"filter": {"must": []}}
             filter_dict = points_selector.get("filter", {})
             must_conditions = filter_dict.get("must", [])
@@ -752,7 +872,9 @@ class FakeQdrantClient:
                             # Handle object-based conditions
                             field_key = condition.key
                             match_value = (
-                                condition.match.value if hasattr(condition.match, "value") else condition.match
+                                condition.match.value
+                                if hasattr(condition.match, "value")
+                                else condition.match
                             )
                             payload_value = data.get("payload", {}).get(field_key)
                             if payload_value != match_value:
@@ -778,7 +900,10 @@ class FakeQdrantClient:
                     and int(point_id_to_delete) in collection_points
                 ):
                     resolved_id = int(point_id_to_delete)
-                elif isinstance(point_id_to_delete, int) and str(point_id_to_delete) in collection_points:
+                elif (
+                    isinstance(point_id_to_delete, int)
+                    and str(point_id_to_delete) in collection_points
+                ):
                     resolved_id = str(point_id_to_delete)
 
                 if resolved_id is not None and resolved_id in collection_points:
@@ -792,7 +917,7 @@ class FakeQdrantClient:
     def delete_points(
         self,
         collection_name: str,
-        points_selector: Union[PointsSelector, dict],
+        points_selector: PointsSelector | dict,
         wait: bool = True,
         **kwargs: Any,
     ) -> UpdateResult:
@@ -807,10 +932,10 @@ class FakeQdrantClient:
         shard_key_selector: Union[
             "Annotated[int, Strict(strict=True)]",
             "Annotated[str, Strict(strict=True)]",
-            "List[Union[Annotated[int, Strict(strict=True)], Annotated[str, Strict(strict=True)]]]",
+            "list[Annotated[int, Strict(strict=True)] | Annotated[str, Strict(strict=True)]]",
             None,
         ] = None,
-        timeout: Optional[int] = None,
+        timeout: int | None = None,
         **kwargs: Any,
     ) -> CountResult:
         """Counts points in a collection, optionally with a filter."""
@@ -832,7 +957,11 @@ class FakeQdrantClient:
                     if hasattr(condition, "key") and hasattr(condition, "match"):
                         # FieldCondition with MatchValue
                         field_key = condition.key
-                        match_value = condition.match.value if hasattr(condition.match, "value") else condition.match
+                        match_value = (
+                            condition.match.value
+                            if hasattr(condition.match, "value")
+                            else condition.match
+                        )
                         payload_value = data.get("payload", {}).get(field_key)
                         if payload_value != match_value:
                             matches_filter = False
@@ -881,7 +1010,7 @@ class FakeQdrantClient:
             None,
         ] = None,
         wait: bool = True,
-        ordering: Optional[WriteOrdering] = None,
+        ordering: WriteOrdering | None = None,
         **kwargs: Any,
     ) -> UpdateResult:
         """Mocks creating a payload index. For this mock, it just notes the field."""
@@ -889,7 +1018,9 @@ class FakeQdrantClient:
             # print(f"FakeQdrantClient.create_payload_index: Collection '{collection_name}' not found.")
             return UpdateResult(operation_id=0, status="not_found")
 
-        self._collections[collection_name].setdefault("indexed_fields", set()).add(field_name)
+        self._collections[collection_name].setdefault("indexed_fields", set()).add(
+            field_name
+        )
         # print(f"FakeQdrantClient.create_payload_index: 'Indexed' field '{field_name}' in '{collection_name}'. Schema: {field_schema}")
         return UpdateResult(operation_id=random.randint(1, 1000), status="completed")
 

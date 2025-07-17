@@ -9,31 +9,39 @@ Usage:
     python scripts/generate_sample_data.py [--vector-count 10000] [--dimension 1536]
 """
 
-import os
-import sys
-import time
-import pickle
-import logging
 import argparse
+import logging
+import os
+import pickle
+import sys
 import tempfile
-from typing import Dict, List, Any
+import time
+from typing import Any
 
-import numpy as np
 import faiss
-from google.cloud import storage, firestore
+import numpy as np
+from google.cloud import firestore, storage
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Configuration
-FAISS_GCS_BUCKET = os.environ.get("GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test")
+FAISS_GCS_BUCKET = os.environ.get(
+    "GCS_BUCKET_NAME", "huyen1974-faiss-index-storage-test"
+)
 FIRESTORE_PROJECT_ID = os.environ.get("FIRESTORE_PROJECT_ID", "chatgpt-db-project")
 FIRESTORE_DATABASE_ID = os.environ.get("FIRESTORE_DATABASE_ID", "test-default")
-FAISS_INDEXES_COLLECTION = os.environ.get("FAISS_INDEXES_COLLECTION", "faiss_indexes_registry")
+FAISS_INDEXES_COLLECTION = os.environ.get(
+    "FAISS_INDEXES_COLLECTION", "faiss_indexes_registry"
+)
 
 
-def generate_sample_vectors(count: int, dimension: int) -> tuple[np.ndarray, List[Dict[str, Any]]]:
+def generate_sample_vectors(
+    count: int, dimension: int
+) -> tuple[np.ndarray, list[dict[str, Any]]]:
     """Generate sample vectors and metadata"""
     logger.info(f"Generating {count} sample vectors with dimension {dimension}")
 
@@ -57,11 +65,15 @@ def generate_sample_vectors(count: int, dimension: int) -> tuple[np.ndarray, Lis
             }
         )
 
-    logger.info(f"Generated {len(vectors)} vectors and {len(metadata)} metadata entries")
+    logger.info(
+        f"Generated {len(vectors)} vectors and {len(metadata)} metadata entries"
+    )
     return vectors, metadata
 
 
-def create_faiss_index(vectors: np.ndarray, metadata: List[Dict[str, Any]]) -> tuple[faiss.Index, Dict[str, Any]]:
+def create_faiss_index(
+    vectors: np.ndarray, metadata: list[dict[str, Any]]
+) -> tuple[faiss.Index, dict[str, Any]]:
     """Create FAISS index with vectors and prepare metadata"""
     logger.info(f"Creating FAISS index for {len(vectors)} vectors")
 
@@ -89,7 +101,9 @@ def create_faiss_index(vectors: np.ndarray, metadata: List[Dict[str, Any]]) -> t
     return index, metadata_dict
 
 
-def upload_to_gcs(storage_client: storage.Client, bucket_name: str, local_file: str, gcs_path: str) -> str:
+def upload_to_gcs(
+    storage_client: storage.Client, bucket_name: str, local_file: str, gcs_path: str
+) -> str:
     """Upload file to GCS and return full GCS path"""
     logger.info(f"Uploading {local_file} to gs://{bucket_name}/{gcs_path}")
 
@@ -104,7 +118,11 @@ def upload_to_gcs(storage_client: storage.Client, bucket_name: str, local_file: 
 
 
 def register_in_firestore(
-    index_name: str, gcs_faiss_path: str, gcs_meta_path: str, vector_count: int, dimension: int
+    index_name: str,
+    gcs_faiss_path: str,
+    gcs_meta_path: str,
+    vector_count: int,
+    dimension: int,
 ) -> str:
     """Register the index in Firestore"""
     logger.info(f"Registering index {index_name} in Firestore")
@@ -130,17 +148,26 @@ def register_in_firestore(
     doc_ref = collection_ref.document(index_name)
     doc_ref.set(doc_data)
 
-    logger.info(f"Registered index {index_name} in Firestore collection {FAISS_INDEXES_COLLECTION}")
+    logger.info(
+        f"Registered index {index_name} in Firestore collection {FAISS_INDEXES_COLLECTION}"
+    )
     return doc_ref.id
 
 
 def main():
     """Main entry point"""
-    parser = argparse.ArgumentParser(description="Generate Sample Data for FAISS Migration")
-    parser.add_argument(
-        "--vector-count", type=int, default=10000, help="Number of vectors to generate (default: 10000)"
+    parser = argparse.ArgumentParser(
+        description="Generate Sample Data for FAISS Migration"
     )
-    parser.add_argument("--dimension", type=int, default=1536, help="Vector dimension (default: 1536)")
+    parser.add_argument(
+        "--vector-count",
+        type=int,
+        default=10000,
+        help="Number of vectors to generate (default: 10000)",
+    )
+    parser.add_argument(
+        "--dimension", type=int, default=1536, help="Vector dimension (default: 1536)"
+    )
     parser.add_argument(
         "--index-name",
         type=str,
@@ -180,16 +207,26 @@ def main():
 
             # Upload to GCS
             gcs_faiss_path = upload_to_gcs(
-                storage_client, FAISS_GCS_BUCKET, faiss_file, f"sample_data/{args.index_name}.faiss"
+                storage_client,
+                FAISS_GCS_BUCKET,
+                faiss_file,
+                f"sample_data/{args.index_name}.faiss",
             )
 
             gcs_meta_path = upload_to_gcs(
-                storage_client, FAISS_GCS_BUCKET, meta_file, f"sample_data/{args.index_name}_meta.pkl"
+                storage_client,
+                FAISS_GCS_BUCKET,
+                meta_file,
+                f"sample_data/{args.index_name}_meta.pkl",
             )
 
         # Register in Firestore
         doc_id = register_in_firestore(
-            args.index_name, gcs_faiss_path, gcs_meta_path, args.vector_count, args.dimension
+            args.index_name,
+            gcs_faiss_path,
+            gcs_meta_path,
+            args.vector_count,
+            args.dimension,
         )
 
         print("\nSample data generation completed successfully!")

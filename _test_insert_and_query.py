@@ -3,8 +3,8 @@
 # Original content is preserved below.
 
 from qdrant_client import QdrantClient
+from qdrant_client.http.models import FieldCondition, Filter, MatchValue
 from qdrant_client.models import PointStruct
-from qdrant_client.http.models import Filter, FieldCondition, MatchValue
 
 client = QdrantClient(
     url="https://ba0aa7ef-be87-47b4-96de-7d36ca4527a8.us-east4-0.gcp.cloud.qdrant.io",
@@ -13,18 +13,26 @@ client = QdrantClient(
 
 client.upsert(
     collection_name="agent_data_vector",
-    points=[PointStruct(id=1, vector=[0.1] * 1536, payload={"source": "test", "tag": "demo"})],
+    points=[
+        PointStruct(
+            id=1, vector=[0.1] * 1536, payload={"source": "test", "tag": "demo"}
+        )
+    ],
 )
 
 print("✅ Đã thêm vector test.")
 
-client.create_payload_index(collection_name="agent_data_vector", field_name="tag", field_schema="keyword")
+client.create_payload_index(
+    collection_name="agent_data_vector", field_name="tag", field_schema="keyword"
+)
 
 print("✅ Đã tạo index cho field 'tag'")
 
 results = client.scroll(
     collection_name="agent_data_vector",
-    scroll_filter=Filter(must=[FieldCondition(key="tag", match=MatchValue(value="demo"))]),
+    scroll_filter=Filter(
+        must=[FieldCondition(key="tag", match=MatchValue(value="demo"))]
+    ),
     limit=5,
 )
 

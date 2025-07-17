@@ -6,21 +6,27 @@ CLI 140e: Measures latency and identifies bottlenecks.
 
 import asyncio
 import cProfile
-import pstats
-import time
 import logging
-from typing import Dict, Any, List
-import sys
 import os
+import pstats
+import sys
+import time
+from typing import Any
 
+from agent_data_manager.api_mcp_gateway import (
+    _cache_result,
+    _get_cache_key,
+    _get_cached_result,
+)
 from agent_data_manager.tools.qdrant_vectorization_tool import qdrant_rag_search
-from agent_data_manager.api_mcp_gateway import _get_cache_key, _get_cached_result, _cache_result
 
 # Add src to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -30,7 +36,9 @@ class CSKHProfiler:
     def __init__(self):
         self.results = {}
 
-    async def profile_rag_search(self, query_text: str, limit: int = 10) -> Dict[str, Any]:
+    async def profile_rag_search(
+        self, query_text: str, limit: int = 10
+    ) -> dict[str, Any]:
         """Profile RAG search performance."""
         logger.info(f"Profiling RAG search for query: '{query_text[:50]}...'")
 
@@ -39,7 +47,12 @@ class CSKHProfiler:
         try:
             # Profile the RAG search
             result = await qdrant_rag_search(
-                query_text=query_text, metadata_filters={}, tags=[], path_query=None, limit=limit, score_threshold=0.6
+                query_text=query_text,
+                metadata_filters={},
+                tags=[],
+                path_query=None,
+                limit=limit,
+                score_threshold=0.6,
             )
 
             end_time = time.time()
@@ -54,7 +67,9 @@ class CSKHProfiler:
                 "success": result.get("status") == "success",
             }
 
-            logger.info(f"RAG search completed in {latency*1000:.2f}ms, {result.get('count', 0)} results")
+            logger.info(
+                f"RAG search completed in {latency*1000:.2f}ms, {result.get('count', 0)} results"
+            )
             return profile_result
 
         except Exception as e:
@@ -70,7 +85,7 @@ class CSKHProfiler:
                 "success": False,
             }
 
-    def profile_cache_operations(self, queries: List[str]) -> Dict[str, Any]:
+    def profile_cache_operations(self, queries: list[str]) -> dict[str, Any]:
         """Profile cache operations performance."""
         logger.info("Profiling cache operations")
 
@@ -106,7 +121,7 @@ class CSKHProfiler:
 
         return cache_results
 
-    async def run_performance_benchmark(self) -> Dict[str, Any]:
+    async def run_performance_benchmark(self) -> dict[str, Any]:
         """Run comprehensive performance benchmark."""
         logger.info("Starting CSKH API performance benchmark")
 
@@ -122,7 +137,12 @@ class CSKHProfiler:
             "Support ticket escalation",
         ]
 
-        benchmark_results = {"timestamp": time.time(), "rag_search_results": [], "cache_results": {}, "summary": {}}
+        benchmark_results = {
+            "timestamp": time.time(),
+            "rag_search_results": [],
+            "cache_results": {},
+            "summary": {},
+        }
 
         # Profile RAG searches
         for query in test_queries[:5]:  # Limit to 5 queries to avoid rate limits
@@ -136,7 +156,9 @@ class CSKHProfiler:
         benchmark_results["cache_results"] = self.profile_cache_operations(test_queries)
 
         # Calculate summary statistics
-        successful_searches = [r for r in benchmark_results["rag_search_results"] if r["success"]]
+        successful_searches = [
+            r for r in benchmark_results["rag_search_results"] if r["success"]
+        ]
         if successful_searches:
             latencies = [r["latency_ms"] for r in successful_searches]
             benchmark_results["summary"] = {
@@ -158,7 +180,9 @@ def run_cprofile_analysis():
 
     async def profile_target():
         profiler = CSKHProfiler()
-        return await profiler.profile_rag_search("Customer service performance test", limit=8)
+        return await profiler.profile_rag_search(
+            "Customer service performance test", limit=8
+        )
 
     # Run with cProfile
     pr = cProfile.Profile()

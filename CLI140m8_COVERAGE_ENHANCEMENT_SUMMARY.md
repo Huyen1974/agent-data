@@ -17,7 +17,7 @@ Achieve ≥80% coverage for `qdrant_vectorization_tool.py` (originally 65%, targ
 - Advanced async mocking with proper fixtures and context managers
 - Comprehensive edge case coverage for batch processing, error handling, and timeouts
 
-### 2. Original Test Suite (`test_cli140m8_coverage.py`) 
+### 2. Original Test Suite (`test_cli140m8_coverage.py`)
 - **8 test methods** with **5 working tests**
 - Focused on tenacity fallbacks, batch operations, and filter methods
 - Solid foundation for basic functionality testing
@@ -26,7 +26,7 @@ Achieve ≥80% coverage for `qdrant_vectorization_tool.py` (originally 65%, targ
 
 ### Successfully Covered:
 - **Lines 13-30**: Tenacity fallback decorators ✅
-- **Lines 133-136**: Batch metadata edge cases ✅  
+- **Lines 133-136**: Batch metadata edge cases ✅
 - **Lines 153-157**: Filter method edge cases ✅
 - **Lines 168-173**: Batch processing timeouts ✅
 - **Lines 179-180**: Additional batch edge cases ✅
@@ -57,11 +57,11 @@ Achieve ≥80% coverage for `qdrant_vectorization_tool.py` (originally 65%, targ
 @pytest.fixture
 def mock_settings(self):
     """Mock settings with proper Qdrant and Firestore configurations."""
-    
-@pytest.fixture  
+
+@pytest.fixture
 def mock_qdrant_store(self):
     """Mock QdrantStore with comprehensive method coverage."""
-    
+
 @pytest.fixture
 def mock_firestore_manager(self):
     """Mock FirestoreMetadataManager with batch operations."""
@@ -96,7 +96,7 @@ test_batch_vectorize_invalid_documents_coverage ✅
 test_update_vector_status_error_handling_coverage ✅
 # + 4 more working tests
 
-# Original tests - 5 passing  
+# Original tests - 5 passing
 test_tenacity_fallback_decorators_comprehensive ✅
 test_batch_vectorize_empty_documents ✅
 test_filter_methods_edge_cases ✅
@@ -163,4 +163,4 @@ test_batch_metadata_edge_cases_coverage ✅
 1. Fixing the 4 failing async tests (estimated +10-15 lines)
 2. Adding targeted tests for the remaining core logic paths (estimated +10-15 lines)
 
-The test infrastructure and patterns established in CLI140m.8 provide a robust foundation for continued coverage enhancement efforts. 
+The test infrastructure and patterns established in CLI140m.8 provide a robust foundation for continued coverage enhancement efforts.

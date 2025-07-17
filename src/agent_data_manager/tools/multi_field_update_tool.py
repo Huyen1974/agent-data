@@ -1,14 +1,16 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def multi_field_update(index_name: str, key: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+def multi_field_update(
+    index_name: str, key: str, updates: dict[str, Any]
+) -> dict[str, Any]:
     """
     Updates multiple fields of a specific metadata node (identified by key)
     within the specified FAISS index's companion metadata file.
@@ -32,7 +34,10 @@ def multi_field_update(index_name: str, key: str, updates: Dict[str, Any]) -> Di
         return {"status": "failed", "error": "Updates dictionary cannot be empty."}
 
     if not os.path.exists(meta_path) or not os.path.exists(index_path):
-        return {"status": "failed", "error": f"FAISS index or metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"FAISS index or metadata file not found for '{index_name}'.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -47,11 +52,13 @@ def multi_field_update(index_name: str, key: str, updates: Dict[str, Any]) -> Di
                 "error": f"Metadata file disappeared for index '{index_name}' during update attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -66,14 +73,22 @@ def multi_field_update(index_name: str, key: str, updates: Dict[str, Any]) -> Di
     metadata_dict = loaded_data["metadata"]
 
     if key not in metadata_dict:
-        return {"status": "failed", "error": f"Key '{key}' not found in index '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"Key '{key}' not found in index '{index_name}'.",
+        }
 
     if not isinstance(metadata_dict[key], dict):
-        return {"status": "failed", "error": f"Metadata for key '{key}' is not a dictionary, cannot update fields."}
+        return {
+            "status": "failed",
+            "error": f"Metadata for key '{key}' is not a dictionary, cannot update fields.",
+        }
 
     # --- Perform Update ---
     metadata_dict[key].update(updates)
-    loaded_data["metadata"] = metadata_dict  # Ensure the loaded data reflects the change
+    loaded_data["metadata"] = (
+        metadata_dict  # Ensure the loaded data reflects the change
+    )
 
     # --- Save with Retry ---
     for attempt in range(MAX_RETRIES):
@@ -82,30 +97,43 @@ def multi_field_update(index_name: str, key: str, updates: Dict[str, Any]) -> Di
                 pickle.dump(loaded_data, f)
 
             # Optionally: Reload to confirm save? For now, assume success.
-            print(f"Successfully updated fields for key '{key}' in index '{index_name}'.")
+            print(
+                f"Successfully updated fields for key '{key}' in index '{index_name}'."
+            )
             return {"status": "success", "updated_metadata": metadata_dict[key]}
 
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to save updated metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to save updated metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
                 # Attempt to restore original state? Difficult without transactionality.
                 # For now, raise error indicating save failure.
-                raise IOError(
+                raise OSError(
                     f"Failed to save updated metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     # Should not be reached if save loop works correctly
-    return {"status": "failed", "error": "Unknown error after update and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after update and save attempts.",
+    }
 
 
 # Example usage (for testing purposes)
 if __name__ == "__main__":
     # Assumes index_trends exists
-    print("Updating index_trends, key 'docB' with {'status': 'final', 'reviewed': True}:")
+    print(
+        "Updating index_trends, key 'docB' with {'status': 'final', 'reviewed': True}:"
+    )
     try:
-        print(multi_field_update("index_trends", "docB", {"status": "final", "reviewed": True}))
+        print(
+            multi_field_update(
+                "index_trends", "docB", {"status": "final", "reviewed": True}
+            )
+        )
     except Exception as e:
         print(f"Error: {e}")
 

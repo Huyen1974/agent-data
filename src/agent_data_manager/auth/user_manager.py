@@ -3,10 +3,11 @@ User Manager for Agent Data API A2A Gateway
 Handles user storage and retrieval from Firestore
 """
 
-import logging
 import hashlib
+import logging
 from datetime import datetime
-from typing import Optional, Dict, Any, List
+from typing import Any
+
 from google.cloud import firestore
 from passlib.context import CryptContext
 
@@ -25,13 +26,17 @@ class UserManager:
         self.collection_name = "users"
 
         try:
-            self.firestore_client = firestore.Client(project=self.project_id, database=self.database_id)
-            logger.info(f"UserManager initialized with project: {self.project_id}, database: {self.database_id}")
+            self.firestore_client = firestore.Client(
+                project=self.project_id, database=self.database_id
+            )
+            logger.info(
+                f"UserManager initialized with project: {self.project_id}, database: {self.database_id}"
+            )
         except Exception as e:
             logger.error(f"Failed to initialize Firestore client: {e}")
             raise
 
-    async def get_user_by_email(self, email: str) -> Optional[Dict[str, Any]]:
+    async def get_user_by_email(self, email: str) -> dict[str, Any] | None:
         """Get user by email address"""
         try:
             users_ref = self.firestore_client.collection(self.collection_name)
@@ -51,10 +56,12 @@ class UserManager:
             logger.error(f"Error retrieving user {email}: {e}")
             return None
 
-    async def get_user_by_id(self, user_id: str) -> Optional[Dict[str, Any]]:
+    async def get_user_by_id(self, user_id: str) -> dict[str, Any] | None:
         """Get user by user ID"""
         try:
-            user_ref = self.firestore_client.collection(self.collection_name).document(user_id)
+            user_ref = self.firestore_client.collection(self.collection_name).document(
+                user_id
+            )
             user_doc = user_ref.get()
 
             if user_doc.exists:
@@ -71,8 +78,8 @@ class UserManager:
             return None
 
     async def create_user(
-        self, email: str, password: str, full_name: str = None, scopes: List[str] = None
-    ) -> Dict[str, Any]:
+        self, email: str, password: str, full_name: str = None, scopes: list[str] = None
+    ) -> dict[str, Any]:
         """Create a new user"""
         if scopes is None:
             scopes = ["read", "write"]
@@ -102,7 +109,9 @@ class UserManager:
 
         try:
             # Create user document
-            user_ref = self.firestore_client.collection(self.collection_name).document(user_id)
+            user_ref = self.firestore_client.collection(self.collection_name).document(
+                user_id
+            )
             user_ref.set(user_data)
 
             user_data["user_id"] = user_id
@@ -113,7 +122,9 @@ class UserManager:
             logger.error(f"Error creating user {email}: {e}")
             raise
 
-    async def authenticate_user(self, email: str, password: str) -> Optional[Dict[str, Any]]:
+    async def authenticate_user(
+        self, email: str, password: str
+    ) -> dict[str, Any] | None:
         """Authenticate user with email and password"""
         try:
             user = await self.get_user_by_email(email)
@@ -143,7 +154,9 @@ class UserManager:
     async def update_login_stats(self, user_id: str):
         """Update user login statistics"""
         try:
-            user_ref = self.firestore_client.collection(self.collection_name).document(user_id)
+            user_ref = self.firestore_client.collection(self.collection_name).document(
+                user_id
+            )
             user_ref.update(
                 {
                     "last_login": datetime.utcnow(),
@@ -156,10 +169,12 @@ class UserManager:
         except Exception as e:
             logger.error(f"Error updating login stats for {user_id}: {e}")
 
-    async def update_user_scopes(self, user_id: str, scopes: List[str]) -> bool:
+    async def update_user_scopes(self, user_id: str, scopes: list[str]) -> bool:
         """Update user access scopes"""
         try:
-            user_ref = self.firestore_client.collection(self.collection_name).document(user_id)
+            user_ref = self.firestore_client.collection(self.collection_name).document(
+                user_id
+            )
             user_ref.update({"scopes": scopes, "updated_at": datetime.utcnow()})
             logger.info(f"Updated scopes for user {user_id}: {scopes}")
             return True
@@ -171,7 +186,9 @@ class UserManager:
     async def deactivate_user(self, user_id: str) -> bool:
         """Deactivate a user account"""
         try:
-            user_ref = self.firestore_client.collection(self.collection_name).document(user_id)
+            user_ref = self.firestore_client.collection(self.collection_name).document(
+                user_id
+            )
             user_ref.update({"is_active": False, "updated_at": datetime.utcnow()})
             logger.info(f"Deactivated user: {user_id}")
             return True
@@ -180,7 +197,9 @@ class UserManager:
             logger.error(f"Error deactivating user {user_id}: {e}")
             return False
 
-    async def list_users(self, limit: int = 100, active_only: bool = True) -> List[Dict[str, Any]]:
+    async def list_users(
+        self, limit: int = 100, active_only: bool = True
+    ) -> list[dict[str, Any]]:
         """List users with optional filtering"""
         try:
             users_ref = self.firestore_client.collection(self.collection_name)
@@ -205,7 +224,7 @@ class UserManager:
             logger.error(f"Error listing users: {e}")
             return []
 
-    async def create_test_user(self) -> Dict[str, Any]:
+    async def create_test_user(self) -> dict[str, Any]:
         """Create a test user for development and testing"""
         test_email = "test@cursor.integration"
         test_password = "test123"
@@ -219,7 +238,10 @@ class UserManager:
 
             # Create test user
             test_user = await self.create_user(
-                email=test_email, password=test_password, full_name="Test User", scopes=["read", "write", "admin"]
+                email=test_email,
+                password=test_password,
+                full_name="Test User",
+                scopes=["read", "write", "admin"],
             )
 
             logger.info(f"Created test user: {test_email}")

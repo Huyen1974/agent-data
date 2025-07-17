@@ -126,7 +126,7 @@
 2025-07-14T05:04:28.2645434Z  Built:             Tue Mar 25 15:07:16 2025
 2025-07-14T05:04:28.2645950Z  OS/Arch:           linux/amd64
 2025-07-14T05:04:28.2646475Z  Context:           default
-2025-07-14T05:04:28.2647862Z 
+2025-07-14T05:04:28.2647862Z
 2025-07-14T05:04:28.2648071Z Server: Docker Engine - Community
 2025-07-14T05:04:28.2648529Z  Engine:
 2025-07-14T05:04:28.2648875Z   Version:          28.0.4
@@ -157,7 +157,7 @@
 2025-07-14T05:04:28.4688847Z   compose: Docker Compose (Docker Inc.)
 2025-07-14T05:04:28.4689436Z     Version:  v2.36.2
 2025-07-14T05:04:28.4689923Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
-2025-07-14T05:04:28.4690335Z 
+2025-07-14T05:04:28.4690335Z
 2025-07-14T05:04:28.4690547Z Server:
 2025-07-14T05:04:28.4690937Z  Containers: 0
 2025-07-14T05:04:28.4691355Z   Running: 0
@@ -206,7 +206,7 @@
 2025-07-14T05:04:28.4714161Z   ::1/128
 2025-07-14T05:04:28.4714413Z   127.0.0.0/8
 2025-07-14T05:04:28.4714698Z  Live Restore Enabled: false
-2025-07-14T05:04:28.4714881Z 
+2025-07-14T05:04:28.4714881Z
 2025-07-14T05:04:28.4715861Z ##[endgroup]
 2025-07-14T05:04:28.5230822Z ##[group]Buildx version
 2025-07-14T05:04:28.5251362Z [command]/usr/bin/docker buildx version
@@ -246,7 +246,7 @@
 2025-07-14T05:04:31.4123690Z Name:          builder-78f7eab4-828e-4f1b-aa2b-03c67ca6a3d1
 2025-07-14T05:04:31.4124832Z Driver:        docker-container
 2025-07-14T05:04:31.4127060Z Last Activity: 2025-07-14 05:04:28 +0000 UTC
-2025-07-14T05:04:31.4127367Z 
+2025-07-14T05:04:31.4127367Z
 2025-07-14T05:04:31.4127472Z Nodes:
 2025-07-14T05:04:31.4127855Z Name:                  builder-78f7eab4-828e-4f1b-aa2b-03c67ca6a3d10
 2025-07-14T05:04:31.4128825Z Endpoint:              unix:///var/run/docker.sock
@@ -376,7 +376,7 @@
 2025-07-14T05:04:31.7619747Z  Built:             Tue Mar 25 15:07:16 2025
 2025-07-14T05:04:31.7619993Z  OS/Arch:           linux/amd64
 2025-07-14T05:04:31.7620192Z  Context:           default
-2025-07-14T05:04:31.7620317Z 
+2025-07-14T05:04:31.7620317Z
 2025-07-14T05:04:31.7620414Z Server: Docker Engine - Community
 2025-07-14T05:04:31.7620621Z  Engine:
 2025-07-14T05:04:31.7620787Z   Version:          28.0.4
@@ -407,7 +407,7 @@
 2025-07-14T05:04:31.8031206Z   compose: Docker Compose (Docker Inc.)
 2025-07-14T05:04:31.8031457Z     Version:  v2.36.2
 2025-07-14T05:04:31.8031712Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
-2025-07-14T05:04:31.8031952Z 
+2025-07-14T05:04:31.8031952Z
 2025-07-14T05:04:31.8032015Z Server:
 2025-07-14T05:04:31.8032169Z  Containers: 1
 2025-07-14T05:04:31.8032325Z   Running: 1
@@ -456,7 +456,7 @@
 2025-07-14T05:04:31.8044451Z   ::1/128
 2025-07-14T05:04:31.8044680Z   127.0.0.0/8
 2025-07-14T05:04:31.8044970Z  Live Restore Enabled: false
-2025-07-14T05:04:31.8045378Z 
+2025-07-14T05:04:31.8045378Z
 2025-07-14T05:04:31.8045848Z ##[endgroup]
 2025-07-14T05:04:31.8046398Z ##[group]Proxy configuration
 2025-07-14T05:04:31.8049348Z No proxy configuration found
@@ -521,14 +521,14 @@
 2025-07-14T05:04:31.9825934Z ##[endgroup]
 2025-07-14T05:04:32.1366506Z [command]/usr/bin/docker buildx build --cache-from type=gha --cache-to type=gha,mode=max --file Dockerfile.test --iidfile /home/runner/work/_temp/docker-actions-toolkit-9TPDpD/build-iidfile-d4bcdc8620.txt --tag agent-data-test-local --load --metadata-file /home/runner/work/_temp/docker-actions-toolkit-9TPDpD/build-metadata-51f9274f82.json .
 2025-07-14T05:04:32.4086648Z #0 building with "builder-78f7eab4-828e-4f1b-aa2b-03c67ca6a3d1" instance using docker-container driver
-2025-07-14T05:04:32.4087350Z 
+2025-07-14T05:04:32.4087350Z
 2025-07-14T05:04:32.4087570Z #1 [internal] load build definition from Dockerfile.test
 2025-07-14T05:04:32.4088060Z #1 transferring dockerfile: 870B done
 2025-07-14T05:04:32.4088351Z #1 DONE 0.0s
-2025-07-14T05:04:32.4088494Z 
+2025-07-14T05:04:32.4088494Z
 2025-07-14T05:04:32.4088712Z #2 [internal] load metadata for docker.io/library/python:3.10.14-slim-buster
 2025-07-14T05:04:32.6914354Z #2 ERROR: docker.io/library/python:3.10.14-slim-buster: not found
-2025-07-14T05:04:32.6915431Z 
+2025-07-14T05:04:32.6915431Z
 2025-07-14T05:04:32.6915721Z #3 [auth] library/python:pull token for registry-1.docker.io
 2025-07-14T05:04:32.6916415Z #3 DONE 0.0s
 2025-07-14T05:04:32.7210234Z ------
@@ -537,9 +537,9 @@
 2025-07-14T05:04:32.7493785Z Dockerfile.test:17
 2025-07-14T05:04:32.7494130Z --------------------
 2025-07-14T05:04:32.7494659Z   15 |     RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
-2025-07-14T05:04:32.7495052Z   16 |     
+2025-07-14T05:04:32.7495052Z   16 |
 2025-07-14T05:04:32.7495505Z   17 | >>> FROM python:${PY_VER}-slim-buster
-2025-07-14T05:04:32.7495789Z   18 |     
+2025-07-14T05:04:32.7495789Z   18 |
 2025-07-14T05:04:32.7495974Z   19 |     WORKDIR /app
 2025-07-14T05:04:32.7496192Z --------------------
 2025-07-14T05:04:32.7497018Z ERROR: failed to build: failed to solve: python:3.10.14-slim-buster: failed to resolve source metadata for docker.io/library/python:3.10.14-slim-buster: docker.io/library/python:3.10.14-slim-buster: not found

@@ -8,13 +8,14 @@ This test validates the optimized metadata query functionality including:
 - Composite index utilization
 """
 
-import pytest
 import time
 from unittest.mock import AsyncMock, MagicMock
-from typing import List
 
-from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+import pytest
 
+from src.agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestCLI136MetadataOptimization:
@@ -44,11 +45,13 @@ class TestCLI136MetadataOptimization:
         """Create FirestoreMetadataManager with mocked dependencies."""
         mock_client, mock_collection, mock_query = mock_firestore_client
 
-        manager = FirestoreMetadataManager(project_id="test-project", collection_name="test_metadata")
+        manager = FirestoreMetadataManager(
+            project_id="test-project", collection_name="test_metadata"
+        )
         manager.db = mock_client
         return manager, mock_collection, mock_query
 
-    def create_mock_documents(self, count: int = 5) -> List[MagicMock]:
+    def create_mock_documents(self, count: int = 5) -> list[MagicMock]:
         """Create mock Firestore documents for testing."""
         mock_docs = []
         for i in range(count):
@@ -181,7 +184,10 @@ class TestCLI136MetadataOptimization:
         # Test multi-level hierarchy query
         start_time = time.time()
         results = await manager.query_multi_level_hierarchy_optimized(
-            level_1="document", level_2="research_paper", order_by_updated=True, limit=25
+            level_1="document",
+            level_2="research_paper",
+            order_by_updated=True,
+            limit=25,
         )
         query_time = time.time() - start_time
 
@@ -263,7 +269,9 @@ class TestCLI136MetadataOptimization:
         results2 = await manager.query_by_version_range_optimized(min_version=1)
         assert results2 == []
 
-        results3 = await manager.query_latest_by_category_optimized(category_value="test")
+        results3 = await manager.query_latest_by_category_optimized(
+            category_value="test"
+        )
         assert results3 == []
 
         results4 = await manager.query_multi_level_hierarchy_optimized(level_1="test")
@@ -284,7 +292,9 @@ class TestCLI136MetadataOptimization:
         assert results == []
 
         # Test empty category value
-        results = await manager.query_latest_by_category_optimized(category_level="level_1_category", category_value="")
+        results = await manager.query_latest_by_category_optimized(
+            category_level="level_1_category", category_value=""
+        )
         assert results == []
 
         # Test empty level_1 for multi-level query

@@ -5,8 +5,10 @@ Demonstrates end-to-end system functionality and optimization
 """
 
 import time
-from agent_data_manager.api_mcp_gateway import app
+
 from fastapi.testclient import TestClient
+
+from agent_data_manager.api_mcp_gateway import app
 
 
 def main():
@@ -65,7 +67,10 @@ def main():
     # Test query endpoint
     print("4. Query Endpoint:")
     try:
-        response = client.post("/query", json={"query_text": "test query", "limit": 5, "tag": "performance_test"})
+        response = client.post(
+            "/query",
+            json={"query_text": "test query", "limit": 5, "tag": "performance_test"},
+        )
         print(f"   Status: {response.status_code}")
         print("   ✅ Query endpoint accessible")
     except Exception as e:
@@ -75,7 +80,10 @@ def main():
     # Test search endpoint
     print("5. Search Endpoint:")
     try:
-        response = client.post("/search", json={"query_text": "test search", "limit": 5, "score_threshold": 0.7})
+        response = client.post(
+            "/search",
+            json={"query_text": "test search", "limit": 5, "score_threshold": 0.7},
+        )
         print(f"   Status: {response.status_code}")
         print("   ✅ Search endpoint accessible")
     except Exception as e:

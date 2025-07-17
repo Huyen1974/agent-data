@@ -4,16 +4,15 @@ Updates task_report.md with latest task progress and completion status.
 Enhanced with CI/CD run data fetching for CLI 135.
 """
 
+import base64
 import json
 import logging
-import base64
 from datetime import datetime, timedelta
-from typing import Dict, Any, Optional, List
+from typing import Any
 
 import functions_framework
 import requests
-from google.cloud import firestore
-from google.cloud import secretmanager
+from google.cloud import firestore, secretmanager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +35,9 @@ def get_github_token() -> str:
     """
     try:
         client = secretmanager.SecretManagerServiceClient()
-        secret_name = f"projects/{PROJECT_ID}/secrets/{GITHUB_TOKEN_SECRET}/versions/latest"
+        secret_name = (
+            f"projects/{PROJECT_ID}/secrets/{GITHUB_TOKEN_SECRET}/versions/latest"
+        )
         response = client.access_secret_version(request={"name": secret_name})
         return response.payload.data.decode("UTF-8")
     except Exception as e:
@@ -44,7 +45,7 @@ def get_github_token() -> str:
         raise
 
 
-def get_github_ci_runs(github_token: str, limit: int = 8) -> List[Dict[str, Any]]:
+def get_github_ci_runs(github_token: str, limit: int = 8) -> list[dict[str, Any]]:
     """
     Fetch recent CI/CD workflow runs from GitHub API.
 
@@ -57,7 +58,10 @@ def get_github_ci_runs(github_token: str, limit: int = 8) -> List[Dict[str, Any]
     """
     try:
         url = f"https://api.github.com/repos/{GITHUB_REPO_OWNER}/{GITHUB_REPO_NAME}/actions/runs"
-        headers = {"Authorization": f"token {github_token}", "Accept": "application/vnd.github.v3+json"}
+        headers = {
+            "Authorization": f"token {github_token}",
+            "Accept": "application/vnd.github.v3+json",
+        }
 
         params = {"per_page": limit, "status": "completed"}  # Only get completed runs
 
@@ -78,15 +82,21 @@ def get_github_ci_runs(github_token: str, limit: int = 8) -> List[Dict[str, Any]
                     "run_number": run.get("run_number"),
                     "workflow_id": run.get("workflow_id"),
                     "head_branch": run.get("head_branch"),
-                    "head_sha": run.get("head_sha")[:8] if run.get("head_sha") else None,
+                    "head_sha": (
+                        run.get("head_sha")[:8] if run.get("head_sha") else None
+                    ),
                     "html_url": run.get("html_url"),
                 }
 
                 # Calculate duration if both timestamps exist
                 if run.get("created_at") and run.get("updated_at"):
                     try:
-                        created = datetime.fromisoformat(run["created_at"].replace("Z", "+00:00"))
-                        updated = datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00"))
+                        created = datetime.fromisoformat(
+                            run["created_at"].replace("Z", "+00:00")
+                        )
+                        updated = datetime.fromisoformat(
+                            run["updated_at"].replace("Z", "+00:00")
+                        )
                         duration = (updated - created).total_seconds()
                         run_data["duration_seconds"] = int(duration)
                         run_data["duration_minutes"] = round(duration / 60, 2)
@@ -100,7 +110,9 @@ def get_github_ci_runs(github_token: str, limit: int = 8) -> List[Dict[str, Any]
             return runs
 
         else:
-            logger.error(f"Failed to fetch CI runs: {response.status_code} - {response.text}")
+            logger.error(
+                f"Failed to fetch CI runs: {response.status_code} - {response.text}"
+            )
             return []
 
     except Exception as e:
@@ -108,7 +120,7 @@ def get_github_ci_runs(github_token: str, limit: int = 8) -> List[Dict[str, Any]
         return []
 
 
-def get_nightly_ci_stats(ci_runs: List[Dict[str, Any]]) -> Dict[str, Any]:
+def get_nightly_ci_stats(ci_runs: list[dict[str, Any]]) -> dict[str, Any]:
     """
     Analyze nightly CI runs for performance statistics.
 
@@ -141,13 +153,15 @@ def get_nightly_ci_stats(ci_runs: List[Dict[str, Any]]) -> Dict[str, Any]:
     return {
         "total_nightly_runs": len(nightly_runs),
         "avg_duration_minutes": round(avg_duration, 2),
-        "last_nightly_status": nightly_runs[0].get("conclusion", "unknown") if nightly_runs else "unknown",
+        "last_nightly_status": (
+            nightly_runs[0].get("conclusion", "unknown") if nightly_runs else "unknown"
+        ),
         "under_5_minutes": avg_duration < 5.0 if avg_duration > 0 else False,
         "recent_runs": nightly_runs[:3],  # Last 3 nightly runs
     }
 
 
-def _format_ci_runs_table(runs: List[Dict[str, Any]]) -> str:
+def _format_ci_runs_table(runs: list[dict[str, Any]]) -> str:
     """
     Format CI runs data into a markdown table.
 
@@ -166,8 +180,16 @@ def _format_ci_runs_table(runs: List[Dict[str, Any]]) -> str:
     for run in runs:
         run_num = run.get("run_number", "N/A")
         name = run.get("name", "Unknown")[:20]  # Truncate long names
-        status = "✅" if run.get("conclusion") == "success" else "❌" if run.get("conclusion") == "failure" else "⏸️"
-        duration = f"{run.get('duration_minutes', 0):.1f}m" if run.get("duration_minutes") else "N/A"
+        status = (
+            "✅"
+            if run.get("conclusion") == "success"
+            else "❌" if run.get("conclusion") == "failure" else "⏸️"
+        )
+        duration = (
+            f"{run.get('duration_minutes', 0):.1f}m"
+            if run.get("duration_minutes")
+            else "N/A"
+        )
         branch = run.get("head_branch", "unknown")[:10]  # Truncate long branch names
         sha = run.get("head_sha", "unknown")
 
@@ -175,7 +197,9 @@ def _format_ci_runs_table(runs: List[Dict[str, Any]]) -> str:
         date_str = "N/A"
         if run.get("created_at"):
             try:
-                date_obj = datetime.fromisoformat(run["created_at"].replace("Z", "+00:00"))
+                date_obj = datetime.fromisoformat(
+                    run["created_at"].replace("Z", "+00:00")
+                )
                 date_str = date_obj.strftime("%m/%d")
             except Exception:
                 pass
@@ -185,7 +209,7 @@ def _format_ci_runs_table(runs: List[Dict[str, Any]]) -> str:
     return table
 
 
-def get_firestore_stats() -> Dict[str, Any]:
+def get_firestore_stats() -> dict[str, Any]:
     """
     Get statistics from Firestore collections.
 
@@ -226,7 +250,10 @@ def get_firestore_stats() -> Dict[str, Any]:
         try:
             change_reports_ref = db.collection("change_reports")
             change_docs = list(change_reports_ref.stream())
-            stats["change_reports"] = {"total_reports": len(change_docs), "recent_reports": 0}
+            stats["change_reports"] = {
+                "total_reports": len(change_docs),
+                "recent_reports": 0,
+            }
 
             # Count reports from last 24 hours
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
@@ -236,7 +263,9 @@ def get_firestore_stats() -> Dict[str, Any]:
                 generated_at = data.get("generated_at")
                 if generated_at:
                     try:
-                        report_time = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+                        report_time = datetime.fromisoformat(
+                            generated_at.replace("Z", "+00:00")
+                        )
                         if report_time > cutoff_time:
                             stats["change_reports"]["recent_reports"] += 1
                     except Exception:
@@ -259,7 +288,7 @@ def get_firestore_stats() -> Dict[str, Any]:
         return {}
 
 
-def get_current_file_content(github_token: str) -> Optional[Dict[str, Any]]:
+def get_current_file_content(github_token: str) -> dict[str, Any] | None:
     """
     Get current content of task_report.md from GitHub.
 
@@ -271,7 +300,10 @@ def get_current_file_content(github_token: str) -> Optional[Dict[str, Any]]:
     """
     try:
         url = f"https://api.github.com/repos/{GITHUB_REPO_OWNER}/{GITHUB_REPO_NAME}/contents/{TASK_REPORT_PATH}"
-        headers = {"Authorization": f"token {github_token}", "Accept": "application/vnd.github.v3+json"}
+        headers = {
+            "Authorization": f"token {github_token}",
+            "Accept": "application/vnd.github.v3+json",
+        }
 
         response = requests.get(url, headers=headers)
 
@@ -283,7 +315,9 @@ def get_current_file_content(github_token: str) -> Optional[Dict[str, Any]]:
             logger.info("task_report.md not found, will create new file")
             return None
         else:
-            logger.error(f"Failed to get file content: {response.status_code} - {response.text}")
+            logger.error(
+                f"Failed to get file content: {response.status_code} - {response.text}"
+            )
             return None
 
     except Exception as e:
@@ -291,7 +325,9 @@ def get_current_file_content(github_token: str) -> Optional[Dict[str, Any]]:
         return None
 
 
-def generate_task_report_content(stats: Dict[str, Any], ci_stats: Optional[Dict[str, Any]] = None) -> str:
+def generate_task_report_content(
+    stats: dict[str, Any], ci_stats: dict[str, Any] | None = None
+) -> str:
     """
     Generate updated task report content.
 
@@ -417,7 +453,9 @@ The Agent Data system provides document vectorization, metadata management, and 
     return content
 
 
-def update_github_file(github_token: str, content: str, current_file: Optional[Dict[str, Any]]) -> bool:
+def update_github_file(
+    github_token: str, content: str, current_file: dict[str, Any] | None
+) -> bool:
     """
     Update task_report.md file on GitHub.
 
@@ -457,7 +495,9 @@ def update_github_file(github_token: str, content: str, current_file: Optional[D
             logger.info(f"Successfully updated {TASK_REPORT_PATH}")
             return True
         else:
-            logger.error(f"Failed to update file: {response.status_code} - {response.text}")
+            logger.error(
+                f"Failed to update file: {response.status_code} - {response.text}"
+            )
             return False
 
     except Exception as e:
@@ -490,7 +530,11 @@ def write_task_report_handler(request) -> tuple:
         ci_runs = get_github_ci_runs(github_token, limit=8)
         nightly_ci_stats = get_nightly_ci_stats(ci_runs)
 
-        ci_stats = {"recent_runs": ci_runs, "nightly_ci": nightly_ci_stats, "total_runs_fetched": len(ci_runs)}
+        ci_stats = {
+            "recent_runs": ci_runs,
+            "nightly_ci": nightly_ci_stats,
+            "total_runs_fetched": len(ci_runs),
+        }
 
         # Get current file content
         current_file = get_current_file_content(github_token)
@@ -521,7 +565,11 @@ def write_task_report_handler(request) -> tuple:
 
     except Exception as e:
         logger.error(f"Error in write_task_report_handler: {e}", exc_info=True)
-        response = {"status": "error", "message": str(e), "timestamp": datetime.utcnow().isoformat()}
+        response = {
+            "status": "error",
+            "message": str(e),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
         return json.dumps(response), 500
 
 

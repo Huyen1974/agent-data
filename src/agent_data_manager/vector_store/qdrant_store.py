@@ -3,11 +3,18 @@
 import asyncio
 import logging
 import uuid
-from typing import Dict, List, Optional, Any, Union
+from typing import Any
+
 import numpy as np
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from qdrant_client.http.models import Distance, VectorParams, PointStruct, Filter, FieldCondition
+from qdrant_client.http.models import (
+    Distance,
+    FieldCondition,
+    Filter,
+    PointStruct,
+    VectorParams,
+)
 
 from .base import VectorStore
 
@@ -15,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize API key masking for this module
 try:
-    from ..tools.api_key_middleware import setup_api_key_masking, mask_config_dict
+    from ..tools.api_key_middleware import mask_config_dict, setup_api_key_masking
 
     setup_api_key_masking(__name__)
 except ImportError:
@@ -31,11 +38,11 @@ except ImportError:
 try:
     from ..tools.prometheus_metrics import (
         MetricsTimer,
+        initialize_metrics_pusher,
         record_qdrant_error,
+        record_semantic_search,
         update_qdrant_connection_status,
         update_vector_count,
-        record_semantic_search,
-        initialize_metrics_pusher,
     )
 
     METRICS_AVAILABLE = True
@@ -66,7 +73,9 @@ except ImportError:
     def record_semantic_search():
         pass
 
-    def initialize_metrics_pusher(pushgateway_url: Optional[str] = None, push_interval: int = 60):
+    def initialize_metrics_pusher(
+        pushgateway_url: str | None = None, push_interval: int = 60
+    ):
         pass
 
 
@@ -118,7 +127,9 @@ class QdrantStore(VectorStore):
     def client(self) -> QdrantClient:
         """Get or create Qdrant client."""
         if self._client is None:
-            self._client = QdrantClient(url=self.url, api_key=self.api_key, timeout=30.0)
+            self._client = QdrantClient(
+                url=self.url, api_key=self.api_key, timeout=30.0
+            )
         return self._client
 
     async def _ensure_collection(self) -> None:
@@ -136,7 +147,9 @@ class QdrantStore(VectorStore):
                 await asyncio.to_thread(
                     self.client.create_collection,
                     collection_name=self.collection_name,
-                    vectors_config=VectorParams(size=self.vector_size, distance=self.distance),
+                    vectors_config=VectorParams(
+                        size=self.vector_size, distance=self.distance
+                    ),
                 )
                 logger.info(f"Created Qdrant collection: {self.collection_name}")
 
@@ -167,10 +180,10 @@ class QdrantStore(VectorStore):
     async def upsert_vector(
         self,
         vector_id: str,
-        vector: Union[List[float], np.ndarray],
-        metadata: Optional[Dict[str, Any]] = None,
-        tag: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        vector: list[float] | np.ndarray,
+        metadata: dict[str, Any] | None = None,
+        tag: str | None = None,
+    ) -> dict[str, Any]:
         """Upsert a vector with metadata."""
         await self._ensure_collection()
 
@@ -196,7 +209,9 @@ class QdrantStore(VectorStore):
 
                 # Upsert the point
                 result = await asyncio.to_thread(
-                    self.client.upsert, collection_name=self.collection_name, points=[point]
+                    self.client.upsert,
+                    collection_name=self.collection_name,
+                    points=[point],
                 )
 
                 # Update connection status on successful operation
@@ -206,7 +221,9 @@ class QdrantStore(VectorStore):
                     "success": True,
                     "vector_id": vector_id,  # Return original doc_id for compatibility
                     "point_id": point_id,  # Include Qdrant point ID for reference
-                    "operation_id": result.operation_id if hasattr(result, "operation_id") else None,
+                    "operation_id": (
+                        result.operation_id if hasattr(result, "operation_id") else None
+                    ),
                 }
 
             except Exception as e:
@@ -218,11 +235,11 @@ class QdrantStore(VectorStore):
     async def query_vectors_by_tag(
         self,
         tag: str,
-        query_vector: Optional[Union[List[float], np.ndarray]] = None,
+        query_vector: list[float] | np.ndarray | None = None,
         limit: int = 10,
         threshold: float = 0.0,
         offset: int = 0,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Query vectors by tag with optional similarity search."""
         await self._ensure_collection()
 
@@ -233,7 +250,9 @@ class QdrantStore(VectorStore):
                     record_semantic_search()
 
                 # Create filter for tag
-                query_filter = Filter(must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))])
+                query_filter = Filter(
+                    must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))]
+                )
 
                 if query_vector is not None:
                     # Convert vector to list if numpy array
@@ -305,9 +324,9 @@ class QdrantStore(VectorStore):
         self,
         query_text: str,
         limit: int = 10,
-        tag: Optional[str] = None,
+        tag: str | None = None,
         score_threshold: float = 0.5,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Perform semantic search using OpenAI embeddings.
 
@@ -327,7 +346,9 @@ class QdrantStore(VectorStore):
             from ..tools.external_tool_registry import get_openai_embedding
 
             # Generate embedding for the query text
-            embedding_result = await get_openai_embedding(agent_context=None, text_to_embed=query_text)
+            embedding_result = await get_openai_embedding(
+                agent_context=None, text_to_embed=query_text
+            )
             if "embedding" not in embedding_result or not embedding_result["embedding"]:
                 logger.error(f"Failed to generate embedding for query: {query_text}")
                 return {
@@ -342,7 +363,9 @@ class QdrantStore(VectorStore):
             # Create filter for tag if specified
             search_filter = None
             if tag:
-                search_filter = Filter(must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))])
+                search_filter = Filter(
+                    must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))]
+                )
 
             # Perform vector search
             with MetricsTimer("semantic_search"):
@@ -382,9 +405,16 @@ class QdrantStore(VectorStore):
             logger.error(f"Failed to perform semantic search for '{query_text}': {e}")
             record_qdrant_error("semantic_search")
             update_qdrant_connection_status(False)
-            return {"status": "failed", "error": str(e), "query": query_text, "results": []}
+            return {
+                "status": "failed",
+                "error": str(e),
+                "query": query_text,
+                "results": [],
+            }
 
-    async def get_recent_documents(self, limit: int = 10, offset: int = 0) -> Dict[str, Any]:
+    async def get_recent_documents(
+        self, limit: int = 10, offset: int = 0
+    ) -> dict[str, Any]:
         """
         Get recent documents from the collection.
 
@@ -435,13 +465,15 @@ class QdrantStore(VectorStore):
                 update_qdrant_connection_status(False)
                 return {"results": [], "total": 0}
 
-    async def delete_vectors_by_tag(self, tag: str) -> Dict[str, Any]:
+    async def delete_vectors_by_tag(self, tag: str) -> dict[str, Any]:
         """Delete all vectors with a specific tag."""
         await self._ensure_collection()
 
         try:
             # Create filter for tag
-            delete_filter = Filter(must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))])
+            delete_filter = Filter(
+                must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))]
+            )
 
             # Delete points with the tag
             result = await asyncio.to_thread(
@@ -453,7 +485,9 @@ class QdrantStore(VectorStore):
             return {
                 "success": True,
                 "tag": tag,
-                "operation_id": result.operation_id if hasattr(result, "operation_id") else None,
+                "operation_id": (
+                    result.operation_id if hasattr(result, "operation_id") else None
+                ),
             }
 
         except Exception as e:
@@ -466,7 +500,9 @@ class QdrantStore(VectorStore):
 
         with MetricsTimer("get_count"):
             try:
-                info = await asyncio.to_thread(self.client.get_collection, collection_name=self.collection_name)
+                info = await asyncio.to_thread(
+                    self.client.get_collection, collection_name=self.collection_name
+                )
                 count = info.vectors_count or 0
 
                 # Update vector count metric

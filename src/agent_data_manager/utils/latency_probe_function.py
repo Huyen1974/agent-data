@@ -4,9 +4,10 @@ import asyncio
 import datetime
 import logging
 import time
-from typing import Optional, Dict, Any
+from typing import Any
 
 from qdrant_client import AsyncQdrantClient
+
 from ..config.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -17,7 +18,7 @@ class QdrantLatencyProbe:
 
     def __init__(self):
         """Initialize the latency probe."""
-        self.client: Optional[AsyncQdrantClient] = None
+        self.client: AsyncQdrantClient | None = None
         self._initialized = False
 
     async def _ensure_initialized(self):
@@ -38,7 +39,7 @@ class QdrantLatencyProbe:
             logger.error(f"Failed to initialize QdrantLatencyProbe: {e}")
             raise
 
-    async def measure_ping_latency(self) -> Dict[str, Any]:
+    async def measure_ping_latency(self) -> dict[str, Any]:
         """
         Measure ping latency to Qdrant cluster.
 
@@ -76,7 +77,7 @@ class QdrantLatencyProbe:
                 "error": str(e),
             }
 
-    async def measure_search_latency(self) -> Dict[str, Any]:
+    async def measure_search_latency(self) -> dict[str, Any]:
         """
         Measure search operation latency.
 
@@ -152,7 +153,7 @@ class QdrantLatencyProbe:
                     "error": str(e),
                 }
 
-    async def run_full_probe(self) -> Dict[str, Any]:
+    async def run_full_probe(self) -> dict[str, Any]:
         """
         Run complete latency probe including ping and search.
 
@@ -184,10 +185,16 @@ class QdrantLatencyProbe:
             "search_result": search_result,
             "p95_latency_ms": p95_latency,
             "avg_latency_ms": sum(latencies) / len(latencies),
-            "status": "SUCCESS" if all(r["status"] == "SUCCESS" for r in [ping_result, search_result]) else "PARTIAL",
+            "status": (
+                "SUCCESS"
+                if all(r["status"] == "SUCCESS" for r in [ping_result, search_result])
+                else "PARTIAL"
+            ),
         }
 
-    def log_result_to_file(self, result: Dict[str, Any], log_file: str = "logs/latency.log"):
+    def log_result_to_file(
+        self, result: dict[str, Any], log_file: str = "logs/latency.log"
+    ):
         """
         Log probe result to file in the specified format.
 
@@ -267,7 +274,11 @@ async def latency_probe_function(request=None):
 
     except Exception as e:
         logger.error(f"Latency probe failed: {e}")
-        return {"error": str(e), "timestamp": datetime.datetime.utcnow().isoformat(), "status": "FAILED"}
+        return {
+            "error": str(e),
+            "timestamp": datetime.datetime.utcnow().isoformat(),
+            "status": "FAILED",
+        }
     finally:
         if _latency_probe:
             await _latency_probe.close()

@@ -4,7 +4,7 @@ Reset to: CLI140m.55 commit 2a94024023b0c66d43e07ffecd8f2ba9cc99f693
 
 Test Collection Results:
 - pytest --collect-only -q --qdrant-mock: 557 total lines
-- pytest --collect-only -q (no mock): 557 total lines  
+- pytest --collect-only -q (no mock): 557 total lines
 - pytest --collect-only -q --qdrant-mock | grep '::test_' | sort | uniq: 519 unique tests
 - Batch test script collection: 513 tests
 
@@ -26,4 +26,4 @@ Status: BASELINE ESTABLISHED
 - Reset to CLI140m.55 successful
 - Test count confirmed: 519 unique tests (not 557 as initially expected)
 - Status matches CLI140m.55 expectations: 0 Failed, minimal Timeout, low Skipped
-- Ready for CLI140m.61 parsing optimization 
+- Ready for CLI140m.61 parsing optimization

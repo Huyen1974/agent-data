@@ -45,7 +45,9 @@ except ImportError as e1:
         print("CRITICAL: Using dummy get_all_tool_functions and flags!")
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # -->> ADDED STARTUP LOGGING <<--
@@ -57,7 +59,9 @@ if REGISTRY_IMPORTED:
         f"Initial Dependency Check (web_server): FAISS_AVAILABLE={FAISS_AVAILABLE}, OPENAI_AVAILABLE={OPENAI_AVAILABLE}"
     )
 else:
-    logger.error("Initial Dependency Check (web_server): Failed to import registry module.")
+    logger.error(
+        "Initial Dependency Check (web_server): Failed to import registry module."
+    )
 # -->> END STARTUP LOGGING <<--
 
 # Load tools at startup - REMOVED
@@ -70,7 +74,9 @@ def execute_tool():
     """Executes a tool based on MCP JSON format."""
     start_time = time.time()
     data = request.get_json()
-    request_id = data.get("id", "req-{}".format(int(start_time)))  # Generate ID if missing
+    request_id = data.get(
+        "id", f"req-{int(start_time)}"
+    )  # Generate ID if missing
 
     if not data:
         logger.error(f"Request {request_id}: Received empty or invalid JSON data.")
@@ -88,7 +94,9 @@ def execute_tool():
     args = data.get("args", [])  # Default to empty list if 'args' is missing
 
     if not tool_name:
-        logger.error(f"Request {request_id}: Missing 'tool_name' key in request payload.")
+        logger.error(
+            f"Request {request_id}: Missing 'tool_name' key in request payload."
+        )
         return (
             jsonify(
                 {
@@ -114,7 +122,9 @@ def execute_tool():
     # --- Get tools lazily ---
     try:
         all_tools = get_all_tool_functions()
-        logger.info(f"Request {request_id}: Lazy tool discovery successful. Found tools: {list(all_tools.keys())}")
+        logger.info(
+            f"Request {request_id}: Lazy tool discovery successful. Found tools: {list(all_tools.keys())}"
+        )
     except Exception as e:
         logger.error(
             f"Request {request_id}: Failed to get tools via get_all_tool_functions: {e}",
@@ -126,8 +136,14 @@ def execute_tool():
     tool_function = all_tools.get(tool_name)
 
     if not tool_function:
-        available_tools_msg = list(all_tools.keys()) if all_tools else "Discovery failed or no tools available"
-        logger.error(f"Request {request_id}: Unknown tool: {tool_name}. Available: {available_tools_msg}")
+        available_tools_msg = (
+            list(all_tools.keys())
+            if all_tools
+            else "Discovery failed or no tools available"
+        )
+        logger.error(
+            f"Request {request_id}: Unknown tool: {tool_name}. Available: {available_tools_msg}"
+        )
         return (
             jsonify(
                 {
@@ -139,7 +155,9 @@ def execute_tool():
         )
 
     try:
-        logger.info(f"Request {request_id}: Executing tool: {tool_name} with args: {args}")
+        logger.info(
+            f"Request {request_id}: Executing tool: {tool_name} with args: {args}"
+        )
         result = tool_function(*args)  # Unpack args for the function call
         logger.info(f"Request {request_id}: Tool {tool_name} executed successfully.")
         # Attempt to return JSON directly, handle potential serialization errors
@@ -193,7 +211,9 @@ def execute_tool():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # Use os.environ.get for Cloud Run compatibility
+    port = int(
+        os.environ.get("PORT", 8080)
+    )  # Use os.environ.get for Cloud Run compatibility
     logger.info(f"Starting Flask server on host 0.0.0.0 port {port}")
     # Use '0.0.0.0' to be accessible externally, required by Cloud Run
     # Turn off debug mode for production/Cloud Run

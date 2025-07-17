@@ -1,6 +1,7 @@
-import pytest
 import subprocess
 import sys
+
+import pytest
 
 
 class TestCLI126AOptimization:
@@ -11,7 +12,9 @@ class TestCLI126AOptimization:
     @pytest.mark.unit
     def test_pytest_testmon_installed(self):
         """Test that pytest-testmon is properly installed and available."""
-        result = subprocess.run([sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True)
+        result = subprocess.run(
+            [sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True
+        )
         assert result.returncode == 0
         assert "--testmon" in result.stdout, "pytest-testmon should be available"
 
@@ -20,7 +23,9 @@ class TestCLI126AOptimization:
     @pytest.mark.unit
     def test_pytest_xdist_installed(self):
         """Test that pytest-xdist is properly installed and available."""
-        result = subprocess.run([sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True)
+        result = subprocess.run(
+            [sys.executable, "-m", "pytest", "--help"], capture_output=True, text=True
+        )
         assert result.returncode == 0
         assert "-n" in result.stdout, "pytest-xdist should be available"
 
@@ -46,7 +51,10 @@ class TestCLI126AOptimization:
         """Test that CLI 126A optimization goals are achieved."""
         # Verify we can run E2E tests quickly
         result = subprocess.run(
-            [sys.executable, "-m", "pytest", "-m", "e2e", "--tb=no", "-q"], capture_output=True, text=True, cwd="."
+            [sys.executable, "-m", "pytest", "-m", "e2e", "--tb=no", "-q"],
+            capture_output=True,
+            text=True,
+            cwd=".",
         )
         # Should pass (exit code 0) and run reasonably fast
         assert result.returncode == 0, f"E2E tests should pass: {result.stdout}"

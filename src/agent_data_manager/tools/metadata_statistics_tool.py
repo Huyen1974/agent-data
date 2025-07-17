@@ -1,17 +1,23 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, Optional, List
 from collections import Counter
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
-DEFAULT_STATS_FIELDS = ["year", "type", "project"]  # Fields to automatically calculate distribution for
+DEFAULT_STATS_FIELDS = [
+    "year",
+    "type",
+    "project",
+]  # Fields to automatically calculate distribution for
 
 
-def metadata_statistics(index_name: str, fields_to_analyze: Optional[List[str]] = None) -> Dict[str, Any]:
+def metadata_statistics(
+    index_name: str, fields_to_analyze: list[str] | None = None
+) -> dict[str, Any]:
     """
     Calculates basic statistics for the metadata in the specified index.
     Includes total node count and value distributions for specified fields.
@@ -49,11 +55,13 @@ def metadata_statistics(index_name: str, fields_to_analyze: Optional[List[str]] 
                 "error": f"Metadata file disappeared for index '{index_name}' during statistics calculation.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -80,10 +88,19 @@ def metadata_statistics(index_name: str, fields_to_analyze: Optional[List[str]] 
                     missing_count += 1
             else:
                 missing_count += 1
-        field_distributions[field] = {"value_counts": dict(counts), "nodes_missing_field": missing_count}
+        field_distributions[field] = {
+            "value_counts": dict(counts),
+            "nodes_missing_field": missing_count,
+        }
 
     print(f"Successfully calculated statistics for index '{index_name}'.")
-    return {"status": "success", "statistics": {"total_nodes": total_nodes, "field_distributions": field_distributions}}
+    return {
+        "status": "success",
+        "statistics": {
+            "total_nodes": total_nodes,
+            "field_distributions": field_distributions,
+        },
+    }
 
 
 # Example usage (for testing purposes)

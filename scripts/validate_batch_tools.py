@@ -1,16 +1,18 @@
+import argparse
 import json
 import sys
-import os
-import argparse
 
 
 def load_tools_list(file_path: str) -> set:
     """Loads a list of tools from a JSON file."""
     try:
-        with open(file_path, "r") as f:
+        with open(file_path) as f:
             tools = json.load(f)
             if not isinstance(tools, list):
-                print(f"Error: Content of {file_path} is not a JSON list.", file=sys.stderr)
+                print(
+                    f"Error: Content of {file_path} is not a JSON list.",
+                    file=sys.stderr,
+                )
                 return set()
             return set(tools)
     except FileNotFoundError:
@@ -24,7 +26,9 @@ def load_tools_list(file_path: str) -> set:
         return set()
 
 
-def validate_tools(input_tool_names: list, production_tools: set, test_only_tools: set) -> dict:
+def validate_tools(
+    input_tool_names: list, production_tools: set, test_only_tools: set
+) -> dict:
     """Validates a list of tool names against allowed and prohibited lists."""
     valid_tools = []
     invalid_tools = []
@@ -46,7 +50,11 @@ def validate_tools(input_tool_names: list, production_tools: set, test_only_tool
             )
             invalid_tools.append(tool_name)
 
-    return {"valid_tools": valid_tools, "invalid_tools": invalid_tools, "prohibited_tools": prohibited_tools}
+    return {
+        "valid_tools": valid_tools,
+        "invalid_tools": invalid_tools,
+        "prohibited_tools": prohibited_tools,
+    }
 
 
 def main():
@@ -95,7 +103,9 @@ def main():
         sys.exit(1)
 
     # Validate tools
-    validation_result = validate_tools(input_tool_names, production_tools, test_only_tools)
+    validation_result = validate_tools(
+        input_tool_names, production_tools, test_only_tools
+    )
 
     # Print the result as JSON to stdout
     print(json.dumps(validation_result, indent=2))

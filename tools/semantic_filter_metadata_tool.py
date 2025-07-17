@@ -1,14 +1,14 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, List
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def _check_values_contain_keywords(data: Any, keywords: List[str]) -> bool:
+def _check_values_contain_keywords(data: Any, keywords: list[str]) -> bool:
     """Recursively check if any string value contains any of the keywords (case-insensitive)."""
     if isinstance(data, dict):
         for value in data.values():
@@ -27,7 +27,9 @@ def _check_values_contain_keywords(data: Any, keywords: List[str]) -> bool:
     return False
 
 
-def semantic_filter_metadata(index_name: str, semantic_criteria: List[str]) -> List[Dict[str, Any]]:
+def semantic_filter_metadata(
+    index_name: str, semantic_criteria: list[str]
+) -> list[dict[str, Any]]:
     """
     Simulates semantic filtering of metadata based on a list of keywords.
     Loads metadata and returns entries where any value contains any of the criteria keywords.
@@ -52,7 +54,9 @@ def semantic_filter_metadata(index_name: str, semantic_criteria: List[str]) -> L
         return []
 
     if not os.path.exists(meta_path):
-        print(f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot filter.")
+        print(
+            f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot filter."
+        )
         return []
 
     loaded_data = None
@@ -62,19 +66,25 @@ def semantic_filter_metadata(index_name: str, semantic_criteria: List[str]) -> L
                 loaded_data = pickle.load(f)
             break  # Success
         except FileNotFoundError:
-            print(f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during filter.")
+            print(
+                f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during filter."
+            )
             return []
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     if loaded_data is None or "metadata" not in loaded_data:
-        raise ValueError(f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key.")
+        raise ValueError(
+            f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key."
+        )
 
     metadata_dict = loaded_data["metadata"]
 
@@ -83,7 +93,9 @@ def semantic_filter_metadata(index_name: str, semantic_criteria: List[str]) -> L
             results.append({key: value})
 
     if not results:
-        print(f"No metadata entries in index '{index_name}' matched semantic criteria: {semantic_criteria}")
+        print(
+            f"No metadata entries in index '{index_name}' matched semantic criteria: {semantic_criteria}"
+        )
 
     return results
 

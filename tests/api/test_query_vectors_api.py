@@ -1,7 +1,9 @@
-import pytest
 import random
 import uuid
+
+import pytest
 from fastapi.testclient import TestClient
+
 from api_vector_search import app  # Assuming your FastAPI app instance is here
 
 client = TestClient(app)
@@ -32,16 +34,22 @@ def test_get_vector_by_id():
         "/upsert_vector",
         json={"point_id": point_id, "vector": vector, "metadata": payload},
     )
-    assert upsert_response.status_code == 200, f"Failed to upsert vector: {upsert_response.text}"
+    assert (
+        upsert_response.status_code == 200
+    ), f"Failed to upsert vector: {upsert_response.text}"
     assert upsert_response.json().get("status") == "ok"
 
     # Get the vector by ID
-    get_response = client.post(f"/get_vector_by_id", json={"point_id": point_id})
+    get_response = client.post("/get_vector_by_id", json={"point_id": point_id})
 
-    assert get_response.status_code == 200, f"Failed to get vector by ID: {get_response.text}"
+    assert (
+        get_response.status_code == 200
+    ), f"Failed to get vector by ID: {get_response.text}"
 
     retrieved_point_data = get_response.json()
-    assert retrieved_point_data is not None, "API returned None for an existing vector ID"
+    assert (
+        retrieved_point_data is not None
+    ), "API returned None for an existing vector ID"
     assert retrieved_point_data["status"] == "ok"
 
     retrieved_vector_data = retrieved_point_data.get("point")
@@ -80,7 +88,9 @@ def test_query_vectors_by_ids():
         tag = generate_unique_tag()
         item_metadata = {"tag": tag, "index": i}
 
-        points_to_upsert.append({"id": point_id, "vector": vector, "metadata": item_metadata})
+        points_to_upsert.append(
+            {"id": point_id, "vector": vector, "metadata": item_metadata}
+        )
         expected_points_data[point_id] = item_metadata
         point_ids_to_query.append(point_id)
 
@@ -98,9 +108,15 @@ def test_query_vectors_by_ids():
     for point_data in points_to_upsert:
         upsert_response = client.post(
             "/upsert_vector",
-            json={"point_id": point_data["id"], "vector": point_data["vector"], "metadata": point_data["metadata"]},
+            json={
+                "point_id": point_data["id"],
+                "vector": point_data["vector"],
+                "metadata": point_data["metadata"],
+            },
         )
-        assert upsert_response.status_code == 200, f"Failed to upsert vector {point_data['id']}: {upsert_response.text}"
+        assert (
+            upsert_response.status_code == 200
+        ), f"Failed to upsert vector {point_data['id']}: {upsert_response.text}"
         assert upsert_response.json().get("status") == "ok"
 
     # Query vectors by IDs
@@ -108,7 +124,9 @@ def test_query_vectors_by_ids():
     query_body = {"point_ids": point_ids_to_query, "limit": 10}
     query_response = client.post("/query_vectors_by_ids", json=query_body)
 
-    assert query_response.status_code == 200, f"Failed to query by IDs: {query_response.text}"
+    assert (
+        query_response.status_code == 200
+    ), f"Failed to query by IDs: {query_response.text}"
 
     retrieved_points = query_response.json()
     assert isinstance(retrieved_points, list), "Response should be a list of points"

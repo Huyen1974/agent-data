@@ -29,4 +29,6 @@ target_file = "/Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/AD
 with open(target_file, "a", encoding="utf-8") as f:
     f.write("\n" + test_code + "\n")
 
-print("✅ Đã chèn test test_save_vector_data_invalid_item_type vào file test_save_metadata_to_faiss.py")
+print(
+    "✅ Đã chèn test test_save_vector_data_invalid_item_type vào file test_save_metadata_to_faiss.py"
+)

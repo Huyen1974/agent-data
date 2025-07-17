@@ -1,5 +1,5 @@
-import sys
 import logging
+import sys
 
 # Set up logger early
 logger = logging.getLogger(__name__)
@@ -15,93 +15,93 @@ except ImportError as e:
     logger.warning(f"Failed to initialize API key masking middleware: {e}")
 
 # --- Core Tool Imports (No external dependencies like Faiss/OpenAI) ---
-from .save_text_tool import save_text
 from .add_numbers_tool import add_numbers
-from .multiply_numbers_tool import multiply_numbers
-from .echo_tool import echo
-from .get_registered_tools_tool import get_registered_tools
-from .delay_tool import delay_tool
-
-# --- Metadata/Document Management Tool Imports (May use local file system/pickle) ---
-from .save_document_tool import save_document
-from .vectorize_document_tool import vectorize_document
-from .document_ingestion_tool import ingest_document_sync, batch_ingest_documents
-from .update_metadata_tool import update_metadata
-from .query_metadata_tool import query_metadata
-from .multi_update_metadata_tool import multi_update_metadata
+from .advanced_semantic_search_tool import advanced_semantic_search
+from .aggregate_metadata_tool import aggregate_metadata
+from .analyze_metadata_trends_tool import analyze_metadata_trends
+from .batch_generate_embeddings_tool import batch_generate_embeddings
 from .bulk_delete_metadata_tool import bulk_delete_metadata
 from .bulk_update_metadata_tool import bulk_update_metadata
-from .multi_field_update_tool import multi_field_update
-from .delete_by_tag_tool import delete_by_tag_sync
 from .bulk_upload_tool import bulk_upload_sync
-from .search_by_payload_tool import search_by_payload_sync
-
-# --- Metadata Search/Query Tool Imports (Local implementations) ---
-from .semantic_search_local_tool import semantic_search_local
-from .find_metadata_by_key_tool import find_metadata_by_key
-from .semantic_search_metadata_tool import semantic_search_metadata
-from .semantic_search_by_author_tool import semantic_search_by_author
-from .semantic_search_by_year_tool import semantic_search_by_year
-from .semantic_search_by_keyword_tool import semantic_search_by_keyword
 from .conditional_search_metadata_tool import conditional_search_metadata
-from .semantic_search_multiple_fields_tool import semantic_search_multiple_fields
-from .sort_metadata_tool import sort_metadata
-from .advanced_semantic_search_tool import advanced_semantic_search
 
 # --- Metadata Tree Tool Imports (Local graph/tree logic) ---
 from .create_metadata_tree_tool import create_metadata_tree
-from .view_metadata_tree_tool import view_metadata_tree
+from .delay_tool import delay_tool
+from .delete_by_tag_tool import delete_by_tag_sync
 from .delete_metadata_node_tool import delete_metadata_node
-from .update_metadata_node_tool import update_metadata_node
 from .depth_first_search_tool import depth_first_search
-from .rebuild_metadata_tree_tool import rebuild_metadata_tree
-from .semantic_search_metadata_tree_tool import semantic_search_metadata_tree
-from .validate_metadata_tree_tool import validate_metadata_tree
+from .detect_anomalies_tool import detect_anomalies
+from .document_ingestion_tool import batch_ingest_documents, ingest_document_sync
+from .echo_tool import echo
+
+# --- Error Tool Import ---
+from .error_tool import raise_error_tool
+from .find_metadata_by_key_tool import find_metadata_by_key
 
 # --- Embedding Generation/Search Tool Imports (Local/Simple) ---
 from .generate_embedding_tool import generate_embedding
-from .semantic_similarity_search_tool import semantic_similarity_search
-from .batch_generate_embeddings_tool import batch_generate_embeddings
+from .get_registered_tools_tool import get_registered_tools
+from .metadata_statistics_tool import metadata_statistics
+from .multi_field_update_tool import multi_field_update
+from .multi_update_metadata_tool import multi_update_metadata
+from .multiply_numbers_tool import multiply_numbers
+from .query_metadata_tool import query_metadata
+from .rebuild_metadata_tree_tool import rebuild_metadata_tree
+
+# --- Metadata/Document Management Tool Imports (May use local file system/pickle) ---
+from .save_document_tool import save_document
+from .save_text_tool import save_text
+from .search_by_payload_tool import search_by_payload_sync
 
 # --- Advanced/Analysis Tool Imports (Local implementations) ---
 from .semantic_expand_metadata_tool import semantic_expand_metadata
 from .semantic_filter_metadata_tool import semantic_filter_metadata
-from .analyze_metadata_trends_tool import analyze_metadata_trends
-from .aggregate_metadata_tool import aggregate_metadata
-from .detect_anomalies_tool import detect_anomalies
-from .metadata_statistics_tool import metadata_statistics
+from .semantic_search_by_author_tool import semantic_search_by_author
+from .semantic_search_by_keyword_tool import semantic_search_by_keyword
+from .semantic_search_by_year_tool import semantic_search_by_year
 
-# --- Error Tool Import ---
-from .error_tool import raise_error_tool
+# --- Metadata Search/Query Tool Imports (Local implementations) ---
+from .semantic_search_local_tool import semantic_search_local
+from .semantic_search_metadata_tool import semantic_search_metadata
+from .semantic_search_metadata_tree_tool import semantic_search_metadata_tree
+from .semantic_search_multiple_fields_tool import semantic_search_multiple_fields
+from .semantic_similarity_search_tool import semantic_similarity_search
+from .sort_metadata_tool import sort_metadata
+from .update_metadata_node_tool import update_metadata_node
+from .update_metadata_tool import update_metadata
+from .validate_metadata_tree_tool import validate_metadata_tree
+from .vectorize_document_tool import vectorize_document
+from .view_metadata_tree_tool import view_metadata_tree
 
 # --- Qdrant Vector Store Tool Imports ---
 try:
-    from .qdrant_vector_tools import (
-        qdrant_upsert_vector,
-        qdrant_query_by_tag,
-        qdrant_delete_by_tag,
-        qdrant_get_count,
-        qdrant_health_check,
-        save_vector_to_qdrant,
-        search_vectors_qdrant,
-    )
     from .qdrant_embedding_tools import (
+        qdrant_batch_generate_embeddings,
         qdrant_generate_and_store_embedding,
         qdrant_semantic_search,
-        qdrant_batch_generate_embeddings,
         semantic_search_qdrant,
     )
 
     # Import synchronous wrappers for MCP integration
     from .qdrant_sync_wrappers import (
-        qdrant_health_check_sync,
-        qdrant_get_count_sync,
-        qdrant_upsert_vector_sync,
-        qdrant_query_by_tag_sync,
         qdrant_delete_by_tag_sync,
-        qdrant_semantic_search_sync,
         qdrant_generate_and_store_embedding_sync,
+        qdrant_get_count_sync,
+        qdrant_health_check_sync,
+        qdrant_query_by_tag_sync,
+        qdrant_semantic_search_sync,
+        qdrant_upsert_vector_sync,
         semantic_search_qdrant_sync,
+    )
+    from .qdrant_vector_tools import (
+        qdrant_delete_by_tag,
+        qdrant_get_count,
+        qdrant_health_check,
+        qdrant_query_by_tag,
+        qdrant_upsert_vector,
+        save_vector_to_qdrant,
+        search_vectors_qdrant,
     )
 
     QDRANT_TOOLS_AVAILABLE = True
@@ -114,9 +114,9 @@ except ImportError:
 from .external_tool_registry import (
     FAISS_AVAILABLE,
     OPENAI_AVAILABLE,
+    clear_embeddings,
     generate_embedding_real,
     semantic_search_cosine,
-    clear_embeddings,
 )
 
 # --- Conditionally import FAISS-dependent tools ---
@@ -132,13 +132,21 @@ from .query_metadata_faiss_tool import query_metadata_faiss
 if FAISS_AVAILABLE:
     try:
         # Use relative paths for conditional imports
+        from .advanced_query_faiss_tool import (
+            advanced_query_faiss as _faiss_query_advanced,
+        )
+        from .load_metadata_from_faiss_tool import (
+            load_metadata_from_faiss as _faiss_load,
+        )
+        from .rebuild_metadata_tree_from_faiss_tool import (
+            rebuild_metadata_tree_from_faiss as _faiss_rebuild_tree,
+        )
         from .save_metadata_to_faiss_tool import save_metadata_to_faiss as _faiss_save
-        from .load_metadata_from_faiss_tool import load_metadata_from_faiss as _faiss_load
-        from .advanced_query_faiss_tool import advanced_query_faiss as _faiss_query_advanced
-        from .rebuild_metadata_tree_from_faiss_tool import rebuild_metadata_tree_from_faiss as _faiss_rebuild_tree
     except ImportError as ie:
         faiss_logger_init = logging.getLogger(__name__)
-        faiss_logger_init.warning(f"FAISS is AVAILABLE but absolute import failed: {ie}. FAISS tools may not work.")
+        faiss_logger_init.warning(
+            f"FAISS is AVAILABLE but absolute import failed: {ie}. FAISS tools may not work."
+        )
 # --- End Conditional FAISS Import ---
 
 
@@ -151,16 +159,24 @@ def register_tools(agent):
         try:
             pass_context = False
             # Tools that require agent_context should be listed here
-            if name in ["query_metadata_faiss", "generate_embedding_real", "get_registered_tools"]:
+            if name in [
+                "query_metadata_faiss",
+                "generate_embedding_real",
+                "get_registered_tools",
+            ]:
                 pass_context = True
                 logger.info(f"Registering tool '{name}' with pass_agent_context=True")
 
-            agent.tools_manager.register_tool(name=name, tool_function=func, pass_agent_context=pass_context)
+            agent.tools_manager.register_tool(
+                name=name, tool_function=func, pass_agent_context=pass_context
+            )
             # logger.debug(f"Successfully registered tool: {name}") # Too verbose for INFO
         except Exception as e:
             logger.error(f"Failed to register tool '{name}': {e}", exc_info=True)
     registered_count = len(agent.tools_manager.tools)
-    logger.info(f"Completed tool registration for {agent.name}. Total tools registered: {registered_count}")
+    logger.info(
+        f"Completed tool registration for {agent.name}. Total tools registered: {registered_count}"
+    )
 
 
 # --- Tool Function Lister ---

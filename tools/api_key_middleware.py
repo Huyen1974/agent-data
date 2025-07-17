@@ -2,7 +2,7 @@
 
 import logging
 import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 class APIKeyMaskingFilter(logging.Filter):
@@ -11,13 +11,22 @@ class APIKeyMaskingFilter(logging.Filter):
     # Patterns to match various API key formats
     API_KEY_PATTERNS = [
         # Qdrant API keys (typically long alphanumeric strings)
-        (r'api_key["\']?\s*[:=]\s*["\']?([a-zA-Z0-9_-]{20,})["\']?', r'api_key="***MASKED***"'),
+        (
+            r'api_key["\']?\s*[:=]\s*["\']?([a-zA-Z0-9_-]{20,})["\']?',
+            r'api_key="***MASKED***"',
+        ),
         # OpenAI API keys (sk-...)
         (r"sk-[a-zA-Z0-9]{48}", r"sk-***MASKED***"),
         # Generic API key patterns
-        (r'["\']?api_key["\']?\s*[:=]\s*["\']?([^"\'\s,}]{10,})["\']?', r'"api_key": "***MASKED***"'),
+        (
+            r'["\']?api_key["\']?\s*[:=]\s*["\']?([^"\'\s,}]{10,})["\']?',
+            r'"api_key": "***MASKED***"',
+        ),
         # Authorization headers
-        (r"Authorization:\s*Bearer\s+([a-zA-Z0-9_-]{10,})", r"Authorization: Bearer ***MASKED***"),
+        (
+            r"Authorization:\s*Bearer\s+([a-zA-Z0-9_-]{10,})",
+            r"Authorization: Bearer ***MASKED***",
+        ),
         # URL embedded API keys
         (r"(\?|&)api_key=([^&\s]+)", r"\1api_key=***MASKED***"),
     ]
@@ -48,7 +57,7 @@ class APIKeyMaskingFilter(logging.Filter):
             text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
         return text
 
-    def mask_dict_values(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def mask_dict_values(self, data: dict[str, Any]) -> dict[str, Any]:
         """Recursively mask sensitive values in dictionaries."""
         if not isinstance(data, dict):
             return data
@@ -56,7 +65,8 @@ class APIKeyMaskingFilter(logging.Filter):
         masked_data = {}
         for key, value in data.items():
             if isinstance(key, str) and any(
-                sensitive in key.lower() for sensitive in ["api_key", "token", "secret", "password"]
+                sensitive in key.lower()
+                for sensitive in ["api_key", "token", "secret", "password"]
             ):
                 masked_data[key] = "***MASKED***"
             elif isinstance(value, dict):
@@ -69,7 +79,7 @@ class APIKeyMaskingFilter(logging.Filter):
         return masked_data
 
 
-def setup_api_key_masking(logger_name: Optional[str] = None) -> None:
+def setup_api_key_masking(logger_name: str | None = None) -> None:
     """
     Set up API key masking for a specific logger or root logger.
 
@@ -122,7 +132,7 @@ def mask_api_key(text: str) -> str:
 
 
 # Convenience function to mask sensitive data in dictionaries
-def mask_config_dict(config: Dict[str, Any]) -> Dict[str, Any]:
+def mask_config_dict(config: dict[str, Any]) -> dict[str, Any]:
     """
     Mask sensitive values in a configuration dictionary.
 

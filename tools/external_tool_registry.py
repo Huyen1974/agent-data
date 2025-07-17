@@ -1,12 +1,14 @@
+import asyncio
+import logging
 import os
 import pickle
+import sys
 import time
-import logging
+from typing import Any
+
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from typing import Dict, Any, List, Union
-import sys
-import asyncio
+
 from ADK.agent_data.agent.agent_data_agent import AgentDataAgent
 
 # --- Setup Logger ---
@@ -22,7 +24,9 @@ try:
     OPENAI_AVAILABLE = True
     logger.info("OpenAI import successful.")
     # Define the actual retry decorator only if openai is available
-    openai_retry = retry_decorator(openai.APIError, tries=3, delay=2, backoff=2, logger=logging.getLogger(__name__))
+    openai_retry = retry_decorator(
+        openai.APIError, tries=3, delay=2, backoff=2, logger=logging.getLogger(__name__)
+    )
 except ImportError as e:
     logger.error(f"OpenAI import failed: {e}", exc_info=True)
     print(f"ERROR: OpenAI import failed: {e}", file=sys.stderr)
@@ -80,7 +84,9 @@ TOP_N_DEFAULT = 5  # Max number of similar items to return
 # --- OpenAI Client Setup ---
 openai_client = None
 openai_async_client = None
-openai_api_key = os.environ.get("OPENAI_API_KEY")  # Prefer env var for simplicity in MCP
+openai_api_key = os.environ.get(
+    "OPENAI_API_KEY"
+)  # Prefer env var for simplicity in MCP
 
 if OPENAI_AVAILABLE and openai_api_key:
     try:
@@ -93,7 +99,9 @@ if OPENAI_AVAILABLE and openai_api_key:
         openai_async_client = None
 else:
     if not OPENAI_AVAILABLE:
-        logger.warning("OpenAI library not found. Tools requiring OpenAI embeddings will not be available.")
+        logger.warning(
+            "OpenAI library not found. Tools requiring OpenAI embeddings will not be available."
+        )
     elif not openai_api_key:
         logger.warning(
             "OPENAI_API_KEY environment variable not set. Tools requiring OpenAI embeddings will not be available."
@@ -107,12 +115,14 @@ else:
 @openai_retry
 async def get_openai_embedding(
     agent_context: AgentDataAgent,
-    text_to_embed: Union[str, List[str]],
+    text_to_embed: str | list[str],
     model_name: str = EMBEDDING_MODEL,
     encoding_format: str = "float",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Gets embedding for a text or list of texts using OpenAI API with retries."""
-    print("<<<< DEBUG: GET_OPENAI_EMBEDDING ENTERED (external_tool_registry.py) >>>>")  # DEBUG ADDED
+    print(
+        "<<<< DEBUG: GET_OPENAI_EMBEDDING ENTERED (external_tool_registry.py) >>>>"
+    )  # DEBUG ADDED
     # print(f"INSIDE get_openai_embedding, type of agent_context: {type(agent_context)}")
     if not openai_async_client:
         logger.warning("OpenAI async client not initialized. Cannot get embedding.")
@@ -129,11 +139,15 @@ async def get_openai_embedding(
 
     try:
         # logger.debug(f"Requesting OpenAI embedding for: {processed_texts} with model: {model_name}, format: {encoding_format}")
-        print("<<<< DEBUG: GET_OPENAI_EMBEDDING BEFORE openai_async_client.embeddings.create >>>>")  # DEBUG ADDED
+        print(
+            "<<<< DEBUG: GET_OPENAI_EMBEDDING BEFORE openai_async_client.embeddings.create >>>>"
+        )  # DEBUG ADDED
         response = await openai_async_client.embeddings.create(
             input=processed_texts, model=model_name, encoding_format=encoding_format
         )
-        print("<<<< DEBUG: GET_OPENAI_EMBEDDING AFTER openai_async_client.embeddings.create >>>>")  # DEBUG ADDED
+        print(
+            "<<<< DEBUG: GET_OPENAI_EMBEDDING AFTER openai_async_client.embeddings.create >>>>"
+        )  # DEBUG ADDED
         # logger.debug(f"OpenAI embedding response received. Usage: {response.usage}")
         # Assuming a single embedding or first if multiple texts were for a single conceptual embedding
         result_dict = {
@@ -143,7 +157,9 @@ async def get_openai_embedding(
         }
         # print(f"DEBUG get_openai_embedding returning: {result_dict.keys()}") # DEBUG REMOVED
         return result_dict
-    except openai.APIError as e:  # Renamed from APIConnectionError, RateLimitError, APIStatusError for broader catch
+    except (
+        openai.APIError
+    ) as e:  # Renamed from APIConnectionError, RateLimitError, APIStatusError for broader catch
         logger.error(f"OpenAI API request failed to connect: {e}")
         # Consider if retry decorator handles this, or if specific return is needed.
         # For now, let retry handle it by re-raising, or return error if retry is exhausted.
@@ -161,14 +177,26 @@ async def get_openai_embedding(
         }
     except openai.APIStatusError as e:
         logger.error(f"OpenAI API returned an API Error: {e.status_code} {e.response}")
-        return {"error": f"OpenAI APIStatusError: {e.message}", "status_code": e.status_code}
+        return {
+            "error": f"OpenAI APIStatusError: {e.message}",
+            "status_code": e.status_code,
+        }
     except Exception as e:
-        print(f"<<<< DEBUG: GET_OPENAI_EMBEDDING CAUGHT EXCEPTION: {type(e).__name__} - {str(e)} >>>>")  # DEBUG ADDED
-        logger.error(f"An unexpected error occurred during OpenAI API call: {e}", exc_info=True)
-        return {"error": f"Unexpected error during OpenAI API call: {e}", "status_code": 500}
+        print(
+            f"<<<< DEBUG: GET_OPENAI_EMBEDDING CAUGHT EXCEPTION: {type(e).__name__} - {str(e)} >>>>"
+        )  # DEBUG ADDED
+        logger.error(
+            f"An unexpected error occurred during OpenAI API call: {e}", exc_info=True
+        )
+        return {
+            "error": f"Unexpected error during OpenAI API call: {e}",
+            "status_code": 500,
+        }
 
 
-def generate_embedding_real(index_name: str, key: str, text_field: str = "content") -> Dict[str, Any]:
+def generate_embedding_real(
+    index_name: str, key: str, text_field: str = "content"
+) -> dict[str, Any]:
     """
     Generates a real embedding using OpenAI API for a specific metadata node
     (based on its 'text_field' or 'content') and updates the metadata file.
@@ -184,12 +212,23 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not openai_client:
-        return {"status": "failed", "error": "OpenAI client not initialized. Cannot generate real embedding."}
+        return {
+            "status": "failed",
+            "error": "OpenAI client not initialized. Cannot generate real embedding.",
+        }
     if not FAISS_AVAILABLE:
-        return {"status": "failed", "error": "FAISS library not available. Cannot operate on FAISS indices."}
+        return {
+            "status": "failed",
+            "error": "FAISS library not available. Cannot operate on FAISS indices.",
+        }
 
-    if not os.path.exists(meta_path):  # No need to check index_path, only modifying meta
-        return {"status": "failed", "error": f"Metadata file not found for '{index_name}'. Cannot generate embedding."}
+    if not os.path.exists(
+        meta_path
+    ):  # No need to check index_path, only modifying meta
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for '{index_name}'. Cannot generate embedding.",
+        }
 
     loaded_data = None
     # Load existing data
@@ -198,9 +237,16 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
         with open(meta_path, "rb") as f:
             loaded_data = pickle.load(f)
     except Exception as e:
-        return {"status": "failed", "error": f"Failed to load metadata file '{meta_path}': {e}"}
+        return {
+            "status": "failed",
+            "error": f"Failed to load metadata file '{meta_path}': {e}",
+        }
 
-    if loaded_data is None or "metadata" not in loaded_data or "key_to_id" not in loaded_data:
+    if (
+        loaded_data is None
+        or "metadata" not in loaded_data
+        or "key_to_id" not in loaded_data
+    ):
         # key_to_id is crucial for potentially updating a FAISS index later if needed
         return {
             "status": "failed",
@@ -210,11 +256,17 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
     metadata_dict = loaded_data["metadata"]
 
     if key not in metadata_dict:
-        return {"status": "failed", "error": f"Key '{key}' not found in index '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"Key '{key}' not found in index '{index_name}'.",
+        }
 
     node_metadata = metadata_dict[key]
     if not isinstance(node_metadata, dict):
-        return {"status": "failed", "error": f"Metadata for key '{key}' is not a dictionary."}
+        return {
+            "status": "failed",
+            "error": f"Metadata for key '{key}' is not a dictionary.",
+        }
 
     # --- Find text to embed ---
     text_to_embed = None
@@ -223,14 +275,18 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
         logger.debug(f"Using primary field '{text_field}' for embedding.")
     elif "content" in node_metadata and isinstance(node_metadata["content"], str):
         text_to_embed = node_metadata["content"]
-        logger.debug(f"Primary field '{text_field}' not found/invalid, using fallback 'content' field.")
+        logger.debug(
+            f"Primary field '{text_field}' not found/invalid, using fallback 'content' field."
+        )
     else:
         # Check common fields before giving up
         potential_fields = ["description", "summary", "text"]
         for field in potential_fields:
             if field in node_metadata and isinstance(node_metadata[field], str):
                 text_to_embed = node_metadata[field]
-                logger.debug(f"Primary/fallback fields not found, using field '{field}'.")
+                logger.debug(
+                    f"Primary/fallback fields not found, using field '{field}'."
+                )
                 break
         if not text_to_embed:
             return {
@@ -241,8 +297,13 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
     # --- Generate Real Embedding ---
     logger.info(f"Attempting to generate real embedding for key '{key}'...")
     try:
-        embedding_result_dict = asyncio.run(get_openai_embedding(agent_context=None, text_to_embed=text_to_embed))
-        if "embedding" not in embedding_result_dict or not embedding_result_dict["embedding"]:
+        embedding_result_dict = asyncio.run(
+            get_openai_embedding(agent_context=None, text_to_embed=text_to_embed)
+        )
+        if (
+            "embedding" not in embedding_result_dict
+            or not embedding_result_dict["embedding"]
+        ):
             return {
                 "status": "failed",
                 "error": f"Failed to generate embedding for key '{key}'. Error: {embedding_result_dict.get('error')}",
@@ -251,11 +312,17 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
 
         if real_embedding is None:  # Should be caught by the check above now
             # Error already logged by get_openai_embedding on failure
-            return {"status": "failed", "error": f"Failed to generate embedding for key '{key}' after retries."}
+            return {
+                "status": "failed",
+                "error": f"Failed to generate embedding for key '{key}' after retries.",
+            }
     except Exception as e:
         # Catch any exception bubbling up from retry failures
         logger.error(f"Embedding generation failed for key '{key}': {e}")
-        return {"status": "failed", "error": f"Embedding generation failed for key '{key}': {e}"}
+        return {
+            "status": "failed",
+            "error": f"Embedding generation failed for key '{key}': {e}",
+        }
 
     node_metadata["embedding"] = real_embedding
     loaded_data["metadata"][key] = node_metadata  # Update the structure to be saved
@@ -267,7 +334,9 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
                 pickle.dump(loaded_data, f)
 
             embedding_dim = len(real_embedding)
-            logger.info(f"Successfully generated and saved real embedding (dim={embedding_dim}) for key '{key}'.")
+            logger.info(
+                f"Successfully generated and saved real embedding (dim={embedding_dim}) for key '{key}'."
+            )
             return {
                 "status": "success",
                 "key": key,
@@ -288,13 +357,16 @@ def generate_embedding_real(index_name: str, key: str, text_field: str = "conten
                     "error": f"Failed to save metadata for '{index_name}' after {MAX_RETRIES} attempts: {e}",
                 }
 
-    return {"status": "failed", "error": "Unknown error after generating real embedding and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after generating real embedding and save attempts.",
+    }
 
 
 # --- semantic_search_cosine_tool ---
 def semantic_search_cosine(
     index_name: str, query_text: str, threshold: float = 0.8, top_n: int = TOP_N_DEFAULT
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Performs semantic similarity search using cosine similarity against a text query.
 
@@ -311,17 +383,31 @@ def semantic_search_cosine(
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not openai_client:
-        return {"status": "failed", "error": "OpenAI client not initialized. Cannot generate query embedding."}
+        return {
+            "status": "failed",
+            "error": "OpenAI client not initialized. Cannot generate query embedding.",
+        }
     if not FAISS_AVAILABLE:
-        return {"status": "failed", "error": "FAISS library not available. Cannot operate on FAISS indices."}
+        return {
+            "status": "failed",
+            "error": "FAISS library not available. Cannot operate on FAISS indices.",
+        }
 
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for index '{index_name}'. Cannot search."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for index '{index_name}'. Cannot search.",
+        }
 
     # --- Generate embedding for the query text ---
     try:
-        query_embedding_result_dict = asyncio.run(get_openai_embedding(agent_context=None, text_to_embed=query_text))
-        if "embedding" not in query_embedding_result_dict or not query_embedding_result_dict["embedding"]:
+        query_embedding_result_dict = asyncio.run(
+            get_openai_embedding(agent_context=None, text_to_embed=query_text)
+        )
+        if (
+            "embedding" not in query_embedding_result_dict
+            or not query_embedding_result_dict["embedding"]
+        ):
             return {
                 "status": "failed",
                 "error": f"Could not generate embedding for query text: '{query_text}'. Error: {query_embedding_result_dict.get('error')}",
@@ -337,7 +423,10 @@ def semantic_search_cosine(
         query_dim = query_embedding.shape[1]
     except Exception as e:
         logger.error(f"Failed to get or process query embedding: {e}")
-        return {"status": "failed", "error": f"Could not generate or process embedding for query: {e}"}
+        return {
+            "status": "failed",
+            "error": f"Could not generate or process embedding for query: {e}",
+        }
 
     loaded_data = None
     # --- Load metadata --- (Simple load, critical failure if meta is bad)
@@ -345,13 +434,22 @@ def semantic_search_cosine(
         with open(meta_path, "rb") as f:
             loaded_data = pickle.load(f)
     except FileNotFoundError:
-        return {"status": "failed", "error": f"Metadata file disappeared for index '{index_name}' during search."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file disappeared for index '{index_name}' during search.",
+        }
     except Exception as e:
         logger.error(f"Failed to load metadata for FAISS index '{index_name}': {e}")
-        return {"status": "failed", "error": f"Failed to load metadata for '{index_name}': {e}"}
+        return {
+            "status": "failed",
+            "error": f"Failed to load metadata for '{index_name}': {e}",
+        }
 
     if loaded_data is None or "metadata" not in loaded_data:
-        return {"status": "failed", "error": f"Invalid metadata file format for '{index_name}'. Missing 'metadata'."}
+        return {
+            "status": "failed",
+            "error": f"Invalid metadata file format for '{index_name}'. Missing 'metadata'.",
+        }
 
     metadata_dict = loaded_data["metadata"]
 
@@ -383,7 +481,9 @@ def semantic_search_cosine(
                     )
 
             except Exception as e:
-                logger.warning(f"Error processing embedding for key '{key}': {e}. Skipping.")
+                logger.warning(
+                    f"Error processing embedding for key '{key}': {e}. Skipping."
+                )
 
     if not keys_to_compare:
         logger.info(
@@ -405,30 +505,44 @@ def semantic_search_cosine(
             )
             return {"status": "failed", "error": "Internal dimension mismatch error."}
 
-        similarity_scores = cosine_similarity(query_embedding, embeddings_array)[0]  # Get the first (only) row
+        similarity_scores = cosine_similarity(query_embedding, embeddings_array)[
+            0
+        ]  # Get the first (only) row
     except ValueError as ve:
         # More specific error for dimension mismatch
         logger.error(f"ValueError during cosine similarity calculation: {ve}")
-        return {"status": "failed", "error": f"Similarity calculation error (likely dimension mismatch): {ve}"}
+        return {
+            "status": "failed",
+            "error": f"Similarity calculation error (likely dimension mismatch): {ve}",
+        }
     except Exception as e:
         logger.error(f"Error calculating cosine similarity: {e}")
-        return {"status": "failed", "error": f"Error calculating cosine similarity: {e}"}
+        return {
+            "status": "failed",
+            "error": f"Error calculating cosine similarity: {e}",
+        }
 
     # Filter by threshold and collect results
     for i, score in enumerate(similarity_scores):
         if score >= threshold:
-            similar_items.append({"key": keys_to_compare[i], "cosine_similarity": round(float(score), 6)})
+            similar_items.append(
+                {"key": keys_to_compare[i], "cosine_similarity": round(float(score), 6)}
+            )
 
     # Sort by score descending and take top N
-    sorted_similar = sorted(similar_items, key=lambda x: x["cosine_similarity"], reverse=True)
+    sorted_similar = sorted(
+        similar_items, key=lambda x: x["cosine_similarity"], reverse=True
+    )
     top_similar = sorted_similar[:top_n]
 
-    logger.info(f"Found {len(top_similar)} similar items (cosine >= {threshold}) for query '{query_text}'.")
+    logger.info(
+        f"Found {len(top_similar)} similar items (cosine >= {threshold}) for query '{query_text}'."
+    )
     return {"status": "success", "query": query_text, "similar_items": top_similar}
 
 
 # --- clear_embeddings_tool ---
-def clear_embeddings(index_name: str) -> Dict[str, Any]:
+def clear_embeddings(index_name: str) -> dict[str, Any]:
     """
     Removes the 'embedding' field from all nodes in the specified index's metadata.
 
@@ -442,7 +556,10 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
 
     # No external dependencies needed to just clear, but check file exists
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for '{index_name}'. Cannot clear embeddings."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for '{index_name}'. Cannot clear embeddings.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -457,7 +574,9 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
                 "error": f"Metadata file disappeared for index '{index_name}' during clear embeddings.",
             }
         except Exception as e:
-            logger.warning(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}' (clear): {e}")
+            logger.warning(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}' (clear): {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY_IO)
             else:
@@ -467,7 +586,10 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
                 }
 
     if loaded_data is None or "metadata" not in loaded_data:
-        return {"status": "failed", "error": f"Invalid metadata file format for '{index_name}'. Missing 'metadata'."}
+        return {
+            "status": "failed",
+            "error": f"Invalid metadata file format for '{index_name}'. Missing 'metadata'.",
+        }
 
     metadata_dict = loaded_data["metadata"]
     cleared_count = 0
@@ -484,9 +606,15 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
 
     if not needs_saving:
         logger.info(f"No embeddings found to clear in index '{index_name}'.")
-        return {"status": "success", "cleared_count": 0, "message": "No embeddings found to clear."}
+        return {
+            "status": "success",
+            "cleared_count": 0,
+            "message": "No embeddings found to clear.",
+        }
 
-    loaded_data["metadata"] = metadata_dict  # Ensure the modified dict is part of the saved structure
+    loaded_data["metadata"] = (
+        metadata_dict  # Ensure the modified dict is part of the saved structure
+    )
 
     # --- Save with Retry ---
     for attempt in range(MAX_RETRIES):
@@ -494,7 +622,9 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
             with open(meta_path, "wb") as f:
                 pickle.dump(loaded_data, f)
 
-            logger.info(f"Successfully cleared embeddings from {cleared_count} nodes in index '{index_name}'.")
+            logger.info(
+                f"Successfully cleared embeddings from {cleared_count} nodes in index '{index_name}'."
+            )
             return {"status": "success", "cleared_count": cleared_count}
 
         except Exception as e:
@@ -509,7 +639,10 @@ def clear_embeddings(index_name: str) -> Dict[str, Any]:
                     "error": f"Failed to save metadata after clearing embeddings for '{index_name}' after {MAX_RETRIES} attempts: {e}",
                 }
 
-    return {"status": "failed", "error": "Unknown error after clearing embeddings and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after clearing embeddings and save attempts.",
+    }
 
 
 # --- Registration Function ---
@@ -517,10 +650,14 @@ def register_external_tools(agent):
     """Registers tools that depend on external libraries or services if available."""
     tools_registered = []
     if openai_client and FAISS_AVAILABLE:
-        agent.tools_manager.register_tool("generate_embedding_real", generate_embedding_real)
+        agent.tools_manager.register_tool(
+            "generate_embedding_real", generate_embedding_real
+        )
         tools_registered.append("generate_embedding_real")
 
-        agent.tools_manager.register_tool("semantic_search_cosine", semantic_search_cosine)
+        agent.tools_manager.register_tool(
+            "semantic_search_cosine", semantic_search_cosine
+        )
         tools_registered.append("semantic_search_cosine")
 
     # clear_embeddings only needs FAISS_DIR and pickle, but conceptually linked

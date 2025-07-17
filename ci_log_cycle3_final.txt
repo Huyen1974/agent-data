@@ -199,7 +199,7 @@ test-count-verification	Install dependencies	2025-07-11T09:55:21.8214460Z Downlo
 test-count-verification	Install dependencies	2025-07-11T09:55:21.8270896Z Downloading typing_extensions-4.14.1-py3-none-any.whl (43 kB)
 test-count-verification	Install dependencies	2025-07-11T09:55:21.8328182Z Downloading pytest_metadata-3.1.1-py3-none-any.whl (11 kB)
 test-count-verification	Install dependencies	2025-07-11T09:55:21.8816218Z Installing collected packages: typing-extensions, tomli, pygments, pluggy, packaging, iniconfig, coverage, exceptiongroup, pytest, pytest-timeout, pytest-mock, pytest-metadata, pytest-cov, pytest-asyncio, pytest-json-report
-test-count-verification	Install dependencies	2025-07-11T09:55:22.9761832Z 
+test-count-verification	Install dependencies	2025-07-11T09:55:22.9761832Z
 test-count-verification	Install dependencies	2025-07-11T09:55:22.9794701Z Successfully installed coverage-7.9.2 exceptiongroup-1.3.0 iniconfig-2.1.0 packaging-25.0 pluggy-1.6.0 pygments-2.19.2 pytest-8.4.1 pytest-asyncio-1.0.0 pytest-cov-6.2.1 pytest-json-report-1.5.0 pytest-metadata-3.1.1 pytest-mock-3.14.1 pytest-timeout-2.4.0 tomli-2.2.1 typing-extensions-4.14.1
 test-count-verification	Install dependencies	2025-07-11T09:55:23.0596419Z Checking for requirements file...
 test-count-verification	Install dependencies	2025-07-11T09:55:23.0596870Z Found requirements.txt, installing...
@@ -624,7 +624,7 @@ test-count-verification	Install dependencies	2025-07-11T09:55:45.1311357Z   Atte
 test-count-verification	Install dependencies	2025-07-11T09:55:45.1318127Z     Found existing installation: pytest 8.4.1
 test-count-verification	Install dependencies	2025-07-11T09:55:45.1404186Z     Uninstalling pytest-8.4.1:
 test-count-verification	Install dependencies	2025-07-11T09:55:45.1967449Z       Successfully uninstalled pytest-8.4.1
-test-count-verification	Install dependencies	2025-07-11T09:55:55.0041625Z 
+test-count-verification	Install dependencies	2025-07-11T09:55:55.0041625Z
 test-count-verification	Install dependencies	2025-07-11T09:55:55.0251919Z Successfully installed Deprecated-1.2.18 Flask-3.1.1 Jinja2-3.1.6 MarkupSafe-3.0.2 PyYAML-6.0.2 Werkzeug-3.1.3 annotated-types-0.7.0 anyio-4.9.0 blinker-1.9.0 cachetools-5.5.2 certifi-2025.4.26 cffi-1.17.1 charset-normalizer-3.4.2 click-8.2.1 cloudevents-1.12.0 cryptography-45.0.5 decorator-5.2.1 deprecation-2.1.0 distro-1.9.0 docstring_parser-0.16 ecdsa-0.19.1 execnet-2.1.1 faiss-cpu-1.11.0 fastapi-0.115.12 functions-framework-3.8.3 google-api-core-2.24.2 google-api-python-client-2.170.0 google-auth-2.40.2 google-auth-httplib2-0.2.0 google-auth-oauthlib-1.2.2 google-cloud-aiplatform-1.95.1 google-cloud-appengine-logging-1.6.2 google-cloud-audit-log-0.3.2 google-cloud-bigquery-3.34.0 google-cloud-billing-1.16.3 google-cloud-billing-budgets-1.17.2 google-cloud-core-2.4.3 google-cloud-firestore-2.20.2 google-cloud-logging-3.12.1 google-cloud-pubsub-2.31.0 google-cloud-resource-manager-1.14.2 google-cloud-run-0.10.18 google-cloud-secret-manager-2.24.0 google-cloud-storage-2.19.0 google-crc32c-1.7.1 google-genai-1.18.0 google-resumable-media-2.7.2 googleapis-common-protos-1.70.0 grpc-google-iam-v1-0.14.2 grpcio-1.71.0 grpcio-status-1.71.0 gunicorn-23.0.0 h11-0.16.0 h2-4.2.0 hpack-4.1.0 httpcore-1.0.9 httplib2-0.22.0 httpx-0.28.1 hyperframe-6.1.0 idna-3.10 importlib_metadata-8.7.0 itsdangerous-2.2.0 jiter-0.10.0 joblib-1.5.1 jsonpatch-1.33 jsonpointer-3.0.0 langchain-core-0.3.63 langchain-openai-0.3.18 langsmith-0.3.43 limits-5.4.0 numpy-2.2.6 oauthlib-3.2.2 openai-1.82.1 opentelemetry-api-1.34.1 opentelemetry-sdk-1.34.1 opentelemetry-semantic-conventions-0.55b1 orjson-3.10.18 packaging-24.2 passlib-1.7.4 portalocker-2.10.1 prometheus_client-0.22.0 proto-plus-1.26.1 protobuf-5.29.5 psutil-7.0.0 py-1.11.0 pyasn1-0.6.1 pyasn1_modules-0.4.2 pycparser-2.22 pydantic-2.11.5 pydantic_core-2.33.2 pyparsing-3.2.3 pytest-8.3.5 pytest-randomly-3.16.0 pytest-rerunfailures-15.1 pytest-xdist-3.8.0 python-dateutil-2.9.0.post0 python-dotenv-1.1.0 python-jose-3.5.0 python-multipart-0.0.20 qdrant-client-1.14.2 regex-2024.11.6 requests-2.32.3 requests-oauthlib-2.0.0 requests-toolbelt-1.0.0 retry-0.9.2 rsa-4.9.1 scikit-learn-1.6.1 scipy-1.15.3 shapely-2.1.1 six-1.17.0 slowapi-0.1.9 sniffio-1.3.1 starlette-0.46.2 tenacity-9.1.2 threadpoolctl-3.6.0 tiktoken-0.9.0 tqdm-4.67.1 typing-inspection-0.4.1 typing_extensions-4.13.2 uritemplate-4.1.1 urllib3-2.4.0 uvicorn-0.34.3 watchdog-6.0.0 websockets-15.0.1 wrapt-1.17.2 zipp-3.23.0 zstandard-0.23.0
 test-count-verification	Install dependencies	2025-07-11T09:55:56.1869207Z Installing package in development mode for proper test discovery...
 test-count-verification	Install dependencies	2025-07-11T09:55:56.6003523Z Obtaining file:///home/runner/work/agent-data/agent-data
@@ -756,7 +756,7 @@ test-count-verification	Install dependencies	2025-07-11T09:55:59.7774236Z   Crea
 test-count-verification	Install dependencies	2025-07-11T09:55:59.7776337Z   Stored in directory: /tmp/pip-ephem-wheel-cache-81oatr4c/wheels/9b/2b/07/65a823d511d7ee06da6a0119e7150c71e779d0785de56ce41d
 test-count-verification	Install dependencies	2025-07-11T09:55:59.7792940Z Successfully built agent_data_manager
 test-count-verification	Install dependencies	2025-07-11T09:55:59.8333307Z Installing collected packages: bcrypt, agent_data_manager
-test-count-verification	Install dependencies	2025-07-11T09:55:59.8490796Z 
+test-count-verification	Install dependencies	2025-07-11T09:55:59.8490796Z
 test-count-verification	Install dependencies	2025-07-11T09:55:59.8690279Z Successfully installed agent_data_manager-0.1.0 bcrypt-4.3.0
 test-count-verification	Verify Test Count	﻿2025-07-11T09:56:00.0222568Z ##[group]Run echo "Verifying test count compliance..."
 test-count-verification	Verify Test Count	2025-07-11T09:56:00.0222970Z [36;1mecho "Verifying test count compliance..."[0m
@@ -782,16 +782,16 @@ test-count-verification	Verify Test Count	2025-07-11T09:56:12.2701191Z === Test 
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2701769Z Target: 402 tests (stable across all environments)
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2703514Z PYTHONPATH: /home/runner/work/agent-data/agent-data:/home/runner/work/agent-data/agent-data/ADK:/home/runner/work/agent-data/agent-data/ADK/agent_data:/home/runner/work/agent-data/agent-data:/home/runner/work/agent-data/agent-data/ADK:/home/runner/work/agent-data/agent-data/ADK/agent_data:
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2705588Z JSON Report - Collected: 427, Deselected: 68, Active: 359
-test-count-verification	Verify Test Count	2025-07-11T09:56:12.2705964Z 
+test-count-verification	Verify Test Count	2025-07-11T09:56:12.2705964Z
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706084Z Test Count Analysis:
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706285Z   Found: 359 tests
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706457Z   Target: 402 tests
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706647Z   Acceptable range: 387-417
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706844Z   Environment: CI
-test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706957Z 
+test-count-verification	Verify Test Count	2025-07-11T09:56:12.2706957Z
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2707354Z ❌ FAILURE: Test count 359 is outside acceptable range 387-417
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2707732Z Expected exactly 402 tests consistently across all environments.
-test-count-verification	Verify Test Count	2025-07-11T09:56:12.2707976Z 
+test-count-verification	Verify Test Count	2025-07-11T09:56:12.2707976Z
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2708061Z Pytest output for debugging:
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2708279Z ============================================================
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2708804Z on.py
@@ -805,7 +805,7 @@ test-count-verification	Verify Test Count	2025-07-11T09:56:12.2710552Z ERROR tes
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2710812Z ERROR tests/test_performance_hybrid_query.py
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2711133Z !!!!!!!!!!!!!!!!!!! Interrupted: 42 errors during collection !!!!!!!!!!!!!!!!!!!
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2711527Z ========= 359/427 tests collected (68 deselected), 42 errors in 8.93s ==========
-test-count-verification	Verify Test Count	2025-07-11T09:56:12.2711766Z 
+test-count-verification	Verify Test Count	2025-07-11T09:56:12.2711766Z
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2711846Z ============================================================
 test-count-verification	Verify Test Count	2025-07-11T09:56:12.2752795Z ##[error]Process completed with exit code 1.
 test-count-verification	Upload test count report	﻿2025-07-11T09:56:12.2820285Z ##[group]Run actions/upload-artifact@v4
@@ -814,7 +814,7 @@ test-count-verification	Upload test count report	2025-07-11T09:56:12.2820727Z   
 test-count-verification	Upload test count report	2025-07-11T09:56:12.2820989Z   path: .cursor/logs/CLI150_*.log
 test-count-verification	Upload test count report	.cursor/logs/
 test-count-verification	Upload test count report	.report.json
-test-count-verification	Upload test count report	
+test-count-verification	Upload test count report
 test-count-verification	Upload test count report	2025-07-11T09:56:12.2821283Z   retention-days: 7
 test-count-verification	Upload test count report	2025-07-11T09:56:12.2821471Z   if-no-files-found: warn
 test-count-verification	Upload test count report	2025-07-11T09:56:12.2821670Z   compression-level: 6

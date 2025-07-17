@@ -1,8 +1,8 @@
 {
-  "total_tests": 463,
-  "estimated_ci_runtime_seconds": 46.61073825503355,
   "estimated_ci_runtime_minutes": 0.7768456375838926,
-  "target_seconds": 300,
+  "estimated_ci_runtime_seconds": 46.61073825503355,
+  "estimation_timestamp": 1749808226.878017,
   "margin_seconds": 253.38926174496646,
-  "estimation_timestamp": 1749808226.878017
+  "target_seconds": 300,
+  "total_tests": 463
 }

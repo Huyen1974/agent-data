@@ -1,10 +1,10 @@
 {
   "firestore": {
-    "rules": "firestore.rules",
+    "database": "test-default",
     "indexes": "firestore.indexes.json",
-    "database": "test-default"
+    "rules": "firestore.rules"
   },
   "projects": {
     "default": "chatgpt-db-project"
   }
-} 
+}

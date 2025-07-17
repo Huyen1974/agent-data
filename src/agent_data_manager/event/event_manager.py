@@ -1,20 +1,20 @@
 """Event manager for Agent-to-Agent (A2A) communication via Google Cloud Pub/Sub."""
 
+import asyncio
 import json
 import logging
-import asyncio
-from typing import Dict, Optional, Any, List
-from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+from typing import Any
 
 from ..config.settings import settings
 from ..utils.structured_logger import get_logger
 
 # Import Google Cloud Pub/Sub client
 try:
+    from google.api_core.exceptions import GoogleAPIError
     from google.cloud import pubsub_v1
     from google.cloud.pubsub_v1.publisher.exceptions import MessageTooLargeError
-    from google.api_core.exceptions import GoogleAPIError
 
     PUBSUB_AVAILABLE = True
 except ImportError:
@@ -22,7 +22,9 @@ except ImportError:
     MessageTooLargeError = Exception
     GoogleAPIError = Exception
     PUBSUB_AVAILABLE = False
-    logging.warning("Google Cloud Pub/Sub not available. Event publishing will be disabled.")
+    logging.warning(
+        "Google Cloud Pub/Sub not available. Event publishing will be disabled."
+    )
 
 logger = get_logger(__name__)
 
@@ -30,7 +32,9 @@ logger = get_logger(__name__)
 class EventManager:
     """Manages Agent-to-Agent event publishing via Google Cloud Pub/Sub with optimizations for concurrent operations."""
 
-    def __init__(self, project_id: Optional[str] = None, topic_name: str = "agent-data-events"):
+    def __init__(
+        self, project_id: str | None = None, topic_name: str = "agent-data-events"
+    ):
         """Initialize the event manager.
 
         Args:
@@ -71,17 +75,23 @@ class EventManager:
             )
 
             self.publisher = pubsub_v1.PublisherClient(batch_settings=batch_settings)
-            self.topic_path = self.publisher.topic_path(self.project_id, self.topic_name)
+            self.topic_path = self.publisher.topic_path(
+                self.project_id, self.topic_name
+            )
             self._batch_settings = batch_settings
 
             self._initialized = True
-            logger.info(f"EventManager initialized for topic: {self.topic_path} with optimized batch settings")
+            logger.info(
+                f"EventManager initialized for topic: {self.topic_path} with optimized batch settings"
+            )
 
         except Exception as e:
             logger.error(f"Failed to initialize EventManager: {e}")
             raise
 
-    async def publish_batch_events(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def publish_batch_events(
+        self, events: list[dict[str, Any]]
+    ) -> dict[str, Any]:
         """
         Publish multiple events in a batch for better performance.
 
@@ -102,7 +112,11 @@ class EventManager:
             return {"status": "skipped", "reason": "publisher_not_initialized"}
 
         if not events:
-            return {"status": "success", "published_count": 0, "message": "No events to publish"}
+            return {
+                "status": "success",
+                "published_count": 0,
+                "message": "No events to publish",
+            }
 
         try:
             published_count = 0
@@ -127,7 +141,9 @@ class EventManager:
                     if result.get("message_id"):
                         message_ids.append(result["message_id"])
 
-            logger.info(f"Batch event publishing completed: {published_count} successful, {failed_count} failed")
+            logger.info(
+                f"Batch event publishing completed: {published_count} successful, {failed_count} failed"
+            )
 
             return {
                 "status": "completed",
@@ -141,7 +157,9 @@ class EventManager:
             logger.error(f"Failed to publish batch events: {e}")
             return {"status": "failed", "error": str(e)}
 
-    async def _publish_single_event_async(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def _publish_single_event_async(
+        self, event_data: dict[str, Any]
+    ) -> dict[str, Any]:
         """
         Publish a single event asynchronously.
 
@@ -186,8 +204,11 @@ class EventManager:
             return {"status": "failed", "error": str(e)}
 
     async def publish_save_document_event(
-        self, doc_id: str, metadata: Optional[Dict[str, Any]] = None, session_id: Optional[str] = None
-    ) -> Dict[str, Any]:
+        self,
+        doc_id: str,
+        metadata: dict[str, Any] | None = None,
+        session_id: str | None = None,
+    ) -> dict[str, Any]:
         """
         Publish a save_document event to Pub/Sub topic.
 
@@ -227,7 +248,10 @@ class EventManager:
             message_id = future.result()  # Wait for the publish to complete
 
             logger.info(
-                "Published save_document event", doc_id=doc_id, message_id=message_id, event_type="save_document"
+                "Published save_document event",
+                doc_id=doc_id,
+                message_id=message_id,
+                event_type="save_document",
             )
             return {
                 "status": "success",
@@ -237,12 +261,20 @@ class EventManager:
             }
 
         except Exception as e:
-            logger.error("Failed to publish save_document event", doc_id=doc_id, error=str(e), exc_info=True)
+            logger.error(
+                "Failed to publish save_document event",
+                doc_id=doc_id,
+                error=str(e),
+                exc_info=True,
+            )
             return {"status": "failed", "error": str(e), "doc_id": doc_id}
 
     async def publish_custom_event(
-        self, event_type: str, event_data: Dict[str, Any], session_id: Optional[str] = None
-    ) -> Dict[str, Any]:
+        self,
+        event_type: str,
+        event_data: dict[str, Any],
+        session_id: str | None = None,
+    ) -> dict[str, Any]:
         """
         Publish a custom event to Pub/Sub topic.
 
@@ -292,7 +324,7 @@ class EventManager:
             logger.error(f"Failed to publish {event_type} event: {e}")
             return {"status": "failed", "error": str(e), "event_type": event_type}
 
-    async def get_topic_info(self) -> Dict[str, Any]:
+    async def get_topic_info(self) -> dict[str, Any]:
         """
         Get information about the Pub/Sub topic.
 
@@ -321,10 +353,12 @@ class EventManager:
 
 
 # Global event manager instance
-_event_manager: Optional[EventManager] = None
+_event_manager: EventManager | None = None
 
 
-def get_event_manager(project_id: Optional[str] = None, topic_name: str = "agent-data-events") -> EventManager:
+def get_event_manager(
+    project_id: str | None = None, topic_name: str = "agent-data-events"
+) -> EventManager:
     """
     Get or create the global event manager instance.
 

@@ -1,28 +1,40 @@
-from fastapi import FastAPI, HTTPException, Depends, Query
-from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
-import os
 import logging
-from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+import os
+from typing import Any
+
+from fastapi import Depends, FastAPI, HTTPException, Query
+from pydantic import BaseModel, Field
+
+from src.agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="CS Agent API", description="API for CS Agent Tree View and Search functionality", version="1.0.0")
+app = FastAPI(
+    title="CS Agent API",
+    description="API for CS Agent Tree View and Search functionality",
+    version="1.0.0",
+)
 
 
 # Pydantic models for Tree View endpoint
 class TreeViewResponse(BaseModel):
-    path: Optional[str] = Field(None, description="Hierarchical path of the document")
-    share_url: Optional[str] = Field(None, description="Shareable URL for the document")
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="Document metadata")
+    path: str | None = Field(None, description="Hierarchical path of the document")
+    share_url: str | None = Field(None, description="Shareable URL for the document")
+    metadata: dict[str, Any] = Field(
+        default_factory=dict, description="Document metadata"
+    )
     status: str = Field(description="Response status")
 
 
 # Pydantic models for Search endpoint
 class SearchResponse(BaseModel):
-    results: List[Dict[str, Any]] = Field(default_factory=list, description="Search results")
+    results: list[dict[str, Any]] = Field(
+        default_factory=list, description="Search results"
+    )
     total: int = Field(description="Total number of results")
     status: str = Field(description="Response status")
 
@@ -32,13 +44,17 @@ def get_firestore_manager():
     """Get FirestoreMetadataManager instance."""
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT", "chatgpt-db-project")
     collection_name = os.environ.get("FIRESTORE_COLLECTION", "document_metadata")
-    return FirestoreMetadataManager(project_id=project_id, collection_name=collection_name)
+    return FirestoreMetadataManager(
+        project_id=project_id, collection_name=collection_name
+    )
 
 
 @app.get("/tree-view/{doc_id}", response_model=TreeViewResponse)
 async def get_tree_view(
     doc_id: str,
-    shared_by: Optional[str] = Query(None, description="Email of user sharing the document"),
+    shared_by: str | None = Query(
+        None, description="Email of user sharing the document"
+    ),
     expires_days: int = Query(7, description="Number of days until share link expires"),
     firestore_manager: FirestoreMetadataManager = Depends(get_firestore_manager),
 ):
@@ -58,7 +74,9 @@ async def get_tree_view(
         path = await firestore_manager.get_document_path(doc_id)
 
         # Generate share link
-        share_result = await firestore_manager.share_document(doc_id, shared_by=shared_by, expires_days=expires_days)
+        share_result = await firestore_manager.share_document(
+            doc_id, shared_by=shared_by, expires_days=expires_days
+        )
 
         # Get document metadata
         metadata = await firestore_manager.get_metadata_with_version(doc_id)
@@ -76,15 +94,19 @@ async def get_tree_view(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error getting tree view for document {doc_id}: {e}", exc_info=True)
+        logger.error(
+            f"Error getting tree view for document {doc_id}: {e}", exc_info=True
+        )
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @app.get("/search", response_model=SearchResponse)
 async def search_documents(
-    path: Optional[str] = Query(None, description="Path segment to search for"),
-    tags: Optional[str] = Query(None, description="Comma-separated tags to search for"),
-    metadata: Optional[str] = Query(None, description="JSON string of metadata filters"),
+    path: str | None = Query(None, description="Path segment to search for"),
+    tags: str | None = Query(None, description="Comma-separated tags to search for"),
+    metadata: str | None = Query(
+        None, description="JSON string of metadata filters"
+    ),
     firestore_manager: FirestoreMetadataManager = Depends(get_firestore_manager),
 ):
     """
@@ -124,14 +146,18 @@ async def search_documents(
 
                 metadata_filters = json.loads(metadata.strip())
                 if isinstance(metadata_filters, dict) and metadata_filters:
-                    metadata_results = await firestore_manager.search_by_metadata(metadata_filters)
+                    metadata_results = await firestore_manager.search_by_metadata(
+                        metadata_filters
+                    )
                     # Avoid duplicates by checking doc_id
                     existing_doc_ids = {result.get("_doc_id") for result in all_results}
                     for result in metadata_results:
                         if result.get("_doc_id") not in existing_doc_ids:
                             all_results.append(result)
             except json.JSONDecodeError:
-                raise HTTPException(status_code=400, detail="Invalid JSON format for metadata parameter")
+                raise HTTPException(
+                    status_code=400, detail="Invalid JSON format for metadata parameter"
+                )
 
         # If no search parameters provided, return empty results
         if not any([path, tags, metadata]):

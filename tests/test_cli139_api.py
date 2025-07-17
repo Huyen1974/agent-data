@@ -5,10 +5,11 @@ Tests for enhanced error handling in A2A API endpoints (/batch_save, /batch_quer
 with retry logic, timeout handling, and detailed error reporting.
 """
 
-import pytest
 import asyncio
 import time
 from unittest.mock import AsyncMock, patch
+
+import pytest
 from fastapi.testclient import TestClient
 
 from ADK.agent_data.api_mcp_gateway import app
@@ -18,11 +19,15 @@ from ADK.agent_data.api_mcp_gateway import app
 def client():
     """Create test client for API testing."""
     from ADK.agent_data.api_mcp_gateway import get_current_user
-    
+
     # Override authentication dependency for testing
     def mock_get_current_user():
-        return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
-    
+        return {
+            "user_id": "test_user_123",
+            "email": "test@example.com",
+            "scopes": ["read", "write"],
+        }
+
     app.dependency_overrides[get_current_user] = mock_get_current_user
     client = TestClient(app)
     yield client
@@ -33,7 +38,11 @@ def client():
 @pytest.fixture
 def mock_auth_user():
     """Mock authenticated user for testing."""
-    return {"user_id": "test_user_123", "email": "test@example.com", "scopes": ["read", "write"]}
+    return {
+        "user_id": "test_user_123",
+        "email": "test@example.com",
+        "scopes": ["read", "write"],
+    }
 
 
 class TestCLI139APIErrorHandling:
@@ -44,9 +53,16 @@ class TestCLI139APIErrorHandling:
         """Test that batch_save retries on rate limit errors with exponential backoff."""
 
         # Mock dependencies
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -54,22 +70,24 @@ class TestCLI139APIErrorHandling:
             # Simulate successful vectorization for /save endpoint
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data
             test_data = {
-                "doc_id": "test_doc_1", 
-                "content": "Test content for rate limit retry", 
-                "metadata": {"test": True}
+                "doc_id": "test_doc_1",
+                "content": "Test content for rate limit retry",
+                "metadata": {"test": True},
             }
 
             start_time = time.time()
 
             # Make request
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             end_time = time.time()
 
@@ -89,9 +107,14 @@ class TestCLI139APIErrorHandling:
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that batch_query handles timeouts properly."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.qdrant_store"
-        ) as mock_qdrant, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -99,7 +122,15 @@ class TestCLI139APIErrorHandling:
             # Simulate normal search (since /query may not have the same timeout logic)
             async def normal_search(*args, **kwargs):
                 await asyncio.sleep(0.1)  # Quick response
-                return {"results": [{"id": "doc_1", "score": 0.9, "payload": {"content": "test result"}}]}
+                return {
+                    "results": [
+                        {
+                            "id": "doc_1",
+                            "score": 0.9,
+                            "payload": {"content": "test result"},
+                        }
+                    ]
+                }
 
             mock_qdrant.semantic_search = normal_search
 
@@ -109,7 +140,9 @@ class TestCLI139APIErrorHandling:
             start_time = time.time()
 
             # Make request
-            response = client.post("/query", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/query", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             end_time = time.time()
 
@@ -117,7 +150,7 @@ class TestCLI139APIErrorHandling:
             assert response.status_code == 200
             result = response.json()
             assert "results" in result
-            
+
             # Verify operation completed quickly with successful mock
             assert end_time - start_time < 1.0
 
@@ -125,9 +158,16 @@ class TestCLI139APIErrorHandling:
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -135,20 +175,22 @@ class TestCLI139APIErrorHandling:
             # Test successful operation (since /save doesn't handle multiple documents)
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data - single document (since /save handles one at a time)
             test_data = {
                 "doc_id": "test_doc_1",
-                "content": "Test content for error categorization", 
-                "metadata": {}
+                "content": "Test content for error categorization",
+                "metadata": {},
             }
 
             # Make request
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             # Verify successful response
             assert response.status_code == 200
@@ -157,14 +199,22 @@ class TestCLI139APIErrorHandling:
             assert "vector_id" in result
 
     @pytest.mark.asyncio
-    async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
+    async def test_batch_operations_performance_under_5_seconds(
+        self, client, mock_auth_user
+    ):
         """Test that batch operations complete within 5 seconds for reasonable loads."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
-            "ADK.agent_data.api_mcp_gateway.auth_manager"
-        ) as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks for fast responses
             mock_auth.validate_user_access.return_value = True
@@ -172,37 +222,46 @@ class TestCLI139APIErrorHandling:
             # Fast vectorization mock
             async def fast_vectorize(*args, **kwargs):
                 await asyncio.sleep(0.1)  # Simulate 100ms processing
-                return {"status": "success", "vector_id": "vec_123", "embedding_dimension": 1536}
+                return {
+                    "status": "success",
+                    "vector_id": "vec_123",
+                    "embedding_dimension": 1536,
+                }
 
             mock_vectorization.vectorize_document = fast_vectorize
 
             # Fast search mock
             async def fast_search(*args, **kwargs):
                 await asyncio.sleep(0.05)  # Simulate 50ms search
-                return {"results": [{"id": "doc_1", "score": 0.9, "payload": {"content": "test"}}]}
+                return {
+                    "results": [
+                        {"id": "doc_1", "score": 0.9, "payload": {"content": "test"}}
+                    ]
+                }
 
             mock_qdrant.semantic_search = fast_search
 
             # Test save performance (single document at a time)
             save_data = {
-                "doc_id": "perf_doc_1", 
-                "content": "Performance test content", 
-                "metadata": {}
+                "doc_id": "perf_doc_1",
+                "content": "Performance test content",
+                "metadata": {},
             }
 
             start_time = time.time()
-            save_response = client.post("/save", json=save_data, headers={"Authorization": "Bearer test_token"})
+            save_response = client.post(
+                "/save", json=save_data, headers={"Authorization": "Bearer test_token"}
+            )
             save_time = time.time() - start_time
 
             # Test query performance (single query)
-            query_data = {
-                "query_text": "performance test query", 
-                "limit": 5
-            }
+            query_data = {"query_text": "performance test query", "limit": 5}
 
             start_time = time.time()
             query_response = client.post(
-                "/query", json=query_data, headers={"Authorization": "Bearer test_token"}
+                "/query",
+                json=query_data,
+                headers={"Authorization": "Bearer test_token"},
             )
             query_time = time.time() - start_time
 
@@ -224,10 +283,17 @@ class TestCLI139APIErrorHandling:
 
         from src.agent_data_manager.session.session_manager import SessionManager
 
-        with patch("src.agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock_firestore:
+        with patch(
+            "src.agent_data_manager.session.session_manager.FirestoreMetadataManager"
+        ) as mock_firestore:
 
             # Mock session data
-            session_data = {"session_id": "test_session", "state": {"counter": 0}, "version": 1, "lock_timestamp": None}
+            session_data = {
+                "session_id": "test_session",
+                "state": {"counter": 0},
+                "version": 1,
+                "lock_timestamp": None,
+            }
 
             mock_firestore_instance = AsyncMock()
             mock_firestore.return_value = mock_firestore_instance
@@ -239,8 +305,11 @@ class TestCLI139APIErrorHandling:
 
             # Test concurrent updates
             async def update_counter(session_id, increment):
-                return await session_manager.update_session_state_with_optimistic_locking(
-                    session_id, {"counter": session_data["state"]["counter"] + increment}
+                return (
+                    await session_manager.update_session_state_with_optimistic_locking(
+                        session_id,
+                        {"counter": session_data["state"]["counter"] + increment},
+                    )
                 )
 
             # Simulate concurrent updates
@@ -255,7 +324,11 @@ class TestCLI139APIErrorHandling:
             end_time = time.time()
 
             # Verify at least one succeeded
-            successful_results = [r for r in results if isinstance(r, dict) and r.get("status") == "success"]
+            successful_results = [
+                r
+                for r in results
+                if isinstance(r, dict) and r.get("status") == "success"
+            ]
             assert len(successful_results) >= 1
 
             # Verify operation completed quickly (with retries)
@@ -295,29 +368,38 @@ class TestCLI139Integration:
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             mock_auth.validate_user_access.return_value = True
 
             # Simulate successful vectorization (since /save doesn't have built-in retry logic)
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data - single document for /save endpoint
             test_data = {
                 "doc_id": "recovery_test_doc",
                 "content": "Test content for error recovery",
-                "metadata": {"test_type": "error_recovery"}
+                "metadata": {"test_type": "error_recovery"},
             }
 
             # Make request to /save endpoint
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             # Verify successful response
             assert response.status_code == 200
@@ -337,9 +419,16 @@ class TestCLI139:
         """Test that save endpoint handles retry logic properly."""
 
         # Mock dependencies
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -347,22 +436,24 @@ class TestCLI139:
             # Simulate successful vectorization for /save endpoint
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data - single document for /save endpoint
             test_data = {
-                "doc_id": "test_doc_1", 
-                "content": "Test content for rate limit retry", 
-                "metadata": {"test": True}
+                "doc_id": "test_doc_1",
+                "content": "Test content for rate limit retry",
+                "metadata": {"test": True},
             }
 
             start_time = time.time()
 
             # Make request to /save endpoint
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             end_time = time.time()
 
@@ -382,9 +473,14 @@ class TestCLI139:
     async def test_batch_query_timeout_handling(self, client, mock_auth_user):
         """Test that query endpoint handles requests properly."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.qdrant_store"
-        ) as mock_qdrant, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -392,7 +488,15 @@ class TestCLI139:
             # Simulate normal search (since /query may not have the same timeout logic)
             async def normal_search(*args, **kwargs):
                 await asyncio.sleep(0.1)  # Quick response
-                return {"results": [{"id": "doc_1", "score": 0.9, "payload": {"content": "test result"}}]}
+                return {
+                    "results": [
+                        {
+                            "id": "doc_1",
+                            "score": 0.9,
+                            "payload": {"content": "test result"},
+                        }
+                    ]
+                }
 
             mock_qdrant.semantic_search = normal_search
 
@@ -402,7 +506,9 @@ class TestCLI139:
             start_time = time.time()
 
             # Make request to /query endpoint
-            response = client.post("/query", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/query", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             end_time = time.time()
 
@@ -410,7 +516,7 @@ class TestCLI139:
             assert response.status_code == 200
             result = response.json()
             assert "results" in result
-            
+
             # Verify operation completed quickly with successful mock
             assert end_time - start_time < 1.0
 
@@ -418,9 +524,16 @@ class TestCLI139:
     async def test_error_categorization_and_reporting(self, client, mock_auth_user):
         """Test that errors are properly categorized and reported with detailed messages."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks
             mock_auth.validate_user_access.return_value = True
@@ -428,20 +541,22 @@ class TestCLI139:
             # Test successful operation (since /save doesn't handle multiple documents)
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data - single document (since /save handles one at a time)
             test_data = {
                 "doc_id": "test_doc_1",
-                "content": "Test content for error categorization", 
-                "metadata": {}
+                "content": "Test content for error categorization",
+                "metadata": {},
             }
 
             # Make request to /save endpoint
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             # Verify successful response
             assert response.status_code == 200
@@ -450,14 +565,22 @@ class TestCLI139:
             assert "vector_id" in result
 
     @pytest.mark.asyncio
-    async def test_batch_operations_performance_under_5_seconds(self, client, mock_auth_user):
+    async def test_batch_operations_performance_under_5_seconds(
+        self, client, mock_auth_user
+    ):
         """Test that operations complete within 5 seconds for reasonable loads."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant, patch(
-            "ADK.agent_data.api_mcp_gateway.auth_manager"
-        ) as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.qdrant_store") as mock_qdrant,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             # Setup mocks for fast responses
             mock_auth.validate_user_access.return_value = True
@@ -465,37 +588,46 @@ class TestCLI139:
             # Fast vectorization mock
             async def fast_vectorize(*args, **kwargs):
                 await asyncio.sleep(0.1)  # Simulate 100ms processing
-                return {"status": "success", "vector_id": "vec_123", "embedding_dimension": 1536}
+                return {
+                    "status": "success",
+                    "vector_id": "vec_123",
+                    "embedding_dimension": 1536,
+                }
 
             mock_vectorization.vectorize_document = fast_vectorize
 
             # Fast search mock
             async def fast_search(*args, **kwargs):
                 await asyncio.sleep(0.05)  # Simulate 50ms search
-                return {"results": [{"id": "doc_1", "score": 0.9, "payload": {"content": "test"}}]}
+                return {
+                    "results": [
+                        {"id": "doc_1", "score": 0.9, "payload": {"content": "test"}}
+                    ]
+                }
 
             mock_qdrant.semantic_search = fast_search
 
             # Test save performance (single document)
             save_data = {
                 "doc_id": "perf_doc_1",
-                "content": "Performance test content", 
-                "metadata": {}
+                "content": "Performance test content",
+                "metadata": {},
             }
 
             start_time = time.time()
-            save_response = client.post("/save", json=save_data, headers={"Authorization": "Bearer test_token"})
+            save_response = client.post(
+                "/save", json=save_data, headers={"Authorization": "Bearer test_token"}
+            )
             save_time = time.time() - start_time
 
             # Test query performance (single query)
-            query_data = {
-                "query_text": "performance test query", 
-                "limit": 5
-            }
+            query_data = {"query_text": "performance test query", "limit": 5}
 
             start_time = time.time()
             query_response = client.post(
-                "/query", json=query_data, headers={"Authorization": "Bearer test_token"}
+                "/query",
+                json=query_data,
+                headers={"Authorization": "Bearer test_token"},
             )
             query_time = time.time() - start_time
 
@@ -517,10 +649,17 @@ class TestCLI139:
 
         from src.agent_data_manager.session.session_manager import SessionManager
 
-        with patch("src.agent_data_manager.session.session_manager.FirestoreMetadataManager") as mock_firestore:
+        with patch(
+            "src.agent_data_manager.session.session_manager.FirestoreMetadataManager"
+        ) as mock_firestore:
 
             # Mock session data
-            session_data = {"session_id": "test_session", "state": {"counter": 0}, "version": 1, "lock_timestamp": None}
+            session_data = {
+                "session_id": "test_session",
+                "state": {"counter": 0},
+                "version": 1,
+                "lock_timestamp": None,
+            }
 
             mock_firestore_instance = AsyncMock()
             mock_firestore.return_value = mock_firestore_instance
@@ -532,8 +671,11 @@ class TestCLI139:
 
             # Test concurrent updates
             async def update_counter(session_id, increment):
-                return await session_manager.update_session_state_with_optimistic_locking(
-                    session_id, {"counter": session_data["state"]["counter"] + increment}
+                return (
+                    await session_manager.update_session_state_with_optimistic_locking(
+                        session_id,
+                        {"counter": session_data["state"]["counter"] + increment},
+                    )
                 )
 
             # Simulate concurrent updates
@@ -548,7 +690,11 @@ class TestCLI139:
             end_time = time.time()
 
             # Verify at least one succeeded
-            successful_results = [r for r in results if isinstance(r, dict) and r.get("status") == "success"]
+            successful_results = [
+                r
+                for r in results
+                if isinstance(r, dict) and r.get("status") == "success"
+            ]
             assert len(successful_results) >= 1
 
             # Verify operation completed quickly (with retries)
@@ -561,29 +707,38 @@ class TestCLI139:
     async def test_end_to_end_error_recovery(self, client, mock_auth_user):
         """Test end-to-end error recovery scenario."""
 
-        with patch("ADK.agent_data.api_mcp_gateway.get_current_user", return_value=mock_auth_user), patch(
-            "ADK.agent_data.api_mcp_gateway.vectorization_tool"
-        ) as mock_vectorization, patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth:
+        with (
+            patch(
+                "ADK.agent_data.api_mcp_gateway.get_current_user",
+                return_value=mock_auth_user,
+            ),
+            patch(
+                "ADK.agent_data.api_mcp_gateway.vectorization_tool"
+            ) as mock_vectorization,
+            patch("ADK.agent_data.api_mcp_gateway.auth_manager") as mock_auth,
+        ):
 
             mock_auth.validate_user_access.return_value = True
 
             # Simulate successful vectorization (since /save doesn't have built-in retry logic)
             mock_vectorization.vectorize_document = AsyncMock()
             mock_vectorization.vectorize_document.return_value = {
-                "status": "success", 
-                "vector_id": "vec_123", 
-                "embedding_dimension": 1536
+                "status": "success",
+                "vector_id": "vec_123",
+                "embedding_dimension": 1536,
             }
 
             # Test data - single document for /save endpoint
             test_data = {
                 "doc_id": "recovery_test_doc",
                 "content": "Test content for error recovery",
-                "metadata": {"test_type": "error_recovery"}
+                "metadata": {"test_type": "error_recovery"},
             }
 
             # Make request to /save endpoint
-            response = client.post("/save", json=test_data, headers={"Authorization": "Bearer test_token"})
+            response = client.post(
+                "/save", json=test_data, headers={"Authorization": "Bearer test_token"}
+            )
 
             # Verify successful response
             assert response.status_code == 200

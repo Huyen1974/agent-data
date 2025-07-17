@@ -16,7 +16,10 @@ def test_empty_filter_tag_rejected(client):
     assert any(
         (
             err.get("loc") == ["body", "filter_tag"]
-            and ("filter_tag, if provided, cannot be empty or just whitespace" in err.get("msg", ""))
+            and (
+                "filter_tag, if provided, cannot be empty or just whitespace"
+                in err.get("msg", "")
+            )
         )
         for err in errs
     ), f"Test for empty string failed. Expected specific filter_tag error, got {errs}"
@@ -36,7 +39,10 @@ def test_whitespace_filter_tag_rejected(client):
     assert any(
         (
             err.get("loc") == ["body", "filter_tag"]
-            and ("filter_tag, if provided, cannot be empty or just whitespace" in err.get("msg", ""))
+            and (
+                "filter_tag, if provided, cannot be empty or just whitespace"
+                in err.get("msg", "")
+            )
         )
         for err in errs
     ), f"Test for whitespace string failed. Expected specific filter_tag error, got {errs}"

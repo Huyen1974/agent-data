@@ -44,8 +44,8 @@ index b3fe89f..faf872e 100644
          pytest.skip("need --runslow option to run")
 +    if "deferred" in item.keywords and not item.config.getoption("--rundeferred"):
 +        pytest.skip("need --rundeferred option to run")
- 
- 
+
+
  # For CLI 87B: Collect coverage-like data
 diff --git a/logs/test_fixes.log b/logs/test_fixes.log
 index d96bb86..54f17ad 100644

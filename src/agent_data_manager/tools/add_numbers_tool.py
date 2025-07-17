@@ -1,10 +1,10 @@
 import logging
-from typing import Dict, Any, Union
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
-def add_numbers(a: Union[int, float], b: Union[int, float]) -> Dict[str, Any]:
+def add_numbers(a: int | float, b: int | float) -> dict[str, Any]:
     """Adds two numbers together.
 
     Args:
@@ -15,7 +15,9 @@ def add_numbers(a: Union[int, float], b: Union[int, float]) -> Dict[str, Any]:
         A dictionary containing the sum under the 'result' key if successful,
         or an error message if inputs are not numbers.
     """
-    logger.info(f"Executing add_numbers tool with: a={a} ({type(a)}), b={b} ({type(b)})")
+    logger.info(
+        f"Executing add_numbers tool with: a={a} ({type(a)}), b={b} ({type(b)})"
+    )
     # Input validation
     if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
         logger.error(f"Invalid input types for add_numbers: a={type(a)}, b={type(b)}")

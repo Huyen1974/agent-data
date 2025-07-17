@@ -3,35 +3,43 @@ FastAPI-based API A2A Gateway for Agent-to-Agent Communication
 Provides REST endpoints for document saving, querying, and semantic search
 """
 
-import logging
-import os
 import asyncio
 import hashlib
+import logging
+import os
 import threading
 import time
 from collections import OrderedDict
 from datetime import datetime
-from typing import Dict, List, Optional, Any
+from typing import Any
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, status, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from pydantic import BaseModel, Field
 import uvicorn
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from pydantic import BaseModel, Field
 from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
+
+from ADK.agent_data.auth.auth_manager import AuthManager
+from ADK.agent_data.auth.user_manager import UserManager
+from ADK.agent_data.config.settings import settings
+from ADK.agent_data.tools.qdrant_vectorization_tool import (
+    QdrantVectorizationTool,
+    qdrant_rag_search,
+)
+from ADK.agent_data.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 # Import Agent Data components
 from ADK.agent_data.vector_store.qdrant_store import QdrantStore
-from ADK.agent_data.vector_store.firestore_metadata_manager import FirestoreMetadataManager
-from ADK.agent_data.tools.qdrant_vectorization_tool import QdrantVectorizationTool, qdrant_rag_search
-from ADK.agent_data.config.settings import settings
-from ADK.agent_data.auth.auth_manager import AuthManager
-from ADK.agent_data.auth.user_manager import UserManager
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -49,7 +57,7 @@ class ThreadSafeLRUCache:
         """Check if a cache entry is expired."""
         return time.time() - timestamp > self.ttl_seconds
 
-    def get(self, key: str) -> Optional[Any]:
+    def get(self, key: str) -> Any | None:
         """Get value from cache, return None if not found or expired."""
         with self._lock:
             if key not in self._cache:
@@ -110,8 +118,8 @@ class ThreadSafeLRUCache:
 
 
 # Global cache instances
-_rag_cache: Optional[ThreadSafeLRUCache] = None
-_embedding_cache: Optional[ThreadSafeLRUCache] = None
+_rag_cache: ThreadSafeLRUCache | None = None
+_embedding_cache: ThreadSafeLRUCache | None = None
 
 
 def _get_cache_key(query_text: str, **kwargs) -> str:
@@ -128,7 +136,7 @@ def _get_cache_key(query_text: str, **kwargs) -> str:
     return hashlib.md5(param_string.encode()).hexdigest()
 
 
-def _get_cached_result(cache_key: str) -> Optional[Dict[str, Any]]:
+def _get_cached_result(cache_key: str) -> dict[str, Any] | None:
     """Get cached result from RAG cache."""
     global _rag_cache
     if not _rag_cache or not settings.RAG_CACHE_ENABLED:
@@ -136,7 +144,7 @@ def _get_cached_result(cache_key: str) -> Optional[Dict[str, Any]]:
     return _rag_cache.get(cache_key)
 
 
-def _cache_result(cache_key: str, result: Dict[str, Any]) -> None:
+def _cache_result(cache_key: str, result: dict[str, Any]) -> None:
     """Cache result in RAG cache."""
     global _rag_cache
     if not _rag_cache or not settings.RAG_CACHE_ENABLED:
@@ -152,7 +160,8 @@ def _initialize_caches():
 
     if cache_config["rag_cache_enabled"]:
         _rag_cache = ThreadSafeLRUCache(
-            max_size=cache_config["rag_cache_max_size"], ttl_seconds=cache_config["rag_cache_ttl"]
+            max_size=cache_config["rag_cache_max_size"],
+            ttl_seconds=cache_config["rag_cache_ttl"],
         )
         logger.info(
             f"Initialized RAG cache: max_size={cache_config['rag_cache_max_size']}, ttl={cache_config['rag_cache_ttl']}s"
@@ -160,7 +169,8 @@ def _initialize_caches():
 
     if cache_config["embedding_cache_enabled"]:
         _embedding_cache = ThreadSafeLRUCache(
-            max_size=cache_config["embedding_cache_max_size"], ttl_seconds=cache_config["embedding_cache_ttl"]
+            max_size=cache_config["embedding_cache_max_size"],
+            ttl_seconds=cache_config["embedding_cache_ttl"],
         )
         logger.info(
             f"Initialized embedding cache: max_size={cache_config['embedding_cache_max_size']}, ttl={cache_config['embedding_cache_ttl']}s"
@@ -230,11 +240,11 @@ app.add_middleware(
 )
 
 # Global instances (initialized on startup)
-qdrant_store: Optional[QdrantStore] = None
-firestore_manager: Optional[FirestoreMetadataManager] = None
-vectorization_tool: Optional[QdrantVectorizationTool] = None
-auth_manager: Optional[AuthManager] = None
-user_manager: Optional[UserManager] = None
+qdrant_store: QdrantStore | None = None
+firestore_manager: FirestoreMetadataManager | None = None
+vectorization_tool: QdrantVectorizationTool | None = None
+auth_manager: AuthManager | None = None
+user_manager: UserManager | None = None
 
 # OAuth2 scheme for token handling
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login", auto_error=False)
@@ -243,74 +253,94 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login", auto_error=False)
 # Pydantic models for API requests/responses
 class SaveDocumentRequest(BaseModel):
     doc_id: str = Field(..., min_length=1, description="Unique document identifier")
-    content: str = Field(..., min_length=1, description="Document content to vectorize and store")
-    metadata: Optional[Dict[str, Any]] = Field(default={}, description="Optional metadata")
-    tag: Optional[str] = Field(default=None, description="Optional tag for grouping")
-    update_firestore: bool = Field(default=True, description="Whether to update Firestore metadata")
+    content: str = Field(
+        ..., min_length=1, description="Document content to vectorize and store"
+    )
+    metadata: dict[str, Any] | None = Field(
+        default={}, description="Optional metadata"
+    )
+    tag: str | None = Field(default=None, description="Optional tag for grouping")
+    update_firestore: bool = Field(
+        default=True, description="Whether to update Firestore metadata"
+    )
 
 
 class SaveDocumentResponse(BaseModel):
     status: str
     doc_id: str
     message: str
-    vector_id: Optional[str] = None
-    embedding_dimension: Optional[int] = None
+    vector_id: str | None = None
+    embedding_dimension: int | None = None
     firestore_updated: bool = False
-    error: Optional[str] = None
+    error: str | None = None
 
 
 class QueryVectorsRequest(BaseModel):
-    query_text: str = Field(..., description="Text to search for semantically similar documents")
-    tag: Optional[str] = Field(default=None, description="Optional tag filter")
-    limit: int = Field(default=10, ge=1, le=100, description="Maximum number of results")
-    score_threshold: Optional[float] = Field(default=0.7, ge=0.0, le=1.0, description="Minimum similarity score")
+    query_text: str = Field(
+        ..., description="Text to search for semantically similar documents"
+    )
+    tag: str | None = Field(default=None, description="Optional tag filter")
+    limit: int = Field(
+        default=10, ge=1, le=100, description="Maximum number of results"
+    )
+    score_threshold: float | None = Field(
+        default=0.7, ge=0.0, le=1.0, description="Minimum similarity score"
+    )
 
 
 class QueryVectorsResponse(BaseModel):
     status: str
     query_text: str
-    results: List[Dict[str, Any]]
+    results: list[dict[str, Any]]
     total_found: int
     message: str
-    error: Optional[str] = None
+    error: str | None = None
 
 
 class SearchDocumentsRequest(BaseModel):
-    tag: Optional[str] = Field(default=None, description="Tag to filter documents")
+    tag: str | None = Field(default=None, description="Tag to filter documents")
     offset: int = Field(default=0, ge=0, description="Number of results to skip")
-    limit: int = Field(default=10, ge=1, le=100, description="Maximum number of results")
-    include_vectors: bool = Field(default=False, description="Whether to include vector embeddings")
+    limit: int = Field(
+        default=10, ge=1, le=100, description="Maximum number of results"
+    )
+    include_vectors: bool = Field(
+        default=False, description="Whether to include vector embeddings"
+    )
 
 
 class SearchDocumentsResponse(BaseModel):
     status: str
-    results: List[Dict[str, Any]]
+    results: list[dict[str, Any]]
     total_found: int
     offset: int
     limit: int
     message: str
-    error: Optional[str] = None
+    error: str | None = None
 
 
 # CLI140e RAG endpoint models
 class RAGSearchRequest(BaseModel):
     query_text: str = Field(..., description="Text to search for using hybrid RAG")
-    metadata_filters: Optional[Dict[str, Any]] = Field(default=None, description="Metadata filters")
-    tags: Optional[List[str]] = Field(default=None, description="Tag filters")
-    path_query: Optional[str] = Field(default=None, description="Path query filter")
+    metadata_filters: dict[str, Any] | None = Field(
+        default=None, description="Metadata filters"
+    )
+    tags: list[str] | None = Field(default=None, description="Tag filters")
+    path_query: str | None = Field(default=None, description="Path query filter")
     limit: int = Field(default=10, ge=1, le=50, description="Maximum number of results")
-    score_threshold: float = Field(default=0.5, ge=0.0, le=1.0, description="Minimum similarity score")
-    qdrant_tag: Optional[str] = Field(default=None, description="Qdrant tag filter")
+    score_threshold: float = Field(
+        default=0.5, ge=0.0, le=1.0, description="Minimum similarity score"
+    )
+    qdrant_tag: str | None = Field(default=None, description="Qdrant tag filter")
 
 
 class RAGSearchResponse(BaseModel):
     status: str
     query: str
-    results: List[Dict[str, Any]]
+    results: list[dict[str, Any]]
     count: int
-    rag_info: Dict[str, Any]
+    rag_info: dict[str, Any]
     message: str
-    error: Optional[str] = None
+    error: str | None = None
 
 
 class LoginRequest(BaseModel):
@@ -324,29 +354,31 @@ class LoginResponse(BaseModel):
     expires_in: int
     user_id: str
     email: str
-    scopes: List[str]
+    scopes: list[str]
 
 
 class UserRegistrationRequest(BaseModel):
     email: str = Field(..., description="User email address")
-    password: str = Field(..., min_length=6, description="User password (minimum 6 characters)")
-    full_name: Optional[str] = Field(default=None, description="User full name")
+    password: str = Field(
+        ..., min_length=6, description="User password (minimum 6 characters)"
+    )
+    full_name: str | None = Field(default=None, description="User full name")
 
 
 class UserRegistrationResponse(BaseModel):
     status: str
     message: str
-    user_id: Optional[str] = None
-    email: Optional[str] = None
-    error: Optional[str] = None
+    user_id: str | None = None
+    email: str | None = None
+    error: str | None = None
 
 
 class HealthResponse(BaseModel):
     status: str
     timestamp: str
     version: str
-    services: Dict[str, str]
-    authentication: Dict[str, Any]
+    services: dict[str, str]
+    authentication: dict[str, Any]
 
 
 @app.on_event("startup")
@@ -365,7 +397,8 @@ async def startup_event():
             # Initialize User Manager
             firestore_config = settings.get_firestore_config()
             user_manager = UserManager(
-                project_id=firestore_config.get("project_id"), database_id=firestore_config.get("database_id")
+                project_id=firestore_config.get("project_id"),
+                database_id=firestore_config.get("database_id"),
             )
             logger.info("UserManager initialized successfully")
 
@@ -389,7 +422,9 @@ async def startup_event():
         firestore_config = settings.get_firestore_config()
         firestore_manager = FirestoreMetadataManager(
             project_id=firestore_config.get("project_id"),
-            collection_name=firestore_config.get("metadata_collection", "document_metadata"),
+            collection_name=firestore_config.get(
+                "metadata_collection", "document_metadata"
+            ),
         )
         logger.info("FirestoreMetadataManager initialized successfully")
 
@@ -420,20 +455,26 @@ async def get_current_user_dependency():
 
     if not auth_manager:
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Authentication service unavailable"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Authentication service unavailable",
         )
 
     return await auth_manager.get_current_user()
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> Dict[str, Any]:
+async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict[str, Any]:
     """Get current user dependency function"""
     if not settings.ENABLE_AUTHENTICATION:
-        return {"user_id": "anonymous", "email": "anonymous@system", "scopes": ["read", "write"]}
+        return {
+            "user_id": "anonymous",
+            "email": "anonymous@system",
+            "scopes": ["read", "write"],
+        }
 
     if not auth_manager:
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Authentication service unavailable"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Authentication service unavailable",
         )
 
     # Use the auth_manager to verify token
@@ -464,7 +505,11 @@ async def health_check():
     }
 
     return HealthResponse(
-        status="healthy" if all(v == "connected" or v == "available" for v in services.values()) else "degraded",
+        status=(
+            "healthy"
+            if all(v == "connected" or v == "available" for v in services.values())
+            else "degraded"
+        ),
         timestamp=datetime.utcnow().isoformat(),
         version="1.0.0",
         services=services,
@@ -477,16 +522,22 @@ async def health_check():
 async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     """Authenticate user and return JWT token"""
     if not settings.ENABLE_AUTHENTICATION:
-        raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Authentication is disabled")
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="Authentication is disabled",
+        )
 
     if not user_manager or not auth_manager:
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Authentication services unavailable"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Authentication services unavailable",
         )
 
     try:
         # Authenticate user
-        user = await user_manager.authenticate_user(form_data.username, form_data.password)
+        user = await user_manager.authenticate_user(
+            form_data.username, form_data.password
+        )
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -496,7 +547,9 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
 
         # Create access token
         access_token = auth_manager.create_user_token(
-            user_id=user["user_id"], email=user["email"], scopes=user.get("scopes", ["read", "write"])
+            user_id=user["user_id"],
+            email=user["email"],
+            scopes=user.get("scopes", ["read", "write"]),
         )
 
         logger.info(f"User logged in successfully: {user['email']}")
@@ -514,7 +567,10 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
         raise
     except Exception as e:
         logger.error(f"Login error: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal authentication error")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal authentication error",
+        )
 
 
 @app.post("/auth/register", response_model=UserRegistrationResponse)
@@ -522,14 +578,21 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
 async def register(request: Request, registration_data: UserRegistrationRequest):
     """Register a new user"""
     if not settings.ENABLE_AUTHENTICATION:
-        raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Authentication is disabled")
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="Authentication is disabled",
+        )
 
     if not settings.ALLOW_REGISTRATION:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User registration is not allowed")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User registration is not allowed",
+        )
 
     if not user_manager:
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="User management service unavailable"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="User management service unavailable",
         )
 
     try:
@@ -544,14 +607,21 @@ async def register(request: Request, registration_data: UserRegistrationRequest)
         logger.info(f"New user registered: {registration_data.email}")
 
         return UserRegistrationResponse(
-            status="success", message="User registered successfully", user_id=user["user_id"], email=user["email"]
+            status="success",
+            message="User registered successfully",
+            user_id=user["user_id"],
+            email=user["email"],
         )
 
     except ValueError as e:
-        return UserRegistrationResponse(status="failed", message="Registration failed", error=str(e))
+        return UserRegistrationResponse(
+            status="failed", message="Registration failed", error=str(e)
+        )
     except Exception as e:
         logger.error(f"Registration error: {e}")
-        return UserRegistrationResponse(status="error", message="Internal registration error", error=str(e))
+        return UserRegistrationResponse(
+            status="error", message="Internal registration error", error=str(e)
+        )
 
 
 @app.post("/save", response_model=SaveDocumentResponse)
@@ -560,7 +630,7 @@ async def save_document(
     request: Request,
     document_data: SaveDocumentRequest,
     background_tasks: BackgroundTasks,
-    current_user: Dict[str, Any] = Depends(get_current_user),
+    current_user: dict[str, Any] = Depends(get_current_user),
 ):
     """
     Save and vectorize a document for agent-to-agent access
@@ -569,8 +639,13 @@ async def save_document(
         raise HTTPException(status_code=503, detail="Vectorization service unavailable")
 
     # Check user permissions
-    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(current_user, "write"):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions to save documents")
+    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(
+        current_user, "write"
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions to save documents",
+        )
 
     try:
         logger.info(
@@ -626,7 +701,9 @@ async def save_document(
 @app.post("/query", response_model=QueryVectorsResponse)
 @limiter.limit("20/minute")  # Higher limit for queries
 async def query_vectors(
-    request: Request, query_data: QueryVectorsRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+    request: Request,
+    query_data: QueryVectorsRequest,
+    current_user: dict[str, Any] = Depends(get_current_user),
 ):
     """
     Perform semantic search on vectorized documents with CLI140e optimizations
@@ -636,8 +713,13 @@ async def query_vectors(
         raise HTTPException(status_code=503, detail="Qdrant service unavailable")
 
     # Check user permissions
-    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(current_user, "read"):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions to query documents")
+    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(
+        current_user, "read"
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions to query documents",
+        )
 
     try:
         # CLI140e Optimization: Check cache first
@@ -645,9 +727,9 @@ async def query_vectors(
             query_data.query_text,
             tag=query_data.tag,
             limit=query_data.limit,
-            score_threshold=query_data.score_threshold
+            score_threshold=query_data.score_threshold,
         )
-        
+
         cached_result = _get_cached_result(cache_key)
         if cached_result:
             logger.info(f"Cache hit for query: {query_data.query_text[:30]}...")
@@ -675,15 +757,15 @@ async def query_vectors(
                 tag=query_data.tag,
                 score_threshold=query_data.score_threshold,
             ),
-            timeout=0.4  # 0.4s timeout to ensure <0.5s total response
+            timeout=0.4,  # 0.4s timeout to ensure <0.5s total response
         )
-        
+
         query_latency = time.time() - start_time
-        
+
         # Cache the result for future requests
         result_data = {"results": search_results.get("results", [])}
         _cache_result(cache_key, result_data)
-        
+
         logger.info(f"Semantic query completed in {query_latency:.3f}s")
 
         return QueryVectorsResponse(
@@ -694,7 +776,7 @@ async def query_vectors(
             message=f"Found {len(search_results.get('results', []))} results for semantic query",
         )
 
-    except asyncio.TimeoutError:
+    except TimeoutError:
         logger.warning(f"Query timeout for: {query_data.query_text[:30]}...")
         return QueryVectorsResponse(
             status="timeout",
@@ -719,7 +801,9 @@ async def query_vectors(
 @app.post("/search", response_model=SearchDocumentsResponse)
 @limiter.limit("30/minute")  # Higher limit for search
 async def search_documents(
-    request: Request, search_data: SearchDocumentsRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+    request: Request,
+    search_data: SearchDocumentsRequest,
+    current_user: dict[str, Any] = Depends(get_current_user),
 ):
     """
     Search documents by tag and metadata filters
@@ -728,9 +812,12 @@ async def search_documents(
         raise HTTPException(status_code=503, detail="Qdrant service unavailable")
 
     # Check user permissions
-    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(current_user, "read"):
+    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(
+        current_user, "read"
+    ):
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions to search documents"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions to search documents",
         )
 
     try:
@@ -745,7 +832,9 @@ async def search_documents(
             )
         else:
             # If no tag specified, get recent documents
-            search_results = await qdrant_store.get_recent_documents(limit=search_data.limit, offset=search_data.offset)
+            search_results = await qdrant_store.get_recent_documents(
+                limit=search_data.limit, offset=search_data.offset
+            )
 
         # Process results to include/exclude vectors as requested
         processed_results = []
@@ -780,7 +869,9 @@ async def search_documents(
 @app.post("/rag", response_model=RAGSearchResponse)
 @limiter.limit("30/minute")  # Higher limit for RAG
 async def rag_search(
-    request: Request, search_data: RAGSearchRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+    request: Request,
+    search_data: RAGSearchRequest,
+    current_user: dict[str, Any] = Depends(get_current_user),
 ):
     """
     Perform hybrid RAG search on vectorized documents with CLI140e optimizations
@@ -790,8 +881,13 @@ async def rag_search(
         raise HTTPException(status_code=503, detail="Qdrant service unavailable")
 
     # Check user permissions
-    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(current_user, "read"):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions to query documents")
+    if settings.ENABLE_AUTHENTICATION and not auth_manager.validate_user_access(
+        current_user, "read"
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions to query documents",
+        )
 
     try:
         logger.info(
@@ -810,15 +906,15 @@ async def rag_search(
                 score_threshold=search_data.score_threshold,
                 qdrant_tag=search_data.qdrant_tag,
             ),
-            timeout=0.6  # 0.6s timeout for RAG (more complex than simple search)
+            timeout=0.6,  # 0.6s timeout for RAG (more complex than simple search)
         )
-        
+
         query_latency = time.time() - start_time
-        
+
         # Cache the result for future requests
         result_data = {"results": search_results.get("results", [])}
         _cache_result(search_data.query_text, result_data)
-        
+
         logger.info(f"RAG search completed in {query_latency:.3f}s")
 
         return RAGSearchResponse(
@@ -830,7 +926,7 @@ async def rag_search(
             message=f"Found {len(search_results.get('results', []))} results for RAG query",
         )
 
-    except asyncio.TimeoutError:
+    except TimeoutError:
         logger.warning(f"RAG timeout for: {search_data.query_text[:30]}...")
         return RAGSearchResponse(
             status="timeout",
@@ -865,9 +961,16 @@ async def root():
             "health": "/health",
             "auth": {
                 "login": "/auth/login",
-                "register": "/auth/register" if settings.ALLOW_REGISTRATION else "disabled",
+                "register": (
+                    "/auth/register" if settings.ALLOW_REGISTRATION else "disabled"
+                ),
             },
-            "api": {"save": "/save", "query": "/query", "search": "/search", "rag": "/rag"},
+            "api": {
+                "save": "/save",
+                "query": "/query",
+                "search": "/search",
+                "rag": "/rag",
+            },
             "docs": "/docs",
         },
         "authentication": {

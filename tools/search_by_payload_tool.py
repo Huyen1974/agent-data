@@ -1,22 +1,23 @@
-import logging
-from typing import Dict, Any, Union, Optional
 import asyncio
+import logging
+from typing import Any
+
+from qdrant_client.http.models import FieldCondition, Filter, MatchValue
 
 from agent_data.vector_store.qdrant_store import QdrantStore
-from qdrant_client.http.models import Filter, FieldCondition, MatchValue
 
 logger = logging.getLogger(__name__)
 
 
 async def search_by_payload(
-    collection_name: Optional[str] = None,
+    collection_name: str | None = None,
     field: str = "tag",
     value: Any = None,
     limit: int = 10,
-    offset: Optional[Union[int, str]] = None,
+    offset: int | str | None = None,
     with_payload: bool = True,
     with_vectors: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Search for points in the Qdrant collection by payload fields.
 
@@ -42,19 +43,31 @@ async def search_by_payload(
         }
 
     if value is None:
-        return {"status": "failed", "error": "Value cannot be None.", "results": [], "count": 0, "next_offset": None}
+        return {
+            "status": "failed",
+            "error": "Value cannot be None.",
+            "results": [],
+            "count": 0,
+            "next_offset": None,
+        }
 
     try:
         # Get the QdrantStore instance
         qdrant_store = QdrantStore()
 
         # Use the collection name from QdrantStore if not provided
-        target_collection = collection_name if collection_name else qdrant_store.collection_name
+        target_collection = (
+            collection_name if collection_name else qdrant_store.collection_name
+        )
 
         # Create filter for the specified field and value
-        search_filter = Filter(must=[FieldCondition(key=field.strip(), match=MatchValue(value=value))])
+        search_filter = Filter(
+            must=[FieldCondition(key=field.strip(), match=MatchValue(value=value))]
+        )
 
-        logger.info(f"Searching in collection '{target_collection}' for field '{field}' with value '{value}'")
+        logger.info(
+            f"Searching in collection '{target_collection}' for field '{field}' with value '{value}'"
+        )
 
         # Use scroll to search by payload (more efficient for payload-only searches)
         results, next_page_offset = qdrant_store.client.scroll(
@@ -76,7 +89,9 @@ async def search_by_payload(
             }
             formatted_results.append(result_item)
 
-        logger.info(f"Found {len(formatted_results)} points matching field '{field}' with value '{value}'")
+        logger.info(
+            f"Found {len(formatted_results)} points matching field '{field}' with value '{value}'"
+        )
 
         return {
             "status": "success",
@@ -87,7 +102,10 @@ async def search_by_payload(
         }
 
     except Exception as e:
-        logger.error(f"Error searching by payload field '{field}' with value '{value}': {e}", exc_info=True)
+        logger.error(
+            f"Error searching by payload field '{field}' with value '{value}': {e}",
+            exc_info=True,
+        )
         return {
             "status": "failed",
             "error": f"Failed to search by payload: {str(e)}",
@@ -99,14 +117,14 @@ async def search_by_payload(
 
 # Synchronous wrapper for compatibility with the tool registration system
 def search_by_payload_sync(
-    collection_name: Optional[str] = None,
+    collection_name: str | None = None,
     field: str = "tag",
     value: Any = None,
     limit: int = 10,
-    offset: Optional[Union[int, str]] = None,
+    offset: int | str | None = None,
     with_payload: bool = True,
     with_vectors: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Synchronous wrapper for search_by_payload function.
 
@@ -141,15 +159,33 @@ def search_by_payload_sync(
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(
                     asyncio.run,
-                    search_by_payload(collection_name, field, value, limit, offset, with_payload, with_vectors),
+                    search_by_payload(
+                        collection_name,
+                        field,
+                        value,
+                        limit,
+                        offset,
+                        with_payload,
+                        with_vectors,
+                    ),
                 )
                 return future.result()
         else:
             return loop.run_until_complete(
-                search_by_payload(collection_name, field, value, limit, offset, with_payload, with_vectors)
+                search_by_payload(
+                    collection_name,
+                    field,
+                    value,
+                    limit,
+                    offset,
+                    with_payload,
+                    with_vectors,
+                )
             )
     except Exception as e:
-        logger.error(f"Error in synchronous wrapper for search_by_payload: {e}", exc_info=True)
+        logger.error(
+            f"Error in synchronous wrapper for search_by_payload: {e}", exc_info=True
+        )
         return {
             "status": "failed",
             "error": f"Failed to search by payload: {str(e)}",

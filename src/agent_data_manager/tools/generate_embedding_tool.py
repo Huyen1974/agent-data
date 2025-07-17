@@ -1,8 +1,9 @@
-import pickle
 import os
+import pickle
 import time
+from typing import Any
+
 import numpy as np
-from typing import Dict, Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -10,7 +11,7 @@ RETRY_DELAY = 1  # seconds
 EMBEDDING_DIM = 8  # Example dimension for mock embeddings
 
 
-def generate_embedding(index_name: str, key: str) -> Dict[str, Any]:
+def generate_embedding(index_name: str, key: str) -> dict[str, Any]:
     """
     Generates a mock embedding for a specific metadata node and updates the metadata file.
 
@@ -30,7 +31,10 @@ def generate_embedding(index_name: str, key: str) -> Dict[str, Any]:
     index_path = os.path.join(FAISS_DIR, f"{index_name}.faiss")
 
     if not os.path.exists(meta_path) or not os.path.exists(index_path):
-        return {"status": "failed", "error": f"FAISS index or metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"FAISS index or metadata file not found for '{index_name}'.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -45,11 +49,13 @@ def generate_embedding(index_name: str, key: str) -> Dict[str, Any]:
                 "error": f"Metadata file disappeared for index '{index_name}' during embedding generation.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -64,7 +70,10 @@ def generate_embedding(index_name: str, key: str) -> Dict[str, Any]:
     metadata_dict = loaded_data["metadata"]
 
     if key not in metadata_dict:
-        return {"status": "failed", "error": f"Key '{key}' not found in index '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"Key '{key}' not found in index '{index_name}'.",
+        }
 
     if not isinstance(metadata_dict[key], dict):
         return {
@@ -83,19 +92,30 @@ def generate_embedding(index_name: str, key: str) -> Dict[str, Any]:
             with open(meta_path, "wb") as f:
                 pickle.dump(loaded_data, f)
 
-            print(f"Successfully generated and saved embedding for key '{key}' in index '{index_name}'.")
-            return {"status": "success", "key": key, "embedding_preview": mock_embedding[:3] + ["..."]}
+            print(
+                f"Successfully generated and saved embedding for key '{key}' in index '{index_name}'."
+            )
+            return {
+                "status": "success",
+                "key": key,
+                "embedding_preview": mock_embedding[:3] + ["..."],
+            }
 
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to save metadata after generating embedding for '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to save metadata after generating embedding for '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to save metadata after generating embedding for '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
-    return {"status": "failed", "error": "Unknown error after generating embedding and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after generating embedding and save attempts.",
+    }
 
 
 # Example usage (for testing purposes)

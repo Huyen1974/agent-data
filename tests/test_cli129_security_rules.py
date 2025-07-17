@@ -1,4 +1,5 @@
 import pytest
+
 """
 CLI 129 Test: Firestore Security Rules Validation
 Tests security rules structure and validates access control concepts.
@@ -23,7 +24,7 @@ class TestCLI129SecurityRules:
         7. Data validation logic
         """
         # Test 1: Rules file structure validation
-        with open("firestore.rules", "r") as f:
+        with open("firestore.rules") as f:
             rules_content = f.read()
 
         assert "rules_version = '2'" in rules_content
@@ -46,8 +47,12 @@ class TestCLI129SecurityRules:
         assert "request.auth.token.email.matches" in rules_content
 
         # Verify service account email pattern works
-        service_account_email = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
-        assert service_account_email.endswith("@chatgpt-db-project.iam.gserviceaccount.com")
+        service_account_email = (
+            "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+        )
+        assert service_account_email.endswith(
+            "@chatgpt-db-project.iam.gserviceaccount.com"
+        )
 
         # Test 5: Validation functions presence and structure
         assert "function validateDocumentMetadata(data)" in rules_content
@@ -76,7 +81,8 @@ class TestCLI129SecurityRules:
 
         has_auth = mock_auth_context["auth"] is not None
         has_valid_data = all(
-            key in mock_auth_context["resource"]["data"] for key in ["doc_id", "vectorStatus", "lastUpdated"]
+            key in mock_auth_context["resource"]["data"]
+            for key in ["doc_id", "vectorStatus", "lastUpdated"]
         )
         assert has_auth is True
         assert has_valid_data is True
@@ -91,10 +97,17 @@ class TestCLI129SecurityRules:
         assert has_auth_unauth is False
 
         # Test 8: Service account access validation
-        mock_service_context = {"auth": {"uid": "service_account", "token": {"email": service_account_email}}}
+        mock_service_context = {
+            "auth": {
+                "uid": "service_account",
+                "token": {"email": service_account_email},
+            }
+        }
 
         has_service_auth = mock_service_context["auth"] is not None
-        has_valid_service_email = service_account_email.endswith("@chatgpt-db-project.iam.gserviceaccount.com")
+        has_valid_service_email = service_account_email.endswith(
+            "@chatgpt-db-project.iam.gserviceaccount.com"
+        )
         assert has_service_auth is True
         assert has_valid_service_email is True
 
@@ -121,7 +134,10 @@ class TestCLI129SecurityRules:
         assert "lastUpdated" not in invalid_metadata
 
         # Test 10: Session data validation logic
-        valid_session = {"session_id": "test_session", "created_at": "2024-01-15T10:00:00Z"}
+        valid_session = {
+            "session_id": "test_session",
+            "created_at": "2024-01-15T10:00:00Z",
+        }
 
         invalid_session = {
             "session_id": "test_session",

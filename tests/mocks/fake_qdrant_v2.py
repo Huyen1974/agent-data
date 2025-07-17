@@ -1,10 +1,17 @@
 """FakeQdrant V2 - Mock implementation for VectorStore interface testing."""
 
 import logging
-from typing import Dict, List, Optional, Any, Union
+from typing import Any
+
 import numpy as np
-from qdrant_client.http.models import Distance, VectorParams, PointStruct, Filter, FieldCondition
 from qdrant_client.http import models
+from qdrant_client.http.models import (
+    Distance,
+    FieldCondition,
+    Filter,
+    PointStruct,
+    VectorParams,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -53,9 +60,11 @@ class FakeQdrantV2:
         config = self._collection_configs.get(collection_name, {})
         vectors_count = len(self._shared_data[collection_name])
 
-        return type("CollectionInfo", (), {"vectors_count": vectors_count, "config": config})()
+        return type(
+            "CollectionInfo", (), {"vectors_count": vectors_count, "config": config}
+        )()
 
-    def upsert(self, collection_name: str, points: List[PointStruct]):
+    def upsert(self, collection_name: str, points: list[PointStruct]):
         """Upsert points into collection."""
         if collection_name not in self._shared_data:
             self._shared_data[collection_name] = {}
@@ -67,13 +76,17 @@ class FakeQdrantV2:
                 "payload": point.payload or {},
             }
 
-        return type("UpdateResult", (), {"operation_id": "fake-operation-id", "status": "completed"})()
+        return type(
+            "UpdateResult",
+            (),
+            {"operation_id": "fake-operation-id", "status": "completed"},
+        )()
 
     def search(
         self,
         collection_name: str,
-        query_vector: List[float],
-        query_filter: Optional[Filter] = None,
+        query_vector: list[float],
+        query_filter: Filter | None = None,
         limit: int = 10,
         score_threshold: float = 0.0,
     ):
@@ -114,7 +127,12 @@ class FakeQdrantV2:
         results.sort(key=lambda x: x.score, reverse=True)
         return results[:limit]
 
-    def scroll(self, collection_name: str, scroll_filter: Optional[Filter] = None, limit: int = 10):
+    def scroll(
+        self,
+        collection_name: str,
+        scroll_filter: Filter | None = None,
+        limit: int = 10,
+    ):
         """Scroll through points in collection."""
         if collection_name not in self._shared_data:
             return ([], None)
@@ -132,7 +150,11 @@ class FakeQdrantV2:
                 type(
                     "Record",
                     (),
-                    {"id": point_data["id"], "payload": point_data["payload"], "vector": point_data["vector"]},
+                    {
+                        "id": point_data["id"],
+                        "payload": point_data["payload"],
+                        "vector": point_data["vector"],
+                    },
                 )()
             )
 
@@ -144,7 +166,11 @@ class FakeQdrantV2:
     def delete(self, collection_name: str, points_selector):
         """Delete points from collection."""
         if collection_name not in self._shared_data:
-            return type("UpdateResult", (), {"operation_id": "fake-operation-id", "status": "completed"})()
+            return type(
+                "UpdateResult",
+                (),
+                {"operation_id": "fake-operation-id", "status": "completed"},
+            )()
 
         data = self._shared_data[collection_name]
         deleted_count = 0
@@ -165,14 +191,18 @@ class FakeQdrantV2:
         return type(
             "UpdateResult",
             (),
-            {"operation_id": "fake-operation-id", "status": "completed", "deleted_count": deleted_count},
+            {
+                "operation_id": "fake-operation-id",
+                "status": "completed",
+                "deleted_count": deleted_count,
+            },
         )()
 
     def close(self):
         """Close the connection (no-op for mock)."""
         pass
 
-    def _matches_filter(self, payload: Dict[str, Any], filter_obj: Filter) -> bool:
+    def _matches_filter(self, payload: dict[str, Any], filter_obj: Filter) -> bool:
         """Check if payload matches the filter."""
         if not filter_obj or not hasattr(filter_obj, "must"):
             return True
@@ -183,7 +213,11 @@ class FakeQdrantV2:
         for condition in filter_obj.must:
             if hasattr(condition, "key") and hasattr(condition, "match"):
                 key = condition.key
-                match_value = condition.match.value if hasattr(condition.match, "value") else condition.match
+                match_value = (
+                    condition.match.value
+                    if hasattr(condition.match, "value")
+                    else condition.match
+                )
 
                 if key not in payload:
                     return False
@@ -193,7 +227,7 @@ class FakeQdrantV2:
 
         return True
 
-    def _calculate_similarity(self, vec1: List[float], vec2: List[float]) -> float:
+    def _calculate_similarity(self, vec1: list[float], vec2: list[float]) -> float:
         """Calculate cosine similarity between two vectors."""
         try:
             # Convert to numpy arrays for calculation
@@ -231,17 +265,19 @@ class MockQdrantStore:
         if not self._collection_initialized:
             self.client.create_collection(
                 collection_name=self.collection_name,
-                vectors_config=VectorParams(size=self.vector_size, distance=self.distance),
+                vectors_config=VectorParams(
+                    size=self.vector_size, distance=self.distance
+                ),
             )
             self._collection_initialized = True
 
     async def upsert_vector(
         self,
         vector_id: str,
-        vector: Union[List[float], np.ndarray],
-        metadata: Optional[Dict[str, Any]] = None,
-        tag: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        vector: list[float] | np.ndarray,
+        metadata: dict[str, Any] | None = None,
+        tag: str | None = None,
+    ) -> dict[str, Any]:
         """Upsert a vector."""
         await self._ensure_collection()
 
@@ -260,14 +296,16 @@ class MockQdrantStore:
     async def query_vectors_by_tag(
         self,
         tag: str,
-        query_vector: Optional[Union[List[float], np.ndarray]] = None,
+        query_vector: list[float] | np.ndarray | None = None,
         limit: int = 10,
         threshold: float = 0.0,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Query vectors by tag."""
         await self._ensure_collection()
 
-        tag_filter = Filter(must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))])
+        tag_filter = Filter(
+            must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))]
+        )
 
         if query_vector is not None:
             if isinstance(query_vector, np.ndarray):
@@ -281,7 +319,11 @@ class MockQdrantStore:
                 score_threshold=threshold,
             )
         else:
-            results, _ = self.client.scroll(collection_name=self.collection_name, scroll_filter=tag_filter, limit=limit)
+            results, _ = self.client.scroll(
+                collection_name=self.collection_name,
+                scroll_filter=tag_filter,
+                limit=limit,
+            )
             # Convert to search-like format
             search_results = []
             for point in results:
@@ -289,7 +331,12 @@ class MockQdrantStore:
                     type(
                         "ScoredPoint",
                         (),
-                        {"id": point.id, "score": 1.0, "payload": point.payload, "vector": point.vector},
+                        {
+                            "id": point.id,
+                            "score": 1.0,
+                            "payload": point.payload,
+                            "vector": point.vector,
+                        },
                     )()
                 )
             results = search_results
@@ -297,19 +344,27 @@ class MockQdrantStore:
         formatted_results = []
         for point in results:
             formatted_results.append(
-                {"id": point.id, "score": point.score, "metadata": point.payload, "vector": point.vector}
+                {
+                    "id": point.id,
+                    "score": point.score,
+                    "metadata": point.payload,
+                    "vector": point.vector,
+                }
             )
 
         return formatted_results
 
-    async def delete_vectors_by_tag(self, tag: str) -> Dict[str, Any]:
+    async def delete_vectors_by_tag(self, tag: str) -> dict[str, Any]:
         """Delete vectors by tag."""
         await self._ensure_collection()
 
-        delete_filter = Filter(must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))])
+        delete_filter = Filter(
+            must=[FieldCondition(key="tag", match=models.MatchValue(value=tag))]
+        )
 
         self.client.delete(
-            collection_name=self.collection_name, points_selector=models.FilterSelector(filter=delete_filter)
+            collection_name=self.collection_name,
+            points_selector=models.FilterSelector(filter=delete_filter),
         )
 
         return {"success": True, "tag": tag}

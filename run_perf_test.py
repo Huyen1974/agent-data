@@ -1,18 +1,30 @@
 import json
-import time
+import os
 import subprocess
 import sys
-import os
+import time
 
 requests = [
     {"tool_name": "echo", "args": ["Hello"], "id": "echo-1"},
     {"tool_name": "echo", "args": [], "id": "echo-2"},  # Invalid echo
     {"tool_name": "delay", "args": [1], "id": "delay-1"},
-    {"tool_name": "delay", "args": [], "id": "delay-2"},  # Invalid delay (might still work depending on tool handling)
-    {"tool_name": "save_document", "args": ["doc_perf_test", "Test content"], "id": "save-1"},
+    {
+        "tool_name": "delay",
+        "args": [],
+        "id": "delay-2",
+    },  # Invalid delay (might still work depending on tool handling)
+    {
+        "tool_name": "save_document",
+        "args": ["doc_perf_test", "Test content"],
+        "id": "save-1",
+    },
     {"tool_name": "save_document", "args": [], "id": "save-2"},  # Invalid save
     {"tool_name": "semantic_search_local", "args": ["keyword"], "id": "search-1"},
-    {"tool_name": "semantic_search_local", "args": [], "id": "search-2"},  # Invalid search
+    {
+        "tool_name": "semantic_search_local",
+        "args": [],
+        "id": "search-2",
+    },  # Invalid search
     {
         "tool_name": "query_metadata",
         "args": ["doc_perf_test", "key"],
@@ -65,10 +77,15 @@ with open(log_file_path, "a") as log_file:
             try:
                 response_json = json.loads(last_json_line)
                 # Check for explicit error field or error status in meta
-                if response_json.get("error") is None and response_json.get("meta", {}).get("status") != "error":
+                if (
+                    response_json.get("error") is None
+                    and response_json.get("meta", {}).get("status") != "error"
+                ):
                     status = "success"
                 else:
-                    status = "failed (error in JSON)"  # Tool executed but returned an error
+                    status = (
+                        "failed (error in JSON)"  # Tool executed but returned an error
+                    )
             except json.JSONDecodeError:
                 status = "failed (bad json output)"  # Output wasn't valid JSON
         elif proc.returncode != 0:
@@ -81,9 +98,7 @@ with open(log_file_path, "a") as log_file:
         # if status == 'success' and 'error' in stdout_content.lower():
         #      status = 'failed (error in output)'
 
-        log_line = (
-            f'[{time.strftime("%Y-%m-%d %H:%M:%S")}] [{req.get("tool_name", "N/A")}] [{latency:.2f}ms] [{status}]\n'
-        )
+        log_line = f'[{time.strftime("%Y-%m-%d %H:%M:%S")}] [{req.get("tool_name", "N/A")}] [{latency:.2f}ms] [{status}]\n'
         log_file.write(log_line)
 
         print(
@@ -96,7 +111,9 @@ with open(log_file_path, "a") as log_file:
             print(f"  Stderr: {stderr_content}")
 
     avg_latency = sum(latencies) / len(latencies) if latencies else 0
-    print(f"Performance test complete. Average latency (incl. startup): {avg_latency:.2f}ms")
+    print(
+        f"Performance test complete. Average latency (incl. startup): {avg_latency:.2f}ms"
+    )
     log_file.write(
         f'[{time.strftime("%Y-%m-%d %H:%M:%S")}] [Summary] Average Latency (incl. startup): {avg_latency:.2f}ms\n'
     )

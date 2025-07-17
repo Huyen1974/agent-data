@@ -135,7 +135,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -112,7 +112,7 @@ class TestCursorRealCloudIntegration:
      def test_04_save_documents_with_auth(self):
          """Test saving multiple documents with authentication"""
@@ -144,7 +144,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -245,7 +245,7 @@ class TestCursorRealCloudIntegration:
      def test_05_semantic_search_with_auth(self):
          """Test semantic search with authentication"""
@@ -153,7 +153,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -316,7 +316,7 @@ class TestCursorRealCloudIntegration:
      def test_06_document_search_with_auth(self):
          """Test document search by tag with authentication"""
@@ -162,7 +162,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -344,7 +344,7 @@ class TestCursorRealCloudIntegration:
      def test_07_performance_under_load(self):
          """Test API performance with multiple authenticated requests"""
@@ -171,7 +171,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -397,7 +397,7 @@ class TestCursorRealCloudIntegration:
      def test_08_verify_firestore_sync(self):
          """Test that document metadata is properly synced to Firestore"""
@@ -180,7 +180,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 @@ -452,7 +452,7 @@ class TestCursorRealCloudIntegration:
      def test_09_cleanup_and_verification(self):
          """Cleanup test and verify system state"""
@@ -189,7 +189,7 @@ index 1ea55c8..26d49f4 100644
 +        # pytest.skip("Skipping real cloud integration test for timeout optimization")
          if not self.access_token:
              pytest.skip("Authentication token not available")
- 
+
 diff --git a/tests/test_cli127_package.py b/tests/test_cli127_package.py
 index afb6e26..845d060 100644
 --- a/tests/test_cli127_package.py
@@ -197,7 +197,7 @@ index afb6e26..845d060 100644
 @@ -13,7 +13,6 @@ import pytest
  class TestCLI127PackageSetup:
      """Test CLI 127 package setup and import validation."""
- 
+
 -    @pytest.mark.deferred
      def test_package_editable_installation(self):
          """Test that agent_data_manager is installed as editable package."""
@@ -207,7 +207,7 @@ index c32d3c9..f75278a 100644
 --- a/tests/test_cli140g1_shadow.py
 +++ b/tests/test_cli140g1_shadow.py
 @@ -149,7 +149,6 @@ class TestCLI140gShadowTraffic:
-         
+
      @pytest.mark.e2e
      @pytest.mark.shadow
 -    @pytest.mark.deferred
@@ -215,7 +215,7 @@ index c32d3c9..f75278a 100644
          """Test that shadow traffic monitoring correctly collects metrics."""
          with patch.object(self.shadow_monitor, 'monitoring_client') as mock_monitoring:
 @@ -177,7 +176,6 @@ class TestCLI140gShadowTraffic:
-             
+
      @pytest.mark.e2e
      @pytest.mark.shadow
 -    @pytest.mark.deferred
@@ -223,9 +223,9 @@ index c32d3c9..f75278a 100644
          """Test that shadow traffic monitoring detects high error rates."""
          # Mock high error rate scenario
 @@ -200,7 +198,6 @@ class TestCLI140gShadowTraffic:
-             
+
      @pytest.mark.e2e
-     @pytest.mark.shadow  
+     @pytest.mark.shadow
 -    @pytest.mark.deferred
      def test_shadow_traffic_latency_threshold_monitoring(self):
          """Test that shadow traffic monitoring detects high latency."""
@@ -237,7 +237,7 @@ index 7fd8c37..ed17ac1 100644
 @@ -197,7 +197,6 @@ class TestMCPIntegration:
                  process.kill()
                  process.wait()
- 
+
 -    @pytest.mark.deferred
      def test_subprocess_medium_scale(self):
          """Test medium-scale processing with 10 documents using mock QdrantStore."""

@@ -107,4 +107,4 @@ Primary objectives achieved:
 - 🔄 Significant progress on reducing skipped tests (370 → ~17 in sample)
 - ✅ Maintained MacBook M1 safety
 
-Ready for CLI140m.65 (final batch test validation). 
+Ready for CLI140m.65 (final batch test validation).

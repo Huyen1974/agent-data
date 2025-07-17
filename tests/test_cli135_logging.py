@@ -5,22 +5,28 @@ This module tests the automated task report update functionality with CI/CD inte
 Follows the "1 test per CLI" rule with comprehensive validation.
 """
 
-from unittest.mock import Mock, patch
-from datetime import datetime
 import json
-import sys
 import os
+import sys
+from datetime import datetime
+from unittest.mock import Mock, patch
+
 import pytest
 
 # Add the functions directory to the path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "functions", "write_task_report_function"))
+sys.path.insert(
+    0,
+    os.path.join(
+        os.path.dirname(__file__), "..", "functions", "write_task_report_function"
+    ),
+)
 
 try:
     from main import (
-        get_github_ci_runs,
-        get_nightly_ci_stats,
         _format_ci_runs_table,
         generate_task_report_content,
+        get_github_ci_runs,
+        get_nightly_ci_stats,
         write_task_report_handler,
     )
 except ImportError:
@@ -29,7 +35,11 @@ except ImportError:
         return []
 
     def get_nightly_ci_stats(runs):
-        return {"total_nightly_runs": 0, "avg_duration_minutes": 0, "under_5_minutes": False}
+        return {
+            "total_nightly_runs": 0,
+            "avg_duration_minutes": 0,
+            "under_5_minutes": False,
+        }
 
     def _format_ci_runs_table(runs):
         return "No recent CI runs available."
@@ -163,7 +173,10 @@ class TestCLI135AutomatedLogging:
         try:
             table = _format_ci_runs_table(mock_ci_runs[:2])
 
-            assert "| Run # | Workflow | Status | Duration | Branch | SHA | Date |" in table
+            assert (
+                "| Run # | Workflow | Status | Duration | Branch | SHA | Date |"
+                in table
+            )
             assert "42" in table  # Run number
             assert "✅" in table  # Success status
             assert "4.5m" in table  # Duration
@@ -177,7 +190,11 @@ class TestCLI135AutomatedLogging:
 | 41 | Slow Tests | ❌ | 2.3m | cli103a | def456gh | 01/15 |"""
 
         # 4. Test task report content generation with CI data
-        ci_stats = {"recent_runs": mock_ci_runs, "nightly_ci": nightly_stats, "total_runs_fetched": len(mock_ci_runs)}
+        ci_stats = {
+            "recent_runs": mock_ci_runs,
+            "nightly_ci": nightly_stats,
+            "total_runs_fetched": len(mock_ci_runs),
+        }
 
         try:
             content = generate_task_report_content(mock_firestore_stats, ci_stats)
@@ -200,11 +217,13 @@ class TestCLI135AutomatedLogging:
 
         # 5. Test end-to-end handler functionality with mocking
         try:
-            with patch("main.get_github_token") as mock_token, patch("main.get_firestore_stats") as mock_stats, patch(
-                "main.get_github_ci_runs"
-            ) as mock_ci_runs_func, patch("main.get_current_file_content") as mock_file, patch(
-                "main.update_github_file"
-            ) as mock_update:
+            with (
+                patch("main.get_github_token") as mock_token,
+                patch("main.get_firestore_stats") as mock_stats,
+                patch("main.get_github_ci_runs") as mock_ci_runs_func,
+                patch("main.get_current_file_content") as mock_file,
+                patch("main.update_github_file") as mock_update,
+            ):
 
                 # Setup mocks
                 mock_token.return_value = "fake_token"
@@ -241,7 +260,10 @@ class TestCLI135AutomatedLogging:
                 "status": "success",
                 "message": "Task report updated successfully with CI/CD data",
                 "cli_135": "automated_logging_active",
-                "ci_stats": {"total_runs_fetched": 2, "nightly_ci": {"under_5_minutes": True}},
+                "ci_stats": {
+                    "total_runs_fetched": 2,
+                    "nightly_ci": {"under_5_minutes": True},
+                },
             }
 
             # Verify expected structure
@@ -264,8 +286,12 @@ class TestCLI135AutomatedLogging:
         assert execution_time < 1.0, f"Test took {execution_time:.3f}s, should be <1s"
 
         print(f"✅ CLI 135 automated logging test completed in {execution_time:.3f}s")
-        print("✅ Validated CI runs fetching, nightly stats, table formatting, and handler")
-        print(f"✅ Confirmed nightly CI under 5 minutes: {nightly_stats['avg_duration_minutes']:.1f}m")
+        print(
+            "✅ Validated CI runs fetching, nightly stats, table formatting, and handler"
+        )
+        print(
+            f"✅ Confirmed nightly CI under 5 minutes: {nightly_stats['avg_duration_minutes']:.1f}m"
+        )
         print("✅ Task report automation with CI/CD integration working")
 
 

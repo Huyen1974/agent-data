@@ -4,11 +4,12 @@ Performance tests for hybrid query functionality with caching.
 Tests latency expectations and cache effectiveness for RAG queries.
 """
 
-import pytest
 import asyncio
 import time
+from typing import Any
 from unittest.mock import AsyncMock, patch
-from typing import Dict, List, Any
+
+import pytest
 
 
 class TestHybridQueryPerformance:
@@ -64,7 +65,9 @@ class TestHybridQueryPerformance:
     ):
         """Test hybrid query latency with 8 documents (should be <0.5s)."""
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool") as mock_tool_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool"
+        ) as mock_tool_class:
             # Setup mock tool instance
             mock_tool = AsyncMock()
             mock_tool.qdrant_store = mock_qdrant_store
@@ -72,7 +75,9 @@ class TestHybridQueryPerformance:
             mock_tool.embedding_provider = mock_embedding_provider
 
             # Mock the batch metadata method
-            async def mock_batch_get_metadata(doc_ids: List[str]) -> Dict[str, Dict[str, Any]]:
+            async def mock_batch_get_metadata(
+                doc_ids: list[str],
+            ) -> dict[str, dict[str, Any]]:
                 return {
                     doc_id: {
                         "doc_id": doc_id,
@@ -137,7 +142,9 @@ class TestHybridQueryPerformance:
                         qdrant_scores[doc_id] = result["score"]
 
                 # Step 2: Batch Firestore metadata
-                batch_metadata = await mock_tool._batch_get_firestore_metadata(qdrant_doc_ids)
+                batch_metadata = await mock_tool._batch_get_firestore_metadata(
+                    qdrant_doc_ids
+                )
                 firestore_results = []
                 for doc_id in qdrant_doc_ids:
                     if doc_id in batch_metadata:
@@ -149,14 +156,20 @@ class TestHybridQueryPerformance:
                 # Step 3: Apply filters
                 filtered_results = firestore_results
                 if metadata_filters:
-                    filtered_results = mock_tool._filter_by_metadata(filtered_results, metadata_filters)
+                    filtered_results = mock_tool._filter_by_metadata(
+                        filtered_results, metadata_filters
+                    )
                 if tags:
                     filtered_results = mock_tool._filter_by_tags(filtered_results, tags)
                 if path_query:
-                    filtered_results = mock_tool._filter_by_path(filtered_results, path_query)
+                    filtered_results = mock_tool._filter_by_path(
+                        filtered_results, path_query
+                    )
 
                 # Step 4: Sort and limit
-                filtered_results.sort(key=lambda x: x.get("_qdrant_score", 0), reverse=True)
+                filtered_results.sort(
+                    key=lambda x: x.get("_qdrant_score", 0), reverse=True
+                )
                 final_results = filtered_results[:limit]
 
                 # Step 5: Enrich results
@@ -165,7 +178,9 @@ class TestHybridQueryPerformance:
                     enriched_result = {
                         "doc_id": result["_doc_id"],
                         "qdrant_score": result["_qdrant_score"],
-                        "metadata": {k: v for k, v in result.items() if not k.startswith("_")},
+                        "metadata": {
+                            k: v for k, v in result.items() if not k.startswith("_")
+                        },
                         "content_preview": result.get("content_preview", ""),
                         "auto_tags": result.get("auto_tags", []),
                         "hierarchy_path": mock_tool._build_hierarchy_path(result),
@@ -194,7 +209,8 @@ class TestHybridQueryPerformance:
 
             # Patch the global tool getter
             with patch(
-                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool", return_value=mock_tool
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool",
+                return_value=mock_tool,
             ):
                 # Measure latency
                 start_time = time.time()
@@ -213,7 +229,9 @@ class TestHybridQueryPerformance:
                 # Assertions
                 assert result["status"] == "success"
                 assert result["count"] <= 8
-                assert latency < 0.5, f"Hybrid query latency {latency:.3f}s exceeds 0.5s target"
+                assert (
+                    latency < 0.5
+                ), f"Hybrid query latency {latency:.3f}s exceeds 0.5s target"
 
                 # Verify result structure
                 assert "rag_info" in result
@@ -242,7 +260,9 @@ class TestHybridQueryPerformance:
             ],
         }
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool") as mock_tool_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool"
+        ) as mock_tool_class:
             # Setup mock tool instance (similar to above but for 50 docs)
             mock_tool = AsyncMock()
             mock_tool.qdrant_store = mock_qdrant_store
@@ -250,7 +270,9 @@ class TestHybridQueryPerformance:
             mock_tool.embedding_provider = mock_embedding_provider
 
             # Mock batch metadata for 50 documents
-            async def mock_batch_get_metadata(doc_ids: List[str]) -> Dict[str, Dict[str, Any]]:
+            async def mock_batch_get_metadata(
+                doc_ids: list[str],
+            ) -> dict[str, dict[str, Any]]:
                 return {
                     doc_id: {
                         "doc_id": doc_id,
@@ -274,7 +296,9 @@ class TestHybridQueryPerformance:
             mock_tool._filter_by_metadata = mock_filter_by_metadata
             mock_tool._filter_by_tags = lambda results, tags: results
             mock_tool._filter_by_path = lambda results, path_query: results
-            mock_tool._build_hierarchy_path = lambda result: "Customer Support > Technical Issues"
+            mock_tool._build_hierarchy_path = (
+                lambda result: "Customer Support > Technical Issues"
+            )
 
             # Use similar rag_search implementation
             async def mock_rag_search(
@@ -303,7 +327,9 @@ class TestHybridQueryPerformance:
                         qdrant_doc_ids.append(doc_id)
                         qdrant_scores[doc_id] = result["score"]
 
-                batch_metadata = await mock_tool._batch_get_firestore_metadata(qdrant_doc_ids)
+                batch_metadata = await mock_tool._batch_get_firestore_metadata(
+                    qdrant_doc_ids
+                )
                 firestore_results = []
                 for doc_id in qdrant_doc_ids:
                     if doc_id in batch_metadata:
@@ -314,9 +340,13 @@ class TestHybridQueryPerformance:
 
                 filtered_results = firestore_results
                 if metadata_filters:
-                    filtered_results = mock_tool._filter_by_metadata(filtered_results, metadata_filters)
+                    filtered_results = mock_tool._filter_by_metadata(
+                        filtered_results, metadata_filters
+                    )
 
-                filtered_results.sort(key=lambda x: x.get("_qdrant_score", 0), reverse=True)
+                filtered_results.sort(
+                    key=lambda x: x.get("_qdrant_score", 0), reverse=True
+                )
                 final_results = filtered_results[:limit]
 
                 enriched_results = []
@@ -324,7 +354,9 @@ class TestHybridQueryPerformance:
                     enriched_result = {
                         "doc_id": result["_doc_id"],
                         "qdrant_score": result["_qdrant_score"],
-                        "metadata": {k: v for k, v in result.items() if not k.startswith("_")},
+                        "metadata": {
+                            k: v for k, v in result.items() if not k.startswith("_")
+                        },
                         "content_preview": result.get("content_preview", ""),
                         "auto_tags": result.get("auto_tags", []),
                         "hierarchy_path": mock_tool._build_hierarchy_path(result),
@@ -352,7 +384,8 @@ class TestHybridQueryPerformance:
             mock_tool_class.return_value = mock_tool
 
             with patch(
-                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool", return_value=mock_tool
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool",
+                return_value=mock_tool,
             ):
                 # Measure latency for 50 documents
                 start_time = time.time()
@@ -370,7 +403,9 @@ class TestHybridQueryPerformance:
                 # Assertions
                 assert result["status"] == "success"
                 assert result["count"] <= 50
-                assert latency < 0.7, f"Hybrid query latency {latency:.3f}s exceeds 0.7s target for 50 documents"
+                assert (
+                    latency < 0.7
+                ), f"Hybrid query latency {latency:.3f}s exceeds 0.7s target for 50 documents"
 
     @pytest.mark.unit
     def test_cache_key_generation_performance(self):
@@ -380,7 +415,10 @@ class TestHybridQueryPerformance:
         # Generate 100 cache keys
         for i in range(100):
             cache_key = _get_cache_key(
-                f"Test query {i}", {"filter": f"value_{i}"}, [f"tag_{i}", f"tag_{i+1}"], f"path/to/category_{i}"
+                f"Test query {i}",
+                {"filter": f"value_{i}"},
+                [f"tag_{i}", f"tag_{i+1}"],
+                f"path/to/category_{i}",
             )
             assert len(cache_key) == 32  # MD5 hash length
 
@@ -388,7 +426,9 @@ class TestHybridQueryPerformance:
         latency = end_time - start_time
 
         # Should be very fast
-        assert latency < 0.1, f"Cache key generation too slow: {latency:.3f}s for 100 keys"
+        assert (
+            latency < 0.1
+        ), f"Cache key generation too slow: {latency:.3f}s for 100 keys"
 
     @pytest.mark.unit
     def test_cache_operations_performance(self):
@@ -417,13 +457,19 @@ class TestHybridQueryPerformance:
         latency = end_time - start_time
 
         # Should be very fast
-        assert latency < 0.1, f"Cache operations too slow: {latency:.3f}s for 100 operations"
+        assert (
+            latency < 0.1
+        ), f"Cache operations too slow: {latency:.3f}s for 100 operations"
 
     @pytest.mark.asyncio
-    async def test_rag_caching_effectiveness(self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider):
+    async def test_rag_caching_effectiveness(
+        self, mock_qdrant_store, mock_firestore_manager, mock_embedding_provider
+    ):
         """Test effectiveness of RAG query caching."""
 
-        with patch("agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool") as mock_tool_class:
+        with patch(
+            "agent_data_manager.tools.qdrant_vectorization_tool.QdrantVectorizationTool"
+        ) as mock_tool_class:
             mock_tool = AsyncMock()
             mock_tool.qdrant_store = mock_qdrant_store
             mock_tool.firestore_manager = mock_firestore_manager
@@ -445,7 +491,8 @@ class TestHybridQueryPerformance:
             mock_tool_class.return_value = mock_tool
 
             with patch(
-                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool", return_value=mock_tool
+                "agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool",
+                return_value=mock_tool,
             ):
                 query_text = "Cache effectiveness test query"
 
@@ -458,7 +505,11 @@ class TestHybridQueryPerformance:
                 cache_key = _get_cache_key(query_text, {}, [], "")
                 _cache_result(
                     cache_key,
-                    {"results": result1["results"], "total_found": result1["count"], "rag_info": result1["rag_info"]},
+                    {
+                        "results": result1["results"],
+                        "total_found": result1["count"],
+                        "rag_info": result1["rag_info"],
+                    },
                 )
 
                 # Second query (should hit cache)
@@ -468,6 +519,10 @@ class TestHybridQueryPerformance:
 
                 # Assertions
                 assert cached_result is not None
-                assert cache_latency < first_latency, "Cache should be faster than original query"
-                assert cache_latency < 0.001, f"Cache retrieval too slow: {cache_latency:.6f}s"
+                assert (
+                    cache_latency < first_latency
+                ), "Cache should be faster than original query"
+                assert (
+                    cache_latency < 0.001
+                ), f"Cache retrieval too slow: {cache_latency:.6f}s"
                 assert cached_result["total_found"] == result1["count"]

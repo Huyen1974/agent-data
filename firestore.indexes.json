@@ -1,8 +1,8 @@
 {
+  "fieldOverrides": [],
   "indexes": [
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_1",
@@ -12,11 +12,11 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_2",
@@ -26,11 +26,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_1_category",
@@ -40,11 +40,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_2_category",
@@ -54,11 +54,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_3_category",
@@ -68,11 +68,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_4_category",
@@ -82,11 +82,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_5_category",
@@ -96,11 +96,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_6_category",
@@ -110,11 +110,11 @@
           "fieldPath": "version",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "level_1_category",
@@ -128,11 +128,11 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "document_metadata",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "version",
@@ -142,11 +142,11 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "agent_sessions",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "session_id",
@@ -156,11 +156,11 @@
           "fieldPath": "created_at",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "change_reports",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "timestamp",
@@ -170,11 +170,11 @@
           "fieldPath": "collection",
           "order": "ASCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "department",
@@ -188,29 +188,29 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "department",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "tags",
-          "arrayConfig": "CONTAINS"
+          "arrayConfig": "CONTAINS",
+          "fieldPath": "tags"
         },
         {
           "fieldPath": "score",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "topic",
@@ -224,15 +224,15 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "tags",
-          "arrayConfig": "CONTAINS"
+          "arrayConfig": "CONTAINS",
+          "fieldPath": "tags"
         },
         {
           "fieldPath": "department",
@@ -242,11 +242,11 @@
           "fieldPath": "score",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "customer_context.account_type",
@@ -260,11 +260,11 @@
           "fieldPath": "lastUpdated",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     },
     {
       "collectionGroup": "documents",
-      "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "metadata.issue_category",
@@ -278,8 +278,8 @@
           "fieldPath": "score",
           "order": "DESCENDING"
         }
-      ]
+      ],
+      "queryScope": "COLLECTION"
     }
-  ],
-  "fieldOverrides": []
+  ]
 }

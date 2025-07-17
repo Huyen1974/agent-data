@@ -7,7 +7,8 @@ client = QdrantClient(
 )
 
 client.recreate_collection(
-    collection_name="agent_data_vector", vectors_config=VectorParams(size=1536, distance=Distance.COSINE)
+    collection_name="agent_data_vector",
+    vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
 )
 
 print("✅ Collection 'agent_data_vector' đã tạo xong.")
@@ -18,16 +19,22 @@ from qdrant_client.models import PointStruct
 
 client.upsert(
     collection_name="agent_data_vector",
-    points=[PointStruct(id=1, vector=[0.1] * 1536, payload={"source": "test", "tag": "demo"})],
+    points=[
+        PointStruct(
+            id=1, vector=[0.1] * 1536, payload={"source": "test", "tag": "demo"}
+        )
+    ],
 )
 
 print("✅ Đã thêm vector test vào collection.")
 
-from qdrant_client.http.models import Filter, FieldCondition, MatchValue
+from qdrant_client.http.models import FieldCondition, Filter, MatchValue
 
 results = client.scroll(
     collection_name="agent_data_vector",
-    scroll_filter=Filter(must=[FieldCondition(key="tag", match=MatchValue(value="demo"))]),
+    scroll_filter=Filter(
+        must=[FieldCondition(key="tag", match=MatchValue(value="demo"))]
+    ),
     limit=5,
 )
 

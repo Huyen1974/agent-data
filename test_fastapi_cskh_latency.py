@@ -4,18 +4,21 @@ Test real FastAPI /cskh_query endpoint latency - CLI140e.3.5
 Validates that the deployed FastAPI achieves real-workload latency targets
 """
 
-import time
-import requests
 import json
 import logging
-from typing import List, Dict, Any
+import time
+from typing import Any
+
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # FastAPI endpoint
-FASTAPI_URL = "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+FASTAPI_URL = (
+    "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+)
 
 
 def test_fastapi_health():
@@ -40,7 +43,9 @@ def test_fastapi_health():
         return False, 0, {"error": str(e)}
 
 
-def test_fastapi_cskh_query_latency(queries: List[str], target_latency: float = 0.5) -> Dict[str, Any]:
+def test_fastapi_cskh_query_latency(
+    queries: list[str], target_latency: float = 0.5
+) -> dict[str, Any]:
     """Test CSKH query latency using real FastAPI endpoint"""
     results = {
         "queries_tested": len(queries),
@@ -66,7 +71,10 @@ def test_fastapi_cskh_query_latency(queries: List[str], target_latency: float = 
             payload = {"query_text": query, "limit": 3, "score_threshold": 0.6}
 
             response = requests.post(
-                f"{FASTAPI_URL}/cskh_query", json=payload, headers={"Content-Type": "application/json"}, timeout=15
+                f"{FASTAPI_URL}/cskh_query",
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=15,
             )
 
             end_time = time.time()
@@ -174,29 +182,35 @@ def main():
     results = test_fastapi_cskh_query_latency(test_queries, target_latency=0.5)
 
     # Print results
-    print(f"\n📊 FASTAPI CSKH LATENCY TEST RESULTS")
+    print("\n📊 FASTAPI CSKH LATENCY TEST RESULTS")
     print("=" * 50)
     print(f"Queries tested: {results['queries_tested']}")
     print(f"Average latency: {results['average_latency']}s")
     print(f"Min latency: {results['min_latency']:.3f}s")
     print(f"Max latency: {results['max_latency']:.3f}s")
     print(f"Target: <{results['target_latency_seconds']}s")
-    print(f"Success rate: {(results['queries_under_target']/results['queries_tested']*100):.1f}%")
+    print(
+        f"Success rate: {(results['queries_under_target']/results['queries_tested']*100):.1f}%"
+    )
 
     if results["authentication_required"]:
-        print(f"⚠️  Authentication required - testing endpoint connectivity only")
+        print("⚠️  Authentication required - testing endpoint connectivity only")
 
-    print(f"\n📝 Individual Query Results:")
+    print("\n📝 Individual Query Results:")
     for result in results["results"]:
         status_icon = "✅" if result["under_target"] else "❌"
-        print(f"  {status_icon} Query {result['query_index']+1}: {result['latency_seconds']}s - {result['query']}")
-        print(f"     Status: {result['status']} (HTTP {result.get('response_code', 'N/A')})")
+        print(
+            f"  {status_icon} Query {result['query_index']+1}: {result['latency_seconds']}s - {result['query']}"
+        )
+        print(
+            f"     Status: {result['status']} (HTTP {result.get('response_code', 'N/A')})"
+        )
 
     # Save results
     with open("logs/fastapi_cskh_latency.log", "w") as f:
         json.dump(results, f, indent=2)
 
-    print(f"\n💾 Results saved to logs/fastapi_cskh_latency.log")
+    print("\n💾 Results saved to logs/fastapi_cskh_latency.log")
 
     # Determine success
     target_met = results["average_latency"] < results["target_latency_seconds"]

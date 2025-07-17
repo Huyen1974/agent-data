@@ -2,20 +2,31 @@
 
 import asyncio
 import logging
-from typing import Dict, List, Optional, Any, Union
-
-from .qdrant_vector_tools import (
-    qdrant_health_check as async_qdrant_health_check,
-    qdrant_get_count as async_qdrant_get_count,
-    qdrant_upsert_vector as async_qdrant_upsert_vector,
-    qdrant_query_by_tag as async_qdrant_query_by_tag,
-    qdrant_delete_by_tag as async_qdrant_delete_by_tag,
-)
+from typing import Any
 
 from .qdrant_embedding_tools import (
-    qdrant_semantic_search as async_qdrant_semantic_search,
     qdrant_generate_and_store_embedding as async_qdrant_generate_and_store_embedding,
+)
+from .qdrant_embedding_tools import (
+    qdrant_semantic_search as async_qdrant_semantic_search,
+)
+from .qdrant_embedding_tools import (
     semantic_search_qdrant as async_semantic_search_qdrant,
+)
+from .qdrant_vector_tools import (
+    qdrant_delete_by_tag as async_qdrant_delete_by_tag,
+)
+from .qdrant_vector_tools import (
+    qdrant_get_count as async_qdrant_get_count,
+)
+from .qdrant_vector_tools import (
+    qdrant_health_check as async_qdrant_health_check,
+)
+from .qdrant_vector_tools import (
+    qdrant_query_by_tag as async_qdrant_query_by_tag,
+)
+from .qdrant_vector_tools import (
+    qdrant_upsert_vector as async_qdrant_upsert_vector,
 )
 
 logger = logging.getLogger(__name__)
@@ -41,57 +52,71 @@ def run_async_tool(async_func, *args, **kwargs):
         return asyncio.run(async_func(*args, **kwargs))
 
 
-def qdrant_health_check_sync() -> Dict[str, Any]:
+def qdrant_health_check_sync() -> dict[str, Any]:
     """Synchronous wrapper for qdrant_health_check."""
     return run_async_tool(async_qdrant_health_check)
 
 
-def qdrant_get_count_sync() -> Dict[str, Any]:
+def qdrant_get_count_sync() -> dict[str, Any]:
     """Synchronous wrapper for qdrant_get_count."""
     return run_async_tool(async_qdrant_get_count)
 
 
 def qdrant_upsert_vector_sync(
     vector_id: str,
-    vector: Union[List[float], str],
-    metadata: Optional[Dict[str, Any]] = None,
-    tag: Optional[str] = None,
-) -> Dict[str, Any]:
+    vector: list[float] | str,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
+) -> dict[str, Any]:
     """Synchronous wrapper for qdrant_upsert_vector."""
     return run_async_tool(async_qdrant_upsert_vector, vector_id, vector, metadata, tag)
 
 
 def qdrant_query_by_tag_sync(
-    tag: str, query_vector: Optional[Union[List[float], str]] = None, limit: int = 10, threshold: float = 0.0
-) -> Dict[str, Any]:
+    tag: str,
+    query_vector: list[float] | str | None = None,
+    limit: int = 10,
+    threshold: float = 0.0,
+) -> dict[str, Any]:
     """Synchronous wrapper for qdrant_query_by_tag."""
-    return run_async_tool(async_qdrant_query_by_tag, tag, query_vector, limit, threshold)
+    return run_async_tool(
+        async_qdrant_query_by_tag, tag, query_vector, limit, threshold
+    )
 
 
-def qdrant_delete_by_tag_sync(tag: str) -> Dict[str, Any]:
+def qdrant_delete_by_tag_sync(tag: str) -> dict[str, Any]:
     """Synchronous wrapper for qdrant_delete_by_tag."""
     return run_async_tool(async_qdrant_delete_by_tag, tag)
 
 
 def qdrant_semantic_search_sync(
-    query_text: str, tag: Optional[str] = None, limit: int = 10, threshold: float = 0.5
-) -> Dict[str, Any]:
+    query_text: str, tag: str | None = None, limit: int = 10, threshold: float = 0.5
+) -> dict[str, Any]:
     """Synchronous wrapper for qdrant_semantic_search."""
-    return run_async_tool(async_qdrant_semantic_search, query_text, tag, limit, threshold)
+    return run_async_tool(
+        async_qdrant_semantic_search, query_text, tag, limit, threshold
+    )
 
 
 def qdrant_generate_and_store_embedding_sync(
-    vector_id: str, text: str, metadata: Optional[Dict[str, Any]] = None, tag: Optional[str] = None
-) -> Dict[str, Any]:
+    vector_id: str,
+    text: str,
+    metadata: dict[str, Any] | None = None,
+    tag: str | None = None,
+) -> dict[str, Any]:
     """Synchronous wrapper for qdrant_generate_and_store_embedding."""
-    return run_async_tool(async_qdrant_generate_and_store_embedding, vector_id, text, metadata, tag)
+    return run_async_tool(
+        async_qdrant_generate_and_store_embedding, vector_id, text, metadata, tag
+    )
 
 
 def semantic_search_qdrant_sync(
     query_text: str,
-    index_name: Optional[str] = None,
+    index_name: str | None = None,
     threshold: float = 0.5,
     top_n: int = 10,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Synchronous wrapper for semantic_search_qdrant."""
-    return run_async_tool(async_semantic_search_qdrant, query_text, index_name, threshold, top_n)
+    return run_async_tool(
+        async_semantic_search_qdrant, query_text, index_name, threshold, top_n
+    )

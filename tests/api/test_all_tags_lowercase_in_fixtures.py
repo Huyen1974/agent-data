@@ -1,5 +1,6 @@
-from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
 import pytest
+
+from tests.conftest import STANDARD_SAMPLE_POINTS_RAW
 
 
 @pytest.mark.unit

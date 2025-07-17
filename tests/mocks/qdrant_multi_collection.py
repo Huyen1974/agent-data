@@ -1,11 +1,19 @@
-from typing import List, Optional, Dict, Any
+from typing import Any
+
 import numpy as np
-from qdrant_client.http.models import PointStruct, UpdateResult, VectorParams, Distance, Record, ScoredPoint
+from qdrant_client.http.models import (
+    Distance,
+    PointStruct,
+    Record,
+    ScoredPoint,
+    UpdateResult,
+    VectorParams,
+)
 
 VECTOR_DIMENSION = 1536
 
 
-def _pad_vector(vector: List[float], target_dimension: int) -> List[float]:
+def _pad_vector(vector: list[float], target_dimension: int) -> list[float]:
     current_dimension = len(vector)
     if current_dimension >= target_dimension:
         return vector[:target_dimension]
@@ -13,9 +21,9 @@ def _pad_vector(vector: List[float], target_dimension: int) -> List[float]:
 
 
 class FakeQdrantClient:
-    _collections: Dict[str, Dict[str, Any]] = {}
+    _collections: dict[str, dict[str, Any]] = {}
 
-    def __init__(self, url: str, api_key: Optional[str] = None, **kwargs):
+    def __init__(self, url: str, api_key: str | None = None, **kwargs):
         pass
 
     def clear_all_data(self):
@@ -29,7 +37,9 @@ class FakeQdrantClient:
         if isinstance(vectors_config, VectorParams):
             size = vectors_config.size
             distance = vectors_config.distance
-        elif isinstance(vectors_config, dict):  # Fallback for older qdrant_client versions or dict-based config
+        elif isinstance(
+            vectors_config, dict
+        ):  # Fallback for older qdrant_client versions or dict-based config
             size = vectors_config.get("size", VECTOR_DIMENSION)
             distance = vectors_config.get("distance", Distance.COSINE)
         else:  # Default if type is unknown
@@ -41,10 +51,13 @@ class FakeQdrantClient:
             "points": {},
         }
 
-    def upsert_points(self, collection_name: str, points: List[PointStruct], **kwargs):
+    def upsert_points(self, collection_name: str, points: list[PointStruct], **kwargs):
         if collection_name not in self._collections:
             # If collection does not exist, create it with default VectorParams
-            self.create_collection(collection_name, VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE))
+            self.create_collection(
+                collection_name,
+                VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE),
+            )
 
         collection_points = self._collections[collection_name]["points"]
         for point in points:
@@ -74,12 +87,12 @@ class FakeQdrantClient:
     def search_points(
         self,
         collection_name: str,
-        query_vector: List[float],
+        query_vector: list[float],
         limit: int = 10,
-        query_filter: Optional[Dict] = None,
-        score_threshold: Optional[float] = None,
-        **kwargs
-    ) -> List[ScoredPoint]:
+        query_filter: dict | None = None,
+        score_threshold: float | None = None,
+        **kwargs,
+    ) -> list[ScoredPoint]:
         self._ensure_collection_exists(collection_name)
 
         points = []
@@ -90,8 +103,15 @@ class FakeQdrantClient:
             if query_filter and "must" in query_filter:
                 match = False
                 for condition in query_filter["must"]:
-                    if "key" in condition and "match" in condition and "value" in condition["match"]:
-                        if point_data["payload"].get(condition["key"]) == condition["match"]["value"]:
+                    if (
+                        "key" in condition
+                        and "match" in condition
+                        and "value" in condition["match"]
+                    ):
+                        if (
+                            point_data["payload"].get(condition["key"])
+                            == condition["match"]["value"]
+                        ):
                             match = True
                             break
                 if not match:
@@ -100,7 +120,9 @@ class FakeQdrantClient:
             # Cosine similarity calculation
             vec_a = np.array(query_vector)
             vec_b = np.array(point_data["vector"])
-            cosine_sim = np.dot(vec_a, vec_b) / (np.linalg.norm(vec_a) * np.linalg.norm(vec_b))
+            cosine_sim = np.dot(vec_a, vec_b) / (
+                np.linalg.norm(vec_a) * np.linalg.norm(vec_b)
+            )
 
             # Apply score_threshold if provided
             if score_threshold is not None and cosine_sim < score_threshold:
@@ -121,10 +143,12 @@ class FakeQdrantClient:
         points.sort(key=lambda p: p.score, reverse=True)
         return points[:limit]
 
-    def retrieve(self, collection_name: str, ids: List[Any], **kwargs) -> List[ScoredPoint]:
+    def retrieve(
+        self, collection_name: str, ids: list[Any], **kwargs
+    ) -> list[ScoredPoint]:
         self._ensure_collection_exists(collection_name)
 
-        retrieved_points: List[ScoredPoint] = []
+        retrieved_points: list[ScoredPoint] = []
         collection_points = self._collections[collection_name]["points"]
 
         for point_id_param in ids:
@@ -149,16 +173,19 @@ class FakeQdrantClient:
             # Create with default settings if accessed before explicit creation
             # This mimics some behaviors of a real Qdrant client that might auto-create
             # or assume existence based on operations.
-            self.create_collection(collection_name, VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE))
+            self.create_collection(
+                collection_name,
+                VectorParams(size=VECTOR_DIMENSION, distance=Distance.COSINE),
+            )
             # logger.info(f"Mock collection '{collection_name}' auto-created.") # Optional logging
 
     def scroll(
         self,
         collection_name: str,
-        scroll_filter: Optional[Any] = None,
+        scroll_filter: Any | None = None,
         limit: int = 10,
-        offset: Optional[Any] = None,
-        **kwargs
+        offset: Any | None = None,
+        **kwargs,
     ) -> tuple[list[Record], Any]:
         self._ensure_collection_exists(collection_name)
 
@@ -173,10 +200,15 @@ class FakeQdrantClient:
                 for condition in scroll_filter.must:
                     field_name = condition.key
                     # Assuming simple exact match for now
-                    if hasattr(condition, "match") and hasattr(condition.match, "value"):
+                    if hasattr(condition, "match") and hasattr(
+                        condition.match, "value"
+                    ):
                         expected_value = condition.match.value.lower()
                         payload_value = point_data["payload"].get(field_name)
-                        if not (payload_value and str(payload_value).lower() == expected_value):
+                        if not (
+                            payload_value
+                            and str(payload_value).lower() == expected_value
+                        ):
                             match = False
                             break
                     # Extend with other filter condition types as needed
@@ -222,7 +254,9 @@ class FakeQdrantClient:
         # A simpler approach for mock: if end_index < len(filtered_points_data), next_page_offset = end_index (as int) or filtered_points_data[end_index][0] (as ID)
         next_page_offset = None
         if end_index < len(filtered_points_data):
-            next_page_offset = filtered_points_data[end_index][0]  # Using point ID as offset for next page
+            next_page_offset = filtered_points_data[end_index][
+                0
+            ]  # Using point ID as offset for next page
 
         return records, next_page_offset
 
@@ -230,12 +264,12 @@ class FakeQdrantClient:
     def search(
         self,
         collection_name: str,
-        query_vector: List[float],
+        query_vector: list[float],
         limit: int = 10,
-        query_filter: Optional[Dict] = None,
-        score_threshold: Optional[float] = None,
-        **kwargs
-    ) -> List[ScoredPoint]:
+        query_filter: dict | None = None,
+        score_threshold: float | None = None,
+        **kwargs,
+    ) -> list[ScoredPoint]:
         # QdrantStore might pass other kwargs, ensure search_points can handle or ignore them if not used by the mock.
         # Currently, search_points also accepts **kwargs, so this should be fine.
         return self.search_points(
@@ -244,11 +278,13 @@ class FakeQdrantClient:
             limit=limit,
             query_filter=query_filter,
             score_threshold=score_threshold,
-            **kwargs
+            **kwargs,
         )
 
     # Add create_payload_index for compatibility with QdrantStore
-    def create_payload_index(self, collection_name: str, field_name: str, field_schema: Any, **kwargs):
+    def create_payload_index(
+        self, collection_name: str, field_name: str, field_schema: Any, **kwargs
+    ):
         # This is a mock, so we don't actually need to create an index.
         # We can just log that it was called if needed for debugging.
         # print(f"Mock: create_payload_index called for collection '{collection_name}', field '{field_name}'")

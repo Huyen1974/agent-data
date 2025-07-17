@@ -11,4 +11,4 @@ main:
     - return_success:
         return:
           message: "Dummy workflow completed successfully"
-          status: "success" 
+          status: "success"

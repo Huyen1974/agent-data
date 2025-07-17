@@ -139,4 +139,4 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=2s --retries=2 \
     CMD wget -q --spider --timeout=1 http://localhost:6333/health || exit 1
 
 # Use optimized startup script
-CMD ["/app/startup.sh"] 
+CMD ["/app/startup.sh"]

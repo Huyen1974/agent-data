@@ -11,889 +11,889 @@ created: 4/4 workers
 
 scheduling tests via WorkStealingScheduling
 
-tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit 
-tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality 
-tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events 
-[gw0] [  0%] PASSED tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures 
-[gw1] [  0%] PASSED tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint 
-tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider 
-[gw0] [  0%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint 
-[gw1] [  0%] PASSED tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services 
-tests/api/test_embeddings_api.py::test_generate_embedding_mock 
-[gw0] [  1%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success 
-[gw1] [  1%] PASSED tests/api/test_embeddings_api.py::test_generate_embedding_mock 
-[gw0] [  1%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable 
-tests/api/test_embeddings_api.py::test_generate_embedding_real 
-[gw1] [  1%] SKIPPED tests/api/test_embeddings_api.py::test_generate_embedding_real 
-tests/api/test_embeddings_api.py::test_semantic_search_cosine 
-[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request 
-[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success 
-[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable 
-[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request 
-[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success 
-[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable 
-[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors 
-[gw1] [  3%] PASSED tests/api/test_embeddings_api.py::test_semantic_search_cosine 
-tests/api/test_embeddings_api.py::test_clear_embeddings 
-[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation 
-[gw3] [  4%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit 
-[gw0] [  4%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling 
-tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow 
-[gw3] [  4%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling 
-[gw0] [  4%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting 
-tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions 
-[gw0] [  4%] SKIPPED tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions 
-tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users 
-[gw3] [  5%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_operations_performance_under_5_seconds 
-[gw1] [  5%] PASSED tests/api/test_embeddings_api.py::test_clear_embeddings 
-tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected 
-[gw1] [  5%] PASSED tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected 
-[gw3] [  5%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_operations_performance_under_5_seconds 
-tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_concurrent_session_operations 
-[gw1] [  6%] PASSED tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected 
-tests/api/test_empty_query_rejected.py::test_empty_query_rejected 
-[gw3] [  6%] PASSED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_concurrent_session_operations 
-tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_api_error_classes_defined 
-[gw3] [  6%] PASSED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_api_error_classes_defined 
-tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery 
-[gw1] [  6%] PASSED tests/api/test_empty_query_rejected.py::test_empty_query_rejected 
-tests/api/test_empty_query_text.py::test_empty_query_text 
-[gw3] [  7%] FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery 
-[gw1] [  7%] PASSED tests/api/test_empty_query_text.py::test_empty_query_text 
-tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit 
-tests/api/test_env_config_valid.py::test_env_config_valid 
-[gw1] [  7%] PASSED tests/api/test_env_config_valid.py::test_env_config_valid 
-tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive 
-[gw3] [  7%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit 
-tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling 
-[gw1] [  7%] PASSED tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive 
-tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches 
-[gw3] [  8%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling 
-tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting 
-[gw1] [  8%] PASSED tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches 
-tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces 
-[gw3] [  8%] FAILED tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting 
-tests/test_cli139_api.py::TestCLI139::test_batch_operations_performance_under_5_seconds 
-[gw1] [  8%] PASSED tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces 
-tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure 
-[gw3] [  9%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_operations_performance_under_5_seconds 
-[gw1] [  9%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure 
-tests/test_cli139_api.py::TestCLI139::test_concurrent_session_operations 
-tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling 
-[gw3] [  9%] PASSED tests/test_cli139_api.py::TestCLI139::test_concurrent_session_operations 
-tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery 
-[gw3] [  9%] FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_endpoint_basic 
-[gw3] [  9%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_endpoint_basic 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_performance_under_1s 
-[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_performance_under_1s 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_caching 
-[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_caching 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_error_handling 
-[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_error_handling 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_timeout_handling 
-[gw3] [ 10%] SKIPPED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_timeout_handling 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_validation 
-[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_validation 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_metrics_recording 
-[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_metrics_recording 
-tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_api_root_includes_cskh_endpoint 
-[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_api_root_includes_cskh_endpoint 
-tests/test_cli140d_index_cost.py::TestCLI140dIndexCost::test_firestore_index_deployment_and_cost_monitoring 
-[gw3] [ 11%] PASSED tests/test_cli140d_index_cost.py::TestCLI140dIndexCost::test_firestore_index_deployment_and_cost_monitoring 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check 
-[gw1] [ 11%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling 
-tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied 
-[gw3] [ 12%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check 
-[gw1] [ 12%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied 
-tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases 
-[gw3] [ 12%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch 
-[gw3] [ 12%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization 
-[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events 
-tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization 
-[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization 
-tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error 
-[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error 
-tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error 
-[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error 
-tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error 
-[gw2] [ 14%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error 
-tests/api/test_tag_too_long.py::test_tag_too_long 
-[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users 
-tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content 
-[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content 
-tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects 
-[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects 
-[gw2] [ 14%] PASSED tests/api/test_tag_too_long.py::test_tag_too_long 
-tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters 
-tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum 
-[gw0] [ 15%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters 
-tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation 
-[gw2] [ 15%] PASSED tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum 
-tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals 
-[gw2] [ 15%] PASSED tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals 
-tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count 
-[gw2] [ 15%] PASSED tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count 
-tests/api/test_top_k_minimum.py::test_top_k_minimum_one 
-[gw2] [ 16%] PASSED tests/api/test_top_k_minimum.py::test_top_k_minimum_one 
-tests/api/test_top_k_too_large.py::test_top_k_too_large 
-[gw2] [ 16%] PASSED tests/api/test_top_k_too_large.py::test_top_k_too_large 
-tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob 
-[gw2] [ 16%] PASSED tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob 
-tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found 
-[gw2] [ 16%] PASSED tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found 
-tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input 
-[gw2] [ 16%] PASSED tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input 
-tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid 
-[gw2] [ 17%] PASSED tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid 
-tests/api/test_vector_edge_cases.py::test_delete_vector_not_found 
-[gw2] [ 17%] PASSED tests/api/test_vector_edge_cases.py::test_delete_vector_not_found 
-tests/api/test_vector_safety_check.py::test_vector_id_collision 
-[gw2] [ 17%] PASSED tests/api/test_vector_safety_check.py::test_vector_id_collision 
-tests/api/test_vector_safety_check.py::test_vector_truncation_protection 
-[gw2] [ 17%] PASSED tests/api/test_vector_safety_check.py::test_vector_truncation_protection 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists 
-[gw2] [ 18%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation 
-[gw3] [ 18%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization 
-[gw2] [ 18%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_batch_execution_simulation 
-[gw2] [ 18%] SKIPPED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_batch_execution_simulation 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation 
-[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling 
-[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement 
-[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement 
-tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement 
-[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement 
-tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status 
-[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status 
-tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations 
-[gw2] [ 20%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations 
-tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125 
-[gw2] [ 20%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125 
-tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_complete_e2e_pipeline 
-[gw2] [ 20%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_complete_e2e_pipeline 
-tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_error_handling 
-[gw2] [ 20%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_error_handling 
-tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_performance 
-[gw2] [ 21%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_performance 
-tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_markers 
-[gw2] [ 21%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_markers 
-tests/test__meta_count.py::test_meta_count 
-[gw3] [ 21%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison 
-[gw3] [ 21%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization 
-[gw3] [ 21%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization 
-tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization 
-[gw0] [ 22%] PASSED tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation 
-tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation 
-[gw3] [ 22%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limit_enforcement 
-[gw1] [ 22%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases 
-tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases 
-[gw3] [ 22%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limit_enforcement 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_states 
-[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_states 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_success_path 
-[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_success_path 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_embedding_error 
-[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_embedding_error 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_with_mocked_components 
-[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_with_mocked_components 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_full_workflow 
-[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_full_workflow 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_documents_success 
-[gw0] [ 24%] PASSED tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation 
-tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation 
-[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_documents_success 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_invalid_documents 
-[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_invalid_documents 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status_error_handling 
-[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status_error_handling 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_upsert_failure 
-[gw0] [ 25%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation 
-tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration 
-[gw0] [ 25%] SKIPPED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration 
-tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling 
-[gw3] [ 25%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_upsert_failure 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_get_vectorization_tool_factory 
-[gw3] [ 25%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_get_vectorization_tool_factory 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_vectorize_document_function 
-[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_vectorize_document_function 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_rag_search_function 
-[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_rag_search_function 
-tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_batch_vectorize_documents_function 
-[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_batch_vectorize_documents_function 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage 
-[gw3] [ 26%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage 
-[gw3] [ 26%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths 
-[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage 
-[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage 
-[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix 
-[gw2] [ 27%] FAILED tests/test__meta_count.py::test_meta_count 
-tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_testmon_installed 
-[gw0] [ 28%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling 
-tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing 
-[gw0] [ 28%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing 
-tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization 
-[gw2] [ 28%] PASSED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_testmon_installed 
-tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_xdist_installed 
-[gw1] [ 28%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases 
-tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits 
-[gw0] [ 28%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization 
-tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification 
-[gw1] [ 29%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits 
-tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation 
-[gw1] [ 29%] PASSED tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation 
-tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts 
-[gw2] [ 29%] PASSED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_xdist_installed 
-tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_selective_test_execution_markers 
-[gw2] [ 29%] SKIPPED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_selective_test_execution_markers 
-tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_cli126a_optimization_goal_achieved 
-[gw2] [ 30%] SKIPPED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_cli126a_optimization_goal_achieved 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_qdrant_mock_functionality 
-[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_qdrant_mock_functionality 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_openai_mock_functionality 
-[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_openai_mock_functionality 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_embedding_cache_functionality 
-[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_embedding_cache_functionality 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_fast_e2e_mocks_integration 
-[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_fast_e2e_mocks_integration 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_auto_mock_external_services 
-[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_auto_mock_external_services 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_mocking_performance_improvement 
-[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_mocking_performance_improvement 
-tests/test_cli126b_mocking.py::TestCLI126BMocking::test_cache_persistence 
-[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_cache_persistence 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_active_test_count_in_target_range 
-[gw2] [ 31%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_active_test_count_in_target_range 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_excluded_from_fast_runs 
-[gw2] [ 32%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_excluded_from_fast_runs 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_included_in_full_runs 
-[gw2] [ 32%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_included_in_full_runs 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_core_functionality_tests_remain_active 
-[gw1] [ 32%] PASSED tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts 
-tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity 
-[gw3] [ 32%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix 
-[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity 
-tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency 
-[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency 
-tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation 
-[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation 
-tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one 
-[gw1] [ 33%] PASSED tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one 
-tests/api/test_invalid_threshold.py::test_invalid_score_threshold 
-[gw1] [ 33%] PASSED tests/api/test_invalid_threshold.py::test_invalid_score_threshold 
-tests/api/test_invalid_top_k.py::test_negative_top_k 
-[gw1] [ 34%] PASSED tests/api/test_invalid_top_k.py::test_negative_top_k 
-tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format 
-[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format 
-tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields 
-[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields 
-tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting 
-[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting 
-tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes 
-[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes 
-tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes 
-[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes 
-tests/api/test_logging.py::TestSamplingFilter::test_info_sampling 
-[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_info_sampling 
-tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization 
-[gw1] [ 35%] PASSED tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization 
-tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit 
-[gw1] [ 35%] PASSED tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit 
-tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization 
-[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization 
-tests/api/test_logging.py::TestStructuredLogger::test_log_levels 
-[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_log_levels 
-tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation 
-[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation 
-tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton 
-[gw1] [ 36%] PASSED tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton 
-tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names 
-[gw1] [ 37%] PASSED tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names 
-tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement 
-[gw1] [ 37%] PASSED tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement 
-tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration 
-[gw1] [ 37%] PASSED tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration 
-tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully 
-[gw1] [ 37%] PASSED tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully 
-tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query 
-[gw1] [ 38%] PASSED tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query 
-tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic 
-[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic 
-tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic 
-[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic 
-tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation 
-[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation 
-tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton 
-[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton 
-tests/api/test_metrics.py::test_metrics_endpoint 
-[gw1] [ 39%] PASSED tests/api/test_metrics.py::test_metrics_endpoint 
-tests/api/test_migration.py::test_migration_smoke 
-[gw1] [ 39%] PASSED tests/api/test_migration.py::test_migration_smoke 
-tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats 
-[gw1] [ 39%] PASSED tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats 
-tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids 
-[gw1] [ 39%] PASSED tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids 
-tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold 
-[gw1] [ 40%] PASSED tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold 
-tests/api/test_package_installation.py::TestPackageInstallation::test_package_import 
-[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_import 
-tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import 
-[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import 
-tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules 
-[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules 
-tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata 
-[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata 
-tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work 
-[gw1] [ 41%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work 
-tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold 
-[gw1] [ 41%] FAILED tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold 
-tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_original_timing 
-[gw1] [ 41%] SKIPPED tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_original_timing 
-tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance 
-[gw1] [ 41%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance 
-tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents 
-[gw2] [ 42%] PASSED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_core_functionality_tests_remain_active 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_edge_case_tests_are_deferred 
-[gw2] [ 42%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_edge_case_tests_are_deferred 
-tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_cli126c_strategy_documentation_ready 
-[gw2] [ 42%] FAILED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_cli126c_strategy_documentation_ready 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_workflow_exists_and_valid 
-[gw2] [ 42%] FAILED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_workflow_exists_and_valid 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_pre_push_hook_exists_and_executable 
-[gw2] [ 42%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_pre_push_hook_exists_and_executable 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_hook_functionality_simulation 
-[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_hook_functionality_simulation 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_ci_badge_ready 
-[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_ci_badge_ready 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_cli126d_requirements_met 
-[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_cli126d_requirements_met 
-tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_development_workflow_optimization 
-[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_development_workflow_optimization 
-tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation 
-[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation 
-tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work 
-[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work 
-tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible 
-[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible 
-tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase 
-[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase 
-tests/test_cli128_metadata.py::TestCLI128MetadataManagement::test_comprehensive_metadata_management_logic 
-[gw2] [ 45%] PASSED tests/test_cli128_metadata.py::TestCLI128MetadataManagement::test_comprehensive_metadata_management_logic 
-tests/test_cli129_security_rules.py::TestCLI129SecurityRules::test_comprehensive_firestore_security_rules_validation 
-[gw2] [ 45%] PASSED tests/test_cli129_security_rules.py::TestCLI129SecurityRules::test_comprehensive_firestore_security_rules_validation 
-tests/test_cli130_tree_view.py::TestCLI130TreeView::test_comprehensive_tree_view_functionality 
-[gw2] [ 45%] PASSED tests/test_cli130_tree_view.py::TestCLI130TreeView::test_comprehensive_tree_view_functionality 
-tests/test_cli130_tree_view.py::TestCLI130TreeView::test_tree_view_implementation_completeness 
-[gw2] [ 45%] PASSED tests/test_cli130_tree_view.py::TestCLI130TreeView::test_tree_view_implementation_completeness 
-tests/test_cli131_search.py::TestCLI131AdvancedSearch::test_comprehensive_advanced_search_functionality 
-[gw2] [ 45%] PASSED tests/test_cli131_search.py::TestCLI131AdvancedSearch::test_comprehensive_advanced_search_functionality 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_success 
-[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_success 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_not_found 
-[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_not_found 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_path 
-[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_path 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_tags 
-[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_tags 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_metadata 
-[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_metadata 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_combined_parameters 
-[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_combined_parameters 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_invalid_metadata_json 
-[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_invalid_metadata_json 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_no_parameters 
-[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_no_parameters 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_health_endpoint 
-[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_health_endpoint 
-tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_api_error_handling 
-[gw2] [ 48%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_api_error_handling 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_vector_only 
-[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_vector_only 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_metadata_filters 
-[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_metadata_filters 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_tags_filter 
-[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_tags_filter 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_path_filter 
-[gw2] [ 49%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_path_filter 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_combined_filters 
-[gw2] [ 49%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_combined_filters 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_no_results 
-[gw2] [ 49%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_no_results 
-tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_qdrant_failure 
-[gw2] [ 49%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_qdrant_failure 
-tests/test_cli133_rag.py::TestCLI133RAG::test_qdrant_rag_search_function 
-[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_qdrant_rag_search_function 
-tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_metadata 
-[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_metadata 
-tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_tags 
-[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_tags 
-tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_path 
-[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_path 
-tests/test_cli133_rag.py::TestCLI133RAG::test_build_hierarchy_path 
-[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_build_hierarchy_path 
-tests/test_cli134_observability.py::TestCLI134Observability::test_qdrant_metrics_collection 
-[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_qdrant_metrics_collection 
-tests/test_cli134_observability.py::TestCLI134Observability::test_firestore_metrics_collection 
-[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_firestore_metrics_collection 
-tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_export_integration 
-[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_export_integration 
-tests/test_cli134_observability.py::TestCLI134Observability::test_alert_policy_validation 
-[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_alert_policy_validation 
-tests/test_cli134_observability.py::TestCLI134Observability::test_dashboard_configuration 
-[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_dashboard_configuration 
-tests/test_cli134_observability.py::TestCLI134Observability::test_observability_error_handling 
-[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_observability_error_handling 
-tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_performance 
-[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_performance 
-tests/test_cli134_observability.py::TestCLI134Observability::test_observability_with_8_documents 
-[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_observability_with_8_documents 
-tests/test_cli135_logging.py::TestCLI135AutomatedLogging::test_automated_logging_functionality 
-[gw2] [ 52%] PASSED tests/test_cli135_logging.py::TestCLI135AutomatedLogging::test_automated_logging_functionality 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_hierarchy_optimized 
-[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_hierarchy_optimized 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_version_range_optimized 
-[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_version_range_optimized 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_latest_by_category_optimized 
-[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_latest_by_category_optimized 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_multi_level_hierarchy_optimized 
-[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_multi_level_hierarchy_optimized 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_benchmark_query_performance 
-[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_benchmark_query_performance 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_error_handling 
-[gw3] [ 54%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance 
-[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_error_handling 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_validation 
-[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_validation 
-tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_performance_target 
-[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_performance_target 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_success 
-[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_success 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_success 
-[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_success 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_partial_failure 
-[gw2] [ 55%] FAILED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_partial_failure 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_scenarios 
-[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_scenarios 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_performance 
-[gw2] [ 56%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_performance 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_request_validation 
-[gw2] [ 56%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_request_validation 
-[gw3] [ 56%] FAILED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker 
-[gw3] [ 56%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker 
-tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage 
-[gw3] [ 57%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_key_generation_edge_cases 
-[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_key_generation_edge_cases 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_ttl_expiration 
-[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_ttl_expiration 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_max_size_eviction 
-[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_max_size_eviction 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_initialization 
-[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_initialization 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_rate_limiting 
-[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_rate_limiting 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_initialization_error_handling 
-[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_initialization_error_handling 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_batch_metadata_retrieval_error_handling 
-[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_batch_metadata_retrieval_error_handling 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_rate_limiting_key_generation 
-[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_rate_limiting_key_generation 
-tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_qdrant_operation_retry_mechanism 
-[gw3] [ 59%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_qdrant_operation_retry_mechanism 
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile 
-[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile 
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile 
-[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile 
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance 
-[gw3] [ 59%] PASSED tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance 
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization 
-[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization 
-tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching 
-[gw3] [ 60%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching 
-tests/test_cli140f_coverage.py::test_cli140f_batch_firestore_metadata_performance 
-[gw3] [ 60%] PASSED tests/test_cli140f_coverage.py::test_cli140f_batch_firestore_metadata_performance 
-tests/test_cli140f_coverage.py::test_cli140f_standalone_function_performance 
-[gw3] [ 60%] PASSED tests/test_cli140f_coverage.py::test_cli140f_standalone_function_performance 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist 
-[gw3] [ 60%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure 
-[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation 
-[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists 
-[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists 
-[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists 
-[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists 
-[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented 
-[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured 
-[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured 
-tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation 
-[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_health_check 
-[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_health_check 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_auth_flow 
-[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_auth_flow 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_document_save_flow 
-[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_document_save_flow 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_vector_query_flow 
-[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_vector_query_flow 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_rag_search_flow 
-[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_rag_search_flow 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_cskh_endpoints 
-[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_cskh_endpoints 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_latency_requirements 
-[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_latency_requirements 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_error_handling 
-[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_error_handling 
-tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_architecture_distribution 
-[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_architecture_distribution 
-tests/test_cli140g_api_gateway_e2e.py::test_cli140g_migration_completion 
-[gw3] [ 65%] PASSED tests/test_cli140g_api_gateway_e2e.py::test_cli140g_migration_completion 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_optimized_dockerfile_exists 
-[gw3] [ 65%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_optimized_dockerfile_exists 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_runtime_requirements_optimization 
-[gw3] [ 65%] FAILED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_runtime_requirements_optimization 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_build_script_configuration 
-[gw3] [ 65%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_build_script_configuration 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_dependency_reduction_calculation 
-[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_dependency_reduction_calculation 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_docker_security_configuration 
-[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_docker_security_configuration 
-tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_cli140h_optimization_complete 
-[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_cli140h_optimization_complete 
-tests/test_cli140h_docker_optimization.py::test_cli140h_completion_summary 
-[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::test_cli140h_completion_summary 
-tests/test_enforce_single_test.py::test_enforce_single_test_per_cli 
-[gw3] [ 66%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli 
-tests/test_enforce_single_test.py::test_cli_guide_documentation_exists 
-[gw3] [ 67%] PASSED tests/test_enforce_single_test.py::test_cli_guide_documentation_exists 
-tests/test_integration_api.py::TestIntegrationAPI::test_comprehensive_api_coverage_integration 
-[gw3] [ 67%] PASSED tests/test_integration_api.py::TestIntegrationAPI::test_comprehensive_api_coverage_integration 
-tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_single_save 
-[gw3] [ 67%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_single_save 
-tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_medium_scale 
-[gw3] [ 67%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_medium_scale 
-tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_mock_qdrant_environment 
-[gw3] [ 68%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_mock_qdrant_environment 
-tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_small_scale 
-[gw3] [ 68%] SKIPPED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_small_scale 
-tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_real_api_calls 
-[gw3] [ 68%] SKIPPED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_real_api_calls 
-tests/test_mcp_integration.py::TestMCPIntegration::test_timeout_retry_logic 
-[gw3] [ 68%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_timeout_retry_logic 
-tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_8_documents 
-[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_8_documents 
-tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_50_documents 
-[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_50_documents 
-tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_key_generation_performance 
-[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_key_generation_performance 
-tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_operations_performance 
-[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_operations_performance 
-tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_rag_caching_effectiveness 
-tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_error_handling 
-[gw2] [ 69%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_error_handling 
-tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax 
-[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax 
-tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration 
-[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration 
-tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration 
-[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration 
-tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration 
-[gw3] [ 70%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_rag_caching_effectiveness 
-[gw2] [ 71%] PASSED tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token 
-tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references 
-[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token 
-[gw2] [ 71%] PASSED tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth 
-tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration 
-[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth 
-[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth 
-[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load 
-[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load 
-[gw2] [ 72%] PASSED tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync 
-tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration 
-[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification 
-[gw2] [ 73%] PASSED tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration 
-[gw3] [ 73%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification 
-tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success 
-[gw3] [ 73%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal 
-[gw2] [ 73%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow 
-tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow 
-[gw3] [ 73%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id 
-[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content 
-[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure 
-[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement 
-[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility 
-[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs 
-[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs 
-tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario 
-[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario 
-tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s 
-[gw3] [ 75%] FAILED tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s 
-tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay 
-[gw3] [ 76%] FAILED tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay 
-tests/api/test_delete_by_tag.py::test_delete_by_tag_valid 
-[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_valid 
-tests/api/test_delete_by_tag.py::test_delete_by_tag_empty 
-[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_empty 
-tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent 
-[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent 
-[gw2] [ 76%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow 
-tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow 
-[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow 
-tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow 
-[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow 
-tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency 
-[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow 
-[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow 
-[gw0] [ 78%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification 
-tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation 
-[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow 
-[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow 
-[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow 
-[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements 
-[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements 
-tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency 
-[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check 
-[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check 
-tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user 
-[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user 
-[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation 
-tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration 
-[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration 
-tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token 
-[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token 
-tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation 
-[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation 
-tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation 
-[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation 
-tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager 
-[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager 
-tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling 
-[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling 
-tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields 
-[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields 
-tests/api/test_authentication.py::TestUserManager::test_user_creation 
-[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestUserManager::test_user_creation 
-tests/api/test_authentication.py::TestUserManager::test_user_authentication 
-[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestUserManager::test_user_authentication 
-tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation 
-[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation 
-tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation 
-[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation 
-tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation 
-[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation 
-tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises 
-[gw0] [ 83%] PASSED tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement 
-[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches 
-[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document 
-[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures 
-[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list 
-[gw0] [ 84%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list 
-tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration 
-[gw0] [ 84%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration 
-tests/api/test_blank_query_text.py::test_query_text_blank_spaces 
-[gw0] [ 84%] PASSED tests/api/test_blank_query_text.py::test_query_text_blank_spaces 
-tests/api/test_bulk_upload.py::test_bulk_upload_valid 
-[gw0] [ 84%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_valid 
-tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection 
-[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection 
-tests/api/test_bulk_upload.py::test_bulk_upload_empty_points 
-[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_empty_points 
-tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points 
-[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points 
-tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid 
-[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid 
-tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids 
-[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data 
-[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields 
-[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types 
-[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits 
-[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps 
-[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid 
-[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment 
-[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease 
-[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip 
-[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip 
-tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics 
-[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics 
-tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity 
-[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity 
-tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact 
-[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact 
-tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics 
-[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics 
-tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis 
-[gw0] [ 89%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis 
-[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents 
-tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries 
-[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries 
-tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches 
-[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches 
-tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary 
-[gw1] [ 90%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary 
-tests/api/test_qdrant_integration.py::test_qdrant_tools_registration 
-[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_tools_registration 
-tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool 
-[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool 
-tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool 
-[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool 
-tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool 
-[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool 
-tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool 
-[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool 
-tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool 
-[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool 
-tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool 
-[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool 
-tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling 
-[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling 
-tests/api/test_qdrant_integration.py::test_qdrant_config_validation 
-[gw1] [ 92%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_config_validation 
-tests/api/test_qdrant_integration.py::test_qdrant_cluster_info 
-[gw1] [ 92%] SKIPPED tests/api/test_qdrant_integration.py::test_qdrant_cluster_info 
-tests/api/test_qdrant_store.py::test_points_selector_empty 
-[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_points_selector_empty 
-tests/api/test_qdrant_store.py::test_points_selector_with_filter 
-[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_points_selector_with_filter 
-tests/api/test_qdrant_store.py::test_vector_store_interface_methods 
-[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_vector_store_interface_methods 
-tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed 
-[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed 
-tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status 
-[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status 
-tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync 
-[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync 
-tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync 
-[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync 
-tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length 
-[gw1] [ 94%] PASSED tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length 
-tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes 
-[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes 
-tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all 
-[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all 
-tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold 
-[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold 
-tests/api/test_query_vectors_api.py::test_get_vector_by_id 
-[gw1] [ 95%] PASSED tests/api/test_query_vectors_api.py::test_get_vector_by_id 
-tests/api/test_query_vectors_api.py::test_query_vectors_by_ids 
-[gw1] [ 95%] PASSED tests/api/test_query_vectors_api.py::test_query_vectors_by_ids 
-tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip 
-[gw1] [ 95%] PASSED tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip 
-tests/api/test_score_threshold_strict.py::test_score_threshold_one 
-[gw1] [ 95%] PASSED tests/api/test_score_threshold_strict.py::test_score_threshold_one 
-tests/api/test_score_threshold_zero.py::test_score_threshold_zero 
-[gw1] [ 95%] PASSED tests/api/test_score_threshold_zero.py::test_score_threshold_zero 
-tests/api/test_search_by_payload.py::test_search_by_payload_valid 
-[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_valid 
-tests/api/test_search_by_payload.py::test_search_by_payload_empty_field 
-[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_empty_field 
-tests/api/test_search_by_payload.py::test_search_by_payload_none_value 
-[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_none_value 
-tests/api/test_search_by_payload.py::test_search_by_payload_pagination 
-[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_pagination 
-tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection 
-[gw1] [ 97%] PASSED tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection 
-tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold 
-[gw1] [ 97%] PASSED tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold 
-tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries 
-[gw1] [ 97%] PASSED tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries 
-tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation 
-[gw1] [ 97%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation 
-tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id 
-[gw1] [ 97%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id 
-tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval 
-[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval 
-tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update 
-[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update 
-tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion 
-[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion 
-tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions 
-[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions 
-tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing 
-[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing 
-tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing 
-[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing 
-tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing 
-[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing 
-tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub 
-[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub 
-tests/api/test_session_and_events.py::TestIntegration::test_agent_session_management 
+tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
+tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality
+tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events
+[gw0] [  0%] PASSED tests/api/test_all_tags_lowercase_in_fixtures.py::test_all_tags_lowercase_in_fixtures
+[gw1] [  0%] PASSED tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_mock_embedding_provider_basic_functionality
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint
+tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider
+[gw0] [  0%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_root_endpoint
+[gw1] [  0%] PASSED tests/api/test_embedding_provider.py::TestEmbeddingProviderInterface::test_vectorization_tool_uses_custom_embedding_provider
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services
+tests/api/test_embeddings_api.py::test_generate_embedding_mock
+[gw0] [  1%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_health_endpoint_no_services
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success
+[gw1] [  1%] PASSED tests/api/test_embeddings_api.py::test_generate_embedding_mock
+[gw0] [  1%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable
+tests/api/test_embeddings_api.py::test_generate_embedding_real
+[gw1] [  1%] SKIPPED tests/api/test_embeddings_api.py::test_generate_embedding_real
+tests/api/test_embeddings_api.py::test_semantic_search_cosine
+[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request
+[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_save_document_invalid_request
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success
+[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable
+[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request
+[gw0] [  2%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_query_vectors_invalid_request
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success
+[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_success
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable
+[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_service_unavailable
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors
+[gw1] [  3%] PASSED tests/api/test_embeddings_api.py::test_semantic_search_cosine
+tests/api/test_embeddings_api.py::test_clear_embeddings
+[gw0] [  3%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_search_documents_with_vectors
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation
+[gw3] [  4%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_save_retry_logic_on_rate_limit
+[gw0] [  4%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_pydantic_models_validation
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling
+tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow
+[gw3] [  4%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_query_timeout_handling
+[gw0] [  4%] PASSED tests/api/test_api_a2a_gateway.py::TestAPIAGateway::test_api_a2a_integration_flow
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions
+[gw0] [  4%] SKIPPED tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_rate_limit_boundary_conditions
+tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users
+[gw3] [  5%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_error_categorization_and_reporting
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_operations_performance_under_5_seconds
+[gw1] [  5%] PASSED tests/api/test_embeddings_api.py::test_clear_embeddings
+tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected
+[gw1] [  5%] PASSED tests/api/test_empty_filter_tag.py::test_empty_filter_tag_rejected
+[gw3] [  5%] FAILED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_batch_operations_performance_under_5_seconds
+tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_concurrent_session_operations
+[gw1] [  6%] PASSED tests/api/test_empty_filter_tag.py::test_whitespace_filter_tag_rejected
+tests/api/test_empty_query_rejected.py::test_empty_query_rejected
+[gw3] [  6%] PASSED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_concurrent_session_operations
+tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_api_error_classes_defined
+[gw3] [  6%] PASSED tests/test_cli139_api.py::TestCLI139APIErrorHandling::test_api_error_classes_defined
+tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery
+[gw1] [  6%] PASSED tests/api/test_empty_query_rejected.py::test_empty_query_rejected
+tests/api/test_empty_query_text.py::test_empty_query_text
+[gw3] [  7%] FAILED tests/test_cli139_api.py::TestCLI139Integration::test_end_to_end_error_recovery
+[gw1] [  7%] PASSED tests/api/test_empty_query_text.py::test_empty_query_text
+tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit
+tests/api/test_env_config_valid.py::test_env_config_valid
+[gw1] [  7%] PASSED tests/api/test_env_config_valid.py::test_env_config_valid
+tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive
+[gw3] [  7%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_save_retry_logic_on_rate_limit
+tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling
+[gw1] [  7%] PASSED tests/api/test_filter_tag_case.py::test_filter_tag_case_insensitive
+tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches
+[gw3] [  8%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_query_timeout_handling
+tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting
+[gw1] [  8%] PASSED tests/api/test_filter_tag_no_match.py::test_filter_tag_with_no_matches
+tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces
+[gw3] [  8%] FAILED tests/test_cli139_api.py::TestCLI139::test_error_categorization_and_reporting
+tests/test_cli139_api.py::TestCLI139::test_batch_operations_performance_under_5_seconds
+[gw1] [  8%] PASSED tests/api/test_filter_tag_trailing_spaces.py::test_filter_tag_trailing_spaces
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure
+[gw3] [  9%] FAILED tests/test_cli139_api.py::TestCLI139::test_batch_operations_performance_under_5_seconds
+[gw1] [  9%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_connection_failure
+tests/test_cli139_api.py::TestCLI139::test_concurrent_session_operations
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling
+[gw3] [  9%] PASSED tests/test_cli139_api.py::TestCLI139::test_concurrent_session_operations
+tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery
+[gw3] [  9%] FAILED tests/test_cli139_api.py::TestCLI139::test_end_to_end_error_recovery
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_endpoint_basic
+[gw3] [  9%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_endpoint_basic
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_performance_under_1s
+[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_performance_under_1s
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_caching
+[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_caching
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_error_handling
+[gw3] [ 10%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_error_handling
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_timeout_handling
+[gw3] [ 10%] SKIPPED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_timeout_handling
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_validation
+[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_validation
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_metrics_recording
+[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_cskh_query_metrics_recording
+tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_api_root_includes_cskh_endpoint
+[gw3] [ 11%] PASSED tests/test_cli140_cskh_rag.py::TestCLI140CSKHRag::test_api_root_includes_cskh_endpoint
+tests/test_cli140d_index_cost.py::TestCLI140dIndexCost::test_firestore_index_deployment_and_cost_monitoring
+[gw3] [ 11%] PASSED tests/test_cli140d_index_cost.py::TestCLI140dIndexCost::test_firestore_index_deployment_and_cost_monitoring
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check
+[gw1] [ 11%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_timeout_handling
+tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied
+[gw3] [ 12%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check
+[gw1] [ 12%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreConnectionEdgeCases::test_firestore_permission_denied
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases
+[gw3] [ 12%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_fallback_existence_check
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch
+[gw3] [ 12%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_versioning_document_fetch
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization
+[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestIntegration::test_vectorization_with_events
+tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization
+[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestIntegration::test_session_context_in_vectorization
+tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error
+[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_session_manager_firestore_error
+tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error
+[gw2] [ 13%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_event_manager_pubsub_error
+tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error
+[gw2] [ 14%] PASSED tests/api/test_session_and_events.py::TestErrorHandling::test_session_not_found_error
+tests/api/test_tag_too_long.py::test_tag_too_long
+[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestRateLimitingEdgeCases::test_concurrent_rate_limit_users
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content
+[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_document_content
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects
+[gw0] [ 14%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_large_metadata_objects
+[gw2] [ 14%] PASSED tests/api/test_tag_too_long.py::test_tag_too_long
+tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters
+tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum
+[gw0] [ 15%] PASSED tests/api/test_api_edge_cases.py::TestLargePayloadHandling::test_unicode_and_special_characters
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation
+[gw2] [ 15%] PASSED tests/api/test_threshold_below_minimum.py::test_threshold_below_minimum
+tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals
+[gw2] [ 15%] PASSED tests/api/test_threshold_exact_equals.py::test_threshold_exact_equals
+tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count
+[gw2] [ 15%] PASSED tests/api/test_top_k_larger_than_data.py::test_top_k_exceeds_data_count
+tests/api/test_top_k_minimum.py::test_top_k_minimum_one
+[gw2] [ 16%] PASSED tests/api/test_top_k_minimum.py::test_top_k_minimum_one
+tests/api/test_top_k_too_large.py::test_top_k_too_large
+[gw2] [ 16%] PASSED tests/api/test_top_k_too_large.py::test_top_k_too_large
+tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob
+[gw2] [ 16%] PASSED tests/api/test_upload_and_download_blob.py::test_upload_and_download_blob
+tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found
+[gw2] [ 16%] PASSED tests/api/test_vector_edge_cases.py::test_get_vector_by_id_not_found
+tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input
+[gw2] [ 16%] PASSED tests/api/test_vector_edge_cases.py::test_upsert_vector_invalid_input
+tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid
+[gw2] [ 17%] PASSED tests/api/test_vector_edge_cases.py::test_query_vectors_by_ids_partial_invalid
+tests/api/test_vector_edge_cases.py::test_delete_vector_not_found
+[gw2] [ 17%] PASSED tests/api/test_vector_edge_cases.py::test_delete_vector_not_found
+tests/api/test_vector_safety_check.py::test_vector_id_collision
+[gw2] [ 17%] PASSED tests/api/test_vector_safety_check.py::test_vector_id_collision
+tests/api/test_vector_safety_check.py::test_vector_truncation_protection
+[gw2] [ 17%] PASSED tests/api/test_vector_safety_check.py::test_vector_truncation_protection
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists
+[gw2] [ 18%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_deployment_exists
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation
+[gw3] [ 18%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_nonexistent_document_optimization
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization
+[gw2] [ 18%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_execution_simulation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_batch_execution_simulation
+[gw2] [ 18%] SKIPPED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_batch_execution_simulation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation
+[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_input_validation
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling
+[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_error_handling
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement
+[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_metadata_enhancement
+tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement
+[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowOrchestration::test_workflow_cli125_requirement
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status
+[gw2] [ 19%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_deployment_status
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations
+[gw2] [ 20%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_performance_expectations
+tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125
+[gw2] [ 20%] PASSED tests/api/test_workflow.py::TestWorkflowIntegration::test_workflow_complete_orchestration_cli125
+tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_complete_e2e_pipeline
+[gw2] [ 20%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_complete_e2e_pipeline
+tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_error_handling
+[gw2] [ 20%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_error_handling
+tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_performance
+[gw2] [ 21%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_performance
+tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_markers
+[gw2] [ 21%] PASSED tests/e2e/test_e2e_pipeline.py::TestE2EPipeline::test_e2e_markers
+tests/test__meta_count.py::test_meta_count
+[gw3] [ 21%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_batch_existence_optimization
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison
+[gw3] [ 21%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_ru_cost_comparison
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization
+[gw3] [ 21%] FAILED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_save_metadata_with_ru_optimization
+tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization
+[gw0] [ 22%] PASSED tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_creation
+tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation
+[gw3] [ 22%] PASSED tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_end_to_end_ru_optimization
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limit_enforcement
+[gw1] [ 22%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_email_validation_edge_cases
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases
+[gw3] [ 22%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rate_limit_enforcement
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_states
+[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_initialization_states
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_success_path
+[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_success_path
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_embedding_error
+[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_embedding_error
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_with_mocked_components
+[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_with_mocked_components
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_full_workflow
+[gw3] [ 23%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_rag_search_full_workflow
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_documents_success
+[gw0] [ 24%] PASSED tests/api/test_api_edge_cases.py::TestConcurrentRequestHandling::test_concurrent_token_validation
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation
+[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_documents_success
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_invalid_documents
+[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_batch_vectorize_invalid_documents
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status_error_handling
+[gw3] [ 24%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_update_vector_status_error_handling
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_upsert_failure
+[gw0] [ 25%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_memory_pressure_simulation
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration
+[gw0] [ 25%] SKIPPED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_rapid_token_expiration
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling
+[gw3] [ 25%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::TestQdrantVectorizationToolCoverage::test_vectorize_document_upsert_failure
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_get_vectorization_tool_factory
+[gw3] [ 25%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_get_vectorization_tool_factory
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_vectorize_document_function
+[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_vectorize_document_function
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_rag_search_function
+[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_qdrant_rag_search_function
+tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_batch_vectorize_documents_function
+[gw3] [ 26%] PASSED tests/test_cli140e3_3_qdrant_vectorization_coverage.py::test_batch_vectorize_documents_function
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage
+[gw3] [ 26%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_additional_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage
+[gw3] [ 26%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_error_handling_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths
+[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_paths
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage
+[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_comprehensive_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage
+[gw3] [ 27%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_edge_cases_coverage
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix
+[gw2] [ 27%] FAILED tests/test__meta_count.py::test_meta_count
+tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_testmon_installed
+[gw0] [ 28%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_malformed_input_handling
+tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing
+[gw0] [ 28%] PASSED tests/api/test_api_edge_cases.py::TestErrorHandlingEdgeCases::test_boundary_value_testing
+tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization
+[gw2] [ 28%] PASSED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_testmon_installed
+tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_xdist_installed
+[gw1] [ 28%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_password_validation_edge_cases
+tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits
+[gw0] [ 28%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_auth_manager_initialization
+tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification
+[gw1] [ 29%] PASSED tests/api/test_firestore_edge_cases.py::TestDataValidationEdgeCases::test_metadata_size_limits
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation
+[gw1] [ 29%] PASSED tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_user_creation
+tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts
+[gw2] [ 29%] PASSED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_pytest_xdist_installed
+tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_selective_test_execution_markers
+[gw2] [ 29%] SKIPPED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_selective_test_execution_markers
+tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_cli126a_optimization_goal_achieved
+[gw2] [ 30%] SKIPPED tests/test_cli126a_optimization.py::TestCLI126AOptimization::test_cli126a_optimization_goal_achieved
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_qdrant_mock_functionality
+[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_qdrant_mock_functionality
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_openai_mock_functionality
+[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_openai_mock_functionality
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_embedding_cache_functionality
+[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_embedding_cache_functionality
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_fast_e2e_mocks_integration
+[gw2] [ 30%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_fast_e2e_mocks_integration
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_auto_mock_external_services
+[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_auto_mock_external_services
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_mocking_performance_improvement
+[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_mocking_performance_improvement
+tests/test_cli126b_mocking.py::TestCLI126BMocking::test_cache_persistence
+[gw2] [ 31%] PASSED tests/test_cli126b_mocking.py::TestCLI126BMocking::test_cache_persistence
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_active_test_count_in_target_range
+[gw2] [ 31%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_active_test_count_in_target_range
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_excluded_from_fast_runs
+[gw2] [ 32%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_excluded_from_fast_runs
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_included_in_full_runs
+[gw2] [ 32%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_deferred_tests_included_in_full_runs
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_core_functionality_tests_remain_active
+[gw1] [ 32%] PASSED tests/api/test_firestore_edge_cases.py::TestConcurrentFirestoreOperations::test_concurrent_authentication_attempts
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity
+[gw3] [ 32%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_rag_latency_validation_with_auth_fix
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix
+[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_user_data_integrity
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency
+[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_timestamp_consistency
+tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation
+[gw1] [ 33%] PASSED tests/api/test_firestore_edge_cases.py::TestFirestoreDataConsistency::test_scope_validation
+tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one
+[gw1] [ 33%] PASSED tests/api/test_invalid_over_threshold.py::test_score_threshold_over_one
+tests/api/test_invalid_threshold.py::test_invalid_score_threshold
+[gw1] [ 33%] PASSED tests/api/test_invalid_threshold.py::test_invalid_score_threshold
+tests/api/test_invalid_top_k.py::test_negative_top_k
+[gw1] [ 34%] PASSED tests/api/test_invalid_top_k.py::test_negative_top_k
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format
+[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_basic_json_format
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields
+[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_context_fields
+tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting
+[gw1] [ 34%] PASSED tests/api/test_logging.py::TestStructuredJSONFormatter::test_exception_formatting
+tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes
+[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_error_always_passes
+tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes
+[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_warning_always_passes
+tests/api/test_logging.py::TestSamplingFilter::test_info_sampling
+[gw1] [ 35%] PASSED tests/api/test_logging.py::TestSamplingFilter::test_info_sampling
+tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization
+[gw1] [ 35%] PASSED tests/api/test_logging.py::TestErrorMetricsHandler::test_metrics_handler_initialization
+tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit
+[gw1] [ 35%] PASSED tests/api/test_logging.py::TestErrorMetricsHandler::test_error_metrics_emit
+tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization
+[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_logger_initialization
+tests/api/test_logging.py::TestStructuredLogger::test_log_levels
+[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_log_levels
+tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation
+[gw1] [ 36%] PASSED tests/api/test_logging.py::TestStructuredLogger::test_log_file_creation
+tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton
+[gw1] [ 36%] PASSED tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_singleton
+tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names
+[gw1] [ 37%] PASSED tests/api/test_logging.py::TestLoggerRegistry::test_get_logger_different_names
+tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement
+[gw1] [ 37%] PASSED tests/api/test_logging.py::TestLoggingIntegration::test_ten_log_entries_cli124_requirement
+tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration
+[gw1] [ 37%] PASSED tests/api/test_mcp_echo_tool_integration.py::test_mcp_echo_tool_integration
+tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully
+[gw1] [ 37%] PASSED tests/api/test_mcp_exit_gracefully.py::test_mcp_exit_gracefully
+tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query
+[gw1] [ 38%] PASSED tests/api/test_mcp_qdrant_integration.py::test_mcp_qdrant_upsert_and_query
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic
+[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_metadata_versioning_logic
+tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic
+[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestMetadataVersioning::test_hierarchical_structure_logic
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation
+[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestAutoTagging::test_content_hash_generation
+tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton
+[gw1] [ 38%] PASSED tests/api/test_metadata_versioning.py::TestAutoTagging::test_get_auto_tagging_tool_singleton
+tests/api/test_metrics.py::test_metrics_endpoint
+[gw1] [ 39%] PASSED tests/api/test_metrics.py::test_metrics_endpoint
+tests/api/test_migration.py::test_migration_smoke
+[gw1] [ 39%] PASSED tests/api/test_migration.py::test_migration_smoke
+tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats
+[gw1] [ 39%] PASSED tests/api/test_migration_dry_run_stats.py::test_migration_dry_run_stats
+tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids
+[gw1] [ 39%] PASSED tests/api/test_migration_handles_duplicate_ids.py::test_migration_handles_duplicate_ids
+tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold
+[gw1] [ 40%] PASSED tests/api/test_missing_filter_tag.py::test_filter_tag_required_when_no_threshold
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_import
+[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_import
+tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import
+[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_core_modules_import
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules
+[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_in_sys_modules
+tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata
+[gw1] [ 40%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_package_metadata
+tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work
+[gw1] [ 41%] PASSED tests/api/test_package_installation.py::TestPackageInstallation::test_new_imports_work
+tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold
+[gw1] [ 41%] FAILED tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_under_threshold
+tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_original_timing
+[gw1] [ 41%] SKIPPED tests/api/test_parallel_calls_under_threshold.py::test_parallel_calls_original_timing
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance
+[gw1] [ 41%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_01_authenticate_for_performance
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents
+[gw2] [ 42%] PASSED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_core_functionality_tests_remain_active
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_edge_case_tests_are_deferred
+[gw2] [ 42%] SKIPPED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_edge_case_tests_are_deferred
+tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_cli126c_strategy_documentation_ready
+[gw2] [ 42%] FAILED tests/test_cli126c_deferred.py::TestCLI126CDeferredStrategy::test_cli126c_strategy_documentation_ready
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_workflow_exists_and_valid
+[gw2] [ 42%] FAILED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_workflow_exists_and_valid
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_pre_push_hook_exists_and_executable
+[gw2] [ 42%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_pre_push_hook_exists_and_executable
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_hook_functionality_simulation
+[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_git_hook_functionality_simulation
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_ci_badge_ready
+[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_nightly_ci_badge_ready
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_cli126d_requirements_met
+[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_cli126d_requirements_met
+tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_development_workflow_optimization
+[gw2] [ 43%] PASSED tests/test_cli126d_ci_setup.py::TestCLI126DCISetup::test_development_workflow_optimization
+tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation
+[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_editable_installation
+tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work
+[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_core_imports_work
+tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible
+[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_package_structure_accessible
+tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase
+[gw2] [ 44%] PASSED tests/test_cli127_package.py::TestCLI127PackageSetup::test_import_consistency_across_codebase
+tests/test_cli128_metadata.py::TestCLI128MetadataManagement::test_comprehensive_metadata_management_logic
+[gw2] [ 45%] PASSED tests/test_cli128_metadata.py::TestCLI128MetadataManagement::test_comprehensive_metadata_management_logic
+tests/test_cli129_security_rules.py::TestCLI129SecurityRules::test_comprehensive_firestore_security_rules_validation
+[gw2] [ 45%] PASSED tests/test_cli129_security_rules.py::TestCLI129SecurityRules::test_comprehensive_firestore_security_rules_validation
+tests/test_cli130_tree_view.py::TestCLI130TreeView::test_comprehensive_tree_view_functionality
+[gw2] [ 45%] PASSED tests/test_cli130_tree_view.py::TestCLI130TreeView::test_comprehensive_tree_view_functionality
+tests/test_cli130_tree_view.py::TestCLI130TreeView::test_tree_view_implementation_completeness
+[gw2] [ 45%] PASSED tests/test_cli130_tree_view.py::TestCLI130TreeView::test_tree_view_implementation_completeness
+tests/test_cli131_search.py::TestCLI131AdvancedSearch::test_comprehensive_advanced_search_functionality
+[gw2] [ 45%] PASSED tests/test_cli131_search.py::TestCLI131AdvancedSearch::test_comprehensive_advanced_search_functionality
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_success
+[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_success
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_not_found
+[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_tree_view_endpoint_not_found
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_path
+[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_path
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_tags
+[gw2] [ 46%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_tags
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_metadata
+[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_by_metadata
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_combined_parameters
+[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_combined_parameters
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_invalid_metadata_json
+[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_invalid_metadata_json
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_no_parameters
+[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_search_endpoint_no_parameters
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_health_endpoint
+[gw2] [ 47%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_health_endpoint
+tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_api_error_handling
+[gw2] [ 48%] PASSED tests/test_cli132_api.py::TestCLI132CSAgentAPI::test_api_error_handling
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_vector_only
+[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_vector_only
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_metadata_filters
+[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_metadata_filters
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_tags_filter
+[gw2] [ 48%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_tags_filter
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_path_filter
+[gw2] [ 49%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_with_path_filter
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_combined_filters
+[gw2] [ 49%] FAILED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_combined_filters
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_no_results
+[gw2] [ 49%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_no_results
+tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_qdrant_failure
+[gw2] [ 49%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_rag_search_qdrant_failure
+tests/test_cli133_rag.py::TestCLI133RAG::test_qdrant_rag_search_function
+[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_qdrant_rag_search_function
+tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_metadata
+[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_metadata
+tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_tags
+[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_tags
+tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_path
+[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_filter_by_path
+tests/test_cli133_rag.py::TestCLI133RAG::test_build_hierarchy_path
+[gw2] [ 50%] PASSED tests/test_cli133_rag.py::TestCLI133RAG::test_build_hierarchy_path
+tests/test_cli134_observability.py::TestCLI134Observability::test_qdrant_metrics_collection
+[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_qdrant_metrics_collection
+tests/test_cli134_observability.py::TestCLI134Observability::test_firestore_metrics_collection
+[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_firestore_metrics_collection
+tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_export_integration
+[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_export_integration
+tests/test_cli134_observability.py::TestCLI134Observability::test_alert_policy_validation
+[gw2] [ 51%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_alert_policy_validation
+tests/test_cli134_observability.py::TestCLI134Observability::test_dashboard_configuration
+[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_dashboard_configuration
+tests/test_cli134_observability.py::TestCLI134Observability::test_observability_error_handling
+[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_observability_error_handling
+tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_performance
+[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_metrics_performance
+tests/test_cli134_observability.py::TestCLI134Observability::test_observability_with_8_documents
+[gw2] [ 52%] PASSED tests/test_cli134_observability.py::TestCLI134Observability::test_observability_with_8_documents
+tests/test_cli135_logging.py::TestCLI135AutomatedLogging::test_automated_logging_functionality
+[gw2] [ 52%] PASSED tests/test_cli135_logging.py::TestCLI135AutomatedLogging::test_automated_logging_functionality
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_hierarchy_optimized
+[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_hierarchy_optimized
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_version_range_optimized
+[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_by_version_range_optimized
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_latest_by_category_optimized
+[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_latest_by_category_optimized
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_multi_level_hierarchy_optimized
+[gw2] [ 53%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_multi_level_hierarchy_optimized
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_benchmark_query_performance
+[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_benchmark_query_performance
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_error_handling
+[gw3] [ 54%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cloud_profiler_validation_with_auth_fix
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance
+[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_error_handling
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_validation
+[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_validation
+tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_performance_target
+[gw2] [ 54%] PASSED tests/test_cli136_metadata.py::TestCLI136MetadataOptimization::test_query_performance_target
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_success
+[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_success
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_success
+[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_success
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_partial_failure
+[gw2] [ 55%] FAILED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_save_partial_failure
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_scenarios
+[gw2] [ 55%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_query_scenarios
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_performance
+[gw2] [ 56%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_performance
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_request_validation
+[gw2] [ 56%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_request_validation
+[gw3] [ 56%] FAILED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_test_suite_count_compliance
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker
+[gw3] [ 56%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_cli140e39_completion_marker
+tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage
+[gw3] [ 57%] PASSED tests/test_cli140e3_9_validation.py::TestCLI140e39Validation::test_api_mcp_gateway_authentication_enabled_coverage
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_key_generation_edge_cases
+[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_key_generation_edge_cases
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_ttl_expiration
+[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_ttl_expiration
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_max_size_eviction
+[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_lru_cache_max_size_eviction
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_initialization
+[gw3] [ 57%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_cache_initialization
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_rate_limiting
+[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_rate_limiting
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_initialization_error_handling
+[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_vectorization_tool_initialization_error_handling
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_batch_metadata_retrieval_error_handling
+[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_batch_metadata_retrieval_error_handling
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_rate_limiting_key_generation
+[gw3] [ 58%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_rate_limiting_key_generation
+tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_qdrant_operation_retry_mechanism
+[gw3] [ 59%] PASSED tests/test_cli140e_coverage.py::TestCLI140eCoverage::test_qdrant_operation_retry_mechanism
+tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile
+[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_rag_search_latency_profile
+tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile
+[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_cskh_api_latency_profile
+tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance
+[gw3] [ 59%] PASSED tests/test_cli140e_latency.py::TestLatencyProfiling::test_lru_cache_performance
+tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization
+[gw3] [ 59%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_batch_firestore_optimization
+tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching
+[gw3] [ 60%] FAILED tests/test_cli140e_latency.py::TestLatencyProfiling::test_end_to_end_latency_with_caching
+tests/test_cli140f_coverage.py::test_cli140f_batch_firestore_metadata_performance
+[gw3] [ 60%] PASSED tests/test_cli140f_coverage.py::test_cli140f_batch_firestore_metadata_performance
+tests/test_cli140f_coverage.py::test_cli140f_standalone_function_performance
+[gw3] [ 60%] PASSED tests/test_cli140f_coverage.py::test_cli140f_standalone_function_performance
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist
+[gw3] [ 60%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_multi_function_architecture_files_exist
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure
+[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_routing_logic_structure
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation
+[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_architecture_split_documentation
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists
+[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_document_ingestion_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists
+[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_vector_search_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists
+[gw3] [ 61%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_rag_search_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists
+[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_router_function_exists
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented
+[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_shadow_traffic_configuration_documented
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured
+[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_latency_monitoring_configured
+tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation
+[gw3] [ 62%] PASSED tests/test_cli140g2_multi_function_routing.py::TestCLI140g2MultiFunctionRouting::test_cli140g2_completion_validation
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_health_check
+[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_health_check
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_auth_flow
+[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_auth_flow
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_document_save_flow
+[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_document_save_flow
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_vector_query_flow
+[gw3] [ 63%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_vector_query_flow
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_rag_search_flow
+[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_rag_search_flow
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_cskh_endpoints
+[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_cskh_endpoints
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_latency_requirements
+[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_latency_requirements
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_error_handling
+[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_error_handling
+tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_architecture_distribution
+[gw3] [ 64%] PASSED tests/test_cli140g_api_gateway_e2e.py::TestCLI140gAPIGatewayE2E::test_api_gateway_architecture_distribution
+tests/test_cli140g_api_gateway_e2e.py::test_cli140g_migration_completion
+[gw3] [ 65%] PASSED tests/test_cli140g_api_gateway_e2e.py::test_cli140g_migration_completion
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_optimized_dockerfile_exists
+[gw3] [ 65%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_optimized_dockerfile_exists
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_runtime_requirements_optimization
+[gw3] [ 65%] FAILED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_runtime_requirements_optimization
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_build_script_configuration
+[gw3] [ 65%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_build_script_configuration
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_dependency_reduction_calculation
+[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_dependency_reduction_calculation
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_docker_security_configuration
+[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_docker_security_configuration
+tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_cli140h_optimization_complete
+[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::TestCLI140hDockerOptimization::test_cli140h_optimization_complete
+tests/test_cli140h_docker_optimization.py::test_cli140h_completion_summary
+[gw3] [ 66%] PASSED tests/test_cli140h_docker_optimization.py::test_cli140h_completion_summary
+tests/test_enforce_single_test.py::test_enforce_single_test_per_cli
+[gw3] [ 66%] FAILED tests/test_enforce_single_test.py::test_enforce_single_test_per_cli
+tests/test_enforce_single_test.py::test_cli_guide_documentation_exists
+[gw3] [ 67%] PASSED tests/test_enforce_single_test.py::test_cli_guide_documentation_exists
+tests/test_integration_api.py::TestIntegrationAPI::test_comprehensive_api_coverage_integration
+[gw3] [ 67%] PASSED tests/test_integration_api.py::TestIntegrationAPI::test_comprehensive_api_coverage_integration
+tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_single_save
+[gw3] [ 67%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_single_save
+tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_medium_scale
+[gw3] [ 67%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_medium_scale
+tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_mock_qdrant_environment
+[gw3] [ 68%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_mock_qdrant_environment
+tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_small_scale
+[gw3] [ 68%] SKIPPED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_small_scale
+tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_real_api_calls
+[gw3] [ 68%] SKIPPED tests/test_mcp_integration.py::TestMCPIntegration::test_subprocess_real_api_calls
+tests/test_mcp_integration.py::TestMCPIntegration::test_timeout_retry_logic
+[gw3] [ 68%] PASSED tests/test_mcp_integration.py::TestMCPIntegration::test_timeout_retry_logic
+tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_8_documents
+[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_8_documents
+tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_50_documents
+[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_hybrid_query_latency_50_documents
+tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_key_generation_performance
+[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_key_generation_performance
+tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_operations_performance
+[gw3] [ 69%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_cache_operations_performance
+tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_rag_caching_effectiveness
+tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_error_handling
+[gw2] [ 69%] PASSED tests/test_cli137_api.py::TestCLI137BatchAPI::test_batch_operations_error_handling
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax
+[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_rules_syntax
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration
+[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firebase_json_configuration
+tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration
+[gw2] [ 70%] PASSED tests/api/test_cli119d10_enhancements.py::TestFirestoreRulesValidation::test_firestore_indexes_configuration
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration
+[gw3] [ 70%] PASSED tests/test_performance_hybrid_query.py::TestHybridQueryPerformance::test_rag_caching_effectiveness
+[gw2] [ 71%] PASSED tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_configuration
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token
+tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references
+[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_03_access_denied_without_token
+[gw2] [ 71%] PASSED tests/api/test_cli119d10_enhancements.py::TestAlertingPolicyValidation::test_alert_policy_metrics_references
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration
+[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_04_save_documents_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth
+[gw3] [ 71%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_05_semantic_search_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth
+[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_06_document_search_with_auth
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load
+[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_07_performance_under_load
+[gw2] [ 72%] PASSED tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_metadata_validation_integration
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync
+tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration
+[gw3] [ 72%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_08_verify_firestore_sync
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification
+[gw2] [ 73%] PASSED tests/api/test_cli119d10_enhancements.py::TestCLI119D10Integration::test_change_reporting_integration
+[gw3] [ 73%] SKIPPED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_09_cleanup_and_verification
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success
+[gw3] [ 73%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_success
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal
+[gw2] [ 73%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_single_document_e2e_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow
+[gw3] [ 73%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_minimal
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id
+[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_doc_id
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content
+[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_missing_content
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure
+[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_handle_cursor_document_storage_vectorization_failure
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement
+[gw3] [ 74%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_metadata_enhancement
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility
+[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_json_format_compatibility
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs
+[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_different_save_dirs
+tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario
+[gw3] [ 75%] PASSED tests/api/test_cursor_integration.py::TestCursorIntegration::test_cursor_integration_real_world_scenario
+tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s
+[gw3] [ 75%] FAILED tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_completes_under_2s
+tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay
+[gw3] [ 76%] FAILED tests/api/test_delay_tool_completes_under_2s.py::test_delay_tool_short_delay
+tests/api/test_delete_by_tag.py::test_delete_by_tag_valid
+[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_valid
+tests/api/test_delete_by_tag.py::test_delete_by_tag_empty
+[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_empty
+tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent
+[gw3] [ 76%] FAILED tests/api/test_delete_by_tag.py::test_delete_by_tag_non_existent
+[gw2] [ 76%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_batch_document_e2e_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow
+[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_query_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow
+[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_metadata_validation_workflow
+tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency
+[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration.py::TestCursorE2EIntegration::test_cursor_integration_data_consistency
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow
+[gw2] [ 77%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_single_document_e2e_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow
+[gw0] [ 78%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_password_hashing_and_verification
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation
+[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_batch_document_e2e_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow
+[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_query_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow
+[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_metadata_validation_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow
+[gw2] [ 78%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_error_handling_workflow
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements
+[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_performance_requirements
+tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency
+[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_integration_fixed.py::TestCursorE2EIntegrationFixed::test_cursor_integration_data_consistency
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check
+[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_01_health_check
+tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user
+[gw2] [ 79%] PASSED tests/api/test_cursor_e2e_real_cloud.py::TestCursorRealCloudIntegration::test_02_authenticate_user
+[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_creation_and_validation
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration
+[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_token_expiration
+tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token
+[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_invalid_jwt_token
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation
+[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_user_token_creation
+tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation
+[gw0] [ 80%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_user_access_validation
+tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager
+[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_jwt_secret_from_secret_manager
+tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling
+[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_malformed_token_handling
+tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields
+[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestJWTAuthentication::test_token_without_required_fields
+tests/api/test_authentication.py::TestUserManager::test_user_creation
+[gw0] [ 81%] PASSED tests/api/test_authentication.py::TestUserManager::test_user_creation
+tests/api/test_authentication.py::TestUserManager::test_user_authentication
+[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestUserManager::test_user_authentication
+tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation
+[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestUserManager::test_rate_limiting_simulation
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation
+[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestAuthenticationIntegration::test_authentication_flow_simulation
+tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation
+[gw0] [ 82%] PASSED tests/api/test_authentication.py::TestAuthenticationIntegration::test_token_refresh_simulation
+tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises
+[gw0] [ 83%] PASSED tests/api/test_bad_topk_value_raises.py::test_bad_topk_value_raises
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement
+[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_size_enforcement
+tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches
+[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_sleep_between_batches
+tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document
+[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_rate_limit_applied_per_document
+tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures
+[gw0] [ 83%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_batch_policy_with_failures
+tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list
+[gw0] [ 84%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_empty_documents_list
+tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration
+[gw0] [ 84%] PASSED tests/api/test_batch_policy.py::TestBatchPolicy::test_default_batch_configuration
+tests/api/test_blank_query_text.py::test_query_text_blank_spaces
+[gw0] [ 84%] PASSED tests/api/test_blank_query_text.py::test_query_text_blank_spaces
+tests/api/test_bulk_upload.py::test_bulk_upload_valid
+[gw0] [ 84%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_valid
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection
+[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_empty_collection
+tests/api/test_bulk_upload.py::test_bulk_upload_empty_points
+[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_empty_points
+tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points
+[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_invalid_points
+tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid
+[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_mixed_valid_invalid
+tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids
+[gw0] [ 85%] PASSED tests/api/test_bulk_upload.py::test_bulk_upload_with_custom_ids
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data
+[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_valid_data
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields
+[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_missing_required_fields
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types
+[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_types
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits
+[gw0] [ 86%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_content_size_limits
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps
+[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_metadata_invalid_timestamps
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid
+[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_valid
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment
+[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_auto_increment
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease
+[gw0] [ 87%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_decrease
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip
+[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_validate_version_increment_skip
+tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics
+[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestMetadataValidationEnhancements::test_get_metadata_statistics
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity
+[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_string_similarity
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact
+[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_analyze_change_impact
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics
+[gw0] [ 88%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_calculate_data_quality_metrics
+tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis
+[gw0] [ 89%] PASSED tests/api/test_cli119d10_enhancements.py::TestChangeReportingEnhancements::test_enhanced_change_analysis
+[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_02_performance_save_documents
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries
+[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_03_performance_search_queries
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches
+[gw1] [ 89%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_04_performance_document_searches
+tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary
+[gw1] [ 90%] PASSED tests/api/test_performance_cloud.py::TestCloudPerformance::test_05_overall_performance_summary
+tests/api/test_qdrant_integration.py::test_qdrant_tools_registration
+[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_tools_registration
+tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool
+[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_upsert_vector_tool
+tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool
+[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_query_by_tag_tool
+tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool
+[gw1] [ 90%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_health_check_tool
+tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool
+[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_get_count_tool
+tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool
+[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_delete_by_tag_tool
+tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool
+[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_semantic_search_qdrant_tool
+tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling
+[gw1] [ 91%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_tool_error_handling
+tests/api/test_qdrant_integration.py::test_qdrant_config_validation
+[gw1] [ 92%] PASSED tests/api/test_qdrant_integration.py::test_qdrant_config_validation
+tests/api/test_qdrant_integration.py::test_qdrant_cluster_info
+[gw1] [ 92%] SKIPPED tests/api/test_qdrant_integration.py::test_qdrant_cluster_info
+tests/api/test_qdrant_store.py::test_points_selector_empty
+[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_points_selector_empty
+tests/api/test_qdrant_store.py::test_points_selector_with_filter
+[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_points_selector_with_filter
+tests/api/test_qdrant_store.py::test_vector_store_interface_methods
+[gw1] [ 92%] PASSED tests/api/test_qdrant_store.py::test_vector_store_interface_methods
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed
+[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_pending_to_completed
+tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status
+[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_firestore_sync_failure_status
+tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync
+[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_batch_vectorization_firestore_sync
+tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync
+[gw1] [ 93%] PASSED tests/api/test_qdrant_vectorization_tool.py::test_vectorization_without_firestore_sync
+tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length
+[gw1] [ 94%] PASSED tests/api/test_query_text_too_long.py::test_query_text_exceeds_max_length
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes
+[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_passes
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all
+[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_by_score_threshold_filters_all
+tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold
+[gw1] [ 94%] PASSED tests/api/test_query_vector_by_score_threshold.py::test_query_vectors_without_score_threshold
+tests/api/test_query_vectors_api.py::test_get_vector_by_id
+[gw1] [ 95%] PASSED tests/api/test_query_vectors_api.py::test_get_vector_by_id
+tests/api/test_query_vectors_api.py::test_query_vectors_by_ids
+[gw1] [ 95%] PASSED tests/api/test_query_vectors_api.py::test_query_vectors_by_ids
+tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip
+[gw1] [ 95%] PASSED tests/api/test_save_metadata_roundtrip.py::test_save_metadata_roundtrip
+tests/api/test_score_threshold_strict.py::test_score_threshold_one
+[gw1] [ 95%] PASSED tests/api/test_score_threshold_strict.py::test_score_threshold_one
+tests/api/test_score_threshold_zero.py::test_score_threshold_zero
+[gw1] [ 95%] PASSED tests/api/test_score_threshold_zero.py::test_score_threshold_zero
+tests/api/test_search_by_payload.py::test_search_by_payload_valid
+[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_valid
+tests/api/test_search_by_payload.py::test_search_by_payload_empty_field
+[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_empty_field
+tests/api/test_search_by_payload.py::test_search_by_payload_none_value
+[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_none_value
+tests/api/test_search_by_payload.py::test_search_by_payload_pagination
+[gw1] [ 96%] PASSED tests/api/test_search_by_payload.py::test_search_by_payload_pagination
+tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection
+[gw1] [ 97%] PASSED tests/api/test_search_in_alt_collection.py::test_search_in_alt_collection
+tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold
+[gw1] [ 97%] PASSED tests/api/test_search_tag_and_threshold.py::test_search_with_tag_and_threshold
+tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries
+[gw1] [ 97%] PASSED tests/api/test_semantic_search_multiple_queries.py::test_semantic_search_multiple_queries
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation
+[gw1] [ 97%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id
+[gw1] [ 97%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_creation_with_custom_id
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval
+[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_retrieval
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update
+[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_state_update
+tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion
+[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_session_deletion
+tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions
+[gw1] [ 98%] PASSED tests/api/test_session_and_events.py::TestSessionMemory::test_multiple_sessions
+tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing
+[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_save_document_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing
+[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_custom_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing
+[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_multiple_event_publishing
+tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub
+[gw1] [ 99%] PASSED tests/api/test_session_and_events.py::TestPubSubEvents::test_event_publishing_without_pubsub
+tests/api/test_session_and_events.py::TestIntegration::test_agent_session_management
 [gw1] [100%] PASSED tests/api/test_session_and_events.py::TestIntegration::test_agent_session_management sys:1: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
 RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 sys:1: RuntimeWarning: coroutine 'delay_tool' was never awaited
@@ -1193,7 +1193,7 @@ _____________ TestLatencyProfiling.test_rag_search_latency_profile _____________
 tests/test_cli140e_latency.py:122: in test_rag_search_latency_profile
     assert result["status"] == "success"
 E   AssertionError: assert 'failed' == 'success'
-E     
+E
 E     - success
 E     + failed
 ----------------------------- Captured stderr call -----------------------------
@@ -1236,7 +1236,7 @@ __________ TestLatencyProfiling.test_end_to_end_latency_with_caching ___________
 tests/test_cli140e_latency.py:292: in test_end_to_end_latency_with_caching
     assert result1["status"] == "success"
 E   AssertionError: assert 'failed' == 'success'
-E     
+E
 E     - success
 E     + failed
 ----------------------------- Captured stderr call -----------------------------
@@ -1294,7 +1294,7 @@ ___________________________ test_delete_by_tag_valid ___________________________
 tests/api/test_delete_by_tag.py:20: in test_delete_by_tag_valid
     assert result["status"] == "success"
 E   AssertionError: assert 'failed' == 'success'
-E     
+E
 E     - success
 E     + failed
 ----------------------------- Captured stderr call -----------------------------
@@ -1341,7 +1341,7 @@ _______________________ test_delete_by_tag_non_existent ________________________
 tests/api/test_delete_by_tag.py:56: in test_delete_by_tag_non_existent
     assert result["status"] == "success"
 E   AssertionError: assert 'failed' == 'success'
-E     
+E
 E     - success
 E     + failed
 ----------------------------- Captured stderr call -----------------------------
@@ -1377,33 +1377,33 @@ src/agent_data_manager/api_mcp_gateway.py:372
 src/agent_data_manager/api_mcp_gateway.py:372
 src/agent_data_manager/api_mcp_gateway.py:372
 src/agent_data_manager/api_mcp_gateway.py:372
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/src/agent_data_manager/api_mcp_gateway.py:372: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/src/agent_data_manager/api_mcp_gateway.py:372: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     @app.on_event("startup")
 
 setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: 12 warnings
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/setup/venv/lib/python3.10/site-packages/fastapi/applications.py:4495: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     return self.router.on_event(event_type)
 
 ADK/agent_data/api_mcp_gateway.py:352
 ADK/agent_data/api_mcp_gateway.py:352
 ADK/agent_data/api_mcp_gateway.py:352
 ADK/agent_data/api_mcp_gateway.py:352
-  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:352: DeprecationWarning: 
+  /Users/nmhuyen/Documents/Manual Deploy/mpc_back_end_for_agents/ADK/agent_data/api_mcp_gateway.py:352: DeprecationWarning:
           on_event is deprecated, use lifespan event handlers instead.
-  
+
           Read more about it in the
           [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
+
     @app.on_event("startup")
 
 tests/test_cli140e1_firestore_ru.py::TestFirestoreRUOptimization::test_optimized_document_existence_check

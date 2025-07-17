@@ -1,16 +1,18 @@
-import pickle
 import os
-from typing import Dict, Any
+import pickle
+from typing import Any
 
 # Reuse or adapt anomaly detection logic
-from .detect_anomalies_tool import detect_anomalies as run_anomaly_detection  # Rename for clarity
+from .detect_anomalies_tool import (
+    detect_anomalies as run_anomaly_detection,
+)  # Rename for clarity
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def validate_metadata_tree(index_name: str) -> Dict[str, Any]:
+def validate_metadata_tree(index_name: str) -> dict[str, Any]:
     """
     Validates the entire metadata tree in the specified index against predefined rules.
     Currently reuses the anomaly detection logic.
@@ -29,7 +31,10 @@ def validate_metadata_tree(index_name: str) -> Dict[str, Any]:
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for index '{index_name}'. Cannot validate."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for index '{index_name}'. Cannot validate.",
+        }
 
     try:
         # Reuse the anomaly detection logic for validation
@@ -46,19 +51,28 @@ def validate_metadata_tree(index_name: str) -> Dict[str, Any]:
                 with open(meta_path, "rb") as f:
                     loaded_data = pickle.load(f)
                 if loaded_data and "metadata" in loaded_data:
-                    validation_summary["total_nodes_checked"] = len(loaded_data["metadata"])
+                    validation_summary["total_nodes_checked"] = len(
+                        loaded_data["metadata"]
+                    )
             except Exception as load_err:
-                print(f"Warning: Could not reload metadata to get total count during validation: {load_err}")
+                print(
+                    f"Warning: Could not reload metadata to get total count during validation: {load_err}"
+                )
 
-            print(f"Validation complete for index '{index_name}'. Issues found: {validation_summary['issues_found']}")
+            print(
+                f"Validation complete for index '{index_name}'. Issues found: {validation_summary['issues_found']}"
+            )
             return {"status": "success", "validation_summary": validation_summary}
         else:
             # Pass through the error from detect_anomalies
             return validation_results
 
-    except (IOError, ValueError) as e:
+    except (OSError, ValueError) as e:
         # Catch potential errors from the reused function if they weren't handled as dicts
-        return {"status": "failed", "error": f"Validation failed due to error in underlying check: {e}"}
+        return {
+            "status": "failed",
+            "error": f"Validation failed due to error in underlying check: {e}",
+        }
     except Exception as e:
         # Catch unexpected errors
         print(f"Unexpected error during validation of index '{index_name}': {e}")

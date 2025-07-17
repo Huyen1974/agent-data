@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,9 @@ def save_text(filename: str, content: str) -> dict:
     try:
         # Sanitize filename to prevent directory traversal
         if ".." in filename or "/" in filename or "\\" in filename:
-            error_msg = "Invalid filename. Contains disallowed characters ('..', '/', '\\')."
+            error_msg = (
+                "Invalid filename. Contains disallowed characters ('..', '/', '\\')."
+            )
             logger.error(error_msg)
             return {"status": "failed", "error": error_msg}
 

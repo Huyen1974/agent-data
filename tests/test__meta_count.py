@@ -19,6 +19,7 @@
 
 import subprocess
 from pathlib import Path
+
 import pytest
 
 
@@ -76,12 +77,17 @@ def test_meta_count():
 
         # Use safer subprocess approach without shell=True
 
-        collect_process = subprocess.run(["pytest", "--collect-only", "-q", "--rundeferred"], check=True, capture_output=True, text=True)
+        collect_process = subprocess.run(
+            ["pytest", "--collect-only", "-q", "--rundeferred"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
 
         # Parse the output to find the test count
         lines = collect_process.stdout.strip().split("\n")
         actual_total_str = ""
-        
+
         for line in lines:
             if "tests collected" in line or "test collected" in line:
                 # Extract number from line like "519 tests collected in 1.71s"
@@ -90,7 +96,9 @@ def test_meta_count():
                     actual_total_str = words[0]
                     break
 
-        if not actual_total_str:  # Handle cases where no tests are collected or grep fails
+        if (
+            not actual_total_str
+        ):  # Handle cases where no tests are collected or grep fails
             actual_total = 0
         else:
             actual_total = int(actual_total_str)

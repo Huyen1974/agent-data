@@ -21,12 +21,12 @@
 - Tokens created with UTC timestamps but validated with local time
 - Caused immediate expiration of valid tokens
 
-**Solution**: 
+**Solution**:
 - Modified `AuthManager.create_access_token()` to use `time.time()` consistently
 - Added explicit expiration validation in `verify_token()` method
 - Enhanced error handling with proper HTTPException (401 status)
 
-**Impact**: 
+**Impact**:
 - ✅ JWT token expiration test now passes
 - ✅ Authentication flow reliability improved
 - ✅ System-wide authentication stability restored
@@ -77,7 +77,7 @@ exp_timestamp = current_timestamp + int(expires_delta.total_seconds())
 
 ### **Modules for ≥80% Coverage**
 1. `api_mcp_gateway.py` - **Status**: Needs verification
-2. `qdrant_vectorization_tool.py` - **Status**: Needs verification  
+2. `qdrant_vectorization_tool.py` - **Status**: Needs verification
 3. `document_ingestion_tool.py` - **Status**: Needs verification
 
 ### **Coverage Strategy Implemented**
@@ -167,4 +167,4 @@ CLI140m.11 has achieved **significant progress** with the **critical JWT authent
 
 **Key Success**: The JWT timing/timezone issue was a **system-level problem** affecting multiple test suites. Resolving this has **stabilized the entire authentication infrastructure** and improved overall test reliability.
 
-**Next Steps**: Focus on the remaining 19 test failures to achieve the ≥95% pass rate target and verify the ≥80% module coverage for the three target modules to complete all CLI140m.11 objectives. 
+**Next Steps**: Focus on the remaining 19 test failures to achieve the ≥95% pass rate target and verify the ≥80% module coverage for the three target modules to complete all CLI140m.11 objectives.

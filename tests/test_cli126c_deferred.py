@@ -5,8 +5,9 @@ This test validates that the deferred test marking strategy is working correctly
 and that we've achieved the target of ~100-120 active tests for development.
 """
 
-import subprocess
 import re
+import subprocess
+
 import pytest
 
 
@@ -24,7 +25,15 @@ class TestCLI126CDeferredStrategy:
         """
         # Count active tests using pytest collection
         result = subprocess.run(
-            ["python", "-m", "pytest", "--collect-only", "-q", "-m", "not slow and not deferred"],
+            [
+                "python",
+                "-m",
+                "pytest",
+                "--collect-only",
+                "-q",
+                "-m",
+                "not slow and not deferred",
+            ],
             capture_output=True,
             text=True,
         )
@@ -35,7 +44,9 @@ class TestCLI126CDeferredStrategy:
         active_count = len(test_lines)
 
         # Verify we're in target range (updated for CLI 132 - added 10 API tests)
-        assert 100 <= active_count <= 135, f"Active tests: {active_count}, expected 100-135"
+        assert (
+            100 <= active_count <= 135
+        ), f"Active tests: {active_count}, expected 100-135"
         print(f"✓ Active test count: {active_count} (target: 100-120)")
 
     @pytest.mark.unit
@@ -47,12 +58,23 @@ class TestCLI126CDeferredStrategy:
         """
         # Count tests in fast run (should be same as active tests)
         fast_result = subprocess.run(
-            ["python", "-m", "pytest", "--collect-only", "-q", "-m", "not slow and not deferred", "--testmon"],
+            [
+                "python",
+                "-m",
+                "pytest",
+                "--collect-only",
+                "-q",
+                "-m",
+                "not slow and not deferred",
+                "--testmon",
+            ],
             capture_output=True,
             text=True,
         )
 
-        fast_lines = [line for line in fast_result.stdout.split("\n") if "::test_" in line]
+        fast_lines = [
+            line for line in fast_result.stdout.split("\n") if "::test_" in line
+        ]
         fast_count = len(fast_lines)
 
         # Count deferred tests (should be significant number)
@@ -62,11 +84,15 @@ class TestCLI126CDeferredStrategy:
             text=True,
         )
 
-        deferred_lines = [line for line in deferred_result.stdout.split("\n") if "::test_" in line]
+        deferred_lines = [
+            line for line in deferred_result.stdout.split("\n") if "::test_" in line
+        ]
         deferred_count = len(deferred_lines)
 
         # Verify deferred tests are substantial (indicating successful deferring)
-        assert deferred_count >= 100, f"Deferred tests: {deferred_count}, expected >=100"
+        assert (
+            deferred_count >= 100
+        ), f"Deferred tests: {deferred_count}, expected >=100"
         assert fast_count <= 135, f"Fast tests: {fast_count}, expected <=135"
         print(f"✓ Fast test count: {fast_count}, Deferred test count: {deferred_count}")
 
@@ -84,21 +110,35 @@ class TestCLI126CDeferredStrategy:
             text=True,
         )
 
-        full_lines = [line for line in full_result.stdout.split("\n") if "::test_" in line]
+        full_lines = [
+            line for line in full_result.stdout.split("\n") if "::test_" in line
+        ]
         total_count = len(full_lines)
 
         # Count active tests
         active_result = subprocess.run(
-            ["python", "-m", "pytest", "--collect-only", "-q", "-m", "not slow and not deferred"],
+            [
+                "python",
+                "-m",
+                "pytest",
+                "--collect-only",
+                "-q",
+                "-m",
+                "not slow and not deferred",
+            ],
             capture_output=True,
             text=True,
         )
 
-        active_lines = [line for line in active_result.stdout.split("\n") if "::test_" in line]
+        active_lines = [
+            line for line in active_result.stdout.split("\n") if "::test_" in line
+        ]
         active_count = len(active_lines)
 
         # Verify total is significantly larger than active (showing deferred tests exist)
-        assert total_count > active_count + 50, f"Total: {total_count}, Active: {active_count}"
+        assert (
+            total_count > active_count + 50
+        ), f"Total: {total_count}, Active: {active_count}"
         print(f"✓ Total tests: {total_count}, Active tests: {active_count}")
 
     @pytest.mark.xfail(reason="CLI140m.68: Legacy test - deferred strategy changed")
@@ -111,16 +151,28 @@ class TestCLI126CDeferredStrategy:
         """
         # Count E2E tests (should be active)
         e2e_result = subprocess.run(
-            ["python", "-m", "pytest", "--collect-only", "-q", "-m", "e2e and not slow and not deferred"],
+            [
+                "python",
+                "-m",
+                "pytest",
+                "--collect-only",
+                "-q",
+                "-m",
+                "e2e and not slow and not deferred",
+            ],
             capture_output=True,
             text=True,
         )
 
-        e2e_lines = [line for line in e2e_result.stdout.split("\n") if "::test_" in line]
+        e2e_lines = [
+            line for line in e2e_result.stdout.split("\n") if "::test_" in line
+        ]
         e2e_active_count = len(e2e_lines)
 
         # Verify core E2E tests remain active
-        assert e2e_active_count >= 4, f"Active E2E tests: {e2e_active_count}, expected >=4"
+        assert (
+            e2e_active_count >= 4
+        ), f"Active E2E tests: {e2e_active_count}, expected >=4"
 
         # Count workflow tests (should have some active)
         workflow_result = subprocess.run(
@@ -138,12 +190,18 @@ class TestCLI126CDeferredStrategy:
             text=True,
         )
 
-        workflow_lines = [line for line in workflow_result.stdout.split("\n") if "::test_" in line]
+        workflow_lines = [
+            line for line in workflow_result.stdout.split("\n") if "::test_" in line
+        ]
         workflow_active_count = len(workflow_lines)
 
         # Verify some workflow tests remain active
-        assert workflow_active_count >= 2, f"Active workflow tests: {workflow_active_count}, expected >=2"
-        print(f"✓ Core functionality preserved: {e2e_active_count} E2E, {workflow_active_count} workflow tests active")
+        assert (
+            workflow_active_count >= 2
+        ), f"Active workflow tests: {workflow_active_count}, expected >=2"
+        print(
+            f"✓ Core functionality preserved: {e2e_active_count} E2E, {workflow_active_count} workflow tests active"
+        )
 
     @pytest.mark.unit
     def test_edge_case_tests_are_deferred(self):
@@ -164,7 +222,16 @@ class TestCLI126CDeferredStrategy:
 
         for test_file in edge_case_files:
             result = subprocess.run(
-                ["python", "-m", "pytest", "--collect-only", "-q", test_file, "-m", "deferred"],
+                [
+                    "python",
+                    "-m",
+                    "pytest",
+                    "--collect-only",
+                    "-q",
+                    test_file,
+                    "-m",
+                    "deferred",
+                ],
                 capture_output=True,
                 text=True,
             )
@@ -174,8 +241,12 @@ class TestCLI126CDeferredStrategy:
                 deferred_edge_count += len(lines)
 
         # Verify significant number of edge case tests are deferred
-        assert deferred_edge_count >= 20, f"Deferred edge case tests: {deferred_edge_count}, expected >=20"
-        print(f"✓ Edge case tests deferred: {deferred_edge_count} tests marked for CLI 141-146")
+        assert (
+            deferred_edge_count >= 20
+        ), f"Deferred edge case tests: {deferred_edge_count}, expected >=20"
+        print(
+            f"✓ Edge case tests deferred: {deferred_edge_count} tests marked for CLI 141-146"
+        )
 
     @pytest.mark.xfail(reason="CLI140m.68: Legacy test - requires old debug_tests.py")
     @pytest.mark.unit
@@ -205,8 +276,12 @@ class TestCLI126CDeferredStrategy:
         deferred_count = int(deferred_match.group(1))
 
         # Final validation of CLI 126C objectives
-        assert 100 <= active_count <= 150, f"CLI 126C objective failed: {active_count} active tests"
-        assert deferred_count >= 100, f"CLI 126C objective failed: {deferred_count} deferred tests"
+        assert (
+            100 <= active_count <= 150
+        ), f"CLI 126C objective failed: {active_count} active tests"
+        assert (
+            deferred_count >= 100
+        ), f"CLI 126C objective failed: {deferred_count} deferred tests"
 
         print("✓ CLI 126C objectives achieved:")
         print(f"  - Active tests: {active_count} (target: 100-150)")

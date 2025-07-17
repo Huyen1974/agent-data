@@ -1,0 +1,584 @@
+Run Tests in a Clean Docker Environment	Set up job	﻿2025-07-14T08:32:51.2332793Z Current runner version: '2.326.0'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2358960Z ##[group]Operating System
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2359803Z Ubuntu
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2360264Z 24.04.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2360804Z LTS
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2361594Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2362123Z ##[group]Runner Image
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2362688Z Image: ubuntu-24.04
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2363311Z Version: 20250710.1.0
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2364312Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250710.1/images/ubuntu/Ubuntu2404-Readme.md
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2365699Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250710.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2366708Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2367220Z ##[group]Runner Image Provisioner
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2367865Z 2.0.449.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2368401Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2369462Z ##[group]GITHUB_TOKEN Permissions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2371447Z Contents: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2372047Z Metadata: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2372558Z Packages: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2373359Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2375314Z Secret source: Actions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2376385Z Prepare workflow directory
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2690338Z Prepare all required actions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.2726867Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.9814438Z ##[group]Download immutable action package 'actions/checkout@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.9815510Z Version: 4.2.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.9816544Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.9817690Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:51.9818425Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.0656829Z ##[group]Download immutable action package 'docker/setup-buildx-action@v3'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.0657765Z Version: 3.11.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.0658531Z Digest: sha256:b58e632d2d812e161c8abeba6def9f56b420aa9ae41d825a8408241bcad0f303
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.0659487Z Source commit SHA: e468171a9de216ec08956ac3ada2f0791b6bd435
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.0660313Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.4302452Z ##[group]Download immutable action package 'docker/build-push-action@v5'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.4303508Z Version: 5.4.0
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.4304293Z Digest: sha256:b1eb22c8ac697d9d0cdfecd96982afc33f5bf7897b1a76f89fd6cb58e9f98e3e
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.4305332Z Source commit SHA: ca052bb54ab0790a636c9b5f226502c73d547a25
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.4306118Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.8356593Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.8357435Z Version: 4.6.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.8358128Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.8359074Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.8359720Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:52.9499261Z Download action repository 'aquasecurity/trivy-action@0.32.0' (SHA:dc5a429b52fcf669ce959baa2c2dd26090d2a6c4)
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:53.5483325Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:53.7373374Z Download action repository 'aquasecurity/setup-trivy@ff1b8b060f23b650436d419b5e13f67f5d4c3087' (SHA:ff1b8b060f23b650436d419b5e13f67f5d4c3087)
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.1093359Z ##[group]Download immutable action package 'actions/cache@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.1094657Z Version: 4.2.3
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.1095960Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.1097685Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.1098860Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.2216958Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:32:54.4769341Z Complete job name: Run Tests in a Clean Docker Environment
+Run Tests in a Clean Docker Environment	Checkout Code	﻿2025-07-14T08:32:54.5595636Z ##[group]Run actions/checkout@v4
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5596860Z with:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5597589Z   repository: Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5598737Z   token: ***
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5599432Z   ssh-strict: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5600155Z   ssh-user: git
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5600898Z   persist-credentials: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5602198Z   clean: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5603010Z   sparse-checkout-cone-mode: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5603920Z   fetch-depth: 1
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5604662Z   fetch-tags: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5605399Z   show-progress: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5606158Z   lfs: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5606840Z   submodules: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5607600Z   set-safe-directory: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.5608708Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7264092Z Syncing repository: Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7266556Z ##[group]Getting Git version info
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7267808Z Working directory is '/home/runner/work/agent-data/agent-data'
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7269512Z [command]/usr/bin/git version
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7313921Z git version 2.50.1
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7349944Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7363649Z Temporarily overriding HOME='/home/runner/work/_temp/58b3f03e-df4b-46ae-890c-909c27624f9f' before making global git config changes
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7366111Z Adding repository directory to the temporary git global config as a safe directory
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7369457Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7404805Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7408412Z ##[group]Initializing the repository
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7413494Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7469318Z hint: Using 'master' as the name for the initial branch. This default branch name
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7472376Z hint: is subject to change. To configure the initial branch name to use in all
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7474253Z hint: of your new repositories, which will suppress this warning, call:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7475510Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7476374Z hint: 	git config --global init.defaultBranch <name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7477662Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7478668Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7480319Z hint: 'development'. The just-created branch can be renamed via this command:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7482101Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7483073Z hint: 	git branch -m <name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7483924Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7484991Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7486812Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7489710Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7517641Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7518949Z ##[group]Disabling automatic garbage collection
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7522631Z [command]/usr/bin/git config --local gc.auto 0
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7552809Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7554948Z ##[group]Setting up auth
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7560530Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7593006Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7873026Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.7905211Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.8130866Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.8176393Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.8178027Z ##[group]Fetching the repository
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:54.8185337Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +24617093fa85ed0542067bcb4504f42e70634594:refs/remotes/pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0048390Z From https://github.com/Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0049999Z  * [new ref]         24617093fa85ed0542067bcb4504f42e70634594 -> pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0071949Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0072651Z ##[group]Determining the checkout info
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0074163Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0079507Z [command]/usr/bin/git sparse-checkout disable
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0119188Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0147874Z ##[group]Checking out the ref
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.0152694Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1813460Z Note: switching to 'refs/remotes/pull/26/merge'.
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1814201Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1814543Z You are in 'detached HEAD' state. You can look around, make experimental
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1815388Z changes and commit them, and you can discard any commits you make in this
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1816171Z state without impacting any branches by switching back to a branch.
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1816658Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1816970Z If you want to create a new branch to retain commits you create, you may
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1817697Z do so (now or later) by using -c with the switch command. Example:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1818104Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1818285Z   git switch -c <new-branch-name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1818579Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1818756Z Or undo this operation with:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1819023Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1819174Z   git switch -
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1819415Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1819765Z Turn off this advice by setting config variable advice.detachedHead to false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1820254Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1820827Z HEAD is now at 2461709 Merge 7c653cb614afd3eceb46d2187d75c3535d75981d into 053bd3b5b78e2a8a93a970301e6d12e009caeecd
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1832680Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1874281Z [command]/usr/bin/git log -1 --format=%H
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:32:56.1897580Z 24617093fa85ed0542067bcb4504f42e70634594
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	﻿2025-07-14T08:32:56.2113043Z ##[group]Run docker/setup-buildx-action@v3
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2113432Z with:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2113660Z   driver: docker-container
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2113916Z   install: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2114145Z   use: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2114357Z   keep-state: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2114596Z   cache-binary: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2114830Z   cleanup: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.2115054Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.4953409Z ##[group]Docker info
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:32:56.4979510Z [command]/usr/bin/docker version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8061491Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8063940Z  Version:           28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8064526Z  API version:       1.48
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8064956Z  Go version:        go1.23.7
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8065290Z  Git commit:        b8034c0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8065576Z  Built:             Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8065897Z  OS/Arch:           linux/amd64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8066181Z  Context:           default
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8066430Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8066569Z Server: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8066861Z  Engine:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8067071Z   Version:          28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8067360Z   API version:      1.48 (minimum version 1.24)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8067699Z   Go version:       go1.23.7
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8067966Z   Git commit:       6430e49
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8068272Z   Built:            Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8068582Z   OS/Arch:          linux/amd64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8068860Z   Experimental:     false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8069114Z  containerd:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8069329Z   Version:          1.7.27
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8069648Z   GitCommit:        05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8070009Z  runc:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8070211Z   Version:          1.2.5
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8070448Z   GitCommit:        v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8070722Z  docker-init:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8070921Z   Version:          0.19.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8071379Z   GitCommit:        de40ad0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:03.8118554Z [command]/usr/bin/docker info
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4655605Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4656549Z  Version:    28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4656962Z  Context:    default
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4657416Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4657816Z  Plugins:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4658201Z   buildx: Docker Buildx (Docker Inc.)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4658753Z     Version:  v0.25.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4659311Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4659949Z   compose: Docker Compose (Docker Inc.)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4660461Z     Version:  v2.36.2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4661209Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4661801Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4661988Z Server:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4662220Z  Containers: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4662457Z   Running: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4662690Z   Paused: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4662913Z   Stopped: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4663139Z  Images: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4663400Z  Server Version: 28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4663689Z  Storage Driver: overlay2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4663980Z   Backing Filesystem: extfs
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4664268Z   Supports d_type: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4664541Z   Using metacopy: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4664811Z   Native Overlay Diff: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4665103Z   userxattr: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4665362Z  Logging Driver: json-file
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4665649Z  Cgroup Driver: systemd
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4665905Z  Cgroup Version: 2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4666144Z  Plugins:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4666306Z   Volume: local
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4666530Z   Network: bridge host ipvlan macvlan null overlay
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4666915Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4667266Z  Swarm: inactive
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4667473Z  Runtimes: io.containerd.runc.v2 runc
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4667720Z  Default Runtime: runc
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4667926Z  Init Binary: docker-init
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4668590Z  containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4668917Z  runc version: v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4669142Z  init version: de40ad0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4669339Z  Security Options:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4669517Z   apparmor
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4669744Z   seccomp
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4670014Z    Profile: builtin
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4670329Z   cgroupns
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4670527Z  Kernel Version: 6.11.0-1018-azure
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4670771Z  Operating System: Ubuntu 24.04.2 LTS
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4671322Z  OSType: linux
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4671629Z  Architecture: x86_64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4671846Z  CPUs: 4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4672009Z  Total Memory: 15.62GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4672206Z  Name: fv-az1693-654
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4672407Z  ID: 59ce2f9e-8373-49df-b904-c97e78d80d7f
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4672686Z  Docker Root Dir: /var/lib/docker
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4672908Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4673105Z  Username: githubactions
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4673327Z  Experimental: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4673516Z  Insecure Registries:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4676877Z   ::1/128
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4677080Z   127.0.0.0/8
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4677279Z  Live Restore Enabled: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4677432Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.4677822Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.9957298Z ##[group]Buildx version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:18.9991554Z [command]/usr/bin/docker buildx version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0386887Z github.com/docker/buildx v0.25.0 faaea65da4ba0e58a13cd9cadcb950c51cf3b3c9
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0418454Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0584924Z ##[group]Inspecting default docker context
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0730166Z [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0730404Z   {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0730586Z     "Name": "default",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0730809Z     "Metadata": {},
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0731175Z     "Endpoints": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0731406Z       "docker": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0731626Z         "Host": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0731920Z         "SkipTLSVerify": false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0732507Z       }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0732675Z     },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0732850Z     "TLSMaterial": {},
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0733063Z     "Storage": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0733263Z       "MetadataPath": "<IN MEMORY>",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0733527Z       "TLSPath": "<IN MEMORY>"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0733740Z     }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0733901Z   }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0734055Z ]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0734648Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.0735162Z ##[group]Creating a new builder instance
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.2282453Z [command]/usr/bin/docker buildx create --name builder-fdf08cbf-9e9b-46be-8016-ce5457602d20 --driver docker-container --buildkitd-flags --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host --use
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.3036650Z builder-fdf08cbf-9e9b-46be-8016-ce5457602d20
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.3077854Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.3078591Z ##[group]Booting builder
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.3122513Z [command]/usr/bin/docker buildx inspect --bootstrap --builder builder-fdf08cbf-9e9b-46be-8016-ce5457602d20
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.3558673Z #1 [internal] booting buildkit
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:19.5063492Z #1 pulling image moby/buildkit:buildx-stable-1
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:22.8358325Z #1 pulling image moby/buildkit:buildx-stable-1 3.5s done
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:22.9864125Z #1 creating container buildx_buildkit_builder-fdf08cbf-9e9b-46be-8016-ce5457602d200
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7113126Z #1 creating container buildx_buildkit_builder-fdf08cbf-9e9b-46be-8016-ce5457602d200 3.9s done
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7129960Z #1 DONE 7.4s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7748899Z Name:          builder-fdf08cbf-9e9b-46be-8016-ce5457602d20
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7749783Z Driver:        docker-container
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7750405Z Last Activity: 2025-07-14 08:33:19 +0000 UTC
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7750868Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7751199Z Nodes:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7751780Z Name:                  builder-fdf08cbf-9e9b-46be-8016-ce5457602d200
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7752567Z Endpoint:              unix:///var/run/docker.sock
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7753633Z Status:                running
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7754454Z BuildKit daemon flags: --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7755142Z BuildKit version:      v0.22.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7755531Z Platforms:             linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/386
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7755928Z Labels:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7756168Z  org.mobyproject.buildkit.worker.executor:         oci
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7756660Z  org.mobyproject.buildkit.worker.hostname:         789f10169439
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7757065Z  org.mobyproject.buildkit.worker.network:          host
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7757553Z  org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7758020Z  org.mobyproject.buildkit.worker.selinux.enabled:  false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7758454Z  org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7758847Z GC Policy rule#0:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7759052Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7759410Z  Filters:        type==source.local,type==exec.cachemount,type==source.git.checkout
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7759871Z  Keep Duration:  48h0m0s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7760100Z  Max Used Space: 488.3MiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7760313Z GC Policy rule#1:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7760573Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7760778Z  Keep Duration:  1440h0m0s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7760994Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7761522Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7761729Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7761942Z GC Policy rule#2:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7762169Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7762411Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7762627Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7762849Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7763131Z GC Policy rule#3:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7763324Z  All:            true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7763515Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7763737Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7764219Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.7803279Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:26.8659653Z ##[group]Inspect builder
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0419053Z {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0419549Z   "nodes": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0420059Z     {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0420738Z       "name": "builder-fdf08cbf-9e9b-46be-8016-ce5457602d200",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0421818Z       "endpoint": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0422328Z       "status": "running",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0423258Z       "buildkitd-flags": "--allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0424222Z       "buildkit": "v0.22.0",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0425043Z       "platforms": "linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0425760Z       "features": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0426452Z         "Automatically load images to the Docker Engine image store": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0427238Z         "Cache export": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0427595Z         "Direct push": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0427913Z         "Docker exporter": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0428243Z         "Multi-platform build": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0428715Z         "OCI exporter": true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0429111Z       },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0429345Z       "labels": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0429688Z         "org.mobyproject.buildkit.worker.executor": "oci",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0430227Z         "org.mobyproject.buildkit.worker.hostname": "789f10169439",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0430761Z         "org.mobyproject.buildkit.worker.network": "host",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0431486Z         "org.mobyproject.buildkit.worker.oci.process-mode": "sandbox",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0432084Z         "org.mobyproject.buildkit.worker.selinux.enabled": "false",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0432648Z         "org.mobyproject.buildkit.worker.snapshotter": "overlayfs"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0433083Z       },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0433307Z       "gcPolicy": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0433561Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0434015Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0434291Z           "filter": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0434572Z             "type==source.local",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0434902Z             "type==exec.cachemount",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0435254Z             "type==source.git.checkout"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0435585Z           ],
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0435839Z           "keepDuration": "48h0m0s",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0436168Z           "maxUsedSpace": "488.3MiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0436480Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0436700Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0436940Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0437223Z           "keepDuration": "1440h0m0s",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0437559Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0437813Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0438057Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0438285Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0438444Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0438630Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0438836Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0439095Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0439332Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0439555Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0439712Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0439877Z           "all": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0440083Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0440321Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0440580Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0440809Z         }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0440975Z       ]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0441358Z     }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0441525Z   ],
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0441756Z   "name": "builder-fdf08cbf-9e9b-46be-8016-ce5457602d20",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0442086Z   "driver": "docker-container",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0442350Z   "lastActivity": "2025-07-14T08:33:19.000Z"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0442616Z }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0443202Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0443738Z ##[group]BuildKit version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0444201Z builder-fdf08cbf-9e9b-46be-8016-ce5457602d200: v0.22.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:33:27.0445299Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	﻿2025-07-14T08:33:27.0635173Z ##[group]Run docker/build-push-action@v5
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0635463Z with:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0635628Z   context: .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0635795Z   file: Dockerfile.test
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636002Z   tags: agent-data-test-local
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636201Z   load: true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636379Z   platforms: linux/amd64,linux/arm64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636612Z   provenance: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636797Z   cache-from: type=gha
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0636989Z   cache-to: type=gha,mode=max
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0637210Z   no-cache: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0637397Z   pull: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0637563Z   push: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0637868Z   github-token: ***
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.0638052Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2847487Z ##[group]GitHub Actions runtime token ACs
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2857989Z refs/pull/26/merge: read/write
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2858441Z refs/heads/main: read
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2859074Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2861273Z ##[group]Docker info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.2898514Z [command]/usr/bin/docker version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3081925Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3085216Z  Version:           28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3085603Z  API version:       1.48
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3085959Z  Go version:        go1.23.7
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3086310Z  Git commit:        b8034c0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3086667Z  Built:             Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3087078Z  OS/Arch:           linux/amd64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3087420Z  Context:           default
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3087631Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3087781Z Server: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3088141Z  Engine:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3088408Z   Version:          28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3088776Z   API version:      1.48 (minimum version 1.24)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3089212Z   Go version:       go1.23.7
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3089438Z   Git commit:       6430e49
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3089701Z   Built:            Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3089965Z   OS/Arch:          linux/amd64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3090209Z   Experimental:     false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3090427Z  containerd:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3090606Z   Version:          1.7.27
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3090885Z   GitCommit:        05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3091412Z  runc:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3091595Z   Version:          1.2.5
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3091812Z   GitCommit:        v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3092088Z  docker-init:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3092273Z   Version:          0.19.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3092486Z   GitCommit:        de40ad0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3128974Z [command]/usr/bin/docker info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3807945Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3808624Z  Version:    28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3808947Z  Context:    default
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3809275Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3809577Z  Plugins:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3809888Z   buildx: Docker Buildx (Docker Inc.)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3810393Z     Version:  v0.25.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3810815Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3811551Z   compose: Docker Compose (Docker Inc.)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3811987Z     Version:  v2.36.2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3812434Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3812800Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3812898Z Server:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3813150Z  Containers: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3813442Z   Running: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3813720Z   Paused: 0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3813985Z   Stopped: 0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3814249Z  Images: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3814520Z  Server Version: 28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3814854Z  Storage Driver: overlay2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3815188Z   Backing Filesystem: extfs
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3815538Z   Supports d_type: true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3815853Z   Using metacopy: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3816177Z   Native Overlay Diff: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3816548Z   userxattr: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3817217Z  Logging Driver: json-file
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3817560Z  Cgroup Driver: systemd
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3818117Z  Cgroup Version: 2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3818416Z  Plugins:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3818575Z   Volume: local
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3818799Z   Network: bridge host ipvlan macvlan null overlay
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3819197Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3819521Z  Swarm: inactive
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3819718Z  Runtimes: runc io.containerd.runc.v2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3819957Z  Default Runtime: runc
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3820152Z  Init Binary: docker-init
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3820412Z  containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3820711Z  runc version: v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3820923Z  init version: de40ad0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3821371Z  Security Options:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3821556Z   apparmor
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3821714Z   seccomp
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3821904Z    Profile: builtin
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3822210Z   cgroupns
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3822512Z  Kernel Version: 6.11.0-1018-azure
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3822928Z  Operating System: Ubuntu 24.04.2 LTS
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3823339Z  OSType: linux
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3823643Z  Architecture: x86_64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3823974Z  CPUs: 4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3824262Z  Total Memory: 15.62GiB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3824615Z  Name: fv-az1693-654
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3824968Z  ID: 59ce2f9e-8373-49df-b904-c97e78d80d7f
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3825414Z  Docker Root Dir: /var/lib/docker
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3825782Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3826098Z  Username: githubactions
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3826437Z  Experimental: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3826734Z  Insecure Registries:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3827086Z   ::1/128
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3827349Z   127.0.0.0/8
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3827626Z  Live Restore Enabled: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3827855Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3828277Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3828773Z ##[group]Proxy configuration
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3832244Z No proxy configuration found
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.3833265Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.4549740Z ##[group]Buildx version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.4576610Z [command]/usr/bin/docker buildx version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.5255272Z github.com/docker/buildx v0.25.0 faaea65da4ba0e58a13cd9cadcb950c51cf3b3c9
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.5290444Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.5291329Z ##[group]Builder info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6140723Z {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6141305Z   "nodes": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6141609Z     {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6142050Z       "name": "builder-fdf08cbf-9e9b-46be-8016-ce5457602d200",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6142701Z       "endpoint": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6143189Z       "status": "running",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6143997Z       "buildkitd-flags": "--allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6144934Z       "buildkit": "v0.22.0",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6145483Z       "platforms": "linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6146076Z       "features": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6146570Z         "Automatically load images to the Docker Engine image store": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6147172Z         "Cache export": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6147539Z         "Direct push": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6147943Z         "Docker exporter": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6148338Z         "Multi-platform build": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6148742Z         "OCI exporter": true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6149081Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6149354Z       "labels": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6149767Z         "org.mobyproject.buildkit.worker.executor": "oci",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6150403Z         "org.mobyproject.buildkit.worker.hostname": "789f10169439",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6151461Z         "org.mobyproject.buildkit.worker.network": "host",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6152257Z         "org.mobyproject.buildkit.worker.oci.process-mode": "sandbox",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6153016Z         "org.mobyproject.buildkit.worker.selinux.enabled": "false",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6154100Z         "org.mobyproject.buildkit.worker.snapshotter": "overlayfs"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6154919Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6155200Z       "gcPolicy": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6155505Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6155772Z           "all": false,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6156100Z           "filter": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6156433Z             "type==source.local",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6156838Z             "type==exec.cachemount",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6157258Z             "type==source.git.checkout"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6157650Z           ],
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6157953Z           "keepDuration": "48h0m0s"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6158323Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6158578Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6158840Z           "all": false,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6159181Z           "keepDuration": "1440h0m0s"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6159559Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6159820Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6160072Z           "all": false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6160375Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6160647Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6160906Z           "all": true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6161417Z         }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6161688Z       ]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6161939Z     }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6162201Z   ],
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6162572Z   "name": "builder-fdf08cbf-9e9b-46be-8016-ce5457602d20",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6163092Z   "driver": "docker-container",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6163522Z   "lastActivity": "2025-07-14T08:33:19.000Z"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6163927Z }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6164524Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.6778086Z [command]/usr/bin/docker buildx build --cache-from type=gha --cache-to type=gha,mode=max --file Dockerfile.test --iidfile /home/runner/work/_temp/docker-actions-toolkit-0k9exH/build-iidfile-2e2b5a9c9f.txt --platform linux/amd64,linux/arm64 --attest type=provenance,disabled=true --tag agent-data-test-local --load --metadata-file /home/runner/work/_temp/docker-actions-toolkit-0k9exH/build-metadata-8320cc7103.json .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.8566794Z ERROR: failed to build: docker exporter does not currently support exporting manifest lists
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:33:27.8626626Z ##[error]buildx failed with: ERROR: failed to build: docker exporter does not currently support exporting manifest lists
+Run Tests in a Clean Docker Environment	Post Build Test Image	﻿2025-07-14T08:33:27.8760455Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:33:28.1057141Z ##[group]Removing temp folder /home/runner/work/_temp/docker-actions-toolkit-0k9exH
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:33:28.1066710Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:33:28.1068000Z ##[group]Post cache
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:33:28.1069013Z State not set
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:33:28.1070421Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	﻿2025-07-14T08:33:28.1207892Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.3934553Z ##[group]Removing builder
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.4862004Z [command]/usr/bin/docker buildx rm builder-fdf08cbf-9e9b-46be-8016-ce5457602d20
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6172126Z builder-fdf08cbf-9e9b-46be-8016-ce5457602d20 removed
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6205483Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6207061Z ##[group]Cleaning up certificates
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6213852Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6214505Z ##[group]Post cache
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6216445Z State not set
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:33:28.6217220Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Checkout Code	﻿2025-07-14T08:33:28.6342712Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7278788Z [command]/usr/bin/git version
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7316990Z git version 2.50.1
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7360229Z Temporarily overriding HOME='/home/runner/work/_temp/ad4baf95-9e1a-4630-84f6-95e683feac5c' before making global git config changes
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7361748Z Adding repository directory to the temporary git global config as a safe directory
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7373436Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7407949Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7440462Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7656930Z fatal: No url found for submodule path 'ADK/agent_data' in .gitmodules
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:33:28.7685913Z ##[warning]The process '/usr/bin/git' failed with exit code 128
+Run Tests in a Clean Docker Environment	Complete job	﻿2025-07-14T08:33:28.7770598Z Cleaning up orphan processes

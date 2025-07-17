@@ -120,4 +120,4 @@ echo "Startup time: ${STARTUP_TIME}s"
 
 # Tag as cli140h_all_green if all tests pass
 docker tag "${FULL_IMAGE_NAME}" "${IMAGE_NAME}:cli140h_all_green"
-echo "Tagged as: ${IMAGE_NAME}:cli140h_all_green" 
+echo "Tagged as: ${IMAGE_NAME}:cli140h_all_green"

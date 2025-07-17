@@ -1,15 +1,15 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
 from collections import Counter
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def aggregate_metadata(index_name: str, aggregate_field: str) -> Dict[str, Any]:
+def aggregate_metadata(index_name: str, aggregate_field: str) -> dict[str, Any]:
     """
     Loads metadata and aggregates counts based on the values of a specified field.
 
@@ -27,7 +27,10 @@ def aggregate_metadata(index_name: str, aggregate_field: str) -> Dict[str, Any]:
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for index '{index_name}'. Cannot aggregate."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for index '{index_name}'. Cannot aggregate.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -42,11 +45,13 @@ def aggregate_metadata(index_name: str, aggregate_field: str) -> Dict[str, Any]:
                 "error": f"Metadata file disappeared for index '{index_name}' during aggregation attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -77,10 +82,20 @@ def aggregate_metadata(index_name: str, aggregate_field: str) -> Dict[str, Any]:
         print(
             f"Warning: No items found with the aggregate field '{aggregate_field}' or no hashable values in index '{index_name}'."
         )
-        return {"status": "success", "aggregation": {}, "items_without_field": items_without_field}
+        return {
+            "status": "success",
+            "aggregation": {},
+            "items_without_field": items_without_field,
+        }
 
-    print(f"Successfully aggregated metadata from index '{index_name}' by field '{aggregate_field}'.")
-    return {"status": "success", "aggregation": dict(aggregation_counts), "items_without_field": items_without_field}
+    print(
+        f"Successfully aggregated metadata from index '{index_name}' by field '{aggregate_field}'."
+    )
+    return {
+        "status": "success",
+        "aggregation": dict(aggregation_counts),
+        "items_without_field": items_without_field,
+    }
 
 
 # Example usage (for testing purposes)

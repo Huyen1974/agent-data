@@ -1,52 +1,56 @@
 {
+  "alertStrategy": {
+    "autoClose": "1800s"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": [
+              "metric.label.collection"
+            ],
+            "perSeriesAligner": "ALIGN_MEAN"
+          }
+        ],
+        "comparison": "COMPARISON_LT",
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE",
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_connection_status\"",
+        "thresholdValue": 1.0
+      },
+      "displayName": "Qdrant Connection Down"
+    },
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "crossSeriesReducer": "REDUCE_SUM",
+            "groupByFields": [
+              "metric.label.collection"
+            ],
+            "perSeriesAligner": "ALIGN_MEAN"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "300s",
+        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE",
+        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_api_errors_total\"",
+        "thresholdValue": 5.0
+      },
+      "displayName": "Qdrant API Error Rate High"
+    }
+  ],
   "displayName": "Qdrant Agent Data Monitoring Alert",
   "documentation": {
     "content": "Alert when Qdrant connection fails or error rates are high in Agent Data system",
     "mimeType": "text/markdown"
   },
-  "conditions": [
-    {
-      "displayName": "Qdrant Connection Down",
-      "conditionThreshold": {
-        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_connection_status\"",
-        "aggregations": [
-          {
-            "alignmentPeriod": "300s",
-            "perSeriesAligner": "ALIGN_MEAN",
-            "crossSeriesReducer": "REDUCE_MEAN",
-            "groupByFields": ["metric.label.collection"]
-          }
-        ],
-        "comparison": "COMPARISON_LT",
-        "thresholdValue": 1.0,
-        "duration": "300s",
-        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
-      }
-    },
-    {
-      "displayName": "Qdrant API Error Rate High",
-      "conditionThreshold": {
-        "filter": "resource.type=\"global\" AND metric.type=\"custom.googleapis.com/qdrant/qdrant_api_errors_total\"",
-        "aggregations": [
-          {
-            "alignmentPeriod": "300s",
-            "perSeriesAligner": "ALIGN_MEAN",
-            "crossSeriesReducer": "REDUCE_SUM",
-            "groupByFields": ["metric.label.collection"]
-          }
-        ],
-        "comparison": "COMPARISON_GT",
-        "thresholdValue": 5.0,
-        "duration": "300s",
-        "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
-      }
-    }
-  ],
-  "combiner": "OR",
   "enabled": true,
   "notificationChannels": [],
-  "alertStrategy": {
-    "autoClose": "1800s"
-  },
   "severity": "WARNING"
-} 
+}

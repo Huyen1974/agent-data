@@ -1,7 +1,6 @@
 import pytest
 
 
-
 @pytest.mark.unit
 def test_empty_query_text(client):
 
@@ -10,5 +9,7 @@ def test_empty_query_text(client):
     assert resp.status_code == 422  # Pydantic validation
     errors = resp.json()["detail"]
     assert any(
-        "query_text" in err["loc"] and ("empty" in err["msg"] or "must not be blank" in err["msg"]) for err in errors
+        "query_text" in err["loc"]
+        and ("empty" in err["msg"] or "must not be blank" in err["msg"])
+        for err in errors
     )

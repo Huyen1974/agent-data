@@ -1,0 +1,1321 @@
+Run Tests in a Clean Docker Environment	Set up job	﻿2025-07-14T08:34:16.1426803Z Current runner version: '2.326.0'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1463477Z ##[group]Operating System
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1464826Z Ubuntu
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1465671Z 24.04.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1466423Z LTS
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1467434Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1468252Z ##[group]Runner Image
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1469205Z Image: ubuntu-24.04
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1470155Z Version: 20250710.1.0
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1471878Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250710.1/images/ubuntu/Ubuntu2404-Readme.md
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1474764Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250710.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1476531Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1477423Z ##[group]Runner Image Provisioner
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1478440Z 2.0.449.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1479338Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1481177Z ##[group]GITHUB_TOKEN Permissions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1484061Z Contents: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1485214Z Metadata: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1486105Z Packages: read
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1487397Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1490288Z Secret source: Actions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1491796Z Prepare workflow directory
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.1960922Z Prepare all required actions
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.2018426Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.6072687Z ##[group]Download immutable action package 'actions/checkout@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.6073939Z Version: 4.2.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.6075442Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.6076721Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.6077578Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.7235893Z ##[group]Download immutable action package 'docker/setup-buildx-action@v3'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.7236865Z Version: 3.11.1
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.7237714Z Digest: sha256:b58e632d2d812e161c8abeba6def9f56b420aa9ae41d825a8408241bcad0f303
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.7238779Z Source commit SHA: e468171a9de216ec08956ac3ada2f0791b6bd435
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:16.7239661Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.0328615Z ##[group]Download immutable action package 'docker/build-push-action@v5'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.0329567Z Version: 5.4.0
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.0330386Z Digest: sha256:b1eb22c8ac697d9d0cdfecd96982afc33f5bf7897b1a76f89fd6cb58e9f98e3e
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.0331628Z Source commit SHA: ca052bb54ab0790a636c9b5f226502c73d547a25
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.0332334Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.3237251Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.3238274Z Version: 4.6.2
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.3239117Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.3240317Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.3241152Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.4426474Z Download action repository 'aquasecurity/trivy-action@0.32.0' (SHA:dc5a429b52fcf669ce959baa2c2dd26090d2a6c4)
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.7408235Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:17.8696255Z Download action repository 'aquasecurity/setup-trivy@ff1b8b060f23b650436d419b5e13f67f5d4c3087' (SHA:ff1b8b060f23b650436d419b5e13f67f5d4c3087)
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.0005494Z ##[group]Download immutable action package 'actions/cache@v4'
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.0006770Z Version: 4.2.3
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.0007964Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.0009720Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.0010880Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.1143015Z Getting action download info
+Run Tests in a Clean Docker Environment	Set up job	2025-07-14T08:34:18.4462803Z Complete job name: Run Tests in a Clean Docker Environment
+Run Tests in a Clean Docker Environment	Checkout Code	﻿2025-07-14T08:34:18.5328023Z ##[group]Run actions/checkout@v4
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5329295Z with:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5330040Z   repository: Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5331228Z   token: ***
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5331964Z   ssh-strict: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5332715Z   ssh-user: git
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5333483Z   persist-credentials: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5334760Z   clean: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5335534Z   sparse-checkout-cone-mode: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5336462Z   fetch-depth: 1
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5337203Z   fetch-tags: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5337954Z   show-progress: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5338721Z   lfs: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5339424Z   submodules: false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5340205Z   set-safe-directory: true
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.5341330Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7133585Z Syncing repository: Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7137671Z ##[group]Getting Git version info
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7139706Z Working directory is '/home/runner/work/agent-data/agent-data'
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7142575Z [command]/usr/bin/git version
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7173214Z git version 2.50.1
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7203175Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7218183Z Temporarily overriding HOME='/home/runner/work/_temp/a04188a7-ae49-4a42-9af5-978c506f77a0' before making global git config changes
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7220727Z Adding repository directory to the temporary git global config as a safe directory
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7223233Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7258850Z Deleting the contents of '/home/runner/work/agent-data/agent-data'
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7262490Z ##[group]Initializing the repository
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7266735Z [command]/usr/bin/git init /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7325205Z hint: Using 'master' as the name for the initial branch. This default branch name
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7328238Z hint: is subject to change. To configure the initial branch name to use in all
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7330355Z hint: of your new repositories, which will suppress this warning, call:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7331643Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7332519Z hint: 	git config --global init.defaultBranch <name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7333592Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7335015Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7336692Z hint: 'development'. The just-created branch can be renamed via this command:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7338113Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7338857Z hint: 	git branch -m <name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7339668Z hint:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7340760Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7342589Z Initialized empty Git repository in /home/runner/work/agent-data/agent-data/.git/
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7345674Z [command]/usr/bin/git remote add origin https://github.com/Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7375876Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7377537Z ##[group]Disabling automatic garbage collection
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7379396Z [command]/usr/bin/git config --local gc.auto 0
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7408872Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7410114Z ##[group]Setting up auth
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7415278Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7446929Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7751039Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.7781866Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.8012289Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.8048872Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.8051557Z ##[group]Fetching the repository
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:18.8060440Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fff27400587c17998177576afab00bebba2793f9:refs/remotes/pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6286527Z From https://github.com/Huyen1974/agent-data
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6288700Z  * [new ref]         fff27400587c17998177576afab00bebba2793f9 -> pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6311614Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6312721Z ##[group]Determining the checkout info
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6314634Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6319362Z [command]/usr/bin/git sparse-checkout disable
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6364068Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6395969Z ##[group]Checking out the ref
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.6401274Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/26/merge
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8085839Z Note: switching to 'refs/remotes/pull/26/merge'.
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8086792Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8087388Z You are in 'detached HEAD' state. You can look around, make experimental
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8088664Z changes and commit them, and you can discard any commits you make in this
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8089941Z state without impacting any branches by switching back to a branch.
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8090659Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8091249Z If you want to create a new branch to retain commits you create, you may
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8092440Z do so (now or later) by using -c with the switch command. Example:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8093117Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8093453Z   git switch -c <new-branch-name>
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8093922Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8094405Z Or undo this operation with:
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8094854Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8095145Z   git switch -
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8095526Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8096035Z Turn off this advice by setting config variable advice.detachedHead to false
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8096675Z 
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8097370Z HEAD is now at fff2740 Merge e29f9cd0a64966d59fb7343217e9cf57e3bcda43 into 053bd3b5b78e2a8a93a970301e6d12e009caeecd
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8104868Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8144543Z [command]/usr/bin/git log -1 --format=%H
+Run Tests in a Clean Docker Environment	Checkout Code	2025-07-14T08:34:19.8167227Z fff27400587c17998177576afab00bebba2793f9
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	﻿2025-07-14T08:34:19.8403175Z ##[group]Run docker/setup-buildx-action@v3
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8403921Z with:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8404755Z   driver: docker-container
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8405378Z   install: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8405958Z   use: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8406515Z   keep-state: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8407095Z   cache-binary: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8407674Z   cleanup: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:19.8408240Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.1348679Z ##[group]Docker info
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.1377050Z [command]/usr/bin/docker version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2296011Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2297832Z  Version:           28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2299431Z  API version:       1.48
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2301897Z  Go version:        go1.23.7
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2303258Z  Git commit:        b8034c0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2304928Z  Built:             Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2306169Z  OS/Arch:           linux/amd64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2307275Z  Context:           default
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2307995Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2308522Z Server: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2309630Z  Engine:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2310600Z   Version:          28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2311736Z   API version:      1.48 (minimum version 1.24)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2313012Z   Go version:       go1.23.7
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2314125Z   Git commit:       6430e49
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2315444Z   Built:            Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2316649Z   OS/Arch:          linux/amd64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2317761Z   Experimental:     false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2318816Z  containerd:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2319813Z   Version:          1.7.27
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2321041Z   GitCommit:        05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2322362Z  runc:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2323306Z   Version:          1.2.5
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2325205Z   GitCommit:        v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2326381Z  docker-init:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2327362Z   Version:          0.19.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2341610Z   GitCommit:        de40ad0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.2359221Z [command]/usr/bin/docker info
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4481401Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4482029Z  Version:    28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4482436Z  Context:    default
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4482826Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4483194Z  Plugins:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4483653Z   buildx: Docker Buildx (Docker Inc.)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4484147Z     Version:  v0.25.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4484830Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4485456Z   compose: Docker Compose (Docker Inc.)
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4485940Z     Version:  v2.36.2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4486448Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4486877Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4487026Z Server:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4487369Z  Containers: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4487734Z   Running: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4488090Z   Paused: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4488435Z   Stopped: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4488779Z  Images: 0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4489178Z  Server Version: 28.0.4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4489585Z  Storage Driver: overlay2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4490028Z   Backing Filesystem: extfs
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4490470Z   Supports d_type: true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4490880Z   Using metacopy: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4491284Z   Native Overlay Diff: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4491716Z   userxattr: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4492102Z  Logging Driver: json-file
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4492539Z  Cgroup Driver: systemd
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4492928Z  Cgroup Version: 2
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4493286Z  Plugins:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4493660Z   Volume: local
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4494113Z   Network: bridge host ipvlan macvlan null overlay
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4495095Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4495752Z  Swarm: inactive
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4496179Z  Runtimes: io.containerd.runc.v2 runc
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4496668Z  Default Runtime: runc
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4497059Z  Init Binary: docker-init
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4498089Z  containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4498478Z  runc version: v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4498873Z  init version: de40ad0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4499158Z  Security Options:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4499397Z   apparmor
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4499600Z   seccomp
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4499810Z    Profile: builtin
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4500028Z   cgroupns
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4500250Z  Kernel Version: 6.11.0-1018-azure
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4500537Z  Operating System: Ubuntu 24.04.2 LTS
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4500817Z  OSType: linux
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4501046Z  Architecture: x86_64
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4501284Z  CPUs: 4
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4501496Z  Total Memory: 15.62GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4501732Z  Name: fv-az1718-952
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4501989Z  ID: 59ce2f9e-8373-49df-b904-c97e78d80d7f
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4502288Z  Docker Root Dir: /var/lib/docker
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4502642Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4503032Z  Username: githubactions
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4503468Z  Experimental: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4503778Z  Insecure Registries:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4508711Z   ::1/128
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4508972Z   127.0.0.0/8
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4509221Z  Live Restore Enabled: false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4509403Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.4509834Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5091857Z ##[group]Buildx version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5113670Z [command]/usr/bin/docker buildx version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5574134Z github.com/docker/buildx v0.25.0 faaea65da4ba0e58a13cd9cadcb950c51cf3b3c9
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5606043Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5760888Z ##[group]Inspecting default docker context
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5901551Z [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5902142Z   {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5902537Z     "Name": "default",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5902837Z     "Metadata": {},
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5903087Z     "Endpoints": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5903313Z       "docker": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5903583Z         "Host": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5903910Z         "SkipTLSVerify": false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5904839Z       }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5905037Z     },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5905257Z     "TLSMaterial": {},
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5905491Z     "Storage": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5905752Z       "MetadataPath": "<IN MEMORY>",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5906195Z       "TLSPath": "<IN MEMORY>"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5906449Z     }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5906717Z   }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5906984Z ]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5907640Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.5908080Z ##[group]Creating a new builder instance
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.7026886Z [command]/usr/bin/docker buildx create --name builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d --driver docker-container --buildkitd-flags --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host --use
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.7550547Z builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.7590351Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.7591197Z ##[group]Booting builder
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.7626526Z [command]/usr/bin/docker buildx inspect --bootstrap --builder builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.8142175Z #1 [internal] booting buildkit
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:20.9650032Z #1 pulling image moby/buildkit:buildx-stable-1
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:22.8179893Z #1 pulling image moby/buildkit:buildx-stable-1 2.0s done
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:22.9682407Z #1 creating container buildx_buildkit_builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1111893Z #1 creating container buildx_buildkit_builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0 0.3s done
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1140280Z #1 DONE 2.3s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1445326Z Name:          builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1445988Z Driver:        docker-container
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1446420Z Last Activity: 2025-07-14 08:34:20 +0000 UTC
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1447480Z 
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1447639Z Nodes:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1448067Z Name:                  builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1448859Z Endpoint:              unix:///var/run/docker.sock
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1450016Z Status:                running
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1450882Z BuildKit daemon flags: --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1451877Z BuildKit version:      v0.22.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1452424Z Platforms:             linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/386
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1452985Z Labels:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1453392Z  org.mobyproject.buildkit.worker.executor:         oci
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1454025Z  org.mobyproject.buildkit.worker.hostname:         d55ce7c5c273
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1454724Z  org.mobyproject.buildkit.worker.network:          host
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1455183Z  org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1455645Z  org.mobyproject.buildkit.worker.selinux.enabled:  false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1456100Z  org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1456497Z GC Policy rule#0:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1456760Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1457173Z  Filters:        type==source.local,type==exec.cachemount,type==source.git.checkout
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1457599Z  Keep Duration:  48h0m0s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1457882Z  Max Used Space: 488.3MiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1458155Z GC Policy rule#1:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1458435Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1458723Z  Keep Duration:  1440h0m0s
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1459003Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1459280Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1459547Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1459825Z GC Policy rule#2:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1460078Z  All:            false
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1460344Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1460611Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1460884Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1461155Z GC Policy rule#3:
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1461409Z  All:            true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1461670Z  Reserved Space: 7.451GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1461947Z  Max Used Space: 54.02GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1462439Z  Min Free Space: 13.97GiB
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.1497441Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2321512Z ##[group]Inspect builder
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2373227Z {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2373581Z   "nodes": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2373846Z     {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2374108Z       "name": "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2374727Z       "endpoint": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2375005Z       "status": "running",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2375468Z       "buildkitd-flags": "--allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2375967Z       "buildkit": "v0.22.0",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2376260Z       "platforms": "linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2376579Z       "features": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2376981Z         "Automatically load images to the Docker Engine image store": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2377405Z         "Cache export": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2377660Z         "Direct push": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2377869Z         "Docker exporter": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2378206Z         "Multi-platform build": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2378515Z         "OCI exporter": true
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2378716Z       },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2378867Z       "labels": {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2379102Z         "org.mobyproject.buildkit.worker.executor": "oci",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2379460Z         "org.mobyproject.buildkit.worker.hostname": "d55ce7c5c273",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2379829Z         "org.mobyproject.buildkit.worker.network": "host",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2380381Z         "org.mobyproject.buildkit.worker.oci.process-mode": "sandbox",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2380852Z         "org.mobyproject.buildkit.worker.selinux.enabled": "false",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2381248Z         "org.mobyproject.buildkit.worker.snapshotter": "overlayfs"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2381546Z       },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2381711Z       "gcPolicy": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2381883Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2382319Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2382502Z           "filter": [
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2382695Z             "type==source.local",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2382919Z             "type==exec.cachemount",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2383164Z             "type==source.git.checkout"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2383394Z           ],
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2383565Z           "keepDuration": "48h0m0s",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2383827Z           "maxUsedSpace": "488.3MiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2384032Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2384187Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2384538Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2384742Z           "keepDuration": "1440h0m0s",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2384972Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2385204Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2385426Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2385634Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2385788Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2385938Z           "all": false,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2386140Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2386624Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2386972Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2387285Z         },
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2387529Z         {
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2387772Z           "all": true,
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2388090Z           "reservedSpace": "7.451GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2388467Z           "maxUsedSpace": "54.02GiB",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2388819Z           "minFreeSpace": "13.97GiB"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2389146Z         }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2389301Z       ]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2389452Z     }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2389592Z   ],
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2389809Z   "name": "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2390098Z   "driver": "docker-container",
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2390335Z   "lastActivity": "2025-07-14T08:34:20.000Z"
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2390561Z }
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2390996Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2391334Z ##[group]BuildKit version
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2391605Z builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0: v0.22.0
+Run Tests in a Clean Docker Environment	Set up Docker Buildx	2025-07-14T08:34:23.2392216Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	﻿2025-07-14T08:34:23.2603677Z ##[group]Run docker/build-push-action@v5
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2603961Z with:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2604132Z   context: .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2604537Z   file: Dockerfile.test
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2604760Z   tags: agent-data-test-local
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2604976Z   load: true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2605149Z   platforms: linux/amd64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2605364Z   provenance: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2605551Z   cache-from: type=gha
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2605759Z   cache-to: type=gha,mode=max
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2605973Z   no-cache: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2606151Z   pull: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2606315Z   push: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2606622Z   github-token: ***
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.2606820Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4943283Z ##[group]GitHub Actions runtime token ACs
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4953634Z refs/pull/26/merge: read/write
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4954779Z refs/heads/main: read
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4957015Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4959732Z ##[group]Docker info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.4998849Z [command]/usr/bin/docker version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5185857Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5186373Z  Version:           28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5186752Z  API version:       1.48
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5189256Z  Go version:        go1.23.7
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5190146Z  Git commit:        b8034c0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5190633Z  Built:             Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5191051Z  OS/Arch:           linux/amd64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5191403Z  Context:           default
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5191634Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5191787Z Server: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5192167Z  Engine:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5192439Z   Version:          28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5192823Z   API version:      1.48 (minimum version 1.24)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5193261Z   Go version:       go1.23.7
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5193533Z   Git commit:       6430e49
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5193797Z   Built:            Tue Mar 25 15:07:16 2025
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5194062Z   OS/Arch:          linux/amd64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5194475Z   Experimental:     false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5194689Z  containerd:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5194868Z   Version:          1.7.27
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5195131Z   GitCommit:        05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5195413Z  runc:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5195571Z   Version:          1.2.5
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5195781Z   GitCommit:        v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5196025Z  docker-init:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5196216Z   Version:          0.19.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5196546Z   GitCommit:        de40ad0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5237658Z [command]/usr/bin/docker info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5602688Z Client: Docker Engine - Community
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5603189Z  Version:    28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5603514Z  Context:    default
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5603834Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5604129Z  Plugins:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5604637Z   buildx: Docker Buildx (Docker Inc.)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5605068Z     Version:  v0.25.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5605497Z     Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5606059Z   compose: Docker Compose (Docker Inc.)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5606466Z     Version:  v2.36.2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5606881Z     Path:     /usr/libexec/docker/cli-plugins/docker-compose
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5607258Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5607371Z Server:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5607640Z  Containers: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5607936Z   Running: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5608221Z   Paused: 0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5608502Z   Stopped: 0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5608776Z  Images: 1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5609052Z  Server Version: 28.0.4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5609392Z  Storage Driver: overlay2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5609745Z   Backing Filesystem: extfs
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5610099Z   Supports d_type: true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5610427Z   Using metacopy: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5610771Z   Native Overlay Diff: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5611125Z   userxattr: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5611803Z  Logging Driver: json-file
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5612152Z  Cgroup Driver: systemd
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5612766Z  Cgroup Version: 2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5613046Z  Plugins:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5613329Z   Volume: local
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5613671Z   Network: bridge host ipvlan macvlan null overlay
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5614461Z   Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5615023Z  Swarm: inactive
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5615348Z  Runtimes: io.containerd.runc.v2 runc
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5615753Z  Default Runtime: runc
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5616093Z  Init Binary: docker-init
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5616559Z  containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5617090Z  runc version: v1.2.5-0-g59923ef
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5617472Z  init version: de40ad0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5617795Z  Security Options:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5618098Z   apparmor
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5618360Z   seccomp
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5618635Z    Profile: builtin
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5618924Z   cgroupns
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5619203Z  Kernel Version: 6.11.0-1018-azure
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5619627Z  Operating System: Ubuntu 24.04.2 LTS
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5619971Z  OSType: linux
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5620161Z  Architecture: x86_64
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5620359Z  CPUs: 4
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5620598Z  Total Memory: 15.62GiB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5620834Z  Name: fv-az1718-952
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5621043Z  ID: 59ce2f9e-8373-49df-b904-c97e78d80d7f
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5621315Z  Docker Root Dir: /var/lib/docker
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5621538Z  Debug Mode: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5621728Z  Username: githubactions
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5621934Z  Experimental: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5622121Z  Insecure Registries:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5622345Z   ::1/128
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5622496Z   127.0.0.0/8
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5622676Z  Live Restore Enabled: false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5622817Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5624072Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5624804Z ##[group]Proxy configuration
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5627921Z No proxy configuration found
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.5628867Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.6108859Z ##[group]Buildx version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.6137630Z [command]/usr/bin/docker buildx version
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.6542317Z github.com/docker/buildx v0.25.0 faaea65da4ba0e58a13cd9cadcb950c51cf3b3c9
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.6574614Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.6575243Z ##[group]Builder info
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7366004Z {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7366366Z   "nodes": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7366657Z     {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7367071Z       "name": "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7367633Z       "endpoint": "unix:///var/run/docker.sock",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7368087Z       "status": "running",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7368732Z       "buildkitd-flags": "--allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7369389Z       "buildkit": "v0.22.0",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7369951Z       "platforms": "linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7370472Z       "features": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7370889Z         "Automatically load images to the Docker Engine image store": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7371424Z         "Cache export": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7371763Z         "Direct push": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7372115Z         "Docker exporter": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7372452Z         "Multi-platform build": true,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7372915Z         "OCI exporter": true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7373246Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7373496Z       "labels": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7373946Z         "org.mobyproject.buildkit.worker.executor": "oci",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7375126Z         "org.mobyproject.buildkit.worker.hostname": "d55ce7c5c273",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7375845Z         "org.mobyproject.buildkit.worker.network": "host",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7376350Z         "org.mobyproject.buildkit.worker.oci.process-mode": "sandbox",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7376791Z         "org.mobyproject.buildkit.worker.selinux.enabled": "false",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7377522Z         "org.mobyproject.buildkit.worker.snapshotter": "overlayfs"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7377968Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7378127Z       "gcPolicy": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7378304Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7378460Z           "all": false,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7378650Z           "filter": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7378855Z             "type==source.local",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7379087Z             "type==exec.cachemount",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7379331Z             "type==source.git.checkout"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7379553Z           ],
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7379734Z           "keepDuration": "48h0m0s"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7379940Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380092Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380244Z           "all": false,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380448Z           "keepDuration": "1440h0m0s"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380658Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380807Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7380959Z           "all": false
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381136Z         },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381290Z         {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381437Z           "all": true
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381612Z         }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381762Z       ]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7381911Z     }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7382051Z   ],
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7382266Z   "name": "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7382560Z   "driver": "docker-container",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7382794Z   "lastActivity": "2025-07-14T08:34:20.000Z"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7383018Z }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7383451Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:23.7943299Z [command]/usr/bin/docker buildx build --cache-from type=gha --cache-to type=gha,mode=max --file Dockerfile.test --iidfile /home/runner/work/_temp/docker-actions-toolkit-ODBfxU/build-iidfile-96d5b27e24.txt --platform linux/amd64 --attest type=provenance,disabled=true --tag agent-data-test-local --load --metadata-file /home/runner/work/_temp/docker-actions-toolkit-ODBfxU/build-metadata-840e0eb40e.json .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1460042Z #0 building with "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d" instance using docker-container driver
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1460784Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1461037Z #1 [internal] load build definition from Dockerfile.test
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1461563Z #1 transferring dockerfile: 1.12kB done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1461966Z #1 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1462130Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1462362Z #2 [auth] library/python:pull token for registry-1.docker.io
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1462831Z #2 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1463003Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.1463629Z #3 [internal] load metadata for docker.io/library/python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.2872761Z #3 DONE 0.4s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4433717Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4434637Z #4 [internal] load .dockerignore
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4437053Z #4 transferring context: 156B done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4437505Z #4 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4437688Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4437841Z #5 [internal] load build context
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4438219Z #5 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4438419Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4438985Z #6 [builder 1/7] FROM docker.io/library/python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4439967Z #6 resolve docker.io/library/python@sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6 done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4440600Z #6 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4440791Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4441013Z #7 importing cache manifest from gha:17975790701605701260
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.4441506Z #7 DONE 0.1s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.5502927Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.5504853Z #5 [internal] load build context
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6537167Z #5 transferring context: 5.52MB 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6538424Z #5 DONE 0.1s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6538673Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6538822Z #8 [builder 2/7] WORKDIR /app
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6539189Z #8 CACHED
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6539360Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6539982Z #9 [builder 3/7] RUN apt-get update &&     apt-get install -y --no-install-recommends build-essential &&     rm -rf /var/lib/apt/lists/*
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.6542001Z #9 CACHED
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.8085008Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.8086129Z #9 [builder 3/7] RUN apt-get update &&     apt-get install -y --no-install-recommends build-essential &&     rm -rf /var/lib/apt/lists/*
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.8087333Z #9 sha256:51bd799101a3b8cf1ca57801d526fcd28dd8d25181bb69eba84982fba6ba7843 92B / 92B 0.0s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.8088043Z #9 sha256:9bf8019009762bbffe101b45ab1d8f8dfb33505add794626c2c9f6c9ebf51730 250B / 250B 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.8088753Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 12.58MB / 86.09MB 0.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.9572739Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 29.36MB / 86.09MB 0.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.9573936Z #9 sha256:1b7693c66349695826ab10137d9c2cee8cca7e542810f0e88082a2f67897cdd1 1.08MB / 1.08MB 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.9575040Z #9 sha256:17594b489a265a01a80971b194d58350cb765228f9a096d2d92beeb7a7ac14b1 6.29MB / 14.84MB 0.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:24.9575894Z #9 sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 3.15MB / 30.26MB 0.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.1078678Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 54.53MB / 86.09MB 0.5s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.1079777Z #9 sha256:17594b489a265a01a80971b194d58350cb765228f9a096d2d92beeb7a7ac14b1 14.84MB / 14.84MB 0.3s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.1080652Z #9 sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 9.44MB / 30.26MB 0.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.2592627Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 66.06MB / 86.09MB 0.6s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.2593881Z #9 sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 14.68MB / 30.26MB 0.5s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.4076438Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 86.09MB / 86.09MB 0.8s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.4077570Z #9 sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 20.97MB / 30.26MB 0.6s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.6062637Z #9 sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 86.09MB / 86.09MB 0.8s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.6064126Z #9 sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 30.26MB / 30.26MB 0.9s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.6064864Z #9 DONE 1.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.7586470Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.7587401Z #9 [builder 3/7] RUN apt-get update &&     apt-get install -y --no-install-recommends build-essential &&     rm -rf /var/lib/apt/lists/*
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:25.7588635Z #9 extracting sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.3984861Z #9 extracting sha256:cc41ef31545f10925901837c6dea7e184299788097caaa3fabb57ed109c52a98 0.8s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.3985697Z #9 DONE 1.8s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.6145399Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.6146370Z #9 [builder 3/7] RUN apt-get update &&     apt-get install -y --no-install-recommends build-essential &&     rm -rf /var/lib/apt/lists/*
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.6147382Z #9 extracting sha256:1b7693c66349695826ab10137d9c2cee8cca7e542810f0e88082a2f67897cdd1 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.6148037Z #9 extracting sha256:17594b489a265a01a80971b194d58350cb765228f9a096d2d92beeb7a7ac14b1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.8789754Z #9 extracting sha256:17594b489a265a01a80971b194d58350cb765228f9a096d2d92beeb7a7ac14b1 0.4s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:26.8790734Z #9 DONE 2.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:27.0403751Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:27.0406402Z #9 [builder 3/7] RUN apt-get update &&     apt-get install -y --no-install-recommends build-essential &&     rm -rf /var/lib/apt/lists/*
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:27.0407653Z #9 extracting sha256:9bf8019009762bbffe101b45ab1d8f8dfb33505add794626c2c9f6c9ebf51730 done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:27.0408678Z #9 extracting sha256:51bd799101a3b8cf1ca57801d526fcd28dd8d25181bb69eba84982fba6ba7843 done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:27.0409617Z #9 extracting sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:28.4129386Z #9 extracting sha256:09d71ff0931aa7c0d0312f93583b20f9e37c6fbc546570c877e96381ed6f31a0 1.5s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:28.4133055Z #9 DONE 3.8s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:28.5641813Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:28.5642399Z #10 [builder 4/7] COPY requirements.lock .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:29.1942861Z #10 DONE 0.8s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:29.3462616Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:29.3463746Z #11 [builder 5/7] RUN pip install --no-cache-dir --upgrade pip &&     pip install --no-cache-dir --require-hashes --timeout=600 --retries=3 -r requirements.lock
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.5706096Z #11 1.375 Requirement already satisfied: pip in /usr/local/lib/python3.10/site-packages (23.0.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.7035824Z #11 1.470 Collecting pip
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.7036405Z #11 1.508   Downloading pip-25.1.1-py3-none-any.whl (1.8 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.9323473Z #11 1.540      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 61.1 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.9324199Z #11 1.585 Installing collected packages: pip
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.9324909Z #11 1.586   Attempting uninstall: pip
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.9325409Z #11 1.586     Found existing installation: pip 23.0.1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:30.9422654Z #11 1.747     Uninstalling pip-23.0.1:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:31.1289222Z #11 1.933       Successfully uninstalled pip-23.0.1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:31.8890161Z #11 2.693 Successfully installed pip-25.1.1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.0398113Z #11 2.694 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.4135664Z #11 3.218 Collecting annotated-types==0.7.0 (from -r requirements.lock (line 7))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.5263850Z #11 3.246   Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.5265194Z #11 3.287 Collecting anthropic==0.45.2 (from -r requirements.lock (line 13))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.5265975Z #11 3.294   Downloading anthropic-0.45.2-py3-none-any.whl (222 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.5266715Z #11 3.331 Collecting anyio==4.8.0 (from -r requirements.lock (line 17))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6973146Z #11 3.339   Downloading anyio-4.8.0-py3-none-any.whl (96 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6974179Z #11 3.354 Collecting blinker==1.9.0 (from -r requirements.lock (line 24))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6975289Z #11 3.361   Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6976151Z #11 3.380 Collecting certifi==2025.1.31 (from -r requirements.lock (line 30))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6977028Z #11 3.387   Downloading certifi-2025.1.31-py3-none-any.whl (166 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.6977777Z #11 3.502 Collecting cffi==1.17.1 (from -r requirements.lock (line 37))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.8863383Z #11 3.510   Downloading cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (446 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.8864545Z #11 3.533 Collecting click==8.1.7 (from -r requirements.lock (line 108))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.8865232Z #11 3.540   Downloading click-8.1.7-py3-none-any.whl (97 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:32.9278481Z #11 3.732 Collecting cryptography==44.0.2 (from -r requirements.lock (line 114))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0325628Z #11 3.744   Downloading cryptography-44.0.2-cp39-abi3-manylinux_2_28_x86_64.whl (4.2 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0327037Z #11 3.761      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 297.3 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0327811Z #11 3.784 Collecting distro==1.9.0 (from -r requirements.lock (line 151))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0328554Z #11 3.792   Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0329301Z #11 3.804 Collecting exceptiongroup==1.3.0 (from -r requirements.lock (line 157))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0330046Z #11 3.812   Downloading exceptiongroup-1.3.0-py3-none-any.whl (16 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0330574Z #11 3.830 Collecting flask==3.0.0 (from -r requirements.lock (line 161))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.0331059Z #11 3.837   Downloading flask-3.0.0-py3-none-any.whl (99 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.2053648Z #11 3.852 Collecting flask-sqlalchemy==3.0.5 (from -r requirements.lock (line 167))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.2054763Z #11 3.861   Downloading flask_sqlalchemy-3.0.5-py3-none-any.whl (24 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.2056022Z #11 4.010 Collecting greenlet==3.2.3 (from -r requirements.lock (line 171))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3147962Z #11 4.018   Downloading greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (582 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3149461Z #11 4.021      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 582.2/582.2 kB 542.5 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3150174Z #11 4.041 Collecting gunicorn==21.2.0 (from -r requirements.lock (line 227))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3150781Z #11 4.049   Downloading gunicorn-21.2.0-py3-none-any.whl (80 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3151246Z #11 4.063 Collecting h11==0.16.0 (from -r requirements.lock (line 231))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3151791Z #11 4.070   Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3152294Z #11 4.090 Collecting httpcore==1.0.9 (from -r requirements.lock (line 237))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3152838Z #11 4.098   Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.3153406Z #11 4.119 Collecting httpx==0.28.1 (from -r requirements.lock (line 243))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4742316Z #11 4.127   Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4743339Z #11 4.142 Collecting idna==3.10 (from -r requirements.lock (line 249))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4744130Z #11 4.150   Downloading idna-3.10-py3-none-any.whl (70 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4745178Z #11 4.161 Collecting iniconfig==2.1.0 (from -r requirements.lock (line 256))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4746023Z #11 4.169   Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4746733Z #11 4.181 Collecting itsdangerous==2.2.0 (from -r requirements.lock (line 260))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4747490Z #11 4.188   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4748149Z #11 4.205 Collecting jinja2==3.1.4 (from -r requirements.lock (line 266))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4748821Z #11 4.213   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.4749288Z #11 4.278 Collecting jiter==0.8.2 (from -r requirements.lock (line 272))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.6973974Z #11 4.287   Downloading jiter-0.8.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (345 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.6974999Z #11 4.343 Collecting markupsafe==3.0.2 (from -r requirements.lock (line 352))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.6975631Z #11 4.351   Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.7414203Z #11 4.546 Collecting numpy==2.1.3 (from -r requirements.lock (line 418))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.8453477Z #11 4.554   Downloading numpy-2.1.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.3 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.8455099Z #11 4.614      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.3/16.3 MB 284.2 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:33.8455842Z #11 4.650 Collecting packaging==25.0 (from -r requirements.lock (line 477))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.0029011Z #11 4.657   Downloading packaging-25.0-py3-none-any.whl (66 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.0041241Z #11 4.809 Collecting pandas==2.2.3 (from -r requirements.lock (line 484))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.2047062Z #11 4.816   Downloading pandas-2.2.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.1 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.2048377Z #11 4.858      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 328.4 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.2833118Z #11 5.088 Collecting pillow==11.2.1 (from -r requirements.lock (line 528))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.4923198Z #11 5.099   Downloading pillow-11.2.1-cp310-cp310-manylinux_2_28_x86_64.whl (4.6 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.4924730Z #11 5.116      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.6/4.6 MB 287.6 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.4925488Z #11 5.138 Collecting pluggy==1.6.0 (from -r requirements.lock (line 611))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.4926238Z #11 5.146   Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.5689513Z #11 5.373 Collecting protobuf==4.21.12 (from -r requirements.lock (line 615))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.7268199Z #11 5.381   Downloading protobuf-4.21.12-cp37-abi3-manylinux2014_x86_64.whl (409 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.7269196Z #11 5.396 Collecting pycparser==2.22 (from -r requirements.lock (line 631))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.7270242Z #11 5.408   Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.7271027Z #11 5.531 Collecting pydantic==2.10.6 (from -r requirements.lock (line 637))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:34.8855740Z #11 5.539   Downloading pydantic-2.10.6-py3-none-any.whl (431 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.4476661Z #11 6.252 Collecting pydantic-core==2.27.2 (from -r requirements.lock (line 643))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5586818Z #11 6.260   Downloading pydantic_core-2.27.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5587904Z #11 6.270      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 251.8 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5588480Z #11 6.291 Collecting pygments==2.19.2 (from -r requirements.lock (line 747))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5589061Z #11 6.299   Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5589573Z #11 6.303      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 496.8 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5590207Z #11 6.321 Collecting pymysql==1.1.1 (from -r requirements.lock (line 751))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5590801Z #11 6.329   Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.5591253Z #11 6.363 Collecting pytest==8.4.1 (from -r requirements.lock (line 755))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6725947Z #11 6.370   Downloading pytest-8.4.1-py3-none-any.whl (365 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6726866Z #11 6.387 Collecting pytest-json-report==1.5.0 (from -r requirements.lock (line 763))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6727680Z #11 6.394   Downloading pytest_json_report-1.5.0-py3-none-any.whl (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6728257Z #11 6.407 Collecting pytest-metadata==3.1.1 (from -r requirements.lock (line 767))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6728814Z #11 6.415   Downloading pytest_metadata-3.1.1-py3-none-any.whl (11 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6729386Z #11 6.430 Collecting pytest-randomly==3.16.0 (from -r requirements.lock (line 771))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6729957Z #11 6.437   Downloading pytest_randomly-3.16.0-py3-none-any.whl (8.4 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6730627Z #11 6.451 Collecting pytest-rerunfailures==15.1 (from -r requirements.lock (line 775))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6731234Z #11 6.459   Downloading pytest_rerunfailures-15.1-py3-none-any.whl (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.6731817Z #11 6.477 Collecting python-dateutil==2.9.0.post0 (from -r requirements.lock (line 779))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9191813Z #11 6.485   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9192780Z #11 6.523 Collecting pytz==2024.2 (from -r requirements.lock (line 785))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9193521Z #11 6.531   Downloading pytz-2024.2-py2.py3-none-any.whl (508 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9194507Z #11 6.548 Collecting six==1.16.0 (from -r requirements.lock (line 791))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9195250Z #11 6.556   Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9195963Z #11 6.566 Collecting sniffio==1.3.1 (from -r requirements.lock (line 797))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:35.9196688Z #11 6.573   Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.1174064Z #11 6.922 Collecting sqlalchemy==2.0.36 (from -r requirements.lock (line 804))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2237394Z #11 6.932   Downloading SQLAlchemy-2.0.36-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2238834Z #11 6.942      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 395.2 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2239368Z #11 6.975 Collecting tomli==2.2.1 (from -r requirements.lock (line 865))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2239956Z #11 6.983   Downloading tomli-2.2.1-py3-none-any.whl (14 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2240577Z #11 7.000 Collecting typing-extensions==4.12.2 (from -r requirements.lock (line 899))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2241156Z #11 7.007   Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2241766Z #11 7.021 Collecting tzdata==2024.2 (from -r requirements.lock (line 908))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.2242350Z #11 7.028   Downloading tzdata-2024.2-py2.py3-none-any.whl (346 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4083032Z #11 7.056 Collecting urllib3==2.4.0 (from -r requirements.lock (line 914))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4084217Z #11 7.064   Downloading urllib3-2.4.0-py3-none-any.whl (128 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4085256Z #11 7.088 Collecting werkzeug==3.1.3 (from -r requirements.lock (line 918))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4085904Z #11 7.096   Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4086774Z #11 7.099 Requirement already satisfied: wheel==0.45.1 in /usr/local/lib/python3.10/site-packages (from -r requirements.lock (line 924)) (0.45.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.4087676Z #11 7.213 Collecting setuptools==75.1.0 (from -r requirements.lock (line 930))
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.5724638Z #11 7.221   Downloading setuptools-75.1.0-py3-none-any.whl (1.2 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.5725649Z #11 7.226      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 346.5 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:36.8429448Z #11 7.647 Installing collected packages: pytz, urllib3, tzdata, typing-extensions, tomli, sniffio, six, setuptools, pymysql, pygments, pycparser, protobuf, pluggy, pillow, packaging, numpy, markupsafe, jiter, itsdangerous, iniconfig, idna, h11, greenlet, distro, click, certifi, blinker, annotated-types, werkzeug, sqlalchemy, python-dateutil, pydantic-core, jinja2, httpcore, gunicorn, exceptiongroup, cffi, pytest, pydantic, pandas, flask, cryptography, anyio, pytest-rerunfailures, pytest-randomly, pytest-metadata, httpx, flask-sqlalchemy, pytest-json-report, anthropic
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:37.1765011Z #11 7.981   Attempting uninstall: setuptools
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:37.4270135Z #11 7.982     Found existing installation: setuptools 65.5.1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:37.4270793Z #11 8.003     Uninstalling setuptools-65.5.1:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:37.4271345Z #11 8.081       Successfully uninstalled setuptools-65.5.1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:46.3608208Z #11 17.17 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:46.5212088Z #11 17.17 Successfully installed annotated-types-0.7.0 anthropic-0.45.2 anyio-4.8.0 blinker-1.9.0 certifi-2025.1.31 cffi-1.17.1 click-8.1.7 cryptography-44.0.2 distro-1.9.0 exceptiongroup-1.3.0 flask-3.0.0 flask-sqlalchemy-3.0.5 greenlet-3.2.3 gunicorn-21.2.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.10 iniconfig-2.1.0 itsdangerous-2.2.0 jinja2-3.1.4 jiter-0.8.2 markupsafe-3.0.2 numpy-2.1.3 packaging-25.0 pandas-2.2.3 pillow-11.2.1 pluggy-1.6.0 protobuf-4.21.12 pycparser-2.22 pydantic-2.10.6 pydantic-core-2.27.2 pygments-2.19.2 pymysql-1.1.1 pytest-8.4.1 pytest-json-report-1.5.0 pytest-metadata-3.1.1 pytest-randomly-3.16.0 pytest-rerunfailures-15.1 python-dateutil-2.9.0.post0 pytz-2024.2 setuptools-75.1.0 six-1.16.0 sniffio-1.3.1 sqlalchemy-2.0.36 tomli-2.2.1 typing-extensions-4.12.2 tzdata-2024.2 urllib3-2.4.0 werkzeug-3.1.3
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:46.5217865Z #11 17.17 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.4844441Z #11 DONE 18.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.6354026Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.6354740Z #12 [builder 6/7] COPY . .
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.6671469Z #12 DONE 0.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.8186304Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:47.8187045Z #13 [builder 7/7] RUN pip install --no-cache-dir -e .[dev]  # [dev] for pytest and plugins
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:48.0226588Z #13 0.355 Obtaining file:///app
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:48.1754729Z #13 0.357   Installing build dependencies: started
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:48.8757124Z #13 1.208   Installing build dependencies: finished with status 'done'
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.0267464Z #13 1.209   Checking if build backend supports build_editable: started
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.1235674Z #13 1.455   Checking if build backend supports build_editable: finished with status 'done'
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.2751278Z #13 1.457   Getting requirements to build editable: started
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.4143491Z #13 1.746   Getting requirements to build editable: finished with status 'done'
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.5660484Z #13 1.748   Preparing editable metadata (pyproject.toml): started
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.5984550Z #13 1.930   Preparing editable metadata (pyproject.toml): finished with status 'done'
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.7093989Z #13 1.941 Requirement already satisfied: flask in /usr/local/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (3.0.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.7095112Z #13 1.994 Collecting google-cloud-storage (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.7095722Z #13 2.016   Downloading google_cloud_storage-3.2.0-py3-none-any.whl.metadata (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.7096348Z #13 2.042 Collecting google-cloud-firestore (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.9236841Z #13 2.058   Downloading google_cloud_firestore-2.21.0-py3-none-any.whl.metadata (9.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.9237926Z #13 2.097 Collecting google-cloud-aiplatform>=1.40.0 (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.9238939Z #13 2.105   Downloading google_cloud_aiplatform-1.103.0-py2.py3-none-any.whl.metadata (38 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:49.9421210Z #13 2.274 Collecting google-api-python-client (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0836757Z #13 2.282   Downloading google_api_python_client-2.176.0-py3-none-any.whl.metadata (7.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0838080Z #13 2.293 Collecting google-auth-httplib2 (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0838927Z #13 2.300   Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl.metadata (2.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0839771Z #13 2.313 Collecting google-auth-oauthlib (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0840567Z #13 2.321   Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl.metadata (2.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0841301Z #13 2.355 Collecting faiss-cpu (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0841977Z #13 2.363   Downloading faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.0842467Z #13 2.416 Collecting fastapi (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2513282Z #13 2.423   Downloading fastapi-0.116.1-py3-none-any.whl.metadata (28 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2514498Z #13 2.456 Collecting uvicorn (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2515259Z #13 2.463   Downloading uvicorn-0.35.0-py3-none-any.whl.metadata (6.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2516029Z #13 2.483 Collecting python-dotenv (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2516735Z #13 2.490   Downloading python_dotenv-1.1.1-py3-none-any.whl.metadata (24 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2517884Z #13 2.492 Requirement already satisfied: gunicorn in /usr/local/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (21.2.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.2518846Z #13 2.583 Collecting scikit-learn (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3564997Z #13 2.591   Downloading scikit_learn-1.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (17 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3566042Z #13 2.659 Collecting openai (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3566781Z #13 2.667   Downloading openai-1.95.1-py3-none-any.whl.metadata (29 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3567864Z #13 2.671 Requirement already satisfied: numpy in /usr/local/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (2.1.3)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3568887Z #13 2.681 Collecting retry (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.3569646Z #13 2.689   Downloading retry-0.9.2-py2.py3-none-any.whl.metadata (5.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5780781Z #13 2.713 Collecting langchain-openai (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5781741Z #13 2.721   Downloading langchain_openai-0.3.27-py3-none-any.whl.metadata (2.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5782917Z #13 2.722 Requirement already satisfied: pytest>=7.0.0 in /usr/local/lib/python3.10/site-packages (from agent_data_manager==0.1.0) (8.4.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5783771Z #13 2.740 Collecting pytest-mock>=3.0.0 (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5784717Z #13 2.748   Downloading pytest_mock-3.14.1-py3-none-any.whl.metadata (3.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5785739Z #13 2.763 Collecting prometheus_client (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5786550Z #13 2.770   Downloading prometheus_client-0.22.1-py3-none-any.whl.metadata (1.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.5787216Z #13 2.910 Collecting pydantic==2.11.* (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6848371Z #13 2.918   Downloading pydantic-2.11.7-py3-none-any.whl.metadata (67 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6849581Z #13 2.952 Collecting qdrant-client==1.14.* (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6850334Z #13 2.960   Downloading qdrant_client-1.14.3-py3-none-any.whl.metadata (10 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6850863Z #13 2.975 Collecting passlib[bcrypt] (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6851346Z #13 2.982   Downloading passlib-1.7.4-py2.py3-none-any.whl.metadata (1.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6851865Z #13 2.996 Collecting python-jose[cryptography] (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6852392Z #13 3.003   Downloading python_jose-3.5.0-py2.py3-none-any.whl.metadata (5.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.6853154Z #13 3.017 Collecting python-multipart (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8126815Z #13 3.025   Downloading python_multipart-0.0.20-py3-none-any.whl.metadata (1.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8129870Z #13 3.036 Collecting slowapi (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8130646Z #13 3.044   Downloading slowapi-0.1.9-py3-none-any.whl.metadata (3.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8131356Z #13 3.098 Collecting black (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8132141Z #13 3.106   Downloading black-25.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl.metadata (81 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.8132731Z #13 3.145 Collecting isort (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9168356Z #13 3.152   Downloading isort-6.0.1-py3-none-any.whl.metadata (11 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9169131Z #13 3.176 Collecting flake8 (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9169670Z #13 3.183   Downloading flake8-7.3.0-py2.py3-none-any.whl.metadata (3.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9170151Z #13 3.200 Collecting pytest-cov (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9170607Z #13 3.207   Downloading pytest_cov-6.2.1-py3-none-any.whl.metadata (30 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:50.9171044Z #13 3.249 Collecting pre-commit (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.0775450Z #13 3.256   Downloading pre_commit-4.2.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.0776927Z #13 3.259 Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (0.7.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.6302106Z #13 3.962 Collecting pydantic-core==2.33.2 (from pydantic==2.11.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.8072179Z #13 3.970   Downloading pydantic_core-2.33.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.8073836Z #13 3.972 Requirement already satisfied: typing-extensions>=4.12.2 in /usr/local/lib/python3.10/site-packages (from pydantic==2.11.*->agent_data_manager==0.1.0) (4.12.2)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.8075531Z #13 3.981 Collecting typing-inspection>=0.4.0 (from pydantic==2.11.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:51.8076491Z #13 3.989   Downloading typing_inspection-0.4.1-py3-none-any.whl.metadata (2.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.2638241Z #13 4.596 Collecting grpcio>=1.41.0 (from qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3955718Z #13 4.604   Downloading grpcio-1.73.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3957406Z #13 4.606 Requirement already satisfied: httpx>=0.20.0 in /usr/local/lib/python3.10/site-packages (from httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (0.28.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3958833Z #13 4.621 Collecting portalocker<3.0.0,>=2.7.0 (from qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3959532Z #13 4.628   Downloading portalocker-2.10.1-py3-none-any.whl.metadata (8.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3960796Z #13 4.631 Requirement already satisfied: protobuf>=3.20.0 in /usr/local/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (4.21.12)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3962065Z #13 4.659 Requirement already satisfied: urllib3<3,>=1.26.14 in /usr/local/lib/python3.10/site-packages (from qdrant-client==1.14.*->agent_data_manager==0.1.0) (2.4.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.3963271Z #13 4.726 Collecting google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4963353Z #13 4.733   Downloading google_api_core-2.25.1-py3-none-any.whl.metadata (3.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4964851Z #13 4.776 Collecting google-auth<3.0.0,>=2.14.1 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4965825Z #13 4.784   Downloading google_auth-2.40.3-py2.py3-none-any.whl.metadata (6.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4966757Z #13 4.809 Collecting proto-plus<2.0.0,>=1.22.3 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4967434Z #13 4.817   Downloading proto_plus-1.26.1-py3-none-any.whl.metadata (2.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4968287Z #13 4.819 Requirement already satisfied: packaging>=14.3 in /usr/local/lib/python3.10/site-packages (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (25.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.4969116Z #13 4.829 Collecting google-cloud-storage (from agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.5978122Z #13 4.836   Downloading google_cloud_storage-2.19.0-py2.py3-none-any.whl.metadata (9.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.5979253Z #13 4.884 Collecting google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.5980263Z #13 4.891   Downloading google_cloud_bigquery-3.34.0-py3-none-any.whl.metadata (8.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.5981417Z #13 4.923 Collecting google-cloud-resource-manager<3.0.0,>=1.3.3 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.5982535Z #13 4.930   Downloading google_cloud_resource_manager-1.14.2-py3-none-any.whl.metadata (9.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.7140487Z #13 5.021 Collecting shapely<3.0.0 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.7141631Z #13 5.028   Downloading shapely-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.7142816Z #13 5.046 Collecting google-genai<2.0.0,>=1.0.0 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8308694Z #13 5.053   Downloading google_genai-1.25.0-py3-none-any.whl.metadata (41 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8309931Z #13 5.096 Collecting docstring_parser<1 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8311118Z #13 5.103   Downloading docstring_parser-0.16-py3-none-any.whl.metadata (3.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8312148Z #13 5.124 Collecting googleapis-common-protos<2.0.0,>=1.56.2 (from google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8313177Z #13 5.131   Downloading googleapis_common_protos-1.70.0-py3-none-any.whl.metadata (9.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.8314103Z #13 5.163 Collecting requests<3.0.0,>=2.18.0 (from google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.9316056Z #13 5.171   Downloading requests-2.32.4-py3-none-any.whl.metadata (4.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.9317719Z #13 5.230 Collecting grpcio-status<2.0.0,>=1.33.2 (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.9319595Z #13 5.237   Downloading grpcio_status-1.73.1-py3-none-any.whl.metadata (1.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.9320738Z #13 5.257 Collecting cachetools<6.0,>=2.0.0 (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:52.9321808Z #13 5.264   Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0328315Z #13 5.284 Collecting pyasn1-modules>=0.2.1 (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0329511Z #13 5.291   Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0330491Z #13 5.307 Collecting rsa<5,>=3.1.4 (from google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0331411Z #13 5.315   Downloading rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0332314Z #13 5.337 Collecting google-cloud-core<3.0.0,>=2.4.1 (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0333053Z #13 5.344   Downloading google_cloud_core-2.4.3-py2.py3-none-any.whl.metadata (2.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.0333895Z #13 5.365 Collecting google-resumable-media<3.0.0,>=2.0.0 (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.2164917Z #13 5.372   Downloading google_resumable_media-2.7.2-py2.py3-none-any.whl.metadata (2.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.2167072Z #13 5.375 Requirement already satisfied: python-dateutil<3.0.0,>=2.8.2 in /usr/local/lib/python3.10/site-packages (from google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (2.9.0.post0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.2169294Z #13 5.447 Collecting grpc-google-iam-v1<1.0.0,>=0.14.0 (from google-cloud-resource-manager<3.0.0,>=1.3.3->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.2170150Z #13 5.454   Downloading grpc_google_iam_v1-0.14.2-py3-none-any.whl.metadata (9.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.2170715Z #13 5.548 Collecting google-crc32c<2.0dev,>=1.0 (from google-cloud-storage->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.3435003Z #13 5.556   Downloading google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.3437609Z #13 5.560 Requirement already satisfied: anyio<5.0.0,>=4.8.0 in /usr/local/lib/python3.10/site-packages (from google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (4.8.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.3439824Z #13 5.675 Collecting tenacity<9.0.0,>=8.2.3 (from google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.4489668Z #13 5.683   Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.4490980Z #13 5.781 Collecting websockets<15.1.0,>=13.0.0 (from google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.6151727Z #13 5.789   Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.6153874Z #13 5.795 Requirement already satisfied: exceptiongroup>=1.0.2 in /usr/local/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.3.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.6156482Z #13 5.796 Requirement already satisfied: idna>=2.8 in /usr/local/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (3.10)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.6158729Z #13 5.797 Requirement already satisfied: sniffio>=1.1 in /usr/local/lib/python3.10/site-packages (from anyio<5.0.0,>=4.8.0->google-genai<2.0.0,>=1.0.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.3.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.7181002Z #13 6.050 Collecting protobuf>=3.20.0 (from qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8961930Z #13 6.058   Downloading protobuf-6.31.1-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8963546Z #13 6.071 Requirement already satisfied: certifi in /usr/local/lib/python3.10/site-packages (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (2025.1.31)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8965364Z #13 6.072 Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.10/site-packages (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (1.0.9)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8966851Z #13 6.075 Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.10/site-packages (from httpcore==1.*->httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0) (0.16.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8968505Z #13 6.144 Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/site-packages (from python-dateutil<3.0.0,>=2.8.2->google-cloud-bigquery!=3.20.0,<4.0.0,>=1.15.0->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0) (1.16.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.8970308Z #13 6.228 Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.18.0->google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,<3.0.0,>=1.34.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9979356Z #13 6.237   Downloading charset_normalizer-3.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9980732Z #13 6.266 Collecting pyasn1>=0.1.3 (from rsa<5,>=3.1.4->google-auth<3.0.0,>=2.14.1->google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9981380Z #13 6.274   Downloading pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9981950Z #13 6.301 Collecting h2<5,>=3 (from httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9982478Z #13 6.308   Downloading h2-4.2.0-py3-none-any.whl.metadata (5.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9983053Z #13 6.322 Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:53.9983665Z #13 6.330   Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1043250Z #13 6.341 Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.14.*->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1044728Z #13 6.348   Downloading hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1045616Z #13 6.364 Requirement already satisfied: iniconfig>=1 in /usr/local/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (2.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1046732Z #13 6.365 Requirement already satisfied: pluggy<2,>=1.5 in /usr/local/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (1.6.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1047875Z #13 6.366 Requirement already satisfied: pygments>=2.7.2 in /usr/local/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (2.19.2)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1048979Z #13 6.367 Requirement already satisfied: tomli>=1 in /usr/local/lib/python3.10/site-packages (from pytest>=7.0.0->agent_data_manager==0.1.0) (2.2.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1050031Z #13 6.380 Requirement already satisfied: click>=8.0.0 in /usr/local/lib/python3.10/site-packages (from black->agent_data_manager==0.1.0) (8.1.7)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1050828Z #13 6.390 Collecting mypy-extensions>=0.4.3 (from black->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1051410Z #13 6.397   Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1051962Z #13 6.409 Collecting pathspec>=0.9.0 (from black->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1052714Z #13 6.417   Downloading pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.1053374Z #13 6.436 Collecting platformdirs>=2 (from black->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.2191815Z #13 6.444   Downloading platformdirs-4.3.8-py3-none-any.whl.metadata (12 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.2192766Z #13 6.488 Collecting starlette<0.48.0,>=0.40.0 (from fastapi->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.2193618Z #13 6.495   Downloading starlette-0.47.1-py3-none-any.whl.metadata (6.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.2194702Z #13 6.551 Collecting mccabe<0.8.0,>=0.7.0 (from flake8->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3410477Z #13 6.559   Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3411438Z #13 6.571 Collecting pycodestyle<2.15.0,>=2.14.0 (from flake8->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3412283Z #13 6.578   Downloading pycodestyle-2.14.0-py2.py3-none-any.whl.metadata (4.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3412902Z #13 6.593 Collecting pyflakes<3.5.0,>=3.4.0 (from flake8->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3413467Z #13 6.601   Downloading pyflakes-3.4.0-py2.py3-none-any.whl.metadata (3.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3414574Z #13 6.611 Requirement already satisfied: Werkzeug>=3.0.0 in /usr/local/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (3.1.3)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3415686Z #13 6.612 Requirement already satisfied: Jinja2>=3.1.2 in /usr/local/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (3.1.4)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3416753Z #13 6.613 Requirement already satisfied: itsdangerous>=2.1.2 in /usr/local/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (2.2.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3417877Z #13 6.614 Requirement already satisfied: blinker>=1.6.2 in /usr/local/lib/python3.10/site-packages (from flask->agent_data_manager==0.1.0) (1.9.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3419020Z #13 6.619 Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/site-packages (from Jinja2>=3.1.2->flask->agent_data_manager==0.1.0) (3.0.2)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3419981Z #13 6.637 Collecting httplib2<1.0.0,>=0.19.0 (from google-api-python-client->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3420629Z #13 6.645   Downloading httplib2-0.22.0-py3-none-any.whl.metadata (2.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.3421210Z #13 6.673 Collecting uritemplate<5,>=3.0.1 (from google-api-python-client->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4567773Z #13 6.680   Downloading uritemplate-4.2.0-py3-none-any.whl.metadata (2.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4569060Z #13 6.722 Collecting pyparsing!=3.0.0,!=3.0.1,!=3.0.2,!=3.0.3,<4,>=2.4.2 (from httplib2<1.0.0,>=0.19.0->google-api-python-client->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4569902Z #13 6.729   Downloading pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4570628Z #13 6.766 Collecting requests-oauthlib>=0.7.0 (from google-auth-oauthlib->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4571400Z #13 6.773   Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl.metadata (11 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.4572119Z #13 6.789 Collecting oauthlib>=3.0.0 (from requests-oauthlib>=0.7.0->google-auth-oauthlib->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.6072437Z #13 6.796   Downloading oauthlib-3.3.1-py3-none-any.whl.metadata (7.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.6073357Z #13 6.939 Collecting langchain-core<1.0.0,>=0.3.66 (from langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.7357760Z #13 6.947   Downloading langchain_core-0.3.68-py3-none-any.whl.metadata (5.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.7358681Z #13 6.996 Collecting tiktoken<1,>=0.7 (from langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.7359717Z #13 7.003   Downloading tiktoken-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.7360897Z #13 7.068 Collecting langsmith>=0.3.45 (from langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.8409238Z #13 7.075   Downloading langsmith-0.4.5-py3-none-any.whl.metadata (15 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.8410734Z #13 7.173 Collecting jsonpatch<2.0,>=1.33 (from langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9767483Z #13 7.180   Downloading jsonpatch-1.33-py2.py3-none-any.whl.metadata (3.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9769177Z #13 7.219 Collecting PyYAML>=5.3 (from langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9770406Z #13 7.226   Downloading PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9771437Z #13 7.245 Collecting packaging>=14.3 (from google-cloud-aiplatform>=1.40.0->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9783796Z #13 7.253   Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:54.9784703Z #13 7.309 Collecting jsonpointer>=1.9 (from jsonpatch<2.0,>=1.33->langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.2257125Z #13 7.316   Downloading jsonpointer-3.0.0-py2.py3-none-any.whl.metadata (2.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.2258145Z #13 7.321 Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.10/site-packages (from openai->agent_data_manager==0.1.0) (1.9.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.2259289Z #13 7.322 Requirement already satisfied: jiter<1,>=0.4.0 in /usr/local/lib/python3.10/site-packages (from openai->agent_data_manager==0.1.0) (0.8.2)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.2260102Z #13 7.400 Collecting tqdm>4 (from openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.2260627Z #13 7.407   Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.4317954Z #13 7.764 Collecting regex>=2022.1.18 (from tiktoken<1,>=0.7->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.5901096Z #13 7.772   Downloading regex-2024.11.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.7154036Z #13 8.047 Collecting orjson<4.0.0,>=3.9.14 (from langsmith>=0.3.45->langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.8517586Z #13 8.055   Downloading orjson-3.10.18-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (41 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.8519082Z #13 8.107 Collecting requests-toolbelt<2.0.0,>=1.0.0 (from langsmith>=0.3.45->langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.8520313Z #13 8.115   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:55.8521461Z #13 8.184 Collecting zstandard<0.24.0,>=0.23.0 (from langsmith>=0.3.45->langchain-core<1.0.0,>=0.3.66->langchain-openai->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.0117568Z #13 8.193   Downloading zstandard-0.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.0268931Z #13 8.359 Collecting bcrypt>=3.1.0 (from passlib[bcrypt]->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1325303Z #13 8.367   Downloading bcrypt-4.3.0-cp39-abi3-manylinux_2_28_x86_64.whl.metadata (10 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1326284Z #13 8.387 Collecting cfgv>=2.0.0 (from pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1326835Z #13 8.395   Downloading cfgv-3.4.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1327381Z #13 8.441 Collecting identify>=1.0.0 (from pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1327939Z #13 8.449   Downloading identify-2.6.12-py2.py3-none-any.whl.metadata (4.4 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.1328495Z #13 8.465 Collecting nodeenv>=0.11.1 (from pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2491655Z #13 8.472   Downloading nodeenv-1.9.1-py2.py3-none-any.whl.metadata (21 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2492854Z #13 8.519 Collecting virtualenv>=20.10.0 (from pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2493996Z #13 8.526   Downloading virtualenv-20.31.2-py3-none-any.whl.metadata (4.5 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2495241Z #13 8.555 Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2496191Z #13 8.562   Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.2496950Z #13 8.581 Collecting filelock<4,>=3.12.2 (from virtualenv>=20.10.0->pre-commit->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.4137339Z #13 8.595   Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.6044778Z #13 8.936 Collecting coverage>=7.5 (from coverage[toml]>=7.5->pytest-cov->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7110338Z #13 8.949   Downloading coverage-7.9.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7111677Z #13 8.974 Collecting ecdsa!=0.15 (from python-jose[cryptography]->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7112560Z #13 8.981   Downloading ecdsa-0.19.1-py2.py3-none-any.whl.metadata (29 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7113912Z #13 8.992 Requirement already satisfied: cryptography>=3.4.0 in /usr/local/lib/python3.10/site-packages (from python-jose[cryptography]->agent_data_manager==0.1.0) (44.0.2)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7116133Z #13 9.004 Requirement already satisfied: cffi>=1.12 in /usr/local/lib/python3.10/site-packages (from cryptography>=3.4.0->python-jose[cryptography]->agent_data_manager==0.1.0) (1.17.1)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7118222Z #13 9.006 Requirement already satisfied: pycparser in /usr/local/lib/python3.10/site-packages (from cffi>=1.12->cryptography>=3.4.0->python-jose[cryptography]->agent_data_manager==0.1.0) (2.22)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7119708Z #13 9.035 Collecting decorator>=3.4.2 (from retry->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.7120534Z #13 9.043   Downloading decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.8686880Z #13 9.059 Collecting py<2.0.0,>=1.4.26 (from retry->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.8688223Z #13 9.066   Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.8689188Z #13 9.201 Collecting scipy>=1.8.0 (from scikit-learn->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9731381Z #13 9.208   Downloading scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9732403Z #13 9.236 Collecting joblib>=1.2.0 (from scikit-learn->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9733035Z #13 9.244   Downloading joblib-1.5.1-py3-none-any.whl.metadata (5.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9733557Z #13 9.255 Collecting threadpoolctl>=3.1.0 (from scikit-learn->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9734208Z #13 9.263   Downloading threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:56.9735041Z #13 9.305 Collecting limits>=2.3 (from slowapi->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.1232122Z #13 9.313   Downloading limits-5.4.0-py3-none-any.whl.metadata (10 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.1233099Z #13 9.336 Collecting deprecated>=1.2 (from limits>=2.3->slowapi->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.1233994Z #13 9.347   Downloading Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.1234963Z #13 9.455 Collecting wrapt<2,>=1.10 (from deprecated>=1.2->limits>=2.3->slowapi->agent_data_manager==0.1.0)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2342579Z #13 9.463   Downloading wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2344016Z #13 9.485 Downloading pydantic-2.11.7-py3-none-any.whl (444 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2344890Z #13 9.500 Downloading pydantic_core-2.33.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2345761Z #13 9.512    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 220.5 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2346277Z #13 9.519 Downloading qdrant_client-1.14.3-py3-none-any.whl (328 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2346720Z #13 9.528 Downloading portalocker-2.10.1-py3-none-any.whl (18 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.2347215Z #13 9.536 Downloading google_cloud_aiplatform-1.103.0-py2.py3-none-any.whl (7.9 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3408167Z #13 9.566    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.9/7.9 MB 279.4 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3409617Z #13 9.574 Downloading docstring_parser-0.16-py3-none-any.whl (36 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3411452Z #13 9.581 Downloading google_api_core-2.25.1-py3-none-any.whl (160 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3412342Z #13 9.588 Downloading google_auth-2.40.3-py2.py3-none-any.whl (216 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3413144Z #13 9.596 Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3413956Z #13 9.603 Downloading google_cloud_bigquery-3.34.0-py3-none-any.whl (253 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3415082Z #13 9.611 Downloading google_cloud_core-2.4.3-py2.py3-none-any.whl (29 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3415908Z #13 9.618 Downloading google_cloud_resource_manager-1.14.2-py3-none-any.whl (394 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3416752Z #13 9.627 Downloading google_cloud_storage-2.19.0-py2.py3-none-any.whl (131 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3417707Z #13 9.634 Downloading google_crc32c-1.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3418585Z #13 9.641 Downloading google_genai-1.25.0-py3-none-any.whl (226 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3419361Z #13 9.650 Downloading google_resumable_media-2.7.2-py2.py3-none-any.whl (81 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3420179Z #13 9.657 Downloading googleapis_common_protos-1.70.0-py3-none-any.whl (294 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3420955Z #13 9.665 Downloading grpc_google_iam_v1-0.14.2-py3-none-any.whl (19 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.3421830Z #13 9.673 Downloading grpcio-1.73.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (6.0 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4475403Z #13 9.700    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.0/6.0 MB 235.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4475959Z #13 9.708 Downloading grpcio_status-1.73.1-py3-none-any.whl (14 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4476408Z #13 9.715 Downloading proto_plus-1.26.1-py3-none-any.whl (50 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4476898Z #13 9.722 Downloading protobuf-6.31.1-cp39-abi3-manylinux2014_x86_64.whl (321 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4477374Z #13 9.730 Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4477982Z #13 9.737 Downloading charset_normalizer-3.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (149 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4478564Z #13 9.745 Downloading rsa-4.9.1-py3-none-any.whl (34 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4479078Z #13 9.755 Downloading shapely-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4479703Z #13 9.765    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 373.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4480092Z #13 9.772 Downloading tenacity-8.5.0-py3-none-any.whl (28 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.4480758Z #13 9.780 Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6483287Z #13 9.787 Downloading h2-4.2.0-py3-none-any.whl (60 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6484042Z #13 9.796 Downloading hpack-4.1.0-py3-none-any.whl (34 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6484902Z #13 9.803 Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6485872Z #13 9.810 Downloading pyasn1-0.6.1-py3-none-any.whl (83 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6486760Z #13 9.818 Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6487455Z #13 9.825 Downloading pytest_mock-3.14.1-py3-none-any.whl (9.9 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6488132Z #13 9.832 Downloading typing_inspection-0.4.1-py3-none-any.whl (14 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6489155Z #13 9.840 Downloading black-25.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6490094Z #13 9.846    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 449.1 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6490554Z #13 9.853 Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6491025Z #13 9.860 Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6491473Z #13 9.868 Downloading platformdirs-4.3.8-py3-none-any.whl (18 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.6491993Z #13 9.879 Downloading faiss_cpu-1.11.0-cp310-cp310-manylinux_2_28_x86_64.whl (31.3 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7524202Z #13 9.980    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 31.3/31.3 MB 317.0 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7525153Z #13 9.988 Downloading fastapi-0.116.1-py3-none-any.whl (95 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7525806Z #13 9.995 Downloading starlette-0.47.1-py3-none-any.whl (72 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7526451Z #13 10.00 Downloading flake8-7.3.0-py2.py3-none-any.whl (57 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7527068Z #13 10.01 Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7527609Z #13 10.02 Downloading pycodestyle-2.14.0-py2.py3-none-any.whl (31 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7528059Z #13 10.02 Downloading pyflakes-3.4.0-py2.py3-none-any.whl (63 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7528527Z #13 10.03 Downloading google_api_python_client-2.176.0-py3-none-any.whl (13.7 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7529127Z #13 10.07    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.7/13.7 MB 382.2 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7529578Z #13 10.08 Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.7530084Z #13 10.08 Downloading httplib2-0.22.0-py3-none-any.whl (96 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8601128Z #13 10.09 Downloading pyparsing-3.2.3-py3-none-any.whl (111 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8602277Z #13 10.10 Downloading uritemplate-4.2.0-py3-none-any.whl (11 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8603147Z #13 10.11 Downloading google_auth_oauthlib-1.2.2-py3-none-any.whl (19 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8603913Z #13 10.12 Downloading requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8604798Z #13 10.13 Downloading oauthlib-3.3.1-py3-none-any.whl (160 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8605502Z #13 10.13 Downloading google_cloud_firestore-2.21.0-py3-none-any.whl (368 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8606179Z #13 10.14 Downloading isort-6.0.1-py3-none-any.whl (94 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8606704Z #13 10.15 Downloading langchain_openai-0.3.27-py3-none-any.whl (70 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8607275Z #13 10.16 Downloading langchain_core-0.3.68-py3-none-any.whl (441 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8607721Z #13 10.16 Downloading jsonpatch-1.33-py2.py3-none-any.whl (12 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8608250Z #13 10.17 Downloading openai-1.95.1-py3-none-any.whl (755 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8608929Z #13 10.18    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 755.6/755.6 kB 532.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8609297Z #13 10.18 Downloading packaging-24.2-py3-none-any.whl (65 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.8609884Z #13 10.19 Downloading tiktoken-0.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9641279Z #13 10.20    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 476.2 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9642048Z #13 10.20 Downloading jsonpointer-3.0.0-py2.py3-none-any.whl (7.6 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9642771Z #13 10.21 Downloading langsmith-0.4.5-py3-none-any.whl (367 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9643636Z #13 10.22 Downloading orjson-3.10.18-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (132 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9644782Z #13 10.23 Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9645955Z #13 10.23 Downloading zstandard-0.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.4 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9647255Z #13 10.25    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 381.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9648109Z #13 10.26 Downloading PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (751 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9649148Z #13 10.26    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 751.2/751.2 kB 472.2 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9650030Z #13 10.27 Downloading regex-2024.11.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (781 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9651082Z #13 10.27    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 781.7/781.7 kB 600.5 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9651709Z #13 10.28 Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9652365Z #13 10.29 Downloading passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9653224Z #13 10.29    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 525.6/525.6 kB 628.9 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:57.9653976Z #13 10.30 Downloading bcrypt-4.3.0-cp39-abi3-manylinux_2_28_x86_64.whl (284 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0642715Z #13 10.30 Downloading pre_commit-4.2.0-py2.py3-none-any.whl (220 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0645057Z #13 10.31 Downloading cfgv-3.4.0-py2.py3-none-any.whl (7.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0645815Z #13 10.32 Downloading identify-2.6.12-py2.py3-none-any.whl (99 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0646325Z #13 10.33 Downloading nodeenv-1.9.1-py2.py3-none-any.whl (22 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0646826Z #13 10.33 Downloading virtualenv-20.31.2-py3-none-any.whl (6.1 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0647586Z #13 10.36    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 291.9 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0648067Z #13 10.37 Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0648540Z #13 10.37 Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0649048Z #13 10.38 Downloading prometheus_client-0.22.1-py3-none-any.whl (58 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0649592Z #13 10.39 Downloading pytest_cov-6.2.1-py3-none-any.whl (24 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.0650463Z #13 10.40 Downloading coverage-7.9.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (240 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1710492Z #13 10.40 Downloading python_dotenv-1.1.1-py3-none-any.whl (20 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1711478Z #13 10.41 Downloading python_jose-3.5.0-py2.py3-none-any.whl (34 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1712182Z #13 10.42 Downloading ecdsa-0.19.1-py2.py3-none-any.whl (150 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1712639Z #13 10.43 Downloading python_multipart-0.0.20-py3-none-any.whl (24 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1713067Z #13 10.43 Downloading retry-0.9.2-py2.py3-none-any.whl (8.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1713465Z #13 10.44 Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1713841Z #13 10.45 Downloading decorator-5.2.1-py3-none-any.whl (9.2 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1714568Z #13 10.46 Downloading scikit_learn-1.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.9 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1715346Z #13 10.49    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.9/12.9 MB 361.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.1715705Z #13 10.50 Downloading joblib-1.5.1-py3-none-any.whl (307 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.3287854Z #13 10.51 Downloading scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.7 MB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5248227Z #13 10.66    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.7/37.7 MB 255.7 MB/s eta 0:00:00
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5249056Z #13 10.67 Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5249810Z #13 10.68 Downloading slowapi-0.1.9-py3-none-any.whl (14 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5250439Z #13 10.68 Downloading limits-5.4.0-py3-none-any.whl (60 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5251139Z #13 10.69 Downloading Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5252249Z #13 10.70 Downloading wrapt-1.17.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (82 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5253867Z #13 10.71 Downloading uvicorn-0.35.0-py3-none-any.whl (66 kB)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.5703938Z #13 10.90 Building wheels for collected packages: agent_data_manager
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.7220894Z #13 10.90   Building editable for agent_data_manager (pyproject.toml): started
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.7800610Z #13 11.11   Building editable for agent_data_manager (pyproject.toml): finished with status 'done'
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.9337169Z #13 11.11   Created wheel for agent_data_manager: filename=agent_data_manager-0.1.0-0.editable-py3-none-any.whl size=1812 sha256=bf0ca4a130c9cc54c2bc8be634cbd15f35eccc82d4f412609d359ec5626b5095
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.9338397Z #13 11.11   Stored in directory: /tmp/pip-ephem-wheel-cache-rs8c1uxl/wheels/9b/2c/d1/15e20a2b97f37ccf65a87ba1049c73a9076d0bf0fbaf814e83
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:58.9339048Z #13 11.11 Successfully built agent_data_manager
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:34:59.1744561Z #13 11.51 Installing collected packages: passlib, distlib, zstandard, wrapt, websockets, uvicorn, uritemplate, typing-inspection, tqdm, threadpoolctl, tenacity, shapely, scipy, regex, PyYAML, python-multipart, python-dotenv, pyparsing, pyflakes, pydantic-core, pycodestyle, pyasn1, py, protobuf, prometheus_client, portalocker, platformdirs, pathspec, packaging, orjson, oauthlib, nodeenv, mypy-extensions, mccabe, jsonpointer, joblib, isort, identify, hyperframe, hpack, grpcio, google-crc32c, filelock, ecdsa, docstring_parser, decorator, coverage, charset_normalizer, cfgv, cachetools, bcrypt, virtualenv, scikit-learn, rsa, retry, requests, pydantic, pyasn1-modules, proto-plus, jsonpatch, httplib2, h2, googleapis-common-protos, google-resumable-media, flake8, faiss-cpu, deprecated, black, tiktoken, starlette, requests-toolbelt, requests-oauthlib, python-jose, pytest-mock, pytest-cov, pre-commit, limits, grpcio-status, google-auth, slowapi, openai, langsmith, grpc-google-iam-v1, google-genai, google-auth-oauthlib, google-auth-httplib2, google-api-core, fastapi, qdrant-client, langchain-core, google-cloud-core, google-api-python-client, langchain-openai, google-cloud-storage, google-cloud-resource-manager, google-cloud-firestore, google-cloud-bigquery, google-cloud-aiplatform, agent_data_manager
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.3405011Z #13 15.67   Attempting uninstall: pydantic-core
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.5040227Z #13 15.67     Found existing installation: pydantic_core 2.27.2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.5040722Z #13 15.68     Uninstalling pydantic_core-2.27.2:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.5041115Z #13 15.69       Successfully uninstalled pydantic_core-2.27.2
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.5239876Z #13 15.86   Attempting uninstall: protobuf
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.7234921Z #13 15.86     Found existing installation: protobuf 4.21.12
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.7235552Z #13 15.87     Uninstalling protobuf-4.21.12:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.7236068Z #13 15.90       Successfully uninstalled protobuf-4.21.12
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.7544621Z #13 16.09   Attempting uninstall: packaging
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.9264151Z #13 16.09     Found existing installation: packaging 25.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:03.9264972Z #13 16.09     Uninstalling packaging-25.0:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:06.3857918Z #13 16.11       Successfully uninstalled packaging-25.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:06.3858463Z #13 18.72   Attempting uninstall: pydantic
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:06.5974739Z #13 18.72     Found existing installation: pydantic 2.10.6
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:06.5975411Z #13 18.73     Uninstalling pydantic-2.10.6:
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:06.5975931Z #13 18.78       Successfully uninstalled pydantic-2.10.6
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:15.4359670Z #13 27.77 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:15.6104917Z #13 27.79 Successfully installed PyYAML-6.0.2 agent_data_manager-0.1.0 bcrypt-4.3.0 black-25.1.0 cachetools-5.5.2 cfgv-3.4.0 charset_normalizer-3.4.2 coverage-7.9.2 decorator-5.2.1 deprecated-1.2.18 distlib-0.3.9 docstring_parser-0.16 ecdsa-0.19.1 faiss-cpu-1.11.0 fastapi-0.116.1 filelock-3.18.0 flake8-7.3.0 google-api-core-2.25.1 google-api-python-client-2.176.0 google-auth-2.40.3 google-auth-httplib2-0.2.0 google-auth-oauthlib-1.2.2 google-cloud-aiplatform-1.103.0 google-cloud-bigquery-3.34.0 google-cloud-core-2.4.3 google-cloud-firestore-2.21.0 google-cloud-resource-manager-1.14.2 google-cloud-storage-2.19.0 google-crc32c-1.7.1 google-genai-1.25.0 google-resumable-media-2.7.2 googleapis-common-protos-1.70.0 grpc-google-iam-v1-0.14.2 grpcio-1.73.1 grpcio-status-1.73.1 h2-4.2.0 hpack-4.1.0 httplib2-0.22.0 hyperframe-6.1.0 identify-2.6.12 isort-6.0.1 joblib-1.5.1 jsonpatch-1.33 jsonpointer-3.0.0 langchain-core-0.3.68 langchain-openai-0.3.27 langsmith-0.4.5 limits-5.4.0 mccabe-0.7.0 mypy-extensions-1.1.0 nodeenv-1.9.1 oauthlib-3.3.1 openai-1.95.1 orjson-3.10.18 packaging-24.2 passlib-1.7.4 pathspec-0.12.1 platformdirs-4.3.8 portalocker-2.10.1 pre-commit-4.2.0 prometheus_client-0.22.1 proto-plus-1.26.1 protobuf-6.31.1 py-1.11.0 pyasn1-0.6.1 pyasn1-modules-0.4.2 pycodestyle-2.14.0 pydantic-2.11.7 pydantic-core-2.33.2 pyflakes-3.4.0 pyparsing-3.2.3 pytest-cov-6.2.1 pytest-mock-3.14.1 python-dotenv-1.1.1 python-jose-3.5.0 python-multipart-0.0.20 qdrant-client-1.14.3 regex-2024.11.6 requests-2.32.4 requests-oauthlib-2.0.0 requests-toolbelt-1.0.0 retry-0.9.2 rsa-4.9.1 scikit-learn-1.7.0 scipy-1.15.3 shapely-2.1.1 slowapi-0.1.9 starlette-0.47.1 tenacity-8.5.0 threadpoolctl-3.6.0 tiktoken-0.9.0 tqdm-4.67.1 typing-inspection-0.4.1 uritemplate-4.2.0 uvicorn-0.35.0 virtualenv-20.31.2 websockets-15.0.1 wrapt-1.17.2 zstandard-0.23.0
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:15.6112573Z #13 27.79 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:18.0302760Z #13 DONE 30.4s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:20.6851914Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:20.6852622Z #8 [builder 2/7] WORKDIR /app
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:20.8381453Z #8 CACHED
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:20.8381685Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:20.8381866Z #14 [stage-1 3/5] COPY --from=builder /usr/local /usr/local
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:26.5486168Z #14 DONE 5.9s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:26.6999310Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:26.6999644Z #15 [stage-1 4/5] COPY --from=builder /app /app
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:26.8611129Z #15 DONE 0.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1048112Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1048942Z #16 [stage-1 5/5] RUN groupadd -r tester && useradd -r -g tester tester
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1049531Z #16 DONE 0.1s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1049708Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1049853Z #17 exporting to docker image format
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:27.1050227Z #17 exporting layers
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:52.6972273Z #17 exporting layers 25.7s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:52.8553868Z #17 exporting manifest sha256:e0b7f112d4d2aeb51cf49f41cb05ffe39936e00c308d3e539913417e55ecaa8b done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:52.8556218Z #17 exporting config sha256:9a49b2308bcd129da2dad9c8ded315bf52c143a6483ab213e1ad496899295210 done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:52.8557054Z #17 sending tarball
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:53.9743645Z #17 ...
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:53.9744411Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:53.9744574Z #18 importing to docker
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:54.1248670Z #18 loading layer 7a263b25683f 327.68kB / 30.26MB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:55.1391985Z #18 loading layer 50795c5cd238 32.77kB / 1.08MB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:55.7874457Z #18 loading layer 8ff2c481a424 163.84kB / 14.84MB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:56.5128573Z #18 loading layer ad3d3ca3879f 250B / 250B
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:56.7166320Z #18 loading layer fce0318169c3 92B / 92B
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:56.7166677Z #18 loading layer 2df0ab825c6d 557.06kB / 233.83MB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:35:58.6212546Z #18 loading layer 2df0ab825c6d 56.82MB / 233.83MB 2.1s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:00.7275940Z #18 loading layer 2df0ab825c6d 100.83MB / 233.83MB 4.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:02.7882228Z #18 loading layer 2df0ab825c6d 138.15MB / 233.83MB 6.2s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:04.8882275Z #18 loading layer 2df0ab825c6d 194.41MB / 233.83MB 8.3s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.5778525Z #18 loading layer 20c0e3dcdcef 32.77kB / 1.08MB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.7587749Z #18 loading layer 3148dd802af7 1.66kB / 1.66kB
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9804099Z #18 loading layer 7a263b25683f 30.26MB / 30.26MB 14.9s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9805159Z #18 loading layer 50795c5cd238 1.08MB / 1.08MB 13.7s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9805733Z #18 loading layer 8ff2c481a424 14.84MB / 14.84MB 13.0s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9806254Z #18 loading layer ad3d3ca3879f 250B / 250B 12.3s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9806729Z #18 loading layer fce0318169c3 92B / 92B 12.3s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9807271Z #18 loading layer 2df0ab825c6d 233.83MB / 233.83MB 12.3s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9807822Z #18 loading layer 20c0e3dcdcef 1.08MB / 1.08MB 0.3s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9808318Z #18 loading layer 3148dd802af7 1.66kB / 1.66kB 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9808745Z #18 DONE 14.9s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9808913Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9809058Z #17 exporting to docker image format
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9809469Z #17 sending tarball 16.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9809800Z #17 DONE 41.9s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9809971Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9810114Z #19 exporting to GitHub Actions Cache
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:08.9810537Z #19 preparing build cache for export
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.2523172Z #19 writing layer sha256:012defdcb4078aa56adb441085d845140665b2c1ddf0849a2d4e2419f8d2fc88
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.3831139Z #19 writing layer sha256:012defdcb4078aa56adb441085d845140665b2c1ddf0849a2d4e2419f8d2fc88 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.3831982Z #19 writing layer sha256:11fb7c251b614629a7183a4e7078b4b5cc0e6218f3d37e85ea5f173693a4247a
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.5135261Z #19 writing layer sha256:11fb7c251b614629a7183a4e7078b4b5cc0e6218f3d37e85ea5f173693a4247a 0.1s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.5136338Z #19 writing layer sha256:39a66e310130336c121b9bed457e9605a306ea4725a0af43c503cac41dcaab0a
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.6898241Z #19 writing layer sha256:39a66e310130336c121b9bed457e9605a306ea4725a0af43c503cac41dcaab0a 0.2s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:27.8910106Z #19 writing layer sha256:588701e147f4f4bd14d28717ecc7dbd048a2e68052e3843dd266cea5a011c77a
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:33.5946785Z #19 writing layer sha256:588701e147f4f4bd14d28717ecc7dbd048a2e68052e3843dd266cea5a011c77a 5.9s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:33.7605770Z #19 writing layer sha256:728d3542be804478afbbc92e18b2ad985f8d0d092e96bf7c3a4d9fc746dc0202
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:49.1353461Z #19 writing layer sha256:728d3542be804478afbbc92e18b2ad985f8d0d092e96bf7c3a4d9fc746dc0202 15.5s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:49.3020582Z #19 writing layer sha256:7567afda3b26afcbaa64334b3ab2c96809558c1fa8052be39eb72dfcf660e566
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:51.8341385Z #19 writing layer sha256:7567afda3b26afcbaa64334b3ab2c96809558c1fa8052be39eb72dfcf660e566 2.7s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.0177103Z #19 writing layer sha256:c706e7c8afe353e4ccc5be61f4749cff2eb2bb2a2c13acd1b894aaaa53f145d1
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.0523548Z #19 writing layer sha256:c706e7c8afe353e4ccc5be61f4749cff2eb2bb2a2c13acd1b894aaaa53f145d1 0.2s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.1842335Z #19 preparing build cache for export 43.4s done
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.1844168Z #19 DONE 43.4s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2164466Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2165165Z #20 resolving provenance for metadata file
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2165949Z #20 DONE 0.0s
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2168552Z 
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2169223Z  [33m1 warning found (use docker --debug to expand):
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2170258Z [0m - UndefinedVar: Usage of undefined variable '$PY_VER' (line 27)
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2249447Z ##[group]ImageID
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2249887Z sha256:9a49b2308bcd129da2dad9c8ded315bf52c143a6483ab213e1ad496899295210
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2251097Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2251592Z ##[group]Digest
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2252081Z sha256:e0b7f112d4d2aeb51cf49f41cb05ffe39936e00c308d3e539913417e55ecaa8b
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2253120Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2253621Z ##[group]Metadata
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2254511Z {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2254791Z   "buildx.build.provenance": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2255211Z     "buildType": "https://mobyproject.org/buildkit@v1",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2255651Z     "materials": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2255969Z       {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2256788Z         "uri": "pkg:docker/python?digest=sha256:11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6&platform=linux%2Famd64",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2257736Z         "digest": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2258280Z           "sha256": "11f05f1647567bfbec331b66ef72ee852c1ab2b386bba5c689af06f0f692faf6"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2258876Z         }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2259132Z       }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2259379Z     ],
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2259641Z     "invocation": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2259950Z       "configSource": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2260183Z         "entryPoint": "Dockerfile.test"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2260412Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2260579Z       "parameters": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2260801Z         "frontend": "dockerfile.v0",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261021Z         "locals": [
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261186Z           {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261343Z             "name": "context"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261535Z           },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261683Z           {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2261843Z             "name": "dockerfile"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262041Z           }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262195Z         ]
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262341Z       },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262492Z       "environment": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262691Z         "platform": "linux/amd64"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2262896Z       }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2263046Z     }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2263206Z   },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2263713Z   "buildx.build.ref": "builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d/builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d0/0ydy88pavcengnegmk1pnf4e0",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2265130Z   "containerimage.config.digest": "sha256:9a49b2308bcd129da2dad9c8ded315bf52c143a6483ab213e1ad496899295210",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2265615Z   "containerimage.descriptor": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2265946Z     "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2266429Z     "digest": "sha256:e0b7f112d4d2aeb51cf49f41cb05ffe39936e00c308d3e539913417e55ecaa8b",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2266795Z     "size": 1881,
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2266980Z     "annotations": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2267237Z       "org.opencontainers.image.created": "2025-07-14T08:35:52Z"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2267528Z     },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2267683Z     "platform": {
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2267868Z       "architecture": "amd64",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2268072Z       "os": "linux"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2268230Z     }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2268375Z   },
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2268762Z   "containerimage.digest": "sha256:e0b7f112d4d2aeb51cf49f41cb05ffe39936e00c308d3e539913417e55ecaa8b",
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2269265Z   "image.name": "docker.io/library/agent-data-test-local:latest"
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2269547Z }
+Run Tests in a Clean Docker Environment	Build Test Image	2025-07-14T08:36:52.2269988Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	﻿2025-07-14T08:36:52.2373583Z ##[group]Run echo "Generating baseline test collection and SHA..."
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2374093Z [36;1mecho "Generating baseline test collection and SHA..."[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2374828Z [36;1mdocker run --rm agent-data-test-local pytest --collect-only -q > collected_tests.txt[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2375309Z [36;1msha256sum collected_tests.txt > collected_tests.sha256[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2375917Z [36;1mecho "TEST_COUNT=$(wc -l < collected_tests.txt)" >> $GITHUB_ENV[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2376327Z [36;1mecho "Generated $(wc -l < collected_tests.txt) test entries"[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2376677Z [36;1mecho "SHA256: $(cat collected_tests.sha256)"[0m
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2409737Z shell: /usr/bin/bash -e {0}
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2409989Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:52.2479659Z Generating baseline test collection and SHA...
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5334031Z WARNING:api_vector_search:OPENAI_API_KEY environment variable not set. Embedding generation will fail.
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5335276Z ERROR: usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5335810Z pytest: error: unrecognized arguments: --timeout=8
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5336184Z   inifile: /app/pytest.ini
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5336455Z   rootdir: /app
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.5336600Z 
+Run Tests in a Clean Docker Environment	Generate Baseline Tests Artifact	2025-07-14T08:36:54.8808883Z ##[error]Process completed with exit code 4.
+Run Tests in a Clean Docker Environment	Post Build Test Image	﻿2025-07-14T08:36:54.8893537Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:36:55.1149241Z ##[group]Removing temp folder /home/runner/work/_temp/docker-actions-toolkit-ODBfxU
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:36:55.1163638Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:36:55.1164417Z ##[group]Post cache
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:36:55.1166117Z State not set
+Run Tests in a Clean Docker Environment	Post Build Test Image	2025-07-14T08:36:55.1166914Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	﻿2025-07-14T08:36:55.1290153Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:55.4278270Z ##[group]Removing builder
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:55.5305673Z [command]/usr/bin/docker buildx rm builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0130085Z builder-af069436-2a79-4dd6-b9b5-3c6a0d5ea16d removed
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0163397Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0185464Z ##[group]Cleaning up certificates
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0186122Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0186634Z ##[group]Post cache
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0186955Z State not set
+Run Tests in a Clean Docker Environment	Post Set up Docker Buildx	2025-07-14T08:36:58.0187442Z ##[endgroup]
+Run Tests in a Clean Docker Environment	Post Checkout Code	﻿2025-07-14T08:36:58.0301819Z Post job cleanup.
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1255122Z [command]/usr/bin/git version
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1291457Z git version 2.50.1
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1335961Z Temporarily overriding HOME='/home/runner/work/_temp/0e20168f-f381-41ea-affa-8fed9e311d2b' before making global git config changes
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1337233Z Adding repository directory to the temporary git global config as a safe directory
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1350079Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-data/agent-data
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1387689Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1420787Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1639973Z fatal: No url found for submodule path 'ADK/agent_data' in .gitmodules
+Run Tests in a Clean Docker Environment	Post Checkout Code	2025-07-14T08:36:58.1678709Z ##[warning]The process '/usr/bin/git' failed with exit code 128
+Run Tests in a Clean Docker Environment	Complete job	﻿2025-07-14T08:36:58.1760221Z Cleaning up orphan processes

@@ -1,7 +1,9 @@
+from io import BytesIO
+
 import pytest
 from fastapi.testclient import TestClient
+
 from tests.mocks.gcs_mock import FakeGCSClient
-from io import BytesIO
 
 
 @pytest.fixture
@@ -23,4 +25,6 @@ def test_upload_and_download_blob(gcs_mock, client_with_qdrant_override: TestCli
 
     retrieved_blob = bucket.get_blob(blob_name)
     assert retrieved_blob is not None, "Expected to retrieve blob"
-    assert retrieved_blob.download_as_bytes() == content, "Downloaded content does not match uploaded"
+    assert (
+        retrieved_blob.download_as_bytes() == content
+    ), "Downloaded content does not match uploaded"

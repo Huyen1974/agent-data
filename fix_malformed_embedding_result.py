@@ -2,7 +2,7 @@ import re
 
 file_path = "ADK/agent_data/tests/tools/test_save_metadata_to_faiss.py"
 
-with open(file_path, "r", encoding="utf-8") as f:
+with open(file_path, encoding="utf-8") as f:
     content = f.read()
 
 # 1. Thay đổi khai báo hàm (gộp lại đúng số biến mock như các test khác)
@@ -17,4 +17,6 @@ content, n_side = re.subn(pattern_side_effect, "", content)
 with open(file_path, "w", encoding="utf-8") as f:
     f.write(content)
 
-print(f"Đã sửa {n_def} khai báo hàm và xóa {n_side} dòng mock_get_embedding.side_effect")
+print(
+    f"Đã sửa {n_def} khai báo hàm và xóa {n_side} dòng mock_get_embedding.side_effect"
+)

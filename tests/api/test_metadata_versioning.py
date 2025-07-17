@@ -2,11 +2,17 @@
 Test cases for metadata versioning, auto-tagging, and hierarchical structure functionality.
 """
 
-import pytest
 from unittest.mock import AsyncMock, patch
 
-from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
-from agent_data_manager.tools.auto_tagging_tool import AutoTaggingTool, get_auto_tagging_tool
+import pytest
+
+from agent_data_manager.tools.auto_tagging_tool import (
+    AutoTaggingTool,
+    get_auto_tagging_tool,
+)
+from agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestMetadataVersioning:
@@ -29,9 +35,13 @@ class TestMetadataVersioning:
         """Create FirestoreMetadataManager with mocked client."""
         mock_client, mock_doc_ref = mock_firestore_client
 
-        with patch("agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient") as mock_firestore:
+        with patch(
+            "agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"
+        ) as mock_firestore:
             mock_firestore.return_value = mock_client
-            manager = FirestoreMetadataManager(project_id="test-project", collection_name="test_metadata")
+            manager = FirestoreMetadataManager(
+                project_id="test-project", collection_name="test_metadata"
+            )
             # Override the db attribute directly
             manager.db = mock_client
             return manager, mock_doc_ref
@@ -103,11 +113,20 @@ class TestAutoTagging:
     @pytest.fixture
     def auto_tagging_tool(self, mock_openai_client):
         """Create AutoTaggingTool with mocked dependencies."""
-        with patch("agent_data_manager.tools.auto_tagging_tool.openai_client", mock_openai_client), patch(
-            "agent_data_manager.tools.auto_tagging_tool.OPENAI_AVAILABLE", True
-        ), patch("agent_data_manager.tools.auto_tagging_tool.settings") as mock_settings:
+        with (
+            patch(
+                "agent_data_manager.tools.auto_tagging_tool.openai_client",
+                mock_openai_client,
+            ),
+            patch("agent_data_manager.tools.auto_tagging_tool.OPENAI_AVAILABLE", True),
+            patch(
+                "agent_data_manager.tools.auto_tagging_tool.settings"
+            ) as mock_settings,
+        ):
 
-            mock_settings.get_firestore_config.return_value = {"project_id": "test-project"}
+            mock_settings.get_firestore_config.return_value = {
+                "project_id": "test-project"
+            }
 
             tool = AutoTaggingTool()
             tool._initialized = True  # Skip initialization

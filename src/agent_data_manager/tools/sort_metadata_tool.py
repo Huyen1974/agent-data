@@ -1,14 +1,16 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def sort_metadata(index_name: str, sort_field: str, ascending: bool = True) -> Dict[str, Any]:
+def sort_metadata(
+    index_name: str, sort_field: str, ascending: bool = True
+) -> dict[str, Any]:
     """
     Loads metadata from the specified FAISS index's companion file and sorts
     the entries based on the value of a specified field.
@@ -29,7 +31,10 @@ def sort_metadata(index_name: str, sort_field: str, ascending: bool = True) -> D
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not os.path.exists(meta_path):
-        return {"status": "failed", "error": f"Metadata file not found for index '{index_name}'. Cannot sort."}
+        return {
+            "status": "failed",
+            "error": f"Metadata file not found for index '{index_name}'. Cannot sort.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -44,11 +49,13 @@ def sort_metadata(index_name: str, sort_field: str, ascending: bool = True) -> D
                 "error": f"Metadata file disappeared for index '{index_name}' during sort attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -67,16 +74,24 @@ def sort_metadata(index_name: str, sort_field: str, ascending: bool = True) -> D
             items_with_missing_key.append((key, value))
 
     if not items_to_sort:
-        print(f"Warning: No items found with the sort field '{sort_field}' in index '{index_name}'.")
+        print(
+            f"Warning: No items found with the sort field '{sort_field}' in index '{index_name}'."
+        )
         # Return all items unsorted, potentially?
         # Or return empty sorted list + unsorted list?
         # Let's return success but indicate nothing was sorted.
-        return {"status": "success", "sorted_items": [], "items_without_sort_key": items_with_missing_key}
+        return {
+            "status": "success",
+            "sorted_items": [],
+            "items_without_sort_key": items_with_missing_key,
+        }
 
     # --- Perform Sort ---
     try:
         # Attempt to sort. This might fail if types are incompatible.
-        sorted_items = sorted(items_to_sort, key=lambda item: item[1][sort_field], reverse=not ascending)
+        sorted_items = sorted(
+            items_to_sort, key=lambda item: item[1][sort_field], reverse=not ascending
+        )
     except TypeError as e:
         return {
             "status": "failed",
@@ -84,10 +99,19 @@ def sort_metadata(index_name: str, sort_field: str, ascending: bool = True) -> D
         }
     except Exception as e:
         # Catch other potential sorting errors
-        return {"status": "failed", "error": f"An unexpected error occurred during sorting: {e}"}
+        return {
+            "status": "failed",
+            "error": f"An unexpected error occurred during sorting: {e}",
+        }
 
-    print(f"Successfully sorted metadata from index '{index_name}' by field '{sort_field}'.")
-    return {"status": "success", "sorted_items": sorted_items, "items_without_sort_key": items_with_missing_key}
+    print(
+        f"Successfully sorted metadata from index '{index_name}' by field '{sort_field}'."
+    )
+    return {
+        "status": "success",
+        "sorted_items": sorted_items,
+        "items_without_sort_key": items_with_missing_key,
+    }
 
 
 # Example usage (for testing purposes)

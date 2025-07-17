@@ -7,10 +7,13 @@ This test validates the enhanced metadata management logic including:
 - Auto-tagging using LLM via auto_tagging_tool
 """
 
-import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+import pytest
+
+from agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestCLI128MetadataManagement:
@@ -36,9 +39,13 @@ class TestCLI128MetadataManagement:
         """Create FirestoreMetadataManager with mocked dependencies."""
         mock_client, mock_doc_ref, mock_doc = mock_firestore_client
 
-        with patch("agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient") as mock_firestore:
+        with patch(
+            "agent_data_manager.vector_store.firestore_metadata_manager.FirestoreAsyncClient"
+        ) as mock_firestore:
             mock_firestore.return_value = mock_client
-            manager = FirestoreMetadataManager(project_id="test-project", collection_name="test_metadata")
+            manager = FirestoreMetadataManager(
+                project_id="test-project", collection_name="test_metadata"
+            )
             manager.db = mock_client
             return manager, mock_doc_ref, mock_doc
 
@@ -48,7 +55,13 @@ class TestCLI128MetadataManagement:
         mock_tool = AsyncMock()
         mock_tool.generate_tags.return_value = {
             "status": "success",
-            "tags": ["machine learning", "artificial intelligence", "python", "neural networks", "data science"],
+            "tags": [
+                "machine learning",
+                "artificial intelligence",
+                "python",
+                "neural networks",
+                "data science",
+            ],
             "source": "openai",
             "content_hash": "test_hash_123",
             "metadata": {
@@ -61,7 +74,9 @@ class TestCLI128MetadataManagement:
         }
         return mock_tool
 
-    async def test_comprehensive_metadata_management_logic(self, metadata_manager, mock_auto_tagging_tool):
+    async def test_comprehensive_metadata_management_logic(
+        self, metadata_manager, mock_auto_tagging_tool
+    ):
         """
         Comprehensive test for CLI 128 metadata management enhancements.
 
@@ -73,7 +88,8 @@ class TestCLI128MetadataManagement:
         # Test 1: Versioning with new document
         mock_doc.exists = False
         with patch(
-            "agent_data_manager.tools.auto_tagging_tool.get_auto_tagging_tool", return_value=mock_auto_tagging_tool
+            "agent_data_manager.tools.auto_tagging_tool.get_auto_tagging_tool",
+            return_value=mock_auto_tagging_tool,
         ):
             new_metadata = {
                 "doc_id": "test_doc_1",
@@ -95,7 +111,9 @@ class TestCLI128MetadataManagement:
 
         # Verify hierarchy structure
         assert saved_metadata["level_1_category"] == "research_paper"
-        assert saved_metadata["level_2_category"] == "machine learning"  # First auto-tag
+        assert (
+            saved_metadata["level_2_category"] == "machine learning"
+        )  # First auto-tag
         assert saved_metadata["level_3_category"] == "Dr. Jane Smith"
         assert saved_metadata["level_4_category"] == "2025"
         assert saved_metadata["level_5_category"] == "english"
@@ -141,7 +159,8 @@ class TestCLI128MetadataManagement:
         )
 
         with patch(
-            "agent_data_manager.tools.auto_tagging_tool.get_auto_tagging_tool", return_value=mock_auto_tagging_tool
+            "agent_data_manager.tools.auto_tagging_tool.get_auto_tagging_tool",
+            return_value=mock_auto_tagging_tool,
         ):
             updated_metadata = {
                 "doc_id": "test_doc_1",
@@ -160,7 +179,12 @@ class TestCLI128MetadataManagement:
 
         # Test 3: Change detection logic (non-async)
         manager_sync = FirestoreMetadataManager.__new__(FirestoreMetadataManager)
-        old_data = {"content": "Original content", "author": "John Doe", "tags": ["tag1", "tag2"], "version": 1}
+        old_data = {
+            "content": "Original content",
+            "author": "John Doe",
+            "tags": ["tag1", "tag2"],
+            "version": 1,
+        }
         new_data = {
             "content": "Updated content",
             "author": "John Doe",

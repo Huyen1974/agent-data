@@ -1,7 +1,8 @@
 """Test package installation and basic imports for agent_data_manager."""
 
-import pytest
 import sys
+
+import pytest
 
 # import importlib
 
@@ -26,7 +27,9 @@ class TestPackageInstallation:
 
             assert AgentDataAgent is not None
         except ImportError as e:
-            pytest.skip(f"AgentDataAgent import failed (may be expected in test env): {e}")
+            pytest.skip(
+                f"AgentDataAgent import failed (may be expected in test env): {e}"
+            )
 
         try:
             from agent_data_manager.vector_store.qdrant_store import QdrantStore

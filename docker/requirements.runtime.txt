@@ -55,4 +55,4 @@ charset-normalizer==3.4.1
 idna==3.10
 urllib3==2.4.0
 typing_extensions==4.13.2
-packaging==25.0 
+packaging==25.0

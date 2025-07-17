@@ -1,14 +1,16 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], updates: Dict[str, Any]) -> Dict[str, Any]:
+def bulk_update_metadata(
+    index_name: str, filter_condition: dict[str, Any], updates: dict[str, Any]
+) -> dict[str, Any]:
     """
     Updates multiple metadata nodes that match a simple filter condition (field == value).
 
@@ -28,14 +30,20 @@ def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], upda
     index_path = os.path.join(FAISS_DIR, f"{index_name}.faiss")
 
     if not filter_condition or len(filter_condition) != 1:
-        return {"status": "failed", "error": "Filter condition must contain exactly one key-value pair."}
+        return {
+            "status": "failed",
+            "error": "Filter condition must contain exactly one key-value pair.",
+        }
     if not updates:
         return {"status": "failed", "error": "Updates dictionary cannot be empty."}
 
     filter_field, filter_value = list(filter_condition.items())[0]
 
     if not os.path.exists(meta_path) or not os.path.exists(index_path):
-        return {"status": "failed", "error": f"FAISS index or metadata file not found for '{index_name}'."}
+        return {
+            "status": "failed",
+            "error": f"FAISS index or metadata file not found for '{index_name}'.",
+        }
 
     loaded_data = None
     # --- Load with Retry ---
@@ -50,11 +58,13 @@ def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], upda
                 "error": f"Metadata file disappeared for index '{index_name}' during update attempt.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -72,7 +82,10 @@ def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], upda
 
     # --- Perform Update ---
     for key, item_metadata in metadata_dict.items():
-        if isinstance(item_metadata, dict) and item_metadata.get(filter_field) == filter_value:
+        if (
+            isinstance(item_metadata, dict)
+            and item_metadata.get(filter_field) == filter_value
+        ):
             item_metadata.update(updates)
             updated_count += 1
             updated_keys.append(key)
@@ -83,7 +96,11 @@ def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], upda
         print(
             f"No nodes matched the filter condition '{filter_condition}' in index '{index_name}'. No updates performed."
         )
-        return {"status": "success", "updated_count": 0, "message": "No matching nodes found."}
+        return {
+            "status": "success",
+            "updated_count": 0,
+            "message": "No matching nodes found.",
+        }
 
     loaded_data["metadata"] = metadata_dict
 
@@ -96,18 +113,27 @@ def bulk_update_metadata(index_name: str, filter_condition: Dict[str, Any], upda
             print(
                 f"Successfully performed bulk update on {updated_count} nodes in index '{index_name}' matching {filter_condition}."
             )
-            return {"status": "success", "updated_count": updated_count, "updated_keys": updated_keys}
+            return {
+                "status": "success",
+                "updated_count": updated_count,
+                "updated_keys": updated_keys,
+            }
 
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to save bulk updated metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to save bulk updated metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to save bulk updated metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
-    return {"status": "failed", "error": "Unknown error after bulk update and save attempts."}
+    return {
+        "status": "failed",
+        "error": "Unknown error after bulk update and save attempts.",
+    }
 
 
 # Example usage (for testing purposes)
@@ -128,7 +154,11 @@ if __name__ == "__main__":
 
     print("\nBulk updating index_bulk where project='Test' set status='final':")
     try:
-        print(bulk_update_metadata("index_bulk", {"project": "Test"}, {"status": "final", "updated": True}))
+        print(
+            bulk_update_metadata(
+                "index_bulk", {"project": "Test"}, {"status": "final", "updated": True}
+            )
+        )
     except Exception as e:
         print(f"Error: {e}")
 

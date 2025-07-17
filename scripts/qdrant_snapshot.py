@@ -10,13 +10,15 @@ import logging
 import os
 import tempfile
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any
 
 from google.cloud import storage
 from qdrant_client import QdrantClient
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -42,11 +44,15 @@ def create_snapshot(client: QdrantClient, collection_name: str) -> str:
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     snapshot_name = f"snapshot_{collection_name}_{timestamp}"
 
-    logger.info(f"Creating snapshot '{snapshot_name}' for collection '{collection_name}'")
+    logger.info(
+        f"Creating snapshot '{snapshot_name}' for collection '{collection_name}'"
+    )
 
     try:
         # Create snapshot
-        snapshot_info = client.create_snapshot(collection_name=collection_name, snapshot_name=snapshot_name)
+        snapshot_info = client.create_snapshot(
+            collection_name=collection_name, snapshot_name=snapshot_name
+        )
         logger.info(f"Snapshot created successfully: {snapshot_info}")
         return snapshot_name
     except Exception as e:
@@ -54,7 +60,9 @@ def create_snapshot(client: QdrantClient, collection_name: str) -> str:
         raise
 
 
-def download_snapshot(client: QdrantClient, collection_name: str, snapshot_name: str) -> str:
+def download_snapshot(
+    client: QdrantClient, collection_name: str, snapshot_name: str
+) -> str:
     """Download the snapshot to a temporary file and return the file path."""
     # Create temporary file
     temp_dir = tempfile.mkdtemp()
@@ -64,7 +72,11 @@ def download_snapshot(client: QdrantClient, collection_name: str, snapshot_name:
 
     try:
         # Download snapshot
-        client.download_snapshot(collection_name=collection_name, snapshot_name=snapshot_name, location=snapshot_path)
+        client.download_snapshot(
+            collection_name=collection_name,
+            snapshot_name=snapshot_name,
+            location=snapshot_path,
+        )
 
         # Verify file exists and has content
         if os.path.exists(snapshot_path) and os.path.getsize(snapshot_path) > 0:
@@ -72,7 +84,9 @@ def download_snapshot(client: QdrantClient, collection_name: str, snapshot_name:
             logger.info(f"Snapshot downloaded successfully. Size: {file_size} bytes")
             return snapshot_path
         else:
-            raise FileNotFoundError(f"Downloaded snapshot file not found or empty: {snapshot_path}")
+            raise FileNotFoundError(
+                f"Downloaded snapshot file not found or empty: {snapshot_path}"
+            )
 
     except Exception as e:
         logger.error(f"Failed to download snapshot: {str(e)}")
@@ -84,7 +98,9 @@ def download_snapshot(client: QdrantClient, collection_name: str, snapshot_name:
         raise
 
 
-def upload_to_gcs(snapshot_path: str, snapshot_name: str, bucket_name: str = "qdrant-snapshots") -> str:
+def upload_to_gcs(
+    snapshot_path: str, snapshot_name: str, bucket_name: str = "qdrant-snapshots"
+) -> str:
     """Upload the snapshot file to Google Cloud Storage."""
     logger.info(f"Uploading snapshot to GCS bucket: {bucket_name}")
 
@@ -130,7 +146,7 @@ def cleanup_local_file(file_path: str):
         logger.warning(f"Failed to clean up local file {file_path}: {str(e)}")
 
 
-def take_and_upload_snapshot() -> Dict[str, Any]:
+def take_and_upload_snapshot() -> dict[str, Any]:
     """
     Main function to take a snapshot and upload it to GCS.
 

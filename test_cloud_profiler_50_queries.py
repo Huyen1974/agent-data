@@ -9,22 +9,27 @@ Enhanced for CLI140e.3.14 with CPU/memory metrics and JSON parsing analysis.
 """
 
 import asyncio
-import aiohttp
-import time
 import json
 import logging
-import statistics
-import psutil
 import os
-from typing import Dict, Any
+import statistics
+import time
 from datetime import datetime
+from typing import Any
+
+import aiohttp
+import psutil
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Cloud Function endpoint
-CLOUD_FUNCTION_URL = "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+CLOUD_FUNCTION_URL = (
+    "https://asia-southeast1-chatgpt-db-project.cloudfunctions.net/api-mcp-gateway-v2"
+)
 
 # Test queries for real workload simulation
 TEST_QUERIES = [
@@ -93,7 +98,8 @@ class CloudProfilerTester:
 
     async def __aenter__(self):
         self.session = aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=30), connector=aiohttp.TCPConnector(limit=10)
+            timeout=aiohttp.ClientTimeout(total=30),
+            connector=aiohttp.TCPConnector(limit=10),
         )
         return self
 
@@ -124,7 +130,9 @@ class CloudProfilerTester:
                     logger.info("Profiler authentication successful")
                     return True
                 elif response.status == 422:
-                    logger.warning(f"Authentication failed - 422 Unprocessable Entity: {response_text}")
+                    logger.warning(
+                        f"Authentication failed - 422 Unprocessable Entity: {response_text}"
+                    )
                     # Try to extract more details for 422 errors
                     try:
                         error_data = await response.json()
@@ -133,14 +141,16 @@ class CloudProfilerTester:
                         pass
                     return False
                 else:
-                    logger.warning(f"Authentication failed: {response.status} - {response_text}")
+                    logger.warning(
+                        f"Authentication failed: {response.status} - {response_text}"
+                    )
                     return False
 
         except Exception as e:
             logger.warning(f"Profiler authentication error: {e}")
             return False
 
-    async def health_check(self) -> Dict[str, Any]:
+    async def health_check(self) -> dict[str, Any]:
         """Perform health check to validate service status."""
         try:
             start_time = time.time()
@@ -167,7 +177,7 @@ class CloudProfilerTester:
         except Exception as e:
             return {"status": "error", "error": str(e), "latency": 0}
 
-    async def execute_query(self, query: str, query_id: int) -> Dict[str, Any]:
+    async def execute_query(self, query: str, query_id: int) -> dict[str, Any]:
         """Execute a single CSKH query using the correct endpoint with CPU/memory profiling."""
         try:
             # Record CPU and memory before query
@@ -234,11 +244,13 @@ class CloudProfilerTester:
                         }
                     )
                 else:
-                    result.update({"status": "failed", "error": f"HTTP {response.status}"})
+                    result.update(
+                        {"status": "failed", "error": f"HTTP {response.status}"}
+                    )
 
                 return result
 
-        except asyncio.TimeoutError:
+        except TimeoutError:
             return {
                 "query_id": query_id,
                 "query": query,
@@ -256,13 +268,15 @@ class CloudProfilerTester:
                 "timestamp": datetime.utcnow().isoformat(),
             }
 
-    async def run_profiler_test(self) -> Dict[str, Any]:
+    async def run_profiler_test(self) -> dict[str, Any]:
         """Run the complete Cloud Profiler test with 50 queries."""
         logger.info("Starting Cloud Profiler test with 50 queries...")
 
         # Health check first
         health_result = await self.health_check()
-        logger.info(f"Health check: {health_result['status']} - {health_result.get('latency', 0):.3f}s")
+        logger.info(
+            f"Health check: {health_result['status']} - {health_result.get('latency', 0):.3f}s"
+        )
 
         # Attempt authentication
         auth_success = await self.authenticate()
@@ -297,7 +311,9 @@ class CloudProfilerTester:
 
         for result in results:
             if isinstance(result, Exception):
-                failed_queries.append({"status": "exception", "error": str(result), "latency": 0})
+                failed_queries.append(
+                    {"status": "exception", "error": str(result), "latency": 0}
+                )
             elif result["status"] == "success":
                 successful_queries.append(result)
             elif result["status"] == "auth_required":
@@ -336,7 +352,9 @@ class CloudProfilerTester:
                 # Estimate JSON parsing time from latency (rough approximation)
                 if "latency" in query:
                     # Assume ~5% of latency is JSON parsing
-                    json_parsing_times.append(query["latency"] * 1000 * 0.05)  # Convert to ms
+                    json_parsing_times.append(
+                        query["latency"] * 1000 * 0.05
+                    )  # Convert to ms
 
         # Calculate statistics
         cpu_stats = {}
@@ -361,7 +379,9 @@ class CloudProfilerTester:
                 "median_memory_mb": statistics.median(all_memory_values),
                 "memory_before_mean": statistics.mean(memory_before_values),
                 "memory_after_mean": statistics.mean(memory_after_values),
-                "memory_diff_mean": statistics.mean(memory_diff_values) if memory_diff_values else 0,
+                "memory_diff_mean": (
+                    statistics.mean(memory_diff_values) if memory_diff_values else 0
+                ),
             }
 
         json_stats = {}
@@ -424,7 +444,9 @@ class CloudProfilerTester:
 async def main():
     """Main function to run the Cloud Profiler test."""
     logger.info("=== Cloud Profiler Test - CLI140e.3.14 ===")
-    logger.info("Testing production FastAPI with 50 real workload queries using /cskh_query")
+    logger.info(
+        "Testing production FastAPI with 50 real workload queries using /cskh_query"
+    )
 
     async with CloudProfilerTester() as tester:
         results = await tester.run_profiler_test()
@@ -440,13 +462,21 @@ async def main():
 
         if "latency_stats" in summary:
             latency = summary["latency_stats"]
-            logger.info(f"Latency - Min: {latency['min']:.3f}s, Max: {latency['max']:.3f}s")
-            logger.info(f"Latency - Mean: {latency['mean']:.3f}s, Median: {latency['median']:.3f}s")
-            logger.info(f"Latency - P95: {latency['p95']:.3f}s, P99: {latency['p99']:.3f}s")
+            logger.info(
+                f"Latency - Min: {latency['min']:.3f}s, Max: {latency['max']:.3f}s"
+            )
+            logger.info(
+                f"Latency - Mean: {latency['mean']:.3f}s, Median: {latency['median']:.3f}s"
+            )
+            logger.info(
+                f"Latency - P95: {latency['p95']:.3f}s, P99: {latency['p99']:.3f}s"
+            )
 
         # Health check status
         health = summary["health_check"]
-        logger.info(f"Health check: {health['status']} - Services: {health.get('services_connected', {})}")
+        logger.info(
+            f"Health check: {health['status']} - Services: {health.get('services_connected', {})}"
+        )
 
         # Log CPU/Memory/JSON metrics
         if summary.get("cpu_metrics"):
@@ -497,7 +527,9 @@ async def main():
             else:
                 logger.warning("⚠️  High P95 latency (> 1.0s)")
 
-        success_rate = (summary["successful"] + summary["auth_required"]) / summary["total_queries"]
+        success_rate = (summary["successful"] + summary["auth_required"]) / summary[
+            "total_queries"
+        ]
         if success_rate >= 0.95:
             logger.info(f"✅ Excellent success rate: {success_rate:.1%}")
         elif success_rate >= 0.90:

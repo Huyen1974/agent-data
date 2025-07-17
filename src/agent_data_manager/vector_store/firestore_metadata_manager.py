@@ -1,7 +1,7 @@
-import os
 import logging
-from typing import Dict, Any, Union, List, Optional
+import os
 from datetime import datetime
+from typing import Any
 
 # Attempt to import AsyncClient, fall back for environments where it might not be immediately available
 # or to allow type hinting without a hard dependency for non-Firestore use cases.
@@ -16,10 +16,14 @@ try:
         # This path might indicate an older library version or an issue.
         # For type hinting or conditional logic, this might be okay.
         # For actual async operations, firestore.AsyncClient is needed.
-        logging.warning("firestore.AsyncClient not found, Firestore async operations might be affected.")
+        logging.warning(
+            "firestore.AsyncClient not found, Firestore async operations might be affected."
+        )
         FirestoreAsyncClient = None
 except ImportError:
-    logging.warning("google-cloud-firestore library not found. FirestoreMetadataManager will not function.")
+    logging.warning(
+        "google-cloud-firestore library not found. FirestoreMetadataManager will not function."
+    )
     firestore = None
     FirestoreAsyncClient = None
 
@@ -29,16 +33,22 @@ logger = logging.getLogger(__name__)
 class FirestoreMetadataManager:
     def __init__(self, project_id: str = None, collection_name: str = None):
         if not FirestoreAsyncClient:
-            raise ImportError("Firestore AsyncClient is not available. Cannot initialize FirestoreMetadataManager.")
+            raise ImportError(
+                "Firestore AsyncClient is not available. Cannot initialize FirestoreMetadataManager."
+            )
 
         self.project_id = project_id or os.getenv("FIRESTORE_PROJECT_ID")
         if not self.project_id:
             # Fallback to a default project ID if you have one, or raise an error.
             # For this example, let's assume it might be implicitly handled by gcloud environment.
-            logger.info("FIRESTORE_PROJECT_ID not explicitly set, relying on gcloud environment.")
+            logger.info(
+                "FIRESTORE_PROJECT_ID not explicitly set, relying on gcloud environment."
+            )
 
         # Default collection name if not provided or found in env
-        self.collection_name = collection_name or os.getenv("QDRANT_METADATA_COLLECTION", "qdrant_vector_metadata")
+        self.collection_name = collection_name or os.getenv(
+            "QDRANT_METADATA_COLLECTION", "qdrant_vector_metadata"
+        )
 
         try:
             self.db = FirestoreAsyncClient(project=self.project_id)
@@ -55,7 +65,9 @@ class FirestoreMetadataManager:
             self.db = None  # Ensure db is None if initialization fails
             raise ConnectionError(f"Could not connect to Firestore: {e}")
 
-    async def save_metadata(self, point_id: Union[str, int], metadata: Dict[str, Any]) -> None:
+    async def save_metadata(
+        self, point_id: str | int, metadata: dict[str, Any]
+    ) -> None:
         """
         Saves or updates metadata for a given point_id in Firestore with versioning support.
 
@@ -87,7 +99,9 @@ class FirestoreMetadataManager:
                     logger.warning(f"Version increment validation failed for {doc_id}")
 
             # Prepare versioned metadata
-            versioned_metadata = await self._prepare_versioned_metadata(metadata, existing_doc)
+            versioned_metadata = await self._prepare_versioned_metadata(
+                metadata, existing_doc
+            )
 
             # Save with versioning and hierarchy support
             await doc_ref.set(versioned_metadata)
@@ -95,11 +109,16 @@ class FirestoreMetadataManager:
                 f"Successfully saved metadata for point_id '{doc_id}' in Firestore collection '{self.collection_name}' with version {versioned_metadata.get('version', 1)}."
             )
         except Exception as e:
-            logger.error(f"Failed to save metadata for point_id '{doc_id}' to Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to save metadata for point_id '{doc_id}' to Firestore: {e}",
+                exc_info=True,
+            )
             # Optionally re-raise or handle as per application error strategy
             raise
 
-    async def _prepare_versioned_metadata(self, metadata: Dict[str, Any], existing_doc) -> Dict[str, Any]:
+    async def _prepare_versioned_metadata(
+        self, metadata: dict[str, Any], existing_doc
+    ) -> dict[str, Any]:
         """
         Prepare metadata with versioning and hierarchical structure.
 
@@ -121,24 +140,32 @@ class FirestoreMetadataManager:
 
             # Store previous version in history
             if "version_history" not in versioned_metadata:
-                versioned_metadata["version_history"] = existing_data.get("version_history", [])
+                versioned_metadata["version_history"] = existing_data.get(
+                    "version_history", []
+                )
 
             # Add current version to history (keep last 10 versions)
             version_entry = {
                 "version": existing_data.get("version", 0),
-                "timestamp": existing_data.get("lastUpdated", datetime.utcnow().isoformat()),
+                "timestamp": existing_data.get(
+                    "lastUpdated", datetime.utcnow().isoformat()
+                ),
                 "changes": self._detect_changes(existing_data, metadata),
             }
             versioned_metadata["version_history"].append(version_entry)
 
             # Keep only last 10 versions
             if len(versioned_metadata["version_history"]) > 10:
-                versioned_metadata["version_history"] = versioned_metadata["version_history"][-10:]
+                versioned_metadata["version_history"] = versioned_metadata[
+                    "version_history"
+                ][-10:]
 
         # Set current version and timestamp
         versioned_metadata["version"] = current_version
         versioned_metadata["lastUpdated"] = datetime.utcnow().isoformat()
-        versioned_metadata["createdAt"] = versioned_metadata.get("createdAt", datetime.utcnow().isoformat())
+        versioned_metadata["createdAt"] = versioned_metadata.get(
+            "createdAt", datetime.utcnow().isoformat()
+        )
 
         # Apply auto-tagging if content is provided
         if "content" in metadata and metadata["content"]:
@@ -152,7 +179,9 @@ class FirestoreMetadataManager:
 
         return versioned_metadata
 
-    def _detect_changes(self, old_data: Dict[str, Any], new_data: Dict[str, Any]) -> List[str]:
+    def _detect_changes(
+        self, old_data: dict[str, Any], new_data: dict[str, Any]
+    ) -> list[str]:
         """
         Detect changes between old and new metadata.
 
@@ -181,12 +210,16 @@ class FirestoreMetadataManager:
 
         # Check for removed fields
         for key in old_data.keys():
-            if key not in new_data and key not in ["version", "lastUpdated", "version_history"]:
+            if key not in new_data and key not in [
+                "version",
+                "lastUpdated",
+                "version_history",
+            ]:
                 changes.append(f"removed:{key}")
 
         return changes
 
-    async def _apply_auto_tagging(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
+    async def _apply_auto_tagging(self, metadata: dict[str, Any]) -> dict[str, Any]:
         """
         Apply auto-tagging to metadata using LLM.
 
@@ -247,7 +280,9 @@ class FirestoreMetadataManager:
             logger.error(f"Auto-tagging failed: {e}")
             return metadata
 
-    def _ensure_hierarchical_structure(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
+    def _ensure_hierarchical_structure(
+        self, metadata: dict[str, Any]
+    ) -> dict[str, Any]:
         """
         Ensure metadata has hierarchical structure with level_1 through level_6.
 
@@ -309,7 +344,9 @@ class FirestoreMetadataManager:
             if "year" in metadata:
                 metadata["level_4_category"] = str(metadata["year"])
             elif "date" in metadata:
-                metadata["level_4_category"] = str(metadata["date"])[:4]  # Extract year from date
+                metadata["level_4_category"] = str(metadata["date"])[
+                    :4
+                ]  # Extract year from date
             elif metadata.get("auto_tags") and len(metadata["auto_tags"]) > 3:
                 metadata["level_4_category"] = metadata["auto_tags"][3]
 
@@ -324,7 +361,10 @@ class FirestoreMetadataManager:
 
         if metadata.get("level_6_category") is None:
             # Try format, status, or use "general"
-            if "format" in metadata and metadata.get("level_5_category") != metadata["format"]:
+            if (
+                "format" in metadata
+                and metadata.get("level_5_category") != metadata["format"]
+            ):
                 metadata["level_6_category"] = metadata["format"]
             elif "status" in metadata:
                 metadata["level_6_category"] = metadata["status"]
@@ -336,8 +376,8 @@ class FirestoreMetadataManager:
         return metadata
 
     async def get_metadata_with_version(
-        self, point_id: Union[str, int], version: Optional[int] = None
-    ) -> Optional[Dict[str, Any]]:
+        self, point_id: str | int, version: int | None = None
+    ) -> dict[str, Any] | None:
         """
         Retrieve metadata for a specific version.
 
@@ -385,10 +425,15 @@ class FirestoreMetadataManager:
             return None
 
         except Exception as e:
-            logger.error(f"Failed to get metadata for point_id '{doc_id}' from Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to get metadata for point_id '{doc_id}' from Firestore: {e}",
+                exc_info=True,
+            )
             return None
 
-    async def get_hierarchy_tree(self, level_filter: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+    async def get_hierarchy_tree(
+        self, level_filter: dict[str, str] | None = None
+    ) -> dict[str, Any]:
         """
         Get hierarchical tree structure of all documents.
 
@@ -430,10 +475,12 @@ class FirestoreMetadataManager:
             return tree
 
         except Exception as e:
-            logger.error(f"Failed to get hierarchy tree from Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to get hierarchy tree from Firestore: {e}", exc_info=True
+            )
             return {}
 
-    def _add_to_tree(self, tree: Dict[str, Any], data: Dict[str, Any], doc_id: str):
+    def _add_to_tree(self, tree: dict[str, Any], data: dict[str, Any], doc_id: str):
         """
         Add document to hierarchy tree structure.
 
@@ -475,7 +522,7 @@ class FirestoreMetadataManager:
             }
         )
 
-    async def delete_metadata(self, point_id: Union[str, int]) -> None:
+    async def delete_metadata(self, point_id: str | int) -> None:
         """
         Deletes metadata for a given point_id from Firestore.
         """
@@ -500,12 +547,16 @@ class FirestoreMetadataManager:
             # Optionally re-raise or handle
             raise
 
-    async def batch_save_metadata(self, metadata_batch: Dict[Union[str, int], Dict[str, Any]]) -> None:
+    async def batch_save_metadata(
+        self, metadata_batch: dict[str | int, dict[str, Any]]
+    ) -> None:
         """
         Saves or updates a batch of metadata in Firestore using a batch writer with versioning support.
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot batch save metadata.")
+            logger.error(
+                "Firestore client not initialized. Cannot batch save metadata."
+            )
             return
         if not metadata_batch:
             logger.info("No metadata provided for batch save.")
@@ -522,7 +573,9 @@ class FirestoreMetadataManager:
             # but necessary for versioning. Consider using a separate versioning strategy for large batches)
             try:
                 existing_doc = await doc_ref.get()
-                versioned_metadata = await self._prepare_versioned_metadata(metadata, existing_doc)
+                versioned_metadata = await self._prepare_versioned_metadata(
+                    metadata, existing_doc
+                )
                 batch.set(doc_ref, versioned_metadata)
             except Exception as e:
                 logger.error(f"Failed to prepare versioned metadata for {doc_id}: {e}")
@@ -535,15 +588,19 @@ class FirestoreMetadataManager:
                 f"Successfully batch saved metadata for {len(metadata_batch)} items in Firestore collection '{self.collection_name}'."
             )
         except Exception as e:
-            logger.error(f"Failed to batch save metadata to Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to batch save metadata to Firestore: {e}", exc_info=True
+            )
             raise
 
-    async def batch_delete_metadata(self, point_ids: List[Union[str, int]]) -> None:
+    async def batch_delete_metadata(self, point_ids: list[str | int]) -> None:
         """
         Deletes a batch of metadata from Firestore using a batch writer.
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot batch delete metadata.")
+            logger.error(
+                "Firestore client not initialized. Cannot batch delete metadata."
+            )
             return
         if not point_ids:
             logger.info("No point_ids provided for batch delete.")
@@ -561,10 +618,12 @@ class FirestoreMetadataManager:
                 f"Successfully batch deleted metadata for {len(point_ids)} items from Firestore collection '{self.collection_name}'."
             )
         except Exception as e:
-            logger.error(f"Failed to batch delete metadata from Firestore: {e}", exc_info=True)
+            logger.error(
+                f"Failed to batch delete metadata from Firestore: {e}", exc_info=True
+            )
             raise
 
-    def _validate_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
+    def _validate_metadata(self, metadata: dict[str, Any]) -> dict[str, Any]:
         """
         Validate metadata structure and content.
 
@@ -590,7 +649,14 @@ class FirestoreMetadataManager:
             errors.append("version must be an integer")
 
         # Validate hierarchy levels
-        hierarchy_levels = ["level_1", "level_2", "level_3", "level_4", "level_5", "level_6"]
+        hierarchy_levels = [
+            "level_1",
+            "level_2",
+            "level_3",
+            "level_4",
+            "level_5",
+            "level_6",
+        ]
         for level in hierarchy_levels:
             if level in metadata and metadata[level] is not None:
                 if not isinstance(metadata[level], str):
@@ -613,7 +679,9 @@ class FirestoreMetadataManager:
 
         return {"valid": len(errors) == 0, "errors": errors}
 
-    def _validate_version_increment(self, existing_data: Dict[str, Any], new_metadata: Dict[str, Any]) -> bool:
+    def _validate_version_increment(
+        self, existing_data: dict[str, Any], new_metadata: dict[str, Any]
+    ) -> bool:
         """
         Validate that version increments are logical.
 
@@ -634,17 +702,21 @@ class FirestoreMetadataManager:
 
         # Version should not decrease
         if new_version < existing_version:
-            logger.warning(f"Version decrease detected: {existing_version} -> {new_version}")
+            logger.warning(
+                f"Version decrease detected: {existing_version} -> {new_version}"
+            )
             return False
 
         # Version should not skip numbers (increment by 1)
         if new_version > existing_version + 1:
-            logger.warning(f"Version skip detected: {existing_version} -> {new_version}")
+            logger.warning(
+                f"Version skip detected: {existing_version} -> {new_version}"
+            )
             return False
 
         return True
 
-    async def get_metadata_statistics(self) -> Dict[str, Any]:
+    async def get_metadata_statistics(self) -> dict[str, Any]:
         """
         Get statistics about the metadata collection.
 
@@ -688,11 +760,17 @@ class FirestoreMetadataManager:
                 created_at = data.get("createdAt")
 
                 if last_updated:
-                    if not stats["latest_update"] or last_updated > stats["latest_update"]:
+                    if (
+                        not stats["latest_update"]
+                        or last_updated > stats["latest_update"]
+                    ):
                         stats["latest_update"] = last_updated
 
                 if created_at:
-                    if not stats["oldest_document"] or created_at < stats["oldest_document"]:
+                    if (
+                        not stats["oldest_document"]
+                        or created_at < stats["oldest_document"]
+                    ):
                         stats["oldest_document"] = created_at
 
             return stats
@@ -701,7 +779,9 @@ class FirestoreMetadataManager:
             logger.error(f"Failed to get metadata statistics: {e}", exc_info=True)
             return {}
 
-    async def query_documents_by_timestamp(self, field_name: str, before_timestamp: str) -> List[Dict[str, Any]]:
+    async def query_documents_by_timestamp(
+        self, field_name: str, before_timestamp: str
+    ) -> list[dict[str, Any]]:
         """
         Query documents where a timestamp field is before the specified timestamp.
 
@@ -727,14 +807,16 @@ class FirestoreMetadataManager:
                 doc_data["_doc_id"] = doc.id  # Include document ID for deletion
                 results.append(doc_data)
 
-            logger.debug(f"Found {len(results)} documents with {field_name} before {before_timestamp}")
+            logger.debug(
+                f"Found {len(results)} documents with {field_name} before {before_timestamp}"
+            )
             return results
 
         except Exception as e:
             logger.error(f"Failed to query documents by timestamp: {e}", exc_info=True)
             return []
 
-    async def delete_documents_by_ids(self, doc_ids: List[str]) -> Dict[str, Any]:
+    async def delete_documents_by_ids(self, doc_ids: list[str]) -> dict[str, Any]:
         """
         Delete multiple documents by their IDs.
 
@@ -772,7 +854,7 @@ class FirestoreMetadataManager:
 
         return {"deleted_count": deleted_count, "error_count": error_count}
 
-    async def get_document_path(self, point_id: Union[str, int]) -> Optional[str]:
+    async def get_document_path(self, point_id: str | int) -> str | None:
         """
         Get the hierarchical path of a document for Tree View copy path functionality.
 
@@ -825,12 +907,17 @@ class FirestoreMetadataManager:
             return document_path
 
         except Exception as e:
-            logger.error(f"Failed to get document path for {doc_id}: {e}", exc_info=True)
+            logger.error(
+                f"Failed to get document path for {doc_id}: {e}", exc_info=True
+            )
             return None
 
     async def share_document(
-        self, point_id: Union[str, int], shared_by: Optional[str] = None, expires_days: int = 7
-    ) -> Optional[Dict[str, Any]]:
+        self,
+        point_id: str | int,
+        shared_by: str | None = None,
+        expires_days: int = 7,
+    ) -> dict[str, Any] | None:
         """
         Generate a shareable link for a document and store metadata in project_tree collection.
 
@@ -856,7 +943,9 @@ class FirestoreMetadataManager:
                 logger.warning(f"Document {doc_id} not found for sharing.")
                 return None
         except Exception as e:
-            logger.error(f"Failed to verify document {doc_id} exists: {e}", exc_info=True)
+            logger.error(
+                f"Failed to verify document {doc_id} exists: {e}", exc_info=True
+            )
             return None
 
         try:
@@ -873,7 +962,9 @@ class FirestoreMetadataManager:
 
             # Default shared_by to service account if not provided
             if not shared_by:
-                shared_by = "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+                shared_by = (
+                    "gemini-service-account@chatgpt-db-project.iam.gserviceaccount.com"
+                )
 
             # Prepare share metadata
             share_metadata = {
@@ -903,14 +994,18 @@ class FirestoreMetadataManager:
                 "shared_by": shared_by,
             }
 
-            logger.info(f"Successfully created share link for document {doc_id}: {share_id}")
+            logger.info(
+                f"Successfully created share link for document {doc_id}: {share_id}"
+            )
             return result
 
         except Exception as e:
-            logger.error(f"Failed to create share link for document {doc_id}: {e}", exc_info=True)
+            logger.error(
+                f"Failed to create share link for document {doc_id}: {e}", exc_info=True
+            )
             return None
 
-    async def search_by_path(self, path_query: str) -> List[Dict[str, Any]]:
+    async def search_by_path(self, path_query: str) -> list[dict[str, Any]]:
         """
         Search documents by hierarchical path segments for Tree View.
 
@@ -946,7 +1041,9 @@ class FirestoreMetadataManager:
 
             for level in hierarchy_levels:
                 # Case-insensitive search using array-contains for partial matches
-                query = collection_ref.where(level, ">=", path_query).where(level, "<=", path_query + "\uf8ff")
+                query = collection_ref.where(level, ">=", path_query).where(
+                    level, "<=", path_query + "\uf8ff"
+                )
                 docs = query.stream()
 
                 for doc in docs:
@@ -958,14 +1055,16 @@ class FirestoreMetadataManager:
                     if not any(existing["_doc_id"] == doc.id for existing in results):
                         results.append(doc_data)
 
-            logger.debug(f"Found {len(results)} documents matching path query: {path_query}")
+            logger.debug(
+                f"Found {len(results)} documents matching path query: {path_query}"
+            )
             return results
 
         except Exception as e:
             logger.error(f"Failed to search by path '{path_query}': {e}", exc_info=True)
             return []
 
-    async def search_by_tags(self, tags: List[str]) -> List[Dict[str, Any]]:
+    async def search_by_tags(self, tags: list[str]) -> list[dict[str, Any]]:
         """
         Search documents by tags for Tree View.
 
@@ -1012,7 +1111,7 @@ class FirestoreMetadataManager:
             logger.error(f"Failed to search by tags {clean_tags}: {e}", exc_info=True)
             return []
 
-    async def search_by_metadata(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
+    async def search_by_metadata(self, filters: dict[str, Any]) -> list[dict[str, Any]]:
         """
         Search documents by metadata fields for Tree View.
 
@@ -1057,7 +1156,9 @@ class FirestoreMetadataManager:
                 doc_data["_matched_filters"] = filters
                 results.append(doc_data)
 
-            logger.debug(f"Found {len(results)} documents matching metadata filters: {filters}")
+            logger.debug(
+                f"Found {len(results)} documents matching metadata filters: {filters}"
+            )
             return results
 
         except Exception as e:
@@ -1066,15 +1167,15 @@ class FirestoreMetadataManager:
 
     async def query_by_hierarchy_optimized(
         self,
-        level_1: Optional[str] = None,
-        level_2: Optional[str] = None,
-        level_3: Optional[str] = None,
-        level_4: Optional[str] = None,
-        level_5: Optional[str] = None,
-        level_6: Optional[str] = None,
+        level_1: str | None = None,
+        level_2: str | None = None,
+        level_3: str | None = None,
+        level_4: str | None = None,
+        level_5: str | None = None,
+        level_6: str | None = None,
         version_order: str = "desc",
         limit: int = 100,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Optimized hierarchical query using indexed fields.
 
@@ -1141,16 +1242,18 @@ class FirestoreMetadataManager:
             return results
 
         except Exception as e:
-            logger.error(f"Failed to execute optimized hierarchy query: {e}", exc_info=True)
+            logger.error(
+                f"Failed to execute optimized hierarchy query: {e}", exc_info=True
+            )
             return []
 
     async def query_by_version_range_optimized(
         self,
-        min_version: Optional[int] = None,
-        max_version: Optional[int] = None,
-        level_1_filter: Optional[str] = None,
+        min_version: int | None = None,
+        max_version: int | None = None,
+        level_1_filter: str | None = None,
         limit: int = 100,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Optimized version range query using indexed fields.
 
@@ -1164,7 +1267,9 @@ class FirestoreMetadataManager:
             List of documents in version range, ordered by version desc
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot query by version range.")
+            logger.error(
+                "Firestore client not initialized. Cannot query by version range."
+            )
             return []
 
         try:
@@ -1211,12 +1316,17 @@ class FirestoreMetadataManager:
             return results
 
         except Exception as e:
-            logger.error(f"Failed to execute optimized version range query: {e}", exc_info=True)
+            logger.error(
+                f"Failed to execute optimized version range query: {e}", exc_info=True
+            )
             return []
 
     async def query_latest_by_category_optimized(
-        self, category_level: str = "level_1_category", category_value: str = None, limit: int = 50
-    ) -> List[Dict[str, Any]]:
+        self,
+        category_level: str = "level_1_category",
+        category_value: str = None,
+        limit: int = 50,
+    ) -> list[dict[str, Any]]:
         """
         Optimized query for latest documents by category using indexed fields.
 
@@ -1229,7 +1339,9 @@ class FirestoreMetadataManager:
             List of latest documents in category, ordered by version desc
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot query latest by category.")
+            logger.error(
+                "Firestore client not initialized. Cannot query latest by category."
+            )
             return []
 
         valid_levels = [
@@ -1242,7 +1354,9 @@ class FirestoreMetadataManager:
         ]
 
         if category_level not in valid_levels:
-            logger.error(f"Invalid category_level: {category_level}. Must be one of {valid_levels}")
+            logger.error(
+                f"Invalid category_level: {category_level}. Must be one of {valid_levels}"
+            )
             return []
 
         if not category_value or not category_value.strip():
@@ -1281,16 +1395,19 @@ class FirestoreMetadataManager:
             return results
 
         except Exception as e:
-            logger.error(f"Failed to execute optimized latest by category query: {e}", exc_info=True)
+            logger.error(
+                f"Failed to execute optimized latest by category query: {e}",
+                exc_info=True,
+            )
             return []
 
     async def query_multi_level_hierarchy_optimized(
         self,
         level_1: str,
-        level_2: Optional[str] = None,
+        level_2: str | None = None,
         order_by_updated: bool = True,
         limit: int = 100,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Optimized multi-level hierarchy query using composite indexes.
 
@@ -1304,7 +1421,9 @@ class FirestoreMetadataManager:
             List of documents matching hierarchy, ordered as specified
         """
         if not self.db:
-            logger.error("Firestore client not initialized. Cannot query multi-level hierarchy.")
+            logger.error(
+                "Firestore client not initialized. Cannot query multi-level hierarchy."
+            )
             return []
 
         if not level_1 or not level_1.strip():
@@ -1353,10 +1472,13 @@ class FirestoreMetadataManager:
             return results
 
         except Exception as e:
-            logger.error(f"Failed to execute optimized multi-level hierarchy query: {e}", exc_info=True)
+            logger.error(
+                f"Failed to execute optimized multi-level hierarchy query: {e}",
+                exc_info=True,
+            )
             return []
 
-    async def benchmark_query_performance(self) -> Dict[str, Any]:
+    async def benchmark_query_performance(self) -> dict[str, Any]:
         """
         Benchmark the performance of optimized queries.
 
@@ -1374,7 +1496,9 @@ class FirestoreMetadataManager:
 
             # Test 1: Simple hierarchy query
             start_time = time.time()
-            results1 = await self.query_by_hierarchy_optimized(level_1="document", limit=10)
+            results1 = await self.query_by_hierarchy_optimized(
+                level_1="document", limit=10
+            )
             benchmark_results["queries"]["hierarchy_simple"] = {
                 "duration_ms": round((time.time() - start_time) * 1000, 2),
                 "result_count": len(results1),
@@ -1383,7 +1507,9 @@ class FirestoreMetadataManager:
 
             # Test 2: Version range query
             start_time = time.time()
-            results2 = await self.query_by_version_range_optimized(min_version=1, max_version=10, limit=10)
+            results2 = await self.query_by_version_range_optimized(
+                min_version=1, max_version=10, limit=10
+            )
             benchmark_results["queries"]["version_range"] = {
                 "duration_ms": round((time.time() - start_time) * 1000, 2),
                 "result_count": len(results2),
@@ -1403,7 +1529,9 @@ class FirestoreMetadataManager:
 
             # Test 4: Multi-level hierarchy
             start_time = time.time()
-            results4 = await self.query_multi_level_hierarchy_optimized(level_1="document", level_2=None, limit=10)
+            results4 = await self.query_multi_level_hierarchy_optimized(
+                level_1="document", level_2=None, limit=10
+            )
             benchmark_results["queries"]["multi_level_hierarchy"] = {
                 "duration_ms": round((time.time() - start_time) * 1000, 2),
                 "result_count": len(results4),
@@ -1411,10 +1539,14 @@ class FirestoreMetadataManager:
             }
 
             # Calculate summary statistics
-            durations = [q["duration_ms"] for q in benchmark_results["queries"].values()]
+            durations = [
+                q["duration_ms"] for q in benchmark_results["queries"].values()
+            ]
             benchmark_results["summary"] = {
                 "total_queries": len(durations),
-                "avg_duration_ms": round(sum(durations) / len(durations), 2) if durations else 0,
+                "avg_duration_ms": (
+                    round(sum(durations) / len(durations), 2) if durations else 0
+                ),
                 "max_duration_ms": max(durations) if durations else 0,
                 "min_duration_ms": min(durations) if durations else 0,
                 "all_under_2000ms": all(d < 2000 for d in durations),

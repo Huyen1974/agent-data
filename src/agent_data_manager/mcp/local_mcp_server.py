@@ -11,12 +11,16 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Import necessary components using relative paths
 try:
-    from agent_data_manager.tools.register_tools import get_all_tool_functions  # Use the new helper
+    from agent_data_manager.tools.register_tools import (
+        get_all_tool_functions,
+    )  # Use the new helper
 except ImportError as e:
     logger.error(f"Failed to import tools using relative paths: {e}", exc_info=True)
     sys.exit(1)
@@ -79,7 +83,9 @@ def run_mcp_loop():
             else:
                 try:
                     tool_function = ALL_TOOLS[tool_name]
-                    logger.info(f"Executing tool '{tool_name}' (ID: {request_id}) with input: {tool_input}")
+                    logger.info(
+                        f"Executing tool '{tool_name}' (ID: {request_id}) with input: {tool_input}"
+                    )
 
                     # --- START REPLACEMENT: Signature-based tool execution ---
                     tool_result_data = None
@@ -96,11 +102,15 @@ def run_mcp_loop():
                                 tool_result_data = tool_function(**tool_input)
                             except TypeError as e:
                                 # If kwargs fail AND the function expects exactly 1 positional arg?
-                                if len(params) == 1 and list(params.values())[0].kind in [
+                                if len(params) == 1 and list(params.values())[
+                                    0
+                                ].kind in [
                                     inspect.Parameter.POSITIONAL_OR_KEYWORD,
                                     inspect.Parameter.POSITIONAL_ONLY,
                                 ]:
-                                    logger.debug(f"kwargs failed for {tool_name}, trying as single arg: {e}")
+                                    logger.debug(
+                                        f"kwargs failed for {tool_name}, trying as single arg: {e}"
+                                    )
                                     tool_result_data = tool_function(tool_input)
                                 else:
                                     raise e  # Re-raise original TypeError if fallback doesn't match signature
@@ -135,7 +145,10 @@ def run_mcp_loop():
                     }
 
                     # Process tool result
-                    if isinstance(tool_result_data, dict) and "status" in tool_result_data:
+                    if (
+                        isinstance(tool_result_data, dict)
+                        and "status" in tool_result_data
+                    ):
                         if tool_result_data["status"] == "failed":
                             response["meta"]["status"] = "error"
                             response["error"] = tool_result_data.get(
@@ -149,7 +162,9 @@ def run_mcp_loop():
                                 f"Tool '{tool_name}' reported failure (ID: {request_id}): {response['error']}"
                             )
                         elif tool_result_data["status"] == "success":
-                            response["result"] = tool_result_data.get("result")  # Extract result from successful dict
+                            response["result"] = tool_result_data.get(
+                                "result"
+                            )  # Extract result from successful dict
                         else:  # Handle unexpected status values if needed
                             response["result"] = (
                                 tool_result_data  # Pass through if status is unrecognized but dict is structured
@@ -162,7 +177,9 @@ def run_mcp_loop():
                         response["result"] = tool_result_data
 
                     if response["meta"]["status"] == "success":
-                        logger.info(f"Tool '{tool_name}' executed successfully (ID: {request_id}).")
+                        logger.info(
+                            f"Tool '{tool_name}' executed successfully (ID: {request_id})."
+                        )
 
                 except Exception as e:
                     logger.error(
@@ -171,7 +188,9 @@ def run_mcp_loop():
                     )
                     response["result"] = None
                     response["meta"] = {"status": "error", "request_id": request_id}
-                    response["error"] = f"Error in tool '{tool_name}': {type(e).__name__}: {e}"
+                    response["error"] = (
+                        f"Error in tool '{tool_name}': {type(e).__name__}: {e}"
+                    )
 
             # Add duration and send response
             duration = (time.time() - start_time) * 1000

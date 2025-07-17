@@ -1,14 +1,14 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, Optional
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def semantic_expand_metadata(index_name: str, keyword: str) -> Optional[Dict[str, Any]]:
+def semantic_expand_metadata(index_name: str, keyword: str) -> dict[str, Any] | None:
     """
     Simulates semantic expansion for a metadata node identified by a keyword.
     Loads the metadata, finds the entry for the keyword, and adds simulated related keywords.
@@ -28,7 +28,9 @@ def semantic_expand_metadata(index_name: str, keyword: str) -> Optional[Dict[str
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not os.path.exists(meta_path):
-        print(f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot expand.")
+        print(
+            f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot expand."
+        )
         return None
 
     loaded_data = None
@@ -38,34 +40,48 @@ def semantic_expand_metadata(index_name: str, keyword: str) -> Optional[Dict[str
                 loaded_data = pickle.load(f)
             break  # Success
         except FileNotFoundError:
-            print(f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during expansion.")
+            print(
+                f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during expansion."
+            )
             return None
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     if loaded_data is None or "metadata" not in loaded_data:
-        raise ValueError(f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key.")
+        raise ValueError(
+            f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key."
+        )
 
     metadata_dict = loaded_data["metadata"]
 
     if keyword in metadata_dict:
         original_metadata = metadata_dict[keyword]
         # Simulate semantic expansion
-        simulated_related = [f"{keyword}_related_term_1", f"{keyword}_topic_A", "generic_concept"]
+        simulated_related = [
+            f"{keyword}_related_term_1",
+            f"{keyword}_topic_A",
+            "generic_concept",
+        ]
         # Avoid modifying the original dict directly if loaded elsewhere
         expanded_metadata = (
-            original_metadata.copy() if isinstance(original_metadata, dict) else {"value": original_metadata}
+            original_metadata.copy()
+            if isinstance(original_metadata, dict)
+            else {"value": original_metadata}
         )
         expanded_metadata["simulated_expansion"] = simulated_related
         return expanded_metadata
     else:
-        print(f"Warning: Keyword '{keyword}' not found in index '{index_name}'. Cannot expand.")
+        print(
+            f"Warning: Keyword '{keyword}' not found in index '{index_name}'. Cannot expand."
+        )
         return None
 
 

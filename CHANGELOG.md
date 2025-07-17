@@ -20,4 +20,4 @@ All notable changes to this project will be documented in this file.
 ### Documentation
 - Added comprehensive CI status and security badges
 - Created TODO issue (#27) for stricter Trivy settings post-Phase 1
-- Established consistent test baseline from CI container environment 
+- Established consistent test baseline from CI container environment

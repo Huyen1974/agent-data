@@ -9,6 +9,6 @@ terraform {
 }
 
 provider "google" {
-  project = "github-chatgpt-ggcloud"
-  region  = "asia-southeast1"
-} 
+  project = var.project_id
+  region  = var.region
+}

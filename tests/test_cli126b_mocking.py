@@ -3,9 +3,10 @@ CLI 126B: Test cases for mocking and caching implementation
 Validates that external services are properly mocked and embeddings are cached.
 """
 
-import pytest
 import json
 from pathlib import Path
+
+import pytest
 
 
 class TestCLI126BMocking:
@@ -36,7 +37,9 @@ class TestCLI126BMocking:
         assert hasattr(upsert_result, "operation_id")
 
         # Test search
-        search_results = qdrant_cloud_mock.search(collection_name="test_collection", query_vector=[0.1] * 1536, limit=2)
+        search_results = qdrant_cloud_mock.search(
+            collection_name="test_collection", query_vector=[0.1] * 1536, limit=2
+        )
         assert len(search_results) == 2
         assert search_results[0].score == 0.92
         assert search_results[0].payload["tag"] == "science"
@@ -45,14 +48,18 @@ class TestCLI126BMocking:
     def test_openai_mock_functionality(self, openai_mock):
         """Test that OpenAI mock returns static embeddings."""
         # Test embedding creation
-        response = openai_mock.embeddings.create(input="test text for embedding", model="text-embedding-ada-002")
+        response = openai_mock.embeddings.create(
+            input="test text for embedding", model="text-embedding-ada-002"
+        )
 
         assert hasattr(response, "data")
         assert len(response.data) == 1
         assert len(response.data[0].embedding) == 1536
 
         # Test that same input produces same embedding (deterministic)
-        response2 = openai_mock.embeddings.create(input="test text for embedding", model="text-embedding-ada-002")
+        response2 = openai_mock.embeddings.create(
+            input="test text for embedding", model="text-embedding-ada-002"
+        )
 
         assert response.data[0].embedding == response2.data[0].embedding
 
@@ -80,7 +87,7 @@ class TestCLI126BMocking:
         assert cache_file.exists()
 
         # Verify cache contents
-        with open(cache_file, "r") as f:
+        with open(cache_file) as f:
             cache_data = json.load(f)
 
         cache_key1 = f"text-embedding-ada-002:{test_text}"
@@ -103,7 +110,9 @@ class TestCLI126BMocking:
 
         # Test OpenAI client mock
         openai_client = mocks["openai_client"]
-        response = openai_client.embeddings.create(input="test integration text", model="text-embedding-ada-002")
+        response = openai_client.embeddings.create(
+            input="test integration text", model="text-embedding-ada-002"
+        )
         assert len(response.data[0].embedding) == 1536
 
         # Test GCS client mock
@@ -136,8 +145,8 @@ class TestCLI126BMocking:
 
         # Test that importing external clients doesn't fail
         try:
-            from qdrant_client import QdrantClient
             from openai import OpenAI
+            from qdrant_client import QdrantClient
 
             # Create clients (should be mocked)
             qdrant_client = QdrantClient(url="http://test:6333", api_key="test")
@@ -147,7 +156,9 @@ class TestCLI126BMocking:
             collections = qdrant_client.get_collections()
             assert collections is not None
 
-            response = openai_client.embeddings.create(input="auto mock test", model="text-embedding-ada-002")
+            response = openai_client.embeddings.create(
+                input="auto mock test", model="text-embedding-ada-002"
+            )
             assert response is not None
 
         except ImportError:
@@ -202,7 +213,7 @@ class TestCLI126BMocking:
         assert cache_file.exists()
 
         # Read cache directly
-        with open(cache_file, "r") as f:
+        with open(cache_file) as f:
             cache_data = json.load(f)
 
         cache_key = f"text-embedding-ada-002:{test_text}"
@@ -210,15 +221,17 @@ class TestCLI126BMocking:
         assert cache_data[cache_key] == embedding1
 
         # Simulate fresh start by creating new cache function
-        def fresh_cache_function(text: str, model: str = "text-embedding-ada-002") -> list:
+        def fresh_cache_function(
+            text: str, model: str = "text-embedding-ada-002"
+        ) -> list:
             """Fresh cache function that should load existing cache."""
 
             cache = {}
             if cache_file.exists():
                 try:
-                    with open(cache_file, "r") as f:
+                    with open(cache_file) as f:
                         cache = json.load(f)
-                except (json.JSONDecodeError, IOError):
+                except (OSError, json.JSONDecodeError):
                     cache = {}
 
             cache_key = f"{model}:{text}"

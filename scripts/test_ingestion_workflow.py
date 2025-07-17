@@ -5,11 +5,11 @@ Tests the workflow with 8 documents to validate functionality.
 """
 
 import json
-import time
-from datetime import datetime
-from typing import List, Dict, Any
 import subprocess
 import sys
+import time
+from datetime import datetime
+from typing import Any
 
 # Sample test documents
 TEST_DOCUMENTS = [
@@ -31,7 +31,9 @@ LOCATION = "asia-southeast1"
 WORKFLOW_NAME = "ingestion-workflow"
 
 
-def execute_workflow(doc_id: str, content: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
+def execute_workflow(
+    doc_id: str, content: str, metadata: dict[str, Any]
+) -> dict[str, Any]:
     """
     Execute the ingestion workflow for a single document.
 
@@ -58,7 +60,9 @@ def execute_workflow(doc_id: str, content: str, metadata: Dict[str, Any]) -> Dic
         ]
 
         print(f"Executing workflow for {doc_id}...")
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)  # 5 minute timeout
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, timeout=300
+        )  # 5 minute timeout
 
         if result.returncode == 0:
             # Parse the workflow result
@@ -101,10 +105,15 @@ def execute_workflow(doc_id: str, content: str, metadata: Dict[str, Any]) -> Dic
             "execution_time": time.time(),
         }
     except Exception as e:
-        return {"status": "error", "doc_id": doc_id, "error": str(e), "execution_time": time.time()}
+        return {
+            "status": "error",
+            "doc_id": doc_id,
+            "error": str(e),
+            "execution_time": time.time(),
+        }
 
 
-def test_workflow_batch(documents: List[Dict[str, Any]]) -> Dict[str, Any]:
+def test_workflow_batch(documents: list[dict[str, Any]]) -> dict[str, Any]:
     """
     Test the workflow with a batch of documents.
 
@@ -132,7 +141,9 @@ def test_workflow_batch(documents: List[Dict[str, Any]]) -> Dict[str, Any]:
         if result["status"] == "success":
             print(f"✅ {doc['doc_id']}: SUCCESS")
         else:
-            print(f"❌ {doc['doc_id']}: {result['status'].upper()} - {result.get('error', 'Unknown error')}")
+            print(
+                f"❌ {doc['doc_id']}: {result['status'].upper()} - {result.get('error', 'Unknown error')}"
+            )
 
         # Add delay between requests to avoid rate limits
         if i < len(documents):
@@ -160,7 +171,7 @@ def test_workflow_batch(documents: List[Dict[str, Any]]) -> Dict[str, Any]:
     return summary
 
 
-def print_summary(summary: Dict[str, Any]):
+def print_summary(summary: dict[str, Any]):
     """Print test summary results."""
     print("\n" + "=" * 60)
     print("WORKFLOW TEST SUMMARY")
@@ -178,7 +189,9 @@ def print_summary(summary: Dict[str, Any]):
         print("\nFAILED DOCUMENTS:")
         for result in summary["results"]:
             if result["status"] != "success":
-                print(f"  - {result['doc_id']}: {result['status']} - {result.get('error', 'Unknown error')}")
+                print(
+                    f"  - {result['doc_id']}: {result['status']} - {result.get('error', 'Unknown error')}"
+                )
 
     print("\nDETAILED RESULTS:")
     for result in summary["results"]:
@@ -214,10 +227,14 @@ def main():
 
     # Exit with appropriate code
     if summary["success_rate"] >= 75:
-        print(f"\n✅ Test PASSED: {summary['success_rate']:.1f}% success rate (≥75% required)")
+        print(
+            f"\n✅ Test PASSED: {summary['success_rate']:.1f}% success rate (≥75% required)"
+        )
         sys.exit(0)
     else:
-        print(f"\n❌ Test FAILED: {summary['success_rate']:.1f}% success rate (<75% required)")
+        print(
+            f"\n❌ Test FAILED: {summary['success_rate']:.1f}% success rate (<75% required)"
+        )
         sys.exit(1)
 
 

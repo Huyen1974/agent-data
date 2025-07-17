@@ -1,8 +1,9 @@
 import random
 
+import pytest
+
 # import math # No longer needed if local normalize_vector is removed
 from fastapi.testclient import TestClient
-import pytest
 
 # Removed sys.path manipulation as not importing from agent_data directly here
 # import sys
@@ -11,10 +12,8 @@ import pytest
 # project_root = os.path.abspath(os.path.join(current_dir, "..", ".."))
 # if project_root not in sys.path:
 #     sys.path.insert(0, project_root)
-
 # Removed import of non-existent normalize_vector
 # from agent_data.utils.vector_utils import normalize_vector
-
 from api_vector_search import app
 
 client = TestClient(app)
@@ -33,7 +32,9 @@ def clear_storage_before_after_test():
     assert response.status_code == 200, "Failed to clear embeddings after test."
 
 
-def create_random_vector(dimensions: int = VECTOR_DIMENSION, precision: int = 7) -> list[float]:
+def create_random_vector(
+    dimensions: int = VECTOR_DIMENSION, precision: int = 7
+) -> list[float]:
     """Generates a random vector of a given dimension with specified precision."""
     return [round(random.uniform(-1, 1), precision) for _ in range(dimensions)]
 
@@ -73,7 +74,9 @@ def test_vector_id_collision():
     # Confirm it matches the second vector (raw, not normalized by endpoint)
     assert retrieved_point["id"] == point_id
     # The endpoint /get_vector_by_id returns the raw vector from the store.
-    assert retrieved_point["vector"] == pytest.approx(vector2, abs=1e-5)  # Compare with raw vector2
+    assert retrieved_point["vector"] == pytest.approx(
+        vector2, abs=1e-5
+    )  # Compare with raw vector2
     assert retrieved_point["metadata"] == metadata2
 
 
@@ -118,4 +121,6 @@ def test_vector_truncation_protection():
 
     # Confirm that no vector was actually inserted with this ID (important safety check)
     get_response = client.post("/get_vector_by_id", json={"point_id": point_id})
-    assert get_response.status_code == 404, f"Malformed vector with id {point_id} should not have been inserted."
+    assert (
+        get_response.status_code == 404
+    ), f"Malformed vector with id {point_id} should not have been inserted."

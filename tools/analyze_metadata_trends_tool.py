@@ -1,8 +1,8 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, Optional, Union
 from collections import Counter
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -10,8 +10,8 @@ RETRY_DELAY = 1  # seconds
 
 
 def analyze_metadata_trends(
-    index_name: str, analysis_type: str, keyword: Optional[str] = None
-) -> Dict[str, Union[str, Dict]]:
+    index_name: str, analysis_type: str, keyword: str | None = None
+) -> dict[str, str | dict]:
     """
     Simulates analysis of metadata trends based on specified type.
     Loads metadata and performs analysis like counting items per year or by keyword in a field.
@@ -31,7 +31,9 @@ def analyze_metadata_trends(
     meta_path = os.path.join(FAISS_DIR, f"{index_name}.meta")
 
     if not os.path.exists(meta_path):
-        return {"error": f"Metadata file not found for index '{index_name}' at {meta_path}. Cannot analyze trends."}
+        return {
+            "error": f"Metadata file not found for index '{index_name}' at {meta_path}. Cannot analyze trends."
+        }
 
     loaded_data = None
     for attempt in range(MAX_RETRIES):
@@ -40,21 +42,27 @@ def analyze_metadata_trends(
                 loaded_data = pickle.load(f)
             break  # Success
         except FileNotFoundError:
-            return {"error": f"Metadata file disappeared for index '{index_name}' at {meta_path} during analysis."}
+            return {
+                "error": f"Metadata file disappeared for index '{index_name}' at {meta_path} during analysis."
+            }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
     if loaded_data is None or "metadata" not in loaded_data:
-        raise ValueError(f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key.")
+        raise ValueError(
+            f"Invalid metadata file format for '{index_name}'. Missing 'metadata' key."
+        )
 
     metadata_dict = loaded_data["metadata"]
-    results: Dict[str, Any] = Counter()
+    results: dict[str, Any] = Counter()
     analysis_performed = False
 
     if analysis_type == "by_year":
@@ -65,7 +73,9 @@ def analyze_metadata_trends(
             analysis_performed = True  # Mark as performed even if no items had 'year'
     elif analysis_type == "by_project_keyword":
         if not keyword:
-            return {"error": "Keyword is required for 'by_project_keyword' analysis type."}
+            return {
+                "error": "Keyword is required for 'by_project_keyword' analysis type."
+            }
         keyword_lower = keyword.lower()
         for key, item_metadata in metadata_dict.items():
             if isinstance(item_metadata, dict) and "project" in item_metadata:
@@ -87,7 +97,9 @@ def analyze_metadata_trends(
         }
 
     if not results:
-        print(f"Warning: No matching data found for analysis type '{analysis_type}' in index '{index_name}'.")
+        print(
+            f"Warning: No matching data found for analysis type '{analysis_type}' in index '{index_name}'."
+        )
         # Return empty counter/dict to indicate no results found for the valid analysis type
         return {"analysis_type": analysis_type, "trends": {}}
 
@@ -113,7 +125,9 @@ if __name__ == "__main__":
     print("\nAnalyzing index_trends by year:")
     print(analyze_metadata_trends("index_trends", "by_year"))
     print("\nAnalyzing index_trends by project keyword 'alpha':")
-    print(analyze_metadata_trends("index_trends", "by_project_keyword", keyword="alpha"))
+    print(
+        analyze_metadata_trends("index_trends", "by_project_keyword", keyword="alpha")
+    )
     print("\nAnalyzing index_trends by project keyword 'beta':")
     print(analyze_metadata_trends("index_trends", "by_project_keyword", keyword="beta"))
     print("\nAnalyzing index_trends with unsupported type:")

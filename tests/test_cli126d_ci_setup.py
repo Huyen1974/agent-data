@@ -6,10 +6,11 @@ implemented in CLI 126D for automated testing and regression detection.
 """
 
 import os
-import pytest
 import subprocess
-import yaml
 from pathlib import Path
+
+import pytest
+import yaml
 
 
 class TestCLI126DCISetup:
@@ -24,7 +25,7 @@ class TestCLI126DCISetup:
         assert workflow_path.exists(), "Nightly workflow file should exist"
 
         # Check file content is valid YAML
-        with open(workflow_path, "r") as f:
+        with open(workflow_path) as f:
             workflow_config = yaml.safe_load(f)
 
         # Validate workflow structure
@@ -58,7 +59,8 @@ class TestCLI126DCISetup:
                 test_step_found = True
                 # Should run full suite, not just active tests
                 assert (
-                    "-m" not in step["run"] or "not slow and not deferred" not in step["run"]
+                    "-m" not in step["run"]
+                    or "not slow and not deferred" not in step["run"]
                 ), "Nightly CI should run full test suite, not just active tests"
                 break
 
@@ -76,7 +78,7 @@ class TestCLI126DCISetup:
         assert os.access(hook_path, os.X_OK), "Pre-push hook should be executable"
 
         # Check file content
-        with open(hook_path, "r") as f:
+        with open(hook_path) as f:
             content = f.read()
 
         # Should be a shell script
@@ -96,7 +98,16 @@ class TestCLI126DCISetup:
         # Simulate running the same command as the pre-push hook
         try:
             result = subprocess.run(
-                ["python", "-m", "pytest", "-q", "-m", "not slow and not deferred", "--testmon", "--maxfail=1"],
+                [
+                    "python",
+                    "-m",
+                    "pytest",
+                    "-q",
+                    "-m",
+                    "not slow and not deferred",
+                    "--testmon",
+                    "--maxfail=1",
+                ],
                 capture_output=True,
                 text=True,
                 timeout=180,  # 3 minute timeout - more reasonable
@@ -104,15 +115,23 @@ class TestCLI126DCISetup:
 
             # The hook should be able to run successfully
             # (individual test failures are handled by the hook logic)
-            assert result.returncode in [0, 1, 2], f"Hook command should return 0, 1, or 2, got {result.returncode}"
+            assert result.returncode in [
+                0,
+                1,
+                2,
+            ], f"Hook command should return 0, 1, or 2, got {result.returncode}"
 
             # Should produce output
-            assert len(result.stdout) > 0 or len(result.stderr) > 0, "Should produce test output"
+            assert (
+                len(result.stdout) > 0 or len(result.stderr) > 0
+            ), "Should produce test output"
 
         except subprocess.TimeoutExpired:
             # If tests are taking too long, it's still a valid test environment
             # Just ensure the command structure is correct
-            pytest.skip("Test execution timed out - hook command is valid but system is slow")
+            pytest.skip(
+                "Test execution timed out - hook command is valid but system is slow"
+            )
 
     @pytest.mark.unit
     def test_nightly_ci_badge_ready(self):
@@ -121,18 +140,22 @@ class TestCLI126DCISetup:
         assert workflow_path.exists(), "Nightly workflow should exist for badge"
 
         # Check that workflow has proper naming for badge generation
-        with open(workflow_path, "r") as f:
+        with open(workflow_path) as f:
             content = f.read()
 
         # Should have a clear name for badge display
         assert "name:" in content, "Workflow should have a name for badge"
-        assert "Nightly" in content or "nightly" in content, "Name should indicate nightly nature"
+        assert (
+            "Nightly" in content or "nightly" in content
+        ), "Name should indicate nightly nature"
 
     @pytest.mark.unit
     def test_cli126d_requirements_met(self):
         """Test that all CLI 126D requirements are satisfied."""
         # 1. Nightly CI setup
-        assert Path(".github/workflows/nightly.yml").exists(), "Nightly CI should be set up"
+        assert Path(
+            ".github/workflows/nightly.yml"
+        ).exists(), "Nightly CI should be set up"
 
         # 2. Git pre-push hook setup
         hook_path = Path(".git/hooks/pre-push")
@@ -151,7 +174,7 @@ class TestCLI126DCISetup:
         # Full runs include all tests for nightly regression detection
         pytest_ini_path = Path("pytest.ini")
         if pytest_ini_path.exists():
-            with open(pytest_ini_path, "r") as f:
+            with open(pytest_ini_path) as f:
                 content = f.read()
             assert "markers" in content, "Should have test markers configured"
 
@@ -161,7 +184,14 @@ class TestCLI126DCISetup:
         # Should be able to run fast tests quickly
         try:
             result = subprocess.run(
-                ["python", "-m", "pytest", "--collect-only", "-m", "not slow and not deferred"],
+                [
+                    "python",
+                    "-m",
+                    "pytest",
+                    "--collect-only",
+                    "-m",
+                    "not slow and not deferred",
+                ],
                 capture_output=True,
                 text=True,
                 timeout=30,

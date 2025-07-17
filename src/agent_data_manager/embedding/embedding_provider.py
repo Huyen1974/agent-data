@@ -1,6 +1,6 @@
 """EmbeddingProvider protocol for abstracting embedding operations."""
 
-from typing import List, Protocol
+from typing import Protocol
 
 
 class EmbeddingProvider(Protocol):
@@ -10,7 +10,7 @@ class EmbeddingProvider(Protocol):
     embedding providers (e.g., OpenAI, Vertex AI) without changing the core logic.
     """
 
-    async def embed(self, texts: List[str]) -> List[List[float]]:
+    async def embed(self, texts: list[str]) -> list[list[float]]:
         """Generate embeddings for a list of texts.
 
         Args:
@@ -24,7 +24,7 @@ class EmbeddingProvider(Protocol):
         """
         ...
 
-    async def embed_single(self, text: str) -> List[float]:
+    async def embed_single(self, text: str) -> list[float]:
         """Generate embedding for a single text.
 
         Args:

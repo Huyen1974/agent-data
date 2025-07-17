@@ -1,5 +1,5 @@
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 
 @pytest.mark.unit
@@ -14,7 +14,9 @@ def test_tag_too_long(client_with_qdrant_override: TestClient):
             "score_threshold": 0.5,
         },
     )
-    assert response.status_code == 422, f"Expected 422 for filter_tag length > 64, got {response.status_code}"
+    assert (
+        response.status_code == 422
+    ), f"Expected 422 for filter_tag length > 64, got {response.status_code}"
     error_detail = response.json().get("detail", [])
     assert any(
         detail.get("loc") == ["body", "filter_tag"]

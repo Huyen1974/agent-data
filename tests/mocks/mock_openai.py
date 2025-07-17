@@ -4,15 +4,14 @@ Prevents test failures due to OpenAI API configuration or rate limits.
 CLI119D4 - Mock OpenAI API calls.
 """
 
-import json
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 
 class MockChatCompletion:
     """Mock implementation of OpenAI ChatCompletion."""
 
     @staticmethod
-    def create(*args, **kwargs) -> Dict[str, Any]:
+    def create(*args, **kwargs) -> dict[str, Any]:
         """Mock ChatCompletion.create method."""
         # Extract model and messages if provided
         model = kwargs.get("model", "gpt-3.5-turbo")
@@ -34,7 +33,11 @@ class MockChatCompletion:
             "created": 1234567890,
             "model": model,
             "choices": [
-                {"index": 0, "message": {"role": "assistant", "content": mock_response}, "finish_reason": "stop"}
+                {
+                    "index": 0,
+                    "message": {"role": "assistant", "content": mock_response},
+                    "finish_reason": "stop",
+                }
             ],
             "usage": {"prompt_tokens": 50, "completion_tokens": 10, "total_tokens": 60},
         }
@@ -44,7 +47,7 @@ class MockEmbeddings:
     """Mock implementation of OpenAI Embeddings."""
 
     @staticmethod
-    def create(*args, **kwargs) -> Dict[str, Any]:
+    def create(*args, **kwargs) -> dict[str, Any]:
         """Mock Embeddings.create method."""
         input_text = kwargs.get("input", "test input")
         model = kwargs.get("model", "text-embedding-ada-002")
@@ -65,12 +68,15 @@ class MockEmbeddings:
                     byte_index = (j * 4) % len(text_hash)
                     value = struct.unpack(
                         "f",
-                        text_hash[byte_index : byte_index + 4] * (4 // len(text_hash[byte_index : byte_index + 4]) + 1),
+                        text_hash[byte_index : byte_index + 4]
+                        * (4 // len(text_hash[byte_index : byte_index + 4]) + 1),
                     )[0]
                     # Normalize to [-1, 1]
                     vector.append(max(-1.0, min(1.0, value / 1000000)))
 
-                embeddings.append({"object": "embedding", "index": i, "embedding": vector})
+                embeddings.append(
+                    {"object": "embedding", "index": i, "embedding": vector}
+                )
         else:
             # Single text input
             text_hash = hashlib.md5(str(input_text).encode()).digest()
@@ -87,7 +93,10 @@ class MockEmbeddings:
             "object": "list",
             "data": embeddings,
             "model": model,
-            "usage": {"prompt_tokens": len(str(input_text)), "total_tokens": len(str(input_text))},
+            "usage": {
+                "prompt_tokens": len(str(input_text)),
+                "total_tokens": len(str(input_text)),
+            },
         }
 
 

@@ -4,7 +4,7 @@ Batches: 171 batches of ≤3 tests each
 Runtime: ~9 minutes total (~2.7s average per batch)
 Status Distribution:
 - PASSED: 129 tests
-- SKIPPED: 370 tests  
+- SKIPPED: 370 tests
 - FAILED: 14 tests
 - TIMEOUT: 0 tests (eliminated successfully)
 - UNKNOWN: 0 tests (eliminated successfully)
@@ -26,4 +26,4 @@ Issues Remaining:
 Next Steps for CLI140m.64:
 - Analyze and fix the 14 failed tests
 - Reduce skipped tests by removing unnecessary @pytest.mark.deferred decorators
-- Achieve target of ~6 intentional skips only 
+- Achieve target of ~6 intentional skips only

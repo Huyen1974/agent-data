@@ -1,14 +1,16 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any, List
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
-def advanced_query_faiss(index_name: str, criteria: Dict[str, Any]) -> List[Dict[str, Any]]:
+def advanced_query_faiss(
+    index_name: str, criteria: dict[str, Any]
+) -> list[dict[str, Any]]:
     """
     Queries the metadata loaded from the specified FAISS index's companion file
     based on multiple field criteria.
@@ -33,7 +35,9 @@ def advanced_query_faiss(index_name: str, criteria: Dict[str, Any]) -> List[Dict
         return []
 
     if not os.path.exists(meta_path):
-        print(f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot perform query.")
+        print(
+            f"Warning: Metadata file not found for index '{index_name}' at {meta_path}. Cannot perform query."
+        )
         return []  # Return empty list as per requirement
 
     loaded_data = None
@@ -43,15 +47,19 @@ def advanced_query_faiss(index_name: str, criteria: Dict[str, Any]) -> List[Dict
                 loaded_data = pickle.load(f)
             break  # Success
         except FileNotFoundError:
-            print(f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during query.")
+            print(
+                f"Warning: Metadata file disappeared for index '{index_name}' at {meta_path} during query."
+            )
             return []  # File gone, return empty
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
                 # Raise error after retries fail for loading issues other than FileNotFoundError
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -75,7 +83,9 @@ def advanced_query_faiss(index_name: str, criteria: Dict[str, Any]) -> List[Dict
             results.append({key: item_metadata})
 
     if not results:
-        print(f"No metadata entries in index '{index_name}' matched all criteria: {criteria}")
+        print(
+            f"No metadata entries in index '{index_name}' matched all criteria: {criteria}"
+        )
 
     return results
 
@@ -89,7 +99,9 @@ if __name__ == "__main__":
     print(advanced_query_faiss("index_v1", {"type": "summary"}))
     print("\\nQuerying index_v2 for {'project': 'X'}:")
     print(advanced_query_faiss("index_v2", {"project": "X"}))
-    print("\\nQuerying index_v1 for {'author': 'A', 'status': 'draft'} (should be empty):")
+    print(
+        "\\nQuerying index_v1 for {'author': 'A', 'status': 'draft'} (should be empty):"
+    )
     print(advanced_query_faiss("index_v1", {"author": "A", "status": "draft"}))
     print("\\nQuerying non_existent_index for {'a': 1}:")
     print(advanced_query_faiss("non_existent_index", {"a": 1}))

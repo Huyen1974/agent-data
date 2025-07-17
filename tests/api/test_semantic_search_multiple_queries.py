@@ -1,5 +1,5 @@
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 
 @pytest.mark.unit
@@ -20,7 +20,9 @@ def test_semantic_search_multiple_queries(client_with_qdrant_override: TestClien
         )
         assert response.status_code == 200
         results = response.json().get("results", [])
-        assert len(results) == 1, f"Expected 1 result for '{query['query_text']}', got {len(results)}"
+        assert (
+            len(results) == 1
+        ), f"Expected 1 result for '{query['query_text']}', got {len(results)}"
         assert (
             results[0]["id"] == query["expected_id"]
         ), f"Expected ID {query['expected_id']} for '{query['query_text']}'"

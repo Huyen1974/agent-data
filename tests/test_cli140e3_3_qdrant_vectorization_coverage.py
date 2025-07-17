@@ -1,19 +1,19 @@
-
 """
 Test coverage for qdrant_vectorization_tool.py - CLI140e.3.3
 Target: Increase coverage from 15% to 65% with approximately 5 unit tests
 """
 
-import pytest
 import time
 from unittest.mock import AsyncMock, patch
+
+import pytest
 
 from src.agent_data_manager.tools.qdrant_vectorization_tool import (
     QdrantVectorizationTool,
     get_vectorization_tool,
-    qdrant_vectorize_document,
-    qdrant_rag_search,
     qdrant_batch_vectorize_documents,
+    qdrant_rag_search,
+    qdrant_vectorize_document,
 )
 
 
@@ -26,7 +26,9 @@ class TestQdrantVectorizationToolCoverage:
         """Setup for each test method."""
         self.mock_embedding_provider = AsyncMock()
         self.mock_embedding_provider.embed_single.return_value = [0.1] * 1536
-        self.mock_embedding_provider.get_model_name.return_value = "text-embedding-ada-002"
+        self.mock_embedding_provider.get_model_name.return_value = (
+            "text-embedding-ada-002"
+        )
 
     @pytest.mark.asyncio
     async def test_rate_limit_enforcement(self):
@@ -60,9 +62,15 @@ class TestQdrantVectorizationToolCoverage:
         assert tool.firestore_manager is None
 
         # Mock the initialization dependencies
-        with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.settings") as mock_settings, patch(
-            "src.agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"
-        ), patch("src.agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"):
+        with (
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+            patch("src.agent_data_manager.tools.qdrant_vectorization_tool.QdrantStore"),
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.FirestoreMetadataManager"
+            ),
+        ):
 
             mock_settings.get_qdrant_config.return_value = {
                 "url": "test_url",
@@ -93,18 +101,24 @@ class TestQdrantVectorizationToolCoverage:
         tool = QdrantVectorizationTool(embedding_provider=self.mock_embedding_provider)
 
         # Mock all dependencies
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch.object(
-            tool, "_update_vector_status"
-        ) as mock_update_status, patch(
-            "src.agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
-        ) as mock_auto_tag, patch(
-            "src.agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
-        ) as mock_event_mgr:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch.object(tool, "_update_vector_status") as mock_update_status,
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.get_auto_tagging_tool"
+            ) as mock_auto_tag,
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.get_event_manager"
+            ) as mock_event_mgr,
+        ):
 
             # Setup mocks
             mock_init.return_value = None
             tool.qdrant_store = AsyncMock()
-            tool.qdrant_store.upsert_vector.return_value = {"success": True, "vector_id": "test_doc_1"}
+            tool.qdrant_store.upsert_vector.return_value = {
+                "success": True,
+                "vector_id": "test_doc_1",
+            }
 
             mock_auto_tagging = AsyncMock()
             mock_auto_tagging.enhance_metadata_with_tags.return_value = {
@@ -114,7 +128,9 @@ class TestQdrantVectorizationToolCoverage:
             mock_auto_tag.return_value = mock_auto_tagging
 
             mock_event_manager = AsyncMock()
-            mock_event_manager.publish_save_document_event.return_value = {"status": "published"}
+            mock_event_manager.publish_save_document_event.return_value = {
+                "status": "published"
+            }
             mock_event_mgr.return_value = mock_event_manager
 
             # Test vectorization
@@ -135,8 +151,12 @@ class TestQdrantVectorizationToolCoverage:
             assert result["firestore_updated"] is True
 
             # Verify calls
-            mock_update_status.assert_any_call("test_doc_1", "pending", {"test": "metadata"})
-            mock_update_status.assert_any_call("test_doc_1", "completed", {"test": "metadata"})
+            mock_update_status.assert_any_call(
+                "test_doc_1", "pending", {"test": "metadata"}
+            )
+            mock_update_status.assert_any_call(
+                "test_doc_1", "completed", {"test": "metadata"}
+            )
             mock_auto_tagging.enhance_metadata_with_tags.assert_called_once()
             mock_event_manager.publish_save_document_event.assert_called_once()
 
@@ -148,15 +168,20 @@ class TestQdrantVectorizationToolCoverage:
         # Make embedding fail
         from src.agent_data_manager.embedding.embedding_provider import EmbeddingError
 
-        self.mock_embedding_provider.embed_single.side_effect = EmbeddingError("Embedding failed")
+        self.mock_embedding_provider.embed_single.side_effect = EmbeddingError(
+            "Embedding failed"
+        )
 
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch.object(
-            tool, "_update_vector_status"
-        ) as mock_update_status:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch.object(tool, "_update_vector_status") as mock_update_status,
+        ):
 
             mock_init.return_value = None
 
-            result = await tool.vectorize_document(doc_id="test_doc_1", content="Test content", update_firestore=True)
+            result = await tool.vectorize_document(
+                doc_id="test_doc_1", content="Test content", update_firestore=True
+            )
 
             # Verify error handling
             assert result["status"] == "failed"
@@ -165,7 +190,9 @@ class TestQdrantVectorizationToolCoverage:
 
             # Verify status update
             mock_update_status.assert_any_call("test_doc_1", "pending", None)
-            mock_update_status.assert_any_call("test_doc_1", "failed", None, "Embedding failed")
+            mock_update_status.assert_any_call(
+                "test_doc_1", "failed", None, "Embedding failed"
+            )
 
     @pytest.mark.asyncio
     async def test_rag_search_with_mocked_components(self):
@@ -174,13 +201,19 @@ class TestQdrantVectorizationToolCoverage:
 
         # Test filtering methods directly for coverage
         sample_results = [
-            {"auto_tags": ["tag1", "tag2"], "category": "test", "level_1_category": "cat1"},
+            {
+                "auto_tags": ["tag1", "tag2"],
+                "category": "test",
+                "level_1_category": "cat1",
+            },
             {"auto_tags": ["tag3"], "category": "other", "level_1_category": "cat2"},
             {"auto_tags": ["tag1"], "category": "test", "level_2_category": "subcat1"},
         ]
 
         # Test metadata filtering
-        filtered_by_metadata = tool._filter_by_metadata(sample_results, {"category": "test"})
+        filtered_by_metadata = tool._filter_by_metadata(
+            sample_results, {"category": "test"}
+        )
         assert len(filtered_by_metadata) == 2
 
         # Test tag filtering
@@ -200,9 +233,10 @@ class TestQdrantVectorizationToolCoverage:
         """Test complete RAG search workflow with mocked dependencies."""
         tool = QdrantVectorizationTool(embedding_provider=self.mock_embedding_provider)
 
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch.object(
-            tool, "_batch_get_firestore_metadata"
-        ) as mock_batch_get:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch.object(tool, "_batch_get_firestore_metadata") as mock_batch_get,
+        ):
 
             mock_init.return_value = None
             tool.qdrant_store = AsyncMock()
@@ -218,8 +252,16 @@ class TestQdrantVectorizationToolCoverage:
 
             # Mock Firestore metadata
             mock_batch_get.return_value = {
-                "doc1": {"auto_tags": ["tag1"], "category": "test", "level_1_category": "cat1"},
-                "doc2": {"auto_tags": ["tag2"], "category": "other", "level_1_category": "cat2"},
+                "doc1": {
+                    "auto_tags": ["tag1"],
+                    "category": "test",
+                    "level_1_category": "cat1",
+                },
+                "doc2": {
+                    "auto_tags": ["tag2"],
+                    "category": "other",
+                    "level_1_category": "cat2",
+                },
             }
 
             # Test RAG search
@@ -243,9 +285,13 @@ class TestQdrantVectorizationToolCoverage:
         """Test batch vectorization with success and failure cases."""
         tool = QdrantVectorizationTool(embedding_provider=self.mock_embedding_provider)
 
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch.object(
-            tool, "vectorize_document"
-        ) as mock_vectorize, patch("src.agent_data_manager.tools.qdrant_vectorization_tool.settings") as mock_settings:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch.object(tool, "vectorize_document") as mock_vectorize,
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+        ):
 
             mock_init.return_value = None
             mock_settings.get_qdrant_config.return_value = {
@@ -261,12 +307,18 @@ class TestQdrantVectorizationToolCoverage:
             ]
 
             documents = [
-                {"doc_id": "doc1", "content": "Content 1", "metadata": {"test": "meta1"}},
+                {
+                    "doc_id": "doc1",
+                    "content": "Content 1",
+                    "metadata": {"test": "meta1"},
+                },
                 {"doc_id": "doc2", "content": "Content 2"},
                 {"doc_id": "doc3", "content": "Content 3"},
             ]
 
-            result = await tool.batch_vectorize_documents(documents, tag="batch_tag", update_firestore=True)
+            result = await tool.batch_vectorize_documents(
+                documents, tag="batch_tag", update_firestore=True
+            )
 
             # Verify batch results
             assert result["status"] == "completed"
@@ -281,9 +333,12 @@ class TestQdrantVectorizationToolCoverage:
         """Test batch vectorization with invalid document formats."""
         tool = QdrantVectorizationTool(embedding_provider=self.mock_embedding_provider)
 
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch(
-            "src.agent_data_manager.tools.qdrant_vectorization_tool.settings"
-        ) as mock_settings:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch(
+                "src.agent_data_manager.tools.qdrant_vectorization_tool.settings"
+            ) as mock_settings,
+        ):
 
             mock_init.return_value = None
             mock_settings.get_qdrant_config.return_value = {
@@ -322,26 +377,36 @@ class TestQdrantVectorizationToolCoverage:
         tool.firestore_manager.save_metadata.side_effect = Exception("Firestore error")
 
         # Should not raise exception even if Firestore fails
-        await tool._update_vector_status("test_doc", "failed", {"test": "meta"}, "Test error")
+        await tool._update_vector_status(
+            "test_doc", "failed", {"test": "meta"}, "Test error"
+        )
 
         # Verify the call was attempted
         tool.firestore_manager.save_metadata.assert_called_once()
 
     @pytest.mark.asyncio
-    @pytest.mark.xfail(reason="CLI140m.69: Async vectorization test with timeout issues")
+    @pytest.mark.xfail(
+        reason="CLI140m.69: Async vectorization test with timeout issues"
+    )
     async def test_vectorize_document_upsert_failure(self):
         """Test handling of Qdrant upsert failures."""
         tool = QdrantVectorizationTool(embedding_provider=self.mock_embedding_provider)
 
-        with patch.object(tool, "_ensure_initialized") as mock_init, patch.object(
-            tool, "_update_vector_status"
-        ) as mock_update_status:
+        with (
+            patch.object(tool, "_ensure_initialized") as mock_init,
+            patch.object(tool, "_update_vector_status") as mock_update_status,
+        ):
 
             mock_init.return_value = None
             tool.qdrant_store = AsyncMock()
-            tool.qdrant_store.upsert_vector.return_value = {"success": False, "error": "Upsert failed"}
+            tool.qdrant_store.upsert_vector.return_value = {
+                "success": False,
+                "error": "Upsert failed",
+            }
 
-            result = await tool.vectorize_document(doc_id="test_doc", content="Test content", update_firestore=True)
+            result = await tool.vectorize_document(
+                doc_id="test_doc", content="Test content", update_firestore=True
+            )
 
             # Verify error handling
             assert result["status"] == "failed"
@@ -350,7 +415,9 @@ class TestQdrantVectorizationToolCoverage:
 
             # Verify status updates
             mock_update_status.assert_any_call("test_doc", "pending", None)
-            mock_update_status.assert_any_call("test_doc", "failed", None, "Failed to upsert vector: Upsert failed")
+            mock_update_status.assert_any_call(
+                "test_doc", "failed", None, "Failed to upsert vector: Upsert failed"
+            )
 
 
 @pytest.mark.unit
@@ -374,13 +441,22 @@ def test_get_vectorization_tool_factory():
 @pytest.mark.asyncio
 async def test_qdrant_vectorize_document_function():
     """Test the standalone qdrant_vectorize_document function."""
-    with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
+    with patch(
+        "src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool"
+    ) as mock_get_tool:
         mock_tool = AsyncMock()
-        mock_tool.vectorize_document.return_value = {"status": "success", "doc_id": "test_doc"}
+        mock_tool.vectorize_document.return_value = {
+            "status": "success",
+            "doc_id": "test_doc",
+        }
         mock_get_tool.return_value = mock_tool
 
         result = await qdrant_vectorize_document(
-            doc_id="test_doc", content="test content", metadata={"test": "meta"}, tag="test_tag", update_firestore=True
+            doc_id="test_doc",
+            content="test content",
+            metadata={"test": "meta"},
+            tag="test_tag",
+            update_firestore=True,
         )
 
         assert result["status"] == "success"
@@ -393,7 +469,9 @@ async def test_qdrant_vectorize_document_function():
 @pytest.mark.asyncio
 async def test_qdrant_rag_search_function():
     """Test the standalone qdrant_rag_search function."""
-    with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
+    with patch(
+        "src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool"
+    ) as mock_get_tool:
         mock_tool = AsyncMock()
         mock_tool.rag_search.return_value = {"status": "success", "results": []}
         mock_get_tool.return_value = mock_tool
@@ -423,14 +501,27 @@ async def test_qdrant_rag_search_function():
 @pytest.mark.asyncio
 async def test_batch_vectorize_documents_function():
     """Test the standalone qdrant_batch_vectorize_documents function."""
-    with patch("src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool") as mock_get_tool:
+    with patch(
+        "src.agent_data_manager.tools.qdrant_vectorization_tool.get_vectorization_tool"
+    ) as mock_get_tool:
         mock_tool = AsyncMock()
-        mock_tool.batch_vectorize_documents.return_value = {"status": "completed", "successful": 2, "failed": 0}
+        mock_tool.batch_vectorize_documents.return_value = {
+            "status": "completed",
+            "successful": 2,
+            "failed": 0,
+        }
         mock_get_tool.return_value = mock_tool
 
-        documents = [{"doc_id": "doc1", "content": "content1"}, {"doc_id": "doc2", "content": "content2"}]
-        result = await qdrant_batch_vectorize_documents(documents, tag="batch_tag", update_firestore=True)
+        documents = [
+            {"doc_id": "doc1", "content": "content1"},
+            {"doc_id": "doc2", "content": "content2"},
+        ]
+        result = await qdrant_batch_vectorize_documents(
+            documents, tag="batch_tag", update_firestore=True
+        )
 
         assert result["status"] == "completed"
         assert result["successful"] == 2
-        mock_tool.batch_vectorize_documents.assert_called_once_with(documents, "batch_tag", True)
+        mock_tool.batch_vectorize_documents.assert_called_once_with(
+            documents, "batch_tag", True
+        )

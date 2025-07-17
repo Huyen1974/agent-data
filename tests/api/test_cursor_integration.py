@@ -3,9 +3,10 @@ Test suite for Cursor IDE integration via MCP stdio
 Tests enhanced document storage from Cursor IDE to Qdrant/Firestore
 """
 
-import pytest
 import json
 from unittest.mock import AsyncMock
+
+import pytest
 
 # Import the function we need to test
 from agent_data_manager.local_mcp_server import handle_cursor_document_storage
@@ -24,7 +25,12 @@ class TestCursorIntegration:
                 "doc_id": doc_id,  # Return the actual doc_id passed in
                 "vector_id": f"vec_{doc_id}",
                 "embedding_dimension": 1536,
-                "metadata_keys": ["doc_id", "content_preview", "vectorized_at", "source"],
+                "metadata_keys": [
+                    "doc_id",
+                    "content_preview",
+                    "vectorized_at",
+                    "source",
+                ],
                 "firestore_updated": True,
             }
         )
@@ -54,14 +60,21 @@ class TestCursorIntegration:
         """Minimal Cursor IDE save request"""
         return {
             "tool_name": "cursor_save_document",
-            "kwargs": {"doc_id": "cursor_minimal_001", "content": "Minimal test document from Cursor."},
+            "kwargs": {
+                "doc_id": "cursor_minimal_001",
+                "content": "Minimal test document from Cursor.",
+            },
         }
 
     @pytest.mark.asyncio
-    async def test_handle_cursor_document_storage_success(self, mock_vectorization_tool, cursor_save_request):
+    async def test_handle_cursor_document_storage_success(
+        self, mock_vectorization_tool, cursor_save_request
+    ):
         """Test successful Cursor document storage"""
         result = await handle_cursor_document_storage(
-            mock_vectorization_tool, cursor_save_request["tool_name"], cursor_save_request
+            mock_vectorization_tool,
+            cursor_save_request["tool_name"],
+            cursor_save_request,
         )
 
         # Verify result structure
@@ -95,10 +108,14 @@ class TestCursorIntegration:
         assert "processed_at" in metadata
 
     @pytest.mark.asyncio
-    async def test_handle_cursor_document_storage_minimal(self, mock_vectorization_tool, minimal_cursor_request):
+    async def test_handle_cursor_document_storage_minimal(
+        self, mock_vectorization_tool, minimal_cursor_request
+    ):
         """Test Cursor document storage with minimal request"""
         result = await handle_cursor_document_storage(
-            mock_vectorization_tool, minimal_cursor_request["tool_name"], minimal_cursor_request
+            mock_vectorization_tool,
+            minimal_cursor_request["tool_name"],
+            minimal_cursor_request,
         )
 
         assert result["status"] == "success"
@@ -117,23 +134,45 @@ class TestCursorIntegration:
         assert metadata["integration_type"] == "mcp_stdio"
 
     @pytest.mark.asyncio
-    async def test_handle_cursor_document_storage_missing_doc_id(self, mock_vectorization_tool):
+    async def test_handle_cursor_document_storage_missing_doc_id(
+        self, mock_vectorization_tool
+    ):
         """Test Cursor document storage with missing doc_id"""
-        invalid_request = {"tool_name": "cursor_save_document", "kwargs": {"content": "Document without doc_id"}}
+        invalid_request = {
+            "tool_name": "cursor_save_document",
+            "kwargs": {"content": "Document without doc_id"},
+        }
 
-        with pytest.raises(ValueError, match="cursor_save_document requires 'doc_id' and 'content' in kwargs"):
-            await handle_cursor_document_storage(mock_vectorization_tool, invalid_request["tool_name"], invalid_request)
+        with pytest.raises(
+            ValueError,
+            match="cursor_save_document requires 'doc_id' and 'content' in kwargs",
+        ):
+            await handle_cursor_document_storage(
+                mock_vectorization_tool, invalid_request["tool_name"], invalid_request
+            )
 
     @pytest.mark.asyncio
-    async def test_handle_cursor_document_storage_missing_content(self, mock_vectorization_tool):
+    async def test_handle_cursor_document_storage_missing_content(
+        self, mock_vectorization_tool
+    ):
         """Test Cursor document storage with missing content"""
-        invalid_request = {"tool_name": "cursor_save_document", "kwargs": {"doc_id": "cursor_invalid_001"}}
+        invalid_request = {
+            "tool_name": "cursor_save_document",
+            "kwargs": {"doc_id": "cursor_invalid_001"},
+        }
 
-        with pytest.raises(ValueError, match="cursor_save_document requires 'doc_id' and 'content' in kwargs"):
-            await handle_cursor_document_storage(mock_vectorization_tool, invalid_request["tool_name"], invalid_request)
+        with pytest.raises(
+            ValueError,
+            match="cursor_save_document requires 'doc_id' and 'content' in kwargs",
+        ):
+            await handle_cursor_document_storage(
+                mock_vectorization_tool, invalid_request["tool_name"], invalid_request
+            )
 
     @pytest.mark.asyncio
-    async def test_handle_cursor_document_storage_vectorization_failure(self, cursor_save_request):
+    async def test_handle_cursor_document_storage_vectorization_failure(
+        self, cursor_save_request
+    ):
         """Test Cursor document storage when vectorization fails"""
         # Mock vectorization tool that returns failure
         mock_tool = AsyncMock()
@@ -143,7 +182,9 @@ class TestCursorIntegration:
             "error": "Failed to generate embedding",
         }
 
-        result = await handle_cursor_document_storage(mock_tool, cursor_save_request["tool_name"], cursor_save_request)
+        result = await handle_cursor_document_storage(
+            mock_tool, cursor_save_request["tool_name"], cursor_save_request
+        )
 
         # Should still return result but with failed status
         assert result["status"] == "failed"
@@ -156,10 +197,14 @@ class TestCursorIntegration:
         assert cursor_info["save_dir"] == "ide_docs"
 
     @pytest.mark.asyncio
-    async def test_cursor_metadata_enhancement(self, mock_vectorization_tool, cursor_save_request):
+    async def test_cursor_metadata_enhancement(
+        self, mock_vectorization_tool, cursor_save_request
+    ):
         """Test that Cursor metadata is properly enhanced"""
         await handle_cursor_document_storage(
-            mock_vectorization_tool, cursor_save_request["tool_name"], cursor_save_request
+            mock_vectorization_tool,
+            cursor_save_request["tool_name"],
+            cursor_save_request,
         )
 
         call_args = mock_vectorization_tool.vectorize_document.call_args
@@ -183,7 +228,11 @@ class TestCursorIntegration:
                 "doc_id": "cursor_compatibility_001",
                 "content": "Testing JSON compatibility for Cursor IDE integration.",
                 "save_dir": "compatibility_test",
-                "metadata": {"source": "cursor_ide", "editor": "cursor", "language": "python"},
+                "metadata": {
+                    "source": "cursor_ide",
+                    "editor": "cursor",
+                    "language": "python",
+                },
             },
         }
 
@@ -198,7 +247,9 @@ class TestCursorIntegration:
         assert parsed["kwargs"]["metadata"]["editor"] == "cursor"
 
     @pytest.mark.asyncio
-    async def test_cursor_integration_different_save_dirs(self, mock_vectorization_tool):
+    async def test_cursor_integration_different_save_dirs(
+        self, mock_vectorization_tool
+    ):
         """Test Cursor integration with different save directories"""
         test_cases = [
             ("project_docs", "cursor_project_docs"),
@@ -221,7 +272,9 @@ class TestCursorIntegration:
             if save_dir is None:
                 del request["kwargs"]["save_dir"]
 
-            result = await handle_cursor_document_storage(mock_vectorization_tool, request["tool_name"], request)
+            result = await handle_cursor_document_storage(
+                mock_vectorization_tool, request["tool_name"], request
+            )
 
             cursor_info = result["cursor_integration"]
             assert cursor_info["qdrant_tag"] == expected_tag
@@ -230,7 +283,9 @@ class TestCursorIntegration:
             mock_vectorization_tool.reset_mock()
 
     @pytest.mark.asyncio
-    async def test_cursor_integration_real_world_scenario(self, mock_vectorization_tool):
+    async def test_cursor_integration_real_world_scenario(
+        self, mock_vectorization_tool
+    ):
         """Test a real-world scenario of Cursor IDE integration"""
         # Simulate a real Cursor IDE scenario where a developer saves a code snippet
         real_world_request = {

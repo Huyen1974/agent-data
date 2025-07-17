@@ -1,8 +1,9 @@
-import pytest
-import random
-import uuid
-import sys
 import os
+import random
+import sys
+import uuid
+
+import pytest
 from fastapi.testclient import TestClient
 
 # Adjust sys.path to include the project root
@@ -40,17 +41,23 @@ def test_get_vector_by_id_not_found():
     Tests retrieving a non-existent vector by ID.
     Expected behavior: 404 Not Found.
     """
-    non_existent_point_id = random.randint(9000000, 9999999)  # A high range unlikely to exist
+    non_existent_point_id = random.randint(
+        9000000, 9999999
+    )  # A high range unlikely to exist
 
     # Corrected: Use POST with JSON body
-    response = client.post("/get_vector_by_id", json={"point_id": non_existent_point_id})
+    response = client.post(
+        "/get_vector_by_id", json={"point_id": non_existent_point_id}
+    )
 
     assert (
         response.status_code == 404
     ), f"Expected status code 404 for non-existent ID, but got {response.status_code}. Response: {response.text}"
 
     response_json = response.json()
-    assert "detail" in response_json, "Response JSON should contain a 'detail' field for errors."
+    assert (
+        "detail" in response_json
+    ), "Response JSON should contain a 'detail' field for errors."
     # The exact message might vary, but it should indicate not found.
     # Example: "Point id {non_existent_point_id} not found!"
     # Example from Qdrant: "Not found: Point with id {point_id} does not exist!"
@@ -58,7 +65,8 @@ def test_get_vector_by_id_not_found():
         str(non_existent_point_id) in response_json["detail"]
     ), f"Error detail should mention the point ID. Got: {response_json['detail']}"
     assert (
-        "not found" in response_json["detail"].lower() or "does not exist" in response_json["detail"].lower()
+        "not found" in response_json["detail"].lower()
+        or "does not exist" in response_json["detail"].lower()
     ), f"Error detail should indicate 'not found' or 'does not exist'. Got: {response_json['detail']}"
 
 
@@ -73,7 +81,9 @@ def test_upsert_vector_invalid_input():
     malformed_vector = create_random_vector(dim=VECTOR_DIMENSION + 1)
     payload = {"tag": generate_unique_tag()}
 
-    upsert_payload = {"points": [{"id": point_id, "vector": malformed_vector, "payload": payload}]}
+    upsert_payload = {
+        "points": [{"id": point_id, "vector": malformed_vector, "payload": payload}]
+    }
 
     response = client.post("/upsert_vector", json=upsert_payload)
 
@@ -82,9 +92,13 @@ def test_upsert_vector_invalid_input():
     ), f"Expected status code 422 for invalid input, but got {response.status_code}. Response: {response.text}"
 
     response_json = response.json()
-    assert "detail" in response_json, "Response JSON should contain a 'detail' field for validation errors."
+    assert (
+        "detail" in response_json
+    ), "Response JSON should contain a 'detail' field for validation errors."
     # We can check if the detail is a list (FastAPI typically returns a list of error objects)
-    assert isinstance(response_json["detail"], list), "Error detail should be a list of error objects."
+    assert isinstance(
+        response_json["detail"], list
+    ), "Error detail should be a list of error objects."
     assert len(response_json["detail"]) > 0, "Error detail list should not be empty."
 
     # Check for a message that indicates a vector dimension issue or validation error for the vector field.
@@ -93,7 +107,9 @@ def test_upsert_vector_invalid_input():
     for error in response_json["detail"]:
         if "loc" in error and isinstance(error["loc"], list):
             # Example loc: ["body", "points", 0, "vector"]
-            if "vector" in error["loc"] or (len(error["loc"]) > 0 and "vector" in str(error["loc"][-1])):
+            if "vector" in error["loc"] or (
+                len(error["loc"]) > 0 and "vector" in str(error["loc"][-1])
+            ):
                 found_vector_error = True
                 # Further check msg if needed, e.g., error["msg"] might contain "dimension"
                 break
@@ -117,21 +133,36 @@ def test_query_vectors_by_ids_partial_invalid():
     valid_point_id = random.randint(2000001, 3000000)
     valid_vector = create_random_vector()
     valid_tag = generate_unique_tag()
-    valid_payload_metadata = {"tag": valid_tag, "description": "valid_point"}  # Renamed for clarity, this is metadata
+    valid_payload_metadata = {
+        "tag": valid_tag,
+        "description": "valid_point",
+    }  # Renamed for clarity, this is metadata
 
     # Corrected upsert payload for /upsert_vector (single item)
     # It expects point_id, vector, and metadata directly in the body.
-    upsert_payload_corrected = {"point_id": valid_point_id, "vector": valid_vector, "metadata": valid_payload_metadata}
+    upsert_payload_corrected = {
+        "point_id": valid_point_id,
+        "vector": valid_vector,
+        "metadata": valid_payload_metadata,
+    }
 
     upsert_response = client.post("/upsert_vector", json=upsert_payload_corrected)
-    assert upsert_response.status_code == 200, f"Failed to upsert valid vector: {upsert_response.text}"
+    assert (
+        upsert_response.status_code == 200
+    ), f"Failed to upsert valid vector: {upsert_response.text}"
 
     # The /upsert_vector endpoint returns { "status": "success" | "updated", "point_id": id }
     # Let's check the response structure based on the API if needed, for now, status 200 is primary.
     upsert_response_json = upsert_response.json()
-    assert "status" in upsert_response_json, f"Upsert response missing 'status': {upsert_response.text}"
-    assert upsert_response_json["status"] == "ok", f"Upsert status not 'ok': {upsert_response_json['status']}"
-    assert "point_id" in upsert_response_json, f"Upsert response missing 'point_id': {upsert_response.text}"
+    assert (
+        "status" in upsert_response_json
+    ), f"Upsert response missing 'status': {upsert_response.text}"
+    assert (
+        upsert_response_json["status"] == "ok"
+    ), f"Upsert status not 'ok': {upsert_response_json['status']}"
+    assert (
+        "point_id" in upsert_response_json
+    ), f"Upsert response missing 'point_id': {upsert_response.text}"
     assert (
         upsert_response_json["point_id"] == valid_point_id
     ), f"Upsert response point_id mismatch: {upsert_response_json['point_id']}"
@@ -142,7 +173,9 @@ def test_query_vectors_by_ids_partial_invalid():
     # 3. Query with 1 valid + 1 invalid point_id
     point_ids_to_query = [valid_point_id, non_existent_point_id]
     # Also test with non-existent first to ensure order doesn't matter for retrieval
-    point_ids_to_query_shuffled = random.sample(point_ids_to_query, len(point_ids_to_query))
+    point_ids_to_query_shuffled = random.sample(
+        point_ids_to_query, len(point_ids_to_query)
+    )
 
     query_body = {"point_ids": point_ids_to_query_shuffled, "limit": 10}
     query_response = client.post("/query_vectors_by_ids", json=query_body)
@@ -184,7 +217,9 @@ def test_delete_vector_not_found():
     or 404 if the API layer specifically checks existence before trying to delete and returns 404.
     Based on current understanding of /delete_vector, it should be 200.
     """
-    non_existent_point_id = random.randint(9000000, 9999999)  # A high range unlikely to exist
+    non_existent_point_id = random.randint(
+        9000000, 9999999
+    )  # A high range unlikely to exist
 
     # The /delete_vector endpoint expects a JSON body like {"point_id": id_value}
     delete_payload = {"point_id": non_existent_point_id}
@@ -198,15 +233,21 @@ def test_delete_vector_not_found():
 
     response_json = response.json()
     assert "status" in response_json, "Response JSON should contain a 'status' field."
-    assert response_json["status"] == "deleted", f"Expected status 'deleted', but got '{response_json['status']}'"
-    assert "point_id" in response_json, "Response JSON should contain a 'point_id' field."
+    assert (
+        response_json["status"] == "deleted"
+    ), f"Expected status 'deleted', but got '{response_json['status']}'"
+    assert (
+        "point_id" in response_json
+    ), "Response JSON should contain a 'point_id' field."
     assert (
         response_json["point_id"] == non_existent_point_id
     ), f"Expected point_id {non_existent_point_id} in response, but got {response_json['point_id']}"
 
     # To absolutely confirm it's not there, try to get it (should be 404)
     # Corrected: Use POST with JSON body
-    get_response = client.post("/get_vector_by_id", json={"point_id": non_existent_point_id})
+    get_response = client.post(
+        "/get_vector_by_id", json={"point_id": non_existent_point_id}
+    )
     assert (
         get_response.status_code == 404
     ), f"Expected 404 when trying to get the supposedly deleted non-existent vector, but got {get_response.status_code}. This indicates it might have somehow been created or the delete logic is different."

@@ -3,16 +3,16 @@ Test suite for JWT Authentication functionality in API A2A Gateway
 Tests login, token validation, rate limiting, and security features
 """
 
-import pytest
-import time
 import os
-from unittest.mock import patch, MagicMock
-from jose import jwt
+import time
 from datetime import datetime, timedelta
+from unittest.mock import MagicMock, patch
+
+import pytest
+from jose import jwt
 
 from agent_data_manager.auth.auth_manager import AuthManager
 from agent_data_manager.auth.user_manager import UserManager
-
 
 # Cached password hash to avoid expensive bcrypt operations in setup
 CACHED_PASSWORD_HASH = "$2b$12$XSWm27MFTABRgoxDz57jk.VNvZTT3iK66QobF330sjFFvX1VCK9o6"  # hash of "test_password_123"
@@ -24,17 +24,20 @@ class TestJWTAuthentication:
     def setup_method(self):
         """Setup test environment with optimized initialization and mocking"""
         # Mock environment variables to avoid Secret Manager calls
-        with patch.dict(os.environ, {
-            'JWT_SECRET_KEY': 'test_secret_key_for_testing_only_123456789',
-            'GOOGLE_CLOUD_PROJECT': 'test-project'
-        }):
+        with patch.dict(
+            os.environ,
+            {
+                "JWT_SECRET_KEY": "test_secret_key_for_testing_only_123456789",
+                "GOOGLE_CLOUD_PROJECT": "test-project",
+            },
+        ):
             # Use cached instances to avoid repeated initialization overhead
-            if not hasattr(self.__class__, '_auth_manager_cache'):
+            if not hasattr(self.__class__, "_auth_manager_cache"):
                 # Mock secret manager during initialization
                 with patch("agent_data_manager.auth.auth_manager.secretmanager"):
                     self.__class__._auth_manager_cache = AuthManager()
                     self.__class__._user_manager_cache = UserManager()
-            
+
             self.auth_manager = self.__class__._auth_manager_cache
             self.user_manager = self.__class__._user_manager_cache
 
@@ -47,17 +50,17 @@ class TestJWTAuthentication:
     def test_password_hashing_and_verification(self):
         """Test password hashing and verification with optimized setup"""
         password = "test_password_123"
-        
+
         # Use cached hash to avoid expensive bcrypt operation
         hashed = CACHED_PASSWORD_HASH
-        
+
         # Test verification with cached hash
         assert hashed != password
         assert self.auth_manager.verify_password(password, hashed)
         assert not self.auth_manager.verify_password("wrong_password", hashed)
-        
+
         # Only test fresh hashing if specifically needed
-        if not hasattr(self.__class__, '_fresh_hash_tested'):
+        if not hasattr(self.__class__, "_fresh_hash_tested"):
             fresh_hash = self.auth_manager.get_password_hash("fresh_test_password")
             assert fresh_hash != "fresh_test_password"
             assert self.auth_manager.verify_password("fresh_test_password", fresh_hash)
@@ -65,7 +68,11 @@ class TestJWTAuthentication:
 
     def test_jwt_token_creation_and_validation(self):
         """Test JWT token creation and validation"""
-        user_data = {"sub": "test@cursor.integration", "email": "test@cursor.integration", "scopes": ["read", "write"]}
+        user_data = {
+            "sub": "test@cursor.integration",
+            "email": "test@cursor.integration",
+            "scopes": ["read", "write"],
+        }
 
         # Create token
         token = self.auth_manager.create_access_token(user_data)
@@ -80,11 +87,16 @@ class TestJWTAuthentication:
 
     def test_jwt_token_expiration(self):
         """Test JWT token expiration handling with optimized timing"""
-        user_data = {"sub": "test@cursor.integration", "email": "test@cursor.integration"}
+        user_data = {
+            "sub": "test@cursor.integration",
+            "email": "test@cursor.integration",
+        }
 
         # Create token with longer expiration first to test immediate validity
         longer_expiry = timedelta(seconds=5)  # Reduced from 10 to 5 seconds
-        valid_token = self.auth_manager.create_access_token(user_data, expires_delta=longer_expiry)
+        valid_token = self.auth_manager.create_access_token(
+            user_data, expires_delta=longer_expiry
+        )
 
         # Token should be valid immediately
         payload = self.auth_manager.verify_token(valid_token)
@@ -92,16 +104,19 @@ class TestJWTAuthentication:
 
         # Now create token with very short expiration
         short_expiry = timedelta(seconds=0.5)  # Reduced from 1 to 0.5 seconds
-        short_token = self.auth_manager.create_access_token(user_data, expires_delta=short_expiry)
+        short_token = self.auth_manager.create_access_token(
+            user_data, expires_delta=short_expiry
+        )
 
         # Wait for token to expire
         time.sleep(0.7)  # Reduced wait time
 
         # Token should now be invalid - the auth manager raises HTTPException with 401 status
         from fastapi import HTTPException
+
         with pytest.raises(HTTPException) as exc_info:
             self.auth_manager.verify_token(short_token)
-        
+
         # Verify it's the correct type of HTTPException (401 Unauthorized)
         assert exc_info.value.status_code == 401
 
@@ -193,7 +208,11 @@ class TestJWTAuthentication:
             "iat": datetime.utcnow(),
         }
 
-        token = jwt.encode(token_payload, self.auth_manager.secret_key, algorithm=self.auth_manager.algorithm)
+        token = jwt.encode(
+            token_payload,
+            self.auth_manager.secret_key,
+            algorithm=self.auth_manager.algorithm,
+        )
 
         # Should fail validation due to missing 'sub'
         with pytest.raises(Exception):  # Should raise HTTPException
@@ -206,16 +225,19 @@ class TestUserManager:
     def setup_method(self):
         """Setup test environment with optimized initialization"""
         # Mock environment and external services to avoid hangs
-        with patch.dict(os.environ, {
-            'GOOGLE_CLOUD_PROJECT': 'test-project',
-            'FIRESTORE_EMULATOR_HOST': 'localhost:8080'
-        }):
+        with patch.dict(
+            os.environ,
+            {
+                "GOOGLE_CLOUD_PROJECT": "test-project",
+                "FIRESTORE_EMULATOR_HOST": "localhost:8080",
+            },
+        ):
             # Use cached instance to avoid repeated initialization overhead
-            if not hasattr(self.__class__, '_user_manager_cache'):
+            if not hasattr(self.__class__, "_user_manager_cache"):
                 # Mock firestore during initialization
                 with patch("agent_data_manager.auth.user_manager.firestore"):
                     self.__class__._user_manager_cache = UserManager()
-            
+
             self.user_manager = self.__class__._user_manager_cache
 
     @patch("agent_data_manager.auth.user_manager.firestore")
@@ -226,12 +248,20 @@ class TestUserManager:
         mock_client = MagicMock()
         mock_firestore.Client.return_value = mock_client
 
-        user_data = {"email": "newuser@test.com", "password": "secure_password", "full_name": "New User"}
+        user_data = {
+            "email": "newuser@test.com",
+            "password": "secure_password",
+            "full_name": "New User",
+        }
 
         # Mock the get_user_by_email to return None (user doesn't exist)
         with patch.object(self.user_manager, "get_user_by_email", return_value=None):
             # Mock the create_user method
-            with patch.object(self.user_manager, "create_user", return_value={"id": "new_user_id", **user_data}):
+            with patch.object(
+                self.user_manager,
+                "create_user",
+                return_value={"id": "new_user_id", **user_data},
+            ):
                 result = await self.user_manager.create_user(user_data)
                 assert result["email"] == user_data["email"]
                 assert "id" in result
@@ -250,18 +280,24 @@ class TestUserManager:
             "password_hash": CACHED_PASSWORD_HASH,  # Use cached hash
             "full_name": "Test User",
             "user_id": "test_user_id",
-            "is_active": True
+            "is_active": True,
         }
 
         # Mock get_user_by_email to return the mock user
-        with patch.object(self.user_manager, "get_user_by_email", return_value=mock_user):
+        with patch.object(
+            self.user_manager, "get_user_by_email", return_value=mock_user
+        ):
             # Test successful authentication
-            result = await self.user_manager.authenticate_user("test@cursor.integration", "test_password_123")
+            result = await self.user_manager.authenticate_user(
+                "test@cursor.integration", "test_password_123"
+            )
             assert result is not None
             assert result["email"] == "test@cursor.integration"
 
             # Test failed authentication
-            result = await self.user_manager.authenticate_user("test@cursor.integration", "wrong_password")
+            result = await self.user_manager.authenticate_user(
+                "test@cursor.integration", "wrong_password"
+            )
             assert result is None
 
     def test_rate_limiting_simulation(self):
@@ -269,20 +305,22 @@ class TestUserManager:
         # Simulate rate limiting without actual delays
         rate_limit_window = 60  # seconds
         max_attempts = 5
-        
+
         # Mock rate limiting data
         attempts = []
         current_time = time.time()
-        
+
         # Simulate attempts within window
         for i in range(max_attempts + 2):
             attempt_time = current_time + i * 5  # 5 seconds apart
             attempts.append(attempt_time)
-            
+
             # Check if within rate limit
-            recent_attempts = [t for t in attempts if attempt_time - t < rate_limit_window]
+            recent_attempts = [
+                t for t in attempts if attempt_time - t < rate_limit_window
+            ]
             is_rate_limited = len(recent_attempts) > max_attempts
-            
+
             if i < max_attempts:
                 assert not is_rate_limited, f"Attempt {i+1} should not be rate limited"
             else:
@@ -294,9 +332,10 @@ class TestAuthenticationIntegration:
 
     def setup_method(self):
         """Setup with mocked environment to avoid timeouts"""
-        with patch.dict(os.environ, {
-            'JWT_SECRET_KEY': 'test_secret_key_for_integration_testing_123456789'
-        }):
+        with patch.dict(
+            os.environ,
+            {"JWT_SECRET_KEY": "test_secret_key_for_integration_testing_123456789"},
+        ):
             with patch("agent_data_manager.auth.auth_manager.secretmanager"):
                 self.auth_manager = AuthManager()
 
@@ -306,17 +345,17 @@ class TestAuthenticationIntegration:
         user_data = {
             "sub": "integration@test.com",
             "email": "integration@test.com",
-            "scopes": ["read", "write"]
+            "scopes": ["read", "write"],
         }
-        
+
         # Create token
         token = self.auth_manager.create_access_token(user_data)
         assert token is not None
-        
+
         # Validate token
         payload = self.auth_manager.verify_token(token)
         assert payload["sub"] == user_data["sub"]
-        
+
         # Test access validation
         assert self.auth_manager.validate_user_access(payload, "read")
         assert self.auth_manager.validate_user_access(payload, "write")
@@ -329,21 +368,21 @@ class TestAuthenticationIntegration:
         old_token = self.auth_manager.create_access_token(
             user_data, expires_delta=timedelta(minutes=15)
         )
-        
+
         # Add minimal delay to ensure different timestamps
         time.sleep(0.2)  # Slightly increased to ensure different iat
-        
+
         # Simulate token refresh (create new token with different expiry)
         new_token = self.auth_manager.create_access_token(
             user_data, expires_delta=timedelta(minutes=30)
         )
-        
+
         # Both tokens should be valid but different
         assert old_token != new_token
-        
+
         old_payload = self.auth_manager.verify_token(old_token)
         new_payload = self.auth_manager.verify_token(new_token)
-        
+
         assert old_payload["sub"] == new_payload["sub"]
         assert old_payload["email"] == new_payload["email"]
         # Verify different expiration times

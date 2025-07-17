@@ -4,7 +4,7 @@ This module contains the core logic without Google Cloud dependencies.
 """
 
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any
 
 
 def calculate_string_similarity(str1: str, str2: str) -> float:
@@ -35,8 +35,8 @@ def calculate_string_similarity(str1: str, str2: str) -> float:
 
 
 def analyze_change_impact(
-    old_data: Dict[str, Any], new_data: Dict[str, Any], changes: Dict[str, Any]
-) -> Dict[str, Any]:
+    old_data: dict[str, Any], new_data: dict[str, Any], changes: dict[str, Any]
+) -> dict[str, Any]:
     """
     Analyze the impact of changes on the system.
 
@@ -67,7 +67,9 @@ def analyze_change_impact(
         if field in critical_fields or importance == "critical":
             impact["overall_impact"] = "critical"
             if field == "vectorStatus":
-                impact["affected_systems"].extend(["vector_search", "embedding_pipeline"])
+                impact["affected_systems"].extend(
+                    ["vector_search", "embedding_pipeline"]
+                )
                 if new_data.get("vectorStatus") == "completed":
                     impact["workflow_impact"].append("vectorization_completed")
                 elif new_data.get("vectorStatus") == "failed":
@@ -86,7 +88,9 @@ def analyze_change_impact(
     return impact
 
 
-def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str, Any]) -> Dict[str, Any]:
+def calculate_data_quality_metrics(
+    old_data: dict[str, Any], new_data: dict[str, Any]
+) -> dict[str, Any]:
     """
     Calculate data quality metrics for the change.
 
@@ -97,18 +101,36 @@ def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str,
     Returns:
         Data quality metrics
     """
-    metrics = {"completeness_score": 0.0, "consistency_score": 0.0, "validity_score": 0.0, "quality_trend": "stable"}
+    metrics = {
+        "completeness_score": 0.0,
+        "consistency_score": 0.0,
+        "validity_score": 0.0,
+        "quality_trend": "stable",
+    }
 
     # Required fields for completeness
     required_fields = ["doc_id", "vectorStatus", "level_1"]
-    optional_fields = ["level_2", "level_3", "tags", "auto_tags", "lastUpdated", "original_text"]
+    optional_fields = [
+        "level_2",
+        "level_3",
+        "tags",
+        "auto_tags",
+        "lastUpdated",
+        "original_text",
+    ]
 
     # Calculate completeness score
-    old_complete = sum(1 for field in required_fields + optional_fields if old_data.get(field))
-    new_complete = sum(1 for field in required_fields + optional_fields if new_data.get(field))
+    old_complete = sum(
+        1 for field in required_fields + optional_fields if old_data.get(field)
+    )
+    new_complete = sum(
+        1 for field in required_fields + optional_fields if new_data.get(field)
+    )
     total_fields = len(required_fields + optional_fields)
 
-    metrics["completeness_score"] = new_complete / total_fields if total_fields > 0 else 0.0
+    metrics["completeness_score"] = (
+        new_complete / total_fields if total_fields > 0 else 0.0
+    )
 
     # Calculate consistency score (hierarchy levels filled consistently)
     hierarchy_levels = ["level_1", "level_2", "level_3"]
@@ -130,7 +152,7 @@ def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str,
     return metrics
 
 
-def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
+def convert_firestore_fields(fields: dict[str, Any]) -> dict[str, Any]:
     """
     Convert Firestore field format to simple Python values.
 
@@ -156,9 +178,14 @@ def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
                 simple_dict[field_name] = field_value["timestampValue"]
             elif "arrayValue" in field_value:
                 array_values = field_value["arrayValue"].get("values", [])
-                simple_dict[field_name] = [convert_firestore_fields({"temp": val})["temp"] for val in array_values]
+                simple_dict[field_name] = [
+                    convert_firestore_fields({"temp": val})["temp"]
+                    for val in array_values
+                ]
             elif "mapValue" in field_value:
-                simple_dict[field_name] = convert_firestore_fields(field_value["mapValue"].get("fields", {}))
+                simple_dict[field_name] = convert_firestore_fields(
+                    field_value["mapValue"].get("fields", {})
+                )
             else:
                 simple_dict[field_name] = field_value
         else:
@@ -167,7 +194,9 @@ def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
     return simple_dict
 
 
-def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dict[str, Any]:
+def analyze_changes(
+    old_value: dict[str, Any], new_value: dict[str, Any]
+) -> dict[str, Any]:
     """
     Analyze changes between old and new document values with enhanced analytics.
 
@@ -198,14 +227,22 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
         for field in new_simple:
             if field not in old_simple:
                 changes["added_fields"].append(
-                    {"field": field, "value": new_simple[field], "type": type(new_simple[field]).__name__}
+                    {
+                        "field": field,
+                        "value": new_simple[field],
+                        "type": type(new_simple[field]).__name__,
+                    }
                 )
 
         # Find removed fields
         for field in old_simple:
             if field not in new_simple:
                 changes["removed_fields"].append(
-                    {"field": field, "old_value": old_simple[field], "type": type(old_simple[field]).__name__}
+                    {
+                        "field": field,
+                        "old_value": old_simple[field],
+                        "type": type(old_simple[field]).__name__,
+                    }
                 )
 
         # Find modified fields with detailed analysis
@@ -225,15 +262,29 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
                     change_detail["change_type"] = "type_change"
 
                 # Analyze string changes
-                if isinstance(old_simple[field], str) and isinstance(new_simple[field], str):
-                    change_detail["length_change"] = len(new_simple[field]) - len(old_simple[field])
-                    change_detail["similarity"] = calculate_string_similarity(old_simple[field], new_simple[field])
+                if isinstance(old_simple[field], str) and isinstance(
+                    new_simple[field], str
+                ):
+                    change_detail["length_change"] = len(new_simple[field]) - len(
+                        old_simple[field]
+                    )
+                    change_detail["similarity"] = calculate_string_similarity(
+                        old_simple[field], new_simple[field]
+                    )
 
                 # Analyze numeric changes
-                if isinstance(old_simple[field], (int, float)) and isinstance(new_simple[field], (int, float)):
-                    change_detail["numeric_change"] = new_simple[field] - old_simple[field]
+                if isinstance(old_simple[field], (int, float)) and isinstance(
+                    new_simple[field], (int, float)
+                ):
+                    change_detail["numeric_change"] = (
+                        new_simple[field] - old_simple[field]
+                    )
                     change_detail["percent_change"] = (
-                        ((new_simple[field] - old_simple[field]) / old_simple[field] * 100)
+                        (
+                            (new_simple[field] - old_simple[field])
+                            / old_simple[field]
+                            * 100
+                        )
                         if old_simple[field] != 0
                         else 0
                     )
@@ -260,14 +311,22 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
             field = change["field"]
             if field in significant_fields:
                 changes["significant_changes"].append(
-                    {"field": field, "importance": significant_fields[field], "change_type": change["change_type"]}
+                    {
+                        "field": field,
+                        "importance": significant_fields[field],
+                        "change_type": change["change_type"],
+                    }
                 )
 
         # Impact analysis
-        changes["impact_analysis"] = analyze_change_impact(old_simple, new_simple, changes)
+        changes["impact_analysis"] = analyze_change_impact(
+            old_simple, new_simple, changes
+        )
 
         # Data quality metrics
-        changes["data_quality_metrics"] = calculate_data_quality_metrics(old_simple, new_simple)
+        changes["data_quality_metrics"] = calculate_data_quality_metrics(
+            old_simple, new_simple
+        )
 
         return changes
 
@@ -275,7 +334,7 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
         return {"error": str(e)}
 
 
-def generate_change_report(change_info: Dict[str, Any]) -> Dict[str, Any]:
+def generate_change_report(change_info: dict[str, Any]) -> dict[str, Any]:
     """
     Generate a comprehensive change report.
 
@@ -319,11 +378,16 @@ def generate_change_report(change_info: Dict[str, Any]) -> Dict[str, Any]:
             recommendations.append("Review critical changes immediately")
             recommendations.append("Verify system functionality after changes")
 
-        if "vectorization_completed" in report["impact_assessment"].get("workflow_impact", []):
+        if "vectorization_completed" in report["impact_assessment"].get(
+            "workflow_impact", []
+        ):
             recommendations.append("Update vector search indexes")
             recommendations.append("Verify embedding quality")
 
-        if report["changes"].get("data_quality_metrics", {}).get("quality_trend") == "declining":
+        if (
+            report["changes"].get("data_quality_metrics", {}).get("quality_trend")
+            == "declining"
+        ):
             recommendations.append("Review data quality issues")
             recommendations.append("Consider data validation improvements")
 

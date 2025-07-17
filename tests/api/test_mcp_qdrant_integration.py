@@ -1,6 +1,7 @@
-import json
-import pytest
 import asyncio
+
+import pytest
+
 from agent_data.vector_store.qdrant_store import QdrantStore
 from agent_data_manager.local_mcp_server import handle_qdrant_tool
 
@@ -22,7 +23,11 @@ def test_mcp_qdrant_upsert_and_query():
     # Test upsert_vector directly using the handle_qdrant_tool function
     upsert_data = {
         "tool_name": "upsert_vector",
-        "data": {"point_id": 1, "vector": [0.1] * 1536, "metadata": {"tag": "test-tag", "content": "test content"}},
+        "data": {
+            "point_id": 1,
+            "vector": [0.1] * 1536,
+            "metadata": {"tag": "test-tag", "content": "test content"},
+        },
     }
 
     result = handle_qdrant_tool(qdrant_store, "upsert_vector", upsert_data)
@@ -55,7 +60,10 @@ def test_mcp_qdrant_upsert_and_query():
         assert len(result) == 0
 
     # Test query with non-existent tag
-    query_empty_data = {"tool_name": "query_vectors_by_tag", "data": {"tag": "non-existent-tag"}}
+    query_empty_data = {
+        "tool_name": "query_vectors_by_tag",
+        "data": {"tag": "non-existent-tag"},
+    }
 
     result = handle_qdrant_tool(qdrant_store, "query_vectors_by_tag", query_empty_data)
     assert len(result) == 0

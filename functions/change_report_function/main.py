@@ -6,11 +6,10 @@ Generates JSON reports of data changes and stores them in Firestore or GCS.
 import json
 import logging
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any
 
 import functions_framework
-from google.cloud import firestore
-from google.cloud import storage
+from google.cloud import firestore, storage
 from google.cloud.functions_v1 import CloudEvent
 
 # Configure logging
@@ -35,7 +34,7 @@ def initialize_clients():
         raise
 
 
-def extract_change_info(cloud_event: CloudEvent) -> Dict[str, Any]:
+def extract_change_info(cloud_event: CloudEvent) -> dict[str, Any]:
     """
     Extract change information from Firestore CloudEvent.
 
@@ -90,7 +89,9 @@ def extract_change_info(cloud_event: CloudEvent) -> Dict[str, Any]:
         return {"error": str(e), "timestamp": datetime.utcnow().isoformat()}
 
 
-def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dict[str, Any]:
+def analyze_changes(
+    old_value: dict[str, Any], new_value: dict[str, Any]
+) -> dict[str, Any]:
     """
     Analyze changes between old and new document values with enhanced analytics.
 
@@ -121,14 +122,22 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
         for field in new_simple:
             if field not in old_simple:
                 changes["added_fields"].append(
-                    {"field": field, "value": new_simple[field], "type": type(new_simple[field]).__name__}
+                    {
+                        "field": field,
+                        "value": new_simple[field],
+                        "type": type(new_simple[field]).__name__,
+                    }
                 )
 
         # Find removed fields
         for field in old_simple:
             if field not in new_simple:
                 changes["removed_fields"].append(
-                    {"field": field, "old_value": old_simple[field], "type": type(old_simple[field]).__name__}
+                    {
+                        "field": field,
+                        "old_value": old_simple[field],
+                        "type": type(old_simple[field]).__name__,
+                    }
                 )
 
         # Find modified fields with detailed analysis
@@ -148,15 +157,29 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
                     change_detail["change_type"] = "type_change"
 
                 # Analyze string changes
-                if isinstance(old_simple[field], str) and isinstance(new_simple[field], str):
-                    change_detail["length_change"] = len(new_simple[field]) - len(old_simple[field])
-                    change_detail["similarity"] = calculate_string_similarity(old_simple[field], new_simple[field])
+                if isinstance(old_simple[field], str) and isinstance(
+                    new_simple[field], str
+                ):
+                    change_detail["length_change"] = len(new_simple[field]) - len(
+                        old_simple[field]
+                    )
+                    change_detail["similarity"] = calculate_string_similarity(
+                        old_simple[field], new_simple[field]
+                    )
 
                 # Analyze numeric changes
-                if isinstance(old_simple[field], (int, float)) and isinstance(new_simple[field], (int, float)):
-                    change_detail["numeric_change"] = new_simple[field] - old_simple[field]
+                if isinstance(old_simple[field], (int, float)) and isinstance(
+                    new_simple[field], (int, float)
+                ):
+                    change_detail["numeric_change"] = (
+                        new_simple[field] - old_simple[field]
+                    )
                     change_detail["percent_change"] = (
-                        ((new_simple[field] - old_simple[field]) / old_simple[field] * 100)
+                        (
+                            (new_simple[field] - old_simple[field])
+                            / old_simple[field]
+                            * 100
+                        )
                         if old_simple[field] != 0
                         else 0
                     )
@@ -183,14 +206,22 @@ def analyze_changes(old_value: Dict[str, Any], new_value: Dict[str, Any]) -> Dic
             field = change["field"]
             if field in significant_fields:
                 changes["significant_changes"].append(
-                    {"field": field, "importance": significant_fields[field], "change_type": change["change_type"]}
+                    {
+                        "field": field,
+                        "importance": significant_fields[field],
+                        "change_type": change["change_type"],
+                    }
                 )
 
         # Impact analysis
-        changes["impact_analysis"] = analyze_change_impact(old_simple, new_simple, changes)
+        changes["impact_analysis"] = analyze_change_impact(
+            old_simple, new_simple, changes
+        )
 
         # Data quality metrics
-        changes["data_quality_metrics"] = calculate_data_quality_metrics(old_simple, new_simple)
+        changes["data_quality_metrics"] = calculate_data_quality_metrics(
+            old_simple, new_simple
+        )
 
         return changes
 
@@ -213,14 +244,27 @@ def calculate_string_similarity(str1: str, str2: str) -> float:
 
 
 def analyze_change_impact(
-    old_data: Dict[str, Any], new_data: Dict[str, Any], changes: Dict[str, Any]
-) -> Dict[str, Any]:
+    old_data: dict[str, Any], new_data: dict[str, Any], changes: dict[str, Any]
+) -> dict[str, Any]:
     """Analyze the impact of changes on the document and system."""
-    impact = {"overall_impact": "low", "affected_systems": [], "workflow_impact": [], "data_integrity_risk": "low"}
+    impact = {
+        "overall_impact": "low",
+        "affected_systems": [],
+        "workflow_impact": [],
+        "data_integrity_risk": "low",
+    }
 
     # Determine overall impact based on significant changes
-    critical_changes = [c for c in changes.get("significant_changes", []) if c.get("importance") == "critical"]
-    high_changes = [c for c in changes.get("significant_changes", []) if c.get("importance") == "high"]
+    critical_changes = [
+        c
+        for c in changes.get("significant_changes", [])
+        if c.get("importance") == "critical"
+    ]
+    high_changes = [
+        c
+        for c in changes.get("significant_changes", [])
+        if c.get("importance") == "high"
+    ]
 
     if critical_changes:
         impact["overall_impact"] = "critical"
@@ -236,31 +280,55 @@ def analyze_change_impact(
     if any(c["field"].startswith("level_") for c in changes.get("modified_fields", [])):
         impact["affected_systems"].append("hierarchy_navigation")
 
-    if any(c["field"] in ["tags", "auto_tags"] for c in changes.get("modified_fields", [])):
+    if any(
+        c["field"] in ["tags", "auto_tags"] for c in changes.get("modified_fields", [])
+    ):
         impact["affected_systems"].append("tagging_system")
 
     # Workflow impact analysis
-    if old_data.get("vectorStatus") == "pending" and new_data.get("vectorStatus") == "completed":
+    if (
+        old_data.get("vectorStatus") == "pending"
+        and new_data.get("vectorStatus") == "completed"
+    ):
         impact["workflow_impact"].append("vectorization_completed")
 
-    if old_data.get("vectorStatus") == "completed" and new_data.get("vectorStatus") == "failed":
+    if (
+        old_data.get("vectorStatus") == "completed"
+        and new_data.get("vectorStatus") == "failed"
+    ):
         impact["workflow_impact"].append("vectorization_failed")
         impact["data_integrity_risk"] = "high"
 
     return impact
 
 
-def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str, Any]) -> Dict[str, Any]:
+def calculate_data_quality_metrics(
+    old_data: dict[str, Any], new_data: dict[str, Any]
+) -> dict[str, Any]:
     """Calculate data quality metrics for the change."""
-    metrics = {"completeness_score": 0.0, "consistency_score": 0.0, "validity_score": 0.0, "quality_trend": "stable"}
+    metrics = {
+        "completeness_score": 0.0,
+        "consistency_score": 0.0,
+        "validity_score": 0.0,
+        "quality_trend": "stable",
+    }
 
     # Calculate completeness (percentage of non-null fields)
     total_fields = len(new_data)
     non_null_fields = sum(1 for v in new_data.values() if v is not None and v != "")
-    metrics["completeness_score"] = non_null_fields / total_fields if total_fields > 0 else 0.0
+    metrics["completeness_score"] = (
+        non_null_fields / total_fields if total_fields > 0 else 0.0
+    )
 
     # Calculate consistency (hierarchy levels properly filled)
-    hierarchy_fields = ["level_1", "level_2", "level_3", "level_4", "level_5", "level_6"]
+    hierarchy_fields = [
+        "level_1",
+        "level_2",
+        "level_3",
+        "level_4",
+        "level_5",
+        "level_6",
+    ]
     hierarchy_consistency = 0
     for i, field in enumerate(hierarchy_fields):
         if field in new_data and new_data[field]:
@@ -271,12 +339,16 @@ def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str,
 
     # Calculate validity (required fields present and properly formatted)
     required_fields = ["doc_id", "vectorStatus", "lastUpdated"]
-    valid_fields = sum(1 for field in required_fields if field in new_data and new_data[field])
+    valid_fields = sum(
+        1 for field in required_fields if field in new_data and new_data[field]
+    )
     metrics["validity_score"] = valid_fields / len(required_fields)
 
     # Determine quality trend
     old_completeness = (
-        len([v for v in old_data.values() if v is not None and v != ""]) / len(old_data) if old_data else 0
+        len([v for v in old_data.values() if v is not None and v != ""]) / len(old_data)
+        if old_data
+        else 0
     )
     if metrics["completeness_score"] > old_completeness:
         metrics["quality_trend"] = "improving"
@@ -286,7 +358,7 @@ def calculate_data_quality_metrics(old_data: Dict[str, Any], new_data: Dict[str,
     return metrics
 
 
-def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
+def convert_firestore_fields(fields: dict[str, Any]) -> dict[str, Any]:
     """
     Convert Firestore field format to simple key-value pairs.
 
@@ -314,7 +386,9 @@ def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
             elif "arrayValue" in field_value:
                 simple_dict[field_name] = field_value["arrayValue"].get("values", [])
             elif "mapValue" in field_value:
-                simple_dict[field_name] = convert_firestore_fields(field_value["mapValue"].get("fields", {}))
+                simple_dict[field_name] = convert_firestore_fields(
+                    field_value["mapValue"].get("fields", {})
+                )
             else:
                 simple_dict[field_name] = str(field_value)
         else:
@@ -323,7 +397,7 @@ def convert_firestore_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
     return simple_dict
 
 
-def generate_change_report(change_info: Dict[str, Any]) -> Dict[str, Any]:
+def generate_change_report(change_info: dict[str, Any]) -> dict[str, Any]:
     """
     Generate a comprehensive change report.
 
@@ -344,12 +418,18 @@ def generate_change_report(change_info: Dict[str, Any]) -> Dict[str, Any]:
             "timestamp": change_info["timestamp"],
         },
         "changes": {},
-        "metadata": {"function_name": "change_report_function", "version": "1.0.0", "project_id": PROJECT_ID},
+        "metadata": {
+            "function_name": "change_report_function",
+            "version": "1.0.0",
+            "project_id": PROJECT_ID,
+        },
     }
 
     # Add change analysis for update operations
     if change_info["operation_type"] == "update":
-        report["changes"] = analyze_changes(change_info["old_value"], change_info["new_value"])
+        report["changes"] = analyze_changes(
+            change_info["old_value"], change_info["new_value"]
+        )
     elif change_info["operation_type"] == "create":
         report["changes"] = {
             "operation": "document_created",
@@ -366,7 +446,7 @@ def generate_change_report(change_info: Dict[str, Any]) -> Dict[str, Any]:
     return report
 
 
-def store_report_firestore(report: Dict[str, Any], firestore_client) -> bool:
+def store_report_firestore(report: dict[str, Any], firestore_client) -> bool:
     """
     Store change report in Firestore.
 
@@ -378,7 +458,9 @@ def store_report_firestore(report: Dict[str, Any], firestore_client) -> bool:
         Success status
     """
     try:
-        doc_ref = firestore_client.collection(REPORTS_COLLECTION).document(report["report_id"])
+        doc_ref = firestore_client.collection(REPORTS_COLLECTION).document(
+            report["report_id"]
+        )
         doc_ref.set(report)
         logger.info(f"Stored change report in Firestore: {report['report_id']}")
         return True
@@ -387,7 +469,7 @@ def store_report_firestore(report: Dict[str, Any], firestore_client) -> bool:
         return False
 
 
-def store_report_gcs(report: Dict[str, Any], storage_client) -> bool:
+def store_report_gcs(report: dict[str, Any], storage_client) -> bool:
     """
     Store change report in Google Cloud Storage.
 
@@ -403,7 +485,9 @@ def store_report_gcs(report: Dict[str, Any], storage_client) -> bool:
         blob_name = f"change_reports/{datetime.utcnow().strftime('%Y/%m/%d')}/{report['report_id']}.json"
         blob = bucket.blob(blob_name)
 
-        blob.upload_from_string(json.dumps(report, indent=2), content_type="application/json")
+        blob.upload_from_string(
+            json.dumps(report, indent=2), content_type="application/json"
+        )
 
         logger.info(f"Stored change report in GCS: {blob_name}")
         return True
@@ -421,7 +505,9 @@ def change_report_handler(cloud_event: CloudEvent) -> None:
         cloud_event: CloudEvent from Firestore trigger
     """
     try:
-        logger.info(f"Processing Firestore change event: {cloud_event.get('type', 'unknown')}")
+        logger.info(
+            f"Processing Firestore change event: {cloud_event.get('type', 'unknown')}"
+        )
 
         # Initialize clients
         firestore_client, storage_client = initialize_clients()

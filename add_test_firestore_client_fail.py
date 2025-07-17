@@ -31,12 +31,14 @@ new_test = """
         mock_firestore_constructor.assert_called_once()
 """
 
-with open(filepath, "r", encoding="utf-8") as f:
+with open(filepath, encoding="utf-8") as f:
     content = f.read()
 
 # Tìm vị trí đóng class TestSaveMetadataToFaiss
 pattern = r"(class TestSaveMetadataToFaiss.*?)(\n})"
-match = re.search(r"(class TestSaveMetadataToFaiss[\s\S]+?)(\n})", content, re.MULTILINE)
+match = re.search(
+    r"(class TestSaveMetadataToFaiss[\s\S]+?)(\n})", content, re.MULTILINE
+)
 if match:
     new_content = content[: match.end(1)] + new_test + content[match.end(1) :]
 else:
@@ -46,4 +48,6 @@ else:
 with open(filepath, "w", encoding="utf-8") as f:
     f.write(new_content)
 
-print("✅ Đã chèn test test_save_firestore_client_init_fails vào file test_save_metadata_to_faiss.py")
+print(
+    "✅ Đã chèn test test_save_firestore_client_init_fails vào file test_save_metadata_to_faiss.py"
+)

@@ -16,11 +16,13 @@ Author: CLI 131 Implementation
 Date: 2024-01-15
 """
 
-import pytest
 from unittest.mock import MagicMock
 
-from src.agent_data_manager.vector_store.firestore_metadata_manager import FirestoreMetadataManager
+import pytest
 
+from src.agent_data_manager.vector_store.firestore_metadata_manager import (
+    FirestoreMetadataManager,
+)
 
 
 class TestCLI131AdvancedSearch:
@@ -70,7 +72,9 @@ class TestCLI131AdvancedSearch:
         ]
 
     @pytest.mark.asyncio
-    async def test_comprehensive_advanced_search_functionality(self, mock_firestore_manager, sample_documents):
+    async def test_comprehensive_advanced_search_functionality(
+        self, mock_firestore_manager, sample_documents
+    ):
         """
         Comprehensive test for all advanced search functionality in CLI 131.
 
@@ -86,7 +90,11 @@ class TestCLI131AdvancedSearch:
         mock_query = MagicMock()
 
         # Mock documents for path search "research_paper"
-        research_docs = [doc for doc in sample_documents if doc.get("level_1_category") == "research_paper"]
+        research_docs = [
+            doc
+            for doc in sample_documents
+            if doc.get("level_1_category") == "research_paper"
+        ]
         mock_docs = []
         for doc in research_docs:
             mock_doc = MagicMock()
@@ -98,23 +106,31 @@ class TestCLI131AdvancedSearch:
             return iter(mock_docs)
 
         mock_query.stream = mock_stream
-        mock_firestore_manager.db.collection.return_value.where.return_value.where.return_value = mock_query
+        mock_firestore_manager.db.collection.return_value.where.return_value.where.return_value = (
+            mock_query
+        )
 
         # Execute search by path
         path_results = await mock_firestore_manager.search_by_path("research_paper")
 
         # Validate path search results
-        assert len(path_results) == 2, f"Expected 2 research papers, got {len(path_results)}"
+        assert (
+            len(path_results) == 2
+        ), f"Expected 2 research papers, got {len(path_results)}"
         assert all(
             "research_paper" in doc.get("level_1_category", "") for doc in path_results
         ), "All results should contain 'research_paper' in path"
-        assert all("_matched_level" in doc for doc in path_results), "All results should have matched level information"
+        assert all(
+            "_matched_level" in doc for doc in path_results
+        ), "All results should have matched level information"
 
         # Test 2: Search by Tags - Python Documents
         mock_query_tags = MagicMock()
 
         # Mock documents for tag search "python"
-        python_docs = [doc for doc in sample_documents if "python" in doc.get("auto_tags", [])]
+        python_docs = [
+            doc for doc in sample_documents if "python" in doc.get("auto_tags", [])
+        ]
         mock_docs_tags = []
         for doc in python_docs:
             mock_doc = MagicMock()
@@ -126,24 +142,32 @@ class TestCLI131AdvancedSearch:
             return iter(mock_docs_tags)
 
         mock_query_tags.stream = mock_stream_tags
-        mock_firestore_manager.db.collection.return_value.where.return_value = mock_query_tags
+        mock_firestore_manager.db.collection.return_value.where.return_value = (
+            mock_query_tags
+        )
 
         # Execute search by tags
         tag_results = await mock_firestore_manager.search_by_tags(["python"])
 
         # Validate tag search results
-        assert len(tag_results) == 2, f"Expected 2 Python documents, got {len(tag_results)}"
+        assert (
+            len(tag_results) == 2
+        ), f"Expected 2 Python documents, got {len(tag_results)}"
         assert all(
             "python" in doc.get("auto_tags", []) for doc in tag_results
         ), "All results should contain 'python' tag"
-        assert all("_matched_tags" in doc for doc in tag_results), "All results should have matched tags information"
+        assert all(
+            "_matched_tags" in doc for doc in tag_results
+        ), "All results should have matched tags information"
 
         # Test 3: Search by Metadata - John Doe's 2024 Documents
         mock_query_metadata = MagicMock()
 
         # Mock documents for metadata search
         john_2024_docs = [
-            doc for doc in sample_documents if doc.get("author") == "John Doe" and doc.get("year") == 2024
+            doc
+            for doc in sample_documents
+            if doc.get("author") == "John Doe" and doc.get("year") == 2024
         ]
         mock_docs_metadata = []
         for doc in john_2024_docs:
@@ -160,17 +184,25 @@ class TestCLI131AdvancedSearch:
         # Chain where clauses for multiple filters
         mock_query_chain = MagicMock()
         mock_query_chain.where.return_value = mock_query_metadata
-        mock_firestore_manager.db.collection.return_value.where.return_value = mock_query_chain
+        mock_firestore_manager.db.collection.return_value.where.return_value = (
+            mock_query_chain
+        )
 
         # Execute search by metadata
-        metadata_results = await mock_firestore_manager.search_by_metadata({"author": "John Doe", "year": 2024})
+        metadata_results = await mock_firestore_manager.search_by_metadata(
+            {"author": "John Doe", "year": 2024}
+        )
 
         # Validate metadata search results
-        assert len(metadata_results) == 2, f"Expected 2 John Doe 2024 documents, got {len(metadata_results)}"
+        assert (
+            len(metadata_results) == 2
+        ), f"Expected 2 John Doe 2024 documents, got {len(metadata_results)}"
         assert all(
             doc.get("author") == "John Doe" for doc in metadata_results
         ), "All results should be authored by John Doe"
-        assert all(doc.get("year") == 2024 for doc in metadata_results), "All results should be from 2024"
+        assert all(
+            doc.get("year") == 2024 for doc in metadata_results
+        ), "All results should be from 2024"
         assert all(
             "_matched_filters" in doc for doc in metadata_results
         ), "All results should have matched filters information"
@@ -181,11 +213,19 @@ class TestCLI131AdvancedSearch:
 
         path_error_results = await manager_no_db.search_by_path("test")
         tags_error_results = await manager_no_db.search_by_tags(["test"])
-        metadata_error_results = await manager_no_db.search_by_metadata({"test": "value"})
+        metadata_error_results = await manager_no_db.search_by_metadata(
+            {"test": "value"}
+        )
 
-        assert path_error_results == [], "Should return empty list when database not initialized"
-        assert tags_error_results == [], "Should return empty list when database not initialized"
-        assert metadata_error_results == [], "Should return empty list when database not initialized"
+        assert (
+            path_error_results == []
+        ), "Should return empty list when database not initialized"
+        assert (
+            tags_error_results == []
+        ), "Should return empty list when database not initialized"
+        assert (
+            metadata_error_results == []
+        ), "Should return empty list when database not initialized"
 
         # Test 5: Edge Cases - Empty Queries
         empty_path_results = await mock_firestore_manager.search_by_path("")
@@ -194,12 +234,16 @@ class TestCLI131AdvancedSearch:
 
         assert empty_path_results == [], "Should return empty list for empty path query"
         assert empty_tags_results == [], "Should return empty list for empty tags"
-        assert empty_metadata_results == [], "Should return empty list for empty metadata filters"
+        assert (
+            empty_metadata_results == []
+        ), "Should return empty list for empty metadata filters"
 
         print("✅ CLI 131 Advanced Search Functionality Test Passed")
         print(f"   - Path Search: Found {len(path_results)} research papers")
         print(f"   - Tag Search: Found {len(tag_results)} Python documents")
-        print(f"   - Metadata Search: Found {len(metadata_results)} John Doe 2024 documents")
+        print(
+            f"   - Metadata Search: Found {len(metadata_results)} John Doe 2024 documents"
+        )
         print("   - Error handling and edge cases validated")
 
 

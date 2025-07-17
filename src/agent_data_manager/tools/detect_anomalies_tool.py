@@ -1,7 +1,7 @@
-import pickle
 import os
+import pickle
 import time
-from typing import Dict, Any
+from typing import Any
 
 FAISS_DIR = "ADK/agent_data/faiss_indices"
 MAX_RETRIES = 3
@@ -13,7 +13,7 @@ MAX_YEAR = 2100  # Adjust as needed
 REQUIRED_FIELDS = ["project"]  # Example required field
 
 
-def detect_anomalies(index_name: str) -> Dict[str, Any]:
+def detect_anomalies(index_name: str) -> dict[str, Any]:
     """
     Loads metadata and detects predefined anomalies in the values.
     Checks for: year out of range, missing required fields.
@@ -50,11 +50,13 @@ def detect_anomalies(index_name: str) -> Dict[str, Any]:
                 "error": f"Metadata file disappeared for index '{index_name}' during anomaly detection.",
             }
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}")
+            print(
+                f"Attempt {attempt + 1} failed to load metadata for FAISS index '{index_name}': {e}"
+            )
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_DELAY)
             else:
-                raise IOError(
+                raise OSError(
                     f"Failed to load metadata for FAISS index '{index_name}' after {MAX_RETRIES} attempts."
                 ) from e
 
@@ -66,7 +68,9 @@ def detect_anomalies(index_name: str) -> Dict[str, Any]:
 
     for key, value in metadata_dict.items():
         if not isinstance(value, dict):
-            anomalies_found.append({"key": key, "reason": "Metadata value is not a dictionary."})
+            anomalies_found.append(
+                {"key": key, "reason": "Metadata value is not a dictionary."}
+            )
             continue
 
         # Check year range
@@ -94,9 +98,15 @@ def detect_anomalies(index_name: str) -> Dict[str, Any]:
 
         # Check required fields
         for field in REQUIRED_FIELDS:
-            if field not in value or not value[field]:  # Check for presence and non-empty
+            if (
+                field not in value or not value[field]
+            ):  # Check for presence and non-empty
                 anomalies_found.append(
-                    {"key": key, "field": field, "reason": f"Required field '{field}' is missing or empty."}
+                    {
+                        "key": key,
+                        "field": field,
+                        "reason": f"Required field '{field}' is missing or empty.",
+                    }
                 )
 
     if not anomalies_found:
@@ -114,7 +124,10 @@ if __name__ == "__main__":
         "doc_ok": {"year": 2020, "project": "Good Project"},
         "doc_bad_year": {"year": 1850, "project": "Old Project"},
         "doc_missing_proj": {"year": 2021},
-        "doc_str_year": {"year": "Two Thousand Twenty Two", "project": "String Year Project"},
+        "doc_str_year": {
+            "year": "Two Thousand Twenty Two",
+            "project": "String Year Project",
+        },
         "doc_non_dict": "Just a string",
     }
     try:

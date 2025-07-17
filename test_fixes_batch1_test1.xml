@@ -18,7 +18,7 @@ vectorization_tool = &lt;ADK.agent_data.tools.qdrant_vectorization_tool.QdrantVe
                 }
             ]
         }
-    
+
         # Mock Firestore metadata
         mock_firestore_metadata = {
             "doc1": {
@@ -39,11 +39,11 @@ vectorization_tool = &lt;ADK.agent_data.tools.qdrant_vectorization_tool.QdrantVe
                 "version": 2
             }
         }
-    
+
         # Mock the methods
         vectorization_tool.qdrant_store.semantic_search = AsyncMock(return_value=mock_qdrant_results)
         vectorization_tool._batch_get_firestore_metadata = AsyncMock(return_value=mock_firestore_metadata)
-    
+
         # Test rag_search with specific parameters
         result = await vectorization_tool.rag_search(
             query_text="test query",
@@ -53,7 +53,7 @@ vectorization_tool = &lt;ADK.agent_data.tools.qdrant_vectorization_tool.QdrantVe
             tags=["physics"],
             path_query="Science"
         )
-    
+
         # Verify successful response
         assert result["status"] == "success"
         assert result["query"] == "test query"

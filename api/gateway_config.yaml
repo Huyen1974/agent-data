@@ -489,7 +489,7 @@ x-google-shadow-traffic:
 # Architecture Distribution Targets (CLI140g.3)
 x-google-architecture-targets:
   cloud_functions: 70.0  # Target: 70%
-  workflows: 20.0        # Target: 20%  
+  workflows: 20.0        # Target: 20%
   cloud_run: 10.0        # Target: <10%
 
 definitions:
@@ -530,4 +530,4 @@ x-google-cors:
 
 # Backend authentication
 x-google-backend-auth:
-  jwt_audience: "PROJECT_ID" 
+  jwt_audience: "PROJECT_ID"
