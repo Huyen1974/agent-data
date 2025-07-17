@@ -1,4 +1,3 @@
-
 test_code = '''
     @patch(f"{SAVE_TOOL_MODULE_PATH}.faiss.IndexFlatL2")
     async def test_save_vector_data_count_mismatch(self, MockFaissIndexFlatL2, mocker, request):
