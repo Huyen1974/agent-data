@@ -534,9 +534,7 @@ class TestCursorRealCloudIntegration:
                 search_result["total_found"] >= 1
             ), "Saved document should be found in search"
 
-            print(
-                "✅ Firestore sync verification completed - document found in search"
-            )
+            print("✅ Firestore sync verification completed - document found in search")
 
         except requests.exceptions.RequestException as e:
             print(f"❌ Firestore sync test failed: {e}")

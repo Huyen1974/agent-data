@@ -2456,8 +2456,8 @@ class TestCLI140m14DocumentIngestionCoverage:
     async def test_error_handling_comprehensive(self, ingestion_tool):
         """Test comprehensive error handling scenarios."""
         # Test with Firestore timeout
-        ingestion_tool.firestore_manager.save_metadata.side_effect = (
-            TimeoutError("Firestore timeout")
+        ingestion_tool.firestore_manager.save_metadata.side_effect = TimeoutError(
+            "Firestore timeout"
         )
 
         result = await ingestion_tool.ingest_document(

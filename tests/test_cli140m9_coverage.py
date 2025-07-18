@@ -330,8 +330,8 @@ class TestCLI140m9FinalQdrantVectorizationToolCoverage:
 
         # Mock auto-tagging tool that sometimes times out
         mock_auto_tagging_tool = AsyncMock()
-        mock_auto_tagging_tool.enhance_metadata_with_tags.side_effect = (
-            TimeoutError("Auto-tagging timeout")
+        mock_auto_tagging_tool.enhance_metadata_with_tags.side_effect = TimeoutError(
+            "Auto-tagging timeout"
         )
 
         with (

@@ -13,14 +13,16 @@ try:
     import langroid as lr
     from langroid import ChatAgent, Task
     from langroid.language_models import OpenAIGPTConfig
-    
+
     # Get version using importlib.metadata
     try:
         from importlib.metadata import version
+
         LANGROID_VERSION = version("langroid")
     except ImportError:
         # Fallback for Python < 3.8
         import pkg_resources
+
         LANGROID_VERSION = pkg_resources.get_distribution("langroid").version
     except Exception:
         LANGROID_VERSION = "unknown"

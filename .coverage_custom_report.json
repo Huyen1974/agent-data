@@ -1,1 +1,22 @@
-{}
+{
+  "tests/api/test_embeddings_api.py::test_clear_embeddings": {
+    "duration": 0.004513458000019455,
+    "status": "failed",
+    "timestamp": "2025-07-17T18:25:16.988737"
+  },
+  "tests/api/test_embeddings_api.py::test_generate_embedding_mock": {
+    "duration": 0.0077226250000421715,
+    "status": "passed",
+    "timestamp": "2025-07-17T18:25:15.648258"
+  },
+  "tests/api/test_embeddings_api.py::test_generate_embedding_real": {
+    "duration": 1.0202984580000702,
+    "status": "passed",
+    "timestamp": "2025-07-17T18:25:16.675485"
+  },
+  "tests/api/test_embeddings_api.py::test_semantic_search_cosine": {
+    "duration": 0.004207332999612845,
+    "status": "failed",
+    "timestamp": "2025-07-17T18:25:16.895096"
+  }
+}

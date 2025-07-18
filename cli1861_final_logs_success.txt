@@ -102,22 +102,22 @@ auth-test	Checkout code	2025-07-14T08:38:10.5200517Z [command]/usr/bin/git confi
 auth-test	Checkout code	2025-07-14T08:38:10.5230020Z ##[group]Checking out the ref
 auth-test	Checkout code	2025-07-14T08:38:10.5233578Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/26/merge
 auth-test	Checkout code	2025-07-14T08:38:10.6928671Z Note: switching to 'refs/remotes/pull/26/merge'.
-auth-test	Checkout code	2025-07-14T08:38:10.6929984Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6929984Z
 auth-test	Checkout code	2025-07-14T08:38:10.6930757Z You are in 'detached HEAD' state. You can look around, make experimental
 auth-test	Checkout code	2025-07-14T08:38:10.6932992Z changes and commit them, and you can discard any commits you make in this
 auth-test	Checkout code	2025-07-14T08:38:10.6935007Z state without impacting any branches by switching back to a branch.
-auth-test	Checkout code	2025-07-14T08:38:10.6936115Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6936115Z
 auth-test	Checkout code	2025-07-14T08:38:10.6936749Z If you want to create a new branch to retain commits you create, you may
 auth-test	Checkout code	2025-07-14T08:38:10.6938157Z do so (now or later) by using -c with the switch command. Example:
-auth-test	Checkout code	2025-07-14T08:38:10.6939251Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6939251Z
 auth-test	Checkout code	2025-07-14T08:38:10.6939599Z   git switch -c <new-branch-name>
-auth-test	Checkout code	2025-07-14T08:38:10.6940176Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6940176Z
 auth-test	Checkout code	2025-07-14T08:38:10.6940496Z Or undo this operation with:
-auth-test	Checkout code	2025-07-14T08:38:10.6941015Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6941015Z
 auth-test	Checkout code	2025-07-14T08:38:10.6941400Z   git switch -
-auth-test	Checkout code	2025-07-14T08:38:10.6942263Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6942263Z
 auth-test	Checkout code	2025-07-14T08:38:10.6943407Z Turn off this advice by setting config variable advice.detachedHead to false
-auth-test	Checkout code	2025-07-14T08:38:10.6945200Z 
+auth-test	Checkout code	2025-07-14T08:38:10.6945200Z
 auth-test	Checkout code	2025-07-14T08:38:10.6947095Z HEAD is now at c1e9cac Merge 9727c300511a1ebdf982fba7c0f00c6be33896e8 into 053bd3b5b78e2a8a93a970301e6d12e009caeecd
 auth-test	Checkout code	2025-07-14T08:38:10.6953463Z ##[endgroup]
 auth-test	Checkout code	2025-07-14T08:38:10.6988782Z [command]/usr/bin/git log -1 --format=%H
@@ -173,13 +173,13 @@ auth-test	Test authentication	2025-07-14T08:38:29.8395009Z Testing GCP authentic
 auth-test	Test authentication	2025-07-14T08:38:30.2966636Z                          Credentialed Accounts
 auth-test	Test authentication	2025-07-14T08:38:30.2967220Z ACTIVE  ACCOUNT
 auth-test	Test authentication	2025-07-14T08:38:30.2968025Z *       ***
-auth-test	Test authentication	2025-07-14T08:38:30.2968331Z 
+auth-test	Test authentication	2025-07-14T08:38:30.2968331Z
 auth-test	Test authentication	2025-07-14T08:38:30.2968508Z To set the active account, run:
 auth-test	Test authentication	2025-07-14T08:38:30.2968969Z     $ gcloud config set account `ACCOUNT`
-auth-test	Test authentication	2025-07-14T08:38:30.2969327Z 
+auth-test	Test authentication	2025-07-14T08:38:30.2969327Z
 auth-test	Test authentication	2025-07-14T08:38:30.8040017Z [core]
 auth-test	Test authentication	2025-07-14T08:38:30.8040581Z project = github-chatgpt-ggcloud
-auth-test	Test authentication	2025-07-14T08:38:30.8042005Z 
+auth-test	Test authentication	2025-07-14T08:38:30.8042005Z
 auth-test	Test authentication	2025-07-14T08:38:30.8042237Z Your active configuration is: [default]
 auth-test	Test authentication	2025-07-14T08:38:30.8648387Z Authentication test completed successfully!
 auth-test	Verify project access	﻿2025-07-14T08:38:30.8682632Z ##[group]Run echo "Verifying project access..."

@@ -49,7 +49,7 @@ Latest Commit: 5724a434d2684ce00db65f970eee223bccd66ea3
 ## Key Metrics
 - Build time: ~3.6 minutes (cold build)
 - Test count: 503 tests
-- Image size: 1.53GB  
+- Image size: 1.53GB
 - Critical vulnerabilities: 8 total (6 in system/deps, 2 in python packages)
 - Lock file: Clean, no conflicts
 

@@ -74,9 +74,7 @@ def execute_tool():
     """Executes a tool based on MCP JSON format."""
     start_time = time.time()
     data = request.get_json()
-    request_id = data.get(
-        "id", f"req-{int(start_time)}"
-    )  # Generate ID if missing
+    request_id = data.get("id", f"req-{int(start_time)}")  # Generate ID if missing
 
     if not data:
         logger.error(f"Request {request_id}: Received empty or invalid JSON data.")

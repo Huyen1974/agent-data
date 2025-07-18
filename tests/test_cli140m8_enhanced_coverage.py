@@ -260,9 +260,7 @@ class TestCLI140m8EnhancedQdrantVectorizationToolCoverage:
 
         # Mock firestore manager with timeout behavior
         slow_firestore = AsyncMock()
-        slow_firestore.get_metadata.side_effect = TimeoutError(
-            "Firestore timeout"
-        )
+        slow_firestore.get_metadata.side_effect = TimeoutError("Firestore timeout")
         slow_firestore._batch_check_documents_exist.side_effect = TimeoutError(
             "Batch check timeout"
         )

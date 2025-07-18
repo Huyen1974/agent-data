@@ -16,7 +16,7 @@ output "environment" {
 output "gcs_buckets" {
   description = "Map of GCS bucket purposes to their names"
   value = {
-    for purpose, bucket in google_storage_bucket.agent_data_buckets : 
+    for purpose, bucket in google_storage_bucket.agent_data_buckets :
     purpose => bucket.name
   }
 }
@@ -28,4 +28,4 @@ output "artifact_registry_repository" {
     location = google_artifact_registry_repository.agent_data_docker_repo.location
     id       = google_artifact_registry_repository.agent_data_docker_repo.repository_id
   }
-} 
+}

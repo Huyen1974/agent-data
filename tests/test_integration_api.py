@@ -3,7 +3,6 @@ Integration API Test for CLI 140e.2
 Comprehensive API coverage integration test to validate end-to-end functionality.
 """
 
-
 import pytest
 
 

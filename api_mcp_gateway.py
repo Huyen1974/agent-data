@@ -256,9 +256,7 @@ class SaveDocumentRequest(BaseModel):
     content: str = Field(
         ..., min_length=1, description="Document content to vectorize and store"
     )
-    metadata: dict[str, Any] | None = Field(
-        default={}, description="Optional metadata"
-    )
+    metadata: dict[str, Any] | None = Field(default={}, description="Optional metadata")
     tag: str | None = Field(default=None, description="Optional tag for grouping")
     update_firestore: bool = Field(
         default=True, description="Whether to update Firestore metadata"

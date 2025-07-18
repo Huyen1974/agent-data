@@ -1,101 +1,113 @@
 #!/usr/bin/env python3
-"""
-Agent Data Langroid CLI - Command Line Interface for agent data operations
-"""
+"""CLI commands for Agent Data system management."""
+
+import logging
+import os
+import sys
+from pathlib import Path
 
 import click
-from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 @click.group()
-@click.version_option()
-def main():
-    """Agent Data Langroid - Multi-agent knowledge management system."""
+def cli():
+    """Agent Data CLI - Knowledge management system commands."""
     pass
 
 
-@main.command()
-@click.option('--host', default='127.0.0.1', help='Host to bind to')
-@click.option('--port', default=8000, help='Port to bind to')
-@click.option('--reload', is_flag=True, help='Enable auto-reload')
-def serve(host: str, port: int, reload: bool):
-    """Start the Agent Data API server."""
+@cli.command()
+@click.option("--host", default="0.0.0.0", help="Host to bind to")
+@click.option("--port", default=8000, help="Port to bind to")
+def serve(host, port):
+    """Start the Agent Data server."""
     try:
         import uvicorn
+
+        # Import app dynamically to avoid unused import error
         from agent_data.server import app
-        
+
         click.echo(f"Starting Agent Data server on {host}:{port}")
-        uvicorn.run(
-            "agent_data.server:app",
-            host=host,
-            port=port,
-            reload=reload,
-            log_level="info"
-        )
+        # Use app to avoid F401 warning
+        uvicorn.run(app, host=host, port=port)
     except ImportError as e:
-        click.echo(f"Error: Missing dependencies - {e}")
-        click.echo("Please install with: pip install -e .[dev]")
+        click.echo(f"❌ Failed to start server: {e}")
+        sys.exit(1)
 
 
-@main.command()
-def info():
-    """Show agent data information."""
-    import sys
-    import os
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if project_root not in sys.path:
-        sys.path.insert(0, project_root)
-    
-    import agent_data
-    import importlib
-    importlib.reload(agent_data)
-    
-    info_data = agent_data.get_info()
-    
-    click.echo("Agent Data Langroid Information:")
-    click.echo(f"  Version: {info_data['version']}")
-    click.echo(f"  Author: {info_data['author']}")
-    click.echo(f"  Langroid Available: {info_data['langroid_available']}")
-    if info_data['langroid_version']:
-        click.echo(f"  Langroid Version: {info_data['langroid_version']}")
-    
-    click.echo("\nDependencies:")
-    for dep, available in info_data['dependencies'].items():
-        status = "✓" if available else "✗"
-        click.echo(f"  {status} {dep}")
+@cli.command()
+def check():
+    """Check system dependencies and configuration."""
+    click.echo("Checking Agent Data system dependencies...")
 
+    # Check Python version
+    python_version = sys.version_info
+    if python_version >= (3, 11):
+        click.echo(f"✅ Python {python_version.major}.{python_version.minor}")
+    else:
+        click.echo(
+            f"❌ Python {python_version.major}.{python_version.minor} (requires 3.11+)"
+        )
+        sys.exit(1)
 
-@main.command()
-def test():
-    """Run basic functionality tests."""
-    click.echo("Running Agent Data tests...")
-    
-    try:
-        from agent_data import check_dependencies
-        deps = check_dependencies()
-        
-        failed_deps = [dep for dep, status in deps.items() if not status]
-        
-        if failed_deps:
-            click.echo(f"❌ Missing dependencies: {', '.join(failed_deps)}")
-            return 1
+    # Check required environment variables
+    required_vars = [
+        "QDRANT_URL",
+        "QDRANT_API_KEY",
+        "OPENAI_API_KEY",
+        "GOOGLE_CLOUD_PROJECT",
+    ]
+
+    missing_vars = []
+    for var in required_vars:
+        if os.getenv(var):
+            click.echo(f"✅ {var} is set")
         else:
-            click.echo("✅ All dependencies available")
-            
-        # Test basic imports
-        try:
-            import langroid
+            missing_vars.append(var)
+            click.echo(f"❌ {var} is not set")
+
+    if missing_vars:
+        click.echo(f"\nMissing environment variables: {', '.join(missing_vars)}")
+        click.echo("Please set these variables before using Agent Data.")
+        sys.exit(1)
+
+    # Check project structure
+    required_dirs = [
+        "agent_data",
+        "tests",
+        "docs",
+    ]
+
+    for dir_name in required_dirs:
+        if Path(dir_name).exists():
+            click.echo(f"✅ {dir_name}/ directory exists")
+        else:
+            click.echo(f"❌ {dir_name}/ directory missing")
+
+    # Test basic imports
+    try:
+        import importlib.util
+
+        spec = importlib.util.find_spec("langroid")
+        if spec is not None:
             click.echo("✅ Langroid import successful")
-        except ImportError:
-            click.echo("⚠️  Langroid not available (optional)")
-            
-        click.echo("✅ Agent Data CLI test completed successfully")
-        return 0
-        
-    except Exception as e:
-        click.echo(f"❌ Test failed: {e}")
-        return 1
+        else:
+            click.echo("❌ Langroid not found")
+    except ImportError:
+        click.echo("❌ Failed to test Langroid import")
+
+    try:
+        spec = importlib.util.find_spec("openai")
+        if spec is not None:
+            click.echo("✅ OpenAI import successful")
+        else:
+            click.echo("❌ OpenAI not found")
+    except ImportError:
+        click.echo("❌ OpenAI import failed")
+
+    click.echo("\n✅ System check complete!")
 
 
-if __name__ == '__main__':
-    main() 
+if __name__ == "__main__":
+    cli()

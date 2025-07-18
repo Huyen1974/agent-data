@@ -49,9 +49,7 @@ def collect_firestore_metrics() -> dict[str, Any]:
     """Collect additional metrics from Firestore."""
     try:
         # Count documents processed in the last hour
-        one_hour_ago = datetime.now(UTC).replace(
-            minute=0, second=0, microsecond=0
-        )
+        one_hour_ago = datetime.now(UTC).replace(minute=0, second=0, microsecond=0)
 
         # Query documents collection for recent activity
         docs_ref = firestore_client.collection("documents")

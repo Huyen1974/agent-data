@@ -16,4 +16,4 @@ variable "environment" {
     condition     = contains(["test", "production"], var.environment)
     error_message = "Environment must be either 'test' or 'production'."
   }
-} 
+}

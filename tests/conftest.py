@@ -214,9 +214,7 @@ def client_with_qdrant_override(
         if QdrantStore:
             # If QdrantStore is a singleton, get_instance() or QdrantStore() should provide the
             # correctly initialized (mocked) instance.
-            return QdrantStore(
-                url="http://dummy:6333", api_key="dummy-key"
-            )  # Provide required parameters
+            return QdrantStore()  # Use no-argument constructor for singleton
         return None  # Should not happen if QdrantStore is integral
 
     if QdrantStore:  # Only override if QdrantStore was successfully imported

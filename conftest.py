@@ -21,6 +21,16 @@ except ImportError:
         return None
 
 
+# Import FakeQdrantClient for test fixtures
+try:
+    from tests.mocks.qdrant_basic import FakeQdrantClient
+except ImportError:
+    # Create a mock class if the import fails
+    from unittest.mock import Mock
+
+    FakeQdrantClient = Mock
+
+
 # CLI140m.63: Global comprehensive mocking fixture
 @pytest.fixture(autouse=True, scope="function")
 def global_comprehensive_mocks(monkeypatch):

@@ -258,9 +258,7 @@ class TestCLI140m7QdrantVectorizationToolTargeted:
             assert isinstance(result, dict)
 
             # Test timeout scenario
-            mock_firestore_manager.get_metadata.side_effect = TimeoutError(
-                "Timeout"
-            )
+            mock_firestore_manager.get_metadata.side_effect = TimeoutError("Timeout")
             result = await tool._batch_get_firestore_metadata(["doc1"])
             assert isinstance(result, dict)
 

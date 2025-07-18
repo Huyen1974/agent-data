@@ -388,9 +388,7 @@ Generate exactly {max_tags} tags as a comma-separated list:"""
             "results": results,
         }
 
-    async def clear_cache(
-        self, older_than_hours: int | None = None
-    ) -> dict[str, Any]:
+    async def clear_cache(self, older_than_hours: int | None = None) -> dict[str, Any]:
         """
         Clear cached tags from Firestore.
 

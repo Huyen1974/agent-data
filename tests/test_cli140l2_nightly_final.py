@@ -10,7 +10,6 @@ Created: 2025-06-14
 Author: CLI140l.2 Completion
 """
 
-
 import pytest
 
 

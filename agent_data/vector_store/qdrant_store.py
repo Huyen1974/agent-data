@@ -686,9 +686,7 @@ class QdrantStore:
             # Consider specific Qdrant exceptions if the client library provides them for more granular error handling.
             return None
 
-    def get_vectors_by_ids(
-        self, point_ids: list[int | str]
-    ) -> list[dict[str, Any]]:
+    def get_vectors_by_ids(self, point_ids: list[int | str]) -> list[dict[str, Any]]:
         """
         Retrieve multiple vectors by their IDs, including their vectors and payloads.
 

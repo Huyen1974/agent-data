@@ -106,9 +106,7 @@ class VectorSearchRequest(BaseModel):
         ..., description="Vector to search for (embedding)"
     )
     top_k: int | None = Field(5, description="Number of results to return")
-    filter_tag: str | None = Field(
-        None, description="Optional tag to filter results"
-    )
+    filter_tag: str | None = Field(None, description="Optional tag to filter results")
     metadata: dict[str, Any] | None = None
 
     @field_validator("query_vector")

@@ -1,2 +1,2 @@
 # Auth manager compatibility shim
-from ADK.agent_data.auth.auth_manager import * 
+from ADK.agent_data.auth.auth_manager import *

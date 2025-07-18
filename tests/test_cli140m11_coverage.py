@@ -498,8 +498,8 @@ class TestCLI140m11DocumentIngestionCoverage:
     async def test_firestore_timeout_handling(self, mock_ingestion_tool):
         """Test Firestore timeout handling in document ingestion."""
         # Mock timeout scenario
-        mock_ingestion_tool.firestore_manager.save_metadata.side_effect = (
-            TimeoutError("Firestore timeout")
+        mock_ingestion_tool.firestore_manager.save_metadata.side_effect = TimeoutError(
+            "Firestore timeout"
         )
 
         result = await mock_ingestion_tool.ingest_document(

@@ -104,9 +104,7 @@ async def get_tree_view(
 async def search_documents(
     path: str | None = Query(None, description="Path segment to search for"),
     tags: str | None = Query(None, description="Comma-separated tags to search for"),
-    metadata: str | None = Query(
-        None, description="JSON string of metadata filters"
-    ),
+    metadata: str | None = Query(None, description="JSON string of metadata filters"),
     firestore_manager: FirestoreMetadataManager = Depends(get_firestore_manager),
 ):
     """

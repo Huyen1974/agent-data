@@ -59,7 +59,6 @@ class TestThreadSafeLRUCache:
         cache.put("key1", "value1")
         cache.put("key2", "value2")
 
-
         time.sleep(0.2)
 
         expired_count = cache.cleanup_expired()
@@ -223,7 +222,6 @@ class TestQdrantVectorizationToolCoverage:
     async def test_rate_limiting(self):
         """Test rate limiting functionality."""
         tool = QdrantVectorizationTool()
-
 
         start_time = time.time()
         await tool._rate_limit()
