@@ -1,166 +1,120 @@
 # Agent Data Langroid
 
-A modern knowledge management system built with Langroid for Google Cloud Platform.
+A multi-agent architecture system built on Google Cloud Platform (GCP) using Langroid framework for intelligent data processing and management.
 
-## Project Overview
+## 🏗️ Architecture
 
-Agent Data Langroid is a next-generation agent-based data management system that leverages the power of Langroid framework to provide intelligent document processing, semantic search, and knowledge management capabilities. This project is designed to work seamlessly with Google Cloud services including Cloud Storage, Firestore, and Qdrant vector databases.
+This project implements a sophisticated multi-agent system that leverages:
+- **Langroid Framework**: For intelligent agent orchestration
+- **Google Cloud Platform**: Cloud-native infrastructure
+- **Vector Storage**: Advanced semantic search capabilities
+- **Real-time Processing**: Scalable data ingestion and processing
 
-## Features
+## ✨ Features
 
-- **Multi-Agent Architecture**: Built on Langroid framework for sophisticated agent interactions
-- **Vector Search**: Advanced semantic search using Qdrant vector database
-- **Cloud Integration**: Native Google Cloud Platform integration
-- **Document Processing**: Intelligent document ingestion and processing
-- **Scalable Design**: Microservices architecture with containerized deployment
-- **CI/CD Ready**: Comprehensive testing and deployment pipelines
+- **Multi-Agent Architecture**: Distributed intelligent agents for specialized tasks
+- **Cloud-Native Design**: Built for GCP with auto-scaling capabilities
+- **Vector Search**: Advanced semantic search using embeddings
+- **Real-time Processing**: Stream processing for live data ingestion
+- **API Gateway**: RESTful APIs with authentication and rate limiting
+- **Monitoring & Logging**: Comprehensive observability stack
+- **CI/CD Pipeline**: Automated testing and deployment
 
-## Architecture
-
-```
-agent_data/          # Core agent data management modules
-├── agents/          # Langroid agent implementations
-├── vector_store/    # Vector database integration
-├── tools/           # Agent tools and utilities
-└── config/          # Configuration management
-
-tests/               # Test suites
-scripts/             # Deployment and utility scripts
-terraform/           # Infrastructure as Code
-```
-
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.12+
-- Poetry or pip-tools
+- Python 3.11.6+
 - Google Cloud SDK
-- Docker (for containerized deployment)
+- Docker
+- Git
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-org/agent-data-langroid.git
-cd agent-data-langroid
+git clone https://github.com/Huyen1974/agent-data-test.git
+cd agent-data-test
 ```
 
-2. Install dependencies:
+2. Activate virtual environment:
+```bash
+pyenv activate ad-py311
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Verify installation:
+### Configuration
+
+1. Set up GCP credentials:
 ```bash
-python -c "import langroid; print(f'Langroid version: {langroid.__version__}')"
+gcloud auth application-default login
+gcloud config set project your-project-id
 ```
 
-### Development Setup
-
-1. Install development dependencies:
+2. Configure environment variables:
 ```bash
-pip install -e ".[dev]"
+cp .env.example .env
+# Edit .env with your configuration
 ```
 
-2. Run tests:
+### Deployment
+
+#### Development Environment
 ```bash
-pytest
+# Deploy to test environment
+make deploy-test
 ```
 
-3. Run pre-commit hooks:
+#### Production Environment
 ```bash
-pre-commit install
-pre-commit run --all-files
+# Deploy to production environment  
+make deploy-prod
 ```
 
-## Configuration
+## 🧪 Testing
 
-The project uses environment-based configuration. Copy `.env.example` to `.env` and configure your settings:
-
+Run the test suite:
 ```bash
-# Google Cloud Configuration
-GCP_PROJECT_ID=your-project-id
-GCP_REGION=asia-southeast1
-
-# Qdrant Configuration
-QDRANT_HOST=localhost
-QDRANT_PORT=6333
-
-# Langroid Configuration
-LANGROID_API_KEY=your-api-key
-```
-
-## Deployment
-
-### Local Development
-```bash
-# Start Qdrant locally
-docker run -p 6333:6333 qdrant/qdrant
-
-# Run the application
-python -m agent_data.main
-```
-
-### Google Cloud Deployment
-```bash
-# Deploy infrastructure
-cd terraform
-terraform init
-terraform plan
-terraform apply
-
-# Deploy application
-gcloud functions deploy agent-data-function --source .
-gcloud run deploy agent-data-service --source .
-```
-
-## Testing
-
-The project includes comprehensive test suites:
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=agent_data
-
-# Run specific test categories
+# Unit tests
 pytest tests/unit/
+
+# Integration tests
 pytest tests/integration/
+
+# End-to-end tests
 pytest tests/e2e/
 ```
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes and add tests
-4. Run the test suite: `pytest`
-5. Commit your changes: `git commit -m "feat: add your feature"`
-6. Push to the branch: `git push origin feature/your-feature`
-7. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🆘 Support
 
-For support and questions, please:
-- Check the [documentation](docs/)
-- Open an issue on GitHub
-- Contact the development team
+- **Documentation**: [Wiki](https://github.com/Huyen1974/agent-data-test/wiki)
+- **Issues**: [GitHub Issues](https://github.com/Huyen1974/agent-data-test/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Huyen1974/agent-data-test/discussions)
 
-## Roadmap
+## 🗺️ Roadmap
 
-- [ ] Enhanced multi-agent workflows
-- [ ] Advanced vector search capabilities
-- [ ] Real-time collaboration features
-- [ ] Enhanced security and compliance
+- [ ] Enhanced multi-agent coordination
+- [ ] Advanced analytics dashboard
+- [ ] Mobile application support
+- [ ] Third-party integrations
 - [ ] Performance optimizations
 
 ---
 
-Built with ❤️ using [Langroid](https://github.com/langroid/langroid) and Google Cloud Platform.
+Built with ❤️ by the Agent Data Team
