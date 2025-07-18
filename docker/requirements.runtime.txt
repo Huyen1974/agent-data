@@ -21,7 +21,7 @@ mcp==1.6.0
 
 # Vector database
 qdrant-client==1.12.1
-faiss-cpu==1.9.0
+faiss-cpu==1.11.0.post1
 
 # Google Cloud (minimal set)
 google-cloud-firestore>=2.20.2,<2.21.0
