@@ -339,7 +339,7 @@ pydantic==2.10.6
     #   openapi-pydantic
     #   pydantic-settings
     #   qdrant-client
-pydantic-core==2.27.2
+pydantic-core==2.35.2
     # via pydantic
 pydantic-settings==2.10.1
     # via mcp
