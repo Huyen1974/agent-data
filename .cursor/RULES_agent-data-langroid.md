@@ -3,7 +3,7 @@
 ## 1. Project root (edit‑allowed ONLY)
 /Users/nmhuyen/Documents/Manual Deploy/agent-data-langroid
 
-✅ Mọi thao tác phải nằm trong thư mục này.  
+✅ Mọi thao tác phải nằm trong thư mục này.
 ⛔ Không được đọc/ghi/sửa ngoài path.
 
 ---
@@ -27,12 +27,13 @@ Mỗi repo trên sẽ có 1 Artifact Registry tương ứng:
 ---
 
 ## 4. CI/CD
-Yêu cầu CI xanh cho:
+Yêu cầu CI xanh **trước khi merge**:
 - Cloud Function
 - Cloud Run
 - Workflow YAML
 
 Sử dụng dummy để test CI/CD khi chưa có mã chính thức.
+Push fixes được phép ngay cả khi CI đang đỏ, nhưng merge phải chờ CI xanh.
 
 ---
 
@@ -70,6 +71,23 @@ Mã luôn phải được đồng bộ:
 - Sau khi làm: **push bản cập nhật**
 
 Không được làm việc trên mã cũ.
+
+---
+
+## Pre-push Self-Validation (MANDATORY)
+
+Before pushing any code, you must verify all of the following:
+1. Git remote URL must point to "agent-data-test"
+2. You are inside the correct working directory path: pwd | grep -q "/Manual Deploy/agent-data-langroid$"
+# CI check (optional)
+if gh run list -L1 >/dev/null 2>&1; then
+    echo "ℹ️ CI run detected (green or red). Push fixes freely, but MERGE only when green."
+fi
+
+In addition to these checks:
+• Do not use "continue-on-error" in any CI step, especially in lint or test jobs. This is forbidden.
+• Always commit this rules file alongside the code. Do not modify Rules without committing them.
+• When removing workflows, use "git rm" instead of "rm -f" to ensure cleanup is tracked in Git history.
 
 ---
 
