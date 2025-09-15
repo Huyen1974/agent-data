@@ -462,7 +462,7 @@ spinners==0.0.24
     # via halo
 sse-starlette==2.4.1
     # via mcp
-starlette==0.47.1
+starlette==0.48.0
     # via
     #   fastapi
     #   mcp
