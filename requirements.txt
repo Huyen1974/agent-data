@@ -374,7 +374,7 @@ python-dateutil==2.9.0.post0
     #   faker
     #   htmldate
     #   pandas
-python-dotenv==1.1.1
+python-dotenv==1.2.1
     # via
     #   agent-data-langroid (pyproject.toml)
     #   fastmcp
